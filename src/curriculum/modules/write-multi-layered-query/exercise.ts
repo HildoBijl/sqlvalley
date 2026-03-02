@@ -48,7 +48,7 @@ WHERE e.total_spent <= b.budget
     `,
   },
   {
-    id: 'multilayered-mock-owners-not-buyers',
+    id: 'multilayered-mock-with-notin',
     version: 1,
     prompt: 'Retrieve the name of the products owned by users who never appear as buyers in any transaction',
     solution: `
