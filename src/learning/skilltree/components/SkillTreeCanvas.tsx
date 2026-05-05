@@ -120,7 +120,7 @@ export function SkillTreeCanvas({
   });
   const transformRef = useRef(transform);
 
-  const minScale = 0.3;
+  const minScale = 0.5;
   const maxScale = 2;
 
   const bind = useGesture(
