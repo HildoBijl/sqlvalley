@@ -171,7 +171,7 @@ export function SkillTree({
         })}
 
         {/* The tooltip. */}
-        <Tooltip>{tooltip}</Tooltip>
+        {/* <Tooltip>{tooltip}</Tooltip> */}
       </Drawing>
     </div>
   );
