@@ -165,7 +165,7 @@ export function SkillTreeCanvas({
           const viewW = viewport?.width ?? 0;
           const viewH = viewport?.height ?? 0;
           const scale = transformRef.current.scale;
-          const extra = 150;
+          const extra = 500;
 
           return {
             left: Math.min(0, viewW - treeBounds.width * scale) - extra,
@@ -174,6 +174,7 @@ export function SkillTreeCanvas({
             bottom: extra,
           };
         },
+        rubberband: true, // Allow some "rubberband" effect when dragging beyond bounds
       },
       pinch: {
         scaleBounds: { min: minScale, max: maxScale },
