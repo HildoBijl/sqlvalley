@@ -9,7 +9,6 @@ import { ModulePositionMeta, treeHeight, treeWidth } from '../definitions/sql-tr
 */
 export function useTreeBounds(modulePositions: Record<string, ModulePositionMeta>) {
   return useMemo(() => {
-    // Hardcoded bounds for testing
     return {
       minX: 0,
       minY: 0,

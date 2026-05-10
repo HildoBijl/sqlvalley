@@ -1,7 +1,7 @@
-import { RefObject, useState, useCallback, useRef } from "react";
-import { useGesture } from "@use-gesture/react";
+import { RefObject, useState, useCallback } from "react";
+import { useSkillTreeTransform } from "../utils/useSkillTreeTransform";
 import type { Vector } from "@/utils/geometry";
-import { useDebouncedFunction, useRefWithElement } from "@/utils/dom";
+import { useDebouncedFunction } from "@/utils/dom";
 import { Module } from "@/curriculum";
 import { ModulePositionMeta } from "../definitions/sql-treeDefinition";
 import { SkillTree } from "./SkillTree";
@@ -65,7 +65,7 @@ export function SkillTreeCanvas({
   );
   const [isPanning, setIsPanning] = useState(false);
 
-  const outerRef = useRef<HTMLDivElement>(null);
+  const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform(treeBounds);
 
   const planningMode = useSkillTreeSettingsStore(
     (state) => state.planningMode[treeId] ?? false,
@@ -111,99 +111,6 @@ export function SkillTreeCanvas({
     },
     [],
   );
-
-  // Implementation of the useGesture library
-  const [transform, setTransform] = useState({
-    x: 0,
-    y: 0,
-    scale: 1,
-  });
-  const transformRef = useRef(transform);
-
-  const minScale = 0.5;
-  const maxScale = 2;
-
-  const bind = useGesture(
-    {
-      onDrag: ({ offset: [x, y] }) => {
-        event?.preventDefault();
-        const next = { ...transformRef.current, x, y };
-        setTransform(next);
-        transformRef.current = next;
-      },
-      onPinch: ({ origin: [ox, oy], offset: [d], event }) => {
-        event.preventDefault();
-        const fixedScale = Math.min(maxScale, Math.max(minScale, d));
-        const next = {
-          ...transformRef.current,
-          scale: fixedScale,
-        };
-        setTransform(next);
-        transformRef.current = next;
-      },
-      onWheel: ({ delta: [, dy], event }) => {
-        event.preventDefault();
-        const factor = dy > 0 ? 0.95 : 1.05;
-        const next = {
-          ...transformRef.current,
-          scale: Math.min(
-            maxScale,
-            Math.max(minScale, transformRef.current.scale * factor),
-          ),
-        };
-        setTransform(next);
-        transformRef.current = next;
-      },
-    },
-    {
-      drag: {
-        from: () => [transformRef.current.x, transformRef.current.y],
-        filterTaps: true,
-        pointer: { touch: true }, // Enable dragging with touch on mobile
-        bounds: () => {
-          const viewport = outerRef.current?.getBoundingClientRect();
-          const viewW = viewport?.width ?? 0;
-          const viewH = viewport?.height ?? 0;
-          const scale = transformRef.current.scale;
-          const extra = 500;
-
-          return {
-            left: Math.min(0, viewW - treeBounds.width * scale) - extra,
-            right: extra,
-            top: Math.min(0, viewH - treeBounds.height * scale) - extra,
-            bottom: extra,
-          };
-        },
-        rubberband: true, // Allow some "rubberband" effect when dragging beyond bounds
-      },
-      pinch: {
-        scaleBounds: { min: minScale, max: maxScale },
-        from: () => [transformRef.current.scale, 0],
-        pointer: { touch: true }, // Enable pinch zoom with touch on mobile
-      },
-      wheel: {
-        eventOptions: { passive: false },
-      },
-    },
-  );
-
-  // Functions that replace zoomIn, zoomOut, resetTransform, centerView from TransformWrapper
-  const zoomBy = (factor: number) => {
-    setTransform((prev) => {
-      const next = {
-        ...prev,
-        scale: Math.min(maxScale, Math.max(minScale, prev.scale * factor)),
-      };
-      transformRef.current = next;
-      return next;
-    });
-  };
-
-  const reset = () => {
-    const next = { x: 0, y: 0, scale: 1 };
-    setTransform(next);
-    transformRef.current = next;
-  };
 
   return (
     <div
