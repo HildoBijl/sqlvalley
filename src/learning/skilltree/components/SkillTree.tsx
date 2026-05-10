@@ -1,7 +1,4 @@
-import {
-  type RefObject,
-  useEffect,
-} from "react";
+import type { RefObject } from "react";
 import type { Vector } from "@/utils/geometry";
 import { Drawing, Curve } from "@/components";
 import { Module } from "@/curriculum";
@@ -79,11 +76,11 @@ export function SkillTree({
     tooltip,
     handleHoverStart,
     handleHoverEnd,
+    handleLongPressEnd,
+    getLongPressProps,
     isConnectorInHoveredPath,
   } = useHoverState(moduleItems, setHoveredId);
-
-
-
+  
   // Calculate prerequisites for goal node in planning mode
   const goalPrerequisites = useGoalProgress(
     goalNodeId,
@@ -118,6 +115,7 @@ export function SkillTree({
         useSvg={true}
         useCanvas={false}
         autoScale={false} // Scaling manually controlled by transformer.
+        svgProps={{ onClick: handleLongPressEnd }}
       >
         {/* The lines between skills and concepts */}
         {visiblePaths.map((connector, i) => {
@@ -144,6 +142,7 @@ export function SkillTree({
             <g
               key={item.id}
               onMouseEnter={() => handleHoverStart(item.id)}
+              {...getLongPressProps(item.id)}
               onMouseLeave={handleHoverEnd}
             >
               <NodeCard
