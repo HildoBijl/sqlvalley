@@ -1,7 +1,8 @@
-import { RefObject, useState, useCallback } from "react";
+import type { RefObject } from "react";
+import { useState } from "react";
 import { useSkillTreeTransform } from "../utils/useSkillTreeTransform";
+import { useSkillTreePlanning } from "../utils/useSkillTreePlanning";
 import type { Vector } from "@/utils/geometry";
-import { useDebouncedFunction } from "@/utils/dom";
 import { Module } from "@/curriculum";
 import { ModulePositionMeta } from "../definitions/sql-treeDefinition";
 import { SkillTree } from "./SkillTree";
@@ -9,7 +10,6 @@ import { ZoomControls } from "./SkillTreeComponents/ZoomControls";
 import { TreeLegend } from "./SkillTreeComponents/TreeLegend";
 import { PlanningProgressIndicator } from "./SkillTreeComponents/PlanningProgressIndicator";
 import { useTheme } from "@mui/material/";
-import { useSkillTreeSettingsStore } from "@/store";
 import { PlanningModeIntro } from "./SkillTreeComponents/PlanningModeIntro";
 
 /*
@@ -60,57 +60,22 @@ export function SkillTreeCanvas({
   containerRef,
   nodeRefs,
 }: SkillTreeCanvasProps) {
-  const dispatchScrollEvent = useDebouncedFunction(() =>
-    window.dispatchEvent(new Event("scroll")),
-  );
   const [isPanning, setIsPanning] = useState(false);
 
   const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform(treeBounds);
 
-  const planningMode = useSkillTreeSettingsStore(
-    (state) => state.planningMode[treeId] ?? false,
-  );
-  const setPlanningMode = useSkillTreeSettingsStore(
-    (state) => state.setPlanningMode,
-  );
-
-  const [goalProgress, setGoalProgress] = useState({
-    completed: 0,
-    total: 0,
-    nextStep: null as string | null,
-    nextStepId: null as string | null,
-  });
-
-  // Set a goal node ID
-  const goalNodeId = useSkillTreeSettingsStore(
-    (state) => state.goalNodeID[treeId] ?? null,
-  );
-  const setGoalNodeIdInStore = useSkillTreeSettingsStore(
-    (state) => state.setGoalNodeID,
-  );
-  const setGoalNodeId = (id: string | null) => setGoalNodeIdInStore(treeId, id);
-  const setHasAccessedPlanningMode = useSkillTreeSettingsStore(
-    (state) => state.setHasAccessedPlanningMode,
-  );
-  const hasAccessedPlanningMode = useSkillTreeSettingsStore(
-    (state) => state.hasAccessedPlanningMode,
-  );
-
-  const [showPlanningModeModal, setShowPlanningModeModal] = useState(false);
+  const {
+    planningMode,
+    goalNodeId,
+    setGoalNodeId,
+    goalProgress,
+    handleGoalProgressChange,
+    showPlanningModeModal,
+    setShowPlanningModeModal,
+    togglePlanningMode,
+  } = useSkillTreePlanning(treeId);
 
   const theme = useTheme();
-
-  const handleGoalProgressChange = useCallback(
-    (
-      completed: number,
-      total: number,
-      nextStep: string | null,
-      nextStepId: string | null,
-    ) => {
-      setGoalProgress({ completed, total, nextStep, nextStepId });
-    },
-    [],
-  );
 
   return (
     <div
@@ -131,13 +96,7 @@ export function SkillTreeCanvas({
         onZoomOut={() => zoomBy(1 / 1.2)}
         onReset={reset}
         onCenter={reset}
-        onTogglePlanningMode={() => {
-          if (!planningMode && !hasAccessedPlanningMode) {
-            setShowPlanningModeModal(true);
-            setHasAccessedPlanningMode(true);
-          }
-          setPlanningMode(treeId, !planningMode);
-        }}
+        onTogglePlanningMode={togglePlanningMode}
         planningMode={planningMode}
       />
       {planningMode && (
