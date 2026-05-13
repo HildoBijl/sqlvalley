@@ -3,26 +3,17 @@
  * This file contains all skill tree modules (concepts and skills).
  */
 
-// Define types. The raw ones are for initial definitions, which are then processed afterwards to contain bidirectional references.
+import {
+  processSkillTreeModules,
+  type SkillTreeModule,
+  type SkillTreeModuleRaw,
+  type SkillTreeModuleType,
+} from '@/learning/skillTreeDefinition';
 
-export type ModuleType = 'concept' | 'skill';
-
-interface ModuleRaw {
-  id: string;
-  name: string;
-  type: ModuleType;
-  description: string;
-  prerequisites: string[];
-}
-
-export interface Module extends ModuleRaw {
-	id: ModuleId,
-  prerequisites: ModuleId[];
-  followUps: ModuleId[];
-}
+export type ModuleType = SkillTreeModuleType;
 
 // The moduleIndexRaw contains all definitions of modules, before being processed into more derived objects.
-const moduleIndexRaw: ModuleRaw[] = [
+const moduleIndexRaw = [
   /*
    * Database concepts
    */
@@ -428,31 +419,14 @@ const moduleIndexRaw: ModuleRaw[] = [
     description: 'How can we safely combine recursion and negation in Datalog programs to guarantee well-defined behavior?',
     prerequisites: ['dl-write-multi-predicate-program', 'dl-define-recursive-predicate', 'dl-check-program-stratification'],
   },
-] as const;
+] as const satisfies readonly SkillTreeModuleRaw[];
 
-export type ModuleId = typeof moduleIndexRaw[number]['id'];
+type DefinedModuleId = typeof moduleIndexRaw[number]['id'];
+export type ModuleId = string;
+export type Module = SkillTreeModule<ModuleId>;
 
-// Prepare the moduleList list and modules object to contain processed modules.
-export const moduleList: Module[] = [];
-export const modules: Record<ModuleId, Module> = {};
+const processedModules = processSkillTreeModules<DefinedModuleId>(moduleIndexRaw);
 
-// Fill up the list and object with the initial modules.
-moduleIndexRaw.forEach(item => {
-  const processedItem: Module = {
-		...item,
-    followUps: [],
-  };
-  moduleList.push(processedItem);
-  modules[item.id] = processedItem;
-});
-
-// Fill up the followUps property of each module.
-moduleIndexRaw.forEach(itemRaw => {
-  const item = modules[itemRaw.id];
-  itemRaw.prerequisites.forEach(prerequisiteId => {
-    const prerequisite = modules[prerequisiteId];
-    if (!prerequisite)
-      throw new Error(`Unknown prerequisite "${prerequisiteId}" encountered at module "${item.id}".`);
-    prerequisite.followUps.push(item.id);
-  });
-});
+export const moduleList: Module[] = processedModules.moduleList;
+export const modules: Record<ModuleId, Module> =
+  processedModules.modules as Record<ModuleId, Module>;
