@@ -18,6 +18,19 @@ import {
 } from '@mui/icons-material';
 import { ColorModeContext } from '@/theme';
 
+const APP_STORAGE_KEYS = [
+  'sqlvalley-settings',
+  'sqlvalley-learning',
+  'sqlvalley-storage-migrated-v1',
+  'sqlvalley-storage',
+  'sqltutor-settings',
+  'sqltutor-learning',
+  'sqltutor-storage',
+  'sqltutor-storage-migrated-v1',
+] as const;
+const SKILL_TREE_HISTORY_KEY = 'sqlvalley-skilltree-history';
+const LEGACY_SKILL_TREE_HISTORY_KEY = 'sqltutor-skilltree-history';
+
 export function SettingsMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -83,8 +96,9 @@ export function SettingsMenu() {
         const key = window.localStorage.key(i);
         if (!key) continue;
         if (
-          key === 'sqltutor-storage' ||
-          key === 'sqltutor-skilltree-history' ||
+          APP_STORAGE_KEYS.some((appKey) => appKey === key) ||
+          key === SKILL_TREE_HISTORY_KEY ||
+          key === LEGACY_SKILL_TREE_HISTORY_KEY ||
           key.startsWith('component-') ||
           key === 'admin'
         ) {

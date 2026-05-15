@@ -1,17 +1,13 @@
-import { type RefObject, type ReactNode, useState, useEffect } from "react";
+import { type RefObject, type ReactNode, useState, useEffect, useMemo } from "react";
 import type { Vector } from "@/utils/geometry";
-import {
-  Drawing,
-  Element,
-  Curve,
-  useDrawingMousePosition,
-} from "@/components";
+import { Drawing, Element, Curve, useDrawingMousePosition } from "@/components";
 import { ModuleMeta } from "@/curriculum";
 import { NodeCard } from "./NodeCard";
 import { ModulePositionMeta } from "../utils/treeDefinition";
 import { useTheme } from "@mui/material/";
 import { useTransformContext } from "react-zoom-pan-pinch";
 import { useDebouncedFunction } from "@/utils";
+import { getPrerequisites } from "../utils/goalPath";
 
 /*
  * SkillTree component that renders the tree structure with nodes and connectors.
@@ -45,6 +41,14 @@ interface SkillTreeProps {
   setHoveredId: (id: string | null) => void;
   containerRef: RefObject<HTMLDivElement | null>;
   nodeRefs: RefObject<Map<string, HTMLDivElement | null>>;
+  planningMode: boolean;
+  goalNodeId?: string | null;
+  setGoalNodeId?: (id: string | null) => void;
+  onGoalProgressChange?: (
+    completedCount: number,
+    totalCount: number,
+    nextStepNode: string | null,
+  ) => void;
 }
 
 export function SkillTree({
@@ -53,13 +57,16 @@ export function SkillTree({
   treeBounds,
   visiblePaths,
   isCompleted,
-  // getProgress,
   setHoveredId,
   containerRef,
-}: // nodeRefs,
-SkillTreeProps) {
+  planningMode,
+  goalNodeId,
+  setGoalNodeId,
+  onGoalProgressChange,
+}: SkillTreeProps) {
   const theme = useTheme();
 
+  // Local state for hovered node ID and prerequisite chain
   const [localHoveredId, setLocalHoveredId] = useState<string | null>(null);
   const [prerequisites, setPrerequisites] = useState<Set<string>>(new Set());
 
@@ -69,27 +76,50 @@ SkillTreeProps) {
 
   // On changes in the zoom-pan-pinch transform state, dispatch a scroll event to update rects.
   const { transformState } = useTransformContext();
-  const dispatchScrollEvent = useDebouncedFunction(() => window.dispatchEvent(new Event("scroll")));
-  useEffect(dispatchScrollEvent, [transformState.scale, transformState.positionX, transformState.positionY]);
+  const dispatchScrollEvent = useDebouncedFunction(() =>
+    window.dispatchEvent(new Event("scroll")),
+  );
+  useEffect(dispatchScrollEvent, [
+    transformState.scale,
+    transformState.positionX,
+    transformState.positionY,
+  ]);
 
-  // Recursive function to get all prerequisites for a given item
-  const getPrerequisites = (itemId: string): Set<string> => {
-    const prerequisites = new Set<string>();
-    const item = moduleItems[itemId];
-
-    if (!item?.prerequisites || item.prerequisites.length === 0)
-      return prerequisites;
-
-    for (const prereqId of item.prerequisites) {
-      prerequisites.add(prereqId);
-      const nestedPrereqs = getPrerequisites(prereqId);
-      for (const p of nestedPrereqs) {
-        prerequisites.add(p);
-      }
+  // Calculate prerequisites for goal node in planning mode
+  const goalPrerequisites = useMemo(() => {
+    if (goalNodeId) {
+      return getPrerequisites(goalNodeId, moduleItems);
     }
+    return new Set<string>();
+  }, [goalNodeId, moduleItems]);
 
-    return prerequisites;
-  };
+  useEffect(() => {
+    if (onGoalProgressChange && goalNodeId) {
+      const nodesOnPath = [...Array.from(goalPrerequisites), goalNodeId];
+      const totalCount = nodesOnPath.length;
+      const completedCount = nodesOnPath.filter((id) =>
+        isCompleted(id),
+      ).length;
+
+      const nextStep = nodesOnPath.find((id) => {
+        if (isCompleted(id)) return false;
+        const item = moduleItems[id];
+        const allPrereqsCompleted =
+          item.prerequisites?.every((prereqId) => isCompleted(prereqId)) ??
+          true;
+        return allPrereqsCompleted;
+      });
+
+      const nextStepName = nextStep ? moduleItems[nextStep]?.name : null;
+      onGoalProgressChange(completedCount, totalCount, nextStepName);
+    }
+  }, [
+    goalNodeId,
+    goalPrerequisites,
+    isCompleted,
+    onGoalProgressChange,
+    moduleItems,
+  ]);
 
   // Tooltip state
   const [tooltip, setTooltip] = useState<string | null>(null);
@@ -98,7 +128,7 @@ SkillTreeProps) {
   const handleHoverStart = (id: string) => {
     setLocalHoveredId(id);
     setHoveredId(id);
-    const chain = getPrerequisites(id);
+    const chain = getPrerequisites(id, moduleItems);
     // Calculate full prerequisite chain
     setPrerequisites(chain);
 
@@ -143,8 +173,28 @@ SkillTreeProps) {
     return toIsInChain && fromIsInChain;
   };
 
+  // Check if a connector is part of the goal path
+  const isConnectorInGoalPath = (connector: {
+    from: string;
+    to: string;
+  }): boolean => {
+    if (!planningMode || !goalNodeId) return false;
+
+    const fromInPath =
+      goalPrerequisites.has(connector.from) || connector.from === goalNodeId;
+    const toInPath =
+      goalPrerequisites.has(connector.to) || connector.to === goalNodeId;
+
+    return fromInPath && toInPath;
+  };
+
   // Determine the style for connectors based on different cases
   const getConnectorStyle = (connector: { from: string; to: string }) => {
+    // TO DO
+    if (planningMode) {
+      if (!goalNodeId) return { opacity: 0.7 };
+      return { opacity: isConnectorInGoalPath(connector) ? 1 : 0.15 };
+    }
     // Full opacity for connectors in the hovered path
     if (isConnectorInHoveredPath(connector)) {
       return { opacity: 0.7 };
@@ -176,14 +226,18 @@ SkillTreeProps) {
     const isNextToLearn =
       isReadyToLearn(moduleItems[connector.to]) && fromCompleted;
 
+    if (planningMode) {
+      if (!isConnectorInGoalPath(connector)) return "#9aa0a6";
+      if (bothCompleted) return "#4CAF50";
+      if (isNextToLearn) return "#FFD700";
+      return "purple";
+    }
     // Hover active
     if (isConnectorInHoveredPath(connector)) {
       if (bothCompleted) {
         return "#4CAF50";
       }
-      if (fromCompleted && !toCompleted) {
-        return "#FFD700";
-      }
+      if (isNextToLearn) return "#FFD700";
       return "#E84421";
     }
 
@@ -249,6 +303,15 @@ SkillTreeProps) {
                 isPrerequisite={prerequisites.has(item.id)}
                 isSomethingHovered={localHoveredId !== null}
                 onClick={() => handleNodeClick(item)}
+                planningMode={planningMode}
+                hasGoal={planningMode && !!goalNodeId}
+                isGoalNode={planningMode && goalNodeId === item.id}
+                isOnGoalPath={planningMode && goalPrerequisites.has(item.id)}
+                onSetGoal={() => {
+                  if (planningMode && setGoalNodeId) {
+                    setGoalNodeId(goalNodeId === item.id ? null : item.id);
+                  }
+                }}
               />
             </g>
           );

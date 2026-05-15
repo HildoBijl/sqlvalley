@@ -6,6 +6,7 @@ import type {
   ComponentState,
   ComponentType,
   ConceptComponentState,
+  LearningState,
   PlaygroundComponentState,
   SkillComponentState,
   StoredExerciseEvent,
@@ -16,8 +17,9 @@ import {
   DEFAULT_COMPONENT_TYPE,
   normalizeComponentState,
 } from './support';
+import type { SetState, GetState } from '../utils';
 
-export const initialLearningState = {
+export const initialLearningState: LearningState = {
   components: {} as Record<string, ComponentState>,
 };
 
@@ -31,8 +33,8 @@ export interface LearningActions {
 }
 
 export function createLearningActions(
-  set: (fn: (state: { components: Record<string, ComponentState> }) => Partial<{ components: Record<string, ComponentState> }>) => void,
-  get: () => { components: Record<string, ComponentState> },
+  set: SetState<LearningState>,
+  get: GetState<LearningState>,
 ): LearningActions {
   return {
     updateComponent: (id, data) =>
