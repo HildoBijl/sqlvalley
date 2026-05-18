@@ -1,10 +1,10 @@
 import type { RefObject } from "react";
 import type { Vector } from "@/utils/geometry";
 import { Drawing, Curve } from "@/components";
-import { Module } from "@/curriculum";
+import type { Module } from "@/curriculum";
 import { NodeCard } from "./SkillTreeComponents/NodeCard";
 import { Tooltip } from "./SkillTreeComponents/Tooltip";
-import { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
+import type { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
 import { useTheme } from "@mui/material/";
 import { useGoalProgress } from "../utils/logic/calculatePrerequisites";
 import { useHoverState } from "../utils/graphics/mouseEvents";
