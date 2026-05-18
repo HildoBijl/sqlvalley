@@ -49,7 +49,7 @@ export function useHoverState(
         handleHoverStart(longPressTargetId.current);
       }
     },
-    { isPreventDefault: true, delay: 500 },
+    { isPreventDefault: false, delay: 500 },
   );
 
   const getLongPressProps = (id: string) => ({
