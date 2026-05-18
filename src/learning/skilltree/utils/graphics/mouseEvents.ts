@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Module } from "@/curriculum";
-import { getPrerequisites } from "./goalPath";
+import { getPrerequisites } from "../goalPath";
 import { useLongPress } from "react-use";
 
 export function useHoverState(

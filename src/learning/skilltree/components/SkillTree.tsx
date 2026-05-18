@@ -6,9 +6,12 @@ import { NodeCard } from "./SkillTreeComponents/NodeCard";
 import { Tooltip } from "./SkillTreeComponents/Tooltip";
 import { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
 import { useTheme } from "@mui/material/";
-import { useGoalProgress } from "../utils/calculatePrerequisites";
-import { useHoverState } from "../utils/mouseEvents";
-import { isReadyToLearn, resolveConnectorStyle } from "../utils/connectorStyle";
+import { useGoalProgress } from "../utils/logic/calculatePrerequisites";
+import { useHoverState } from "../utils/graphics/mouseEvents";
+import {
+  isReadyToLearn,
+  resolveConnectorStyle,
+} from "../utils/graphics/connectorStyle";
 
 /*
  * SkillTree component that renders the tree structure with nodes and connectors.
@@ -80,7 +83,7 @@ export function SkillTree({
     getLongPressProps,
     isConnectorInHoveredPath,
   } = useHoverState(moduleItems, setHoveredId);
-  
+
   // Calculate prerequisites for goal node in planning mode
   const goalPrerequisites = useGoalProgress(
     goalNodeId,
@@ -119,8 +122,16 @@ export function SkillTree({
       >
         {/* The lines between skills and concepts */}
         {visiblePaths.map((connector, i) => {
-          const { strokeColor, strokeWidth, opacity } =
-            resolveConnectorStyle(connector, planningMode, goalNodeId, goalPrerequisites, localHoveredId, isCompleted, moduleItems, isConnectorInHoveredPath);
+          const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
+            connector,
+            planningMode,
+            goalNodeId,
+            goalPrerequisites,
+            localHoveredId,
+            isCompleted,
+            moduleItems,
+            isConnectorInHoveredPath,
+          );
           return (
             <Curve
               key={i}
@@ -175,4 +186,3 @@ export function SkillTree({
     </div>
   );
 }
-

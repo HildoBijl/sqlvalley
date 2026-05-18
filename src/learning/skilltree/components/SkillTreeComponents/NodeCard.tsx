@@ -2,7 +2,7 @@ import { Vector } from "@/utils/geometry";
 import { Rectangle, Element } from "@/components";
 import { Module } from "@/curriculum";
 import { cardWidth, cardHeight } from "../../utils/settings";
-import { getNodeStyle } from "../../utils/nodeStyle";
+import { getNodeStyle } from "../../utils/graphics/nodeStyle";
 import { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
 import { useTheme, ButtonBase } from "@mui/material/";
 import { NodeIconBadge } from "./Icons/NodeIconBadge";
@@ -153,10 +153,7 @@ export function NodeCard({
               pointerEvents: "none",
             }}
           >
-            <NodeIconBadge
-              type={type}
-              iconSize={iconSize}
-            />
+            <NodeIconBadge type={type} iconSize={iconSize} />
 
             {completed && !isGoalNode && (
               <NodeCompletedMark iconSize={checkmarkSize} />

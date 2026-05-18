@@ -1,6 +1,6 @@
 import { useMemo, useEffect } from "react";
 import { Module } from "@/curriculum";
-import { getPrerequisites } from "./goalPath";
+import { getPrerequisites } from "../goalPath";
 
 export function useGoalProgress(
   goalNodeId: string | null | undefined,

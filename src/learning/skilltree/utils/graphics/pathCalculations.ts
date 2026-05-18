@@ -1,6 +1,6 @@
 import { Vector } from '@/utils/geometry';
 import type { ModulePositionMeta } from '@/learning/skillTreeDefinition';
-import { cardHeight, initialPathSpacing, maxPathSpace, minVerticalOffset, maxVerticalOffset } from './settings';
+import { cardHeight, initialPathSpacing, maxPathSpace, minVerticalOffset, maxVerticalOffset } from '../settings';
 
 /*
 * Utility function to compute points for curved connectors between nodes in the skill tree.

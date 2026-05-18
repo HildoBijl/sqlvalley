@@ -1,7 +1,7 @@
 import type { RefObject } from "react";
 import { useState } from "react";
-import { useSkillTreeTransform } from "../utils/useSkillTreeTransform";
-import { useSkillTreePlanning } from "../utils/useSkillTreePlanning";
+import { useSkillTreeTransform } from "../utils/graphics/useSkillTreeTransform";
+import { useSkillTreePlanning } from "../utils/logic/useSkillTreePlanning";
 import type { Vector } from "@/utils/geometry";
 import { Module } from "@/curriculum";
 import { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
