@@ -4,8 +4,8 @@ import {
 	type ModulePositionMetaRaw,
 	processModulePositions,
 } from '@/learning/skillTreeDefinition';
-import { cardWidth, cardHeight } from '../utils/settings';
-import { computeConnectorPath } from '../utils/pathCalculations';
+import { cardWidth, cardHeight } from '@/learning/skilltree/utils/settings';
+import { computeConnectorPath } from '@/learning/skilltree/utils/pathCalculations';
 
 const margin = 20;
 

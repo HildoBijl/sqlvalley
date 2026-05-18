@@ -4,7 +4,7 @@ import { useSkillTreeTransform } from "../utils/useSkillTreeTransform";
 import { useSkillTreePlanning } from "../utils/useSkillTreePlanning";
 import type { Vector } from "@/utils/geometry";
 import { Module } from "@/curriculum";
-import { ModulePositionMeta } from "../definitions/sql-treeDefinition";
+import { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
 import { SkillTree } from "./SkillTree";
 import { ZoomControls } from "./SkillTreeComponents/ZoomControls";
 import { TreeLegend } from "./SkillTreeComponents/TreeLegend";

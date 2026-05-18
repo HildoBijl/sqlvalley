@@ -3,7 +3,7 @@ import { Rectangle, Element } from "@/components";
 import { Module } from "@/curriculum";
 import { cardWidth, cardHeight } from "../../utils/settings";
 import { getNodeStyle } from "../../utils/nodeStyle";
-import { ModulePositionMeta } from "../../definitions/sql-treeDefinition";
+import { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
 import { useTheme, ButtonBase } from "@mui/material/";
 import { NodeIconBadge } from "./Icons/NodeIconBadge";
 import { NodeGoalPin } from "./Icons/NodeGoalPin";

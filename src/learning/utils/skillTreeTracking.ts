@@ -1,6 +1,6 @@
-import { modulePositions } from '@/learning/skilltree/definitions/sql-treeDefinition';
-import { raModulePositions } from '@/learning/skilltree/definitions/ra-treeDefinition';
-import { datalogModulePositions } from '@/learning/skilltree/definitions/datalog-treeDefinitions';
+import { modulePositions } from '@/curriculum/definitions/sql-treeDefinition';
+import { raModulePositions } from '@/curriculum/definitions/ra-treeDefinition';
+import { datalogModulePositions } from '@/curriculum/definitions/datalog-treeDefinitions';
 import { useSkillTreeSettingsStore } from '@/store';
 
 export type SkillTreeId = 'sql' | 'ra' | 'datalog';

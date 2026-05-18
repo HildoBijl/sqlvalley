@@ -4,7 +4,7 @@ import { Drawing, Curve } from "@/components";
 import { Module } from "@/curriculum";
 import { NodeCard } from "./SkillTreeComponents/NodeCard";
 import { Tooltip } from "./SkillTreeComponents/Tooltip";
-import { ModulePositionMeta } from "../definitions/sql-treeDefinition";
+import { ModulePositionMeta } from "@/curriculum/definitions/sql-treeDefinition";
 import { useTheme } from "@mui/material/";
 import { useGoalProgress } from "../utils/calculatePrerequisites";
 import { useHoverState } from "../utils/mouseEvents";
