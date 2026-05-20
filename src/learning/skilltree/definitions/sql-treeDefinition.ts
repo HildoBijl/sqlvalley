@@ -3,7 +3,7 @@ import {
 	type ModulePositionMeta,
 	type ModulePositionMetaRaw,
 	processModulePositions,
-} from '@/learning/skillTreeDefinition';
+} from '../utils/positionProcessing';
 import { cardWidth, cardHeight } from '../utils/settings';
 import { computeConnectorPath } from '../utils/pathCalculations';
 

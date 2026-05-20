@@ -1,6 +1,5 @@
+import type { SkillTreeModule } from '@/learning/skillTreeDefinition';
 import { type VectorInput, Vector, ensureVector } from '@/utils/geometry';
-
-import type { SkillTreeModule } from './types';
 
 export interface ModulePositionMetaRaw {
   position: VectorInput;
