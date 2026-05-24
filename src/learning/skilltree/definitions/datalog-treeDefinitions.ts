@@ -1,4 +1,4 @@
-import { modules } from '@/curriculum';
+import { skillTree } from '@/curriculum';
 import {
     type ModulePositionMeta,
     type ModulePositionMetaRaw,
@@ -76,7 +76,7 @@ const modulePositionsRaw: Record<string, ModulePositionMetaRaw> = {
 
 const processedModulePositions = processModulePositions({
     rawPositions: modulePositionsRaw,
-    modules,
+    skillTree,
     cardHeight,
     computeConnectorPath,
     treeName: 'Datalog Skill Tree',

@@ -4,14 +4,14 @@ import { Container, Typography, Alert, CircularProgress, Button, Box } from '@mu
 import { MenuBook, Lightbulb, Bolt, EditNote, Storage, Edit, CheckCircle } from '@mui/icons-material';
 
 import { useLearningStore, useSettingsStore, type SkillModuleState } from '@/store';
-import { moduleList } from '@/curriculum';
+import { skillTree } from '@/curriculum';
 import { moduleComponents } from '@/curriculum/utils/loaders';
 import { getModuleTables } from '@/curriculum/utils/moduleAccess';
 
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useSkillContent } from '@/learning/hooks/useSkillContent';
 import { useSkillExerciseController } from '@/learning/hooks/useSkillExerciseController';
-import { useModuleProgress } from '@/learning/hooks/useModuleProgress';
+import { useModuleProgress } from '@/learning/progress';
 import { useAdminMode } from '@/store/adminMode';
 import { useSkillTreeHistory } from '@/learning/hooks/useSkillTreeHistory';
 import { getBackToLearningPathFromHistory } from '@/learning/utils/skillTreeTracking';
@@ -31,7 +31,6 @@ export default function SkillPage() {
 	const navigate = useNavigate();
 
 	const hideStories = useSettingsStore((state) => state.hideStories);
-	const modules = useLearningStore((state) => state.modules);
 	const completeSkill = useLearningStore((state) => state.completeSkill);
 	const isAdmin = useAdminMode();
 	const [showCompletionDialog, setShowCompletionDialog] = useState(false);
@@ -87,7 +86,7 @@ export default function SkillPage() {
 		moduleState,
 	});
 
-	const { isCompleted } = useModuleProgress(moduleList, modules);
+	const { isCompleted } = useModuleProgress(skillTree);
 	const isSkillMastered = skillId ? isCompleted(skillId) : false;
 	const summaryUnlocked = isSkillMastered || isAdmin;
 

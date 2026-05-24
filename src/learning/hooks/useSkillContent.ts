@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { type Module, moduleList } from '@/curriculum';
+import { type Module, skillTree } from '@/curriculum';
 import { skillExerciseLoaders } from '@/curriculum/utils/loaders';
 
 import { normalizeSkillExerciseModule } from '../utils/normalizeSkillModule';
@@ -50,7 +50,8 @@ export function useSkillContent(
     updateState({ isLoading: true, error: null });
 
     const entry =
-      moduleList.find((item) => item.type === 'skill' && item.id === skillId) || null;
+      Object.values(skillTree).find((item) => item.type === 'skill' && item.id === skillId) ||
+      null;
     updateState({ skillMeta: entry });
 
     if (!entry) {

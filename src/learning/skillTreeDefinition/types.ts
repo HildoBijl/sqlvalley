@@ -1,15 +1,17 @@
-export type SkillTreeModuleType = 'concept' | 'skill';
+export type ModuleType = 'concept' | 'skill';
 
-export interface SkillTreeModuleRaw<Id extends string = string> {
+export interface ModuleRaw<Id extends string = string> {
   id: Id;
   name: string;
-  type: SkillTreeModuleType;
+  type: ModuleType;
   description: string;
   prerequisites: readonly Id[];
 }
 
-export interface SkillTreeModule<Id extends string = string>
-  extends Omit<SkillTreeModuleRaw<Id>, 'prerequisites'> {
+export interface Module<Id extends string = string>
+  extends Omit<ModuleRaw<Id>, 'prerequisites'> {
   prerequisites: Id[];
   followUps: Id[];
 }
+
+export type SkillTree<Id extends string = string> = Record<Id, Module<Id>>;

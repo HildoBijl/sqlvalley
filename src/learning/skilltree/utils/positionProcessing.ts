@@ -1,4 +1,4 @@
-import type { SkillTreeModule } from '@/learning/skillTreeDefinition';
+import type { SkillTree } from '@/learning/skillTreeDefinition';
 import { type VectorInput, Vector, ensureVector } from '@/utils/geometry';
 
 export interface ModulePositionMetaRaw {
@@ -20,7 +20,7 @@ export interface ModuleConnector {
 
 export interface ProcessModulePositionsOptions<Id extends string> {
   rawPositions: Record<string, ModulePositionMetaRaw>;
-  modules: Record<Id, SkillTreeModule<Id>>;
+  skillTree: SkillTree<Id>;
   cardHeight: number;
   computeConnectorPath: (
     from: ModulePositionMeta,
@@ -37,7 +37,7 @@ export interface ProcessedModulePositions {
 
 export function processModulePositions<Id extends string>({
   rawPositions,
-  modules,
+  skillTree,
   cardHeight,
   computeConnectorPath,
   treeName = 'Skill Tree',
@@ -45,7 +45,7 @@ export function processModulePositions<Id extends string>({
   const modulePositions: Record<string, ModulePositionMeta> = {};
 
   Object.entries(rawPositions).forEach(([id, positionDataRaw]) => {
-    if (!modules[id as Id]) {
+    if (!skillTree[id as Id]) {
       throw new Error(
         `Invalid module ID "${id}" encountered when defining module positions for the ${treeName}.`,
       );
@@ -61,7 +61,7 @@ export function processModulePositions<Id extends string>({
   });
 
   Object.values(modulePositions).forEach((positionData) => {
-    const module = modules[positionData.id as Id];
+    const module = skillTree[positionData.id as Id];
     const { position } = positionData;
 
     const prerequisiteRefPoint = position.add([0, -cardHeight / 2]);

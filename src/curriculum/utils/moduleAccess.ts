@@ -3,8 +3,8 @@
  */
 
 import { type TableKey, allTables } from '@/mockData';
-import { getPrerequisites } from '@/learning/skilltree/utils/goalPath'
-import { type ModuleId, modules } from '../modules';
+import { getPrerequisites } from '@/learning/skillTreeDefinition';
+import { type ModuleId, skillTree } from '../skillTree';
 
 // List the point (or points) in the Skill Tree where the respective tables are introduced.
 const tableIntroduction: Record<TableKey, ModuleId | ModuleId[]> = {
@@ -28,9 +28,9 @@ const tableIntroduction: Record<TableKey, ModuleId | ModuleId[]> = {
 const moduleTableIntroduction: Record<ModuleId, TableKey[]> = {};
 allTables.forEach(table => {
 	const moduleOrList = tableIntroduction[table];
-	const moduleList = Array.isArray(moduleOrList) ? moduleOrList : [moduleOrList];
-	moduleList.forEach(moduleId => {
-		if (!modules[moduleId])
+	const moduleIds = Array.isArray(moduleOrList) ? moduleOrList : [moduleOrList];
+	moduleIds.forEach(moduleId => {
+		if (!skillTree[moduleId])
 			throw new Error(`Invalid module ID given in table introductions: module "${moduleId}" is unknown.`)
 		if (!moduleTableIntroduction[moduleId])
 			moduleTableIntroduction[moduleId] = [];
@@ -40,7 +40,7 @@ allTables.forEach(table => {
 
 // Get the tables required for a given module ID. Gives an empty list when no tables are found.
 export function getModuleTables(moduleId: ModuleId): TableKey[] {
-	const prerequisites = getPrerequisites(moduleId, modules);
+	const prerequisites = getPrerequisites(skillTree, moduleId);
 	const introducedTables = Array.from(prerequisites).flatMap(prerequisite => moduleTableIntroduction[prerequisite]);
 	return Array.from(new Set(introducedTables));
 }

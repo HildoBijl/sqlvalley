@@ -16,9 +16,9 @@ import {
   type ConceptModuleState,
 } from "@/store";
 import { useAdminMode } from "@/store/adminMode";
-import { moduleList, type Module } from "@/curriculum";
+import { skillTree, type Module } from "@/curriculum";
 import { useContentTabs } from "@/learning/hooks/useContentTabs";
-import { useModuleProgress } from "@/learning/hooks/useModuleProgress";
+import { useModuleProgress } from "@/learning/progress";
 import { useSkillTreeHistory } from "@/learning/hooks/useSkillTreeHistory";
 import { ContentHeader } from "@/learning/components/ContentHeader";
 import { ContentTabs } from "@/learning/components/ContentTabs";
@@ -34,15 +34,12 @@ import {
   getBackToLearningPathFromHistory,
   getSkillTreeDefinitions,
 } from "@/learning/utils/skillTreeTracking";
-
-import { modules } from "@/curriculum";
-import { getPrerequisites } from "@/learning/skilltree/utils/goalPath";
+import { getPrerequisites } from "@/learning/skillTreeDefinition";
 
 export default function ConceptPage() {
   const { conceptId } = useParams<{ conceptId: string }>();
   const navigate = useNavigate();
   const hideStories = useSettingsStore((state) => state.hideStories);
-  const learningModules = useLearningStore((state) => state.modules);
   const completeConcept = useLearningStore((state) => state.completeConcept);
   const isAdmin = useAdminMode();
   const [showCompletionDialog, setShowCompletionDialog] = useState(false);
@@ -54,7 +51,7 @@ export default function ConceptPage() {
 
   const conceptMeta = useMemo<Module | undefined>(() => {
     if (!conceptId) return undefined;
-    return moduleList.find(
+    return Object.values(skillTree).find(
       (item) => item.type === "concept" && item.id === conceptId,
     );
   }, [conceptId]);
@@ -85,10 +82,7 @@ export default function ConceptPage() {
     },
   );
 
-  const { isCompleted: isModuleCompleted } = useModuleProgress(
-    moduleList,
-    learningModules,
-  );
+  const { isCompleted: isModuleCompleted } = useModuleProgress(skillTree);
   const isCompleted = conceptId
     ? isModuleCompleted(conceptId)
     : (moduleState.understood ?? false);
@@ -151,15 +145,15 @@ export default function ConceptPage() {
 
   // Get all prerequisites for the current goal node
   const prerequisitesOfGoal = goalNodeID
-    ? getPrerequisites(goalNodeID, modules)
+    ? getPrerequisites(skillTree, goalNodeID)
     : new Set<string>();
 
   const treeModuleIds = conceptTree?.moduleIds ?? new Set<string>();
   const allFollowUps = conceptId
-    ? (modules[conceptId]?.followUps ?? []).filter((id) => treeModuleIds.has(id))
+    ? (skillTree[conceptId]?.followUps ?? []).filter((id) => treeModuleIds.has(id))
     : [];
   const allPrereqsDone = (id: string) =>
-    modules[id]?.prerequisites?.every((prereqId) => isModuleCompleted(prereqId)) ?? true;
+    skillTree[id]?.prerequisites?.every((prereqId) => isModuleCompleted(prereqId)) ?? true;
 
   const nextUp = goalNodeID
     ? (() => {
@@ -218,7 +212,7 @@ export default function ConceptPage() {
         conceptName={conceptMeta.name}
         nextUp={nextUp}
         onNavigateToNext={(id) => {
-          const type = modules[id]?.type;
+          const type = skillTree[id]?.type;
           navigate(type === "skill" ? `/skill/${id}` : `/concept/${id}`);
         }}
         onClose={() => setShowCompletionDialog(false)}

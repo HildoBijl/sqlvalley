@@ -1,7 +1,7 @@
 import { Box, Typography, LinearProgress } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Link } from "@/components";
-import { modules } from "@/curriculum";
+import { skillTree } from "@/curriculum";
 
 interface PlanningProgressIndicatorProps {
   nextStepName: string;
@@ -19,7 +19,7 @@ export function PlanningProgressIndicator({
   totalCount,
   hasGoal,
 }: PlanningProgressIndicatorProps) {
-  const nextStepModule = nextStepId ? modules[nextStepId as keyof typeof modules] : null;
+  const nextStepModule = nextStepId ? skillTree[nextStepId] : null;
   const nextStepHref = nextStepModule
     ? `/${nextStepModule.type}/${nextStepId}`
     : null;

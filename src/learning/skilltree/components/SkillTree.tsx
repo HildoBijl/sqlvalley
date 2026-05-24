@@ -7,13 +7,13 @@ import {
 } from "react";
 import type { Vector } from "@/utils/geometry";
 import { Drawing, Element, Curve, useDrawingMousePosition } from "@/components";
-import { Module } from "@/curriculum";
+import type { Module } from "@/curriculum";
 import { NodeCard } from "./NodeCard";
-import { ModulePositionMeta } from "../definitions/sql-treeDefinition";
+import type { ModulePositionMeta } from "../utils/positionProcessing";
 import { useTheme } from "@mui/material/";
 import { useTransformContext } from "react-zoom-pan-pinch";
 import { useDebouncedFunction } from "@/utils";
-import { getPrerequisites } from "../utils/goalPath";
+import { getPrerequisites } from "@/learning/skillTreeDefinition";
 import { getConnectorStyle } from "../utils/connectorStyle";
 
 /*
@@ -21,7 +21,7 @@ import { getConnectorStyle } from "../utils/connectorStyle";
  * This is a pure rendering component without zoom/pan controls.
  * Uses the Drawing library for coordinate-based positioning.
  *
- * @param moduleItems - Array of modules (concepts and skills) with info about these modules.
+ * @param skillTree - Skill tree modules keyed by module ID.
  * @param modulePositions - Array of module position data entries to display.
  * @param treeBounds - The bounding box of the tree layout.
  * @param visiblePaths - Array of connector objects with points arrays and from/to node IDs.
@@ -32,7 +32,7 @@ import { getConnectorStyle } from "../utils/connectorStyle";
  * @param nodeRefs - Ref to a map of node IDs to their corresponding div elements.
  */
 interface SkillTreeProps {
-  moduleItems: Record<string, Module>;
+  skillTree: Record<string, Module>;
   modulePositions: Record<string, ModulePositionMeta>;
   treeBounds: {
     minX: number;
@@ -60,7 +60,7 @@ interface SkillTreeProps {
 }
 
 export function SkillTree({
-  moduleItems,
+  skillTree,
   modulePositions,
   treeBounds,
   visiblePaths,
@@ -96,10 +96,10 @@ export function SkillTree({
   // Calculate prerequisites for goal node in planning mode
   const goalPrerequisites = useMemo(() => {
     if (goalNodeId) {
-      return getPrerequisites(goalNodeId, moduleItems);
+      return getPrerequisites(skillTree, goalNodeId);
     }
     return new Set<string>();
-  }, [goalNodeId, moduleItems]);
+  }, [goalNodeId, skillTree]);
 
   useEffect(() => {
     if (onGoalProgressChange && goalNodeId) {
@@ -109,14 +109,14 @@ export function SkillTree({
 
       const nextStep = nodesOnPath.find((id) => {
         if (isCompleted(id)) return false;
-        const item = moduleItems[id];
+        const item = skillTree[id];
         const allPrereqsCompleted =
           item.prerequisites?.every((prereqId) => isCompleted(prereqId)) ??
           true;
         return allPrereqsCompleted;
       });
 
-      const nextStepName = nextStep ? moduleItems[nextStep]?.name : null;
+      const nextStepName = nextStep ? skillTree[nextStep]?.name : null;
       onGoalProgressChange(completedCount, totalCount, nextStepName, nextStep ?? null);
     }
   }, [
@@ -124,7 +124,7 @@ export function SkillTree({
     goalPrerequisites,
     isCompleted,
     onGoalProgressChange,
-    moduleItems,
+    skillTree,
   ]);
 
   // Tooltip state
@@ -134,12 +134,12 @@ export function SkillTree({
   const handleHoverStart = (id: string) => {
     setLocalHoveredId(id);
     setHoveredId(id);
-    const chain = getPrerequisites(id, moduleItems);
+    const chain = getPrerequisites(skillTree, id);
     // Calculate full prerequisite chain
     setPrerequisites(chain);
 
     // Show tooltip at cursor position
-    const item = moduleItems[id];
+    const item = skillTree[id];
     setTooltip(item.description || "No description available");
   };
 
@@ -204,7 +204,7 @@ export function SkillTree({
       isSomethingHovered: !!localHoveredId,
       fromCompleted,
       toCompleted: isCompleted(connector.to),
-      isNextToLearn: isReadyToLearn(moduleItems[connector.to]) && fromCompleted,
+      isNextToLearn: isReadyToLearn(skillTree[connector.to]) && fromCompleted,
     });
   };
 
@@ -245,7 +245,7 @@ export function SkillTree({
 
         {/* Rectangles in the SVG layer, and only those whose position is defined */}
         {Object.values(modulePositions).map((positionData) => {
-          const item = moduleItems[positionData.id];
+          const item = skillTree[positionData.id];
           const readyToLearn = isReadyToLearn(item);
 
           return (

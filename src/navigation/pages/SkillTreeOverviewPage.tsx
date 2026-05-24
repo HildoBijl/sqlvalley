@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Container } from "@mui/material";
-import { moduleList, modules as curriculumModules } from "@/curriculum";
-import { useLearningStore } from "@/store";
+import { skillTree } from "@/curriculum";
 import {
   SkillTreeCanvas,
   type SkillTreeCanvasProps,
 } from "@/learning/skilltree/components/SkillTreeCanvas";
-import { useModuleProgress } from "@/learning/hooks/useModuleProgress";
+import { useModuleProgress } from "@/learning/progress";
 import { useTreeBounds } from "@/learning/skilltree/hooks/useTreeBounds";
 import { markSkillTreeVisited, type SkillTreeId } from "@/learning/utils/skillTreeTracking";
 
@@ -21,7 +20,6 @@ export function SkillTreeOverviewPage({
   modulePositions,
   visiblePaths,
 }: SkillTreeOverviewPageProps) {
-  const learningModules = useLearningStore((state) => state.modules);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -31,10 +29,7 @@ export function SkillTreeOverviewPage({
     markSkillTreeVisited(treeId);
   }, [treeId]);
 
-  const { isCompleted, getProgress } = useModuleProgress(
-    moduleList,
-    learningModules,
-  );
+  const { isCompleted, getProgress } = useModuleProgress(skillTree);
 
   const treeBounds = useTreeBounds(modulePositions);
 
@@ -42,7 +37,7 @@ export function SkillTreeOverviewPage({
     <Container maxWidth={false} sx={{ py: 4, maxWidth: "1400px" }}>
       <SkillTreeCanvas
         treeId={treeId}
-        moduleItems={curriculumModules}
+        skillTree={skillTree}
         modulePositions={modulePositions}
         treeBounds={treeBounds}
         visiblePaths={visiblePaths}

@@ -2,8 +2,8 @@ import { RefObject, useState, useCallback } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import type { Vector } from "@/utils/geometry";
 import { useDebouncedFunction } from "@/utils/dom";
-import { Module } from "@/curriculum";
-import { ModulePositionMeta } from "../definitions/sql-treeDefinition";
+import type { Module } from "@/curriculum";
+import type { ModulePositionMeta } from "../utils/positionProcessing";
 import { SkillTree } from "./SkillTree";
 import { ZoomControls } from "./ZoomControls";
 import { TreeLegend } from "./TreeLegend";
@@ -16,7 +16,7 @@ import { PlanningModeIntro } from "./PlanningModeIntro";
  * SkillTreeCanvas component that wraps the skill tree with zoom and pan capabilities.
  * This component only handles the zoom/pan functionality and UI controls.
  *
- * @param moduleItems - Array of modules (concepts and skills) with info about these modules.
+ * @param skillTree - Skill tree modules keyed by module ID.
  * @param modulePositions - Array of module position data entries to display.
  * @param treeBounds - The bounding box of the tree layout.
  * @param visiblePaths - Array of connector objects with points arrays and from/to node IDs.
@@ -29,7 +29,7 @@ import { PlanningModeIntro } from "./PlanningModeIntro";
  */
 export interface SkillTreeCanvasProps {
   treeId: string;
-  moduleItems: Record<string, Module>;
+  skillTree: Record<string, Module>;
   modulePositions: Record<string, ModulePositionMeta>;
   treeBounds: {
     minX: number;
@@ -50,7 +50,7 @@ export interface SkillTreeCanvasProps {
 
 export function SkillTreeCanvas({
   treeId,
-  moduleItems,
+  skillTree,
   modulePositions,
   treeBounds,
   visiblePaths,
@@ -178,7 +178,7 @@ const setPlanningMode = useSkillTreeSettingsStore((state) => state.setPlanningMo
               }}
             >
               <SkillTree
-                moduleItems={moduleItems}
+                skillTree={skillTree}
                 modulePositions={modulePositions}
                 treeBounds={treeBounds}
                 visiblePaths={visiblePaths}

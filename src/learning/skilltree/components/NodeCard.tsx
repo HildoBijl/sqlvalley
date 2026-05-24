@@ -1,9 +1,9 @@
 import { Vector } from "@/utils/geometry";
 import { Rectangle, Element } from "@/components";
-import { Module } from "@/curriculum";
+import type { Module } from "@/curriculum";
 import { cardWidth, cardHeight } from "../utils/settings";
 import { getNodeStyle } from "../utils/nodeStyle";
-import { ModulePositionMeta } from "../definitions/sql-treeDefinition";
+import type { ModulePositionMeta } from "../utils/positionProcessing";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import School from "@mui/icons-material/School";

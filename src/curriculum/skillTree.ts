@@ -1,19 +1,20 @@
 /**
- * Module definitions for the curriculum.
- * This file contains all skill tree modules (concepts and skills).
+ * Skill tree definition for the curriculum.
+ * This file contains all educational modules in the site's main skill tree.
  */
 
 import {
   processSkillTreeModules,
-  type SkillTreeModule,
-  type SkillTreeModuleRaw,
-  type SkillTreeModuleType,
+  type Module as ProcessedModule,
+  type ModuleRaw,
+  type ModuleType as ProcessedModuleType,
+  type SkillTree,
 } from '@/learning/skillTreeDefinition';
 
-export type ModuleType = SkillTreeModuleType;
+export type ModuleType = ProcessedModuleType;
 
-// The moduleIndexRaw contains all definitions of modules, before being processed into more derived objects.
-const moduleIndexRaw = [
+// Raw module definitions before follow-up links and validation are derived.
+const skillTreeRaw = [
   /*
    * Database concepts
    */
@@ -419,14 +420,11 @@ const moduleIndexRaw = [
     description: 'How can we safely combine recursion and negation in Datalog programs to guarantee well-defined behavior?',
     prerequisites: ['dl-write-multi-predicate-program', 'dl-define-recursive-predicate', 'dl-check-program-stratification'],
   },
-] as const satisfies readonly SkillTreeModuleRaw[];
+] as const satisfies readonly ModuleRaw[];
 
-type DefinedModuleId = typeof moduleIndexRaw[number]['id'];
+type DefinedModuleId = typeof skillTreeRaw[number]['id'];
 export type ModuleId = string;
-export type Module = SkillTreeModule<ModuleId>;
+export type Module = ProcessedModule<ModuleId>;
 
-const processedModules = processSkillTreeModules<DefinedModuleId>(moduleIndexRaw);
-
-export const moduleList: Module[] = processedModules.moduleList;
-export const modules: Record<ModuleId, Module> =
-  processedModules.modules as Record<ModuleId, Module>;
+export const skillTree: SkillTree<ModuleId> =
+  processSkillTreeModules<DefinedModuleId>(skillTreeRaw) as SkillTree<ModuleId>;
