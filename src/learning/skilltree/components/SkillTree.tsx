@@ -55,6 +55,7 @@ interface SkillTreeProps {
     nextStepId: string | null,
   ) => void;
   nextStepId?: string | null;
+  staticMode?: boolean;
 }
 
 export function SkillTree({
@@ -70,6 +71,7 @@ export function SkillTree({
   setGoalNodeId,
   onGoalProgressChange,
   nextStepId,
+  staticMode,
 }: SkillTreeProps) {
   const theme = useTheme();
 
@@ -131,6 +133,7 @@ export function SkillTree({
             isCompleted,
             moduleItems,
             isConnectorInHoveredPath,
+            staticMode,
           );
           return (
             <Curve
@@ -175,6 +178,7 @@ export function SkillTree({
                   }
                 }}
                 nextStepId={nextStepId}
+                staticMode={staticMode}
               />
             </g>
           );

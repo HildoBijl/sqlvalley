@@ -2,12 +2,20 @@ import { Box, Typography, IconButton } from "@mui/material";
 import { EditNote, School, Close } from "@mui/icons-material";
 import { useSkillTreeSettingsStore } from "@/store";
 
+interface TreeLegendProps {
+  hideLegend?: boolean;
+  setHideLegend?: (value: boolean) => void;
+}
+
 /*
  * TreeLegend component that displays a legend for the skill tree nodes.
  */
-export function TreeLegend() {
-  const hideLegend = useSkillTreeSettingsStore((state) => state.hideLegend);
-  const setHideLegend = useSkillTreeSettingsStore((state) => state.setHideLegend);
+export function TreeLegend({ hideLegend: hideLegendProp, setHideLegend: setHideLegendProp }: TreeLegendProps = {}) {
+  const storeHideLegend = useSkillTreeSettingsStore((state) => state.hideLegend);
+  const storeSetHideLegend = useSkillTreeSettingsStore((state) => state.setHideLegend);
+
+  const hideLegend = hideLegendProp !== undefined ? hideLegendProp : storeHideLegend;
+  const setHideLegend = setHideLegendProp !== undefined ? setHideLegendProp : storeSetHideLegend;
 
 
   if (hideLegend) return null;

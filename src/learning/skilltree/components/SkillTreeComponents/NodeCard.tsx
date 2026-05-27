@@ -28,6 +28,7 @@ interface NodeCardProps {
   isOnGoalPath?: boolean;
   onSetGoal?: () => void;
   nextStepId?: string | null;
+  staticMode?: boolean;
 }
 
 export function NodeCard({
@@ -45,6 +46,7 @@ export function NodeCard({
   isOnGoalPath = false,
   onSetGoal,
   nextStepId,
+  staticMode = false,
 }: NodeCardProps) {
   const theme = useTheme();
   const type = item.type;
@@ -84,6 +86,7 @@ export function NodeCard({
     isSomethingHovered,
     isPrerequisite,
     theme,
+    staticMode,
   });
 
   return (

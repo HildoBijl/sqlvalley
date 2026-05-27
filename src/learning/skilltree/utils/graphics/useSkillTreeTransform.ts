@@ -6,13 +6,23 @@ interface TreeBounds {
   height: number;
 }
 
+interface UseSkillTreeTransformOptions {
+  treeBounds: TreeBounds;
+  initialScale?: number;
+  allowZoom?: boolean;
+}
+
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 2;
 
-export function useSkillTreeTransform(treeBounds: TreeBounds) {
+export function useSkillTreeTransform({
+  treeBounds,
+  initialScale = 1,
+  allowZoom = true,
+}: UseSkillTreeTransformOptions) {
   const outerRef = useRef<HTMLDivElement>(null);
 
-  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: initialScale });
   const transformRef = useRef(transform);
 
   const bind = useGesture(
@@ -24,6 +34,7 @@ export function useSkillTreeTransform(treeBounds: TreeBounds) {
         transformRef.current = next;
       },
       onPinch: ({ offset: [d], event }) => {
+        if (!allowZoom) return;
         event.preventDefault();
         const next = {
           ...transformRef.current,
@@ -33,6 +44,7 @@ export function useSkillTreeTransform(treeBounds: TreeBounds) {
         transformRef.current = next;
       },
       onWheel: ({ delta: [, dy], event }) => {
+        if (!allowZoom) return;
         event.preventDefault();
         const factor = dy > 0 ? 0.95 : 1.05;
         const next = {
@@ -86,7 +98,7 @@ export function useSkillTreeTransform(treeBounds: TreeBounds) {
   };
 
   const reset = () => {
-    const next = { x: 0, y: 0, scale: 1 };
+    const next = { x: 0, y: 0, scale: initialScale };
     setTransform(next);
     transformRef.current = next;
   };

@@ -34,6 +34,7 @@ export function resolveConnectorStyle(
   isCompletedFn: (id: string) => boolean,
   moduleItems: Record<string, Module>,
   isConnectorInHoveredPath: (connector: { from: string; to: string }) => boolean,
+  staticMode?: boolean,
 ) {
   const fromCompleted = isCompletedFn(connector.from);
   return getConnectorStyle({
@@ -45,6 +46,7 @@ export function resolveConnectorStyle(
     fromCompleted,
     toCompleted: isCompletedFn(connector.to),
     isNextToLearn: isReadyToLearn(moduleItems[connector.to], isCompletedFn) && fromCompleted,
+    staticMode,
   });
 }
 
@@ -57,6 +59,7 @@ interface ConnectorStyleInput {
   fromCompleted: boolean;
   toCompleted: boolean;
   isNextToLearn: boolean;
+  staticMode?: boolean;
 }
 
 interface ConnectorStyleOutput {
@@ -74,8 +77,13 @@ export function getConnectorStyle({
   fromCompleted,
   toCompleted,
   isNextToLearn,
+  staticMode,
 }: ConnectorStyleInput): ConnectorStyleOutput {
   const bothCompleted = fromCompleted && toCompleted;
+
+  if (staticMode) {
+    return { strokeColor: "#9aa0a6", strokeWidth: 1.5, opacity: 1 };
+  }
 
   if (planningMode) {
     if (!goalNodeId) return { strokeColor: "#9aa0a6", strokeWidth: 1.5, opacity: 0.7 };

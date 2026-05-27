@@ -11,6 +11,7 @@ interface NodeStyleInput {
   isSomethingHovered: boolean;
   isPrerequisite: boolean;
   theme: Theme;
+  staticMode?: boolean;
 }
 
 interface NodeStyle {
@@ -31,8 +32,18 @@ export function getNodeStyle({
   isSomethingHovered,
   isPrerequisite,
   theme,
+  staticMode = false
 }: NodeStyleInput): NodeStyle {
   const fillColor = isGoalNode ? 'purple' : theme.palette.background.paper;
+
+  if (staticMode) {
+    return {
+      borderColor: theme.palette.divider,
+      fillColor: theme.palette.background.paper,
+      nodeOpacity: 1.0,
+      strokeWidth: 1,
+    }
+  }
 
   if (planningMode) {
     const prominent = isGoalNode || isOnGoalPath || isHovered;

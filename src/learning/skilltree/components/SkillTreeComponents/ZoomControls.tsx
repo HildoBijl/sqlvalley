@@ -11,6 +11,7 @@ interface ZoomControlsProps {
   onCenter: () => void;
   planningMode?: boolean;
   onTogglePlanningMode?: () => void;
+  allowZoom?: boolean;
 }
 
 /*
@@ -27,7 +28,10 @@ export function ZoomControls({
   onReset,
   onTogglePlanningMode,
   planningMode,
+  allowZoom = true,
 }: ZoomControlsProps) {
+  if (!allowZoom && !onTogglePlanningMode) return null;
+
   return (
     <Box
       sx={{
@@ -43,57 +47,63 @@ export function ZoomControls({
         p: 1,
       }}
     >
-      <Tooltip title="Zoom In" placement="left">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => onZoomIn()}
-          sx={{ minWidth: "40px" }}
-        >
-          <Add fontSize="small" color="primary" />
-        </Button>
-      </Tooltip>
-      <Tooltip title="Zoom Out" placement="left">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => onZoomOut()}
-          sx={{ minWidth: "40px" }}
-        >
-          <Remove fontSize="small" color="primary" />
-        </Button>
-      </Tooltip>
-      <Tooltip title="Reset View" placement="left">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => onReset()}
-          sx={{ minWidth: "40px", fontSize: "15px" }}
-        >
-          <Refresh fontSize="small" color="primary" />
-        </Button>
-      </Tooltip>
-      <Tooltip title="Planning Mode" placement="left">
-        <Button
-          variant={planningMode ? "contained" : "outlined"}
-          size="small"
-          onClick={onTogglePlanningMode}
-          sx={{
-            minWidth: "40px",
-            fontSize: "15px",
-            ...(planningMode && {
-              backgroundColor: "purple",
-              borderColor: "purple",
-              "&:hover": { backgroundColor: "#6a0dad" },
-            }),
-          }}
-        >
-          <OutlinedFlag
-            fontSize="small"
-            sx={{ color: planningMode ? "white" : "primary" }}
-          />
-        </Button>
-      </Tooltip>
+      {allowZoom && (
+        <>
+          <Tooltip title="Zoom In" placement="left">
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => onZoomIn()}
+              sx={{ minWidth: "40px" }}
+            >
+              <Add fontSize="small" color="primary" />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Zoom Out" placement="left">
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => onZoomOut()}
+              sx={{ minWidth: "40px" }}
+            >
+              <Remove fontSize="small" color="primary" />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Reset View" placement="left">
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => onReset()}
+              sx={{ minWidth: "40px", fontSize: "15px" }}
+            >
+              <Refresh fontSize="small" color="primary" />
+            </Button>
+          </Tooltip>
+        </>
+      )}
+      {onTogglePlanningMode && (
+        <Tooltip title="Planning Mode" placement="left">
+          <Button
+            variant={planningMode ? "contained" : "outlined"}
+            size="small"
+            onClick={onTogglePlanningMode}
+            sx={{
+              minWidth: "40px",
+              fontSize: "15px",
+              ...(planningMode && {
+                backgroundColor: "purple",
+                borderColor: "purple",
+                "&:hover": { backgroundColor: "#6a0dad" },
+              }),
+            }}
+          >
+            <OutlinedFlag
+              fontSize="small"
+              sx={{ color: planningMode ? "white" : "primary" }}
+            />
+          </Button>
+        </Tooltip>
+      )}
     </Box>
   );
 }

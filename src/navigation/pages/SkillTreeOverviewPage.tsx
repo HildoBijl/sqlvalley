@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { Container } from "@mui/material";
 import { moduleList, modules as curriculumModules } from "@/curriculum";
-import { useLearningStore } from "@/store";
+import { useLearningStore, useSkillTreeSettingsStore } from "@/store";
 import {
   SkillTreeCanvas,
   type SkillTreeCanvasProps,
 } from "@/learning/skilltree/components/SkillTreeCanvas";
 import { useModuleProgress } from "@/learning/hooks/useModuleProgress";
 import { useTreeBounds } from "@/learning/skilltree/hooks/useTreeBounds";
-import { markSkillTreeVisited, type SkillTreeId } from "@/learning/utils/skillTreeTracking";
+import {
+  markSkillTreeVisited,
+  type SkillTreeId,
+} from "@/learning/utils/skillTreeTracking";
 
 interface SkillTreeOverviewPageProps {
   treeId: SkillTreeId;
-  modulePositions: SkillTreeCanvasProps['modulePositions'];
-  visiblePaths: SkillTreeCanvasProps['visiblePaths'];
+  modulePositions: SkillTreeCanvasProps["modulePositions"];
+  visiblePaths: SkillTreeCanvasProps["visiblePaths"];
 }
 
 export function SkillTreeOverviewPage({
@@ -38,6 +41,27 @@ export function SkillTreeOverviewPage({
 
   const treeBounds = useTreeBounds(modulePositions);
 
+  // Skill Tree customization settings
+  const planningMode = useSkillTreeSettingsStore(
+    (s) => s.planningMode[treeId] ?? false,
+  );
+  const setPlanningMode = useSkillTreeSettingsStore((s) => s.setPlanningMode);
+
+  const goalNodeId = useSkillTreeSettingsStore(
+    (s) => s.goalNodeID[treeId] ?? null,
+  );
+  const setGoalNodeId = useSkillTreeSettingsStore((s) => s.setGoalNodeID);
+
+  const hasAccessedPlanningMode = useSkillTreeSettingsStore(
+    (s) => s.hasAccessedPlanningMode,
+  );
+  const setHasAccessedPlanningMode = useSkillTreeSettingsStore(
+    (s) => s.setHasAccessedPlanningMode,
+  );
+
+  const hideLegend = useSkillTreeSettingsStore((s) => s.hideLegend);
+  const setHideLegend = useSkillTreeSettingsStore((s) => s.setHideLegend);
+
   return (
     <Container maxWidth={false} sx={{ py: 4, maxWidth: "1400px" }}>
       <SkillTreeCanvas
@@ -48,10 +72,26 @@ export function SkillTreeOverviewPage({
         visiblePaths={visiblePaths}
         isCompleted={isCompleted}
         getProgress={getProgress}
+        memoryStoreAPI={{
+          planningMode,
+          setPlanningMode: (value) => setPlanningMode(treeId, value),
+          goalNodeId,
+          setGoalNodeId: (id) => setGoalNodeId(treeId, id),
+          hasAccessedPlanningMode,
+          setHasAccessedPlanningMode,
+          hideLegend,
+          setHideLegend,
+        }}
         hoveredId={hoveredId}
         setHoveredId={setHoveredId}
         containerRef={containerRef}
         nodeRefs={nodeRefs}
+        settings={{
+          allowZoom: true,
+          initialZoom: 1,
+          allowPlanningMode: true,
+          trackProgress: false,
+        }}
       />
     </Container>
   );

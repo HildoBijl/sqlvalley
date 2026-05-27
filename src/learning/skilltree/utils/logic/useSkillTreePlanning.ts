@@ -1,28 +1,57 @@
 import { useState, useCallback } from "react";
 import { useSkillTreeSettingsStore } from "@/store";
+import { SkillTreeMemoryStoreAPI } from "../../types/SkillTreeMemoryStoreAPI";
 
-export function useSkillTreePlanning(treeId: string) {
-  const planningMode = useSkillTreeSettingsStore(
+export function useSkillTreePlanning(treeId: string, memoryStoreAPI?: SkillTreeMemoryStoreAPI) {
+  const storePlanningMode = useSkillTreeSettingsStore(
     (state) => state.planningMode[treeId] ?? false,
   );
-  const setPlanningMode = useSkillTreeSettingsStore(
+  const storeSetPlanningMode = useSkillTreeSettingsStore(
     (state) => state.setPlanningMode,
   );
 
-  const goalNodeId = useSkillTreeSettingsStore(
+  const planningMode = memoryStoreAPI?.planningMode !== undefined 
+    ? memoryStoreAPI.planningMode
+    : storePlanningMode;
+
+  const setPlanningMode = (value: boolean) => {
+    memoryStoreAPI?.setPlanningMode 
+    ? memoryStoreAPI.setPlanningMode(value) 
+    : storeSetPlanningMode(treeId, value);
+  }
+
+
+  const storeGoalNodeId = useSkillTreeSettingsStore(
     (state) => state.goalNodeID[treeId] ?? null,
   );
-  const setGoalNodeIdInStore = useSkillTreeSettingsStore(
+  const storeSetGoalNodeId = useSkillTreeSettingsStore(
     (state) => state.setGoalNodeID,
   );
-  const setGoalNodeId = (id: string | null) => setGoalNodeIdInStore(treeId, id);
 
-  const hasAccessedPlanningMode = useSkillTreeSettingsStore(
+  const goalNodeId = memoryStoreAPI?.goalNodeId !== undefined
+    ? memoryStoreAPI.goalNodeId
+    : storeGoalNodeId;
+
+  const setGoalNodeId = (id: string | null) =>
+    memoryStoreAPI?.setGoalNodeId
+      ? memoryStoreAPI.setGoalNodeId(id)
+      : storeSetGoalNodeId(treeId, id);
+
+  const storeHasAccessedPlanningMode = useSkillTreeSettingsStore(
     (state) => state.hasAccessedPlanningMode,
   );
-  const setHasAccessedPlanningMode = useSkillTreeSettingsStore(
+  const storeSetHasAccessedPlanningMode = useSkillTreeSettingsStore(
     (state) => state.setHasAccessedPlanningMode,
   );
+
+  const hasAccessedPlanningMode = memoryStoreAPI?.hasAccessedPlanningMode !== undefined
+    ? memoryStoreAPI.hasAccessedPlanningMode
+    : storeHasAccessedPlanningMode;
+
+  const setHasAccessedPlanningMode = (value: boolean) =>
+    memoryStoreAPI?.setHasAccessedPlanningMode
+      ? memoryStoreAPI.setHasAccessedPlanningMode(value)
+      : storeSetHasAccessedPlanningMode(value);
 
   const [goalProgress, setGoalProgress] = useState({
     completed: 0,
@@ -50,7 +79,7 @@ export function useSkillTreePlanning(treeId: string) {
       setShowPlanningModeModal(true);
       setHasAccessedPlanningMode(true);
     }
-    setPlanningMode(treeId, !planningMode);
+    setPlanningMode(!planningMode);
   };
 
   return {

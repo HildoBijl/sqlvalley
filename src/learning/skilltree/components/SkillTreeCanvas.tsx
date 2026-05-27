@@ -11,6 +11,8 @@ import { TreeLegend } from "./SkillTreeComponents/TreeLegend";
 import { PlanningProgressIndicator } from "./SkillTreeComponents/PlanningProgressIndicator";
 import { useTheme } from "@mui/material/";
 import { PlanningModeIntro } from "./SkillTreeComponents/PlanningModeIntro";
+import { SkillTreeSettings } from "../types/SkillTreeSettings";
+import { SkillTreeMemoryStoreAPI } from "../types/SkillTreeMemoryStoreAPI";
 
 /*
  * SkillTreeCanvas component that wraps the skill tree with zoom and pan capabilities.
@@ -40,12 +42,14 @@ export interface SkillTreeCanvasProps {
     height: number;
   };
   visiblePaths: { points: Vector[]; from: string; to: string }[];
-  isCompleted: (id: string) => boolean;
-  getProgress: (id: string) => string | null;
+  isCompleted?: (id: string) => boolean;
+  getProgress?: (id: string) => string | null;
   hoveredId: string | null;
   setHoveredId: (id: string | null) => void;
   containerRef: RefObject<HTMLDivElement | null>;
   nodeRefs: RefObject<Map<string, HTMLDivElement | null>>;
+  settings?: SkillTreeSettings;
+  memoryStoreAPI? : SkillTreeMemoryStoreAPI;
 }
 
 export function SkillTreeCanvas({
@@ -59,10 +63,27 @@ export function SkillTreeCanvas({
   setHoveredId,
   containerRef,
   nodeRefs,
+  settings,
+  memoryStoreAPI,
 }: SkillTreeCanvasProps) {
-  const [isPanning, setIsPanning] = useState(false);
+  const {
+    allowZoom = true,
+    initialZoom = 1,
+    allowPlanningMode = true,
+    trackProgress = true,
+  } = settings ?? {};
 
-  const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform(treeBounds);
+  const staticMode = !trackProgress;
+  const resolvedIsCompleted = staticMode ? () => false : (isCompleted ?? (() => false));
+  const resolvedGetProgress = staticMode ? () => null : (getProgress ?? (() => null));
+
+  const [isPanning] = useState(false);
+
+  const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform({
+    treeBounds,
+    initialScale: initialZoom,
+    allowZoom,
+  });
 
   const {
     planningMode,
@@ -73,7 +94,7 @@ export function SkillTreeCanvas({
     showPlanningModeModal,
     setShowPlanningModeModal,
     togglePlanningMode,
-  } = useSkillTreePlanning(treeId);
+  } = useSkillTreePlanning(treeId, memoryStoreAPI);
 
   const theme = useTheme();
 
@@ -90,16 +111,16 @@ export function SkillTreeCanvas({
         position: "relative",
       }}
     >
-      {/* Zoom controls outside of the pannable area */}
       <ZoomControls
         onZoomIn={() => zoomBy(1.2)}
         onZoomOut={() => zoomBy(1 / 1.2)}
         onReset={reset}
         onCenter={reset}
-        onTogglePlanningMode={togglePlanningMode}
-        planningMode={planningMode}
+        onTogglePlanningMode={allowPlanningMode ? togglePlanningMode : undefined}
+        planningMode={allowPlanningMode ? planningMode : false}
+        allowZoom={allowZoom}
       />
-      {planningMode && (
+      {allowPlanningMode && planningMode && (
         <PlanningProgressIndicator
           nextStepName={goalProgress.nextStep || "All completed!"}
           nextStepId={goalProgress.nextStepId}
@@ -109,7 +130,10 @@ export function SkillTreeCanvas({
           hasGoal={!!goalNodeId}
         />
       )}
-      <TreeLegend />
+      <TreeLegend
+        hideLegend={memoryStoreAPI?.hideLegend}
+        setHideLegend={memoryStoreAPI?.setHideLegend}
+      />
 
       {/* The pannable/zoomable area */}
       <div
@@ -118,7 +142,7 @@ export function SkillTreeCanvas({
           width: "100%",
           height: "100%",
           cursor: isPanning ? "grabbing" : "grab",
-          touchAction: "none", // critical for mobile
+          touchAction: "none",
         }}
       >
         <div
@@ -133,16 +157,17 @@ export function SkillTreeCanvas({
             modulePositions={modulePositions}
             treeBounds={treeBounds}
             visiblePaths={visiblePaths}
-            isCompleted={isCompleted}
-            getProgress={getProgress}
+            isCompleted={resolvedIsCompleted}
+            getProgress={resolvedGetProgress}
             setHoveredId={setHoveredId}
             containerRef={containerRef}
             nodeRefs={nodeRefs}
-            planningMode={planningMode}
+            planningMode={allowPlanningMode ? planningMode : false}
             goalNodeId={goalNodeId}
             setGoalNodeId={setGoalNodeId}
             onGoalProgressChange={handleGoalProgressChange}
             nextStepId={goalProgress.nextStepId}
+            staticMode={staticMode}
           />
         </div>
       </div>
