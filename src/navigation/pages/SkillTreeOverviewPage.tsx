@@ -90,7 +90,7 @@ export function SkillTreeOverviewPage({
           allowZoom: true,
           initialZoom: 1,
           allowPlanningMode: true,
-          trackProgress: false,
+          trackProgress: true,
         }}
       />
     </Container>

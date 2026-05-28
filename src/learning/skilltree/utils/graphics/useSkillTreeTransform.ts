@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGesture } from "@use-gesture/react";
 
 interface TreeBounds {
@@ -25,31 +25,42 @@ export function useSkillTreeTransform({
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: initialScale });
   const transformRef = useRef(transform);
 
+  // Wheel zoom via listener to avoid double zoom caused by @use-gesture and wheel event both triggering zoom
+  const allowZoomRef = useRef(allowZoom);
+  allowZoomRef.current = allowZoom;
+
+  useEffect(() => {
+    const el = outerRef.current;
+    if (!el) return;
+    const onWheel = (event: WheelEvent) => {
+      if (!allowZoomRef.current) return;
+      event.preventDefault();
+      const factor = event.deltaY > 0 ? 0.95 : 1.05;
+      setTransform((prev) => {
+        const next = {
+          ...prev,
+          scale: Math.min(MAX_SCALE, Math.max(MIN_SCALE, prev.scale * factor)),
+        };
+        transformRef.current = next;
+        return next;
+      });
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
   const bind = useGesture(
     {
       onDrag: ({ offset: [x, y] }) => {
-        event?.preventDefault();
         const next = { ...transformRef.current, x, y };
         setTransform(next);
         transformRef.current = next;
       },
-      onPinch: ({ offset: [d], event }) => {
-        if (!allowZoom) return;
-        event.preventDefault();
+      onPinch: ({ offset: [d] }) => {
+        if (!allowZoomRef.current) return;
         const next = {
           ...transformRef.current,
           scale: Math.min(MAX_SCALE, Math.max(MIN_SCALE, d)),
-        };
-        setTransform(next);
-        transformRef.current = next;
-      },
-      onWheel: ({ delta: [, dy], event }) => {
-        if (!allowZoom) return;
-        event.preventDefault();
-        const factor = dy > 0 ? 0.95 : 1.05;
-        const next = {
-          ...transformRef.current,
-          scale: Math.min(MAX_SCALE, Math.max(MIN_SCALE, transformRef.current.scale * factor)),
         };
         setTransform(next);
         transformRef.current = next;
@@ -79,14 +90,12 @@ export function useSkillTreeTransform({
         scaleBounds: { min: MIN_SCALE, max: MAX_SCALE },
         from: () => [transformRef.current.scale, 0],
         pointer: { touch: true },
-      },
-      wheel: {
-        eventOptions: { passive: false },
+        pinchOnWheel: false,
       },
     },
   );
 
-  const zoomBy = (factor: number) => {
+  const zoomBy = useCallback((factor: number) => {
     setTransform((prev) => {
       const next = {
         ...prev,
@@ -95,13 +104,13 @@ export function useSkillTreeTransform({
       transformRef.current = next;
       return next;
     });
-  };
+  }, []);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     const next = { x: 0, y: 0, scale: initialScale };
     setTransform(next);
     transformRef.current = next;
-  };
+  }, [initialScale]);
 
   return { outerRef, transform, bind, zoomBy, reset };
 }
