@@ -76,7 +76,7 @@ export function useSkillTreeTransform({
           const viewW = viewport?.width ?? 0;
           const viewH = viewport?.height ?? 0;
           const scale = transformRef.current.scale;
-          const extra = 500;
+          const extra = 250;
           return {
             left: Math.min(0, viewW - treeBounds.width * scale) - extra,
             right: extra,
