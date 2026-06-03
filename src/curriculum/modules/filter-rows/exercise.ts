@@ -1,6 +1,6 @@
-import { buildStaticExerciseModule, type ExerciseState as StaticExerciseState, type StaticExercise } from '@/learning/engine/staticExercise';
+import { buildSimpleSqlExerciseModule, type SimpleSqlExerciseState, type SimpleSqlExercise } from '@/learning/sqlGrading';
 
-const EXERCISES: StaticExercise[] = [
+const EXERCISES: SimpleSqlExercise[] = [
   {
     id: 'filter-rows-lt-amount',
     version: 1,
@@ -43,7 +43,7 @@ WHERE start_date > '2023-12-31';
   },
 ];
 
-export type ExerciseState = StaticExerciseState;
+export type ExerciseState = SimpleSqlExerciseState;
 
 export const {
   generate,
@@ -53,4 +53,4 @@ export const {
   getSolution,
   listExercises,
   getExerciseById,
-} = buildStaticExerciseModule(EXERCISES);
+} = buildSimpleSqlExerciseModule(EXERCISES);

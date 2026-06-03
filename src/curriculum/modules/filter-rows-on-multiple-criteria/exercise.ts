@@ -1,6 +1,6 @@
-import { buildStaticExerciseModule, type ExerciseState as StaticExerciseState, type StaticExercise } from '@/learning/engine/staticExercise';
+import { buildSimpleSqlExerciseModule, type SimpleSqlExerciseState, type SimpleSqlExercise } from '@/learning/sqlGrading';
 
-const EXERCISES: StaticExercise[] = [
+const EXERCISES: SimpleSqlExercise[] = [
   {
     id: 'multi-filter-employees-between',
     version: 1,
@@ -75,7 +75,7 @@ WHERE phone LIKE '408%'
 //   },
 ];
 
-export type ExerciseState = StaticExerciseState;
+export type ExerciseState = SimpleSqlExerciseState;
 
 export const {
   generate,
@@ -85,4 +85,4 @@ export const {
   getSolution,
   listExercises,
   getExerciseById,
-} = buildStaticExerciseModule(EXERCISES);
+} = buildSimpleSqlExerciseModule(EXERCISES);

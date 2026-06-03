@@ -289,7 +289,3 @@ export function buildSimpleSqlExerciseModule(exercises: SimpleSqlExercise[]) {
     isExerciseValid,
   };
 }
-
-export type StaticExercise = SimpleSqlExercise;
-export type ExerciseState = SimpleSqlExerciseState;
-export const buildStaticExerciseModule = buildSimpleSqlExerciseModule;
