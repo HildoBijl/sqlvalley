@@ -1,12 +1,12 @@
 import { EXERCISES_TO_COMPLETE } from '@/constants';
 import {
+  getModules,
   getPrerequisites,
-  type Module,
   type SkillTree,
 } from '@/learning/skillTreeDefinition';
 import type { ModuleState, SkillModuleState } from '@/store';
 
-import type { ProcessedModuleCompletion, RawModuleCompletion } from './types';
+import type { ModuleCompletion, RawModuleCompletion } from './types';
 
 function getSkillSolvedCount(moduleState: ModuleState | undefined): number {
   const solved = (moduleState as Partial<SkillModuleState> | undefined)?.numSolved;
@@ -15,10 +15,6 @@ function getSkillSolvedCount(moduleState: ModuleState | undefined): number {
 
 function isUnderstood(moduleState: ModuleState | undefined): boolean {
   return moduleState?.understood === true;
-}
-
-function getModules<Id extends string>(skillTree: SkillTree<Id>): Module<Id>[] {
-  return Object.values(skillTree) as Module<Id>[];
 }
 
 export function getRawModuleCompletion<Id extends string>(
@@ -54,7 +50,7 @@ export function getRawModuleCompletion<Id extends string>(
 export function processModuleCompletion<Id extends string>(
   skillTree: SkillTree<Id>,
   rawCompletion: RawModuleCompletion<Id>,
-): ProcessedModuleCompletion<Id> {
+): ModuleCompletion<Id> {
   const completed = new Set(rawCompletion.completed);
 
   for (const moduleId of rawCompletion.completed) {
@@ -73,7 +69,7 @@ export function getProcessedModuleCompletion<Id extends string>(
   skillTree: SkillTree<Id>,
   moduleStates: Record<string, ModuleState>,
   requiredCount: number = EXERCISES_TO_COMPLETE,
-): ProcessedModuleCompletion<Id> {
+): ModuleCompletion<Id> {
   return processModuleCompletion(
     skillTree,
     getRawModuleCompletion(skillTree, moduleStates, requiredCount),

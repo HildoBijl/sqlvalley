@@ -1,3 +1,2 @@
-export * from './hooks';
-export * from './logic';
-export * from './types';
+export { useModuleProgress } from './hooks';
+export type { ModuleCompletion } from './types';

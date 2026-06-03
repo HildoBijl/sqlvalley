@@ -4,5 +4,4 @@ export interface RawModuleCompletion<Id extends string = string> {
   requiredCount: number;
 }
 
-export type ProcessedModuleCompletion<Id extends string = string> =
-  RawModuleCompletion<Id>;
+export type ModuleCompletion<Id extends string = string> = RawModuleCompletion<Id>;

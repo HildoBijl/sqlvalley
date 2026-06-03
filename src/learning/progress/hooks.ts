@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import type { Module, SkillTree } from '@/learning/skillTreeDefinition';
+import { getModules, type SkillTree } from '@/learning/skillTreeDefinition';
 import { useLearningStore } from '@/store';
 
 import {
@@ -8,11 +8,7 @@ import {
   processModuleCompletion,
 } from './logic';
 
-function getModules<Id extends string>(skillTree: SkillTree<Id>): Module<Id>[] {
-  return Object.values(skillTree) as Module<Id>[];
-}
-
-export function useRawModuleCompletion<Id extends string>(
+function useRawModuleCompletion<Id extends string>(
   skillTree: SkillTree<Id>,
 ) {
   const moduleStates = useLearningStore((state) => state.modules);
@@ -23,7 +19,7 @@ export function useRawModuleCompletion<Id extends string>(
   );
 }
 
-export function useProcessedModuleCompletion<Id extends string>(
+export function useModuleCompletion<Id extends string>(
   skillTree: SkillTree<Id>,
 ) {
   const rawCompletion = useRawModuleCompletion(skillTree);
@@ -46,16 +42,16 @@ export function useModuleProgress<Id extends string>(
     () => modules.filter((module) => module.type === 'skill'),
     [modules],
   );
-  const processed = useProcessedModuleCompletion(skillTree);
+  const processed = useModuleCompletion(skillTree);
 
   const isCompleted = useCallback(
-    (id: string) => processed.completed.has(id as Id),
+    (id: Id) => processed.completed.has(id),
     [processed],
   );
 
   const getProgress = useCallback(
-    (id: string) => {
-      const progress = processed.skillProgress[id as Id];
+    (id: Id) => {
+      const progress = processed.skillProgress[id];
       if (progress === undefined) return null;
       return `${progress}/${processed.requiredCount}`;
     },
