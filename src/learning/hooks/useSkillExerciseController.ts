@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import type { ExecutionResult as SqlExecutionResult } from '@/curriculum/utils/types';
+import type { SqlExecutionResult } from '@/learning/sqlGrading';
 import { useSettingsStore, type SkillModuleState } from '@/store';
 import { useDatabase } from '@/learning/databases';
 import type { DatasetSize } from '@/mockData';
