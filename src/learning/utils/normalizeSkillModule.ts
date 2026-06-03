@@ -1,4 +1,4 @@
-import type { SkillExerciseModuleLike } from '../useSkillExerciseState';
+import type { SkillExerciseModuleLike } from '../exerciseEngine';
 
 type AnyFunction = (...args: any[]) => unknown;
 
@@ -30,6 +30,9 @@ export function normalizeSkillExerciseModule(
       : undefined,
     validateInput: isCallable<NonNullable<SkillExerciseModuleLike['validateInput']>>(candidate.validateInput)
       ? candidate.validateInput
+      : undefined,
+    normalizeInput: isCallable<NonNullable<SkillExerciseModuleLike['normalizeInput']>>(candidate.normalizeInput)
+      ? candidate.normalizeInput
       : undefined,
     validateOutput: isCallable<NonNullable<SkillExerciseModuleLike['validateOutput']>>(candidate.validateOutput)
       ? candidate.validateOutput

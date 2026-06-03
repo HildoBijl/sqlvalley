@@ -9,7 +9,7 @@ import {
   type SkillExerciseOption,
   type SkillExerciseModuleLike,
   type SkillExerciseProgress,
-} from '../useSkillExerciseState';
+} from '../exerciseEngine';
 import type { PracticeFeedback } from '../components/SkillPractice';
 import type { SkillExercise, QueryResultSet, PracticeSolution, PracticeSolutionLike } from '../types';
 import { normalizePracticeSolution } from '../utils/normalizePracticeSolution';

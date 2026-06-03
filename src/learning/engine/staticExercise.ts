@@ -6,6 +6,7 @@ import type {
   VerificationResult,
 } from '@/curriculum/utils/types';
 import type { QueryResult } from '@/components/sql/sqljs/types';
+import type { ValidateInputArgs } from '@/learning/exerciseEngine';
 
 export interface StaticExercise {
   id: string;
@@ -39,6 +40,9 @@ const MESSAGES = {
 } as const;
 
 const DEFAULT_VERSION = 1;
+
+const normalizeSqlInput = (value: string) =>
+  value.toLowerCase().replace(/\s+/g, ' ').trim().replace(/;$/, '');
 
 function formatMessage(template: string, context: Record<string, unknown>): string {
   return template.replace(/\{(\w+)\}/g, (_m, key) => {
@@ -161,6 +165,25 @@ export function buildStaticExerciseModule(exercises: StaticExercise[]) {
     return exercise.description || exercise.prompt;
   }
 
+  function validateInput(
+    args: ValidateInputArgs<ExerciseState, string, unknown>,
+  ): ValidationResult {
+    const query = typeof args.input === 'string' ? args.input : '';
+    if (!query.trim()) {
+      return {
+        ok: false,
+        message: 'Please enter a valid SQL SELECT query so we can check it.',
+      };
+    }
+    if (!/\b(select|with)\b/i.test(query)) {
+      return {
+        ok: false,
+        message: 'Start with a SELECT (or WITH) clause so we can understand the query.',
+      };
+    }
+    return { ok: true };
+  }
+
   function validateOutput(
     _exercise: ExerciseState,
     result: ExecutionResult<QueryResult[]>,
@@ -255,7 +278,9 @@ export function buildStaticExerciseModule(exercises: StaticExercise[]) {
 
   return {
     generate,
+    normalizeInput: normalizeSqlInput,
     getDescription,
+    validateInput,
     validateOutput,
     verifyOutput,
     getSolution,

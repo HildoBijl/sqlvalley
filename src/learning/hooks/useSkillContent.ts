@@ -4,7 +4,7 @@ import { type Module, skillTree } from '@/curriculum';
 import { skillExerciseLoaders } from '@/curriculum/utils/loaders';
 
 import { normalizeSkillExerciseModule } from '../utils/normalizeSkillModule';
-import type { SkillExerciseModuleLike } from '../useSkillExerciseState';
+import type { SkillExerciseModuleLike } from '../exerciseEngine';
 
 type SkillExerciseLoader = (typeof skillExerciseLoaders)[keyof typeof skillExerciseLoaders];
 type SkillExerciseModule = Awaited<ReturnType<SkillExerciseLoader>>;
