@@ -1,20 +1,17 @@
+import type { RefObject } from 'react';
+import { Curve, Drawing } from '@/components';
+import type { Module } from '@/curriculum';
+import type { Vector } from '@/utils/geometry';
+import { useTheme } from '@mui/material/';
+import { NodeCard } from './SkillTreeComponents/NodeCard';
+import { Tooltip } from './SkillTreeComponents/Tooltip';
+import type { ModulePositionMeta } from '../utils/positionProcessing';
 import {
-  type RefObject,
-  type ReactNode,
-  useState,
-  useEffect,
-  useMemo,
-} from "react";
-import type { Vector } from "@/utils/geometry";
-import { Drawing, Element, Curve, useDrawingMousePosition } from "@/components";
-import type { Module } from "@/curriculum";
-import { NodeCard } from "./NodeCard";
-import type { ModulePositionMeta } from "../utils/positionProcessing";
-import { useTheme } from "@mui/material/";
-import { useTransformContext } from "react-zoom-pan-pinch";
-import { useDebouncedFunction } from "@/utils";
-import { getPrerequisites } from "@/learning/skillTreeDefinition";
-import { getConnectorStyle } from "../utils/connectorStyle";
+  isReadyToLearn,
+  resolveConnectorStyle,
+} from '../utils/graphics/connectorStyle';
+import { useHoverState } from '../utils/graphics/mouseEvents';
+import { useGoalProgress } from '../utils/logic/calculatePrerequisites';
 
 /*
  * SkillTree component that renders the tree structure with nodes and connectors.
@@ -57,6 +54,8 @@ interface SkillTreeProps {
     nextStepName: string | null,
     nextStepId: string | null,
   ) => void;
+  nextStepId?: string | null;
+  staticMode?: boolean;
 }
 
 export function SkillTree({
@@ -71,153 +70,43 @@ export function SkillTree({
   goalNodeId,
   setGoalNodeId,
   onGoalProgressChange,
+  nextStepId,
+  staticMode,
 }: SkillTreeProps) {
   const theme = useTheme();
 
-  // Local state for hovered node ID and prerequisite chain
-  const [localHoveredId, setLocalHoveredId] = useState<string | null>(null);
-  const [prerequisites, setPrerequisites] = useState<Set<string>>(new Set());
+  const {
+    localHoveredId,
+    prerequisites,
+    tooltip,
+    handleHoverStart,
+    handleHoverEnd,
+    handleLongPressEnd,
+    getLongPressProps,
+    isConnectorInHoveredPath,
+  } = useHoverState(skillTree, setHoveredId);
 
-  // const setNodeRef = (id: string) => (el: HTMLDivElement | null) => {
-  //   nodeRefs.current?.set(id, el);
-  // };
-
-  // On changes in the zoom-pan-pinch transform state, dispatch a scroll event to update rects.
-  const { transformState } = useTransformContext();
-  const dispatchScrollEvent = useDebouncedFunction(() =>
-    window.dispatchEvent(new Event("scroll")),
-  );
-  useEffect(dispatchScrollEvent, [
-    transformState.scale,
-    transformState.positionX,
-    transformState.positionY,
-  ]);
-
-  // Calculate prerequisites for goal node in planning mode
-  const goalPrerequisites = useMemo(() => {
-    if (goalNodeId) {
-      return getPrerequisites(skillTree, goalNodeId);
-    }
-    return new Set<string>();
-  }, [goalNodeId, skillTree]);
-
-  useEffect(() => {
-    if (onGoalProgressChange && goalNodeId) {
-      const nodesOnPath = [...Array.from(goalPrerequisites), goalNodeId];
-      const totalCount = nodesOnPath.length;
-      const completedCount = nodesOnPath.filter((id) => isCompleted(id)).length;
-
-      const nextStep = nodesOnPath.find((id) => {
-        if (isCompleted(id)) return false;
-        const item = skillTree[id];
-        const allPrereqsCompleted =
-          item.prerequisites?.every((prereqId) => isCompleted(prereqId)) ??
-          true;
-        return allPrereqsCompleted;
-      });
-
-      const nextStepName = nextStep ? skillTree[nextStep]?.name : null;
-      onGoalProgressChange(completedCount, totalCount, nextStepName, nextStep ?? null);
-    }
-  }, [
+  const goalPrerequisites = useGoalProgress(
     goalNodeId,
-    goalPrerequisites,
+    skillTree,
     isCompleted,
     onGoalProgressChange,
-    skillTree,
-  ]);
+  );
 
-  // Tooltip state
-  const [tooltip, setTooltip] = useState<string | null>(null);
-
-  // Handlers for hover events
-  const handleHoverStart = (id: string) => {
-    setLocalHoveredId(id);
-    setHoveredId(id);
-    const chain = getPrerequisites(skillTree, id);
-    // Calculate full prerequisite chain
-    setPrerequisites(chain);
-
-    // Show tooltip at cursor position
-    const item = skillTree[id];
-    setTooltip(item.description || "No description available");
-  };
-
-  const handleHoverEnd = () => {
-    setLocalHoveredId(null);
-    setHoveredId(null);
-    // Reset the prerequisite chain
-    setPrerequisites(new Set());
-    setTooltip(null);
-  };
-
-  // Handler for click events on nodes
   const handleNodeClick = (item: Module) => {
-    const path =
-      item.type === "skill" ? `/skill/${item.id}` : `/concept/${item.id}`;
+    const path = item.type === 'skill' ? `/skill/${item.id}` : `/concept/${item.id}`;
     window.location.href = path;
-  };
-
-  // Determine if a node is ready to learn
-  const isReadyToLearn = (item: Module): boolean => {
-    const allPrequisitesCompleted =
-      item.prerequisites?.every((preId) => isCompleted(preId)) ?? true;
-    return !isCompleted(item.id) && allPrequisitesCompleted;
-  };
-
-  // Check if a connector is part of the hovered path
-  const isConnectorInHoveredPath = (connector: {
-    from: string;
-    to: string;
-  }): boolean => {
-    if (!localHoveredId) return false;
-
-    const toIsHovered = connector.to === localHoveredId;
-    const fromIsInChain = prerequisites.has(connector.from);
-    const toIsInChain = prerequisites.has(connector.to) || toIsHovered;
-
-    return toIsInChain && fromIsInChain;
-  };
-
-  // Check if a connector is part of the goal path
-  const isConnectorInGoalPath = (connector: {
-    from: string;
-    to: string;
-  }): boolean => {
-    if (!planningMode || !goalNodeId) return false;
-
-    const fromInPath =
-      goalPrerequisites.has(connector.from) || connector.from === goalNodeId;
-    const toInPath =
-      goalPrerequisites.has(connector.to) || connector.to === goalNodeId;
-
-    return fromInPath && toInPath;
-  };
-
-  const resolveConnectorStyle = (connector: { from: string; to: string }) => {
-    const fromCompleted = isCompleted(connector.from);
-    return getConnectorStyle({
-      planningMode,
-      goalNodeId,
-      isInGoalPath: isConnectorInGoalPath(connector),
-      isInHoveredPath: isConnectorInHoveredPath(connector),
-      isSomethingHovered: !!localHoveredId,
-      fromCompleted,
-      toCompleted: isCompleted(connector.to),
-      isNextToLearn: isReadyToLearn(skillTree[connector.to]) && fromCompleted,
-    });
   };
 
   return (
     <div
       ref={containerRef}
       style={{
-        position: "relative",
+        position: 'relative',
         width: `${treeBounds.width}px`,
         height: `${treeBounds.height}px`,
-        // Add a margin when rendering the SkillTree in the Canvas
-        marginLeft: "35px",
-        marginTop: "35px",
+        marginLeft: '35px',
+        marginTop: '35px',
         backgroundColor: theme.palette.background.paper,
       }}
     >
@@ -226,11 +115,22 @@ export function SkillTree({
         height={treeBounds.height}
         useSvg={true}
         useCanvas={false}
-        autoScale={false} // Scaling manually controlled by transformer.
+        autoScale={false}
+        svgProps={{ onClick: handleLongPressEnd }}
       >
-        {/* The lines between skills and concepts */}
         {visiblePaths.map((connector, i) => {
-          const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(connector);
+          const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
+            connector,
+            planningMode,
+            goalNodeId,
+            goalPrerequisites,
+            localHoveredId,
+            isCompleted,
+            skillTree,
+            isConnectorInHoveredPath,
+            staticMode,
+          );
+
           return (
             <Curve
               key={i}
@@ -243,15 +143,17 @@ export function SkillTree({
           );
         })}
 
-        {/* Rectangles in the SVG layer, and only those whose position is defined */}
         {Object.values(modulePositions).map((positionData) => {
           const item = skillTree[positionData.id];
-          const readyToLearn = isReadyToLearn(item);
+          if (!item) return null;
+
+          const readyToLearn = isReadyToLearn(item, isCompleted);
 
           return (
             <g
               key={item.id}
               onMouseEnter={() => handleHoverStart(item.id)}
+              {...getLongPressProps(item.id)}
               onMouseLeave={handleHoverEnd}
             >
               <NodeCard
@@ -272,45 +174,15 @@ export function SkillTree({
                     setGoalNodeId(goalNodeId === item.id ? null : item.id);
                   }
                 }}
-
+                nextStepId={nextStepId}
+                staticMode={staticMode}
               />
             </g>
           );
         })}
 
-        {/* The tooltip. */}
         <Tooltip>{tooltip}</Tooltip>
       </Drawing>
     </div>
-  );
-}
-
-interface TooltipProps {
-  children?: ReactNode;
-}
-function Tooltip({ children }: TooltipProps) {
-  const mousePosition = useDrawingMousePosition();
-  const theme = useTheme();
-
-  if (!children || !mousePosition) return null;
-
-  return (
-    <Element anchor={[-1, -1]} position={mousePosition.add([20, 10])}>
-      <div
-        style={{
-          border: `1px solid ${theme.palette.divider}`,
-          backgroundColor: theme.palette.background.paper,
-          color: theme.palette.text.primary,
-          padding: "8px 12px",
-          borderRadius: "4px",
-          fontSize: "14px",
-          maxWidth: "300px",
-          zIndex: 1000,
-          boxShadow: theme.shadows[4],
-        }}
-      >
-        {children}
-      </div>
-    </Element>
   );
 }

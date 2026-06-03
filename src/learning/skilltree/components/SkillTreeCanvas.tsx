@@ -1,16 +1,18 @@
-import { RefObject, useState, useCallback } from "react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { Vector } from "@/utils/geometry";
-import { useDebouncedFunction } from "@/utils/dom";
-import type { Module } from "@/curriculum";
-import type { ModulePositionMeta } from "../utils/positionProcessing";
-import { SkillTree } from "./SkillTree";
-import { ZoomControls } from "./ZoomControls";
-import { TreeLegend } from "./TreeLegend";
-import { PlanningProgressIndicator } from "./PlanningProgressIndicator";
-import { useTheme } from "@mui/material/";
-import { useSkillTreeSettingsStore } from "@/store";
-import { PlanningModeIntro } from "./PlanningModeIntro";
+import type { RefObject } from 'react';
+import { useState } from 'react';
+import { useTheme } from '@mui/material/';
+import type { Module } from '@/curriculum';
+import type { Vector } from '@/utils/geometry';
+import { SkillTree } from './SkillTree';
+import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro';
+import { PlanningProgressIndicator } from './SkillTreeComponents/PlanningProgressIndicator';
+import { TreeLegend } from './SkillTreeComponents/TreeLegend';
+import { ZoomControls } from './SkillTreeComponents/ZoomControls';
+import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI';
+import type { SkillTreeSettings } from '../types/SkillTreeSettings';
+import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform';
+import { useSkillTreePlanning } from '../utils/logic/useSkillTreePlanning';
+import type { ModulePositionMeta } from '../utils/positionProcessing';
 
 /*
  * SkillTreeCanvas component that wraps the skill tree with zoom and pan capabilities.
@@ -40,12 +42,14 @@ export interface SkillTreeCanvasProps {
     height: number;
   };
   visiblePaths: { points: Vector[]; from: string; to: string }[];
-  isCompleted: (id: string) => boolean;
-  getProgress: (id: string) => string | null;
+  isCompleted?: (id: string) => boolean;
+  getProgress?: (id: string) => string | null;
   hoveredId: string | null;
   setHoveredId: (id: string | null) => void;
   containerRef: RefObject<HTMLDivElement | null>;
   nodeRefs: RefObject<Map<string, HTMLDivElement | null>>;
+  settings?: SkillTreeSettings;
+  memoryStoreAPI?: SkillTreeMemoryStoreAPI;
 }
 
 export function SkillTreeCanvas({
@@ -59,143 +63,116 @@ export function SkillTreeCanvas({
   setHoveredId,
   containerRef,
   nodeRefs,
+  settings,
+  memoryStoreAPI,
 }: SkillTreeCanvasProps) {
-  const dispatchScrollEvent = useDebouncedFunction(() =>
-    window.dispatchEvent(new Event("scroll")),
-  );
-  const [isPanning, setIsPanning] = useState(false);
+  const {
+    allowZoom = true,
+    initialZoom = 1,
+    allowPlanningMode = true,
+    trackProgress = true,
+  } = settings ?? {};
 
-const planningMode = useSkillTreeSettingsStore((state) => state.planningMode[treeId] ?? false);
-const setPlanningMode = useSkillTreeSettingsStore((state) => state.setPlanningMode);
+  const staticMode = !trackProgress;
+  const resolvedIsCompleted = staticMode
+    ? () => false
+    : (isCompleted ?? (() => false));
+  const resolvedGetProgress = staticMode ? () => null : (getProgress ?? (() => null));
 
-  const [goalProgress, setGoalProgress] = useState({
-    completed: 0,
-    total: 0,
-    nextStep: null as string | null,
-    nextStepId: null as string | null,
+  const [isPanning] = useState(false);
+
+  const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform({
+    treeBounds,
+    initialScale: initialZoom,
+    allowZoom,
   });
 
-// Set a goal node ID
-  const goalNodeId = useSkillTreeSettingsStore(
-    (state) => state.goalNodeID[treeId] ?? null,
-  );
-  const setGoalNodeIdInStore = useSkillTreeSettingsStore(
-    (state) => state.setGoalNodeID,
-  ); 
-  const setGoalNodeId = (id: string | null) => setGoalNodeIdInStore(treeId, id);
-  const setHasAccessedPlanningMode = useSkillTreeSettingsStore(
-    (state) => state.setHasAccessedPlanningMode,
-  );
-  const hasAccessedPlanningMode = useSkillTreeSettingsStore(
-    (state) => state.hasAccessedPlanningMode,
-  );
-
-
-  const [showPlanningModeModal, setShowPlanningModeModal] = useState(false);
-  
-
+  const {
+    planningMode,
+    goalNodeId,
+    setGoalNodeId,
+    goalProgress,
+    handleGoalProgressChange,
+    showPlanningModeModal,
+    setShowPlanningModeModal,
+    togglePlanningMode,
+  } = useSkillTreePlanning(treeId, memoryStoreAPI);
 
   const theme = useTheme();
 
-  const handleGoalProgressChange = useCallback(
-    (completed: number, total: number, nextStep: string | null, nextStepId: string | null) => {
-      setGoalProgress({ completed, total, nextStep, nextStepId });
-    },
-    [],
-  );
-
   return (
     <div
+      ref={outerRef}
       style={{
-        width: "100%",
-        height: "calc(100vh - 120px)",
-        minHeight: "600px",
+        width: '100%',
+        height: 'calc(100vh - 120px)',
+        minHeight: '600px',
         border: `1px solid ${theme.palette.divider}`,
-        overflow: "hidden",
+        overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
-        position: "relative",
+        position: 'relative',
       }}
     >
-      <TransformWrapper
-        initialScale={1}
-        minScale={0.3}
-        maxScale={2}
-        limitToBounds={false}
-        centerOnInit={true}
-        wheel={{
-          step: 0.05,
+      <ZoomControls
+        onZoomIn={() => zoomBy(1.2)}
+        onZoomOut={() => zoomBy(1 / 1.2)}
+        onReset={reset}
+        onCenter={reset}
+        onTogglePlanningMode={allowPlanningMode ? togglePlanningMode : undefined}
+        planningMode={allowPlanningMode ? planningMode : false}
+        allowZoom={allowZoom}
+      />
+      {allowPlanningMode && planningMode && (
+        <PlanningProgressIndicator
+          nextStepName={goalProgress.nextStep || 'All completed!'}
+          nextStepId={goalProgress.nextStepId}
+          treeId={treeId}
+          completedCount={goalProgress.completed}
+          totalCount={goalProgress.total}
+          hasGoal={!!goalNodeId}
+        />
+      )}
+      <TreeLegend
+        hideLegend={memoryStoreAPI?.hideLegend}
+        setHideLegend={memoryStoreAPI?.setHideLegend}
+      />
+
+      <div
+        {...bind()}
+        style={{
+          width: '100%',
+          height: '100%',
+          cursor: isPanning ? 'grabbing' : 'grab',
+          touchAction: 'none',
         }}
-        doubleClick={{
-          mode: "zoomIn",
-        }}
-        panning={{
-          velocityDisabled: false,
-          excluded: ["a", "button", "input"],
-        }}
-        onTransformed={dispatchScrollEvent}
       >
-        {({ zoomIn, zoomOut, resetTransform, centerView }) => (
-          <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <ZoomControls
-              onZoomIn={zoomIn}
-              onZoomOut={zoomOut}
-              onReset={resetTransform}
-              onCenter={centerView}
-              onTogglePlanningMode={() => {
-                if (!planningMode && !hasAccessedPlanningMode) {
-                  setShowPlanningModeModal(true);
-                  setHasAccessedPlanningMode(true);
-                }
-                setPlanningMode(treeId, !planningMode);
-              }}
-              planningMode={planningMode}
-            />
-            {planningMode && (
-              <PlanningProgressIndicator
-                nextStepName={goalProgress.nextStep || "All completed!"}
-                nextStepId={goalProgress.nextStepId}
-                treeId={treeId}
-                completedCount={goalProgress.completed}
-                totalCount={goalProgress.total}
-                hasGoal={!!goalNodeId}
-              />
-            )}
-            <TreeLegend />
-            <TransformComponent
-              wrapperStyle={{
-                width: "100%",
-                height: "100%",
-                cursor: isPanning ? "grabbing" : "grab",
-              }}
-              contentStyle={{
-                width: "100%",
-                height: "100%",
-              }}
-              wrapperProps={{
-                onMouseDown: () => setIsPanning(true),
-                onMouseUp: () => setIsPanning(false),
-                onMouseLeave: () => setIsPanning(false),
-              }}
-            >
-              <SkillTree
-                skillTree={skillTree}
-                modulePositions={modulePositions}
-                treeBounds={treeBounds}
-                visiblePaths={visiblePaths}
-                isCompleted={isCompleted}
-                getProgress={getProgress}
-                setHoveredId={setHoveredId}
-                containerRef={containerRef}
-                nodeRefs={nodeRefs}
-                planningMode={planningMode}
-                goalNodeId={goalNodeId}
-                setGoalNodeId={setGoalNodeId}
-                onGoalProgressChange={handleGoalProgressChange}
-              />
-            </TransformComponent>
-          </div>
-        )}
-      </TransformWrapper>
+        <div
+          style={{
+            transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
+            transformOrigin: '0 0',
+            willChange: 'transform',
+          }}
+        >
+          <SkillTree
+            skillTree={skillTree}
+            modulePositions={modulePositions}
+            treeBounds={treeBounds}
+            visiblePaths={visiblePaths}
+            isCompleted={resolvedIsCompleted}
+            getProgress={resolvedGetProgress}
+            setHoveredId={setHoveredId}
+            containerRef={containerRef}
+            nodeRefs={nodeRefs}
+            planningMode={allowPlanningMode ? planningMode : false}
+            goalNodeId={goalNodeId}
+            setGoalNodeId={setGoalNodeId}
+            onGoalProgressChange={handleGoalProgressChange}
+            nextStepId={goalProgress.nextStepId}
+            staticMode={staticMode}
+          />
+        </div>
+      </div>
+
       <PlanningModeIntro
         open={showPlanningModeModal}
         onClose={() => setShowPlanningModeModal(false)}
