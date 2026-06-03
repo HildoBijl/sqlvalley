@@ -1,20 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { Container } from '@mui/material';
 import { skillTree } from '@/curriculum';
+import type { SkillTreeVisualizationId } from '@/curriculum/skillTreeVisualizations';
 import { useModuleProgress } from '@/learning/progress';
 import {
   SkillTreeCanvas,
   type SkillTreeCanvasProps,
 } from '@/learning/skilltree/components/SkillTreeCanvas';
 import { useTreeBounds } from '@/learning/skilltree/hooks/useTreeBounds';
-import {
-  markSkillTreeVisited,
-  type SkillTreeId,
-} from '@/learning/utils/skillTreeTracking';
 import { useSkillTreeSettingsStore } from '@/store';
 
 interface SkillTreeOverviewPageProps {
-  treeId: SkillTreeId;
+  treeId: SkillTreeVisualizationId;
   modulePositions: SkillTreeCanvasProps['modulePositions'];
   visiblePaths: SkillTreeCanvasProps['visiblePaths'];
 }
@@ -28,10 +25,13 @@ export function SkillTreeOverviewPage({
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const nodeRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
+  const markSkillTreeVisited = useSkillTreeSettingsStore(
+    (state) => state.markSkillTreeVisited,
+  );
 
   useEffect(() => {
     markSkillTreeVisited(treeId);
-  }, [treeId]);
+  }, [markSkillTreeVisited, treeId]);
 
   const { isCompleted, getProgress } = useModuleProgress(skillTree);
   const treeBounds = useTreeBounds(modulePositions);

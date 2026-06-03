@@ -25,11 +25,7 @@ function normalizeHistory(raw: unknown): string[] {
     }
   }
 
-  if (!seen.has('sql')) {
-    result.unshift('sql');
-  }
-
-  return result.length > 0 ? result : ['sql'];
+  return result;
 }
 
 /** Migrations: index i transforms payload from version i to i+1. */

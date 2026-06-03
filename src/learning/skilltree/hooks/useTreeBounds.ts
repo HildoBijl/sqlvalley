@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { treeHeight, treeWidth } from '@/curriculum/definitions/sql-treeDefinition';
+import { treeHeight, treeWidth } from '@/curriculum/skillTreeVisualizations/sql-treeDefinition';
 import type { ModulePositionMeta } from '../utils/positionProcessing';
 
 /*

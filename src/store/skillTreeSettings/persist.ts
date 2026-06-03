@@ -8,8 +8,6 @@ import {
   SKILL_TREE_HISTORY_KEY,
 } from './constants';
 
-const DEFAULT_SKILL_TREE_HISTORY = ['sql'];
-
 function normalizeHistory(raw: unknown): string[] {
   const result: string[] = [];
   const seen = new Set<string>();
@@ -28,11 +26,7 @@ function normalizeHistory(raw: unknown): string[] {
     }
   }
 
-  if (!seen.has('sql')) {
-    result.unshift('sql');
-  }
-
-  return result.length > 0 ? result : [...DEFAULT_SKILL_TREE_HISTORY];
+  return result;
 }
 
 function readLegacyHistoryFromStorage(): string[] | null {

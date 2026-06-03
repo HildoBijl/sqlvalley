@@ -1,4 +1,4 @@
-import { skillTree } from '@/curriculum';
+import { skillTree } from '@/curriculum/skillTree';
 import {
   type ModulePositionMeta,
   type ModulePositionMetaRaw,

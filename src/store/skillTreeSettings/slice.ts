@@ -12,7 +12,7 @@ export const initialSkillTreeSettingsState: SkillTreeSettingsState = {
   hideLegend: false,
   hasAccessedPlanningMode: false,
   planningMode: {},
-  lastVisitedSkillTrees: ['sql'],
+  lastVisitedSkillTrees: [],
 };
 
 export interface SkillTreeSettingsActions {

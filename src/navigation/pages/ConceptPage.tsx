@@ -1,40 +1,42 @@
-import { useMemo, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Container, Box, Button, Alert } from "@mui/material";
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Alert, Box, Button, Container } from '@mui/material';
 import {
+  Bolt,
   CheckCircle,
-  School,
   Lightbulb,
   MenuBook,
-  Bolt,
-} from "@mui/icons-material";
+  School,
+} from '@mui/icons-material';
 
 import {
+  type ConceptModuleState,
   useLearningStore,
   useSettingsStore,
   useSkillTreeSettingsStore,
-  type ConceptModuleState,
-} from "@/store";
-import { useAdminMode } from "@/store/adminMode";
-import { skillTree, type Module } from "@/curriculum";
-import { useContentTabs } from "@/learning/hooks/useContentTabs";
-import { useModuleProgress } from "@/learning/progress";
-import { useSkillTreeHistory } from "@/learning/hooks/useSkillTreeHistory";
-import { ContentHeader } from "@/learning/components/ContentHeader";
-import { ContentTabs } from "@/learning/components/ContentTabs";
+} from '@/store';
+import { useAdminMode } from '@/store/adminMode';
+import { skillTree, type Module } from '@/curriculum';
+import {
+  defaultSkillTreeVisualization,
+  isSkillTreeVisualizationId,
+  skillTreeVisualizationById,
+  skillTreeVisualizationDefinitions,
+  type SkillTreeVisualizationId,
+} from '@/curriculum/skillTreeVisualizations';
+import { ContentHeader } from '@/learning/components/ContentHeader';
+import { ConceptCompletionDialog } from '@/learning/components/ConceptCompletionDialog';
+import { ContentTabs } from '@/learning/components/ContentTabs';
 import {
   StoryTab,
+  SummaryTab,
   TheoryTab,
   VideoTab,
-  SummaryTab,
-} from "@/learning/components/TabContent/ContentTab";
-import type { TabConfig } from "@/learning/types";
-import { ConceptCompletionDialog } from "@/learning/components/ConceptCompletionDialog";
-import {
-  getBackToLearningPathFromHistory,
-  getSkillTreeDefinitions,
-} from "@/learning/utils/skillTreeTracking";
-import { getPrerequisites } from "@/learning/skillTreeDefinition";
+} from '@/learning/components/TabContent/ContentTab';
+import { useContentTabs } from '@/learning/hooks/useContentTabs';
+import { useModuleProgress } from '@/learning/progress';
+import { getPrerequisites } from '@/learning/skillTreeDefinition';
+import type { TabConfig } from '@/learning/types';
 
 export default function ConceptPage() {
   const { conceptId } = useParams<{ conceptId: string }>();
@@ -43,28 +45,34 @@ export default function ConceptPage() {
   const completeConcept = useLearningStore((state) => state.completeConcept);
   const isAdmin = useAdminMode();
   const [showCompletionDialog, setShowCompletionDialog] = useState(false);
-  const skillTreeHistory = useSkillTreeHistory();
+  const skillTreeHistoryRaw = useSkillTreeSettingsStore(
+    (state) => state.lastVisitedSkillTrees,
+  );
+  const skillTreeHistory = useMemo(
+    () => normalizeSkillTreeHistory(skillTreeHistoryRaw),
+    [skillTreeHistoryRaw],
+  );
   const backToLearningPath = useMemo(
-    () => getBackToLearningPathFromHistory(skillTreeHistory, conceptId),
-    [skillTreeHistory, conceptId],
+    () => getBackToLearningPathFromHistory(skillTreeHistoryRaw, conceptId),
+    [skillTreeHistoryRaw, conceptId],
   );
 
   const conceptMeta = useMemo<Module | undefined>(() => {
     if (!conceptId) return undefined;
     return Object.values(skillTree).find(
-      (item) => item.type === "concept" && item.id === conceptId,
+      (item) => item.type === 'concept' && item.id === conceptId,
     );
   }, [conceptId]);
 
   const allTabs: TabConfig[] = [
-    { key: "story", label: "Story", icon: <MenuBook /> },
-    { key: "theory", label: "Theory", icon: <Lightbulb /> },
+    { key: 'story', label: 'Story', icon: <MenuBook /> },
+    { key: 'theory', label: 'Theory', icon: <Lightbulb /> },
     // { key: 'video', label: 'Video', icon: <OndemandVideo /> },
-    { key: "summary", label: "Summary", icon: <Bolt /> },
+    { key: 'summary', label: 'Summary', icon: <Bolt /> },
   ];
 
   const availableTabs = hideStories
-    ? allTabs.filter((tab) => tab.key !== "story")
+    ? allTabs.filter((tab) => tab.key !== 'story')
     : allTabs;
 
   const {
@@ -75,10 +83,10 @@ export default function ConceptPage() {
     moduleState,
   } = useContentTabs<ConceptModuleState>(
     conceptId,
-    "concept",
+    'concept',
     availableTabs,
     {
-      defaultTab: "theory",
+      defaultTab: 'theory',
     },
   );
 
@@ -90,19 +98,59 @@ export default function ConceptPage() {
 
   const visibleTabs = useMemo(
     () =>
-      summaryUnlocked ? tabs : tabs.filter((tab) => tab.key !== "summary"),
+      summaryUnlocked ? tabs : tabs.filter((tab) => tab.key !== 'summary'),
     [summaryUnlocked, tabs],
   );
 
   useEffect(() => {
-    if (!summaryUnlocked && currentTab === "summary") {
+    if (!summaryUnlocked && currentTab === 'summary') {
       const fallbackTab =
-        tabs.find((tab) => tab.key === "theory")?.key ??
-        tabs.find((tab) => tab.key !== "summary")?.key ??
-        "theory";
+        tabs.find((tab) => tab.key === 'theory')?.key ??
+        tabs.find((tab) => tab.key !== 'summary')?.key ??
+        'theory';
       selectTab(fallbackTab);
     }
   }, [currentTab, summaryUnlocked, selectTab, tabs]);
+
+  const conceptTree = useMemo(() => {
+    if (!conceptId) return undefined;
+    for (const treeId of skillTreeHistory) {
+      const tree = skillTreeVisualizationById.get(treeId);
+      if (tree?.moduleIds.has(conceptId)) return tree;
+    }
+    return skillTreeVisualizationDefinitions.find((tree) =>
+      tree.moduleIds.has(conceptId),
+    );
+  }, [conceptId, skillTreeHistory]);
+
+  const goalNodeID = useSkillTreeSettingsStore((state) =>
+    conceptTree ? (state.goalNodeID[conceptTree.id] ?? null) : null,
+  );
+
+  const prerequisitesOfGoal = useMemo(
+    () => (goalNodeID ? getPrerequisites(skillTree, goalNodeID) : new Set<string>()),
+    [goalNodeID],
+  );
+
+  const treeModuleIds = conceptTree?.moduleIds ?? new Set<string>();
+  const allFollowUps = conceptId
+    ? (skillTree[conceptId]?.followUps ?? []).filter((id) => treeModuleIds.has(id))
+    : [];
+  const allPrereqsDone = (id: string) =>
+    skillTree[id]?.prerequisites?.every((prereqId) => isModuleCompleted(prereqId)) ?? true;
+
+  const nextUp = goalNodeID
+    ? (() => {
+        if (!isModuleCompleted(goalNodeID) && allPrereqsDone(goalNodeID)) {
+          return [goalNodeID];
+        }
+        return allFollowUps.filter(
+          (id) =>
+            (prerequisitesOfGoal.has(id) || id === goalNodeID) &&
+            allPrereqsDone(id),
+        );
+      })()
+    : allFollowUps.filter(allPrereqsDone);
 
   if (!conceptMeta) {
     return (
@@ -126,46 +174,6 @@ export default function ConceptPage() {
     setShowCompletionDialog(true);
   };
 
-  // Calculate in which skill tree this concept is located, preferring the tree the user came from
-  const conceptTree = useMemo(() => {
-    if (!conceptId) return undefined;
-    for (let i = 0; i < skillTreeHistory.length; i++) {
-      const tree = getSkillTreeDefinitions().find(
-        (t) => t.id === skillTreeHistory[i] && t.moduleIds.has(conceptId)
-      );
-      if (tree) return tree;
-    }
-    return getSkillTreeDefinitions().find((tree) => tree.moduleIds.has(conceptId));
-  }, [conceptId, skillTreeHistory]);
-
-  // Calculate the current goal node ID for this tree (if any)
-  const goalNodeID = useSkillTreeSettingsStore((state) =>
-    conceptTree ? (state.goalNodeID[conceptTree.id] ?? null) : null,
-  );
-
-  // Get all prerequisites for the current goal node
-  const prerequisitesOfGoal = goalNodeID
-    ? getPrerequisites(skillTree, goalNodeID)
-    : new Set<string>();
-
-  const treeModuleIds = conceptTree?.moduleIds ?? new Set<string>();
-  const allFollowUps = conceptId
-    ? (skillTree[conceptId]?.followUps ?? []).filter((id) => treeModuleIds.has(id))
-    : [];
-  const allPrereqsDone = (id: string) =>
-    skillTree[id]?.prerequisites?.every((prereqId) => isModuleCompleted(prereqId)) ?? true;
-
-  const nextUp = goalNodeID
-    ? (() => {
-        if (!isModuleCompleted(goalNodeID) && allPrereqsDone(goalNodeID)) {
-          return [goalNodeID];
-        }
-        return allFollowUps.filter(
-          (id) => (prerequisitesOfGoal.has(id) || id === goalNodeID) && allPrereqsDone(id)
-        );
-      })()
-    : allFollowUps.filter(allPrereqsDone);
-
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <ContentHeader
@@ -182,19 +190,19 @@ export default function ConceptPage() {
           tabs={visibleTabs}
           onChange={handleTabChange}
         >
-          {currentTab === "theory" && <TheoryTab contentId={conceptMeta.id} />}
-          {currentTab === "video" && <VideoTab contentId={conceptMeta.id} />}
-          {currentTab === "summary" && summaryUnlocked && (
+          {currentTab === 'theory' && <TheoryTab contentId={conceptMeta.id} />}
+          {currentTab === 'video' && <VideoTab contentId={conceptMeta.id} />}
+          {currentTab === 'summary' && summaryUnlocked && (
             <SummaryTab contentId={conceptMeta.id} />
           )}
-          {currentTab === "story" && <StoryTab contentId={conceptMeta.id} />}
+          {currentTab === 'story' && <StoryTab contentId={conceptMeta.id} />}
         </ContentTabs>
       )}
 
-      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
         <span />
 
-        <Box sx={{ display: "flex", gap: 2 }}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           {!isCompleted && (
             <Button
               variant="contained"
@@ -213,15 +221,51 @@ export default function ConceptPage() {
         nextUp={nextUp}
         onNavigateToNext={(id) => {
           const type = skillTree[id]?.type;
-          navigate(type === "skill" ? `/skill/${id}` : `/concept/${id}`);
+          navigate(type === 'skill' ? `/skill/${id}` : `/concept/${id}`);
         }}
         onClose={() => setShowCompletionDialog(false)}
         onViewSummary={() => {
           setShowCompletionDialog(false);
-          selectTab("summary");
+          selectTab('summary');
         }}
         onReturnToOverview={() => navigate(backToLearningPath)}
       />
     </Container>
   );
+}
+
+function normalizeSkillTreeHistory(
+  history: readonly string[],
+): SkillTreeVisualizationId[] {
+  const result: SkillTreeVisualizationId[] = [];
+  const seen = new Set<SkillTreeVisualizationId>();
+
+  for (const value of history) {
+    if (!isSkillTreeVisualizationId(value) || seen.has(value)) {
+      continue;
+    }
+    seen.add(value);
+    result.push(value);
+  }
+
+  return result;
+}
+
+function getBackToLearningPathFromHistory(
+  history: readonly string[],
+  moduleId?: string,
+): string {
+  const normalized = normalizeSkillTreeHistory(history);
+  const fallbackId = normalized[0] ?? defaultSkillTreeVisualization;
+
+  if (moduleId) {
+    for (const treeId of normalized) {
+      const tree = skillTreeVisualizationById.get(treeId);
+      if (tree?.moduleIds.has(moduleId)) {
+        return tree.path;
+      }
+    }
+  }
+
+  return skillTreeVisualizationById.get(fallbackId)?.path ?? '/learn';
 }

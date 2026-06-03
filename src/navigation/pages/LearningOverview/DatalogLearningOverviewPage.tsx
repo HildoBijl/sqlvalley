@@ -1,7 +1,7 @@
 import {
   datalogModulePositions,
   datalogConnectors,
-} from "@/curriculum/definitions/datalog-treeDefinitions";
+} from "@/curriculum/skillTreeVisualizations/datalog-treeDefinitions";
 import { SkillTreeOverviewPage } from "../SkillTreeOverviewPage";
 
 /*

@@ -6,5 +6,8 @@
 // Skill tree definition
 export * from './skillTree';
 
+// Skill tree visualizations
+export * from './skillTreeVisualizations';
+
 // Utilities
 export * from './utils';
