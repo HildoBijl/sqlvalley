@@ -40,7 +40,7 @@ export function NodeGoalPin({ variant, checkmarkSize, onSetGoal }: NodeGoalPinPr
 
   return (
     <div
-      onClick={(e) => {
+      onPointerDown={(e) => {
         e.stopPropagation();
         if (onSetGoal) onSetGoal();
       }}

@@ -12,6 +12,7 @@ interface NodeStyleInput {
   isPrerequisite: boolean;
   theme: Theme;
   staticMode?: boolean;
+  isSelected?: boolean;
 }
 
 interface NodeStyle {
@@ -32,7 +33,8 @@ export function getNodeStyle({
   isSomethingHovered,
   isPrerequisite,
   theme,
-  staticMode = false
+  staticMode = false,
+  isSelected = false
 }: NodeStyleInput): NodeStyle {
   const fillColor = isGoalNode ? 'purple' : theme.palette.background.paper;
 
@@ -66,7 +68,7 @@ export function getNodeStyle({
     return { borderColor, fillColor, nodeOpacity, strokeWidth };
   }
 
-  const highlighted = isHovered || isPrerequisite;
+  const highlighted = isHovered || isPrerequisite || isSelected;
   const dimmed = isSomethingHovered && !highlighted;
 
   if (highlighted) {

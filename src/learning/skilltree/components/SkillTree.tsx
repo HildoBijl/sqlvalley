@@ -75,16 +75,25 @@ export function SkillTree({
 }: SkillTreeProps) {
   const theme = useTheme();
 
+
+  const onNavigate = (id: string) => {
+    const item = skillTree[id];
+    window.location.href = item.type === 'skill' ? `/skill/${id}` : `/concept/${id}`;
+  }
+  
   const {
     localHoveredId,
     prerequisites,
     tooltip,
+    selectedId,
     handleHoverStart,
     handleHoverEnd,
-    handleLongPressEnd,
-    getLongPressProps,
+    // handleLongPressEnd,
+    // getLongPressProps,
     isConnectorInHoveredPath,
-  } = useHoverState(skillTree, setHoveredId);
+    handlePointerDown,
+    handlePointerOutside,
+  } = useHoverState(skillTree, setHoveredId, onNavigate);
 
   const goalPrerequisites = useGoalProgress(
     goalNodeId,
@@ -101,6 +110,7 @@ export function SkillTree({
   return (
     <div
       ref={containerRef}
+      onPointerDown={handlePointerOutside}
       style={{
         position: 'relative',
         width: `${treeBounds.width}px`,
@@ -116,7 +126,7 @@ export function SkillTree({
         useSvg={true}
         useCanvas={false}
         autoScale={false}
-        svgProps={{ onClick: handleLongPressEnd }}
+        // svgProps={{ onClick: handleLongPressEnd }}
       >
         {visiblePaths.map((connector, i) => {
           const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
@@ -153,8 +163,13 @@ export function SkillTree({
             <g
               key={item.id}
               onMouseEnter={() => handleHoverStart(item.id)}
-              {...getLongPressProps(item.id)}
+              // {...getLongPressProps(item.id)}
               onMouseLeave={handleHoverEnd}
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                const isGoal = planningMode && goalNodeId === item.id;
+                handlePointerDown(item.id, e, isGoal);
+              }}
             >
               <NodeCard
                 item={item}
@@ -164,7 +179,7 @@ export function SkillTree({
                 readyToLearn={readyToLearn}
                 isPrerequisite={prerequisites.has(item.id)}
                 isSomethingHovered={localHoveredId !== null}
-                onClick={() => handleNodeClick(item)}
+                isSelected={selectedId === item.id}
                 planningMode={planningMode}
                 hasGoal={planningMode && !!goalNodeId}
                 isGoalNode={planningMode && goalNodeId === item.id}
