@@ -88,8 +88,6 @@ export function SkillTree({
     selectedId,
     handleHoverStart,
     handleHoverEnd,
-    // handleLongPressEnd,
-    // getLongPressProps,
     isConnectorInHoveredPath,
     handlePointerDown,
     handlePointerOutside,
@@ -101,11 +99,6 @@ export function SkillTree({
     isCompleted,
     onGoalProgressChange,
   );
-
-  const handleNodeClick = (item: Module) => {
-    const path = item.type === 'skill' ? `/skill/${item.id}` : `/concept/${item.id}`;
-    window.location.href = path;
-  };
 
   return (
     <div

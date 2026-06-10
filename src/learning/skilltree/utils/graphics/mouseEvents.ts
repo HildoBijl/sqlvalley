@@ -1,6 +1,4 @@
-import type { TouchEvent } from 'react';
-import { useRef, useState } from 'react';
-import { useLongPress } from 'react-use';
+import {  useState } from 'react';
 import type { Module } from '@/curriculum';
 import { getPrerequisites } from '@/learning/skillTreeDefinition';
 
@@ -13,8 +11,7 @@ export function useHoverState(
   const [prerequisites, setPrerequisites] = useState<Set<string>>(new Set());
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  // const [isLongPressing, setIsLongPressing] = useState(false);
-  // const longPressTargetId = useRef<string | null>(null);
+
 
   const handleHoverStart = (id: string) => {
     setLocalHoveredId(id);
@@ -27,41 +24,11 @@ export function useHoverState(
   };
 
   const handleHoverEnd = () => {
-    // if (isLongPressing) return;
     setLocalHoveredId(null);
     setHoveredId(null);
     setPrerequisites(new Set());
     setTooltip(null);
-    // longPressTargetId.current = null;
   };
-
-  // const handleLongPressEnd = () => {
-  //   if (!isLongPressing) return;
-  //   setIsLongPressing(false);
-  //   setLocalHoveredId(null);
-  //   setHoveredId(null);
-  //   setPrerequisites(new Set());
-  //   setTooltip(null);
-  //   longPressTargetId.current = null;
-  // };
-
-  // const longPressHandlers = useLongPress(
-  //   () => {
-  //     if (longPressTargetId.current !== null) {
-  //       setIsLongPressing(true);
-  //       handleHoverStart(longPressTargetId.current);
-  //     }
-  //   },
-  //   { isPreventDefault: false, delay: 500 },
-  // );
-
-  // const getLongPressProps = (id: string) => ({
-  //   ...longPressHandlers,
-  //   onTouchStart: (event: TouchEvent) => {
-  //     longPressTargetId.current = id;
-  //     longPressHandlers.onTouchStart(event);
-  //   },
-  // });
 
   const handlePointerDown = (id: string, e: React.PointerEvent, skipToNavigate = false) => {
     if (e.pointerType === 'mouse' || skipToNavigate) {
@@ -101,11 +68,8 @@ export function useHoverState(
     prerequisites,
     tooltip,
     selectedId,
-    // isLongPressing,
     handleHoverStart,
     handleHoverEnd,
-    // handleLongPressEnd,
-    // getLongPressProps,
     isConnectorInHoveredPath,
     handlePointerDown,
     handlePointerOutside,
