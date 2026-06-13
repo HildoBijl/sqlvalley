@@ -1,30 +1,38 @@
-import type { ComponentType } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 
-import type { DatasetSize } from '@/mockData';
-import type { PracticeFeedback } from '@/learning/components/SkillPractice/types';
-import type { PracticeSolution, QueryResultSet } from '@/learning/types';
-import type { ExerciseHelpers } from '../types';
+import type { ExerciseHelpers } from '../Exercise';
 
 export type SimpleExerciseStoredState =
   | Record<string, never>
   | { solved: true }
   | { givenUp: true };
 
+export type SimpleExerciseFeedbackType = 'success' | 'info' | 'warning' | 'error';
+
 export interface SimpleExerciseValidationResult {
-  ok: boolean;
-  message?: string;
+  valid: boolean;
+  feedback?: string;
+  feedbackType?: SimpleExerciseFeedbackType;
   code?: string;
   warnings?: string[];
 }
 
 export interface SimpleExerciseCheckResult {
-  solved: boolean;
+  correct: boolean;
   feedback?: string;
-  solution?: unknown;
+  feedbackType?: SimpleExerciseFeedbackType;
 }
 
 export interface SimpleExerciseProblemProps<Parameters extends Record<string, unknown>> {
   parameters: Parameters;
+}
+
+export interface SimpleExerciseInputProps<Parameters extends Record<string, unknown>, Input> {
+  parameters: Parameters;
+  value: Input;
+  disabled: boolean;
+  onChange: (value: Input) => void;
+  onSubmit: () => void;
 }
 
 export interface SimpleExerciseSolutionProps<Parameters extends Record<string, unknown>> {
@@ -32,78 +40,73 @@ export interface SimpleExerciseSolutionProps<Parameters extends Record<string, u
   state: SimpleExerciseStoredState;
 }
 
+export interface SimpleExerciseOutputProps<
+  Parameters extends Record<string, unknown>,
+  Input,
+  CheckResult,
+> {
+  parameters: Parameters;
+  input: Input;
+  result: CheckResult | null;
+  state: SimpleExerciseStoredState;
+}
+
+export interface SimpleExerciseControlSlotProps<Parameters extends Record<string, unknown>> {
+  definitions: ReadonlyArray<SimpleExerciseDefinition<Parameters, unknown, unknown>>;
+  currentExerciseId: string | null;
+  startExercise: (exerciseId: string) => void;
+  showSolution: () => void;
+  disabled: boolean;
+}
+
 export interface SimpleExerciseDefinition<
   Parameters extends Record<string, unknown>,
   Input,
   CheckResult = SimpleExerciseCheckResult,
 > {
+  exerciseId: string;
+  version: number;
   generateParameters: (
     helpers: ExerciseHelpers,
     context?: { previousParameters?: Parameters | null },
   ) => Parameters;
-  validateInput: (args: { parameters: Parameters; input: Input }) => SimpleExerciseValidationResult;
+  validateInput: (
+    args: { parameters: Parameters; input: Input },
+  ) => SimpleExerciseValidationResult | Promise<SimpleExerciseValidationResult>;
   checkInput: (args: { parameters: Parameters; input: Input }) => CheckResult | Promise<CheckResult>;
+  isCorrect?: (result: CheckResult) => boolean;
+  getFeedback?: (result: CheckResult) => string | undefined;
+  normalizeInput?: (input: Input) => string;
+  isInputEmpty?: (input: Input) => boolean;
   Problem: ComponentType<SimpleExerciseProblemProps<Parameters>>;
+  Input: ComponentType<SimpleExerciseInputProps<Parameters, Input>>;
   Solution: ComponentType<SimpleExerciseSolutionProps<Parameters>>;
   Prompt?: ComponentType<SimpleExerciseProblemProps<Parameters>>;
   Payoff?: ComponentType<{ parameters: Parameters; result: CheckResult }>;
+  Output?: ComponentType<SimpleExerciseOutputProps<Parameters, Input, CheckResult>>;
 }
 
-export interface SimpleExerciseOption {
-  id: string;
-  label: string;
-}
+export type SimpleExerciseAction<Input, CheckResult> =
+  | {
+      type: 'input';
+      input: Input;
+      validation: SimpleExerciseValidationResult;
+      result?: CheckResult;
+      correct: boolean;
+    }
+  | { type: 'give-up' };
 
-export interface SimpleExercisePracticeState {
-  title: string;
-  query: string;
-  feedback: PracticeFeedback | null;
-  currentExercise: Record<string, unknown> | null;
-  unavailableMessage?: string;
-  solution: PracticeSolution | null;
-  hasGivenUp: boolean;
-  exerciseCompleted: boolean;
-  queryResult: ReadonlyArray<QueryResultSet> | null;
-  queryError: Error | null;
-  description: string;
-  tableNames: string[];
-  completionSchema: Record<string, string[]>;
-  canSubmit: boolean;
-  canGiveUp: boolean;
-  hasExecutedQuery: boolean;
-  datasetSize: DatasetSize;
-  datasetWarning: string | null;
-  exerciseOptions: SimpleExerciseOption[];
-  selectedExerciseId: string | null;
-}
-
-export interface SimpleExerciseStatusState {
-  dbReady: boolean;
-  isExecuting: boolean;
-}
-
-export interface SimpleExerciseActions {
-  setQuery: (value: string) => void;
-  submit: (override?: string) => Promise<void> | void;
-  liveExecute: (query: string) => Promise<void> | void;
-  autoComplete: (options?: { insertIntoEditor?: boolean }) => Promise<void> | void;
-  nextExercise: () => void;
-  dismissFeedback: () => void;
-  setDatasetSize: (size: DatasetSize) => void;
-  selectExercise: (exerciseId: string) => void;
-}
-
-export interface SimpleExerciseGiveUpDialog {
-  open: boolean;
-  openDialog: () => void;
-  closeDialog: () => void;
-  confirmGiveUp: () => void;
-}
-
-export interface SimpleExerciseProps {
-  practice: SimpleExercisePracticeState;
-  status: SimpleExerciseStatusState;
-  actions: SimpleExerciseActions;
-  dialogs: SimpleExerciseGiveUpDialog;
-  isAdmin: boolean;
+export interface SimpleExerciseProps<
+  Parameters extends Record<string, unknown>,
+  Input,
+  CheckResult = SimpleExerciseCheckResult,
+> {
+  skillId: string;
+  definitions: ReadonlyArray<SimpleExerciseDefinition<Parameters, Input, CheckResult>>;
+  initialInput: Input;
+  unavailableMessage?: ReactNode;
+  Controls?: ComponentType<SimpleExerciseControlSlotProps<Parameters>>;
+  canSubmit?: boolean;
+  canGiveUp?: boolean;
+  onSolved?: () => void;
 }

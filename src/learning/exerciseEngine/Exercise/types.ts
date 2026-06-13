@@ -7,6 +7,11 @@ import type {
   StoredExerciseState,
 } from '@/store';
 
+export interface ExerciseHelpers {
+  selectRandomly<T>(items: readonly T[]): T;
+  randomInt(min: number, max: number): number;
+}
+
 export interface ExerciseDescriptor<Parameters extends Record<string, unknown>> {
   exerciseId: string;
   version: number;

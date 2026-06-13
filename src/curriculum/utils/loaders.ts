@@ -48,13 +48,13 @@ export const moduleComponents: Record<string, ModuleComponentMap> = Object.entri
   return acc;
 }, {});
 
-const skillExerciseModules = import.meta.glob('../modules/*/exercise.ts');
+const skillExerciseModules = import.meta.glob('../modules/*/exercise.tsx');
 
 type SkillExerciseLoader = () => Promise<unknown>;
 
 export const skillExerciseLoaders = Object.fromEntries(
   Object.entries(skillExerciseModules).reduce<[string, SkillExerciseLoader][]>((entries, [path, loader]) => {
-    const match = path.match(/\.\.\/modules\/([^/]+)\/exercise\.ts$/);
+    const match = path.match(/\.\.\/modules\/([^/]+)\/exercise\.tsx$/);
     if (match) {
       entries.push([match[1], loader as SkillExerciseLoader]);
     }

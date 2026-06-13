@@ -8,8 +8,6 @@
 export {
   useDatabase,
   usePlaygroundDatabase,
-  useConceptDatabase,
-  useSkillDatabase,
   useTheorySampleDatabase,
 } from './useDatabase';
 
