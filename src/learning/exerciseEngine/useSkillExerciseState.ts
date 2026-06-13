@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { createInitialProgress, createSimpleExerciseReducer } from './reducer';
+import { useExerciseSession } from './Exercise';
 import type {
   ExerciseAction,
   ExerciseAttempt,
@@ -12,10 +13,7 @@ import type {
   VerificationResult,
   ValidateInputArgs,
 } from './types';
-import { useModuleState } from '@/learning/hooks/useModuleState';
 import {
-  useLearningStore,
-  type SkillModuleState,
   type StoredExerciseAction,
   type StoredExerciseInstance,
   type StoredExerciseState,
@@ -62,10 +60,6 @@ function hasSolvedState(state: StoredExerciseState | undefined): boolean {
 
 function hasGivenUpState(state: StoredExerciseState | undefined): boolean {
   return state?.givenUp === true;
-}
-
-function getCurrentInstance(moduleState: SkillModuleState): StoredExerciseInstance | null {
-  return moduleState.exercises[moduleState.exercises.length - 1] ?? null;
 }
 
 function applyStoredParameters(
@@ -149,6 +143,44 @@ export type SkillExerciseProgress = ExerciseProgress<any, string, unknown, unkno
 
 type Dispatch = (action: ExerciseAction<string, unknown>) => void;
 
+type PersistedExerciseAction =
+  | Extract<ExerciseAction<string, unknown>, { type: 'input' }>
+  | { type: 'give-up' };
+
+const emptyStoredExerciseState: StoredExerciseState = {};
+
+function reducePersistedExerciseState({
+  action,
+  previousState,
+}: {
+  parameters: Record<string, unknown>;
+  action: PersistedExerciseAction;
+  previousState: StoredExerciseState;
+}): StoredExerciseState {
+  if (previousState.solved === true) {
+    return previousState;
+  }
+  if (action.type === 'give-up') {
+    return { givenUp: true };
+  }
+  return action.verification?.correct ? { solved: true } : {};
+}
+
+function serializePersistedExerciseAction(action: PersistedExerciseAction): StoredExerciseAction {
+  if (action.type === 'give-up') {
+    return { type: 'give-up' };
+  }
+  return { type: 'input', input: action.input };
+}
+
+function isPersistedExerciseComplete(state: StoredExerciseState): boolean {
+  return state.solved === true || state.givenUp === true;
+}
+
+function isPersistedExerciseSolved(state: StoredExerciseState): boolean {
+  return state.solved === true;
+}
+
 type ValidationPreview = (input: string) => ValidationResult;
 
 function defaultInvalidMessage(messages?: SkillExerciseModuleLike['messages']) {
@@ -156,10 +188,20 @@ function defaultInvalidMessage(messages?: SkillExerciseModuleLike['messages']) {
 }
 
 export function useSkillExerciseState(moduleId: string, moduleLike: SkillExerciseModuleLike | null) {
-  const moduleState = useModuleState<SkillModuleState>(moduleId, 'skill');
-  const startNewExercise = useLearningStore((state) => state.startNewExercise);
-  const submitExerciseAction = useLearningStore((state) => state.submitExerciseAction);
-  const setExerciseDraftInput = useLearningStore((state) => state.setExerciseDraftInput);
+  const {
+    instance: currentStoredInstance,
+    startExercise,
+    ensureExercise,
+    submitAction,
+    setDraftInput: setPersistedDraftInput,
+  } = useExerciseSession({
+    skillId: moduleId,
+    reducer: reducePersistedExerciseState,
+    initialState: emptyStoredExerciseState,
+    isComplete: isPersistedExerciseComplete,
+    isSolved: isPersistedExerciseSolved,
+    serializeAction: serializePersistedExerciseAction,
+  });
 
   const helpers = useMemo<ExerciseHelpers>(
     () => ({
@@ -245,20 +287,10 @@ export function useSkillExerciseState(moduleId: string, moduleLike: SkillExercis
 
   const [progress, setProgress] = useState<SkillExerciseProgress>(() => createInitialProgress());
   const progressRef = useRef(progress);
-  const moduleStateRef = useRef(moduleState);
 
   useEffect(() => {
     progressRef.current = progress;
   }, [progress]);
-
-  useEffect(() => {
-    moduleStateRef.current = moduleState;
-  }, [moduleState]);
-
-  const currentStoredInstance = useMemo(
-    () => getCurrentInstance(moduleState),
-    [moduleState],
-  );
 
   const resolveStoredExercise = useCallback(
     (instance: StoredExerciseInstance): unknown => {
@@ -287,33 +319,22 @@ export function useSkillExerciseState(moduleId: string, moduleLike: SkillExercis
         const exerciseId = getExerciseId(nextExercise) ?? 'exercise';
         const version = getExerciseVersion(nextExercise);
         const parameters = getExerciseParameters(nextExercise);
-        startNewExercise(moduleId, exerciseId, version, parameters);
+        const descriptor = { exerciseId, version, parameters };
+        if (action.ensure) {
+          ensureExercise(descriptor);
+        } else {
+          startExercise(descriptor);
+        }
       } else if (action.type === 'input') {
-        const currentInstance = getCurrentInstance(moduleStateRef.current);
-        if (currentInstance) {
-          const solvedNow = next.status === 'correct';
-          const solvedBefore =
-            prev.status === 'correct' ||
-            currentInstance.events.some((event) => hasSolvedState(event.resultingState));
-          const storedAction: StoredExerciseAction = {
-            type: 'input',
-            input: action.input,
-          };
-          const storedResultingState: StoredExerciseState = solvedNow ? { solved: true } : {};
-          submitExerciseAction(
-            moduleId,
-            storedAction,
-            storedResultingState,
-            solvedNow,
-            solvedNow && !solvedBefore,
-          );
+        if (currentStoredInstance) {
+          submitAction(action);
         }
       }
 
       progressRef.current = next;
       setProgress(next);
     },
-    [moduleId, reducer, startNewExercise, submitExerciseAction],
+    [currentStoredInstance, ensureExercise, reducer, startExercise, submitAction],
   );
 
   useEffect(() => {
@@ -420,7 +441,7 @@ export function useSkillExerciseState(moduleId: string, moduleLike: SkillExercis
   );
 
   const recordGiveUp = useCallback(() => {
-    const currentInstance = getCurrentInstance(moduleStateRef.current);
+    const currentInstance = currentStoredInstance;
     if (!currentInstance) {
       return;
     }
@@ -430,7 +451,7 @@ export function useSkillExerciseState(moduleId: string, moduleLike: SkillExercis
       return;
     }
 
-    submitExerciseAction(moduleId, { type: 'give-up' }, { givenUp: true }, true, false);
+    submitAction({ type: 'give-up' });
     const current = progressRef.current;
     if (current.status === 'correct') {
       return;
@@ -441,16 +462,16 @@ export function useSkillExerciseState(moduleId: string, moduleLike: SkillExercis
     };
     progressRef.current = nextProgress;
     setProgress(nextProgress);
-  }, [moduleId, submitExerciseAction]);
+  }, [currentStoredInstance, submitAction]);
 
   const persistDraftInput = useCallback(
     (draftInput: unknown) => {
       if (!currentStoredInstance) {
         return;
       }
-      setExerciseDraftInput(moduleId, draftInput);
+      setPersistedDraftInput(draftInput);
     },
-    [currentStoredInstance, moduleId, setExerciseDraftInput],
+    [currentStoredInstance, setPersistedDraftInput],
   );
 
   const isGivenUp = useMemo(() => {

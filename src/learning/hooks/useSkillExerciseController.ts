@@ -226,7 +226,7 @@ export function useSkillExerciseController({
   useEffect(() => {
     if (!dbReady || !skillModule) return;
     if (!exerciseProgress.exercise && moduleState.exercises.length === 0) {
-      exerciseDispatch({ type: 'generate' });
+      exerciseDispatch({ type: 'generate', ensure: true });
     }
   }, [dbReady, skillModule, exerciseProgress.exercise, exerciseDispatch, moduleState.exercises.length]);
 

@@ -68,7 +68,7 @@ export interface ExerciseProgress<Exercise, Input, Demo = unknown, Result = unkn
 }
 
 export type ExerciseAction<Input = unknown, Result = unknown> =
-  | { type: 'generate'; seed?: number; exercise?: unknown }
+  | { type: 'generate'; seed?: number; exercise?: unknown; ensure?: boolean }
   | { type: 'reset'; keepExercise?: boolean }
   | {
       type: 'input';
