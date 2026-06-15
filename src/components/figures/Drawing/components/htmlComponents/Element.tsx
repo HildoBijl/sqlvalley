@@ -49,7 +49,7 @@ export function Element(props: ElementProps) {
 			scale(${scale})
 			rotate(${rotate! * 180 / Math.PI}deg)
 			${style?.transform ?? ''}`;
-	}, [internalRef, bounds, figure, getFigureScale, p, a, rotate, scale]);
+	}, [internalRef, bounds, figure, getFigureScale, p, a, rotate, scale, style?.transform]);
 
 	// Call update on layout changes and resize.
 	useLayoutEffect(updateElementPosition, [updateElementPosition, children]);
