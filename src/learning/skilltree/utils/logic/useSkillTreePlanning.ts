@@ -15,9 +15,11 @@ export function useSkillTreePlanning(treeId: string, memoryStoreAPI?: SkillTreeM
     : storePlanningMode;
 
   const setPlanningMode = (value: boolean) => {
-    memoryStoreAPI?.setPlanningMode 
-    ? memoryStoreAPI.setPlanningMode(value) 
-    : storeSetPlanningMode(treeId, value);
+    if (memoryStoreAPI?.setPlanningMode) {
+      memoryStoreAPI.setPlanningMode(value);
+    } else {
+      storeSetPlanningMode(treeId, value);
+    }
   }
 
 

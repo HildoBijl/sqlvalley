@@ -27,7 +27,7 @@ interface BaseModuleState {
   understood?: true;
 }
 
-export interface ConceptModuleState extends BaseModuleState {}
+export type ConceptModuleState = BaseModuleState;
 
 export interface SkillModuleState extends BaseModuleState {
   numSolved: number;

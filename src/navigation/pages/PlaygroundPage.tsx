@@ -120,7 +120,7 @@ export default function PlaygroundPage() {
     try {
       await navigator.clipboard.writeText(query);
       setMessage('Query copied to clipboard');
-    } catch (error) {
+    } catch {
       setMessage('Failed to copy query');
     }
   };

@@ -100,7 +100,7 @@ export function useExerciseSession<
       const store = useLearningStore.getState();
       const current = store.getCurrentExerciseInstance(skillId);
       if (!current) {
-        throw new Error(`Cannot submit an action for \"${skillId}\" without an active exercise.`);
+        throw new Error(`Cannot submit an action for "${skillId}" without an active exercise.`);
       }
 
       const previousState = readStoredState(current, initialState);
