@@ -10,6 +10,7 @@ Once this has been set up, there is a variety of separate stores that all track 
 
 - **[settings/](./settings/)** is the part where all of the user's actions related to site settings are stored. This includes both actual settings (like light/dark mode) and usage patterns (like remembering that you closed that Skill Tree legend).
 - **[learning/](./learning/)** is the data store that tracks all data related to your educational experience. Think of the progress you made for each module from the Skill Tree.
+- **[skilltree/](./skilltree/)** stores data directly related to the Skill Tree visualizations. Like whether or not the legend should still be visible, whether or not the planning mode is on, etcetera.
 
 Finally, there are some combining functions that support the above learning stores.
 
