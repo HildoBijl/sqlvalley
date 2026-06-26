@@ -106,13 +106,12 @@ SELECT DISTINCT category FROM products WHERE p_id IN (
   },
 ];
 
-const Exercise: SimpleSQLExerciseComponent = ({ skillId, title, onSolved }) => (
+const Exercise: SimpleSQLExerciseComponent = ({ skillId, title }) => (
   <SimpleSQLExercise
     skillId={skillId}
     tables={getModuleTables(skillId)}
     definitions={EXERCISES}
     title={title}
-    onSolved={onSolved}
   />
 );
 

@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Alert, Box, Button, CircularProgress, Container } from '@mui/material';
 import { Bolt, CheckCircle, Edit, EditNote, Lightbulb, MenuBook, Storage } from '@mui/icons-material';
@@ -111,6 +111,16 @@ export default function SkillPage() {
     setShowCompletionDialog(true);
   };
 
+  // Show the completion dialog once, when the learner crosses the required count.
+  const prevSolvedRef = useRef(moduleState.numSolved ?? 0);
+  useEffect(() => {
+    const solved = moduleState.numSolved ?? 0;
+    const crossed = prevSolvedRef.current < REQUIRED_EXERCISE_COUNT &&
+      solved >= REQUIRED_EXERCISE_COUNT;
+    prevSolvedRef.current = solved;
+    if (crossed) setShowCompletionDialog(true);
+  }, [moduleState.numSolved]);
+
   useEffect(() => {
     if (!summaryUnlocked && currentTab === 'summary') {
       const fallbackTab =
@@ -184,13 +194,6 @@ export default function SkillPage() {
             <ExerciseComponent
               skillId={skillId ?? ''}
               title={exerciseTitle}
-              onSolved={() => {
-                const solvedBeforeSubmission = moduleState.numSolved ?? 0;
-                if (solvedBeforeSubmission < REQUIRED_EXERCISE_COUNT &&
-                  solvedBeforeSubmission + 1 >= REQUIRED_EXERCISE_COUNT) {
-                  setShowCompletionDialog(true);
-                }
-              }}
             />
           )}
 

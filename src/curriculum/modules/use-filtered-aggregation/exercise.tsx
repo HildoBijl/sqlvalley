@@ -87,13 +87,12 @@ HAVING AVG(price) < 1000000;
   },
 ];
 
-const Exercise: SimpleSQLExerciseComponent = ({ skillId, title, onSolved }) => (
+const Exercise: SimpleSQLExerciseComponent = ({ skillId, title }) => (
   <SimpleSQLExercise
     skillId={skillId}
     tables={getModuleTables(skillId)}
     definitions={EXERCISES}
     title={title}
-    onSolved={onSolved}
   />
 );
 

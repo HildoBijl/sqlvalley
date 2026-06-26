@@ -44,13 +44,12 @@ ORDER BY end_date DESC NULLS FIRST;
   },
 ];
 
-const Exercise: SimpleSQLExerciseComponent = ({ skillId, title, onSolved }) => (
+const Exercise: SimpleSQLExerciseComponent = ({ skillId, title }) => (
   <SimpleSQLExercise
     skillId={skillId}
     tables={getModuleTables(skillId)}
     definitions={EXERCISES}
     title={title}
-    onSolved={onSolved}
   />
 );
 

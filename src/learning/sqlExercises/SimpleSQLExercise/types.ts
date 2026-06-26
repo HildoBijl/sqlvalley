@@ -22,11 +22,9 @@ export interface SimpleSQLExerciseProps<Parameters extends Record<string, unknow
   tables: TableKey[];
   definitions: ReadonlyArray<SimpleSQLExerciseDefinition<Parameters>>;
   title?: string;
-  onSolved?: () => void;
 }
 
 export type SimpleSQLExerciseComponent = ComponentType<{
   skillId: string;
   title?: string;
-  onSolved?: () => void;
 }>;

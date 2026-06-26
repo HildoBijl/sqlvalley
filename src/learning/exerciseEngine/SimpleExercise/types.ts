@@ -102,5 +102,4 @@ export interface SimpleExerciseProps<
   Controls?: ComponentType<SimpleExerciseControlSlotProps<Parameters>>;
   canSubmit?: boolean;
   canGiveUp?: boolean;
-  onSolved?: () => void;
 }

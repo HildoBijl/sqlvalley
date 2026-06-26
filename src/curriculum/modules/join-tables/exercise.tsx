@@ -77,13 +77,12 @@ WHERE status = 'sick leave';
   //   },
 ];
 
-const Exercise: SimpleSQLExerciseComponent = ({ skillId, title, onSolved }) => (
+const Exercise: SimpleSQLExerciseComponent = ({ skillId, title }) => (
   <SimpleSQLExercise
     skillId={skillId}
     tables={getModuleTables(skillId)}
     definitions={EXERCISES}
     title={title}
-    onSolved={onSolved}
   />
 );
 

@@ -28,7 +28,6 @@ export function SimpleExercise<
   Controls,
   canSubmit,
   canGiveUp,
-  onSolved,
 }: SimpleExerciseProps<Parameters, Input, CheckResult>) {
   return (
     <Exercise<Parameters, SimpleExerciseAction<Input>, SimpleExerciseStoredState>
@@ -50,7 +49,6 @@ export function SimpleExercise<
             Controls={Controls}
             canSubmit={canSubmit}
             canGiveUp={canGiveUp}
-            onSolved={onSolved}
             onNext={startNewExercise}
             startExercise={startExercise}
           />

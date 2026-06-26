@@ -55,13 +55,12 @@ FROM employees;
   },
 ];
 
-const ChooseColumnsExercise: SimpleSQLExerciseComponent = ({ skillId, title, onSolved }) => (
+const ChooseColumnsExercise: SimpleSQLExerciseComponent = ({ skillId, title }) => (
   <SimpleSQLExercise
     skillId={skillId}
     tables={getModuleTables(skillId)}
     definitions={EXERCISES}
     title={title}
-    onSolved={onSolved}
   />
 );
 

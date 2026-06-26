@@ -117,13 +117,12 @@ WHERE d.nr_employees - COALESCE(sa.only_allocated, 0) > 3;
   },
 ];
 
-const Exercise: SimpleSQLExerciseComponent = ({ skillId, title, onSolved }) => (
+const Exercise: SimpleSQLExerciseComponent = ({ skillId, title }) => (
   <SimpleSQLExercise
     skillId={skillId}
     tables={getModuleTables(skillId)}
     definitions={EXERCISES}
     title={title}
-    onSolved={onSolved}
   />
 );
 

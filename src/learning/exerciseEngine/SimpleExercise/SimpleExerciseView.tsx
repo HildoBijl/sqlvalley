@@ -25,7 +25,6 @@ interface SimpleExerciseViewProps<
   Controls?: ComponentType<SimpleExerciseControlSlotProps<Parameters>>;
   canSubmit?: boolean;
   canGiveUp?: boolean;
-  onSolved?: () => void;
   onNext: () => void;
   startExercise: (exerciseId: string) => void;
 }
@@ -45,7 +44,6 @@ export function SimpleExerciseView<
   Controls,
   canSubmit: externallyCanSubmit = true,
   canGiveUp: externallyCanGiveUp = true,
-  onSolved,
   onNext,
   startExercise,
 }: SimpleExerciseViewProps<Parameters, Input, CheckResult>) {
@@ -129,9 +127,6 @@ export function SimpleExerciseView<
           (correct ? 'Correct!' : 'Not quite right. Try again.'),
         type: checkResult.feedbackType ?? (correct ? 'success' : 'error'),
       });
-      if (correct && !isSimpleExerciseSolved(state)) {
-        onSolved?.();
-      }
     } catch (error) {
       setFeedback({
         message: error instanceof Error ? error.message : 'Unable to check your answer. Please try again.',
@@ -140,7 +135,7 @@ export function SimpleExerciseView<
     } finally {
       setIsSubmitting(false);
     }
-  }, [definition, events, input, isSubmitting, onSolved, parameters, state, submitAction]);
+  }, [definition, events, input, isSubmitting, parameters, submitAction]);
 
   const handleGiveUp = useCallback(() => {
     submitAction({ type: 'give-up' });

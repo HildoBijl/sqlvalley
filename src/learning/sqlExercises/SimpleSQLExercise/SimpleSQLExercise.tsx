@@ -41,7 +41,6 @@ export function SimpleSQLExercise<Parameters extends Record<string, unknown>>({
   tables,
   definitions,
   title = 'Exercise',
-  onSolved,
 }: SimpleSQLExerciseProps<Parameters>) {
   const datasetSize = useSettingsStore((state) => state.practiceDatasetSize);
   const setPracticeDatasetSize = useSettingsStore((state) => state.setPracticeDatasetSize);
@@ -306,7 +305,6 @@ export function SimpleSQLExercise<Parameters extends Record<string, unknown>>({
         Controls={AdminControls}
         canSubmit={dbReady && !displayDatabase.isExecuting}
         canGiveUp={!displayDatabase.isExecuting}
-        onSolved={onSolved}
       />
     </SimpleSQLRuntimeProvider>
   );
