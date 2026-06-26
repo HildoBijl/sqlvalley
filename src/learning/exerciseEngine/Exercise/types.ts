@@ -20,7 +20,7 @@ export interface ExerciseDescriptor<Parameters extends Record<string, unknown>> 
 
 export type ExerciseReducer<
   Parameters extends Record<string, unknown>,
-  Action,
+  Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 > = (args: {
   parameters: Parameters;
@@ -30,7 +30,7 @@ export type ExerciseReducer<
 
 export interface ExerciseSessionOptions<
   Parameters extends Record<string, unknown>,
-  Action,
+  Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 > {
   skillId: string;
@@ -38,12 +38,11 @@ export interface ExerciseSessionOptions<
   initialState: State;
   isComplete: (state: State) => boolean;
   isSolved: (state: State) => boolean;
-  serializeAction: (action: Action) => StoredExerciseAction;
 }
 
 export interface ExerciseContextValue<
   Parameters extends Record<string, unknown>,
-  Action,
+  Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 > {
   descriptor: ExerciseDescriptor<Parameters> | null;
@@ -60,7 +59,7 @@ export interface ExerciseContextValue<
 
 export interface ExerciseProps<
   Parameters extends Record<string, unknown>,
-  Action,
+  Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 > extends ExerciseSessionOptions<Parameters, Action, State> {
   children: ReactNode;

@@ -10,7 +10,6 @@ import {
   isSimpleExerciseGivenUp,
   isSimpleExerciseSolved,
   reduceSimpleExerciseState,
-  serializeSimpleExerciseAction,
 } from './logic';
 import type {
   SimpleExerciseAction,
@@ -41,13 +40,12 @@ export function SimpleExercise<
   onSolved,
 }: SimpleExerciseProps<Parameters, Input, CheckResult>) {
   return (
-    <Exercise<Parameters, SimpleExerciseAction<Input, CheckResult>, SimpleExerciseStoredState>
+    <Exercise<Parameters, SimpleExerciseAction<Input>, SimpleExerciseStoredState>
       skillId={skillId}
       reducer={reduceSimpleExerciseState}
       initialState={emptySimpleExerciseState}
       isComplete={(state) => isSimpleExerciseSolved(state) || isSimpleExerciseGivenUp(state)}
       isSolved={isSimpleExerciseSolved}
-      serializeAction={serializeSimpleExerciseAction}
     >
       <SimpleExerciseContent
         definitions={definitions}
@@ -88,7 +86,7 @@ function SimpleExerciseContent<
     setDraftInput,
   } = useExercise<
     Parameters,
-    SimpleExerciseAction<Input, CheckResult>,
+    SimpleExerciseAction<Input>,
     SimpleExerciseStoredState
   >();
   const [input, setInput] = useState(initialInput);
@@ -185,12 +183,7 @@ function SimpleExerciseContent<
         (definition.normalizeInput?.(event.action.input as Input) ?? String(event.action.input).trim()) === normalizedInput,
     );
     if (repeated) {
-      submitAction({
-        type: 'input',
-        input,
-        validation: { valid: true },
-        correct: false,
-      });
+      submitAction({ type: 'input', input, correct: false });
       setFeedback({ message: 'You already tried this exact input before.', type: 'info' });
       return;
     }
@@ -199,7 +192,7 @@ function SimpleExerciseContent<
     try {
       const validation = await definition.validateInput({ parameters, input });
       if (!validation.valid) {
-        submitAction({ type: 'input', input, validation, correct: false });
+        submitAction({ type: 'input', input, correct: false });
         setFeedback({
           message: validation.feedback ?? 'Please double-check your input before submitting.',
           type: validation.feedbackType ?? 'warning',
@@ -210,7 +203,7 @@ function SimpleExerciseContent<
       const correct = definition.isCorrect
         ? definition.isCorrect(result)
         : Boolean((result as SimpleExerciseCheckResult).correct);
-      submitAction({ type: 'input', input, validation, result, correct });
+      submitAction({ type: 'input', input, correct });
       setLastResult(result);
       const checkResult = result as SimpleExerciseCheckResult;
       setFeedback({

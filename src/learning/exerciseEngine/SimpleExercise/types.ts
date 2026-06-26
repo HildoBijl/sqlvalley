@@ -86,14 +86,8 @@ export interface SimpleExerciseDefinition<
   Output?: ComponentType<SimpleExerciseOutputProps<Parameters, Input, CheckResult>>;
 }
 
-export type SimpleExerciseAction<Input, CheckResult> =
-  | {
-      type: 'input';
-      input: Input;
-      validation: SimpleExerciseValidationResult;
-      result?: CheckResult;
-      correct: boolean;
-    }
+export type SimpleExerciseAction<Input> =
+  | { type: 'input'; input: Input; correct: boolean }
   | { type: 'give-up' };
 
 export interface SimpleExerciseProps<

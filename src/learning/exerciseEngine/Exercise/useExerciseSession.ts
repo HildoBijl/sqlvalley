@@ -4,6 +4,7 @@ import {
   createModuleState,
   useLearningStore,
   type SkillModuleState,
+  type StoredExerciseAction,
   type StoredExerciseInstance,
   type StoredExerciseState,
 } from '@/store';
@@ -39,7 +40,7 @@ function readStoredState<State extends StoredExerciseState>(
 
 export function useExerciseSession<
   Parameters extends Record<string, unknown>,
-  Action,
+  Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 >({
   skillId,
@@ -47,7 +48,6 @@ export function useExerciseSession<
   initialState,
   isComplete,
   isSolved,
-  serializeAction,
 }: ExerciseSessionOptions<Parameters, Action, State>): ExerciseContextValue<Parameters, Action, State> {
   const moduleState = useLearningStore((store) => {
     const existing = store.modules[skillId];
@@ -111,14 +111,14 @@ export function useExerciseSession<
       });
       store.submitExerciseAction(
         skillId,
-        serializeAction(action),
+        action,
         nextState,
         isComplete(nextState),
         isSolved(nextState) && !isSolved(previousState),
       );
       return nextState;
     },
-    [initialState, isComplete, isSolved, reducer, serializeAction, skillId],
+    [initialState, isComplete, isSolved, reducer, skillId],
   );
 
   const setDraftInput = useCallback(

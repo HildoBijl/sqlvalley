@@ -1,9 +1,4 @@
-import type { StoredExerciseAction } from '@/store';
-import type {
-  SimpleExerciseAction,
-  SimpleExerciseCheckResult,
-  SimpleExerciseStoredState,
-} from './types';
+import type { SimpleExerciseAction, SimpleExerciseStoredState } from './types';
 
 export const emptySimpleExerciseState: SimpleExerciseStoredState = {};
 
@@ -30,12 +25,12 @@ export function isSimpleExerciseGivenUp(state: SimpleExerciseStoredState | undef
   return !!state && 'givenUp' in state && state.givenUp === true;
 }
 
-export function reduceSimpleExerciseState<Input, CheckResult = SimpleExerciseCheckResult>({
+export function reduceSimpleExerciseState<Input>({
   action,
   previousState,
 }: {
   parameters: Record<string, unknown>;
-  action: SimpleExerciseAction<Input, CheckResult>;
+  action: SimpleExerciseAction<Input>;
   previousState: SimpleExerciseStoredState;
 }): SimpleExerciseStoredState {
   if (isSimpleExerciseSolved(previousState) || isSimpleExerciseGivenUp(previousState)) {
@@ -45,12 +40,4 @@ export function reduceSimpleExerciseState<Input, CheckResult = SimpleExerciseChe
     return { givenUp: true };
   }
   return action.correct ? { solved: true } : emptySimpleExerciseState;
-}
-
-export function serializeSimpleExerciseAction<Input, CheckResult>(
-  action: SimpleExerciseAction<Input, CheckResult>,
-): StoredExerciseAction {
-  return action.type === 'give-up'
-    ? { type: 'give-up' }
-    : { type: 'input', input: action.input };
 }
