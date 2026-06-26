@@ -45,6 +45,7 @@ export interface ExerciseContextValue<
   Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 > {
+  skillId: string;
   descriptor: ExerciseDescriptor<Parameters> | null;
   instance: StoredExerciseInstance | null;
   state: State;
@@ -52,7 +53,6 @@ export interface ExerciseContextValue<
   parameters: Parameters | null;
   draftInput: unknown;
   startExercise: (descriptor: ExerciseDescriptor<Parameters>) => void;
-  ensureExercise: (descriptor: ExerciseDescriptor<Parameters>) => void;
   submitAction: (action: Action) => State;
   setDraftInput: (draftInput: unknown) => void;
 }

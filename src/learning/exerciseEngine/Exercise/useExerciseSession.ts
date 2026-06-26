@@ -18,18 +18,6 @@ function getCurrentInstance(moduleState: SkillModuleState): StoredExerciseInstan
   return moduleState.exercises[moduleState.exercises.length - 1] ?? null;
 }
 
-function descriptorMatches(
-  instance: StoredExerciseInstance | null,
-  descriptor: ExerciseDescriptor<Record<string, unknown>>,
-): boolean {
-  return instance?.exerciseId === descriptor.exerciseId && instance.version === descriptor.version;
-}
-
-const recentlyEnsuredExercises = new Map<
-  string,
-  ExerciseDescriptor<Record<string, unknown>>
->();
-
 function readStoredState<State extends StoredExerciseState>(
   instance: StoredExerciseInstance | null,
   initialState: State,
@@ -64,33 +52,6 @@ export function useExerciseSession<
         descriptor.version,
         descriptor.parameters,
       );
-    },
-    [skillId],
-  );
-
-  const ensureExercise = useCallback(
-    (descriptor: ExerciseDescriptor<Parameters>) => {
-      const store = useLearningStore.getState();
-      const current = store.getCurrentExerciseInstance(skillId);
-      if (descriptorMatches(current, descriptor)) {
-        return;
-      }
-      const recentlyEnsured = recentlyEnsuredExercises.get(skillId);
-      if (recentlyEnsured && descriptorMatches(current, recentlyEnsured)) {
-        return;
-      }
-      recentlyEnsuredExercises.set(skillId, descriptor);
-      store.startNewExercise(
-        skillId,
-        descriptor.exerciseId,
-        descriptor.version,
-        descriptor.parameters,
-      );
-      queueMicrotask(() => {
-        if (recentlyEnsuredExercises.get(skillId) === descriptor) {
-          recentlyEnsuredExercises.delete(skillId);
-        }
-      });
     },
     [skillId],
   );
@@ -141,6 +102,7 @@ export function useExerciseSession<
     : null;
 
   return {
+    skillId,
     descriptor,
     instance,
     state,
@@ -148,7 +110,6 @@ export function useExerciseSession<
     parameters: descriptor?.parameters ?? null,
     draftInput: instance?.draftInput,
     startExercise,
-    ensureExercise,
     submitAction,
     setDraftInput,
   };
