@@ -1,29 +1,19 @@
-import { createContext, useContext } from 'react';
-
-import type { StoredExerciseState } from '@/store';
-import type { ExerciseContextValue, ExerciseProps } from './types';
+import type { StoredExerciseAction, StoredExerciseState } from '@/store';
+import { ExerciseContext, type AnyExerciseContextValue } from './context';
+import type { ExerciseProps } from './types';
 import { useExerciseSession } from './useExerciseSession';
 
-const ExerciseContext = createContext<ExerciseContextValue<any, any, any> | null>(null);
-
+/** Runs an exercise session and exposes it to descendants through ExerciseContext. */
 export function Exercise<
   Parameters extends Record<string, unknown>,
-  Action,
+  Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 >(props: ExerciseProps<Parameters, Action, State>) {
   const { children, ...options } = props;
   const value = useExerciseSession(options);
-  return <ExerciseContext.Provider value={value}>{children}</ExerciseContext.Provider>;
-}
-
-export function useExercise<
-  Parameters extends Record<string, unknown>,
-  Action,
-  State extends StoredExerciseState,
->(): ExerciseContextValue<Parameters, Action, State> {
-  const value = useContext(ExerciseContext);
-  if (!value) {
-    throw new Error('useExercise must be used within an Exercise component.');
-  }
-  return value as ExerciseContextValue<Parameters, Action, State>;
+  return (
+    <ExerciseContext.Provider value={value as unknown as AnyExerciseContextValue}>
+      {children}
+    </ExerciseContext.Provider>
+  );
 }
