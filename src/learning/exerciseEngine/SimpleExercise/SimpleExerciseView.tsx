@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType }
 import { Alert, Box } from '@mui/material';
 
 import { useExercise } from '../Exercise';
+import { SimpleExerciseControlsContext } from './controlsContext';
 import { ExerciseControls } from './ExerciseControls';
 import { GiveUpDialog } from './GiveUpDialog';
 import { isSimpleExerciseGivenUp, isSimpleExerciseSolved } from './logic';
@@ -165,24 +166,28 @@ export function SimpleExerciseView<
         onSubmit={() => void handleSubmit()}
       />
       {feedback ? <Alert severity={feedback.type} sx={{ mt: 1.5 }}>{feedback.message}</Alert> : null}
-      <ExerciseControls
-        exerciseCompleted={solved}
-        hasGivenUp={givenUp}
-        canSubmit={canSubmit}
-        canGiveUp={externallyCanGiveUp && !complete && !isSubmitting}
-        onSubmit={() => void handleSubmit()}
-        onGiveUp={() => setGiveUpOpen(true)}
-        onNext={onNext}
-        leftActions={Controls ? (
-          <Controls
-            definitions={definitions as ReadonlyArray<SimpleExerciseDefinition<Parameters, unknown, unknown>>}
-            currentExerciseId={definition.exerciseId}
-            startExercise={startExercise}
-            showSolution={() => setSolutionRevealed(true)}
-            disabled={isSubmitting}
-          />
-        ) : null}
-      />
+      <SimpleExerciseControlsContext.Provider
+        value={{
+          solved,
+          givenUp,
+          canSubmit,
+          canGiveUp: externallyCanGiveUp && !complete && !isSubmitting,
+          onSubmit: () => void handleSubmit(),
+          onGiveUp: () => setGiveUpOpen(true),
+          onNext,
+          adminControls: Controls ? (
+            <Controls
+              definitions={definitions as ReadonlyArray<SimpleExerciseDefinition<Parameters, unknown, unknown>>}
+              currentExerciseId={definition.exerciseId}
+              startExercise={startExercise}
+              showSolution={() => setSolutionRevealed(true)}
+              disabled={isSubmitting}
+            />
+          ) : null,
+        }}
+      >
+        <ExerciseControls />
+      </SimpleExerciseControlsContext.Provider>
       {Output ? (
         <Output parameters={parameters} input={input} result={lastResult} state={state} />
       ) : null}

@@ -1,27 +1,12 @@
 import { Box, Button } from '@mui/material';
 import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material';
 
-interface ExerciseControlsProps {
-  exerciseCompleted: boolean;
-  hasGivenUp: boolean;
-  canSubmit: boolean;
-  canGiveUp: boolean;
-  onSubmit: () => void;
-  onGiveUp: () => void;
-  onNext: () => void;
-  leftActions?: React.ReactNode;
-}
+import { useSimpleExerciseControls } from './controlsContext';
 
-export function ExerciseControls({
-  exerciseCompleted,
-  hasGivenUp,
-  canSubmit,
-  canGiveUp,
-  onSubmit,
-  onGiveUp,
-  onNext,
-  leftActions,
-}: ExerciseControlsProps) {
+export function ExerciseControls() {
+  const { solved, givenUp, canSubmit, canGiveUp, onSubmit, onGiveUp, onNext, adminControls } =
+    useSimpleExerciseControls();
+
   return (
     <Box
       sx={{
@@ -34,12 +19,12 @@ export function ExerciseControls({
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
-        {leftActions}
+        {adminControls}
       </Box>
 
       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-        {!exerciseCompleted ? (
-          hasGivenUp ? (
+        {!solved ? (
+          givenUp ? (
             <Button
               variant="contained"
               size="medium"
