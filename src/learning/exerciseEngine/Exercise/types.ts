@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 
 import type {
+  AsyncExerciseReducer,
+  ExerciseActionResult,
   StoredExerciseAction,
   StoredExerciseEvent,
   StoredExerciseInstance,
@@ -52,8 +54,17 @@ export interface ExerciseContextValue<
   events: StoredExerciseEvent[];
   parameters: Parameters | null;
   draftInput: unknown;
+  pending: boolean;
   startExercise: (descriptor: ExerciseDescriptor<Parameters>) => void;
   submitAction: (action: Action) => State;
+  processAction: (
+    action: Action,
+    run: AsyncExerciseReducer,
+    options: {
+      isComplete: (state: StoredExerciseState) => boolean;
+      isSolved: (state: StoredExerciseState) => boolean;
+    },
+  ) => Promise<ExerciseActionResult>;
   setDraftInput: (draftInput: unknown) => void;
 }
 

@@ -82,6 +82,12 @@ export function useExerciseSession<
     [initialState, isComplete, isSolved, reducer, skillId],
   );
 
+  const processAction = useCallback<ExerciseContextValue<Parameters, Action, State>['processAction']>(
+    (action, run, options) =>
+      useLearningStore.getState().processExerciseAction(skillId, action, run, options),
+    [skillId],
+  );
+
   const setDraftInput = useCallback(
     (draftInput: unknown) => {
       const store = useLearningStore.getState();
@@ -109,8 +115,10 @@ export function useExerciseSession<
     events: instance?.events ?? [],
     parameters: descriptor?.parameters ?? null,
     draftInput: instance?.draftInput,
+    pending: moduleState.pending ?? false,
     startExercise,
     submitAction,
+    processAction,
     setDraftInput,
   };
 }
