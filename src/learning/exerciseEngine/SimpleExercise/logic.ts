@@ -1,3 +1,4 @@
+import type { StoredExerciseState } from '@/store';
 import type { SimpleExerciseAction, SimpleExerciseStoredState } from './types';
 
 export const emptySimpleExerciseState: SimpleExerciseStoredState = {};
@@ -17,11 +18,11 @@ export function getSimpleExerciseState(args?: {
   return emptySimpleExerciseState;
 }
 
-export function isSimpleExerciseSolved(state: SimpleExerciseStoredState | undefined): boolean {
+export function isSimpleExerciseSolved(state: StoredExerciseState | undefined): boolean {
   return !!state && 'solved' in state && state.solved === true;
 }
 
-export function isSimpleExerciseGivenUp(state: SimpleExerciseStoredState | undefined): boolean {
+export function isSimpleExerciseGivenUp(state: StoredExerciseState | undefined): boolean {
   return !!state && 'givenUp' in state && state.givenUp === true;
 }
 
