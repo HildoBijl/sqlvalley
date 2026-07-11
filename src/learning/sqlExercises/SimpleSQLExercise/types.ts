@@ -1,6 +1,10 @@
 import type { ComponentType } from 'react';
 
-import type { ExerciseHelpers } from '@/learning/exerciseEngine';
+import type {
+  ExerciseHelpers,
+  SimpleExerciseCheckResult,
+  SimpleExerciseFeedbackType,
+} from '@/learning/exerciseEngine';
 import type { TableKey } from '@/mockData';
 import type { CompareOptions } from '../grading';
 
@@ -15,6 +19,17 @@ export interface SimpleSQLExerciseDefinition<Parameters extends Record<string, u
   solution: string | ((parameters: Parameters) => string);
   label?: string;
   comparisonOptions?: CompareOptions;
+}
+
+export interface SimpleSQLCheckResult extends SimpleExerciseCheckResult {
+  feedbackType: SimpleExerciseFeedbackType;
+}
+
+/** A single SQL exercise plus the per-skill data (tables, title) buildSimpleSQLExercise needs. */
+export interface SimpleSQLExerciseSpec<Parameters extends Record<string, unknown>>
+  extends SimpleSQLExerciseDefinition<Parameters> {
+  tables: TableKey[];
+  title?: string;
 }
 
 export interface SimpleSQLExerciseProps<Parameters extends Record<string, unknown>> {

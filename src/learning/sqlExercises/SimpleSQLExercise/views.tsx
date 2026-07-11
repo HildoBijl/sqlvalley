@@ -7,7 +7,7 @@ import { ExerciseDescription } from './components/ExerciseDescription';
 import { ExerciseEditor } from './components/ExerciseEditor';
 import { ExerciseResults } from './components/ExerciseResults';
 import { ExerciseSolution } from './components/ExerciseSolution';
-import type { SimpleSQLCheckResult } from './SimpleSQLExercise';
+import type { SimpleSQLCheckResult } from './types';
 import { useSimpleSQLRuntime } from './runtime';
 
 export function SQLExerciseInput<Parameters extends Record<string, unknown>>({

@@ -1,8 +1,8 @@
 import {
-  SimpleSQLExercise,
-  type SimpleSQLExerciseComponent,
+  buildSimpleSQLExercise,
   type SimpleSQLExerciseDefinition,
 } from '@/learning/sqlExercises';
+import type { AnyExerciseDefinition } from '@/learning/exerciseEngine';
 import { getModuleTables } from '@/curriculum/utils/moduleAccess';
 
 type Parameters = Record<string, never>;
@@ -85,13 +85,7 @@ WHERE phone LIKE '408%'
 //   },
 ];
 
-const Exercise: SimpleSQLExerciseComponent = ({ skillId, title }) => (
-  <SimpleSQLExercise
-    skillId={skillId}
-    tables={getModuleTables(skillId)}
-    definitions={EXERCISES}
-    title={title}
-  />
-);
-
-export default Exercise;
+export default function buildExercises(skillId: string): AnyExerciseDefinition[] {
+  const tables = getModuleTables(skillId);
+  return EXERCISES.map((exercise) => buildSimpleSQLExercise({ ...exercise, tables }));
+}

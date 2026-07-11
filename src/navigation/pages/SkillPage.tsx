@@ -27,6 +27,7 @@ import { StoryTab, SummaryTab, TheoryTab, VideoTab } from '@/learning/components
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
 import { useModuleProgress } from '@/learning/progress';
+import { ExerciseManager } from '@/learning/exerciseEngine/ExerciseManager/manager';
 import { useAdminMode } from '@/store/adminMode';
 
 import type { TabConfig } from '@/learning/types';
@@ -81,13 +82,13 @@ export default function SkillPage() {
   const {
     isLoading,
     skillMeta,
-    exerciseComponent: ExerciseComponent,
+    exerciseDefinitions,
     error: contentError,
   } = useSkillContent(skillId, {
     loadExercises: !hasStaticPractice,
   });
 
-  const hasInteractivePractice = Boolean(ExerciseComponent);
+  const hasInteractivePractice = Boolean(exerciseDefinitions?.length);
   const hasPractice = hasStaticPractice || hasInteractivePractice;
 
   const { isCompleted } = useModuleProgress(skillTree);
@@ -159,9 +160,6 @@ export default function SkillPage() {
       : undefined;
 
   const showStoryButton = visibleTabs.some((tab) => tab.key === 'story');
-  const exerciseTitle = (moduleState.numSolved ?? 0) >= REQUIRED_EXERCISE_COUNT
-    ? 'Practice Exercise'
-    : 'Exercise';
 
   return (
     <Container maxWidth="lg" sx={{ py: 3 }}>
@@ -190,11 +188,8 @@ export default function SkillPage() {
             />
           )}
 
-          {currentTab === 'practice' && ExerciseComponent && !hasStaticPractice && (
-            <ExerciseComponent
-              skillId={skillId ?? ''}
-              title={exerciseTitle}
-            />
+          {currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
+            <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
           )}
 
           {currentTab === 'theory' && <TheoryTab contentId={skillMeta.id} />}

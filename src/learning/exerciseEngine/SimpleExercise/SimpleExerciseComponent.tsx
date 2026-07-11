@@ -8,7 +8,7 @@ import { SimpleExerciseControlsContext } from './controlsContext';
 import { ExerciseControls } from './ExerciseControls';
 import { GiveUpDialog } from './GiveUpDialog';
 import { isSimpleExerciseGivenUp, isSimpleExerciseSolved } from './logic';
-import type { SimpleExerciseSpecification } from './specifications';
+import type { SimpleExerciseRenderSpec } from './specifications';
 import type { SimpleExerciseFeedbackType, SimpleExerciseStoredState } from './types';
 
 interface SimpleExerciseComponentProps<
@@ -16,7 +16,7 @@ interface SimpleExerciseComponentProps<
   Input,
   CheckResult,
 > {
-  spec: SimpleExerciseSpecification<Parameters, Input, CheckResult>;
+  spec: SimpleExerciseRenderSpec<Parameters, Input, CheckResult>;
   reduce: AsyncExerciseReducer;
   isComplete: (state: StoredExerciseState) => boolean;
   isSolved: (state: StoredExerciseState) => boolean;

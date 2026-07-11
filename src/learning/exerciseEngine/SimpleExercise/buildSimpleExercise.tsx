@@ -58,7 +58,6 @@ export function buildSimpleExercise<
     exerciseId: spec.exerciseId,
     version: spec.version,
     generateParameters: spec.generateParameters as AnyExerciseDefinition['generateParameters'],
-    reduce,
     initialState: emptySimpleExerciseState,
     isComplete,
     isSolved: isSimpleExerciseSolved,
