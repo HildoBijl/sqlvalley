@@ -36,10 +36,11 @@ export interface ExerciseSessionOptions<
   State extends StoredExerciseState,
 > {
   skillId: string;
-  reducer: ExerciseReducer<Parameters, Action, State>;
+  reducer?: ExerciseReducer<Parameters, Action, State>;
   initialState: State;
   isComplete: (state: State) => boolean;
   isSolved: (state: State) => boolean;
+  startNewExercise?: () => void;
 }
 
 export interface ExerciseContextValue<
@@ -56,6 +57,7 @@ export interface ExerciseContextValue<
   draftInput: unknown;
   pending: boolean;
   startExercise: (descriptor: ExerciseDescriptor<Parameters>) => void;
+  startNewExercise: () => void;
   submitAction: (action: Action) => State;
   processAction: (
     action: Action,

@@ -34,3 +34,10 @@ export interface ExerciseDefinition<
   isSolved: (state: State) => boolean;
   Component: ComponentType;
 }
+
+/** An exercise definition with its generics erased, for holding a mixed list. */
+export type AnyExerciseDefinition = ExerciseDefinition<
+  Record<string, unknown>,
+  StoredExerciseAction,
+  StoredExerciseState
+>;

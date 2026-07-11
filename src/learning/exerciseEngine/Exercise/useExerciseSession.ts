@@ -36,6 +36,7 @@ export function useExerciseSession<
   initialState,
   isComplete,
   isSolved,
+  startNewExercise,
 }: ExerciseSessionOptions<Parameters, Action, State>): ExerciseContextValue<Parameters, Action, State> {
   const moduleState = useLearningStore((store) => {
     const existing = store.modules[skillId];
@@ -64,6 +65,9 @@ export function useExerciseSession<
         throw new Error(`Cannot submit an action for "${skillId}" without an active exercise.`);
       }
 
+      if (!reducer) {
+        throw new Error(`Cannot submit a sync action for "${skillId}" without a reducer.`);
+      }
       const previousState = readStoredState(current, initialState);
       const nextState = reducer({
         parameters: current.parameters as Parameters,
@@ -117,6 +121,7 @@ export function useExerciseSession<
     draftInput: instance?.draftInput,
     pending: moduleState.pending ?? false,
     startExercise,
+    startNewExercise: startNewExercise ?? (() => {}),
     submitAction,
     processAction,
     setDraftInput,
