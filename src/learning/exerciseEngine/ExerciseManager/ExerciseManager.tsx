@@ -1,80 +1,74 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, type ReactNode } from 'react';
 import { Alert, Typography } from '@mui/material';
 
-import {
-  useLearningStore,
-  type StoredExerciseAction,
-  type StoredExerciseState,
-} from '@/store';
-import { useExercise } from '../Exercise';
+import { useLearningStore, type SkillModuleState } from '@/store';
+import { Exercise, type AnyExerciseDefinition } from '../Exercise';
 import { exerciseHelpers } from './helpers';
-import type { ExerciseManagerProps, ManagedExercise } from './types';
+
+interface ExerciseManagerProps {
+  skillId: string;
+  exercises: ReadonlyArray<AnyExerciseDefinition>;
+  unavailableMessage?: ReactNode;
+  pendingMessage?: ReactNode;
+}
 
 /**
- * Owns exercise selection and lifecycle for a skill: ensures one is active
- * (generating when needed) and renders it. Content-agnostic.
+ * Owns exercise selection and lifecycle for a skill. Fed the skill's definitions
+ * by the page, it matches the store's current exercise to one of them (starting a
+ * new one when missing or stale) and renders that definition's component.
  */
-export function ExerciseManager<
-  Parameters extends Record<string, unknown>,
-  T extends ManagedExercise<Parameters>,
->({ exercises, unavailableMessage, pendingMessage, children }: ExerciseManagerProps<Parameters, T>) {
-  const { skillId, descriptor, parameters, startExercise } = useExercise<
-    Parameters,
-    StoredExerciseAction,
-    StoredExerciseState
-  >();
+export function ExerciseManager({
+  skillId,
+  exercises,
+  unavailableMessage,
+  pendingMessage,
+}: ExerciseManagerProps) {
+  const skillModule = useLearningStore(
+    (store) => store.modules[skillId] as SkillModuleState | undefined,
+  );
+  const current = skillModule?.exercises?.[skillModule.exercises.length - 1] ?? null;
 
   const byId = useMemo(
     () => new Map(exercises.map((exercise) => [exercise.exerciseId, exercise])),
     [exercises],
   );
-  const active = descriptor ? byId.get(descriptor.exerciseId) ?? null : null;
-
-  // Build a fresh descriptor (id, version, randomized parameters) for an exercise.
-  const createDescriptor = useCallback(
-    (exercise: T) => ({
-      exerciseId: exercise.exerciseId,
-      version: exercise.version,
-      parameters: exercise.generateParameters(exerciseHelpers, { previousParameters: parameters }),
-    }),
-    [parameters],
-  );
-
-  const startSpecific = useCallback(
-    (exerciseId: string) => {
-      const exercise = byId.get(exerciseId);
-      if (exercise) startExercise(createDescriptor(exercise));
-    },
-    [byId, createDescriptor, startExercise],
-  );
+  const matched = current ? byId.get(current.exerciseId) ?? null : null;
+  const active = matched && matched.version === current?.version ? matched : null;
 
   const startNewExercise = useCallback(() => {
-    const candidates = active && exercises.length > 1
-      ? exercises.filter((exercise) => exercise.exerciseId !== active.exerciseId)
+    const store = useLearningStore.getState();
+    const instance = store.getCurrentExerciseInstance(skillId);
+    const currentDefinition = instance ? byId.get(instance.exerciseId) : null;
+    const candidates = currentDefinition && exercises.length > 1
+      ? exercises.filter((exercise) => exercise.exerciseId !== currentDefinition.exerciseId)
       : exercises;
     if (candidates.length === 0) return;
-    startExercise(createDescriptor(exerciseHelpers.selectRandomly(candidates)));
-  }, [active, createDescriptor, exercises, startExercise]);
+    const next = exerciseHelpers.selectRandomly(candidates);
+    const parameters = next.generateParameters(exerciseHelpers, {
+      previousParameters: instance?.parameters ?? null,
+    });
+    store.startNewExercise(skillId, next.exerciseId, next.version, parameters);
+  }, [byId, exercises, skillId]);
 
-  // Ensure exactly one valid exercise is active. Reads the live store rather than
-  // the captured descriptor so React StrictMode's double-invoke can't start two.
+  // Ensure exactly one valid exercise is active. Reads the live store so React
+  // StrictMode's double-invoke can't start two.
   useEffect(() => {
     if (exercises.length === 0) return;
-    const current = useLearningStore.getState().getCurrentExerciseInstance(skillId);
-    if (!current) {
-      startExercise(createDescriptor(exerciseHelpers.selectRandomly(exercises)));
-      return;
-    }
-    const stored = byId.get(current.exerciseId);
-    if (!stored || stored.version !== current.version) {
-      startExercise(createDescriptor(stored ?? exerciseHelpers.selectRandomly(exercises)));
-    }
-  }, [byId, createDescriptor, exercises, skillId, startExercise]);
+    const store = useLearningStore.getState();
+    const instance = store.getCurrentExerciseInstance(skillId);
+    const definition = instance ? byId.get(instance.exerciseId) : undefined;
+    if (instance && definition && definition.version === instance.version) return;
+    const next = definition ?? exerciseHelpers.selectRandomly(exercises);
+    const parameters = next.generateParameters(exerciseHelpers, {
+      previousParameters: instance?.parameters ?? null,
+    });
+    store.startNewExercise(skillId, next.exerciseId, next.version, parameters);
+  }, [byId, exercises, skillId]);
 
   if (exercises.length === 0) {
     return <Alert severity="info">{unavailableMessage ?? 'No exercises are available yet.'}</Alert>;
   }
-  if (!active || !parameters) {
+  if (!active) {
     return (
       <Typography color="text.secondary">
         {pendingMessage ?? 'Generating your next exercise...'}
@@ -82,5 +76,16 @@ export function ExerciseManager<
     );
   }
 
-  return <>{children(active, { startNewExercise, startExercise: startSpecific })}</>;
+  const { Component } = active;
+  return (
+    <Exercise
+      skillId={skillId}
+      initialState={active.initialState}
+      isComplete={active.isComplete}
+      isSolved={active.isSolved}
+      startNewExercise={startNewExercise}
+    >
+      <Component />
+    </Exercise>
+  );
 }

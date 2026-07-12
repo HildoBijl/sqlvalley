@@ -1,5 +1,3 @@
-import type { ComponentType } from 'react';
-
 import type {
   ExerciseHelpers,
   SimpleExerciseCheckResult,
@@ -31,15 +29,3 @@ export interface SimpleSQLExerciseSpec<Parameters extends Record<string, unknown
   tables: TableKey[];
   title?: string;
 }
-
-export interface SimpleSQLExerciseProps<Parameters extends Record<string, unknown>> {
-  skillId: string;
-  tables: TableKey[];
-  definitions: ReadonlyArray<SimpleSQLExerciseDefinition<Parameters>>;
-  title?: string;
-}
-
-export type SimpleSQLExerciseComponent = ComponentType<{
-  skillId: string;
-  title?: string;
-}>;
