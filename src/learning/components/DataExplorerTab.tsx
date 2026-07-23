@@ -17,11 +17,10 @@ import {
 import { AccountTree } from '@mui/icons-material';
 import { DataTable } from '@/components';
 import { useDatabase } from '@/learning/databases';
-import { buildSchema, defaultDatasetSize, allTables } from '@/mockData';
-import { getModuleTables } from '@/curriculum/utils/moduleAccess';
+import { buildSchema, defaultDatasetSize, type TableKey } from '@/mockData';
 
 interface DataExplorerTabProps {
-  skillId: string;
+  tables: TableKey[];
 }
 
 interface TableInfo {
@@ -45,19 +44,18 @@ interface Relationship {
   toColumn: string;
 }
 
-export function DataExplorerTab({ skillId }: DataExplorerTabProps) {
+export function DataExplorerTab({ tables }: DataExplorerTabProps) {
   const [selectedTable, setSelectedTable] = useState<string>('');
   const [isErDiagramOpen, setIsErDiagramOpen] = useState(false);
 
-  const resolvedTables = useMemo(() => skillId ? getModuleTables(skillId) : allTables, [skillId]);
-  const resolvedSize = useMemo(() => defaultDatasetSize, [skillId]);
+  const resolvedSize = defaultDatasetSize;
   const schemaSource = useMemo(
-    () => buildSchema({ tables: resolvedTables, size: resolvedSize }),
-    [resolvedTables, resolvedSize],
+    () => buildSchema({ tables, size: resolvedSize }),
+    [tables, resolvedSize],
   );
   
   const { tableNames, executeQuery, queryResult } = useDatabase({
-    moduleId: skillId,
+    tables,
     size: 'full',
     resetOnSchemaChange: false,
   });

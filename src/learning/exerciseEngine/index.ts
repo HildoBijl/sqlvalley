@@ -1,4 +1,3 @@
-export * from './reducer';
+export * from './Exercise';
+export * from './ExerciseManager';
 export * from './SimpleExercise';
-export * from './types';
-export * from './useSkillExerciseState';

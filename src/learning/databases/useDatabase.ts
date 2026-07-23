@@ -1,17 +1,13 @@
 /**
- * SQL-Valley specific database hook.
- * Knows about content, tables, and sizes - wraps the generic SQL.js functionality.
+ * SQL-Valley database hook wrapping the generic SQL.js functionality.
  */
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useDatabaseContext, type QueryResult } from '@/components/sql/sqljs';
 import { type DatasetSize, type TableKey, buildSchema, getCompletionSchema, defaultDatasetSize, allTables } from '@/mockData';
-import { getModuleTables } from '@/curriculum/utils/moduleAccess';
 
 interface DatabaseOptions {
-  /** Module ID (skill or concept) to determine tables and size */
-  moduleId?: string;
-  /** Override tables (ignores contentId for table resolution) */
+  /** Tables included in the database. Defaults to all tables. */
   tables?: TableKey[];
   /** Override dataset size */
   size?: DatasetSize;
@@ -39,7 +35,6 @@ interface UseDatabaseReturn {
 
 export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
   const {
-    moduleId,
     tables,
     size,
     cacheKey,
@@ -65,7 +60,7 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
   // Resolve the dataset size
   const resolvedSize = useMemo(
     () => size ?? defaultDatasetSize,
-    [size, moduleId],
+    [size],
   );
 
   // Resolve the tables to include
@@ -73,8 +68,8 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
     if (tables?.length) {
       return Array.from(new Set(tables)) as TableKey[];
     }
-    return moduleId ? getModuleTables(moduleId) : allTables;
-  }, [tables, moduleId]);
+    return allTables;
+  }, [tables]);
 
   // Build the schema SQL
   const resolvedSchema = useMemo(
@@ -92,8 +87,8 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
   const contextKey = useMemo(() => {
     if (cacheKey) return cacheKey;
     const tablesSignature = resolvedTables.join('|');
-    return `${moduleId ?? 'default'}:size=${resolvedSize}:tables=${tablesSignature}`;
-  }, [cacheKey, moduleId, resolvedTables, resolvedSize]);
+    return `size=${resolvedSize}:tables=${tablesSignature}`;
+  }, [cacheKey, resolvedTables, resolvedSize]);
 
   // Update database when schema changes, provider DB instance changes, or context is ready
   useEffect(() => {
@@ -114,7 +109,7 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
     if (!providerDb) {
       const db = getDatabase(contextKey, resolvedSchema, {
         persistent,
-        metadata: { moduleId, size: resolvedSize },
+        metadata: { size: resolvedSize },
       });
       setDatabase(db);
       setCurrentSchema(resolvedSchema);
@@ -162,7 +157,6 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
     currentSchema,
     contextKey,
     persistent,
-    moduleId,
     resolvedSize,
     resetOnSchemaChange,
     getDatabase,
@@ -229,27 +223,9 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
 /** Playground database - full dataset, persistent */
 export function usePlaygroundDatabase() {
   return useDatabase({
-    moduleId: 'playground',
     size: 'full',
+    cacheKey: 'playground',
     persistent: true,
-    resetOnSchemaChange: true,
-  });
-}
-
-/** Concept pages - small dataset */
-export function useConceptDatabase(conceptId: string) {
-  return useDatabase({
-		moduleId: conceptId,
-    size: 'small',
-    resetOnSchemaChange: true,
-  });
-}
-
-/** Skill practice - module-specific tables (full dataset) */
-export function useSkillDatabase(skillId: string) {
-  return useDatabase({
-    moduleId: skillId,
-    size: 'full',
     resetOnSchemaChange: true,
   });
 }

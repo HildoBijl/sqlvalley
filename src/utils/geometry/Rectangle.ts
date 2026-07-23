@@ -4,7 +4,7 @@ import { Span, ensureSpan, type SpanInput, type SpanSO } from './Span';
 import { ensureLine, Line, type LineInput } from './Line';
 
 export type RectangleInput = Rectangle | SpanInput;
-export interface RectangleSO extends SpanSO { }
+export type RectangleSO = SpanSO;
 
 export class Rectangle {
 	public readonly span: Span;

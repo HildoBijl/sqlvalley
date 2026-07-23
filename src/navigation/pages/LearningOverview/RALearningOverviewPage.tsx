@@ -1,8 +1,5 @@
-import {
-  raModulePositions,
-  raConnectors,
-} from "@/curriculum/skillTreeVisualizations/ra-treeDefinition";
-import { SkillTreeOverviewPage } from "../SkillTreeOverviewPage";
+import { raModulePositions, raConnectors } from '@/curriculum/skillTreeVisualizations';
+import { SkillTreeOverviewPage } from '../SkillTreeOverviewPage';
 
 /*
  * RALearningOverviewPage component that displays the Relational Algebra skill tree overview page.

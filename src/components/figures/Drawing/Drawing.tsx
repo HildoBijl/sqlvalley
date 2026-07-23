@@ -74,8 +74,8 @@ export function Drawing(props: DrawingProps) {
 		getPointFromEvent: (event: MouseEvent | TouchEvent) => getCoordinates(getEventPosition(event), figure?.inner && figure?.inner.getBoundingClientRect(), bounds),
 		contains: (point: Vector) => bounds.contains(point),
 		applyBounds: (point: Vector) => bounds.applyBounds(point),
-	}), [bounds, figure, svg, svgDefs, htmlContents, canvas, getFigureScale]);
-	useImperativeHandle(mergedRef, () => drawingData, [bounds, figure, svg, svgDefs, htmlContents, canvas, getFigureScale]);
+	}), [id, bounds, figure, svg, svgDefs, htmlContents, canvas, getFigureScale]);
+	useImperativeHandle(mergedRef, () => drawingData, [drawingData]);
 
 	// Render figure with SVG and Canvas properly placed.
 	return <DrawingContext.Provider value={drawingData}>

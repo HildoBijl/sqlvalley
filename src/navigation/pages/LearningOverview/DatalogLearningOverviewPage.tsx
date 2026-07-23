@@ -1,8 +1,5 @@
-import {
-  datalogModulePositions,
-  datalogConnectors,
-} from "@/curriculum/skillTreeVisualizations/datalog-treeDefinitions";
-import { SkillTreeOverviewPage } from "../SkillTreeOverviewPage";
+import { datalogModulePositions, datalogConnectors } from '@/curriculum/skillTreeVisualizations';
+import { SkillTreeOverviewPage } from '../SkillTreeOverviewPage';
 
 /*
  * Datalog-LearningOverviewPage component that displays the skill tree overview page.

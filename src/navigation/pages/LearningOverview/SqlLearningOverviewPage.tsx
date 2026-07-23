@@ -1,8 +1,5 @@
-import {
-  modulePositions,
-  connectors,
-} from "@/curriculum/skillTreeVisualizations/sql-treeDefinition";
-import { SkillTreeOverviewPage } from "../SkillTreeOverviewPage";
+import { modulePositions, connectors } from '@/curriculum/skillTreeVisualizations';
+import { SkillTreeOverviewPage } from '../SkillTreeOverviewPage';
 
 /*
  * LearningOverviewPage component that displays the skill tree overview page.

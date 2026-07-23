@@ -1,5 +1,5 @@
 import { Page, Section, Par, Term, RA, RelationName } from '@/components';
-import { ManualExerciseSet } from '@/learning/components/SkillPractice';
+import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
 
 import { CompaniesSchema } from '../../utils';
 

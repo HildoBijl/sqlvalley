@@ -150,7 +150,7 @@ export function SQLEditor({
     }
 
     return baseExtensions;
-  }, [hasExecute, sqlConfig]);
+  }, [hasExecute, sqlConfig, executeRef]);
 
   const basicSetup = useMemo(
     () => ({

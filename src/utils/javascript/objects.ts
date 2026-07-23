@@ -122,34 +122,3 @@ export function preserveRefs<T = unknown>(newValue: T, oldValue?: T): T {
 	// Fallback: cannot reconcile deeper; return new value.
 	return newValue
 }
-
-// Process the options given to a function or component, filling in default values. Return a copied object.
-export function processOptions<T extends Record<string, any>>(givenOptions: Partial<T> = {}, defaultOptions: T): T {
-  // Check the input.
-  if (!isPlainObject(givenOptions))
-    throw new Error(`Invalid options: expected object but received type "${typeof givenOptions}".`);
-  if (!isPlainObject(defaultOptions))
-    throw new Error("Invalid defaultOptions: no or invalid object given.");
-
-  // Start with defaults and add given options.
-  const result: T = { ...defaultOptions };
-  for (const key in givenOptions) {
-    if (!Object.prototype.hasOwnProperty.call(defaultOptions, key))
-      throw new Error(`Invalid option: "${key}" is not a recognized option.`);
-    const value = givenOptions[key];
-    if (value !== undefined)
-      result[key] = value;
-  }
-  return result;
-}
-
-// Filter out properties from a given set of options to only be left with the ones in the second set of options.
-export function filterOptions<T extends Record<string, any>, U extends Record<string, any>>(givenOptions: T, defaultOptions: U): Partial<U> {
-  const keys = Object.keys(defaultOptions) as (keyof U)[];
-  const result = {} as Partial<U>;
-  for (const key of keys) {
-    if (key in givenOptions)
-      result[key] = givenOptions[key as keyof T] as any;
-  }
-  return result;
-}
