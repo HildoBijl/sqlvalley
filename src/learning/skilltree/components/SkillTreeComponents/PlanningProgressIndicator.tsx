@@ -2,6 +2,7 @@ import { Box, LinearProgress, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Link } from '@/components';
 import { skillTree } from '@/curriculum';
+import { treeColors } from '../../utils/graphics/treeColors';
 
 interface PlanningProgressIndicatorProps {
   nextStepName: string;
@@ -79,7 +80,7 @@ export function PlanningProgressIndicator({
                     : progress < 66
                       ? 'orange'
                       : progress === 100
-                        ? 'purple'
+                        ? treeColors.goal
                         : 'green',
                 borderRadius: 4,
               },

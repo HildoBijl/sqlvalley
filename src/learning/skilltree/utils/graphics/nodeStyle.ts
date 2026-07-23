@@ -1,4 +1,5 @@
 import type { Theme } from '@mui/material/styles';
+import { treeColors } from './treeColors';
 
 interface NodeStyleInput {
   planningMode: boolean;
@@ -36,7 +37,7 @@ export function getNodeStyle({
   staticMode = false,
   isSelected = false
 }: NodeStyleInput): NodeStyle {
-  const fillColor = isGoalNode ? 'purple' : theme.palette.background.paper;
+  const fillColor = isGoalNode ? treeColors.goal : theme.palette.background.paper;
 
   if (staticMode) {
     return {
@@ -57,15 +58,15 @@ export function getNodeStyle({
 
     let borderColor: string;
     if (isGoalNode) {
-      borderColor = 'purple';
+      borderColor = treeColors.goal;
     } else if (highlighted) {
-      borderColor = completed ? '#4CAF50' : readyToLearn ? '#FFD700' : '#E84421';
+      borderColor = completed ? treeColors.completed : readyToLearn ? treeColors.ready : treeColors.locked;
     } else if (completed) {
-      borderColor = '#4CAF50';
+      borderColor = treeColors.completed;
     } else if (isOnGoalPath && readyToLearn) {
-      borderColor = '#FFD700';
+      borderColor = treeColors.ready;
     } else if (isOnGoalPath) {
-      borderColor = 'purple';
+      borderColor = treeColors.goal;
     } else {
       borderColor = theme.palette.divider;
     }
@@ -78,7 +79,7 @@ export function getNodeStyle({
 
   if (highlighted) {
     return {
-      borderColor: completed ? 'rgba(76, 175, 80, 1.0)' : readyToLearn ? '#FFD700' : '#E84421',
+      borderColor: completed ? treeColors.completed : readyToLearn ? treeColors.ready : treeColors.locked,
       fillColor,
       nodeOpacity: 1.0,
       strokeWidth: 2,
@@ -86,7 +87,7 @@ export function getNodeStyle({
   }
   if (completed) {
     return {
-      borderColor: dimmed ? 'rgba(76, 175, 80, 0.4)' : '#4CAF50',
+      borderColor: dimmed ? treeColors.completedFaded : treeColors.completed,
       fillColor,
       nodeOpacity: dimmed ? 0.4 : 1.0,
       strokeWidth: 1,
@@ -94,14 +95,14 @@ export function getNodeStyle({
   }
   if (readyToLearn) {
     return {
-      borderColor: dimmed ? '#e0e0e0' : '#FFD700',
+      borderColor: dimmed ? treeColors.faded : treeColors.ready,
       fillColor,
       nodeOpacity: dimmed ? 0.15 : 1.0,
       strokeWidth: 1,
     };
   }
   return {
-    borderColor: '#e0e0e0',
+    borderColor: treeColors.faded,
     fillColor,
     nodeOpacity: 0.15,
     strokeWidth: 1,

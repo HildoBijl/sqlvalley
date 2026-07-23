@@ -1,5 +1,6 @@
 import type { Module } from '@/curriculum';
 import { isReadyToLearn } from '@/learning/skillTreeDefinition';
+import { treeColors } from './treeColors';
 
 export function isConnectorInGoalPath(
   connector: { from: string; to: string },
@@ -74,22 +75,22 @@ export function getConnectorStyle({
   const bothCompleted = fromCompleted && toCompleted;
 
   if (staticMode) {
-    return { strokeColor: '#9aa0a6', strokeWidth: 1.5, opacity: 1 };
+    return { strokeColor: treeColors.neutral, strokeWidth: 1.5, opacity: 1 };
   }
 
   if (isInHoveredPath) {
     if (bothCompleted) {
-      return { strokeColor: '#4CAF50', strokeWidth: 1.5, opacity: 0.7 };
+      return { strokeColor: treeColors.completed, strokeWidth: 1.5, opacity: 0.7 };
     }
     if (isNextToLearn) {
-      return { strokeColor: '#FFD700', strokeWidth: 1.5, opacity: 0.7 };
+      return { strokeColor: treeColors.ready, strokeWidth: 1.5, opacity: 0.7 };
     }
-    return { strokeColor: '#E84421', strokeWidth: 1.5, opacity: 0.7 };
+    return { strokeColor: treeColors.locked, strokeWidth: 1.5, opacity: 0.7 };
   }
 
   if (isSomethingHovered) {
     return {
-      strokeColor: '#9aa0a6',
+      strokeColor: treeColors.neutral,
       strokeWidth: 1.5,
       opacity: planningMode ? 0.15 : 0.2,
     };
@@ -97,25 +98,25 @@ export function getConnectorStyle({
 
   if (planningMode) {
     if (!goalNodeId) {
-      return { strokeColor: '#9aa0a6', strokeWidth: 1.5, opacity: 0.7 };
+      return { strokeColor: treeColors.neutral, strokeWidth: 1.5, opacity: 0.7 };
     }
     if (!isInGoalPath) {
-      return { strokeColor: '#9aa0a6', strokeWidth: 1.5, opacity: 0.15 };
+      return { strokeColor: treeColors.neutral, strokeWidth: 1.5, opacity: 0.15 };
     }
     if (bothCompleted) {
-      return { strokeColor: '#4CAF50', strokeWidth: 1.5, opacity: 1 };
+      return { strokeColor: treeColors.completed, strokeWidth: 1.5, opacity: 1 };
     }
     if (isNextToLearn) {
-      return { strokeColor: '#FFD700', strokeWidth: 1.5, opacity: 1 };
+      return { strokeColor: treeColors.ready, strokeWidth: 1.5, opacity: 1 };
     }
-    return { strokeColor: 'purple', strokeWidth: 1.5, opacity: 1 };
+    return { strokeColor: treeColors.goal, strokeWidth: 1.5, opacity: 1 };
   }
 
   if (bothCompleted) {
-    return { strokeColor: '#4CAF50', strokeWidth: 1.5, opacity: 0.7 };
+    return { strokeColor: treeColors.completed, strokeWidth: 1.5, opacity: 0.7 };
   }
   if (isNextToLearn) {
-    return { strokeColor: '#FFD700', strokeWidth: 1.5, opacity: 0.5 };
+    return { strokeColor: treeColors.ready, strokeWidth: 1.5, opacity: 0.5 };
   }
-  return { strokeColor: '#9aa0a6', strokeWidth: 1.5, opacity: 0.2 };
+  return { strokeColor: treeColors.neutral, strokeWidth: 1.5, opacity: 0.2 };
 }

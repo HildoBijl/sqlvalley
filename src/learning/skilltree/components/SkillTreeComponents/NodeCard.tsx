@@ -6,6 +6,7 @@ import { NodeCompletedMark } from './Icons/NodeCompletedMark';
 import { NodeGoalPin } from './Icons/NodeGoalPin';
 import { NodeIconBadge } from './Icons/NodeIconBadge';
 import { getNodeStyle } from '../../utils/graphics/nodeStyle';
+import { treeColors } from '../../utils/graphics/treeColors';
 import type { ModulePositionMeta } from '../../utils/positionProcessing';
 import { cardHeight, cardWidth } from '../../utils/settings';
 
@@ -125,7 +126,7 @@ export function NodeCard({
             cursor: 'pointer',
             borderRadius: `${cornerRadius}px`,
             '&:hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              backgroundColor: 'action.hover',
             },
           }}
           TouchRippleProps={{
@@ -180,7 +181,10 @@ export function NodeCard({
                 textAlign: 'center',
                 fontWeight: 500,
                 fontSize: '17px',
-                color: planningMode && isGoalNode ? '#ffffff' : '#000000',
+                color:
+                  planningMode && isGoalNode
+                    ? treeColors.goalContrastText
+                    : theme.palette.text.primary,
               }}
             >
               {item.name}
