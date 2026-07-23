@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { Container } from '@mui/material';
 import { skillTree } from '@/curriculum';
 import type { SkillTreeVisualizationId } from '@/curriculum/skillTreeVisualizations';
@@ -21,10 +21,6 @@ export function SkillTreeOverviewPage({
   modulePositions,
   visiblePaths,
 }: SkillTreeOverviewPageProps) {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const nodeRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
   const markSkillTreeVisited = useSkillTreeSettingsStore(
     (state) => state.markSkillTreeVisited,
   );
@@ -33,7 +29,7 @@ export function SkillTreeOverviewPage({
     markSkillTreeVisited(treeId);
   }, [markSkillTreeVisited, treeId]);
 
-  const { isCompleted, getProgress } = useModuleProgress(skillTree);
+  const { isCompleted } = useModuleProgress(skillTree);
   const treeBounds = useTreeBounds(modulePositions);
 
   const planningMode = useSkillTreeSettingsStore(
@@ -65,7 +61,6 @@ export function SkillTreeOverviewPage({
         treeBounds={treeBounds}
         visiblePaths={visiblePaths}
         isCompleted={isCompleted}
-        getProgress={getProgress}
         memoryStoreAPI={{
           planningMode,
           setPlanningMode: (value) => setPlanningMode(treeId, value),
@@ -76,10 +71,6 @@ export function SkillTreeOverviewPage({
           hideLegend,
           setHideLegend,
         }}
-        hoveredId={hoveredId}
-        setHoveredId={setHoveredId}
-        containerRef={containerRef}
-        nodeRefs={nodeRefs}
         settings={{
           allowZoom: true,
           initialZoom: 1,

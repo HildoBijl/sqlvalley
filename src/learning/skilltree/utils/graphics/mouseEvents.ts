@@ -4,7 +4,6 @@ import { getPrerequisites } from '@/learning/skillTreeDefinition';
 
 export function useHoverState(
   skillTree: Record<string, Module>,
-  setHoveredId: (id: string | null) => void,
   onNavigate: (id: string) => void,
 ) {
   const [localHoveredId, setLocalHoveredId] = useState<string | null>(null);
@@ -12,10 +11,8 @@ export function useHoverState(
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-
   const handleHoverStart = (id: string) => {
     setLocalHoveredId(id);
-    setHoveredId(id);
     const chain = getPrerequisites(skillTree, id);
     setPrerequisites(chain);
 
@@ -25,7 +22,6 @@ export function useHoverState(
 
   const handleHoverEnd = () => {
     setLocalHoveredId(null);
-    setHoveredId(null);
     setPrerequisites(new Set());
     setTooltip(null);
   };

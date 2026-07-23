@@ -1,35 +1,21 @@
 import type { Module } from '@/curriculum';
-
-export function isReadyToLearn(
-  item: Module,
-  isCompleted: (id: string) => boolean,
-): boolean {
-  const allPrerequisitesCompleted =
-    item.prerequisites?.every((preId) => isCompleted(preId)) ?? true;
-  return !isCompleted(item.id) && allPrerequisitesCompleted;
-}
+import { isReadyToLearn } from '@/learning/skillTreeDefinition';
 
 export function isConnectorInGoalPath(
   connector: { from: string; to: string },
   planningMode: boolean,
   goalNodeId: string | null | undefined,
-  goalPrerequisites: Set<string>,
+  goalPath: Set<string>,
 ): boolean {
   if (!planningMode || !goalNodeId) return false;
-
-  const fromInPath =
-    goalPrerequisites.has(connector.from) || connector.from === goalNodeId;
-  const toInPath =
-    goalPrerequisites.has(connector.to) || connector.to === goalNodeId;
-
-  return fromInPath && toInPath;
+  return goalPath.has(connector.from) && goalPath.has(connector.to);
 }
 
 export function resolveConnectorStyle(
   connector: { from: string; to: string },
   planningMode: boolean,
   goalNodeId: string | null | undefined,
-  goalPrerequisites: Set<string>,
+  goalPath: Set<string>,
   localHoveredId: string | null,
   isCompletedFn: (id: string) => boolean,
   skillTree: Record<string, Module>,
@@ -44,14 +30,14 @@ export function resolveConnectorStyle(
       connector,
       planningMode,
       goalNodeId,
-      goalPrerequisites,
+      goalPath,
     ),
     isInHoveredPath: isConnectorInHoveredPath(connector),
     isSomethingHovered: !!localHoveredId,
     fromCompleted,
     toCompleted: isCompletedFn(connector.to),
     isNextToLearn:
-      isReadyToLearn(skillTree[connector.to], isCompletedFn) && fromCompleted,
+      isReadyToLearn(skillTree, connector.to, isCompletedFn) && fromCompleted,
     staticMode,
   });
 }
