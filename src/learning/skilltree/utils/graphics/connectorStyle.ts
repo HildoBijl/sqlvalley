@@ -91,6 +91,24 @@ export function getConnectorStyle({
     return { strokeColor: '#9aa0a6', strokeWidth: 1.5, opacity: 1 };
   }
 
+  if (isInHoveredPath) {
+    if (bothCompleted) {
+      return { strokeColor: '#4CAF50', strokeWidth: 1.5, opacity: 0.7 };
+    }
+    if (isNextToLearn) {
+      return { strokeColor: '#FFD700', strokeWidth: 1.5, opacity: 0.7 };
+    }
+    return { strokeColor: '#E84421', strokeWidth: 1.5, opacity: 0.7 };
+  }
+
+  if (isSomethingHovered) {
+    return {
+      strokeColor: '#9aa0a6',
+      strokeWidth: 1.5,
+      opacity: planningMode ? 0.15 : 0.2,
+    };
+  }
+
   if (planningMode) {
     if (!goalNodeId) {
       return { strokeColor: '#9aa0a6', strokeWidth: 1.5, opacity: 0.7 };
@@ -105,20 +123,6 @@ export function getConnectorStyle({
       return { strokeColor: '#FFD700', strokeWidth: 1.5, opacity: 1 };
     }
     return { strokeColor: 'purple', strokeWidth: 1.5, opacity: 1 };
-  }
-
-  if (isInHoveredPath) {
-    if (bothCompleted) {
-      return { strokeColor: '#4CAF50', strokeWidth: 1.5, opacity: 0.7 };
-    }
-    if (isNextToLearn) {
-      return { strokeColor: '#FFD700', strokeWidth: 1.5, opacity: 0.7 };
-    }
-    return { strokeColor: '#E84421', strokeWidth: 1.5, opacity: 0.7 };
-  }
-
-  if (isSomethingHovered) {
-    return { strokeColor: '#9aa0a6', strokeWidth: 1.5, opacity: 0.2 };
   }
 
   if (bothCompleted) {

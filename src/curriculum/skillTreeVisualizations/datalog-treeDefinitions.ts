@@ -4,13 +4,11 @@ import {
   type ModulePositionMetaRaw,
   processModulePositions,
 } from '@/learning/skilltree/utils/positionProcessing';
-import { cardWidth, cardHeight } from '@/learning/skilltree/utils/settings';
+import { cardWidth, cardHeight, treeMargin } from '@/learning/skilltree/utils/settings';
 import { computeConnectorPath } from '@/learning/skilltree/utils/graphics/pathCalculations';
 
-const margin = 20;
-
 const dy = cardHeight * 1.5;
-const y1 = margin + cardHeight / 2;
+const y1 = treeMargin + cardHeight / 2;
 const y2 = y1 + dy;
 const y3 = y2 + dy;
 const y4 = y3 + dy;
@@ -20,17 +18,13 @@ const y7 = y6 + dy;
 const y8 = y7 + dy;
 const y9 = y8 + dy;
 const y10 = y9 + dy;
-export const treeHeight = y10 + cardHeight / 2 + margin;
 
 const dx = cardWidth * 1.5;
-const x1 = margin + cardWidth / 2;
+const x1 = treeMargin + cardWidth / 2;
 const x2 = x1 + dx;
 const x3 = x2 + dx;
 const x4 = x3 + dx;
 const x5 = x4 + dx;
-const x6 = x5 + dx;
-// const x7 = x6 + dx;
-export const treeWidth = x6 + cardWidth / 2 + margin;
 
 // Placeholder positions for Datalog skill tree
 const modulePositionsRaw: Record<string, ModulePositionMetaRaw> = {

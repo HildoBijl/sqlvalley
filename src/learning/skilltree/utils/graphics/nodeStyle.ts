@@ -48,13 +48,18 @@ export function getNodeStyle({
   }
 
   if (planningMode) {
-    const prominent = isGoalNode || isOnGoalPath || isHovered;
-    const nodeOpacity = prominent || !hasGoal ? 1.0 : 0.15;
-    const strokeWidth = isGoalNode || isHovered ? 2 : 1;
+    const highlighted = isHovered || isPrerequisite || isSelected;
+    const dimmedByHover = isSomethingHovered && !highlighted && !isGoalNode;
+
+    const prominent = isGoalNode || isOnGoalPath || highlighted || !hasGoal;
+    const nodeOpacity = dimmedByHover || !prominent ? 0.15 : 1.0;
+    const strokeWidth = isGoalNode || highlighted ? 2 : 1;
 
     let borderColor: string;
     if (isGoalNode) {
       borderColor = 'purple';
+    } else if (highlighted) {
+      borderColor = completed ? '#4CAF50' : readyToLearn ? '#FFD700' : '#E84421';
     } else if (completed) {
       borderColor = '#4CAF50';
     } else if (isOnGoalPath && readyToLearn) {
@@ -62,7 +67,7 @@ export function getNodeStyle({
     } else if (isOnGoalPath) {
       borderColor = 'purple';
     } else {
-      borderColor = isHovered ? theme.palette.primary.main : theme.palette.divider;
+      borderColor = theme.palette.divider;
     }
 
     return { borderColor, fillColor, nodeOpacity, strokeWidth };

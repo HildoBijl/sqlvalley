@@ -1,4 +1,3 @@
-import type { MouseEvent } from 'react';
 import { ButtonBase, useTheme } from '@mui/material/';
 import { Element, Rectangle } from '@/components';
 import type { Module } from '@/curriculum';
