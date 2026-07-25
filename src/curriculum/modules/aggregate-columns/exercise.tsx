@@ -3,6 +3,7 @@ import {
   type SimpleSQLExerciseDefinition,
 } from '@/learning/sqlExercises';
 import type { AnyExerciseDefinition } from '@/learning/exerciseEngine';
+import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
 
 type Parameters = Record<string, never>;
 
@@ -75,3 +76,5 @@ GROUP BY d_id;
 export default function buildExercises(): AnyExerciseDefinition[] {
   return EXERCISES.map((exercise) => buildSimpleSQLExercise(exercise));
 }
+
+export const ModuleProvider = SqlPracticeProvider;

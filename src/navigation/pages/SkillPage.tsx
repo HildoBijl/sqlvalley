@@ -28,7 +28,6 @@ import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
 import { useModuleProgress } from '@/learning/progress';
 import { ExerciseManager } from '@/learning/exerciseEngine';
-import { SqlModuleProvider } from '@/learning/sqlExercises';
 import { useAdminMode } from '@/store/adminMode';
 
 import type { TabConfig } from '@/learning/types';
@@ -84,6 +83,7 @@ export default function SkillPage() {
     isLoading,
     skillMeta,
     exerciseDefinitions,
+    moduleProvider: ModuleProvider,
     error: contentError,
   } = useSkillContent(skillId, {
     loadExercises: !hasStaticPractice,
@@ -190,9 +190,13 @@ export default function SkillPage() {
           )}
 
           {currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
-            <SqlModuleProvider skillId={skillId ?? ''} tables={tables}>
+            ModuleProvider ? (
+              <ModuleProvider skillId={skillId ?? ''}>
+                <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
+              </ModuleProvider>
+            ) : (
               <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
-            </SqlModuleProvider>
+            )
           )}
 
           {currentTab === 'theory' && <TheoryTab contentId={skillMeta.id} />}

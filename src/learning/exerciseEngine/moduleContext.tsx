@@ -1,4 +1,7 @@
-import { createContext, useContext, type ReactNode } from 'react';
+import { createContext, useContext, type ComponentType, type ReactNode } from 'react';
+
+/** A per-module provider a skill prescribes to wrap its practice (or none). */
+export type ModuleProviderComponent = ComponentType<{ skillId: string; children: ReactNode }>;
 
 /**
  * The subject-specific environment for a module (skill/concept). Opaque to the
