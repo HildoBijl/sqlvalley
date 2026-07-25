@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 import type {
   AsyncExerciseReducer,
   ExerciseActionResult,
+  ExerciseId,
+  ExerciseVersion,
   StoredExerciseAction,
   StoredExerciseEvent,
   StoredExerciseInstance,
@@ -15,8 +17,8 @@ export interface ExerciseHelpers {
 }
 
 export interface ExerciseDescriptor<Parameters extends Record<string, unknown>> {
-  exerciseId: string;
-  version: number;
+  exerciseId: ExerciseId;
+  version: ExerciseVersion;
   parameters: Parameters;
 }
 

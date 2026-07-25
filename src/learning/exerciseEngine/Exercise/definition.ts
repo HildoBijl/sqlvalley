@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import type { StoredExerciseState } from '@/store';
+import type { ExerciseId, ExerciseVersion, StoredExerciseState } from '@/store';
 import type { ExerciseHelpers } from './types';
 
 /**
@@ -11,8 +11,8 @@ export interface ExerciseDefinition<
   Parameters extends Record<string, unknown>,
   State extends StoredExerciseState,
 > {
-  exerciseId: string;
-  version: number;
+  exerciseId: ExerciseId;
+  version: ExerciseVersion;
   generateParameters: (
     helpers: ExerciseHelpers,
     context?: { previousParameters?: Parameters | null },

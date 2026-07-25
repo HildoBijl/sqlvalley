@@ -2,6 +2,10 @@
  * Learning store types.
  */
 
+export type ExerciseId = string;
+export type ExerciseVersion = number;
+export type SkillId = string;
+
 export type StoredExerciseAction = Record<string, unknown>;
 export type StoredExerciseState = Record<string, unknown>;
 
@@ -12,8 +16,8 @@ export interface StoredExerciseEvent {
 }
 
 export interface StoredExerciseInstance {
-  exerciseId: string;
-  version: number;
+  exerciseId: ExerciseId;
+  version: ExerciseVersion;
   parameters: Record<string, unknown>;
   createdAt: number;
   events: StoredExerciseEvent[];

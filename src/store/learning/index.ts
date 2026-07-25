@@ -5,9 +5,12 @@ export type { LearningStoreState } from './store';
 export type {
   AsyncExerciseReducer,
   ExerciseActionResult,
+  ExerciseId,
+  ExerciseVersion,
   ModuleState,
   ModuleType,
   ConceptModuleState,
+  SkillId,
   SkillModuleState,
   StoredExerciseAction,
   StoredExerciseEvent,
