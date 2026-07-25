@@ -38,20 +38,7 @@ export type ConceptModuleState = BaseModuleState;
 export interface SkillModuleState extends BaseModuleState {
   numSolved: number;
   exercises: StoredExerciseInstance[];
-  // Transient: an async action is currently being processed for this skill.
-  pending?: boolean;
 }
-
-export interface ExerciseActionResult {
-  state: StoredExerciseState;
-  feedback?: unknown;
-}
-
-export type AsyncExerciseReducer = (args: {
-  parameters: Record<string, unknown>;
-  action: StoredExerciseAction;
-  previousState: StoredExerciseState;
-}) => Promise<ExerciseActionResult>;
 
 export type ModuleState = ConceptModuleState | SkillModuleState;
 

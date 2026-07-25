@@ -3,8 +3,6 @@ export { createModuleState } from './support';
 
 export type { LearningStoreState } from './store';
 export type {
-  AsyncExerciseReducer,
-  ExerciseActionResult,
   ExerciseId,
   ExerciseVersion,
   ModuleState,

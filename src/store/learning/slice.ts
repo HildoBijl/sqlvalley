@@ -3,8 +3,6 @@
  */
 
 import type {
-  AsyncExerciseReducer,
-  ExerciseActionResult,
   ModuleState,
   ModuleType,
   ConceptModuleState,
@@ -44,15 +42,6 @@ export interface LearningActions {
     increaseSolvedCounter: boolean,
   ) => void;
   setExerciseDraftInput: (skillId: string, draftInput: unknown) => void;
-  processExerciseAction: (
-    skillId: string,
-    action: StoredExerciseAction,
-    run: AsyncExerciseReducer,
-    options: {
-      isComplete: (state: StoredExerciseState) => boolean;
-      isSolved: (state: StoredExerciseState) => boolean;
-    },
-  ) => Promise<ExerciseActionResult>;
   getModule: (id: string, type: ModuleType) => ModuleState;
   resetModule: (id: string, type: ModuleType) => void;
   getCurrentExerciseInstance: (skillId: string) => StoredExerciseInstance | null;
@@ -65,10 +54,6 @@ function getConceptModuleForUpdate(moduleId: string, state: LearningState): Conc
 
 function getSkillModuleForUpdate(moduleId: string, state: LearningState): SkillModuleState {
   return normalizeSkillModuleState(moduleId, state.modules[moduleId]);
-}
-
-function readLatestState(instance: StoredExerciseInstance): StoredExerciseState {
-  return { ...(instance.events[instance.events.length - 1]?.resultingState ?? {}) };
 }
 
 export function createLearningActions(
@@ -224,69 +209,6 @@ export function createLearningActions(
           },
         };
       }),
-
-    processExerciseAction: async (skillId, action, run, { isComplete, isSolved }) => {
-      const skillModule = normalizeSkillModuleState(skillId, get().modules[skillId]);
-      const current = skillModule.exercises[skillModule.exercises.length - 1] ?? null;
-      if (!current) {
-        throw new Error(`Cannot process an action for "${skillId}" without an active exercise.`);
-      }
-      if (skillModule.pending) {
-        return { state: readLatestState(current) };
-      }
-
-      const previousState = readLatestState(current);
-      set((state) => ({
-        modules: {
-          ...state.modules,
-          [skillId]: { ...getSkillModuleForUpdate(skillId, state), pending: true },
-        },
-      }));
-
-      let result: ExerciseActionResult;
-      try {
-        result = await run({ parameters: { ...current.parameters }, action, previousState });
-      } catch (error) {
-        set((state) => ({
-          modules: {
-            ...state.modules,
-            [skillId]: { ...getSkillModuleForUpdate(skillId, state), pending: false },
-          },
-        }));
-        throw error;
-      }
-
-      const nextState = result.state;
-      set((state) => {
-        const module = getSkillModuleForUpdate(skillId, state);
-        if (module.exercises.length === 0) return {};
-        const currentExercise = module.exercises[module.exercises.length - 1];
-        const updatedExercise: StoredExerciseInstance = {
-          ...currentExercise,
-          events: [
-            ...currentExercise.events,
-            { timestamp: Date.now(), action: { ...action }, resultingState: { ...nextState } },
-          ],
-          draftInput: isComplete(nextState) ? undefined : currentExercise.draftInput,
-        };
-        return {
-          modules: {
-            ...state.modules,
-            [skillId]: {
-              ...module,
-              pending: false,
-              lastAccessed: Date.now(),
-              numSolved: isSolved(nextState) && !isSolved(previousState)
-                ? module.numSolved + 1
-                : module.numSolved,
-              exercises: [...module.exercises.slice(0, -1), updatedExercise],
-            },
-          },
-        };
-      });
-
-      return result;
-    },
 
     getModule: (id, type) =>
       type === 'skill'
