@@ -65,6 +65,7 @@ function normalizeStoredExerciseEvent(value: unknown): StoredExerciseEvent | nul
     timestamp,
     action: isRecord(value.action) ? { ...value.action } : {},
     resultingState: isRecord(value.resultingState) ? { ...value.resultingState } : {},
+    report: value.report,
   };
 }
 

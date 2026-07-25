@@ -39,6 +39,7 @@ export interface LearningActions {
     skillId: string,
     action: StoredExerciseAction,
     resultingState: StoredExerciseState,
+    report: unknown,
     exerciseDone: boolean,
     increaseSolvedCounter: boolean,
   ) => void;
@@ -155,7 +156,7 @@ export function createLearningActions(
         };
       }),
 
-    submitExerciseAction: (skillId, action, resultingState, exerciseDone, increaseSolvedCounter) =>
+    submitExerciseAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) =>
       set((state) => {
         const skillModule = getSkillModuleForUpdate(skillId, state);
         if (skillModule.exercises.length === 0) {
@@ -172,6 +173,7 @@ export function createLearningActions(
               timestamp: Date.now(),
               action: { ...action },
               resultingState: { ...resultingState },
+              report,
             },
           ],
           draftInput: exerciseDone ? undefined : currentExercise.draftInput,

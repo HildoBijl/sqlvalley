@@ -78,6 +78,7 @@ export function useExerciseSession<
         skillId,
         action,
         nextState,
+        undefined,
         isComplete(nextState),
         isSolved(nextState) && !isSolved(previousState),
       );

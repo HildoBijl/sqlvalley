@@ -13,6 +13,8 @@ export interface StoredExerciseEvent {
   timestamp: number;
   action: StoredExerciseAction;
   resultingState: StoredExerciseState;
+  // Opaque per-exercise-type data for rebuilding feedback without regrading.
+  report?: unknown;
 }
 
 export interface StoredExerciseInstance {
