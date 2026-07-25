@@ -1,18 +1,10 @@
 import type {
-  ExerciseId,
-  ExerciseVersion,
   SkillId,
   StoredExerciseAction,
   StoredExerciseEvent,
   StoredExerciseState,
 } from '@/store';
 import type { ExerciseDefinition } from './definition';
-
-export interface ExerciseDescriptor<Parameters extends Record<string, unknown>> {
-  exerciseId: ExerciseId;
-  version: ExerciseVersion;
-  parameters: Parameters;
-}
 
 /** Dynamically generated data about the current exercise. */
 export interface ExerciseData<

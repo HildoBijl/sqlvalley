@@ -97,7 +97,6 @@ export function SimpleExerciseComponent<
           onSubmit: handleSubmit,
           onGiveUp: () => setGiveUpOpen(true),
           onNext: controls.startNewExercise,
-          adminControls: null,
         }}
       >
         <ExerciseControls />

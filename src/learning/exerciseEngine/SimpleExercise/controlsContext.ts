@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from 'react';
+import { createContext, useContext } from 'react';
 
 /** Control state the SimpleExercise view exposes so ExerciseControls can self-serve. */
 export interface SimpleExerciseControlsValue {
@@ -9,7 +9,6 @@ export interface SimpleExerciseControlsValue {
   onSubmit: () => void;
   onGiveUp: () => void;
   onNext: () => void;
-  adminControls: ReactNode;
 }
 
 export const SimpleExerciseControlsContext = createContext<SimpleExerciseControlsValue | null>(null);

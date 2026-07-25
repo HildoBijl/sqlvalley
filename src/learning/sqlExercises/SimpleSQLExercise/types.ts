@@ -11,7 +11,6 @@ export interface SimpleSQLExerciseDefinition<Parameters extends Record<string, u
   ) => Parameters;
   problem: string | ((parameters: Parameters) => string);
   solution: string | ((parameters: Parameters) => string);
-  label?: string;
   comparisonOptions?: CompareOptions;
 }
 

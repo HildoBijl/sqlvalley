@@ -174,8 +174,6 @@ export function SqlModuleProvider({ skillId, tables, children }: SqlModuleProvid
 
   const value = useMemo<SqlModuleContext>(() => ({
     ready: dbReady,
-    dbReady,
-    isExecuting: displayDatabase.isExecuting,
     tableNames: displayDatabase.tableNames,
     completionSchema: displayDatabase.completionSchema,
     queryResult: displayDatabase.queryResult,
@@ -188,7 +186,6 @@ export function SqlModuleProvider({ skillId, tables, children }: SqlModuleProvid
     grade,
   }), [
     dbReady,
-    displayDatabase.isExecuting,
     displayDatabase.tableNames,
     displayDatabase.completionSchema,
     displayDatabase.queryResult,

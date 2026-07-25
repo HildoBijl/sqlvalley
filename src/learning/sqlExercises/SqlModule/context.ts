@@ -10,8 +10,6 @@ import type { SimpleSQLCheckResult } from '../SimpleSQLExercise/types';
 export interface SqlModuleContext {
   /** Standard readiness flag the ExerciseManager gates exercise generation on. */
   ready: boolean;
-  dbReady: boolean;
-  isExecuting: boolean;
   tableNames: string[];
   completionSchema: Record<string, string[]>;
   queryResult: ReadonlyArray<SqlQueryResult> | null;

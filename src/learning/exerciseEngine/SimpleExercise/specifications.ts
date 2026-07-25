@@ -48,7 +48,3 @@ export interface SimpleExerciseSpecification<
   isCorrect?: (result: CheckResult) => boolean;
   getFeedback?: (result: CheckResult) => string | undefined;
 }
-
-export type SimpleExerciseInputAction<Input> =
-  | { type: 'input'; input: Input }
-  | { type: 'give-up' };
