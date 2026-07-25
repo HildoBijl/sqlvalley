@@ -1,16 +1,12 @@
-import type {
-  ExerciseHelpers,
-  SimpleExerciseCheckResult,
-  SimpleExerciseFeedbackType,
-} from '@/learning/exerciseEngine';
-import type { TableKey } from '@/mockData';
+import type { ExerciseId, ExerciseVersion } from '@/store';
+import type { SimpleExerciseCheckResult, SimpleExerciseFeedbackType } from '@/learning/exerciseEngine';
 import type { CompareOptions } from '../grading';
 
 export interface SimpleSQLExerciseDefinition<Parameters extends Record<string, unknown>> {
-  exerciseId: string;
-  version: number;
+  exerciseId: ExerciseId;
+  version: ExerciseVersion;
   generateParameters: (
-    helpers: ExerciseHelpers,
+    moduleContext: unknown,
     context?: { previousParameters?: Parameters | null },
   ) => Parameters;
   problem: string | ((parameters: Parameters) => string);
@@ -23,9 +19,8 @@ export interface SimpleSQLCheckResult extends SimpleExerciseCheckResult {
   feedbackType: SimpleExerciseFeedbackType;
 }
 
-/** A single SQL exercise plus the per-skill data (tables, title) buildSimpleSQLExercise needs. */
+/** A SQL exercise definition plus a display title. Tables live on the SqlModuleProvider. */
 export interface SimpleSQLExerciseSpec<Parameters extends Record<string, unknown>>
   extends SimpleSQLExerciseDefinition<Parameters> {
-  tables: TableKey[];
   title?: string;
 }

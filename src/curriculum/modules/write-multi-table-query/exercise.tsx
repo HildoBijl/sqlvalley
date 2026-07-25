@@ -3,7 +3,6 @@ import {
   type SimpleSQLExerciseDefinition,
 } from '@/learning/sqlExercises';
 import type { AnyExerciseDefinition } from '@/learning/exerciseEngine';
-import { getModuleTables } from '@/curriculum/utils/moduleAccess';
 
 type Parameters = Record<string, never>;
 
@@ -106,7 +105,6 @@ SELECT DISTINCT category FROM products WHERE p_id IN (
   },
 ];
 
-export default function buildExercises(skillId: string): AnyExerciseDefinition[] {
-  const tables = getModuleTables(skillId);
-  return EXERCISES.map((exercise) => buildSimpleSQLExercise({ ...exercise, tables }));
+export default function buildExercises(): AnyExerciseDefinition[] {
+  return EXERCISES.map((exercise) => buildSimpleSQLExercise(exercise));
 }

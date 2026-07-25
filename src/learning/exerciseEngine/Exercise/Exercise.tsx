@@ -1,19 +1,12 @@
-import type { StoredExerciseAction, StoredExerciseState } from '@/store';
-import { ExerciseContext, type AnyExerciseContextValue } from './context';
+import { ExerciseContext } from './context';
 import type { ExerciseProps } from './types';
-import { useExerciseSession } from './useExerciseSession';
 
-/** Runs an exercise session and exposes it to descendants through ExerciseContext. */
-export function Exercise<
-  Parameters extends Record<string, unknown>,
-  Action extends StoredExerciseAction,
-  State extends StoredExerciseState,
->(props: ExerciseProps<Parameters, Action, State>) {
-  const { children, ...options } = props;
-  const value = useExerciseSession(options);
+/** Wraps a ready-made exercise context and renders the active exercise's component. */
+export function Exercise({ value }: ExerciseProps) {
+  const { Component } = value.definition;
   return (
-    <ExerciseContext.Provider value={value as unknown as AnyExerciseContextValue}>
-      {children}
+    <ExerciseContext.Provider value={value}>
+      <Component />
     </ExerciseContext.Provider>
   );
 }
