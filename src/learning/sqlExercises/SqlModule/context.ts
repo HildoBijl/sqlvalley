@@ -8,6 +8,8 @@ import type { SimpleSQLCheckResult } from '../SimpleSQLExercise/types';
  * function the exercise reducers use. Exposed as the exercise moduleContext.
  */
 export interface SqlModuleContext {
+  /** Standard readiness flag the ExerciseManager gates exercise generation on. */
+  ready: boolean;
   dbReady: boolean;
   isExecuting: boolean;
   tableNames: string[];

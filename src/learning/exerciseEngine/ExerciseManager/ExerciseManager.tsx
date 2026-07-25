@@ -90,10 +90,15 @@ export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
     store.setExerciseDraftInput(skillId, draftInput);
   }, [skillId]);
 
+  // A module provider may report it isn't ready yet (e.g. its database is still
+  // loading); hold off generating until it is. No provider means always ready.
+  const moduleReady = moduleContext == null ||
+    (moduleContext as { ready?: boolean }).ready !== false;
+
   // Ensure exactly one valid exercise is active. Reads the live store so React
   // StrictMode's double-invoke can't start two.
   useEffect(() => {
-    if (exercises.length === 0) return;
+    if (exercises.length === 0 || !moduleReady) return;
     const store = useLearningStore.getState();
     const current = store.getCurrentExerciseInstance(skillId);
     const definition = current ? byId.get(current.exerciseId) : undefined;
@@ -104,7 +109,7 @@ export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
       previousParameters: current?.parameters ?? null,
     });
     store.startNewExercise(skillId, next.exerciseId, next.version, parameters);
-  }, [byId, exercises, moduleContext, skillId]);
+  }, [byId, exercises, moduleContext, moduleReady, skillId]);
 
   if (exercises.length === 0) {
     return <Alert severity="info">No exercises are available yet.</Alert>;

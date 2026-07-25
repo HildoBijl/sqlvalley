@@ -173,6 +173,7 @@ export function SqlModuleProvider({ skillId, tables, children }: SqlModuleProvid
   }, [displayDatabase.executeQuery, displayDatabase.isReady, evaluateSmallDatasetWarning, pendingDatasetRefresh]);
 
   const value = useMemo<SqlModuleContext>(() => ({
+    ready: dbReady,
     dbReady,
     isExecuting: displayDatabase.isExecuting,
     tableNames: displayDatabase.tableNames,
