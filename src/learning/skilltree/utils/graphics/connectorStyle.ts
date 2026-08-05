@@ -1,4 +1,4 @@
-import type { Module } from '@/curriculum';
+import type { Module } from '@/learning/skillTreeDefinition';
 
 export function isReadyToLearn(
   item: Module,

@@ -1,7 +1,7 @@
 import type { TouchEvent } from 'react';
 import { useRef, useState } from 'react';
 import { useLongPress } from 'react-use';
-import type { Module } from '@/curriculum';
+import type { Module } from '@/learning/skillTreeDefinition';
 import { getPrerequisites } from '@/learning/skillTreeDefinition';
 
 export function useHoverState(
