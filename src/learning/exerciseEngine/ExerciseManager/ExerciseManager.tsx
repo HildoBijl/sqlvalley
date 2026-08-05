@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Alert, Typography } from '@mui/material';
 
-import {
-  useLearningStore,
-  type SkillModuleState,
-  type StoredExerciseAction,
-  type StoredExerciseInstance,
-  type StoredExerciseState,
-} from '@/store';
+import { useLearningStore, type SkillModuleState } from '@/store';
+import type {
+  StoredExerciseAction,
+  StoredExerciseInstance,
+  StoredExerciseState,
+} from '../storedState';
 import { selectRandomly } from '@/utils/javascript';
 import { Exercise, type AnyExerciseContextValue, type AnyExerciseDefinition } from '../Exercise';
 import { useModuleContext } from '../moduleContext';

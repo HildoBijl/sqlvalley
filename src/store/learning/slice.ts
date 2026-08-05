@@ -8,10 +8,12 @@ import type {
   ConceptModuleState,
   LearningState,
   SkillModuleState,
+} from './types';
+import type {
   StoredExerciseAction,
   StoredExerciseInstance,
   StoredExerciseState,
-} from './types';
+} from '@/learning/exerciseEngine/storedState';
 import {
   createModuleState,
   normalizeConceptModuleState,

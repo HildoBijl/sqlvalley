@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import type { StoredExerciseAction, StoredExerciseState } from '@/store';
+import type { StoredExerciseAction, StoredExerciseState } from '../storedState';
 import type { ExerciseContextValue } from './types';
 
 export type AnyExerciseContextValue = ExerciseContextValue<

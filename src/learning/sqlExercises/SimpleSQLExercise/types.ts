@@ -1,4 +1,4 @@
-import type { ExerciseId, ExerciseVersion } from '@/store';
+import type { ExerciseId, ExerciseVersion } from '@/learning/exerciseEngine';
 import type { SimpleExerciseCheckResult, SimpleExerciseFeedbackType } from '@/learning/exerciseEngine';
 import type { CompareOptions } from '../grading';
 

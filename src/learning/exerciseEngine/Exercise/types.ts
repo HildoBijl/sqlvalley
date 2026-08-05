@@ -3,7 +3,7 @@ import type {
   StoredExerciseAction,
   StoredExerciseEvent,
   StoredExerciseState,
-} from '@/store';
+} from '../storedState';
 import type { ExerciseDefinition } from './definition';
 
 /** Dynamically generated data about the current exercise. */

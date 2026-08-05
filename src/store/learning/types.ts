@@ -2,29 +2,7 @@
  * Learning store types.
  */
 
-export type ExerciseId = string;
-export type ExerciseVersion = number;
-export type SkillId = string;
-
-export type StoredExerciseAction = Record<string, unknown>;
-export type StoredExerciseState = Record<string, unknown>;
-
-export interface StoredExerciseEvent {
-  timestamp: number;
-  action: StoredExerciseAction;
-  resultingState: StoredExerciseState;
-  // Opaque per-exercise-type data for rebuilding feedback without regrading.
-  report?: unknown;
-}
-
-export interface StoredExerciseInstance {
-  exerciseId: ExerciseId;
-  version: ExerciseVersion;
-  parameters: Record<string, unknown>;
-  createdAt: number;
-  events: StoredExerciseEvent[];
-  draftInput: unknown;
-}
+import type { StoredExerciseInstance } from '@/learning/exerciseEngine/storedState';
 
 interface BaseModuleState {
   id: string;

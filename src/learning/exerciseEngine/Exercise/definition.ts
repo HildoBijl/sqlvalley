@@ -5,7 +5,7 @@ import type {
   ExerciseVersion,
   StoredExerciseAction,
   StoredExerciseState,
-} from '@/store';
+} from '../storedState';
 
 export type Awaitable<T> = T | Promise<T>;
 

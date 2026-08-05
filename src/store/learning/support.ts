@@ -7,9 +7,11 @@ import type {
   ModuleType,
   ConceptModuleState,
   SkillModuleState,
+} from './types';
+import type {
   StoredExerciseEvent,
   StoredExerciseInstance,
-} from './types';
+} from '@/learning/exerciseEngine/storedState';
 
 export function createModuleState(
   id: string,
