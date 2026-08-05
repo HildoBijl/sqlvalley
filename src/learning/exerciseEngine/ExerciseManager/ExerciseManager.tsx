@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { Alert, Typography } from '@mui/material';
 
-import { useLearningStore, type SkillModuleState } from '@/store';
 import type {
   StoredExerciseAction,
   StoredExerciseInstance,
@@ -10,6 +9,7 @@ import type {
 import { selectRandomly } from '@/utils/javascript';
 import { Exercise, type AnyExerciseContextValue, type AnyExerciseDefinition } from '../Exercise';
 import { useModuleContext } from '../moduleContext';
+import { useExerciseStorage } from '../storageContext';
 
 interface ExerciseManagerProps {
   skillId: string;
@@ -27,10 +27,12 @@ function readLatestState(instance: StoredExerciseInstance): StoredExerciseState 
  */
 export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
   const moduleContext = useModuleContext();
-  const skillModule = useLearningStore(
-    (store) => store.modules[skillId] as SkillModuleState | undefined,
+  const storage = useExerciseStorage();
+  const getInstanceSnapshot = useCallback(
+    () => storage.getInstance(skillId),
+    [storage, skillId],
   );
-  const instance = skillModule?.exercises?.[skillModule.exercises.length - 1] ?? null;
+  const instance = useSyncExternalStore(storage.subscribe, getInstanceSnapshot);
 
   const byId = useMemo(
     () => new Map(exercises.map((exercise) => [exercise.exerciseId, exercise])),
@@ -42,8 +44,7 @@ export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
   const [pending, setPending] = useState(false);
 
   const startNewExercise = useCallback(() => {
-    const store = useLearningStore.getState();
-    const current = store.getCurrentExerciseInstance(skillId);
+    const current = storage.getInstance(skillId);
     const currentDefinition = current ? byId.get(current.exerciseId) : null;
     const candidates = currentDefinition && exercises.length > 1
       ? exercises.filter((exercise) => exercise.exerciseId !== currentDefinition.exerciseId)
@@ -53,15 +54,14 @@ export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
     const parameters = next.generateParameters(moduleContext, {
       previousParameters: current?.parameters ?? null,
     });
-    store.startNewExercise(skillId, next.exerciseId, next.version, parameters);
-  }, [byId, exercises, moduleContext, skillId]);
+    storage.startExercise(skillId, next.exerciseId, next.version, parameters);
+  }, [byId, exercises, moduleContext, skillId, storage]);
 
   const submitAction = useCallback(async (action: StoredExerciseAction) => {
     if (!active) return;
     setPending(true);
     try {
-      const store = useLearningStore.getState();
-      const current = store.getCurrentExerciseInstance(skillId);
+      const current = storage.getInstance(skillId);
       if (!current) return;
       const previousState = readLatestState(current);
       const { state, report } = await active.reduce(
@@ -70,7 +70,7 @@ export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
         action,
         moduleContext,
       );
-      store.submitExerciseAction(
+      storage.submitAction(
         skillId,
         action,
         state,
@@ -81,25 +81,23 @@ export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
     } finally {
       setPending(false);
     }
-  }, [active, moduleContext, skillId]);
+  }, [active, moduleContext, skillId, storage]);
 
   const setDraftInput = useCallback((draftInput: unknown) => {
-    const store = useLearningStore.getState();
-    if (!store.getCurrentExerciseInstance(skillId)) return;
-    store.setExerciseDraftInput(skillId, draftInput);
-  }, [skillId]);
+    if (!storage.getInstance(skillId)) return;
+    storage.setDraftInput(skillId, draftInput);
+  }, [skillId, storage]);
 
   // A module provider may report it isn't ready yet (e.g. its database is still
   // loading); hold off generating until it is. No provider means always ready.
   const moduleReady = moduleContext == null ||
     (moduleContext as { ready?: boolean }).ready !== false;
 
-  // Ensure exactly one valid exercise is active. Reads the live store so React
+  // Keep exactly one valid exercise active. Reads live storage so React
   // StrictMode's double-invoke can't start two.
   useEffect(() => {
     if (exercises.length === 0 || !moduleReady) return;
-    const store = useLearningStore.getState();
-    const current = store.getCurrentExerciseInstance(skillId);
+    const current = storage.getInstance(skillId);
     const definition = current ? byId.get(current.exerciseId) : undefined;
     if (current && definition && definition.version === current.version) return;
     const next = definition ?? selectRandomly(exercises);
@@ -107,8 +105,8 @@ export function ExerciseManager({ skillId, exercises }: ExerciseManagerProps) {
     const parameters = next.generateParameters(moduleContext, {
       previousParameters: current?.parameters ?? null,
     });
-    store.startNewExercise(skillId, next.exerciseId, next.version, parameters);
-  }, [byId, exercises, moduleContext, moduleReady, skillId]);
+    storage.startExercise(skillId, next.exerciseId, next.version, parameters);
+  }, [byId, exercises, moduleContext, moduleReady, skillId, storage]);
 
   if (exercises.length === 0) {
     return <Alert severity="info">No exercises are available yet.</Alert>;
