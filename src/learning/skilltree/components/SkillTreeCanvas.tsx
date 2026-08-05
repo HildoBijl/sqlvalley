@@ -100,6 +100,11 @@ export function SkillTreeCanvas({
 
   const theme = useTheme();
 
+  const nextStepModule = goalProgress.nextStepId ? skillTree[goalProgress.nextStepId] : null;
+  const nextStepHref = nextStepModule
+    ? `/${nextStepModule.type}/${goalProgress.nextStepId}`
+    : null;
+
   return (
     <div
       ref={outerRef}
@@ -125,8 +130,7 @@ export function SkillTreeCanvas({
       {allowPlanningMode && planningMode && (
         <PlanningProgressIndicator
           nextStepName={goalProgress.nextStep || 'All completed!'}
-          nextStepId={goalProgress.nextStepId}
-          treeId={treeId}
+          nextStepHref={nextStepHref}
           completedCount={goalProgress.completed}
           totalCount={goalProgress.total}
           hasGoal={!!goalNodeId}

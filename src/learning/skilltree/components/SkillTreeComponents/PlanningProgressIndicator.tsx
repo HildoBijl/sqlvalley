@@ -1,28 +1,22 @@
 import { Box, LinearProgress, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Link } from '@/components';
-import { skillTree } from '@/curriculum';
 
 interface PlanningProgressIndicatorProps {
   nextStepName: string;
+  nextStepHref: string | null;
   completedCount: number;
   totalCount: number;
   hasGoal: boolean;
-  treeId?: string;
-  nextStepId?: string | null;
 }
 
 export function PlanningProgressIndicator({
   nextStepName,
-  nextStepId,
+  nextStepHref,
   completedCount,
   totalCount,
   hasGoal,
 }: PlanningProgressIndicatorProps) {
-  const nextStepModule = nextStepId ? skillTree[nextStepId] : null;
-  const nextStepHref = nextStepModule
-    ? `/${nextStepModule.type}/${nextStepId}`
-    : null;
   const theme = useTheme();
   const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
 
