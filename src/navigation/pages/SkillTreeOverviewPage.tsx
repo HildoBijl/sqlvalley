@@ -1,7 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Container } from '@mui/material';
 import { skillTree } from '@/curriculum';
-import type { SkillTreeVisualizationId } from '@/curriculum/skillTreeVisualizations';
+import {
+  datalogTreeHeight,
+  datalogTreeWidth,
+  raTreeHeight,
+  raTreeWidth,
+  sqlTreeHeight,
+  sqlTreeWidth,
+  type SkillTreeVisualizationId,
+} from '@/curriculum/skillTreeVisualizations';
 import { useModuleProgress } from '@/learning/progress';
 import {
   SkillTreeCanvas,
@@ -9,6 +17,12 @@ import {
 } from '@/learning/skilltree/components/SkillTreeCanvas';
 import { useTreeBounds } from '@/learning/skilltree/hooks/useTreeBounds';
 import { useSkillTreeSettingsStore } from '@/store';
+
+const treeDimensions: Record<SkillTreeVisualizationId, { width: number; height: number }> = {
+  sql: { width: sqlTreeWidth, height: sqlTreeHeight },
+  ra: { width: raTreeWidth, height: raTreeHeight },
+  datalog: { width: datalogTreeWidth, height: datalogTreeHeight },
+};
 
 interface SkillTreeOverviewPageProps {
   treeId: SkillTreeVisualizationId;
@@ -34,7 +48,8 @@ export function SkillTreeOverviewPage({
   }, [markSkillTreeVisited, treeId]);
 
   const { isCompleted, getProgress } = useModuleProgress(skillTree);
-  const treeBounds = useTreeBounds(modulePositions);
+  const { width, height } = treeDimensions[treeId];
+  const treeBounds = useTreeBounds(width, height);
 
   const planningMode = useSkillTreeSettingsStore(
     (s) => s.planningMode[treeId] ?? false,
