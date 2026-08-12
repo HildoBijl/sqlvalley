@@ -1,4 +1,4 @@
-import { mod, firstOf, lastOf, repeat, type VectorInput, Vector, ensureVectorArray, Span } from '@/utils';
+import { mod, firstOf, lastOf, repeat, type VectorInput, Vector, ensureVectorArray, Span } from '@sqlvalley/utils';
 
 import { type ArrowHeadProps, type LineWithoutArrowsProps, type CurveWithoutArrowsProps } from './types';
 import { defaultArrowHeadPullIn } from './ArrowHead';

@@ -1,4 +1,4 @@
-import { type VectorInput, Vector, ensureVector } from '@/utils';
+import { type VectorInput, Vector, ensureVector } from '@sqlvalley/utils';
 
 import { useDrawingId, SvgPortal } from '../../DrawingContext';
 import { type DefaultObjectProps, getDefaultObject } from './definitions';

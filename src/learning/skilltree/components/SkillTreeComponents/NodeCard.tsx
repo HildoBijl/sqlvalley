@@ -2,7 +2,7 @@ import type { MouseEvent } from 'react';
 import { ButtonBase, useTheme } from '@mui/material/';
 import { Element, Rectangle } from '@/components';
 import type { Module } from '@sqlvalley/skill-tree-definition';
-import { Vector } from '@/utils/geometry';
+import { Vector } from '@sqlvalley/utils/geometry';
 import { NodeCompletedMark } from './Icons/NodeCompletedMark';
 import { NodeGoalPin } from './Icons/NodeGoalPin';
 import { NodeIconBadge } from './Icons/NodeIconBadge';

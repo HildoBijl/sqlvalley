@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { useMousePosition } from "@/utils/dom";
+import { useMousePosition } from "@sqlvalley/utils/dom";
 import { useTheme } from "@mui/material/";
 
 interface TooltipProps {

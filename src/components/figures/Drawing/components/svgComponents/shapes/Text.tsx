@@ -1,4 +1,4 @@
-import { type VectorInput, Vector, ensureVector } from '@/utils';
+import { type VectorInput, Vector, ensureVector } from '@sqlvalley/utils';
 
 import { SvgPortal } from '../../../DrawingContext';
 

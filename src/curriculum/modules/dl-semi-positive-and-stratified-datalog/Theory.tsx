@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { useTheme } from '@mui/material/';
 
-import { useRefWithValue } from '@/utils/dom';
+import { useRefWithValue } from '@sqlvalley/utils/dom';
 import { useThemeColor } from '@/theme';
 import { Page, Section, Par, List, Info, Warning, Term, Em, M, DL, IDL } from '@/components';
 import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@/components';
@@ -16,20 +16,20 @@ export function Theory() {
       <Par>We know that negation in Datalog can be tricky: we need safe queries, or we could get infinitely large outputs. Similarly recursion in Datalog is tricky: we need the fixed-point algorithm to compute predicates. When combining negation with recursion, there are even more pitfalls. We'll study some of the problems that occur, and then see what is required to avoid them.</Par>
     </Section>
 
-    <Section title="The problem: non-unique results – multiple models">
-      <Par>Let's consider a very simple Datalog program. We have one fact – Alice is a person – and two rules – a person is happy if they're not stressed, and a person is stressed if they're not happy.</Par>
+    <Section title="The problem: non-unique results â€“ multiple models">
+      <Par>Let's consider a very simple Datalog program. We have one fact â€“ Alice is a person â€“ and two rules â€“ a person is happy if they're not stressed, and a person is stressed if they're not happy.</Par>
       <DL>{`
 person('Alice').
 happy(x) :- person(x), not stressed(x).
 stressed(x) :- person(x), not happy(x).
 `}</DL>
-      <Par>We can evaluate this program. To evaluate programs, Datalog starts off with a set of facts – here <IDL>{`{ person('Alice') }`}</IDL> – and evaluates all rules with this set of facts to update/extend its set of facts. This is repeated until nothing changes anymore.</Par>
+      <Par>We can evaluate this program. To evaluate programs, Datalog starts off with a set of facts â€“ here <IDL>{`{ person('Alice') }`}</IDL> â€“ and evaluates all rules with this set of facts to update/extend its set of facts. This is repeated until nothing changes anymore.</Par>
       <Par>When updating the set of facts, Datalog generally evaluates all rules <Em>together</Em> for this set of facts. When we apply this to our example, <Em>both</Em> rules are triggered: Alice is currently neither happy nor stressed. The updated set of facts will then be <IDL>{`{ person('Alice'), happy('Alice'), stressed('Alice') }`}</IDL>. So Alice is now both happy and stressed. We then evaluate the rules again, and this time we come back to <IDL>{`{ person('Alice') }`}</IDL>. We're back where we started. This process is repeated, and the algorithm never ends!</Par>
       <Par>You might think this procedure is silly, and we should just evaluate rules one at a time. We could do so, but which of the two rules should we then check first? If we check the first rule first, we'll end up with <IDL>{`{ person('Alice'), happy('Alice') }`}</IDL>. If we check the second rule first, we'll wind up with <IDL>{`{ person('Alice'), stressed('Alice') }`}</IDL>. Both these sets won't change further, and are hence valid outcomes of the program. But they're different!</Par>
       <Par>We define a <Term>model</Term> as a set of facts that makes all rules true. All the programs we've seen before have always had a single model, but this program seems to have two! Having multiple models is definitely a problem: which output should our program give?</Par>
     </Section>
 
-    <Section title="The root cause: shrinking result sets – no monotonicity">
+    <Section title="The root cause: shrinking result sets â€“ no monotonicity">
       <Par>To find out what's different, we take a step back first. Let's consider a Datalog program where we don't have problems; for instance one where we track ancestry. We start with some facts about who is a parent of who. Then we say that a person is someone's ancestor if they're their parent, or if they're an ancestor of their parent.</Par>
       <DL>{`
 parent('Alice', 'Bob').
@@ -136,8 +136,8 @@ export function DependencyGraph() {
       <Curve points={[p4Bounds.bottomLeft.add([2, 0]), p5Bounds.topRight.add([-2, 0])]} endArrow={true} color={themeColor} />
       <Curve points={[p5Bounds.topLeft.add([2, 0]), p3Bounds.bottomRight.add([-2, 0])]} endArrow={true} color={themeColor} />
 
-      <Element position={p3Bounds.middleRight.add(p4Bounds.middleLeft).divide(2).add([0, 10])} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>–</span></Element>
-      <Element position={p4Bounds.middleTop.add(p2Bounds.middleBottom).divide(2).add([-5, 6])} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>–</span></Element>
+      <Element position={p3Bounds.middleRight.add(p4Bounds.middleLeft).divide(2).add([0, 10])} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>â€“</span></Element>
+      <Element position={p4Bounds.middleTop.add(p2Bounds.middleBottom).divide(2).add([-5, 6])} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>â€“</span></Element>
     </> : null}
   </Drawing>;
 }

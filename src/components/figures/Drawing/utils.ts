@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { repeat } from '@/utils/javascript';
-import { Vector, type VectorInput, ensureVector, Rectangle, type RectangleInput, ensureRectangle } from '@/utils/geometry';
-import { type UtilKeys, useMouseData as useClientMouseData, useBoundingClientRect, useRefWithElement, useTextNode } from '@/utils/dom';
+import { repeat } from '@sqlvalley/utils/javascript';
+import { Vector, type VectorInput, ensureVector, Rectangle, type RectangleInput, ensureRectangle } from '@sqlvalley/utils/geometry';
+import { type UtilKeys, useMouseData as useClientMouseData, useBoundingClientRect, useRefWithElement, useTextNode } from '@sqlvalley/utils/dom';
 
 import { type DrawingData } from './definitions';
 import { useDrawingDataWithFallback } from './DrawingContext';

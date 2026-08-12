@@ -1,7 +1,7 @@
 import { type Ref, type HTMLAttributes, useCallback, useLayoutEffect } from 'react';
 
-import { type VectorInput, Vector, ensureVector } from '@/utils/geometry';
-import { useEnsureRef, useEqualRefOnEquality, useResizeListener, notSelectable } from '@/utils/dom';
+import { type VectorInput, Vector, ensureVector } from '@sqlvalley/utils/geometry';
+import { useEnsureRef, useEqualRefOnEquality, useResizeListener, notSelectable } from '@sqlvalley/utils/dom';
 
 import { useDrawingData, HtmlPortal } from '../../DrawingContext';
 

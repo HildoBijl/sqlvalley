@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useImperativeHandle, useId, type CSSProperties } from 'react';
 
-import { type Vector, Rectangle } from '@/utils/geometry';
-import { getEventPosition, useEnsureRef, notSelectable, useRefWithElement, useRefWithValue } from '@/utils/dom';
+import { type Vector, Rectangle } from '@sqlvalley/utils/geometry';
+import { getEventPosition, useEnsureRef, notSelectable, useRefWithElement, useRefWithValue } from '@sqlvalley/utils/dom';
 
 import { type FigureData, Figure } from '../Figure';
 

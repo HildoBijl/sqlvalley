@@ -1,4 +1,4 @@
-import { Vector } from '@/utils/geometry';
+import { Vector } from '@sqlvalley/utils/geometry';
 import type { ModulePositionMeta } from '../positionProcessing';
 import {
   cardHeight,

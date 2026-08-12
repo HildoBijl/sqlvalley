@@ -6,7 +6,7 @@ import type {
   StoredExerciseInstance,
   StoredExerciseState,
 } from '../storedState';
-import { selectRandomly } from '@/utils/javascript';
+import { selectRandomly } from '@sqlvalley/utils/javascript';
 import { Exercise, type AnyExerciseContextValue, type AnyExerciseDefinition } from '../Exercise';
 import { useModuleContext } from '../moduleContext';
 import { useExerciseStorage } from '../storageContext';

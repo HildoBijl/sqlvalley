@@ -1,4 +1,4 @@
-import { type RectangleInput, Rectangle as GeometryRectangle, ensureRectangle } from '@/utils';
+import { type RectangleInput, Rectangle as GeometryRectangle, ensureRectangle } from '@sqlvalley/utils';
 
 import { SvgPortal } from '../../../DrawingContext';
 

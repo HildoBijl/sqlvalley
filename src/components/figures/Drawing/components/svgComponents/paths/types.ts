@@ -1,4 +1,4 @@
-import { type VectorInput, type Vector } from '@/utils';
+import { type VectorInput, type Vector } from '@sqlvalley/utils';
 
 import { type DefaultObjectProps } from '../definitions';
 

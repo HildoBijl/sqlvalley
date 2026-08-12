@@ -1,5 +1,5 @@
 import type { SVGProps, HTMLAttributes, CanvasHTMLAttributes } from 'react';
-import type { Vector, Rectangle } from '@/utils';
+import type { Vector, Rectangle } from '@sqlvalley/utils';
 
 import { type FigureProps, type FigureData, getDefaultFigure } from '../Figure';
 

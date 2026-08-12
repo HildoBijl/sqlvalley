@@ -1,4 +1,4 @@
-import { Vector, ensureVector } from '@/utils';
+import { Vector, ensureVector } from '@sqlvalley/utils';
 
 import { SvgPortal } from '../../../DrawingContext';
 

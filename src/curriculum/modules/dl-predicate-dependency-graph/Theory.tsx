@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 
-import { useRefWithValue } from '@/utils/dom';
+import { useRefWithValue } from '@sqlvalley/utils/dom';
 import { useThemeColor } from '@/theme';
 import { Page, Section, Par, List, Info, Warning, Term, Em, DL, IDL } from '@/components';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@/components';

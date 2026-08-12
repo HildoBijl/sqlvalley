@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import { useRefWithValue } from '@/utils/dom';
+import { useRefWithValue } from '@sqlvalley/utils/dom';
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/components';
 import { type DrawingData, Drawing, Element, useRefWithBounds } from '@/components';
 import { useTheorySampleDatabase } from '@/learning/databases';

@@ -6,8 +6,8 @@ import { EditorView, keymap } from '@codemirror/view';
 import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
 import { Box, Paper } from '@mui/material';
-import { useLatest, useDebounce } from '@/utils/dom';
-import { noop } from '@/utils/javascript';
+import { useLatest, useDebounce } from '@sqlvalley/utils/dom';
+import { noop } from '@sqlvalley/utils/javascript';
 
 interface SQLEditorProps {
   value: string;
