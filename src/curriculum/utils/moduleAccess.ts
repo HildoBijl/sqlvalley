@@ -3,7 +3,7 @@
  */
 
 import { type TableKey, allTables } from '@/mockData';
-import { getPrerequisites } from '@/learning/skillTreeDefinition';
+import { getPrerequisites } from '@sqlvalley/skill-tree-definition';
 import { type ModuleId, skillTree } from '../skillTree';
 
 // List the point (or points) in the Skill Tree where the respective tables are introduced.

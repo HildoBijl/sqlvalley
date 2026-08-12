@@ -1,4 +1,4 @@
-import type { SkillTree } from '@/learning/skillTreeDefinition';
+import type { SkillTree } from '@sqlvalley/skill-tree-definition';
 import { type VectorInput, Vector, ensureVector } from '@/utils/geometry';
 
 export interface ModulePositionMetaRaw {

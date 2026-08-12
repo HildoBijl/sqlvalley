@@ -35,7 +35,7 @@ import {
 } from '@/learning/components/TabContent/ContentTab';
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useModuleProgress } from '@/learning/progress';
-import { getPrerequisites } from '@/learning/skillTreeDefinition';
+import { getPrerequisites } from '@sqlvalley/skill-tree-definition';
 import type { TabConfig } from '@/learning/types';
 
 export default function ConceptPage() {

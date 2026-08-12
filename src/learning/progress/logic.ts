@@ -3,7 +3,7 @@ import {
   getModules,
   getPrerequisites,
   type SkillTree,
-} from '@/learning/skillTreeDefinition';
+} from '@sqlvalley/skill-tree-definition';
 import type { ModuleState, SkillModuleState } from '@/store';
 
 import type { ModuleCompletion, RawModuleCompletion } from './types';

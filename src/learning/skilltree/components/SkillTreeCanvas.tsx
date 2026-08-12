@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 import { useState } from 'react';
 import { useTheme } from '@mui/material/';
-import type { Module } from '@/learning/skillTreeDefinition';
+import type { Module } from '@sqlvalley/skill-tree-definition';
 import type { Vector } from '@/utils/geometry';
 import { SkillTree } from './SkillTree';
 import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro';

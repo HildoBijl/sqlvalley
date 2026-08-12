@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { getModules, type SkillTree } from '@/learning/skillTreeDefinition';
+import { getModules, type SkillTree } from '@sqlvalley/skill-tree-definition';
 import { useLearningStore } from '@/store';
 
 import {

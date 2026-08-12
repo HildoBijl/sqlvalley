@@ -1,4 +1,4 @@
-import type { Module } from '@/learning/skillTreeDefinition';
+import type { Module } from '@sqlvalley/skill-tree-definition';
 
 export function isReadyToLearn(
   item: Module,

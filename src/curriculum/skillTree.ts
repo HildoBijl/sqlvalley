@@ -9,7 +9,7 @@ import {
   type ModuleRaw,
   type ModuleType as ProcessedModuleType,
   type SkillTree,
-} from '@/learning/skillTreeDefinition';
+} from '@sqlvalley/skill-tree-definition';
 
 export type ModuleType = ProcessedModuleType;
 

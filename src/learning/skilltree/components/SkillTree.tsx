@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 import { Curve, Drawing } from '@/components';
-import type { Module } from '@/learning/skillTreeDefinition';
+import type { Module } from '@sqlvalley/skill-tree-definition';
 import type { Vector } from '@/utils/geometry';
 import { useTheme } from '@mui/material/';
 import { NodeCard } from './SkillTreeComponents/NodeCard';

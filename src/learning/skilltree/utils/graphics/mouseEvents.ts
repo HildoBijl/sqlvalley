@@ -1,8 +1,8 @@
 import type { TouchEvent } from 'react';
 import { useRef, useState } from 'react';
 import { useLongPress } from 'react-use';
-import type { Module } from '@/learning/skillTreeDefinition';
-import { getPrerequisites } from '@/learning/skillTreeDefinition';
+import type { Module } from '@sqlvalley/skill-tree-definition';
+import { getPrerequisites } from '@sqlvalley/skill-tree-definition';
 
 export function useHoverState(
   skillTree: Record<string, Module>,

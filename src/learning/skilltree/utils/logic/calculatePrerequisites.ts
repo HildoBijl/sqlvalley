@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import type { Module } from '@/learning/skillTreeDefinition';
-import { getPrerequisites } from '@/learning/skillTreeDefinition';
+import type { Module } from '@sqlvalley/skill-tree-definition';
+import { getPrerequisites } from '@sqlvalley/skill-tree-definition';
 
 export function useGoalProgress(
   goalNodeId: string | null | undefined,

@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,6 +15,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@sqlvalley/skill-tree-definition": "*",
     "@codemirror/lang-sql": "^6.6.1",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@emotion/react": "^11.14.0",
