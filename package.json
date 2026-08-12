@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@sqlvalley/skill-tree-definition": "*",
+    "@sqlvalley/sql-grading": "*",
     "@sqlvalley/utils": "*",
     "@codemirror/lang-sql": "^6.6.1",
     "@codemirror/theme-one-dark": "^6.1.2",

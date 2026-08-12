@@ -1,6 +1,6 @@
 import { buildSimpleExercise, type AnyExerciseDefinition } from '@/learning/exerciseEngine';
 
-import { normalizeSqlInput, validateSqlInput } from '../grading';
+import { normalizeSqlInput, validateSqlInput } from '@sqlvalley/sql-grading';
 import type { SqlModuleContext } from '../SqlModule';
 import { createSQLProblem, createSQLSolution, SQLExerciseInput, SQLExerciseOutput } from './views';
 import type { SimpleSQLCheckResult, SimpleSQLExerciseSpec } from './types';

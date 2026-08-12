@@ -6,7 +6,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { DataTable, Warning } from '@/components';
 import { ExerciseSection } from '@/learning/components/ExerciseSection';
 import type { DatasetSize } from '@/mockData';
-import type { SqlQueryResult } from '../../grading';
+import type { SqlQueryResult } from '@sqlvalley/sql-grading';
 
 interface ExerciseResultsProps {
   queryResult: ReadonlyArray<SqlQueryResult> | null;

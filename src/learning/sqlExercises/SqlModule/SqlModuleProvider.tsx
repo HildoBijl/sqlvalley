@@ -12,7 +12,7 @@ import {
   type CompareOptions,
   type SqlExecutionResult,
   type SqlQueryResult,
-} from '../grading';
+} from '@sqlvalley/sql-grading';
 import type { SimpleSQLCheckResult } from '../SimpleSQLExercise/types';
 import type { SqlModuleContext } from './context';
 
