@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@sqlvalley/exercise-engine": "*",
+    "@sqlvalley/skill-tree": "*",
     "@sqlvalley/skill-tree-definition": "*",
     "@sqlvalley/sql-grading": "*",
     "@sqlvalley/ui": "*",

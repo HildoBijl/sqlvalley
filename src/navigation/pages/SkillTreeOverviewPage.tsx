@@ -13,9 +13,9 @@ import {
 import { useModuleProgress } from '@/learning/progress';
 import {
   SkillTreeCanvas,
+  useTreeBounds,
   type SkillTreeCanvasProps,
-} from '@/learning/skilltree/components/SkillTreeCanvas';
-import { useTreeBounds } from '@/learning/skilltree/hooks/useTreeBounds';
+} from '@sqlvalley/skill-tree';
 import { useSkillTreeSettingsStore } from '@/store';
 
 const treeDimensions: Record<SkillTreeVisualizationId, { width: number; height: number }> = {

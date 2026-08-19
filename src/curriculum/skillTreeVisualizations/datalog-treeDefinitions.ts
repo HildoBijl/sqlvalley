@@ -1,11 +1,12 @@
 import { skillTree } from '@/curriculum/skillTree';
 import {
+  cardHeight,
+  cardWidth,
+  computeConnectorPath,
+  processModulePositions,
   type ModulePositionMeta,
   type ModulePositionMetaRaw,
-  processModulePositions,
-} from '@/learning/skilltree/utils/positionProcessing';
-import { cardWidth, cardHeight } from '@/learning/skilltree/utils/settings';
-import { computeConnectorPath } from '@/learning/skilltree/utils/graphics/pathCalculations';
+} from '@sqlvalley/skill-tree';
 
 const margin = 20;
 
