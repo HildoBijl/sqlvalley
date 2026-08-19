@@ -1,243 +1,1251 @@
 p_id,name,category,owned_by,est_value,status
-151879,Chippendale Mahogany Chair Set,Antique Furniture,XxMrMelonxX,90000,listed
-501342, Lincoln Head Copper Penny,Collectible Coins,XxMrMelonxX,255000,listed
-110345,"Hermès Birkin Bag (Crocodile, 35cm)",Designer Fashion,vanilla_coke,33000,listed
-214320,Gucci Jackie Bag (Vintage),Designer Fashion,Jim_Business,16000,withdrawn
-732499,Frida Kahlo Self-Portrait Sketch,Fine Art,lizardman,85000,in_escrow
-986603,Princess Diana's Revenge Dress (Replica),Haute Couture,7e1543c0-0b3d-45f7-8557-9dca6efe25fc,165155,sold
-535322,Dior Gala Vintage Dress,Haute Couture,7a3520ed-ccf4-4ef6-b184-f2be8831e0ad,19645,sold
-938790,Ancient Roman Gladius Sword,Historical Artifacts,11ce6126-9b47-40a8-81a9-a9fd49caf3f7,286539,sold
-878470,McLaren P1 GTR,Luxury Vehicles,b01afa48-40e5-4fc1-b1b4-4d013ad0de04,5398574,sold
-823173,Aston Martin DB5 from James Bond Films,Luxury Vehicles,38fc8ee7-7126-459a-a21a-0bd283e80529,4638572,sold
-182438,Steinway & Sons Concert Grand Piano,Musical Instruments,bcd40f55-1c09-4c5d-98f2-768fae06d08c,249483,sold
-145104,Original Marilyn Monroe Film Costume,Other,XxMrMelonxX,166025,sold
-132849,Meteorite Fragment (Martian),Other,XxMrMelonxX,182441,sold
-486668,Frida Kahlo's Paint-Stained Easel,Other,vanilla_coke,630777,sold
-565145,Original Dune Manuscript by Frank Herbert,Rare Books & Manuscripts,Jim_Business,1219390,sold
-939534,Dom PÃ©rignon 1921,Vintage Wine & Spirits,lizardman,76108,sold
-101751,O'Keeffe Desert Flower Painting,Fine Art,1de8463a-aaab-4442-8b3d-a195ed10dc8b,841869,sold
-106915,Hockney Swimming Pool Painting,Fine Art,92fe1b42-96fd-4b95-b2c0-5657964f78b8,5380397,sold
-110645,Steve Jobs' Mercedes SL55 AMG,Luxury Vehicles,e5c65e13-3f89-4f82-bf39-a8560e52f115,519253,sold
-117100,Tesla's Original Circuit Diagram,Historical Artifacts,f9ea818b-60cd-4691-bf76-8314f903f816,757338,sold
-120879,Spirit of St. Louis Propeller Blade,Other,50b4bc47-1a57-4f22-8890-57e3c9b92905,796137,sold
-124947,Dickens' Original Christmas Carol,Rare Books & Manuscripts,d43550b5-6899-4b19-a672-2604ea4c7e54,1289393,sold
-127119,Columbus' Ship Log Page,Other,bf796172-5192-4ccd-aeeb-f6ffa7651c8c,4528989,sold
-130552,Alice in Wonderland First Edition,Rare Books & Manuscripts,3e657da6-c29e-41ac-af33-032f874927fb,417646,sold
-131404,Magellan's Navigation Tools,Other,95cf0677-73a6-4d22-ba15-7179306a2c93,1108507,sold
-133715,Lincoln's Top Hat,Other,5d26b60f-9b1c-4230-aa05-28b0809b41fd,3557208,sold
-148885,Cleopatra's Golden Sandal,Other,24b46c58-0bf6-41fe-ba50-b7585cfddd73,1500263,sold
-151137,Wright Flyer Wood Fragment,Other,79b68721-3e4f-4cc9-a08d-c869a0c52cb3,344665,sold
-154907,Basquiat Crown Painting,Fine Art,24b46c58-0bf6-41fe-ba50-b7585cfddd73,545710,sold
-154982,PelÃ©'s 1970 World Cup Jersey,Other,aeae5926-5073-4571-a8fc-befa5660b163,621571,sold
-163073,Curie's Radiation Badge,Other,b359e6cb-168c-4b04-8a43-6cebcbf3f190,1003676,sold
-165070,Jimi Hendrix's Woodstock Stratocaster,Musical Instruments,e5c65e13-3f89-4f82-bf39-a8560e52f115,5407320,sold
-167367,Edgar Allan Poe's 'The Raven' Manuscript,Rare Books & Manuscripts,30ad95e1-c96e-4e5e-89a1-3f65b06b348e,1340185,sold
-171067,Florence Nightingale's Medical Kit,Other,0d9585b1-64d5-460c-bade-92357c693e31,286538,sold
-180812,Bonnie Parker's Pistol,Other,e8215a60-18b2-4cc7-8597-fd8f055c7704,402331,sold
-184265,Ming Dynasty Dragon Throne Chair,Antique Furniture,06ffa6ee-2815-45fe-8c5a-d2956a399311,2259336,sold
-189233,Julius Caesar Silver Denarius,Collectible Coins,XxMrMelonxX,201952,sold
-192439,Wright Brothers' Plane Blueprint,Historical Artifacts,XxMrMelonxX,1226904,sold
-206993,Elizabeth Taylor's Diamond Brooch,Jewelry,vanilla_coke,498635,sold
-208242,Amelia Earhart's Flight Goggles,Other,Jim_Business,701315,sold
-212931,Keith Haring Original Mural Sketch,Fine Art,lizardman,548770,sold
-213897,Elton John's Platform Shoes,Designer Fashion,79a0f558-4c32-4140-81d1-1f5518b3df29,78444,sold
-227930,Chief Joseph's Headdress,Other,fa4ea72e-eefe-461a-8011-018f6cdce2c1,1940050,sold
-228268,Darth Vader's Helmet (Original),Other,6782c60e-32d6-45fd-ae16-0d1c29697e30,2554510,sold
-241096,Newton's Apple Tree Branch,Other,d8d3d04d-73f1-409e-b33f-62c24c13f982,122738,sold
-241618,Rembrandt Etching 'The Three Crosses',Fine Art,5b87ccdb-ce9f-4b52-97a7-24669d0c3c92,1488211,sold
-253238,ChÃ¢teau Margaux 1787 (Jefferson Bottle),Vintage Wine & Spirits,f2b6ed0c-689d-4bcb-b2ec-06e09fe24c94,654083,sold
-273988,Genghis Khan's Sword,Other,5e4755d5-5233-4cb2-b6f2-873393fedaac,1606967,sold
-289452,Tom Brady's Super Bowl Football,Other,0c2b6f43-9e1e-4535-98b9-762890ffcf03,715475,sold
-294959,Sacagawea's Beaded Pouch,Other,added80d-b90d-4c55-934f-3933792aa860,439097,sold
-302560,Audrey Hepburn's Givenchy Hat,Designer Fashion,lizardman,81800,sold
-309190,Brasher Doubloon 1787,Collectible Coins,XxMrMelonxX,11128759,sold
-313146,Queen Anne Walnut Bureau,Antique Furniture,vanilla_coke,249349,sold
-318287,Copernicus' Star Chart,Other,Jim_Business,1373258,sold
-335024,Blackbeard's Pistol,Other,lizardman,746635,sold
-335038,Vivien Leigh's Gone with the Wind Dress,Haute Couture,a7625e72-fadf-4bf8-8554-9622acc3fbcb,982231,sold
-335860,Buffalo Bill's Show Poster (Original),Other,7e350d5c-3a9f-41f9-ade3-a605388355b7,114104,sold
-353033,Galileo's Telescope Lens,Other,37c65474-3a76-4d04-9b08-9e4c87de7f8f,2012709,sold
-369328,Elizabeth Taylor's Cleopatra Gown,Haute Couture,fa481978-0a81-49b4-a99a-83a771c7d2f0,307433,sold
-378209,Imperial Russian Sapphire Parure,Jewelry,5b80f103-4cca-442b-9f32-67056e27da75,1277056,sold
-381280,Edward VIII Sovereign (Unissued),Collectible Coins,02bf0600-bf7b-4cae-9e5f-d5461ac3eab5,1092145,sold
-384951,Napoleon's Campaign Bed,Antique Furniture,be054df8-784e-4588-aff3-b2f6c2428ec3,905054,sold
-396273,Jesse James' Revolver,Other,XxMrMelonxX,872309,sold
-398941,Van Gogh's Easel,Other,XxMrMelonxX,2372534,sold
-400716,Sitting Bull's Peace Pipe,Other,vanilla_coke,1148750,sold
-417459,Joan of Arc's Armor Piece,Other,Jim_Business,1340095,sold
-450010,Kandinsky Abstract Composition,Fine Art,lizardman,1543464,sold
-451095,Mark Twain's Handwritten Novel,Rare Books & Manuscripts,7e350d5c-3a9f-41f9-ade3-a605388355b7,1015289,sold
-451168,Anne Frank's Diary Page,Historical Artifacts,5b87ccdb-ce9f-4b52-97a7-24669d0c3c92,1431124,sold
-454129,Pol Roger 1874 Champagne,Vintage Wine & Spirits,193ff851-1e85-4b2c-b511-e794c8525564,100671,sold
-457062,Marlene Dietrich's Tuxedo Suit,Haute Couture,155454bd-e323-4dad-97dc-2878048e500f,239865,sold
-457352,Matisse Paper Cut-Out,Fine Art,f53c9565-0500-4a9c-97c1-bbe20b10f550,817418,sold
-457715,Alexander the Great Gold Stater,Collectible Coins,e15864f3-5e11-4048-a147-fd2d435a6f06,349975,sold
-459696,Roger Federer's Wimbledon Racket,Other,d8d3d04d-73f1-409e-b33f-62c24c13f982,227541,sold
-460260,Mozart's Harpsichord,Musical Instruments,a7625e72-fadf-4bf8-8554-9622acc3fbcb,4939468,sold
-469008,Gettysburg Address Draft,Historical Artifacts,328a7425-6d21-42da-a4da-3669dd829b25,6201708,sold
-472308,BjÃ¶rk's Swan Dress,Designer Fashion,2e23e9e3-f0fd-409e-a065-eb19fe1df618,105866,sold
-473781,Einstein's Pipe,Other,65c3bd5f-7431-4a03-bb54-11a113000d2a,184647,sold
-474997,Beethoven's Piano,Other,20a75ffa-08de-4d05-8eac-22f40e57e40c,4682059,sold
-476093,Usain Bolt's Olympic Gold Medal,Other,fcf5dce9-aaa1-4a6c-85c5-03b4d7b9fbc3,685429,sold
-479417,Magic Johnson's Lakers Championship Ring,Other,3ab4adee-ba03-43f0-a79e-4af0272fc5f0,262708,sold
-486387,Highland Park 50 Year Whisky,Vintage Wine & Spirits,906040d4-7f8c-4fa7-ae50-ead831d5b014,320226,sold
-486418,Indiana Jones' Whip Prop,Other,cf38e9e0-9b01-4b8b-8195-d531adc45c5f,435136,sold
-487743,Marie Antoinette's Lock of Hair,Other,a40c461d-cce0-42d7-a3c3-549e40f711b0,84170,sold
-495794,Cher's Bob Mackie Gown,Designer Fashion,d500e6b2-c946-43c1-b899-3da59e0dba6c,127980,sold
-499072,Harry Potter's Wand Prop,Other,f53c9565-0500-4a9c-97c1-bbe20b10f550,333608,sold
-506017,Napoleon's Personal Cognac Reserve,Vintage Wine & Spirits,a6ea7fd3-059e-4d16-b118-17d25c1bbda1,330258,sold
-506486,Marie Curie's Laboratory Notebook,Historical Artifacts,2c6dfff7-1ac8-44f3-9a22-178f95b299d5,1002432,sold
-507285,Iron Man Suit (MCU),Other,1808d0f2-56df-4b7c-9e4d-57d09105867d,762686,sold
-510195,Moon Landing Flag from Apollo 15,Historical Artifacts,d500e6b2-c946-43c1-b899-3da59e0dba6c,4715819,sold
-517511,Art Deco Ã‰mile-Jacques Ruhlmann Cabinet,Antique Furniture,090d7e86-c8d4-47b8-bbdb-34887efc4088,712430,sold
-517582,JFK's Omega Ultra Thin,Watches,654ae9eb-a1eb-4969-8a31-ae975c36497b,363871,sold
-549848,Prince's Yellow Cloud Guitar,Musical Instruments,8f24b5e7-6a61-46df-8925-f0c946080cb7,816280,sold
-551556,Ancient Egyptian Gold Collar,Jewelry,2c6dfff7-1ac8-44f3-9a22-178f95b299d5,1150090,sold
-554243,Prince's Purple Rain Outfit,Designer Fashion,bf796172-5192-4ccd-aeeb-f6ffa7651c8c,320457,sold
-555363,Lady Gaga's Meat Dress (Preserved),Designer Fashion,3ab4adee-ba03-43f0-a79e-4af0272fc5f0,120046,sold
-571569,Miles Davis' Trumpet,Musical Instruments,37021f1f-7445-4f99-92f3-6466f8fa7154,1168563,sold
-588162,Batman's Batmobile (1989),Other,2c6dfff7-1ac8-44f3-9a22-178f95b299d5,7711138,sold
-595463,Tolkien's Hobbit Manuscript,Rare Books & Manuscripts,768b15a4-71dd-4538-857c-82e66b709505,2677735,sold
-607313,John Lennon's Rolls-Royce Phantom,Luxury Vehicles,e4c01ebc-94bd-454e-a47b-efd4d2ce9c27,2822461,sold
-620574,Rosetta Stone Cast (Original Mold),Other,ad1dc16c-ed82-42c0-992d-de80b1ee9c53,630254,sold
-624785,Wayne Gretzky's Rookie Card (PSA 10),Other,6782c60e-32d6-45fd-ae16-0d1c29697e30,4233494,sold
-634843,Churchill's Signed War Dispatch,Historical Artifacts,768b15a4-71dd-4538-857c-82e66b709505,375139,sold
-635353,Wyatt Earp's Badge,Other,1de8463a-aaab-4442-8b3d-a195ed10dc8b,959650,sold
-639722,Ella Fitzgerald's Microphone,Musical Instruments,6f8b6e8e-d527-47ec-ad10-c06db65ceeb1,138005,sold
-640535,Wild Bill Hickok's Poker Hand (Dead Man's Hand Cards),Other,bc2c4153-3b6a-4852-b852-769832b311fa,469547,sold
-646927,Bob Dylan's Newport Folk Festival Guitar,Musical Instruments,5cab340a-6412-4f3e-b052-510fde129ed2,1491948,sold
-647010,Cleopatra's Pearl Earring (Replica),Jewelry,7c805a13-343b-4f37-84f8-0c3068cc6ecd,122113,sold
-657839,James Dean's Porsche 550 Spyder,Luxury Vehicles,a7625e72-fadf-4bf8-8554-9622acc3fbcb,6001020,sold
-661098,Dead Sea Scrolls Fragment,Other,95cf0677-73a6-4d22-ba15-7179306a2c93,5472614,sold
-662248,Dali Surrealist Lithograph,Fine Art,59d0b7ee-2cb6-46ad-8ca8-3fb58c8d26b4,267083,sold
-662435,Frank Sinatra's Dual-Ghia,Luxury Vehicles,3f34272c-f0f4-43eb-9b0d-ac0fe94b5051,648490,sold
-668236,Gutenberg Bible Single Page,Other,30ad95e1-c96e-4e5e-89a1-3f65b06b348e,1291669,sold
-671433,Chuck Yeager's Flight Suit,Other,6f8b6e8e-d527-47ec-ad10-c06db65ceeb1,426433,sold
-671953,Marie Antoinette's Writing Desk,Antique Furniture,9c6514d3-7ef8-4c97-9283-dd9bb2932452,1085829,sold
-687711,Al Capone's Fedora Hat,Other,f9ea818b-60cd-4691-bf76-8314f903f816,282258,sold
-697882,Frank Lloyd Wright Dining Table,Antique Furniture,06728ac9-2266-4181-a930-c49e95b7d3e4,328683,sold
-699283,First Bitcoin Mining Computer,Other,87ed858f-77f8-49dc-bcf3-fca5423ce2da,3841920,sold
-702887,Concorde Nose Cone Section,Other,64bcbd4f-1f60-42a9-9d63-db55932ea747,1203557,sold
-708283,Martin Luther King Jr.'s Speech Notes,Other,f6821c08-4915-4fae-b21e-f3aa8f399946,1872395,sold
-717920,ChÃ¢teau d'Yquem 1811,Vintage Wine & Spirits,02c1b489-8644-4dbe-b4e7-912fb46d19c7,151646,sold
-726628,Caravaggio School Portrait,Fine Art,3b44a14a-af26-480c-a63c-fe545764c27d,2146542,sold
-730604,Gandhi's Walking Staff,Other,e190e338-e0d2-4c8a-ab05-a5b2563dc7a3,1590031,sold
-736547,Shakespeare's Quill Pen,Other,f6821c08-4915-4fae-b21e-f3aa8f399946,4883770,sold
-739370,Marilyn Monroe's Subway Grate Dress,Haute Couture,ce14e7cc-37b6-4584-81f8-c02e23e5d31d,8267610,sold
-760201,Glenfiddich 1937 Single Malt,Vintage Wine & Spirits,033fd6ec-1fa9-48c8-a698-802fe2b7b591,225156,sold
-769831,1937 Bugatti Type 57SC Atlantic,Luxury Vehicles,e190e338-e0d2-4c8a-ab05-a5b2563dc7a3,51602044,sold
-778256,Hubble Telescope Mirror Fragment,Other,cfa187ac-568c-4907-966e-f786d0e53582,1757662,sold
-788089,Marco Polo's Compass,Other,3e657da6-c29e-41ac-af33-032f874927fb,2346990,sold
-790040,Original Magna Carta Fragment,Historical Artifacts,6782c60e-32d6-45fd-ae16-0d1c29697e30,4213563,sold
-799545,Maharaja's Emerald Necklace,Jewelry,30ad95e1-c96e-4e5e-89a1-3f65b06b348e,982382,sold
-800917,John Lennon's Steinway Piano,Musical Instruments,1f6d0ff4-252c-454b-a127-b48e35e44139,4266075,sold
-800941,Winston Churchill's Pocket Watch,Watches,3ab4adee-ba03-43f0-a79e-4af0272fc5f0,546357,sold
-801246,Virginia Woolf's Personal Diary,Rare Books & Manuscripts,8e352dfa-52cc-4d06-a8d5-355ff9ca4d74,421091,sold
-806498,Leonardo da Vinci's Sketch Book Page,Other,033fd6ec-1fa9-48c8-a698-802fe2b7b591,10162964,sold
-818103,Andy Warhol's Cartier Tank,Watches,a6ea7fd3-059e-4d16-b118-17d25c1bbda1,163185,sold
-821409,Picasso's Paint Palette,Other,79a0f558-4c32-4140-81d1-1f5518b3df29,915669,sold
-824008,Sputnik Satellite Component,Other,a49ed267-b9bd-48d7-8ce8-818b5ba5c8d3,1175332,sold
-829580,Tiger Woods' 1997 Masters Trophy,Other,78aa56ed-b20d-4828-9dd2-b26c97bb0fd1,1574848,sold
-840652,SpaceX Dragon Capsule Heat Shield,Other,5cab340a-6412-4f3e-b052-510fde129ed2,1204460,sold
-861085,Rosa Parks' Bus Ticket,Historical Artifacts,16180b9b-bfde-4385-813c-2fedd086f7d6,158819,sold
-865297,Hemingway's Typewriter,Other,02c1b489-8644-4dbe-b4e7-912fb46d19c7,569315,sold
-866048,Josephine Baker's Banana Skirt,Haute Couture,155454bd-e323-4dad-97dc-2878048e500f,98699,sold
-866267,Lewis & Clark's Journal,Other,1de8463a-aaab-4442-8b3d-a195ed10dc8b,2111074,sold
-866740,Geronimo's War Lance,Other,ed75ebb9-45cd-41fc-baec-b55f83706926,982098,sold
-888162,Bonnie & Clyde's Death Car,Luxury Vehicles,5d26b60f-9b1c-4230-aa05-28b0809b41fd,896273,sold
-898696,Hawking's Wheelchair,Other,1de8463a-aaab-4442-8b3d-a195ed10dc8b,1392419,sold
-901308,Elvis Presley's Pink Cadillac,Luxury Vehicles,39b48e17-dc3f-4c27-8df9-2f1e18aac1af,2341207,sold
-906139,Art Deco Cartier Panther Bracelet,Jewelry,c83107ce-9568-44c5-a67a-86fb4d45b726,560073,sold
-906309,Rothko Color Field Study,Fine Art,e3d62d7e-fe01-4292-a273-cbedc9d3e924,1079501,sold
-924261,Annie Oakley's Rifle,Other,65c3bd5f-7431-4a03-bb54-11a113000d2a,694263,sold
-924264,Grace Kelly's Wedding Dress Replica,Haute Couture,7c805a13-343b-4f37-84f8-0c3068cc6ecd,608100,sold
-928450,Grace Kelly's Engagement Ring Replica,Jewelry,1f6d0ff4-252c-454b-a127-b48e35e44139,432988,sold
-932347,Babe Ruth's 'Called Shot' Baseball,Other,b3141126-49cb-4bc3-a20e-f8560214f2e0,1310075,sold
-936520,Darwin's Specimen Collection Box,Other,cfa187ac-568c-4907-966e-f786d0e53582,508168,sold
-937695,Madonna's Jean Paul Gaultier Cone Bra,Designer Fashion,bdc5147d-8263-4ebb-ba64-580f3a6fcc5d,120642,sold
-946593,Alan Turing's Enigma Machine,Other,d8d3d04d-73f1-409e-b33f-62c24c13f982,3592000,sold
-948318,Queen Elizabeth I Gold Crown,Collectible Coins,ee4bdadb-0479-485a-a6fc-d644d4c6fad2,521012,sold
-948652,Steve McQueen's Heuer Monaco,Watches,92fe1b42-96fd-4b95-b2c0-5657964f78b8,183289,sold
-959625,E.T. Animatronic Model,Other,3e657da6-c29e-41ac-af33-032f874927fb,907578,sold
-961166,Queen Victoria's Mourning Jewelry,Jewelry,6fdad0b2-21a4-40e2-999a-977d1926ca09,194031,sold
-964820,Byron's Handwritten Poetry Book,Rare Books & Manuscripts,73c5a892-2d98-4402-9bb5-b3a63f0e5665,1093892,sold
-973999,Buzz Aldrin's Speedmaster,Watches,d5a9da49-7dd3-42ec-bf11-7796aa8f4c49,2591796,sold
-981694,Original iPhone Launch Keynote Prototype,Other,275b24f1-2dbc-40bb-88ee-f8e9b192f077,645051,sold
-982508,Kobe Bryant's Final Game Jersey,Other,7e350d5c-3a9f-41f9-ade3-a605388355b7,1243567,sold
-997928,Dorothy's Ruby Slippers (Wizard of Oz),Other,59d0b7ee-2cb6-46ad-8ca8-3fb58c8d26b4,4378754,sold
-190665,Bugatti Veyron Super Sport,Luxury Vehicles,dc48f39b-344c-4151-adce-7acfc85f1380,3408792,reserved
-496864,Penfolds Grange 1951,Vintage Wine & Spirits,0ebb889c-dcfa-4dc9-9ac4-de2879d4a61b,105086,reserved
-707887,Dom PÃ©rignon 1921,Vintage Wine & Spirits,f5fbffb8-52bf-4fb6-aa84-afbcfafffb0f,48727,reserved
-293998,Classical Boston Mahogany Sofa,Antique Furniture,5aeda594-8714-4baa-97f5-dfc14d319957,139948,pending
-985971,Art Nouveau Tiffany Desk Lamp,Antique Furniture,3307e844-d472-405c-aa92-d568dea7c38c,92077,pending
-124899,Titanic First Class Dinner Menu,Historical Artifacts,40ba523d-1576-46b9-bdf1-92105d350f13,111685,pending
-178756,Neil Armstrong's Apollo 11 Flight Suit,Historical Artifacts,0925984e-c142-4373-8d21-c0cb552d9d82,4411369,pending
-437052,Napoleon's Personal Writing Desk,Historical Artifacts,f5fbffb8-52bf-4fb6-aa84-afbcfafffb0f,1407314,pending
-129123,Medieval Knight's Helmet,Historical Artifacts,9eb22f71-12a3-48ae-b7bb-246cb4feb6fb,125817,pending
-229069,John F Kennedy's Handwritten Letter,Historical Artifacts,dc48f39b-344c-4151-adce-7acfc85f1380,462406,pending
-718310,Victorian Diamond Brooch,Jewelry,bcd40f55-1c09-4c5d-98f2-768fae06d08c,53414,pending
-821431,Steve Jobs' Original iPhone Prototype,Other,81091a02-84d3-4c9c-9d0a-dc8c70986cf1,231485,pending
-395828,Beatles' Original Abbey Road Master Tape,Other,727b2914-a1db-42b1-ae22-bbf58c1178a5,696913,pending
-755279,Regency Period Secretary Desk,Antique Furniture,5aeda594-8714-4baa-97f5-dfc14d319957,82089,listed
-361508,Chinese Sycee Silver Ingot,Collectible Coins,b01afa48-40e5-4fc1-b1b4-4d013ad0de04,68219,listed
-599255,1933 Double Eagle Gold Coin,Collectible Coins,92398d57-2c85-4417-89c3-115135a104e0,9420502,listed
-461022,1913 Liberty Head Nickel,Collectible Coins,f5fbffb8-52bf-4fb6-aa84-afbcfafffb0f,4346778,listed
-544539,1794 Flowing Hair Silver Dollar,Collectible Coins,40ba523d-1576-46b9-bdf1-92105d350f13,11126515,listed
-212050,Louis Vuitton Trunk (1920s),Designer Fashion,27685539-5525-4a14-ab79-5dfd1e918233,73166,listed
-836859,Jackie Kennedy's Pillbox Hat,Designer Fashion,0925984e-c142-4373-8d21-c0cb552d9d82,763412,listed
-655228,David Bowie's Ziggy Stardust Platform Boots,Designer Fashion,7e1543c0-0b3d-45f7-8557-9dca6efe25fc,140087,listed
-978523,Chanel Vintage Quilted Handbag,Designer Fashion,52bf2a97-dacc-4811-a343-30819f7baf98,14267,listed
-173568,Renaissance Portrait by Unknown Master,Fine Art,9eb22f71-12a3-48ae-b7bb-246cb4feb6fb,881913,listed
-222674,Monet Water Lilies Study,Fine Art,73c879d7-51ec-422f-a660-c7acd98830aa,2830190,listed
-593224,Frida Kahlo Self-Portrait Sketch,Fine Art,f5fbffb8-52bf-4fb6-aa84-afbcfafffb0f,859942,listed
-454039,Baroque Sculpture by Unknown Master,Fine Art,52bf2a97-dacc-4811-a343-30819f7baf98,940552,listed
-326398,Schiaparelli Lobster Dress,Haute Couture,5aeda594-8714-4baa-97f5-dfc14d319957,151285,listed
-933605,Marilyn Monroe's Seven Year Itch Dress,Haute Couture,38fc8ee7-7126-459a-a21a-0bd283e80529,2649975,listed
-933443,Elie Saab Beaded Gown,Haute Couture,11ce6126-9b47-40a8-81a9-a9fd49caf3f7,23072,listed
-153587,Lincoln's Handwritten Letter,Historical Artifacts,27685539-5525-4a14-ab79-5dfd1e918233,799665,listed
-142372,Laika the Space Dog's Paw Print Cast,Historical Artifacts,f0f750f7-2d34-4731-97f3-270b2d2c068a,686957,listed
-362804,Egyptian Alabaster Shabti,Historical Artifacts,c3de8aee-2615-4e92-a247-d32f318ff378,113373,listed
-543049,Civil War Confederate Flag,Historical Artifacts,11ce6126-9b47-40a8-81a9-a9fd49caf3f7,124142,listed
-183625,Victorian Ruby Brooch,Jewelry,73c879d7-51ec-422f-a660-c7acd98830aa,80755,listed
-268224,Harry Winston Sapphire Pendant,Jewelry,7a3520ed-ccf4-4ef6-b184-f2be8831e0ad,464735,listed
-622750,Edwardian Diamond Tiara,Jewelry,c3de8aee-2615-4e92-a247-d32f318ff378,331332,listed
-254149,Bvlgari Serpenti Watch,Jewelry,52bf2a97-dacc-4811-a343-30819f7baf98,100367,listed
-101876,Audrey Hepburn's Breakfast at Tiffany's Tiara,Jewelry,aa545ea7-9182-4985-949a-62c680e98581,299171,listed
-657154,Art Deco Emerald Earrings,Jewelry,0ebb889c-dcfa-4dc9-9ac4-de2879d4a61b,168434,listed
-506071,1962 Ferrari 250 GTO,Luxury Vehicles,73c879d7-51ec-422f-a660-c7acd98830aa,45118973,listed
-531537,Stradivarius Violin 'Lady Blunt',Musical Instruments,e81b1f78-27a6-4e3d-bc6e-980e331c2e0b,17549087,listed
-758580,Martin D-45 Acoustic Guitar (1939),Musical Instruments,73c879d7-51ec-422f-a660-c7acd98830aa,158519,listed
-954216,Kurt Cobain's MTV Unplugged Guitar,Musical Instruments,412abc4b-5bae-47b5-9ea5-bff0fb4f2b07,8503431,listed
-363434,Space Shuttle Heat Shield Tile,Other,b01afa48-40e5-4fc1-b1b4-4d013ad0de04,57478,listed
-873221,Original Star Wars R2-D2 Filming Model,Other,d7ca0446-d506-41f5-8496-7508aba33868,1994763,listed
-230476,Original Star Wars Lightsaber Prop,Other,e35ec7b2-ef2b-4f30-bfbd-5466320eed5f,405433,listed
-203872,Moon Rock Sample (Apollo 17),Other,40ba523d-1576-46b9-bdf1-92105d350f13,4826170,listed
-315902,Michael Jordan's 1998 Finals Game-Worn Jersey,Other,729f8593-133e-40c9-afd7-09f8bc19ec76,1071437,listed
-374894,First Apple Computer (Apple-1),Other,3307e844-d472-405c-aa92-d568dea7c38c,527255,listed
-134959,FabergÃ© Imperial Egg Replica,Other,e81b1f78-27a6-4e3d-bc6e-980e331c2e0b,422713,listed
-497920,Gutenberg Bible Leaf,Rare Books & Manuscripts,c6f2cc06-1729-4d1a-b451-e586a6c837e4,159593,listed
-557307,First Edition 'Pride and Prejudice',Rare Books & Manuscripts,11ce6126-9b47-40a8-81a9-a9fd49caf3f7,282346,listed
-488048,Darwin's 'Origin of Species' Signed,Rare Books & Manuscripts,916cf585-9e21-463b-a6a6-2ad92fea0ce7,589883,listed
-732672,Macallan 1926 Single Malt Whisky,Vintage Wine & Spirits,92398d57-2c85-4417-89c3-115135a104e0,2019895,listed
-225749,Dalmore 62 Year Old Single Malt,Vintage Wine & Spirits,7a3520ed-ccf4-4ef6-b184-f2be8831e0ad,283959,listed
-474812,ChÃ¢teau Lafite Rothschild 1869,Vintage Wine & Spirits,b01afa48-40e5-4fc1-b1b4-4d013ad0de04,349392,listed
-385488,Omega Speedmaster Moon Watch (1969),Watches,5aeda594-8714-4baa-97f5-dfc14d319957,74964,listed
-491455,Ming Dynasty Scholar's Table,Antique Furniture,bcd40f55-1c09-4c5d-98f2-768fae06d08c,391043,expired
-729771,TimothÃ©e Chalamet's Dune Premiere Hat,Designer Fashion,37a74de7-9ce7-4988-9c3f-07013da7b37f,29298,expired
-168508,Christian Lacroix Couture Ensemble,Haute Couture,e35ec7b2-ef2b-4f30-bfbd-5466320eed5f,55216,expired
-614579,Amati Cello (17th Century),Musical Instruments,0ebb889c-dcfa-4dc9-9ac4-de2879d4a61b,1477781,expired
-950391,Muhammad Ali's Boxing Gloves (Thrilla in Manila),Other,28fd6000-2d0c-4aa0-a551-bcd86a4d6b18,632910,expired
-943301,Einstein's Handwritten Relativity Equations,Rare Books & Manuscripts,83904eca-54d3-4253-8a49-ca2acd2718b6,1426011,expired
-575498,Elvis Presley's Stage-Worn Jumpsuit,Designer Fashion,1daed9bb-6806-476d-84b1-534d0695dcbb,384379,draft
-292651,Banksy 'Girl with Balloon' Print,Fine Art,916cf585-9e21-463b-a6a6-2ad92fea0ce7,123540,draft
-838492,Vintage Selmer Mark VI Saxophone,Musical Instruments,e81b1f78-27a6-4e3d-bc6e-980e331c2e0b,28060,draft
-796477,RomanÃ©e-Conti Grand Cru 1945,Vintage Wine & Spirits,916cf585-9e21-463b-a6a6-2ad92fea0ce7,870015,draft
-586787,Cognac Croizet 1858,Vintage Wine & Spirits,916cf585-9e21-463b-a6a6-2ad92fea0ce7,146158,draft
-999468,Ancient Greek Dekadrachm,Collectible Coins,bcd40f55-1c09-4c5d-98f2-768fae06d08c,294845,canceled
-581684,Givenchy Audrey Hepburn Dress,Haute Couture,916cf585-9e21-463b-a6a6-2ad92fea0ce7,135140,canceled
-891293,Chanel Couture Tweed Suit (1960s),Haute Couture,7a3520ed-ccf4-4ef6-b184-f2be8831e0ad,94215,canceled
-288117,Egyptian Scarab Amulet (1500 BC),Historical Artifacts,3307e844-d472-405c-aa92-d568dea7c38c,175120,canceled
-792477,Porsche 911 Turbo S (Limited Edition),Luxury Vehicles,27685539-5525-4a14-ab79-5dfd1e918233,370916,canceled
-726903,1959 Gibson Les Paul Sunburst,Musical Instruments,9eb22f71-12a3-48ae-b7bb-246cb4feb6fb,551953,canceled
-941846,Serena Williams' Childhood Tennis Racquet,Other,729f8593-133e-40c9-afd7-09f8bc19ec76,82771,canceled
-267460,Medieval Illuminated Manuscript,Rare Books & Manuscripts,dc48f39b-344c-4151-adce-7acfc85f1380,496068,canceled
+100001,"Leonardo da Vinci, Mona Lisa",PAINTING,bobby,,DRAFT
+100002,Apollo 11 Command Module Columbia,TRANSPORTATION,caesar,,DRAFT
+100003,"Antonio Stradivari, Messiah Violin, 1716",MUSICAL_INSTRUMENT,caesar,,DRAFT
+100004,The Imperial State Crown,JEWELRY,caesar,,DRAFT
+100005,DeLorean Time Machine from Back to the Future,FILM_PROP,caesar,,DRAFT
+100006,"Michelangelo, David",SCULPTURE,bobby,,DRAFT
+100007,The Rosetta Stone,HISTORIC_OBJECT,bobby,,DRAFT
+100008,"Vincent van Gogh, The Starry Night, 1889",PAINTING,bobby,,DRAFT
+100100,Victorian Mourning Brooch — Group 4,JEWELRY,eastgatefolkartarchive,587000,SOLD
+102927,Championship Boxing Gloves — Group 4,SPORTS_MEMORABILIA,quarrylanecraftpreservations,685000,SOLD
+103899,"The Orlov Modular Chair Series, 1974",FURNITURE,northbridgemuseumofmoderncra,180000,INACTIVE
+104811,"The Luma-3 Exhibition Lamp, 1979",DESIGN_OBJECT,northbridgemuseumofmoderncra,120000,INACTIVE
+105006,"Nicolas de Staël, Composition, 1950",PAINTING,celine.irwin,861000,INACTIVE
+105795,"Screen-Used Harbour Series I Prop, 1978",FILM_PROP,xavier.jacobs,746000,REJECTED
+106483,"Elena Morrow Exhibition Lamp Prototype, 1980",DESIGN_OBJECT,reese.wilson,2299000,FULLY_SUBSCRIBED
+108415,Vintage Racing Car Body — Group 2,TRANSPORTATION,kai.kaur,311000,SUBMITTED
+111158,"Annotated Production Script, 1956",FILM_AND_MEDIA,nia.sims,71000,UNDER_OFFER
+112353,Historic Concert Cello — Group 7,MUSICAL_INSTRUMENT,emilia.cho,1694000,SOLD
+112376,"Annotated Production Script, 1962",FILM_AND_MEDIA,avane_alt,2766000,SOLD
+112919,Three Cypress Trees — Group 2,PAINTING,zane.thomas,1535000,SOLD
+114148,"Screen-Used Signal Field Prop, 1944",FILM_PROP,GrantMercer,1186000,SOLD
+115317,Green Passage,PAINTING,stonefieldhistorichousefound,371000,INACTIVE
+115597,"Samuel Serrat, Denver at Night, 2008",PHOTOGRAPH,fairmontdesignheritagecenter,246000,AVAILABLE
+115624,Campaign Megaphone from the 1968 Election,HISTORIC_OBJECT,heritagerowdecorativeartsarc,128000,AVAILABLE
+117657,"Journal of the Denver Expedition, 1956–1958",MANUSCRIPT,naomi.campbell,530000,SOLD
+119101,"Harcourt Estate Painted Stage Backdrop, 1980",THEATRE_OBJECT,foxgloveculturalpreservation,433000,INACTIVE
+119163,"Harcourt Estate Computing Prototype, 1992",TECHNOLOGY,windermeremuseumofmoderncraf,401000,UNDER_REVIEW
+119507,Historic Household Interior Group — Group 5,COLLECTION,tanglewoodfolkartarchive,1721000,SOLD
+121787,"Elena Kapoor, Orchard Interior, 1953",PAINTING,redcedarfolkartfoundation,1322000,FULLY_SUBSCRIBED
+121893,Signal Field Print,PRINT,theo.foster,225000,RESERVED
+122074,"Meridian Studio Archive, 1946–1976",ARCHIVAL_COLLECTION,heritagerowmaterialculturein,458000,INACTIVE
+124877,"Harcourt Estate Processional Banner, 1762",TEXTILE,silvermarshdecorativeartsarc,709000,SOLD
+126202,"Claude Monet, Nymphéas, c. 1916",PAINTING,heritagerowmaterialculturein,1071000,FULLY_SUBSCRIBED
+126512,Festival Mask with 1912 Collection Notes,ETHNOGRAPHIC_OBJECT,elmsteadhistoricalsociety,673000,SOLD
+128433,Harbour Series I Sculpture,SCULPTURE,elmsteadculturalmemoryprojec,877000,PARTIALLY_SUBSCRIBED
+128486,Signed First Edition — Group 5,RARE_BOOK,liucollections,533000,AVAILABLE
+129273,Championship Boxing Gloves — Group 5,SPORTS_MEMORABILIA,croth_alt,1078000,SOLD
+129479,"Nadia Roth, New York at Night, 2011",PHOTOGRAPH,highlandartistslegacytru_org,652000,SOLD
+129589,"Darius Ito, Signal Field, 1904",PAINTING,isaac.shah,1201000,FULLY_SUBSCRIBED
+129634,Foundry Pressure Gauge,INDUSTRIAL_OBJECT,chloe.shah,1451000,SOLD
+131223,"Riverside Theatre Stained-Glass Window, 1868",ARCHITECTURAL_ELEMENT,camila.park,483000,SOLD
+133986,"Mercury Records Computing Prototype, 1986",TECHNOLOGY,windermeredesignheritage_org,991000,SOLD
+135298,"Gabriel Mercer Tour Outfit and Backstage Passes, 1952",MUSIC_MEMORABILIA,hana.dubois,168000,SUBMITTED
+136264,"Chicago Championship Match-Worn Jersey, 2017",SPORTS_MEMORABILIA,copperlinemuseumofphotograph,578000,AVAILABLE
+136850,Coastal Survey Atlas — Group 3,MAP,emilia.sullivan_curator,324000,AVAILABLE
+138766,Hand-Coloured Regional Map — Group 3,MAP,eva.howell,850000,WITHDRAWN
+139077,Hand-Coloured Regional Map — Group 4,MAP,MWexler,1023000,SOLD
+139741,Early Personal Computer — Group 2,TECHNOLOGY,reina.rivera,513000,RESERVED
+139877,Festival Vestment Set — Group 3,RELIGIOUS_OBJECT,TheoKincaid,849000,SOLD
+140144,"New York Railway Carriage Panel, 1889",TRANSPORTATION,quinn.cho,2871000,FULLY_SUBSCRIBED
+140346,Miniature Effects Vehicle,FILM_PROP,elmsteadhistoricalsociety,334000,AVAILABLE
+141325,"Linden Library Processional Banner, 1854",TEXTILE,yasmin.roberts,142000,UNDER_REVIEW
+141827,"Harcourt Estate Computing Prototype, 1995",TECHNOLOGY,copperlinemuseumofphotograph,465000,AVAILABLE
+141995,"Cypress Observatory Control Panel, 1963",INDUSTRIAL_OBJECT,tessa.lee,1343000,SOLD
+142754,"Lucien Cole, Signal Field, 1815",PAINTING,noelle.lee,793000,SOLD
+143193,"Mercury Records Archive, 2004–2034",ARCHIVAL_COLLECTION,oakhollowmuseumofappliedarts,821000,WITHDRAWN
+143989,Victorian Era Monocle — Group 5,HISTORIC_OBJECT,westhavencraftpreservationso,775000,SOLD
+144306,"Imani Havel, Three Cypress Trees, bronze, 1943",SCULPTURE,nathan.hassan,960000,SOLD
+145862,"George Orwell, Nineteen Eighty-Four, first edition, 1949",RARE_BOOK,greatlakesindustrialartsmuse,416000,AVAILABLE
+146179,"Nadia Ito, Study for Standing Form, 1902",DRAWING,tessa.lee,309000,SALE_PENDING
+147603,Railway Engineering Map,MAP,jonah.irwin,211000,INACTIVE
+148822,"Rowan Kwon, Savannah at Night, 1963",PHOTOGRAPH,HelenaVale,1414000,SOLD
+149029,"Samuel Ortega, Portland at Night, 1894",PHOTOGRAPH,vivian.reyes_finance,228000,AVAILABLE
+149940,"Mercury Records Processional Cross, c. 1775",RELIGIOUS_OBJECT,walkercollections,1402000,SOLD
+150634,"Theo Navarro Precision Microscope, 1940",SCIENTIFIC_INSTRUMENT,MWexler,1250000,SOLD
+152737,"Orion Press Control Panel, 1957",INDUSTRIAL_OBJECT,redcedarfolkartfoundation,633000,SOLD
+153056,Annotated Travel Diary,MANUSCRIPT,harborlightmuseumofprintedar,755000,INACTIVE
+153223,Salt Marsh at Dusk,PAINTING,celine.irwin,580000,SOLD
+153383,"Arthur Ferrand, Monterey at Night, 1952",PHOTOGRAPH,harborlightdecorativeartsarc,172000,AVAILABLE
+153577,"Journal of the Savannah Expedition, 1863–1865",MANUSCRIPT,cedarpointculturalmemoryproj,738000,REJECTED
+153985,Harbour Series I — Group 2,PAINTING,robertsheritagesales,538000,UNDER_REVIEW
+154684,Black Orchard Print,PRINT,rosemontmuseumofmoderncraftd,250000,AVAILABLE
+154727,Blue Room with Fig Tree,PAINTING,ashlandmuseumofprintedarts,435000,INACTIVE
+155449,Signed First Edition — Group 6,RARE_BOOK,meridiannorrisfineobjects,1396000,SOLD
+155461,Historic Prayer Book,RELIGIOUS_OBJECT,cole.thomas_director,667000,SOLD
+156117,"Camille Cole, Market Morning, 1763",PAINTING,vivienne.cross,1161000,SOLD
+156607,"Iris Maren Studio Ceramic Vessel Set, 1953",CERAMIC,aaliyah.zimmerman,692000,SOLD
+156829,"Amina Kwon, Harbour Series I, 1947",PAINTING,orchardhousecommunityartsfou,639000,SOLD
+157311,"Lucien Bennett Library Chair, 1943",FURNITURE,timberlinerestorationfoundat,338000,INACTIVE
+157531,Early Scientific Treatise — Group 3,RARE_BOOK,cole.thomas_director,100000,AVAILABLE
+157794,"Riverside Theatre Control Panel, 1877",INDUSTRIAL_OBJECT,eastgateindustrialartsmuseum,696000,SOLD
+157818,Victorian Mourning Brooch — Group 3,JEWELRY,akira.bennett,1247000,SOLD
+160417,"Arthur Dawson, Factory Window, 1867",PAINTING,paola.santos,3380000,SOLD
+161776,Jazz Club Upright Piano — Group 3,MUSICAL_INSTRUMENT,nathan.hassan,467000,AVAILABLE
+162617,Altair 8800 Computer,TECHNOLOGY,georgia.park,1352000,FULLY_SUBSCRIBED
+164957,"Priya Foster Studio Ceramic Vessel Set, 1805",CERAMIC,harborlightmuseumofprintedar,1164000,WITHDRAWN
+165481,Ancient Coin Group,ARCHAEOLOGICAL_OBJECT,windermeredesignheritage_org,731000,SOLD
+166270,"Gabriel Ortega, Detroit at Night, 1918",PHOTOGRAPH,elias.zhang,520000,AVAILABLE
+166474,"Samuel Alvarez Couture Evening Coat, 1910",FASHION,abigail.lee_curator,1410000,FULLY_SUBSCRIBED
+166988,Concert Poster Archive — Group 4,MUSIC_MEMORABILIA,oakhollowmuseumofappliedarts,862000,WITHDRAWN
+168780,Market Morning,PAINTING,stonefieldmaterialcultureins,366000,INACTIVE
+169596,Opera Scenery Panel,THEATRE_OBJECT,willowmererailwayhistorycent,419000,AVAILABLE
+170673,"Screen-Used Signal Field Prop, 1991",FILM_PROP,DominicHale,589000,SOLD
+173768,Early Television Camera — Group 2,FILM_AND_MEDIA,ashcroftcollection,1365000,SOLD
+176037,Orchard Interior Print,PRINT,southbankmaterialcultureinst,117000,INACTIVE
+181629,"Sofia Saito, Baltimore at Night, 1858",PHOTOGRAPH,pineharbormaterialcultureins,559000,RESERVED
+182022,Study for a Procession Sculpture,SCULPTURE,quarrylanemuseumofphotograph,3593000,FULLY_SUBSCRIBED
+183053,Stained-Glass Study Panel — Group 3,GLASS,ruby.reed,977000,SOLD
+184983,Handwoven Wall Textile,TEXTILE,parkhurstcommunityartsfounda,99000,INACTIVE
+187399,"Granite Bay Film Society Processional Banner, 1969",TEXTILE,felix.romero,808000,WITHDRAWN
+187913,Orchard Interior Study,DRAWING,yara.flores,123000,INACTIVE
+188782,"Rosa Saito Concert Violin, 1666",MUSICAL_INSTRUMENT,HelenaVale,255000,AVAILABLE
+189251,Early Electron Microscope Control Unit,SCIENTIFIC_INSTRUMENT,rosemontmuseumofmoderncraftd,589000,INACTIVE
+189968,Studio Ceramic Vessel Set — Group 11,CERAMIC,christian.tran,1574000,SOLD
+190771,"Orion Press Ceremonial Presentation Object, 1889",HISTORIC_OBJECT,yasmin.roberts,759000,INACTIVE
+191057,"Mercury Records Archive, 1810–1840",ARCHIVAL_COLLECTION,santiago.jordan,599000,SOLD
+192387,Art Deco Silver Tea Service — Group 7,METALWORK,daniel.campbell,723000,SOLD
+193010,"Samuel Novak, House at Low Tide, 1890",PAINTING,copperlinemuseumofphotograph,1621000,FULLY_SUBSCRIBED
+193685,Studio Ceramic Collection — Group 4,COLLECTION,emilia.quinn,2301000,SOLD
+195343,"Yayoi Kusama, Pumpkin, 1994",PAINTING,windermeredesignheritagecent,778000,INACTIVE
+196138,Roger Federer Match-Used Racket,SPORTS_MEMORABILIA,parkhurstpublicartconservanc,359000,INACTIVE
+196814,Brass Surveying Transit — Group 3,SCIENTIFIC_INSTRUMENT,croth_alt,390000,UNDER_REVIEW
+197086,"Amara Ito Couture Evening Coat, 1958",FASHION,farah.stone,498000,UNDER_REVIEW
+197805,Local Newspaper Photograph Archive — Group 7,ARCHIVAL_COLLECTION,delilah.kim,2116000,FULLY_SUBSCRIBED
+199185,"Screen-Used Night Tram Prop, 1956",FILM_PROP,windermerepublicartconservan,149000,SUBMITTED
+199567,"New Orleans Championship Match-Worn Jersey, 2010",SPORTS_MEMORABILIA,howardfineobjects,258000,UNDER_REVIEW
+199878,"Screen-Used Coastal Light Prop, 1934",FILM_PROP,tanglewoodfolkartarchive,336000,AVAILABLE
+199965,"Cypress Observatory Stained-Glass Window, 1844",ARCHITECTURAL_ELEMENT,TheoKincaid,968000,SOLD
+200036,"Elias Serrat, Red Bridge, 1827",PAINTING,highlandartistslegacytrust,543000,SOLD
+200159,Community Ritual Mask,ETHNOGRAPHIC_OBJECT,whiteclifffolkartarchive,764000,INACTIVE
+201205,"Rafael Dawson, Harbour Series I, lithograph, 1990",PRINT,elmsteadhistoricalsociety,286000,AVAILABLE
+201275,"Granite Bay Film Society Processional Cross, c. 1997",RELIGIOUS_OBJECT,naomi.campbell,149000,INACTIVE
+201634,"Priya Navarro Library Chair, 1835",FURNITURE,windermerepublicartconservan,1656000,FULLY_SUBSCRIBED
+201777,Winter Garden — Group 3,PAINTING,daniel.campbell,248000,SALE_PENDING
+202462,Factory Window Sculpture,SCULPTURE,pineharborrailwayhistorycent,167000,INACTIVE
+203633,Studio Ceramic Vessel Set — Group 3,CERAMIC,mina.singh,268000,INACTIVE
+204315,"Meridian Studio Material Culture Collection, 1965–1990",COLLECTION,nadia_whitmore,795000,SOLD
+204814,"Westhaven Works Ceremonial Presentation Object, 2002",HISTORIC_OBJECT,aldergrovefurnituredesignarc,455000,INACTIVE
+205135,Designer Performance Costume,FASHION,chloe.singh,282000,INACTIVE
+205164,"Amina Kapoor Concert Violin, 1830",MUSICAL_INSTRUMENT,cassidy.ito,179000,AVAILABLE
+205521,Embroidered Civic Standard — Group 4,TEXTILE,henry.franklin,990000,SOLD
+205706,"Valentina Ferrand Studio Ceramic Vessel Set, 1785",CERAMIC,CelesteRoth,334000,UNDER_REVIEW
+205717,"Noelle Ferrand Precision Microscope, 1820",SCIENTIFIC_INSTRUMENT,lana.vasquez,1107000,SOLD
+205973,Signed Recording Contract — Group 4,MUSIC_MEMORABILIA,croth_alt,420000,UNDER_REVIEW
+207224,"Redwood Civic Association Silver Presentation Service, 1871",METALWORK,southbankmaritimeheritagemus,3749000,SOLD
+209892,Telecommunications Switching Unit — Group 4,TECHNOLOGY,GrantMercer,438000,UNDER_REVIEW
+210574,Art Deco Cinema Ticket Booth,ARCHITECTURAL_ELEMENT,aaron.olsen,1018000,INACTIVE
+211719,"Amara Voss, Study for Coastal Light, 1774",DRAWING,eastgateindustrialartsmuseum,2196000,FULLY_SUBSCRIBED
+211908,Philadelphia Photographic Album,PHOTOGRAPH,zane.thomas,752000,SOLD
+212114,"Priya Navarro Couture Evening Coat, 2001",FASHION,ironwoodcraftpreservatio_org,1617000,SOLD
+212622,The Reading Room,PAINTING,abigail.lee_curator,535000,INACTIVE
+212918,Arcade Development Console — Group 2,TECHNOLOGY,emilia.sullivan_curator,708000,SOLD
+212919,Exhibition Lighting Prototype,DESIGN_OBJECT,maplecrossinghistorichousefo,148000,INACTIVE
+212947,"Santiago Kwon, Factory Window, bronze, 1918",SCULPTURE,mwexler_alt,686000,SOLD
+213067,Studio with Copper Vessel Print,PRINT,quarrylanemuseumofphotograph,562000,UNDER_OFFER
+215277,Cloud over the Foundry Sculpture,SCULPTURE,ronanA,558000,AVAILABLE
+217499,"Chicago Championship Match-Worn Jersey, 1937",SPORTS_MEMORABILIA,yara.diaz,1396000,SOLD
+218202,Walnut Reading Chair — Group 4,FURNITURE,longfellowestatecollection,275000,AVAILABLE
+218710,"Sofia Ellis, Standing Form, 1763",PAINTING,harper.ellis,125000,UNDER_REVIEW
+219025,"Alexander McQueen Runway Jacket, Autumn/Winter 1998",FASHION,brookfieldhistorichousefound,733000,INACTIVE
+219438,Chicago Photographic Album,PHOTOGRAPH,abigail.martinez,2052000,SOLD
+219444,Designer Performance Costume — Group 4,FASHION,GrantMercer,941000,SOLD
+220190,"Theo Voss, Salt Marsh at Dusk, lithograph, 1874",PRINT,elmsteadculturalpreservation,144000,UNDER_REVIEW
+221424,Orchard Interior — Group 2,PAINTING,HelenaVale,575000,SUBMITTED
+221750,"Celia Morrow, After the Storm, bronze, 1895",SCULPTURE,imani.reed,760000,SOLD
+222295,Roman Coin Hoard with Excavation Archive,ARCHAEOLOGICAL_OBJECT,pineharbormaterialcultureins,344000,INACTIVE
+222455,Local Newspaper Photograph Archive — Group 6,ARCHIVAL_COLLECTION,imani.reed,887000,PARTIALLY_SUBSCRIBED
+222944,"Monterey Championship Match-Worn Jersey, 1951",SPORTS_MEMORABILIA,noelle.lee,377000,UNDER_REVIEW
+223652,The Long Platform Study,DRAWING,hearthstonefolkartarchive,321000,INACTIVE
+224032,"Meridian Studio Silver Presentation Service, 1793",METALWORK,windermeredesignheritagecent,405000,INACTIVE
+224351,"Riverside Theatre Ceremonial Presentation Object, 1781",HISTORIC_OBJECT,brookfieldhistorichousefound,856000,WITHDRAWN
+224589,"Granite Bay Film Society Press, Illustrated First Edition, 1760",RARE_BOOK,harborlightdecorativeartsarc,226000,AVAILABLE
+225275,Local Newspaper Photograph Archive — Group 3,ARCHIVAL_COLLECTION,hearthstonefolkartarchive,231000,INACTIVE
+226153,"Screen-Used Market Morning Prop, 1935",FILM_PROP,aaron.olsen,167000,AVAILABLE
+227312,"Sofia Ellis Art Glass Panel, 1924",GLASS,tanglewoodmuseumofmoderncraf,764000,SOLD
+228725,Factory Time Clock,INDUSTRIAL_OBJECT,whiteclifffolkartarchive,256000,AVAILABLE
+230140,"Elena Maren Tour Outfit and Backstage Passes, 1989",MUSIC_MEMORABILIA,celine.irwin,729000,SOLD
+230652,Green Passage Sculpture,SCULPTURE,jonah.irwin,89000,AVAILABLE
+231439,"Ansel Adams, Moonrise, Hernandez, New Mexico, 1941",PHOTOGRAPH,southbanktextilearchive,596000,SOLD
+231572,"Riverside Theatre Processional Banner, 1965",TEXTILE,yasmin.roberts,313000,INACTIVE
+232010,"Mara Serrat, Study for The Long Platform, 2015",DRAWING,zane.flores_director,322000,AVAILABLE
+232156,"Ansel Ren Concert Violin, 2016",MUSICAL_INSTRUMENT,northbridgemuseumofmoderncra,260000,AVAILABLE
+232532,Jazz Club Upright Piano — Group 2,MUSICAL_INSTRUMENT,priya.nelson,152000,AVAILABLE
+233675,"Noelle Ingram Art Glass Panel, 1756",GLASS,yorkfieldfurnituredesignarch,167000,UNDER_REVIEW
+234163,"Orion Press Press, Illustrated First Edition, 1872",RARE_BOOK,harborlightmuseumofprintedar,460000,INACTIVE
+234215,"Jonas Ferrand Studio Ceramic Vessel Set, 1991",CERAMIC,abigail.lee_curator,265000,INACTIVE
+234304,Three Cypress Trees Study,DRAWING,keira.nguyen,198000,AVAILABLE
+234970,"Bay City Foundry Painted Stage Backdrop, 1768",THEATRE_OBJECT,aaron.olsen,676000,SOLD
+235462,Telecommunications Switching Unit — Group 3,TECHNOLOGY,GrantMercer,766000,SOLD
+235738,"Harcourt Estate Processional Cross, c. 1782",RELIGIOUS_OBJECT,liam.martin,520000,SOLD
+236152,"Felix Serrat, Night Tram, lithograph, 1973",PRINT,HelenaVale,253000,UNDER_REVIEW
+236882,"Philadelphia Railway Carriage Panel, 1935",TRANSPORTATION,yasmin.roberts,425000,AVAILABLE
+238447,Modular Chair Prototype — Group 4,DESIGN_OBJECT,TheoKincaid,71000,UNDER_REVIEW
+238536,"Monterey Championship Match-Worn Jersey, 1928",SPORTS_MEMORABILIA,georgia.lee,1041000,SOLD
+239208,"Marc Chagall, The Circus, lithograph, 1967",PRINT,theo.foster,314000,INACTIVE
+239210,"Gold and Enamel Memorial Brooch, c. 1878",JEWELRY,amir.saito_director,1303000,FULLY_SUBSCRIBED
+239638,"Excavated Ceramic Vessel with Field Archive, c. 511",ARCHAEOLOGICAL_OBJECT,fairmontmaritimeheritagemuse,712000,SOLD
+240117,"Amina Desai, Portland at Night, 1854",PHOTOGRAPH,ashlanddecorativeartsarchive,323000,AVAILABLE
+240980,"Darius Maren, The Reading Room, lithograph, 1804",PRINT,eva.howell,597000,SOLD
+241129,Victorian Era Monocle — Group 3,HISTORIC_OBJECT,kai.zimmerman,2636000,SOLD
+243669,"Amara Novak Tour Outfit and Backstage Passes, 1968",MUSIC_MEMORABILIA,juniperridgepublicartconserv,507000,UNDER_REVIEW
+246091,Public Transit Destination Sign,TRANSPORTATION,ravenwoodcraftpreservationso,306000,AVAILABLE
+246285,"Blue Factory Window, 1934; acquired 1978",PAINTING,northbridgemuseumofmoderncra,180000,INACTIVE
+246793,Science-Fiction Helmet Prop,FILM_PROP,malik.johnson,343000,AVAILABLE
+246920,"David Hockney, Study for a Pool, 1970",PAINTING,reese.wilson,214000,AVAILABLE
+247435,"Seattle Championship Match-Worn Jersey, 1962",SPORTS_MEMORABILIA,stonefieldmaterialcultureins,253000,AVAILABLE
+247436,Annotated Shooting Script for a 1970s Science-Fiction Film,FILM_AND_MEDIA,sabrina.edwards,218000,AVAILABLE
+248624,Machine Shop Sign — Group 4,INDUSTRIAL_OBJECT,pineharborrailwayhistorycent,1348000,SOLD
+248747,"Noelle Havel Tour Outfit and Backstage Passes, 1974",MUSIC_MEMORABILIA,henry.reed,937000,SOLD
+250349,Salt Marsh at Dusk — Group 2,PAINTING,orchardhousecommunityartsfou,478000,RESERVED
+250789,"Journal of the Savannah Expedition, 1999–2001",MANUSCRIPT,silvermarshdecorativeartsarc,534000,INACTIVE
+250790,"Darius Cole, Three Cypress Trees, 1756",PAINTING,leo.lane,1409000,INACTIVE
+251857,Studio Ceramic Collection,COLLECTION,eastgateindustrialartsmuseum,555000,INACTIVE
+253716,"Lucien Havel, Signal Field, lithograph, 1988",PRINT,vivian.reyes_finance,649000,INACTIVE
+253939,"Milo Serrat, Blue Room with Fig Tree, 1894",PAINTING,ironwoodcraftpreservatio_org,1485000,INACTIVE
+254108,Historic Motorcycle — Group 3,TRANSPORTATION,DominicHale,462000,UNDER_REVIEW
+254303,Closed Theatre Records — Group 6,ARCHIVAL_COLLECTION,amir.saito_director,1034000,SOLD
+259790,"Darius Mercer, The North Courtyard, 1947",PAINTING,redcedarfolkartfoundation,1291000,FULLY_SUBSCRIBED
+261869,Walnut Reading Chair — Group 2,FURNITURE,southbanktextilearchive,875000,PARTIALLY_SUBSCRIBED
+262905,"Mara Havel Tour Outfit and Backstage Passes, 2011",MUSIC_MEMORABILIA,castillocollections,930000,SOLD
+263664,"Ansel Foster Couture Evening Coat, 1912",FASHION,mateo.williams,358000,RESERVED
+263999,Ceremonial Chalice — Group 2,RELIGIOUS_OBJECT,harper.hernandez,660000,SOLD
+264108,"Samuel Ferrand, After the Storm, bronze, 2001",SCULPTURE,DominicHale,986000,SOLD
+264204,"Noelle Ortega, Monterey at Night, 1957",PHOTOGRAPH,vivian.reyes_finance,301000,AVAILABLE
+264649,"Priya Desai, Black Orchard, lithograph, 1944",PRINT,stonefieldpublicartconservan,176000,AVAILABLE
+265175,"Mercury Records Processional Cross, c. 1993",RELIGIOUS_OBJECT,orchardhousecommunityartsfou,54000,UNDER_REVIEW
+265532,"Harcourt Estate Archive, 1964–1994",ARCHIVAL_COLLECTION,isaac.shah,832000,WITHDRAWN
+265607,Three Cypress Trees,PAINTING,rosemonthistoricalsociety,2585000,FULLY_SUBSCRIBED
+265809,"New York Championship Match-Worn Jersey, 1923",SPORTS_MEMORABILIA,oakhollowmuseumofappliedarts,2275000,SOLD
+266484,Early Personal Computer — Group 4,TECHNOLOGY,avane_alt,230000,RESERVED
+267493,"Mara Ito, Study for Three Cypress Trees, 1971",DRAWING,santiago.alvarez,352000,UNDER_OFFER
+268002,"Rosa Caldwell Studio Ceramic Vessel Set, 1950",CERAMIC,brookfieldarchitecturalherit,973000,PARTIALLY_SUBSCRIBED
+268057,"Gold and Enamel Memorial Brooch, c. 1798",JEWELRY,stonefieldmaterialcultureins,1130000,SOLD
+268830,"Screen-Used House at Low Tide Prop, 1948",FILM_PROP,eastgatefolkartarchive,357000,AVAILABLE
+269033,"Nadia Serrat Art Glass Panel, 1855",GLASS,cassidy.ito,2087000,FULLY_SUBSCRIBED
+269413,Blade Runner Spinner Miniature,FILM_PROP,southbanktextilearchive,674000,INACTIVE
+271215,"Amina Kwon, Savannah at Night, 1994",PHOTOGRAPH,quinn.campbell,187000,AVAILABLE
+271485,"Roy Lichtenstein, Brushstroke, 1965",PRINT,northbridgemuseumofmoderncra,740000,REJECTED
+273204,Astronomical Compendium,SCIENTIFIC_INSTRUMENT,southbanktextilearchive,1079000,INACTIVE
+273454,Three Cypress Trees Sculpture,SCULPTURE,westhavencraftpreservationso,613000,SOLD
+273821,"Elena Voss Couture Evening Coat, 1966",FASHION,tanglewoodculturalmemory_org,3159000,SOLD
+274770,"Estate Collection of Studio Ceramics, 1948–1972",COLLECTION,redcedarfolkartfoundation,1700000,INACTIVE
+275369,"Mateo Navarro Exhibition Lamp Prototype, 1986",DESIGN_OBJECT,leo.lane,1674000,FULLY_SUBSCRIBED
+276333,Mineral Specimen Cabinet — Group 2,NATURAL_HISTORY,crossventuresart,3490000,SOLD
+278538,"Samuel Ferrand, Factory Window, bronze, 1750",SCULPTURE,rosemontmuseumofmoderncraftd,1046000,FULLY_SUBSCRIBED
+279206,Vintage Racing Car Body,TRANSPORTATION,stonefieldhistorichousefound,489000,INACTIVE
+279849,Blue Room with Fig Tree Study,DRAWING,lucia76,587000,SOLD
+280293,Handwritten Set List,MUSIC_MEMORABILIA,quarrylanemuseumofphotograph,2065000,INACTIVE
+280387,"Camille Novak, Coastal Light, bronze, 1894",SCULPTURE,hearthstonefolkartarchive,1600000,FULLY_SUBSCRIBED
+280568,"Amara Voss Couture Evening Coat, 1959",FASHION,rosemontmuseumofmoderncraftd,731000,SOLD
+281194,"Journal of the Boston Expedition, 1901–1903",MANUSCRIPT,georgia.park,377000,INACTIVE
+281549,Closed Theatre Records — Group 5,ARCHIVAL_COLLECTION,harper.flores,303000,INACTIVE
+282531,Mosaic Interior Panel — Group 2,ARCHITECTURAL_ELEMENT,amir.miller,366000,AVAILABLE
+282711,Championship Boxing Gloves — Group 3,SPORTS_MEMORABILIA,TheoKincaid,4733000,SOLD
+283128,Studio with Copper Vessel Sculpture,SCULPTURE,brookfieldhistorichousefound,664000,SOLD
+283165,"Ansel Kapoor Library Chair, 1860",FURNITURE,lana.vasquez,311000,AVAILABLE
+283965,"Survey Map of Santa Clara, 1948",MAP,eastgaterailwayhistorycenter,889000,SOLD
+284323,Blue Room with Fig Tree Sculpture,SCULPTURE,jade.campbell,1244000,FULLY_SUBSCRIBED
+285747,"Granite Bay Film Society Painted Stage Backdrop, 1892",THEATRE_OBJECT,croth_alt,478000,RESERVED
+285774,Miniature Effects Vehicle — Group 3,FILM_PROP,rosemontdesignheritagecenter,1004000,SOLD
+287153,Local Newspaper Photograph Archive — Group 8,ARCHIVAL_COLLECTION,harborlightmuseumofprintedar,252000,AVAILABLE
+289122,"Chicago Railway Carriage Panel, 2012",TRANSPORTATION,eastgatefolkartarchive,1124000,SOLD
+290158,Studio Ceramic Collection — Group 2,COLLECTION,ironwoodcraftpreservatio_org,562000,INACTIVE
+290172,Art Deco Silver Tea Service — Group 8,METALWORK,lorenzo.valdez,634000,SOLD
+290902,"Andy Warhol, Flowers, 1964",PAINTING,foxgloveartistslegacytrust,5400000,DISPUTED
+292709,"Gerhard Richter, Abstraktes Bild 747-1, 1991",PAINTING,isaac.shah,9400000,DISPUTED
+293992,Hand-Coloured Regional Map,MAP,granitehillmuseumoflocalindu,377000,INACTIVE
+294282,"Orion Press Press, Illustrated First Edition, 2000",RARE_BOOK,emilia.sullivan_curator,449000,UNDER_REVIEW
+294305,"Santiago Saito Tour Outfit and Backstage Passes, 1955",MUSIC_MEMORABILIA,isabel.carter,1221000,FULLY_SUBSCRIBED
+294517,Historic Household Interior Group — Group 4,COLLECTION,vivienne.cross,1815000,SOLD
+295014,"Screen-Used Three Cypress Trees Prop, 1996",FILM_PROP,ari.turner,306000,UNDER_REVIEW
+296458,"Darius Ren, Factory Window, bronze, 2012",SCULPTURE,ravenwoodcraftpreservationso,483000,SOLD
+296669,River Bend Study,DRAWING,priya.nelson,385000,UNDER_REVIEW
+296719,"Gold and Enamel Memorial Brooch, c. 2001",JEWELRY,redcedarfolkartfoundation,2036000,FULLY_SUBSCRIBED
+296987,"Mara Ellis, Night Tram, 1889",PAINTING,AuggieVane,360000,AVAILABLE
+298129,"Felix Roth, House at Low Tide, bronze, 1915",SCULPTURE,emilia.yoon,1705000,SOLD
+298213,"St. Elian Parish Press, Illustrated First Edition, 1952",RARE_BOOK,rothartadvisory,100000,UNDER_REVIEW
+299332,"Oakland Championship Match-Worn Jersey, 1914",SPORTS_MEMORABILIA,AuggieVane,1751000,SOLD
+299617,Composer’s Working Notebook — Group 2,MANUSCRIPT,yasmin.roberts,514000,UNDER_OFFER
+299768,Tour Stage Jacket — Group 2,FASHION,vcross_alt,566000,AVAILABLE
+300000,"North Coast Railway Control Panel, 1922",INDUSTRIAL_OBJECT,georgia.park,139000,SUBMITTED
+300408,Festival Mask with 1842 Collection Notes,ETHNOGRAPHIC_OBJECT,imani.thomas,435000,AVAILABLE
+300591,Handwoven Wall Textile — Group 7,TEXTILE,granitehillmuseumoflocalindu,263000,UNDER_REVIEW
+301740,Industrial Design Radio,DESIGN_OBJECT,georgia.lee,111000,INACTIVE
+302192,Art Nouveau Pendant — Group 5,JEWELRY,celine.kapoor,446000,SUBMITTED
+303148,"Felix Cole, Study for Market Morning, 1796",DRAWING,isaac.rivera,424000,AVAILABLE
+304815,"Gold and Enamel Memorial Brooch, c. 1782",JEWELRY,theo.foster,642000,SOLD
+304843,"Ansel Maren Couture Evening Coat, 1925",FASHION,choiartadvisory,992000,SOLD
+305082,Theatre Lobby Bench,FURNITURE,cedarpointculturalmemoryproj,69000,INACTIVE
+305713,Theatre Lobby Bench — Group 4,FURNITURE,leo.lane,292000,AVAILABLE
+306491,"Noelle Bennett, Three Cypress Trees, 1987",PAINTING,fairmontdesignheritagecenter,1895000,SOLD
+308372,Annotated Poetry Volume — Group 3,RARE_BOOK,priya.lane,1207000,SOLD
+308427,"Amara Kwon, Harbour Series I, 1866",PAINTING,theo.foster,1725000,FULLY_SUBSCRIBED
+308865,"Amara Vale, House at Low Tide, 1934",PAINTING,atlastaylorauctions,1247000,SOLD
+308894,Market Morning — Group 2,PAINTING,highlandartistslegacytrust,733000,SOLD
+309506,"Theo Novak, Three Cypress Trees, 1906",PAINTING,cedarpointculturalmemoryproj,983000,FULLY_SUBSCRIBED
+309930,"Philadelphia Championship Match-Worn Jersey, 1981",SPORTS_MEMORABILIA,harper7,505000,SALE_PENDING
+310033,Annotated Poetry Volume,RARE_BOOK,windermeredesignheritagecent,470000,INACTIVE
+310616,"Cypress Observatory Processional Banner, 1762",TEXTILE,elmsteadculturalpreservation,1513000,FULLY_SUBSCRIBED
+311830,"Mateo Voss, Cloud over the Foundry, 1825",PAINTING,keystonemillerauctions,195000,UNDER_REVIEW
+312044,Runway Evening Dress — Group 2,FASHION,jonah.irwin,726000,SOLD
+312584,"Valentina Morrow, Factory Window, bronze, 1830",SCULPTURE,ftran_westhave,645000,SOLD
+312975,"Elias Cole, Studio with Copper Vessel, 2006",PAINTING,heritagerowmaterialculturein,252000,AVAILABLE
+313147,"Orion Press Ceremonial Presentation Object, 1990",HISTORIC_OBJECT,yorkfieldfurnituredesignarch,271000,UNDER_OFFER
+313878,Historic Concert Cello — Group 6,MUSICAL_INSTRUMENT,caleb.brooks,558000,UNDER_OFFER
+313899,Community Ritual Mask — Group 3,ETHNOGRAPHIC_OBJECT,bishopheritagesales,163000,UNDER_REVIEW
+315243,"Imani Bell Exhibition Lamp Prototype, 1981",DESIGN_OBJECT,foxgloveartistslegacytrust,397000,AVAILABLE
+316249,"Cypress Observatory Control Panel, 1901",INDUSTRIAL_OBJECT,abigail.martinez,726000,INACTIVE
+316446,Art Nouveau Pendant,JEWELRY,parkhurstceramicsmuseum,923000,INACTIVE
+316873,"Bay City Foundry Processional Banner, 1897",TEXTILE,choiartadvisory,1000000,SOLD
+318353,Historic Household Interior Group — Group 2,COLLECTION,oakhollowmuseumofappliedarts,742000,REJECTED
+321584,"North Coast Railway Archive, 1873–1903",ARCHIVAL_COLLECTION,elmsteadculturalmemoryprojec,1072000,SOLD
+322136,"Mara Kwon, Coastal Light, 1939",PAINTING,imani.reed,454000,AVAILABLE
+322479,After the Storm Print,PRINT,priya.nelson,488000,SOLD
+322718,"Cypress Observatory Press, Illustrated First Edition, 1791",RARE_BOOK,adamscollections,764000,SOLD
+322752,"Orion Press Archive, 1949–1979",ARCHIVAL_COLLECTION,xavier.jacobs,987000,INACTIVE
+322806,The Reading Room — Group 2,PAINTING,leo.lane,1663000,SOLD
+323546,"Rowan Ortega, Cloud over the Foundry, bronze, 2013",SCULPTURE,eastgaterailwayhistorycenter,260000,AVAILABLE
+324510,Coastal Light,PAINTING,reina.sullivan,457000,INACTIVE
+324789,"Samuel Saito Exhibition Lamp Prototype, 1972",DESIGN_OBJECT,hearthstonefolkartarchive,535000,INACTIVE
+324982,"Theo Saito, The Reading Room, bronze, 1832",SCULPTURE,yorkfieldfurnituredesignarch,484000,AVAILABLE
+325381,"Cypress Observatory Ceremonial Presentation Object, 1935",HISTORIC_OBJECT,elmsteadhistoricalsociety,425000,AVAILABLE
+326230,"Amara Foster Concert Violin, 2000",MUSICAL_INSTRUMENT,quarrylanemuseumofphotograph,1380000,FULLY_SUBSCRIBED
+326320,"Samuel Ellis, Orchard Interior, bronze, 1843",SCULPTURE,whiteclifffolkartarchive,452000,INACTIVE
+327239,Match-Worn Football Shirt,SPORTS_MEMORABILIA,silvermarshdecorativeartsarc,227000,INACTIVE
+328768,After the Storm Sculpture,SCULPTURE,sofia.rivera,1151000,SOLD
+330229,Blue Room with Fig Tree Print,PRINT,silvermarsharchitecturalheri,266000,AVAILABLE
+330716,Signed Tournament Racket — Group 2,SPORTS_MEMORABILIA,tanglewoodfolkartarchive,849000,WITHDRAWN
+330901,"Mercury Records Ceremonial Presentation Object, 1771",HISTORIC_OBJECT,hearthstonemuseumofappliedar,749000,SOLD
+330957,Walnut Reading Chair — Group 7,FURNITURE,iris.knight,1213000,SOLD
+331637,"Westhaven Works Material Culture Collection, 1998–2023",COLLECTION,zimmermancollections,576000,SALE_PENDING
+331811,"Iris Caldwell Tour Outfit and Backstage Passes, 2013",MUSIC_MEMORABILIA,GrantMercer,865000,SOLD
+332004,Machine Shop Sign — Group 2,INDUSTRIAL_OBJECT,howardfineobjects,406000,AVAILABLE
+333633,Green Passage — Group 2,PAINTING,lorenzo.valdez,3507000,SOLD
+333652,"Santiago Saito Couture Evening Coat, 1914",FASHION,hana.dubois,358000,AVAILABLE
+333811,"Mara Morrow, Austin at Night, 1958",PHOTOGRAPH,atlascolemanadvisory,106000,UNDER_REVIEW
+333816,"Henri Cartier-Bresson, Behind the Gare Saint-Lazare, 1932",PHOTOGRAPH,sofia.hayes,94000,INACTIVE
+334341,"Rafael Bennett Precision Microscope, 1865",SCIENTIFIC_INSTRUMENT,stonefieldhistorichousefound,410000,AVAILABLE
+334728,Theatre Lobby Bench — Group 3,FURNITURE,emilia.cho,751000,INACTIVE
+335532,Ancient Coin Group — Group 2,ARCHAEOLOGICAL_OBJECT,chloe63,2140000,SOLD
+335577,Closed Factory Neon Sign,INDUSTRIAL_OBJECT,aldergrovefurnituredesignarc,607000,INACTIVE
+336440,Screen-Used Hero Prop — Group 5,FILM_PROP,southbankmaterialcultureinst,1064000,SOLD
+337095,"Felix Ito Couture Evening Coat, 1975",FASHION,keystoneandersonauctions,1405000,SOLD
+337370,"Camille Ito, Three Cypress Trees, bronze, 1793",SCULPTURE,lorenzo.ellis,1556000,SOLD
+337806,"Amara Vale Tour Outfit and Backstage Passes, 2010",MUSIC_MEMORABILIA,meridianmillercollections,316000,UNDER_OFFER
+337824,"Elias Cole Exhibition Lamp Prototype, 1889",DESIGN_OBJECT,granitehillmuseumoflocalindu,120000,INACTIVE
+338175,Evening at the Quarry — Group 2,PAINTING,leo.ortiz,1574000,SOLD
+338250,"Granite Bay Film Society Computing Prototype, 1990",TECHNOLOGY,nathan.hassan,895000,SOLD
+340234,"Gabriel Ellis Exhibition Lamp Prototype, 1925",DESIGN_OBJECT,southbankmaritimeheritagemus,808000,WITHDRAWN
+340529,"Rowan Roth, Richmond at Night, 1949",PHOTOGRAPH,zane.thomas,1664000,SOLD
+341270,Art Deco Silver Tea Service,METALWORK,lana.mendez,188000,INACTIVE
+342054,"Santiago Ingram, Harbour Series I, bronze, 1813",SCULPTURE,rothartadvisory,5505000,SOLD
+342446,Mineral Specimen Cabinet,NATURAL_HISTORY,lorenzo.ellis,384000,UNDER_OFFER
+342861,Le Mans Racing Steering Wheel,TRANSPORTATION,georgia.park,900000,PARTIALLY_SUBSCRIBED
+342976,"Redwood Civic Association Archive, 1943–1973",ARCHIVAL_COLLECTION,stonefieldhistorichousefound,761000,INACTIVE
+343640,"Orion Press Computing Prototype, 1979",TECHNOLOGY,quinn.cho,241000,REJECTED
+343768,Walnut Reading Chair — Group 8,FURNITURE,DominicHale,371000,UNDER_REVIEW
+343940,"Mara Cole, Studio with Copper Vessel, 1978",PAINTING,farah.stone,886000,PARTIALLY_SUBSCRIBED
+344092,"Iris Novak, Winter Garden, 1976",PAINTING,imani.reed,241000,AVAILABLE
+344566,Early Personal Computer — Group 5,TECHNOLOGY,santiago.monroe,834000,SOLD
+345066,"Riverside Theatre Silver Presentation Service, 1884",METALWORK,greatlakesindustrialartsmuse,973000,FULLY_SUBSCRIBED
+346481,"Celia Morrow Exhibition Lamp Prototype, 1951",DESIGN_OBJECT,valeheritagefund,1420000,SOLD
+347055,"Camille Saito, House at Low Tide, 2004",PAINTING,mina.singh,361000,AVAILABLE
+348012,"Harcourt Estate Archive, 1881–1911",ARCHIVAL_COLLECTION,eastgateindustrialartsmuseum,429000,AVAILABLE
+348359,Studio Ceramic Vessel Set — Group 12,CERAMIC,amir.miller,144000,SALE_PENDING
+348560,"Sofia Quinn, Market Morning, 1825",PAINTING,harper.hernandez,598000,INACTIVE
+349216,"Elena Navarro Concert Violin, 1695",MUSICAL_INSTRUMENT,akira.bennett,659000,SOLD
+351386,"Westhaven Works Computing Prototype, 2007",TECHNOLOGY,cedarpointculturalmemoryproj,1563000,FULLY_SUBSCRIBED
+351455,"Valentina Ito, Study for Signal Field, 1778",DRAWING,willowmererailwayhistorycent,500000,SOLD
+353055,"St. Elian Parish Processional Banner, 1862",TEXTILE,elmsteadhistoricalsociety,415000,UNDER_REVIEW
+353680,"Elias Serrat, Philadelphia at Night, 1840",PHOTOGRAPH,MWexler,1019000,SOLD
+354328,"Helen Frankenthaler, Untitled, 1965",PAINTING,hearthstonemuseumofappliedar,1141000,INACTIVE
+354565,Exploration Journal,MANUSCRIPT,reina.rivera,292000,INACTIVE
+354855,"Detroit Botanical Specimen Collection, 1803",NATURAL_HISTORY,isaac.rivera,4805000,FULLY_SUBSCRIBED
+354893,Studio Ceramic Vessel Set,CERAMIC,chloe.singh,69000,INACTIVE
+355837,"Sofia Roth, The Long Platform, bronze, 1860",SCULPTURE,windermeremuseumofmoderncraf,954000,PARTIALLY_SUBSCRIBED
+356739,Evening at the Quarry — Group 3,PAINTING,chloe.shah,1078000,SOLD
+359295,The North Courtyard Print,PRINT,quarrylanecraftpreservations,80000,INACTIVE
+359450,"Celia Alvarez, Orchard Interior, lithograph, 1951",PRINT,elmsteadculturalpreservation,198000,INACTIVE
+359600,Red Bridge Print,PRINT,ashlandestatecollection,309000,INACTIVE
+359673,"Screen-Used Study for a Procession Prop, 1933",FILM_PROP,fairmontmaritimeheritagemuse,1591000,FULLY_SUBSCRIBED
+360014,Early Scientific Treatise — Group 4,RARE_BOOK,cassidy.ito,621000,SOLD
+360047,Original Animation Cells from a 1940s Feature Film,FILM_AND_MEDIA,juniperridgeartistslegacytru,137000,AVAILABLE
+360420,"Elias Ingram, Black Orchard, 1802",PAINTING,lana.mendez,1727000,INACTIVE
+361655,"Mercury Records Processional Banner, 1780",TEXTILE,westhavencraftpreservationso,138000,INACTIVE
+361964,"Granite Bay Film Society Material Culture Collection, 1851–1876",COLLECTION,emilia.cho,756000,SOLD
+362183,Winter Garden,PAINTING,rosemonthistoricalsociety,1236000,FULLY_SUBSCRIBED
+362684,"Portland Botanical Specimen Collection, 1962",NATURAL_HISTORY,aldergrovefurnituredesignarc,799000,SOLD
+363357,The North Courtyard,PAINTING,abigail.martinez,1223000,INACTIVE
+363510,"Orion Press Ceremonial Presentation Object, 1834",HISTORIC_OBJECT,caleb.brooks,367000,UNDER_OFFER
+364070,"Noelle Bennett Tour Outfit and Backstage Passes, 1969",MUSIC_MEMORABILIA,farah.stone,720000,SOLD
+364638,"Amina Kapoor, The Reading Room, 1925",PAINTING,castillocollections,619000,SOLD
+365186,"New Orleans Botanical Specimen Collection, 1774",NATURAL_HISTORY,georgia.lee,939000,PARTIALLY_SUBSCRIBED
+365418,Winter Garden Sculpture,SCULPTURE,harborlightmuseumofprintedar,650000,SOLD
+366846,Composer’s Working Notebook — Group 3,MANUSCRIPT,abigail.morgan,377000,SUBMITTED
+366865,"Elena Caldwell, Philadelphia at Night, 1952",PHOTOGRAPH,andersonheritagesales,558000,UNDER_REVIEW
+366970,Original Animation Cell Set,FILM_AND_MEDIA,parkhurstceramicsmuseum,463000,AVAILABLE
+367033,"Iron Meteorite, 42 kg",NATURAL_HISTORY,cassidy.ito,857000,INACTIVE
+367380,Cloud over the Foundry Print,PRINT,redcedarfolkartfoundation,771000,WITHDRAWN
+367688,"Survey Map of Denver, 1816",MAP,cedarpointculturalmemoryproj,1150000,FULLY_SUBSCRIBED
+370081,Historic Concert Cello — Group 2,MUSICAL_INSTRUMENT,granitehillbotanicalheritage,212000,AVAILABLE
+370127,Factory Window,PAINTING,tanglewoodmuseumofmoderncraf,221000,INACTIVE
+370253,"Elena Quinn Tour Outfit and Backstage Passes, 1953",MUSIC_MEMORABILIA,lana.mendez,956000,PARTIALLY_SUBSCRIBED
+370598,"Harcourt Estate Control Panel, 1911",INDUSTRIAL_OBJECT,TheoKincaid,490000,WITHDRAWN
+370847,"Meridian Studio Processional Cross, c. 1784",RELIGIOUS_OBJECT,cassidy.ito,437000,AVAILABLE
+371499,Boston Photographic Album,PHOTOGRAPH,eastgateindustrialartsmuseum,217000,AVAILABLE
+371793,"Screen-Used Market Morning Prop, 1936",FILM_PROP,longfellowestatecollection,467000,UNDER_REVIEW
+372303,"Jonas Cole, Cloud over the Foundry, lithograph, 1893",PRINT,oakhollowmuseumofappliedarts,289000,AVAILABLE
+373033,Tour Outfit — Group 4,MUSIC_MEMORABILIA,kara.martin,935000,SOLD
+373768,Public Transit Destination Sign — Group 4,TRANSPORTATION,martinheritagesales,1399000,SOLD
+374062,"Orion Press Ceremonial Presentation Object, 1906",HISTORIC_OBJECT,juniperridgepublicartconserv,427000,INACTIVE
+374464,Political Campaign Banner — Group 3,HISTORIC_OBJECT,blair.kaur,744000,SOLD
+374638,"Gabriel Ito Concert Violin, 1811",MUSICAL_INSTRUMENT,rosemonthistoricalsociety,2975000,SOLD
+375584,Cloud over the Foundry — Group 2,PAINTING,gianna.jensen,1224000,SOLD
+376712,Art Nouveau Sapphire Dragonfly Brooch,JEWELRY,orchardhousecommunityartsfou,1336000,INACTIVE
+378256,Green Passage — Group 3,PAINTING,farah.stone,271000,UNDER_REVIEW
+379961,"Rafael Dawson, Coastal Light, lithograph, 1824",PRINT,copperlinemuseumofphotograph,1656000,SOLD
+381122,Night Tram,PAINTING,henry.reed,862000,WITHDRAWN
+382847,Bon Jovi Slippery When Wet Tour Outfit,MUSIC_MEMORABILIA,stonefieldpublicartconservan,426000,INACTIVE
+384585,Baltimore Photographic Album,PHOTOGRAPH,hana.dubois,144000,UNDER_REVIEW
+385852,Championship Boxing Gloves,SPORTS_MEMORABILIA,brookfieldarchitecturalherit,414000,AVAILABLE
+386802,"Bay City Foundry Stained-Glass Window, 1799",ARCHITECTURAL_ELEMENT,priya.lane,1765000,FULLY_SUBSCRIBED
+387376,"Jonas Morrow, Salt Marsh at Dusk, bronze, 2018",SCULPTURE,zane.flores_director,454000,AVAILABLE
+390465,"Gold and Enamel Memorial Brooch, c. 1825",JEWELRY,tanglewoodmuseumofmoderncraf,1771000,FULLY_SUBSCRIBED
+390607,Industrial Design Radio — Group 3,DESIGN_OBJECT,croth_alt,328000,UNDER_REVIEW
+390772,"Amina Alvarez, The Reading Room, 1825",PAINTING,amir.miller,1114000,FULLY_SUBSCRIBED
+390964,"Amara Serrat Exhibition Lamp Prototype, 2007",DESIGN_OBJECT,ethan.knight,136000,INACTIVE
+390999,"St. Elian Parish Silver Presentation Service, 1993",METALWORK,croth_alt,322000,SALE_PENDING
+391227,Family Correspondence Archive,ARCHIVAL_COLLECTION,longfellowestatecollection,238000,INACTIVE
+392750,Closed Theatre Records,ARCHIVAL_COLLECTION,ashlandestatecollection,125000,INACTIVE
+393906,Jazz Club Upright Piano — Group 6,MUSICAL_INSTRUMENT,vivienne.cross,72000,UNDER_REVIEW
+394135,"Mateo Navarro Exhibition Lamp Prototype, 1936",DESIGN_OBJECT,parkhurstcommunityartsfounda,478000,WITHDRAWN
+395487,Stained-Glass Study Panel,GLASS,theo.foster,340000,INACTIVE
+395739,Portland Photographic Album,PHOTOGRAPH,kai.romero,217000,INACTIVE
+396043,"Elena Havel Concert Violin, 1650",MUSICAL_INSTRUMENT,GrantMercer,997000,SOLD
+396189,"Santiago Kwon Couture Evening Coat, 2016",FASHION,ari.turner,556000,UNDER_OFFER
+396597,"Priya Desai, Blue Room with Fig Tree, bronze, 1826",SCULPTURE,vivian.reyes_finance,1496000,SOLD
+397049,"Cypress Observatory Processional Cross, c. 1936",RELIGIOUS_OBJECT,abigail.lee_curator,498000,SOLD
+397770,"Screen-Used Red Bridge Prop, 2010",FILM_PROP,brookfieldarchitecturalherit,626000,SOLD
+399002,"Nadia Bennett Concert Violin, 1700",MUSICAL_INSTRUMENT,xavier.jacobs,948000,INACTIVE
+399216,"Imani Bennett Exhibition Lamp Prototype, 1891",DESIGN_OBJECT,nadia_whitmore,927000,SOLD
+400078,"Seattle Railway Carriage Panel, 1924",TRANSPORTATION,heritagerowdecorativeartsarc,1920000,FULLY_SUBSCRIBED
+400528,"Harcourt Estate Painted Stage Backdrop, 1989",THEATRE_OBJECT,yorkfieldfurnituredesignarch,322000,INACTIVE
+401353,"Westhaven Works Archive, 1817–1847",ARCHIVAL_COLLECTION,julia.roberts,1329000,INACTIVE
+402121,"Journal of the Denver Expedition, 1759–1761",MANUSCRIPT,tanglewoodculturalmemoryproj,2004000,FULLY_SUBSCRIBED
+402428,Fossil Fish Slab,NATURAL_HISTORY,delilah.kim,758000,REJECTED
+405172,"Nadia Ortega Couture Evening Coat, 1915",FASHION,norrisfineobjects,284000,AVAILABLE
+405480,"Gabriel Quinn, Evening at the Quarry, 1838",PAINTING,keystonepatelfineobjects,318000,AVAILABLE
+406283,"Denver Championship Match-Worn Jersey, 1909",SPORTS_MEMORABILIA,serena.huang,347000,UNDER_OFFER
+406689,"Mateo Voss Couture Evening Coat, 1931",FASHION,cole.thomas_director,627000,INACTIVE
+406929,"Los Angeles Railway Carriage Panel, 1962",TRANSPORTATION,priya.nelson,1047000,FULLY_SUBSCRIBED
+407136,"Orion Press Processional Banner, 1873",TEXTILE,granitehillbotanicalheritage,408000,INACTIVE
+408841,"Sofia Ferrand Tour Outfit and Backstage Passes, 1954",MUSIC_MEMORABILIA,heritagerowmaterialculturein,418000,UNDER_OFFER
+408921,"Lucien Roth, Savannah at Night, 1915",PHOTOGRAPH,kai.romero,189000,INACTIVE
+409505,"Diane Arbus, Identical Twins, Roselle, New Jersey, 1967",PHOTOGRAPH,fairmontmaritimeheritagemuse,345000,INACTIVE
+409988,"Jonas Kapoor, House at Low Tide, bronze, 1769",SCULPTURE,celine.irwin,1622000,FULLY_SUBSCRIBED
+410026,"Noelle Caldwell Library Chair, 1797",FURNITURE,mina.singh,1329000,SOLD
+410384,"Elena Ito, Green Passage, 1897",PAINTING,norrisfineobjects,366000,UNDER_REVIEW
+410735,"Meridian Studio Silver Presentation Service, 1854",METALWORK,elliscollections,569000,AVAILABLE
+410984,Textile Mill Time Clock,INDUSTRIAL_OBJECT,tanglewoodculturalmemoryproj,366000,INACTIVE
+411788,"Meridian Studio Press, Illustrated First Edition, 1839",RARE_BOOK,wexlercollection,314000,AVAILABLE
+412330,Stained-Glass Study Panel — Group 5,GLASS,ironwoodcraftpreservatio_org,670000,SOLD
+412662,"Journal of the New York Expedition, 1879–1881",MANUSCRIPT,PriyaSethi,1864000,WITHDRAWN
+413126,"Westhaven Works Press, Illustrated First Edition, 1823",RARE_BOOK,keira.nguyen,808000,SOLD
+413898,"Ansel Vale, Salt Marsh at Dusk, 1968",PAINTING,rosemonthistoricalsociety,1915000,SOLD
+414973,"Orion Press Computing Prototype, 1994",TECHNOLOGY,harper.hernandez,737000,REJECTED
+417015,"Mara Kapoor, Santa Clara at Night, 1856",PHOTOGRAPH,HelenaVale,248000,UNDER_OFFER
+417105,Local Newspaper Photograph Archive — Group 9,ARCHIVAL_COLLECTION,mina.singh,715000,SOLD
+418723,"Mercury Records Press, Illustrated First Edition, 1821",RARE_BOOK,priya.lane,1567000,FULLY_SUBSCRIBED
+419329,"Santiago Ito, House at Low Tide, 1753",PAINTING,celine.irwin,1938000,FULLY_SUBSCRIBED
+419349,"Camille Maren Tour Outfit and Backstage Passes, 1976",MUSIC_MEMORABILIA,lorenzo.xu,525000,AVAILABLE
+421361,Concert Poster Archive — Group 2,MUSIC_MEMORABILIA,eastgaterailwayhistorycenter,257000,AVAILABLE
+422171,"Gold and Enamel Memorial Brooch, c. 1925",JEWELRY,pineharborrailwayhistorycent,771000,WITHDRAWN
+422596,The North Courtyard Sculpture,SCULPTURE,vivian.reyes_finance,763000,SOLD
+423122,Railway Station Clock,TRANSPORTATION,juniperridgepublicartconserv,6910000,FULLY_SUBSCRIBED
+423402,"Mara Kapoor Library Chair, 1922",FURNITURE,naomi.campbell,335000,AVAILABLE
+424518,"Orion Press Ceremonial Presentation Object, 1799",HISTORIC_OBJECT,eastgatefolkartarchive,192000,SUBMITTED
+424564,"Riverside Theatre Silver Presentation Service, 1767",METALWORK,chloe.singh,250000,AVAILABLE
+424755,"Mara Cole, River Bend, 1834",PAINTING,quinn.cho,1621000,FULLY_SUBSCRIBED
+425644,"Elena Mercer Concert Violin, 1848",MUSICAL_INSTRUMENT,yara.flores,2272000,SOLD
+426042,"Harcourt Estate Processional Cross, c. 1778",RELIGIOUS_OBJECT,harper.hernandez,266000,SALE_PENDING
+426264,"Mercury Records Archive, 1977–2007",ARCHIVAL_COLLECTION,copperlinemuseumofphotograph,3404000,FULLY_SUBSCRIBED
+426957,"Elena Vale, Study for Signal Field, 2007",DRAWING,felix.romero,271000,RESERVED
+427890,Match-Worn Football Shirt — Group 6,SPORTS_MEMORABILIA,franklincollections,1879000,SOLD
+432357,"Elias Quinn Library Chair, 1991",FURNITURE,georgia.lee,284000,INACTIVE
+433218,"Meridian Studio Computing Prototype, 2015",TECHNOLOGY,christian.tran,1975000,SOLD
+433779,Theatre Lobby Bench — Group 2,FURNITURE,eastgateindustrialartsmuseum,257000,INACTIVE
+434245,Orchard Interior Sculpture,SCULPTURE,emilia.cho,4683000,FULLY_SUBSCRIBED
+434579,"Joan Miró, Le Lézard aux plumes d’or, 1971",PRINT,theo.foster,63000,INACTIVE
+434591,"Pablo Picasso, Étude de tête, 1962",DRAWING,amir.saito_director,274000,AVAILABLE
+434681,"Screen-Used Orchard Interior Prop, 2003",FILM_PROP,harborlightdecorativeartsarc,218000,UNDER_REVIEW
+435112,"Westhaven Works Material Culture Collection, 1849–1874",COLLECTION,northbridgemuseumofmoderncra,103000,INACTIVE
+435762,"Felix Bennett, Green Passage, bronze, 1891",SCULPTURE,zane.quinn,471000,UNDER_REVIEW
+435863,Black Orchard Study,DRAWING,foxgloveartistslegacytrust,637000,SOLD
+436214,"Screen-Used Market Morning Prop, 1961",FILM_PROP,silvermarshdecorativeartsarc,127000,AVAILABLE
+436679,"San Jose Championship Match-Worn Jersey, 1895",SPORTS_MEMORABILIA,vivienne.cross,217000,UNDER_OFFER
+437544,Historic Concert Cello — Group 3,MUSICAL_INSTRUMENT,quinn.cho,242000,AVAILABLE
+437825,"Valentina Serrat, Salt Marsh at Dusk, lithograph, 1935",PRINT,mwexler_alt,550000,SUBMITTED
+439243,"San Jose Championship Match-Worn Jersey, 1924",SPORTS_MEMORABILIA,harper.ellis,750000,SOLD
+440050,"Amara Roth, The Reading Room, 1883",PAINTING,mwexler_alt,240000,UNDER_REVIEW
+440393,"Celia Serrat Exhibition Lamp Prototype, 1941",DESIGN_OBJECT,nadia_whitmore,141000,UNDER_REVIEW
+440509,Red Bridge,PAINTING,sabrina.edwards,3525000,FULLY_SUBSCRIBED
+441118,"Detroit Championship Match-Worn Jersey, 2000",SPORTS_MEMORABILIA,camila.park,1094000,SOLD
+442373,"Camille Morrow Tour Outfit and Backstage Passes, 2000",MUSIC_MEMORABILIA,AuggieVane,560000,UNDER_REVIEW
+442746,The Long Platform Sculpture,SCULPTURE,martinheritagesales,402000,AVAILABLE
+443379,"Samuel Roth Studio Ceramic Vessel Set, 1933",CERAMIC,highlandartistslegacytrust,323000,INACTIVE
+444000,Historic Restaurant Sign — Group 6,HISTORIC_OBJECT,keira.nguyen,193000,UNDER_REVIEW
+446147,"Felix Ferrand, Standing Form, bronze, 1927",SCULPTURE,highlandartistslegacytrust,709000,SOLD
+446192,"Redwood Civic Association Computing Prototype, 1995",TECHNOLOGY,redcedarfolkartfoundation,788000,WITHDRAWN
+446505,Savannah Photographic Album,PHOTOGRAPH,leo.lane,911000,PARTIALLY_SUBSCRIBED
+446534,"Cypress Observatory Stained-Glass Window, 1926",ARCHITECTURAL_ELEMENT,HelenaVale,403000,UNDER_REVIEW
+447037,"Riverside Theatre Computing Prototype, 1999",TECHNOLOGY,celine.norris,281000,AVAILABLE
+447877,Santa Clara Photographic Album,PHOTOGRAPH,zane.thomas,84000,AVAILABLE
+449934,"Sofia Serrat, River Bend, 1888",PAINTING,isabel.carter,457000,INACTIVE
+450413,Festival Mask with 1920 Collection Notes,ETHNOGRAPHIC_OBJECT,cole.thomas_director,1608000,FULLY_SUBSCRIBED
+452802,"Gabriel Mercer, Factory Window, bronze, 1815",SCULPTURE,robertsheritagesales,3425000,SOLD
+453246,"Henri Matisse, Icare from Jazz, 1947",PRINT,lana.vasquez,234000,INACTIVE
+454701,Standing Form Print,PRINT,emilia.cho,758000,SOLD
+455580,Folk Costume Ensemble,ETHNOGRAPHIC_OBJECT,malik.johnson,2255000,FULLY_SUBSCRIBED
+457955,Carved Festival Mask with 1930s Field Notes,ETHNOGRAPHIC_OBJECT,southbanktextilearchive,213000,AVAILABLE
+458259,"Annotated Production Script, 2018",FILM_AND_MEDIA,keystonepatelfineobjects,510000,SALE_PENDING
+458877,"Rafael Ito, River Bend, bronze, 1885",SCULPTURE,farah.stone,6283000,FULLY_SUBSCRIBED
+459164,"Granite Bay Film Society Ceremonial Presentation Object, 1772",HISTORIC_OBJECT,reese.wilson,153000,AVAILABLE
+459567,"Elena Voss, Baltimore at Night, 1988",PHOTOGRAPH,eastgaterailwayhistorycenter,103000,AVAILABLE
+459898,"Baltimore Botanical Specimen Collection, 1906",NATURAL_HISTORY,reina.sullivan,192000,UNDER_REVIEW
+460471,Studio Ceramic Collection — Group 3,COLLECTION,reese.wilson,681000,SOLD
+461499,Winter Garden — Group 2,PAINTING,javier.hayes,350000,UNDER_REVIEW
+461551,"Screen-Used Black Orchard Prop, 1990",FILM_PROP,windermeredesignheritagecent,1262000,FULLY_SUBSCRIBED
+461839,Festival Vestment Set,RELIGIOUS_OBJECT,sofia.rivera,1839000,FULLY_SUBSCRIBED
+463000,"Santiago Quinn Concert Violin, 1965",MUSICAL_INSTRUMENT,rosemontmuseumofmoderncraftd,960000,PARTIALLY_SUBSCRIBED
+463702,"Leila Maren Couture Evening Coat, 1955",FASHION,windermeremuseumofmoderncraf,4278000,SOLD
+465230,"Elena Havel Concert Violin, 1772",MUSICAL_INSTRUMENT,emilia.ortiz,430000,UNDER_OFFER
+465276,Roman Domestic Vessel,ARCHAEOLOGICAL_OBJECT,celine.irwin,139000,AVAILABLE
+466865,"Egon Schiele, Seated Figure Study, 1917",DRAWING,imani.reed,290000,AVAILABLE
+467208,"St. Elian Parish Control Panel, 1891",INDUSTRIAL_OBJECT,akira.bennett,1305000,INACTIVE
+467933,"Oakland Championship Match-Worn Jersey, 1945",SPORTS_MEMORABILIA,cassidy.lane,680000,SOLD
+468153,Historic Restaurant Sign,HISTORIC_OBJECT,harper.hernandez,552000,SOLD
+469512,"Meridian Studio Processional Banner, 1850",TEXTILE,southbankmaritimeheritagemus,122000,AVAILABLE
+470093,"Harcourt Estate Press, Illustrated First Edition, 1997",RARE_BOOK,stonefieldhistorichousefound,4070000,SOLD
+470727,"Riverside Theatre Ceremonial Presentation Object, 1969",HISTORIC_OBJECT,jonah.irwin,768000,INACTIVE
+471928,"Annotated Production Script, 1974",FILM_AND_MEDIA,ramirezauctionpartners,299000,UNDER_OFFER
+473135,"Linden Library Archive, 2012–2042",ARCHIVAL_COLLECTION,windermeremuseumofmoderncraf,403000,INACTIVE
+474729,Studio Ceramic Vessel Set — Group 7,CERAMIC,lucia.knight,480000,INACTIVE
+474952,"Theo Vale Couture Evening Coat, 1993",FASHION,felix.romero,456000,AVAILABLE
+475674,"Felix Ellis, Orchard Interior, 1957",PAINTING,zimmermancollections,943000,SOLD
+475827,"Amina Novak, Signal Field, bronze, 1995",SCULPTURE,sabrina.edwards,529000,INACTIVE
+477625,"Camille Saito Exhibition Lamp Prototype, 1901",DESIGN_OBJECT,heritagerowceramicsmuseum,399000,INACTIVE
+478046,Handwoven Wall Textile — Group 6,TEXTILE,cole.thomas_director,233000,UNDER_REVIEW
+480109,Muhammad Ali Training Robe,SPORTS_MEMORABILIA,harper.ellis,390000,INACTIVE
+481375,"Screen-Used Market Morning Prop, 1974",FILM_PROP,TheoKincaid,412000,AVAILABLE
+483492,Science-Fiction Helmet Prop — Group 4,FILM_PROP,vivian.reyes_finance,578000,UNDER_REVIEW
+483676,"Amara Cole, Philadelphia at Night, 1975",PHOTOGRAPH,abigail.martinez,249000,AVAILABLE
+483711,Apple-1 Computer,TECHNOLOGY,yasmin.roberts,382000,INACTIVE
+484225,"Noelle Kapoor Library Chair, 1795",FURNITURE,northbridgemuseumofmoderncra,624000,INACTIVE
+485191,"Jonas Novak, Harbour Series I, bronze, 1925",SCULPTURE,maplecrossinghistorichousefo,835000,SOLD
+485700,Studio Ceramic Collection — Group 7,COLLECTION,stonefieldhistorichousefound,678000,SOLD
+485893,"Meridian Studio Archive, 1894–1924",ARCHIVAL_COLLECTION,quarrylanemuseumofphotograph,125000,AVAILABLE
+490092,Modular Chair Prototype — Group 3,DESIGN_OBJECT,westhavencraftpreservationso,856000,SOLD
+490178,Local Club Memorabilia Collection — Group 2,COLLECTION,anthony.garcia,579000,SOLD
+490536,Historic Household Interior Group — Group 3,COLLECTION,harper.ellis,1918000,FULLY_SUBSCRIBED
+493411,"Imani Cole Studio Ceramic Vessel Set, 1871",CERAMIC,stonefieldpublicartconservan,1070000,FULLY_SUBSCRIBED
+495079,Historic Herbarium Collection — Group 2,NATURAL_HISTORY,julia.roberts,462000,AVAILABLE
+496204,"New Orleans Championship Match-Worn Jersey, 1965",SPORTS_MEMORABILIA,reina.sullivan,4418000,FULLY_SUBSCRIBED
+497302,Signed Recording Contract,MUSIC_MEMORABILIA,reina.sullivan,250000,INACTIVE
+497833,Theatre Mask Collection,THEATRE_OBJECT,fairmontmaritimeheritagemuse,596000,INACTIVE
+498219,"Leila Mercer, Green Passage, 1904",PAINTING,highlandartistslegacytru_org,384000,AVAILABLE
+498405,"Mateo Foster Concert Violin, 1896",MUSICAL_INSTRUMENT,imani.reed,498000,SOLD
+498770,Studio with Copper Vessel Study,DRAWING,harborlightmuseumofprintedar,217000,INACTIVE
+500500,Seventeenth-Century Portolan Chart,MAP,lucia.knight,545000,INACTIVE
+500986,Public Transit Destination Sign — Group 3,TRANSPORTATION,renee.kim,1218000,SOLD
+501720,"Theo Bell Concert Violin, 1993",MUSICAL_INSTRUMENT,noelle.lee,274000,AVAILABLE
+502981,Harbour Series I,PAINTING,bellwethermaterialcultureins,235000,INACTIVE
+506383,"Celia Desai, Studio with Copper Vessel, 1956",PAINTING,georgia.lee,240000,AVAILABLE
+506661,Signal Field Study,DRAWING,celine.irwin,144000,INACTIVE
+507760,Jazz Club Upright Piano,MUSICAL_INSTRUMENT,rosemontdesignheritagecenter,667000,INACTIVE
+508287,"Elias Ellis, Seattle at Night, 1854",PHOTOGRAPH,martinheritagesales,135000,UNDER_REVIEW
+508965,"Noelle Bennett, Blue Room with Fig Tree, bronze, 1903",SCULPTURE,ari.morgan,974000,FULLY_SUBSCRIBED
+509240,"Priya Alvarez Exhibition Lamp Prototype, 1977",DESIGN_OBJECT,crossventuresart,568000,SUBMITTED
+509874,"Excavated Ceramic Vessel with Field Archive, c. 269",ARCHAEOLOGICAL_OBJECT,harborlightdecorativeartsarc,632000,SOLD
+510843,"Agnes Martin, Untitled, 1990",PAINTING,georgia.park,442000,AVAILABLE
+510989,"Jonas Cole, House at Low Tide, bronze, 1851",SCULPTURE,MWexler,257000,AVAILABLE
+512873,"Mara Ingram Couture Evening Coat, 1922",FASHION,croth_alt,404000,WITHDRAWN
+513014,Signed Tournament Racket — Group 5,SPORTS_MEMORABILIA,xavier.jacobs,1613000,SOLD
+514909,"Mara Saito Art Glass Panel, 1911",GLASS,windermeredesignheritagecent,464000,RESERVED
+516563,Richmond Photographic Album,PHOTOGRAPH,priya.nelson,457000,AVAILABLE
+516680,"St. Elian Parish Control Panel, 1919",INDUSTRIAL_OBJECT,maplecrossinghistorichousefo,695000,SOLD
+518743,Family Correspondence Archive — Group 3,ARCHIVAL_COLLECTION,reina.sullivan,567000,SOLD
+519889,Tour Stage Jacket — Group 3,FASHION,atlaslamauctions,472000,UNDER_OFFER
+521185,Night Tram Print,PRINT,farah.stone,297000,INACTIVE
+521588,Tour Outfit,MUSIC_MEMORABILIA,windermerepublicartconservan,220000,AVAILABLE
+521650,Industrial Design Radio — Group 2,DESIGN_OBJECT,redcedarfolkartfoundation,781000,SOLD
+522244,Early Medical Imaging Unit — Group 2,SCIENTIFIC_INSTRUMENT,sofia.rivera,1380000,SOLD
+522307,Community Ritual Mask — Group 2,ETHNOGRAPHIC_OBJECT,PriyaSethi,1152000,SOLD
+522321,Foundry Pressure Gauge — Group 2,INDUSTRIAL_OBJECT,granitehillmuseumoflocalindu,225000,UNDER_REVIEW
+522407,Red Bridge Sculpture,SCULPTURE,celine.irwin,246000,AVAILABLE
+523195,"Denver Championship Match-Worn Jersey, 1998",SPORTS_MEMORABILIA,amir.saito_director,315000,AVAILABLE
+523218,Winter Garden — Group 4,PAINTING,harborlightdecorativeartsarc,258000,UNDER_REVIEW
+523225,"Archive of the Meridian Press, 1924–1962",ARCHIVAL_COLLECTION,southbanktextilearchive,221000,AVAILABLE
+523614,"Denver Championship Match-Worn Jersey, 1922",SPORTS_MEMORABILIA,reina.rivera,519000,SOLD
+524410,Standing Form Study,DRAWING,celine.irwin,69000,INACTIVE
+524471,"Noelle Maren Art Glass Panel, 1847",GLASS,abigail.lee_curator,196000,INACTIVE
+525717,Jurassic Park Raptor Maquette,FILM_PROP,elmsteadculturalmemoryprojec,771000,INACTIVE
+527296,"Denver Railway Carriage Panel, 1899",TRANSPORTATION,ashlandmuseumofprintedarts,408000,AVAILABLE
+527357,"Rosa Voss Tour Outfit and Backstage Passes, 1985",MUSIC_MEMORABILIA,harborlightpublicartconserva,867000,PARTIALLY_SUBSCRIBED
+527424,Exploration Journal — Group 2,MANUSCRIPT,ashlanddecorativeartsarchive,647000,INACTIVE
+527628,"Oakland Championship Match-Worn Jersey, 1964",SPORTS_MEMORABILIA,lana.vasquez,1189000,SOLD
+528123,Victorian Mourning Brooch,JEWELRY,lucia.knight,552000,SOLD
+529161,Signed First Edition — Group 4,RARE_BOOK,ari.morgan,828000,SOLD
+530118,"Rosa Havel, Los Angeles at Night, 1867",PHOTOGRAPH,granitehillbotanicalheritage,342000,AVAILABLE
+530605,"Leila Serrat Couture Evening Coat, 1974",FASHION,liam.martin,346000,UNDER_REVIEW
+530863,Standing Form Sculpture,SCULPTURE,ashlandestatecollection,159000,AVAILABLE
+531089,"Cypress Observatory Painted Stage Backdrop, 1982",THEATRE_OBJECT,daniel.ito,563000,UNDER_REVIEW
+532834,"Mercury Records Silver Presentation Service, 1848",METALWORK,isaac.rivera,698000,SOLD
+533972,Closed Cinema Ticket Machine,HISTORIC_OBJECT,bellwethermaterialcultureins,423000,INACTIVE
+534305,"Screen-Used Black Orchard Prop, 1940",FILM_PROP,redcedarfolkartfoundation,549000,SUBMITTED
+534615,Carved Stone Door Surround — Group 2,ARCHITECTURAL_ELEMENT,redcedarfolkartfoundation,229000,AVAILABLE
+535406,"Darius Ferrand Tour Outfit and Backstage Passes, 2010",MUSIC_MEMORABILIA,santiago.jordan,956000,SOLD
+535621,Local Club Memorabilia Collection,COLLECTION,eastgateindustrialartsmuseum,353000,INACTIVE
+535741,"Annotated Production Script, 1952",FILM_AND_MEDIA,jade.campbell,392000,AVAILABLE
+536392,"Annotated Production Script, 1977",FILM_AND_MEDIA,sabrina.edwards,639000,SOLD
+536929,Modernist Writing Desk — Group 3,FURNITURE,brookfieldhistorichousefound,43000,AVAILABLE
+537443,"Screen-Used The Reading Room Prop, 1942",FILM_PROP,vivian.reyes_finance,650000,SOLD
+537465,"Gabriel Ortega, New York at Night, 1968",PHOTOGRAPH,emilia.sullivan_curator,402000,UNDER_OFFER
+538916,"Valentina Saito Library Chair, 1988",FURNITURE,harborlightpublicartconserva,369000,AVAILABLE
+541437,"Priya Kwon Couture Evening Coat, 1952",FASHION,eastgaterailwayhistorycenter,169000,INACTIVE
+541617,Evening at the Quarry Sculpture,SCULPTURE,imani.reed,593000,SOLD
+542397,Foundry Pressure Gauge — Group 4,INDUSTRIAL_OBJECT,vivienne.cross,210000,UNDER_REVIEW
+542747,"Westhaven Works Control Panel, 2000",INDUSTRIAL_OBJECT,felix.romero,171000,INACTIVE
+543287,Historic Shopfront Sign,ARCHITECTURAL_ELEMENT,parkhurstpublicartconservanc,266000,INACTIVE
+543296,Los Angeles Photographic Album,PHOTOGRAPH,isaac.rivera,94000,INACTIVE
+543410,"Westhaven Works Stained-Glass Window, 1957",ARCHITECTURAL_ELEMENT,rosemontmuseumofmoderncraftd,600000,SOLD
+543491,"Oakland Championship Match-Worn Jersey, 2011",SPORTS_MEMORABILIA,lucia.knight,383000,AVAILABLE
+544930,Closed Theatre Records — Group 7,ARCHIVAL_COLLECTION,julia.roberts,2314000,SOLD
+545272,Art Nouveau Pendant — Group 2,JEWELRY,eva.howell,642000,SOLD
+545293,Historic Racing Helmet — Group 2,SPORTS_MEMORABILIA,EleanorRook,341000,AVAILABLE
+547498,Championship Boxing Gloves — Group 2,SPORTS_MEMORABILIA,isaac.shah,315000,AVAILABLE
+548235,"Alberto Giacometti, Portrait Study, c. 1955",DRAWING,cassidy.ito,56000,AVAILABLE
+555366,The Long Platform Print,PRINT,cedarpointculturalmemoryproj,41000,INACTIVE
+555684,"Camille Mercer Concert Violin, 1801",MUSICAL_INSTRUMENT,heritagerowceramicsmuseum,289000,AVAILABLE
+557911,"Nadia Quinn Library Chair, 1933",FURNITURE,wellingtonmaterialcultureins,990000,FULLY_SUBSCRIBED
+557963,"Amina Rivera Art Glass Panel, 2014",GLASS,harborlightdecorativeartsarc,1182000,SOLD
+558773,"Priya Morrow, After the Storm, bronze, 1761",SCULPTURE,isabel.carter,604000,SOLD
+559686,Historic Restaurant Sign — Group 5,HISTORIC_OBJECT,andersonartadvisory,409000,SALE_PENDING
+559720,"Iris Quinn, Study for Signal Field, 2004",DRAWING,emilia.yoon,600000,SOLD
+560509,"Elias Ellis Tour Outfit and Backstage Passes, 1968",MUSIC_MEMORABILIA,lorenzo.ellis,638000,INACTIVE
+560832,"Cypress Observatory Computing Prototype, 1989",TECHNOLOGY,DominicHale,674000,SOLD
+562676,"Jonas Roth, Study for Harbour Series I, 1750",DRAWING,pineharborrailwayhistorycent,418000,AVAILABLE
+563029,"Bay City Foundry Computing Prototype, 1992",TECHNOLOGY,chloe.shah,657000,INACTIVE
+563569,"Arthur Ellis, Oakland at Night, 1996",PHOTOGRAPH,khalil.kapoor,387000,SUBMITTED
+564604,Winter Garden Print,PRINT,henry.reed,140000,INACTIVE
+565129,"Samuel Navarro Tour Outfit and Backstage Passes, 2017",MUSIC_MEMORABILIA,farah.stone,508000,UNDER_REVIEW
+566103,Evening at the Quarry Print,PRINT,chloe.singh,58000,INACTIVE
+566458,"Santiago Bennett, Study for Orchard Interior, 1769",DRAWING,nia.sims,469000,SALE_PENDING
+566815,The Reading Room Sculpture,SCULPTURE,copperlinemuseumofphotograph,303000,AVAILABLE
+566909,House at Low Tide Print,PRINT,HelenaVale,270000,SUBMITTED
+566911,"J.R.R. Tolkien, The Hobbit, first edition, 1937",RARE_BOOK,brookfieldarchitecturalherit,1254000,INACTIVE
+567449,Historic Motorcycle,TRANSPORTATION,longfellowestatecollection,664000,SOLD
+567639,"Los Angeles Championship Match-Worn Jersey, 1964",SPORTS_MEMORABILIA,aaron.olsen,2034000,FULLY_SUBSCRIBED
+568988,"Celia Mercer Tour Outfit and Backstage Passes, 1963",MUSIC_MEMORABILIA,redcedarfolkartfoundation,829000,SOLD
+569132,"Milo Ortega Concert Violin, 1939",MUSICAL_INSTRUMENT,lana.vasquez,489000,SOLD
+569268,"Rowan Voss, The Reading Room, 1936",PAINTING,southbankmaritimeheritagemus,1290000,FULLY_SUBSCRIBED
+569594,"Amina Vale, Study for a Procession, lithograph, 1929",PRINT,emilia.cho,1428000,INACTIVE
+570033,"Journal of the New York Expedition, 1983–1985",MANUSCRIPT,vcross_alt,333000,UNDER_REVIEW
+570980,"Mercury Records Archive, 1867–1897",ARCHIVAL_COLLECTION,julia.roberts,146000,INACTIVE
+571350,Political Campaign Banner — Group 2,HISTORIC_OBJECT,zane.thomas,2586000,SOLD
+572762,Coastal Survey Atlas — Group 2,MAP,cedarpointculturalmemoryproj,958000,INACTIVE
+573292,Telecommunications Switching Unit — Group 2,TECHNOLOGY,chloe.singh,1852000,FULLY_SUBSCRIBED
+573302,"Mara Quinn Studio Ceramic Vessel Set, 1862",CERAMIC,renee.kim,121000,INACTIVE
+576000,Concert Poster Archive,MUSIC_MEMORABILIA,tanglewoodfolkartarchive,731000,INACTIVE
+576737,"Redwood Civic Association Painted Stage Backdrop, 1989",THEATRE_OBJECT,windermerepublicartconservan,198000,AVAILABLE
+576835,"Linden Library Processional Cross, c. 1772",RELIGIOUS_OBJECT,lucia.knight,341000,AVAILABLE
+577122,"Keith Haring, Pop Shop I, 1987",PRINT,georgia.park,267000,INACTIVE
+577613,"Charles Darwin, On the Origin of Species, first edition, 1859",RARE_BOOK,lana.vasquez,634000,SOLD
+578938,Theatre Mask Collection — Group 2,THEATRE_OBJECT,vanefamilyoffice,562000,RESERVED
+579850,"Richmond Botanical Specimen Collection, 1858",NATURAL_HISTORY,adamscollections,1574000,SOLD
+580072,"Valentina Ellis Couture Evening Coat, 1957",FASHION,bellwethermaterialcultureins,885000,PARTIALLY_SUBSCRIBED
+580554,Studio Ceramic Vessel Set — Group 2,CERAMIC,copperlinemuseumofphotograph,158000,INACTIVE
+581283,"Detroit Railway Carriage Panel, 1891",TRANSPORTATION,howardfineobjects,361000,UNDER_REVIEW
+582888,"Milo Ren, Coastal Light, 1930",PAINTING,emilia.sullivan_curator,1609000,SOLD
+583243,Sapphire Signet Ring — Group 2,JEWELRY,elliscollections,1044000,SOLD
+583857,Studio Ceramic Vessel Set — Group 14,CERAMIC,vanefamilyoffice,483000,SALE_PENDING
+584652,"Ansel Saito Tour Outfit and Backstage Passes, 1996",MUSIC_MEMORABILIA,iris.knight,684000,SOLD
+585005,Handwoven Wall Textile — Group 5,TEXTILE,cedarpointculturalmemoryproj,689000,SOLD
+585332,"Gabriel Bennett Couture Evening Coat, 1901",FASHION,wexlercollection,416000,RESERVED
+586087,"Imani Havel, Red Bridge, 1927",PAINTING,rothartadvisory,1502000,SOLD
+587974,"Banksy, Love is in the Air, 2005",PAINTING,greatlakesindustrialartsmuse,4700000,DISPUTED
+590071,"Rafael Maren, Signal Field, bronze, 1921",SCULPTURE,reina.sullivan,963000,PARTIALLY_SUBSCRIBED
+590334,"Samuel Hart, Study for Red Bridge, 1990",DRAWING,juniperridgeartistslegacytru,1033000,FULLY_SUBSCRIBED
+590355,"Gabriel Serrat Tour Outfit and Backstage Passes, 1986",MUSIC_MEMORABILIA,PriyaSethi,1118000,SOLD
+590377,"Cypress Observatory Computing Prototype, 1973",TECHNOLOGY,priya.nelson,1330000,FULLY_SUBSCRIBED
+590459,"Theo Rivera Library Chair, 1810",FURNITURE,isaac.shah,789000,SOLD
+590964,"Detroit Railway Carriage Panel, 1933",TRANSPORTATION,sabrina.edwards,2619000,INACTIVE
+591659,Art Deco Silver Tea Service — Group 5,METALWORK,croth_alt,777000,REJECTED
+592139,"Cypress Observatory Control Panel, 1976",INDUSTRIAL_OBJECT,julia.roberts,153000,AVAILABLE
+592468,Modernist Writing Desk — Group 5,FURNITURE,stonefieldpublicartconservan,161000,SALE_PENDING
+593024,House at Low Tide,PAINTING,aaron.olsen,1495000,FULLY_SUBSCRIBED
+593070,Historic Shopfront Sign — Group 2,ARCHITECTURAL_ELEMENT,avane_alt,599000,SOLD
+593338,"Mara Kwon, Night Tram, bronze, 1850",SCULPTURE,hearthstonemuseumofappliedar,340000,AVAILABLE
+594460,Railway Station Clock — Group 2,TRANSPORTATION,ironwoodcraftpreservationsoc,1410000,SOLD
+594620,New Orleans Photographic Album,PHOTOGRAPH,emilia.sullivan_curator,83000,AVAILABLE
+595418,"Gold and Enamel Memorial Brooch, c. 1884",JEWELRY,sofia.hayes,1339000,SOLD
+596436,Jazz Club Upright Piano — Group 5,MUSICAL_INSTRUMENT,quarrylanemuseumofphotograph,299000,AVAILABLE
+597305,"Imani Kwon, Winter Garden, 1759",PAINTING,brookfieldarchitecturalherit,2445000,FULLY_SUBSCRIBED
+597413,"Granite Bay Film Society Painted Stage Backdrop, 1866",THEATRE_OBJECT,quinn.campbell,1033000,FULLY_SUBSCRIBED
+599739,Madonna Blond Ambition Tour Costume Sketches,MUSIC_MEMORABILIA,stonefieldmaterialcultureins,116000,AVAILABLE
+600940,Salt Marsh at Dusk Print,PRINT,brookfieldarchitecturalherit,312000,AVAILABLE
+601072,"Rowan Roth, The Long Platform, bronze, 1939",SCULPTURE,nadia_whitmore,3459000,SOLD
+602144,Film Festival Print — Group 2,FILM_AND_MEDIA,ronanA,199000,UNDER_REVIEW
+602337,"Celia Morrow Art Glass Panel, 1821",GLASS,tanglewoodculturalmemory_org,1754000,FULLY_SUBSCRIBED
+602745,"Lucien Voss Concert Violin, 2009",MUSICAL_INSTRUMENT,ashlanddecorativeartsarchive,118000,UNDER_REVIEW
+604573,"Elias Bennett, Study for Red Bridge, 1879",DRAWING,northbridgemuseumofmoderncra,163000,UNDER_REVIEW
+604685,"Denver Railway Carriage Panel, 1988",TRANSPORTATION,keira.nguyen,933000,PARTIALLY_SUBSCRIBED
+605247,Modernist Writing Desk — Group 2,FURNITURE,southbanktextilearchive,196000,AVAILABLE
+605360,"Darius Mercer, Winter Garden, 1868",PAINTING,longfellowestatecollection,996000,INACTIVE
+605711,"Westhaven Works Processional Banner, 1778",TEXTILE,bellwethermaterialcultureins,144000,AVAILABLE
+606600,"Sofia Roth, Evening at the Quarry, 1866",PAINTING,redcedarfolkartfoundation,740000,REJECTED
+606614,Stained-Glass Study Panel — Group 4,GLASS,DominicHale,534000,RESERVED
+606800,"Rowan Ren, Harbour Series I, bronze, 2017",SCULPTURE,vcross_alt,1328000,SOLD
+608136,Ceremonial Chalice,RELIGIOUS_OBJECT,ashlandmuseumofprintedarts,248000,AVAILABLE
+609999,Historic Prayer Book — Group 2,RELIGIOUS_OBJECT,georgia.park,1354000,SOLD
+615325,"Imani Desai Studio Ceramic Vessel Set, 1978",CERAMIC,sofia.hayes,287000,INACTIVE
+615371,Historic Motorcycle — Group 4,TRANSPORTATION,zane.quinn,915000,SOLD
+616143,"Jean-Michel Basquiat, Untitled Head, 1982",PAINTING,imani.reed,384000,AVAILABLE
+616514,"Darius Hart, After the Storm, 1957",PAINTING,harborlightmuseumofprintedar,563000,INACTIVE
+617244,"North Coast Railway Press, Illustrated First Edition, 1915",RARE_BOOK,ironwoodcraftpreservationsoc,864000,INACTIVE
+617257,"Mercury Records Silver Presentation Service, 1931",METALWORK,keystonemillerauctions,526000,RESERVED
+617370,"Theo Havel Exhibition Lamp Prototype, 1988",DESIGN_OBJECT,stonefieldpublicartconservan,2553000,FULLY_SUBSCRIBED
+618422,Marionette Theatre Figures — Group 2,THEATRE_OBJECT,valeheritagefund,812000,SOLD
+618843,"Screen-Used Market Morning Prop, 1993",FILM_PROP,tanglewoodculturalmemory_org,668000,INACTIVE
+620026,"Elias Desai, Study for Harbour Series I, 1964",DRAWING,windermeredesignheritagecent,608000,SOLD
+620104,"Henry Moore, Maquette for Reclining Figure, 1952",SCULPTURE,amir.saito_director,960000,INACTIVE
+620227,Family Correspondence Archive — Group 2,ARCHIVAL_COLLECTION,aldergrovefurnituredesignarc,508000,SOLD
+620426,"Amina Bell, Red Bridge, bronze, 1924",SCULPTURE,yasmin.roberts,711000,INACTIVE
+620949,"Mercury Records Processional Cross, c. 2010",RELIGIOUS_OBJECT,keystoneandersonauctions,1009000,SOLD
+621245,Handwritten Lyrics for a 1970s Rock Single,MANUSCRIPT,northbridgemuseumofmoderncra,266000,INACTIVE
+621367,Marionette Theatre Figures,THEATRE_OBJECT,sabrina.edwards,837000,SOLD
+622833,Alien Xenomorph Production Head,FILM_PROP,highlandartistslegacytrust,212000,INACTIVE
+623446,"Chicago Botanical Specimen Collection, 1973",NATURAL_HISTORY,delilah.kim,288000,AVAILABLE
+623755,Art Nouveau Pendant — Group 3,JEWELRY,willowmererailwayhistorycent,395000,UNDER_OFFER
+624381,Factory Window Print,PRINT,yorkfieldfurnituredesignarch,204000,INACTIVE
+624439,"Gabriel Voss Concert Violin, 1703",MUSICAL_INSTRUMENT,nathan.hassan,546000,AVAILABLE
+624558,"Samuel Ellis, River Bend, bronze, 1853",SCULPTURE,ftran_westhave,511000,SOLD
+624684,Festival Vestment Set — Group 2,RELIGIOUS_OBJECT,mina.singh,524000,SOLD
+625476,"Santiago Roth, Evening at the Quarry, 1826",PAINTING,darius.howell,2343000,SOLD
+625973,"Joan Miró, Peinture, 1953",PAINTING,ironwoodcraftpreservatio_org,310000,INACTIVE
+626550,"Ansel Foster Art Glass Panel, 1893",GLASS,tanglewoodfolkartarchive,199000,AVAILABLE
+627137,Tour Stage Jacket — Group 4,FASHION,granitehillmuseumoflocalindu,1149000,SOLD
+628404,"Embroidered Festival Vestments, c. 1880",RELIGIOUS_OBJECT,tanglewoodmuseumofmoderncraf,108000,INACTIVE
+630298,Orchard Interior,PAINTING,akira.bennett,293000,AVAILABLE
+630383,"Milo Ferrand, Factory Window, bronze, 1906",SCULPTURE,ftran_westhave,1571000,SOLD
+631045,"New York Railway Carriage Panel, 2007",TRANSPORTATION,redcedarfolkartfoundation,1144000,FULLY_SUBSCRIBED
+631949,The Reading Room — Group 3,PAINTING,elias.garcia,1390000,SOLD
+632244,"Journal of the Oakland Expedition, 1828–1830",MANUSCRIPT,elmsteadculturalpreservation,216000,AVAILABLE
+632726,"Screen-Used Orchard Interior Prop, 1982",FILM_PROP,imani.reed,1414000,SOLD
+632876,"Celia Roth, Blue Room with Fig Tree, bronze, 1920",SCULPTURE,juniperridgeartistslegacytru,1108000,FULLY_SUBSCRIBED
+633723,"Samuel Novak Studio Ceramic Vessel Set, 1933",CERAMIC,norrisfineobjects,311000,UNDER_OFFER
+633800,"Mercury Records Computing Prototype, 1955",TECHNOLOGY,redcedarfolkartfoundation,152000,AVAILABLE
+634733,Annotated Travel Diary — Group 4,MANUSCRIPT,quarrylanecraftpreservations,222000,UNDER_OFFER
+636432,"San Jose Championship Match-Worn Jersey, 1992",SPORTS_MEMORABILIA,croth_alt,551000,AVAILABLE
+636770,Harbour Series I Print,PRINT,bellwethermaterialcultureins,607000,SOLD
+638791,Screen-Used Hero Prop — Group 6,FILM_PROP,andersonheritagesales,546000,UNDER_REVIEW
+639037,"Riverside Theatre Ceremonial Presentation Object, 1929",HISTORIC_OBJECT,theo.foster,457000,AVAILABLE
+639117,Mosaic Interior Panel — Group 4,ARCHITECTURAL_ELEMENT,choiartadvisory,883000,SOLD
+642609,"Cindy Sherman, Untitled Film Still #21, 1978",PHOTOGRAPH,fairmontmaritimeheritagemuse,478000,SOLD
+642987,"Philadelphia Championship Match-Worn Jersey, 1930",SPORTS_MEMORABILIA,ironwoodcraftpreservatio_org,6762000,FULLY_SUBSCRIBED
+643015,"Mercury Records Processional Cross, c. 1887",RELIGIOUS_OBJECT,harper.ellis,608000,SOLD
+643042,"North Coast Railway Material Culture Collection, 1764–1789",COLLECTION,eastgateindustrialartsmuseum,550000,SOLD
+643730,Ancient Coin Group — Group 3,ARCHAEOLOGICAL_OBJECT,ronanA,390000,UNDER_REVIEW
+644387,Concert Poster Archive — Group 5,MUSIC_MEMORABILIA,arcadiathomasauctions,300000,AVAILABLE
+645481,Market Morning Sculpture,SCULPTURE,elena.desai,676000,SOLD
+645795,"Theo Navarro, Standing Form, 1796",PAINTING,croth_alt,1464000,SOLD
+646883,Mosaic Interior Panel — Group 3,ARCHITECTURAL_ELEMENT,greatlakesindustrialartsmuse,1032000,SOLD
+648501,"Amina Cole Tour Outfit and Backstage Passes, 1971",MUSIC_MEMORABILIA,daniel.ito,398000,AVAILABLE
+648658,Fantasy Film Sword Prop — Group 3,FILM_PROP,khalil.kapoor,750000,SOLD
+649472,"Alberto Giacometti, Figurine, c. 1950",SCULPTURE,windermeremuseumofmoderncraf,1437000,INACTIVE
+651295,Exhibition Lighting Prototype — Group 5,DESIGN_OBJECT,northbridgemuseumofmoderncra,1173000,SOLD
+652042,"Olympic Relay Torch, 1968",SPORTS_MEMORABILIA,tanglewoodmuseumofmoderncraf,145000,AVAILABLE
+652852,Night Tram Study,DRAWING,ari.morgan,311000,AVAILABLE
+653087,"Ansel Ferrand, Philadelphia at Night, 1982",PHOTOGRAPH,GrantMercer,164000,UNDER_REVIEW
+653209,Austin Photographic Album,PHOTOGRAPH,orchardhousecommunityartsfou,254000,INACTIVE
+654903,"Private Letters of a Modernist Architect, 1919–1947",ARCHIVAL_COLLECTION,yara.diaz,506000,INACTIVE
+655596,Early Television Camera,FILM_AND_MEDIA,hearthstonefolkartarchive,594000,SOLD
+655638,"Meridian Studio Ceremonial Presentation Object, 1779",HISTORIC_OBJECT,rosemontdesignheritagecenter,343000,AVAILABLE
+655856,Brass Surveying Transit — Group 2,SCIENTIFIC_INSTRUMENT,greatlakesindustrialartsmuse,1118000,FULLY_SUBSCRIBED
+657989,Black Orchard,PAINTING,copperlinemuseumofphotograph,399000,AVAILABLE
+660086,"Sofia Vale Exhibition Lamp Prototype, 1887",DESIGN_OBJECT,khalil.kapoor,495000,SOLD
+660220,Local Club Memorabilia Collection — Group 3,COLLECTION,windermeredesignheritagecent,448000,UNDER_REVIEW
+661217,Walnut Reading Chair,FURNITURE,juniperridgeartistslegacytru,70000,INACTIVE
+661673,Miniature Effects Vehicle — Group 2,FILM_PROP,longfellowestatecollection,323000,AVAILABLE
+662924,"Bay City Foundry Press, Illustrated First Edition, 1877",RARE_BOOK,avane_alt,244000,UNDER_REVIEW
+663038,"Philadelphia Railway Carriage Panel, 2006",TRANSPORTATION,rosemontmuseumofmoderncraftd,873000,PARTIALLY_SUBSCRIBED
+663395,Art Deco Silver Tea Service — Group 3,METALWORK,lorenzo.ellis,7828000,SOLD
+665079,Match-Worn Football Shirt — Group 2,SPORTS_MEMORABILIA,southbankmaritimeheritagemus,380000,AVAILABLE
+665528,"Santiago Roth Library Chair, 1871",FURNITURE,imani.reed,336000,INACTIVE
+666092,"Screen-Used Orchard Interior Prop, 1940",FILM_PROP,reyesfineobjects,2677000,SOLD
+668859,"Mara Kwon Library Chair, 1972",FURNITURE,elias.estrada,2739000,FULLY_SUBSCRIBED
+669080,"Arthur Cole Tour Outfit and Backstage Passes, 1962",MUSIC_MEMORABILIA,foundryxufineobjects,1140000,SOLD
+671075,"Amara Alvarez, Study for Factory Window, 1858",DRAWING,mwexler_alt,2460000,SOLD
+672001,"Valentina Roth, Study for Factory Window, 2018",DRAWING,imani.reed,439000,AVAILABLE
+672162,Painted Scenery from the Riverside Theatre,THEATRE_OBJECT,elias.estrada,494000,INACTIVE
+673009,Nirvana Backstage Pass and Set List,MUSIC_MEMORABILIA,aldergrovefurnituredesignarc,414000,INACTIVE
+673079,Standing Form,PAINTING,kai.romero,183000,INACTIVE
+674444,"Lucien Quinn, Study for Black Orchard, 1995",DRAWING,emilia.cho,3192000,FULLY_SUBSCRIBED
+674982,"Darius Caldwell, House at Low Tide, lithograph, 1870",PRINT,priya.lane,154000,AVAILABLE
+675178,Exploration Journal — Group 3,MANUSCRIPT,cassidy.ito,140000,AVAILABLE
+675222,Signed Recording Contract — Group 3,MUSIC_MEMORABILIA,parkhurstpublicartconservanc,229000,UNDER_REVIEW
+675397,Historic Restaurant Sign — Group 3,HISTORIC_OBJECT,ironwoodcraftpreservationsoc,805000,WITHDRAWN
+676245,Signed Tournament Racket — Group 3,SPORTS_MEMORABILIA,isaac.shah,382000,AVAILABLE
+677800,"North Coast Railway Computing Prototype, 2010",TECHNOLOGY,mwexler_alt,1308000,SOLD
+678199,"Iris Kapoor Exhibition Lamp Prototype, 1992",DESIGN_OBJECT,serena.owens,2968000,SOLD
+678661,"Screen-Used Red Bridge Prop, 1997",FILM_PROP,renee.kim,454000,AVAILABLE
+680682,"Meridian Studio Material Culture Collection, 1969–1994",COLLECTION,aldergrovefurnituredesignarc,208000,INACTIVE
+681403,Studio with Copper Vessel — Group 2,PAINTING,atlastaylorauctions,1391000,SOLD
+682314,"Elena Foster, Black Orchard, 1756",PAINTING,isaac.shah,1063000,FULLY_SUBSCRIBED
+682597,Cloud over the Foundry,PAINTING,xavier.jacobs,870000,INACTIVE
+682773,Studio Ceramic Vessel Set — Group 15,CERAMIC,isaac.shah,456000,UNDER_REVIEW
+682968,Brass Surveying Transit,SCIENTIFIC_INSTRUMENT,harper.hernandez,375000,INACTIVE
+684600,Carved Stone Door Surround,ARCHITECTURAL_ELEMENT,jade.campbell,108000,AVAILABLE
+687635,"Survey Map of Los Angeles, 1830",MAP,rosemontmuseumofmoderncraftd,2895000,FULLY_SUBSCRIBED
+687783,"Austin Botanical Specimen Collection, 1974",NATURAL_HISTORY,wellingtonmaterialcultureins,1542000,SOLD
+687821,"Harcourt Estate Processional Cross, c. 1789",RELIGIOUS_OBJECT,lila.estrada,1863000,FULLY_SUBSCRIBED
+687839,"Nadia Vale, Cloud over the Foundry, bronze, 1791",SCULPTURE,ari.morgan,915000,PARTIALLY_SUBSCRIBED
+689042,"Amina Voss Exhibition Lamp Prototype, 1954",DESIGN_OBJECT,quarrylanemuseumofphotograph,368000,RESERVED
+689484,"Iris Ferrand, After the Storm, 1894",PAINTING,celine.irwin,3071000,FULLY_SUBSCRIBED
+689544,Decorative Iron Gate — Group 2,ARCHITECTURAL_ELEMENT,kai.zimmerman,1950000,SOLD
+689613,"Bay City Foundry Press, Illustrated First Edition, 1966",RARE_BOOK,CelesteRoth,528000,UNDER_REVIEW
+691244,"Seattle Championship Match-Worn Jersey, 2018",SPORTS_MEMORABILIA,ravenwoodcraftpreservationso,1824000,FULLY_SUBSCRIBED
+691730,Carved Stone Door Surround — Group 3,ARCHITECTURAL_ELEMENT,chloe.wilson,1314000,SOLD
+691953,"Bay City Foundry Ceremonial Presentation Object, 1899",HISTORIC_OBJECT,eastgatefolkartarchive,162000,RESERVED
+691960,"Elias Bell, Winter Garden, 1763",PAINTING,reese.wilson,836000,SOLD
+692135,"Orion Press Computing Prototype, 1988",TECHNOLOGY,orchardhousecommunityartsfou,624000,SOLD
+693503,"Rafael Cole, Night Tram, 1941",PAINTING,amir.miller,423000,INACTIVE
+694553,"Harcourt Estate Painted Stage Backdrop, 1754",THEATRE_OBJECT,stoneheritagesales,231000,UNDER_OFFER
+695585,"Rafael Alvarez Concert Violin, 1713",MUSICAL_INSTRUMENT,eva.howell,1168000,FULLY_SUBSCRIBED
+696639,Handwoven Wall Textile — Group 3,TEXTILE,eva.howell,124000,INACTIVE
+696720,"Milo Rivera, River Bend, bronze, 1901",SCULPTURE,isabel.carter,439000,INACTIVE
+697324,Historic Herbarium Collection,NATURAL_HISTORY,juniperridgeartistslegacytru,1044000,SOLD
+697740,The Long Platform Sculpture — Group 2,SCULPTURE,vanefamilyoffice,499000,UNDER_REVIEW
+698087,"Savannah Championship Match-Worn Jersey, 1952",SPORTS_MEMORABILIA,harper.flores,87000,AVAILABLE
+698687,Historic Restaurant Sign — Group 2,HISTORIC_OBJECT,wellingtonmaterialcultureins,186000,AVAILABLE
+702991,"Linden Library Archive, 1821–1851",ARCHIVAL_COLLECTION,harper.hernandez,561000,SOLD
+703887,Designer Performance Costume — Group 3,FASHION,reyesfineobjects,344000,UNDER_OFFER
+704066,"Arthur Ferrand Tour Outfit and Backstage Passes, 2010",MUSIC_MEMORABILIA,cassidy.ito,774000,WITHDRAWN
+705387,"Rosa Havel, The Reading Room, bronze, 1880",SCULPTURE,bishopheritagesales,326000,UNDER_REVIEW
+705632,River Bend Sculpture,SCULPTURE,leila.price,1670000,SOLD
+705898,Local Newspaper Photograph Archive — Group 5,ARCHIVAL_COLLECTION,ashlandestatecollection,1595000,FULLY_SUBSCRIBED
+706330,"Journal of the Chicago Expedition, 1937–1939",MANUSCRIPT,hearthstonefolkartarchiv_org,862000,WITHDRAWN
+706569,Stained-Glass Study Panel — Group 2,GLASS,aaron.olsen,1465000,SOLD
+706963,"Alexander Calder, Small Standing Mobile, c. 1965",SCULPTURE,daniel.campbell,722000,INACTIVE
+707150,"Ansel Kwon, Market Morning, 1838",PAINTING,oakhollowmuseumofappliedarts,227000,AVAILABLE
+708279,Walnut Reading Chair — Group 3,FURNITURE,southbankmaterialcultureinst,3711000,FULLY_SUBSCRIBED
+708405,"Cypress Observatory Processional Cross, c. 1842",RELIGIOUS_OBJECT,ashlandmuseumofprintedarts,203000,RESERVED
+709131,Studio Ceramic Collection — Group 5,COLLECTION,ashcroftcollection,397000,AVAILABLE
+709937,"Westhaven Works Archive, 1924–1954",ARCHIVAL_COLLECTION,rosemontdesignheritagecenter,2462000,FULLY_SUBSCRIBED
+710690,"Theo Dawson, Philadelphia at Night, 1975",PHOTOGRAPH,redcedarfolkartfoundation,532000,SOLD
+712154,"Excavated Ceramic Vessel with Field Archive, c. 255",ARCHAEOLOGICAL_OBJECT,hana.dubois,1177000,SOLD
+712741,Festival Mask with 1894 Collection Notes,ETHNOGRAPHIC_OBJECT,kai.zimmerman,214000,AVAILABLE
+714101,"Bay City Foundry Processional Cross, c. 1821",RELIGIOUS_OBJECT,cassidy.ito,2297000,FULLY_SUBSCRIBED
+714543,"Camille Ellis, Study for Blue Room with Fig Tree, 1969",DRAWING,aldergrovefurnituredesignarc,248000,INACTIVE
+714926,Closed Cinema Ticket Machine — Group 2,HISTORIC_OBJECT,amir.miller,1239000,SOLD
+715975,Fantasy Film Sword Prop — Group 4,FILM_PROP,elliscollections,542000,UNDER_REVIEW
+716432,"Screen-Used Three Cypress Trees Prop, 1936",FILM_PROP,CelesteRoth,1369000,SOLD
+716459,"Mateo Quinn Exhibition Lamp Prototype, 1973",DESIGN_OBJECT,pineharbormaterialcultureins,957000,INACTIVE
+716573,"Priya Voss, The North Courtyard, 1872",PAINTING,imani.reed,327000,AVAILABLE
+716583,Closed Theatre Records — Group 3,ARCHIVAL_COLLECTION,hearthstonemuseumofappliedar,491000,INACTIVE
+716783,"Rowan Ingram, Coastal Light, 1797",PAINTING,atlastaylorauctions,1745000,SOLD
+717676,Festival Mask with 1840 Collection Notes,ETHNOGRAPHIC_OBJECT,cedarpointculturalmemoryproj,2519000,FULLY_SUBSCRIBED
+718465,"Philadelphia Championship Match-Worn Jersey, 1967",SPORTS_MEMORABILIA,howardfineobjects,265000,SUBMITTED
+719301,"Sofia Navarro Exhibition Lamp Prototype, 2008",DESIGN_OBJECT,jonah.irwin,478000,SOLD
+720115,"Orion Press Silver Presentation Service, 2011",METALWORK,bishopheritagesales,529000,AVAILABLE
+720222,Signed First Edition — Group 2,RARE_BOOK,yorkfieldfurnituredesignarch,547000,INACTIVE
+721707,Machine Shop Sign — Group 3,INDUSTRIAL_OBJECT,ironwoodcraftpreservatio_org,380000,UNDER_REVIEW
+723701,"Mara Morrow, House at Low Tide, 1982",PAINTING,yara.shah,691000,SOLD
+723784,Walnut Reading Chair — Group 5,FURNITURE,hearthstonefolkartarchiv_org,255000,AVAILABLE
+724073,Embroidered Civic Standard — Group 2,TEXTILE,theo.foster,446000,AVAILABLE
+725296,Studio with Copper Vessel,PAINTING,jade.campbell,2973000,FULLY_SUBSCRIBED
+725766,Festival Mask with 1922 Collection Notes,ETHNOGRAPHIC_OBJECT,aiden.patel,729000,SOLD
+727534,"Amara Navarro, Study for The Reading Room, 1942",DRAWING,amir.saito_director,297000,AVAILABLE
+728506,"New York Botanical Specimen Collection, 1809",NATURAL_HISTORY,peter.mason,382000,UNDER_OFFER
+728574,"Mara Serrat Art Glass Panel, 1909",GLASS,mateo.hayes,1088000,SOLD
+729386,"Gabriel Caldwell, Study for Standing Form, 1953",DRAWING,leo.ortiz,332000,SALE_PENDING
+729460,"Meridian Studio Archive, 1974–2004",ARCHIVAL_COLLECTION,ashcroftcollection,301000,AVAILABLE
+731442,"Redwood Civic Association Archive, 1806–1836",ARCHIVAL_COLLECTION,elmsteadculturalpreservation,258000,AVAILABLE
+732153,"Riverside Theatre Ceremonial Presentation Object, 1934",HISTORIC_OBJECT,abigail.irwin,488000,UNDER_REVIEW
+733312,"Linden Library Silver Presentation Service, 1877",METALWORK,rosemontdesignheritagecenter,831000,WITHDRAWN
+733741,"Rosa Desai, Evening at the Quarry, lithograph, 1767",PRINT,stonefieldpublicartconservan,582000,INACTIVE
+734081,Studio Ceramic Vessel Set — Group 6,CERAMIC,delilah.kim,1091000,INACTIVE
+734082,"Riverside Theatre Processional Banner, 1940",TEXTILE,mwexler_alt,1081000,SOLD
+734091,"Mercury Records Press, Illustrated First Edition, 1762",RARE_BOOK,fairmontdesignheritagecenter,919000,PARTIALLY_SUBSCRIBED
+734477,"Harcourt Estate Archive, 1896–1926",ARCHIVAL_COLLECTION,ari.morgan,1183000,INACTIVE
+735997,"Annotated Production Script, 2015",FILM_AND_MEDIA,sabrina.shah,2047000,SOLD
+737305,"Pablo Picasso, La Colombe, 1949",PRINT,malik.johnson,210000,AVAILABLE
+737892,Annotated Travel Diary — Group 5,MANUSCRIPT,farah.stone,234000,UNDER_REVIEW
+738208,Monterey Photographic Album,PHOTOGRAPH,elenacollector1,280000,UNDER_REVIEW
+738223,Art Deco Silver Tea Service — Group 4,METALWORK,foundryzimmermanfineobjects,342000,AVAILABLE
+738455,Studio Ceramic Collection — Group 6,COLLECTION,greatlakesindustrialartsmuse,1216000,SOLD
+739598,"Granite Bay Film Society Computing Prototype, 1947",TECHNOLOGY,stonefieldhistorichousefound,610000,SOLD
+739828,Green Passage — Group 4,PAINTING,aaron.olsen,1442000,SOLD
+739877,Excavated Architectural Fragment — Group 2,ARCHAEOLOGICAL_OBJECT,rothartadvisory,323000,UNDER_REVIEW
+739889,Art Deco Silver Tea Service — Group 2,METALWORK,xavier.jacobs,1308000,SOLD
+740953,"Rosa Saito Precision Microscope, 1762",SCIENTIFIC_INSTRUMENT,highlandartistslegacytru_org,307000,AVAILABLE
+743100,Early Personal Computer,TECHNOLOGY,fairmontmaritimeheritagemuse,3203000,FULLY_SUBSCRIBED
+744223,Early Personal Computer — Group 6,TECHNOLOGY,georgia.park,2323000,SOLD
+744991,Factory Time Clock — Group 2,INDUSTRIAL_OBJECT,kai.romero,1580000,SOLD
+745519,"Los Angeles Championship Match-Worn Jersey, 1955",SPORTS_MEMORABILIA,northbridgemuseumofmoderncra,636000,SOLD
+746176,"North Coast Railway Silver Presentation Service, 1919",METALWORK,quinn.campbell,1622000,FULLY_SUBSCRIBED
+747069,Community Festival Banner,TEXTILE,harper.ellis,160000,INACTIVE
+747729,"Journal of the Baltimore Expedition, 1757–1759",MANUSCRIPT,stonefieldpublicartconservan,344000,AVAILABLE
+748937,"Santa Clara Championship Match-Worn Jersey, 1951",SPORTS_MEMORABILIA,juniperridgepublicartconserv,610000,SOLD
+749636,Macintosh 128K Prototype,TECHNOLOGY,ari.morgan,2003000,INACTIVE
+750766,"Granite Bay Film Society Processional Cross, c. 1965",RELIGIOUS_OBJECT,ironwoodcraftpreservatio_org,554000,SOLD
+751822,"Darius Alvarez Library Chair, 1874",FURNITURE,eva.howell,636000,SOLD
+754451,"Camille Desai, Denver at Night, 1967",PHOTOGRAPH,hearthstonefolkartarchive,839000,WITHDRAWN
+754769,"Redwood Civic Association Archive, 1792–1822",ARCHIVAL_COLLECTION,reina.rivera,1547000,SOLD
+756582,"Mara Novak, Red Bridge, bronze, 2015",SCULPTURE,aaron.olsen,1081000,FULLY_SUBSCRIBED
+757295,"Imani Ito Tour Outfit and Backstage Passes, 1968",MUSIC_MEMORABILIA,leo.lane,172000,AVAILABLE
+758812,"Lucien Alvarez Tour Outfit and Backstage Passes, 1960",MUSIC_MEMORABILIA,elias.estrada,670000,SOLD
+758823,Tour Stage Jacket,FASHION,redcedarfolkartfoundation,446000,AVAILABLE
+759009,"Riverside Theatre Processional Banner, 1951",TEXTILE,georgia.lee,216000,AVAILABLE
+759203,Local Newspaper Photograph Archive — Group 2,ARCHIVAL_COLLECTION,eastgatefolkartarchive,367000,INACTIVE
+760239,Annotated Travel Diary — Group 2,MANUSCRIPT,naomi.campbell,394000,AVAILABLE
+761536,"North Coast Railway Processional Cross, c. 1785",RELIGIOUS_OBJECT,harper.flores,353000,AVAILABLE
+763044,Early Personal Computer — Group 3,TECHNOLOGY,OscarBexley,847000,SOLD
+764252,Studio Ceramic Vessel Set — Group 5,CERAMIC,eastgateindustrialartsmuseum,199000,INACTIVE
+764594,"Journal of the Richmond Expedition, 1871–1873",MANUSCRIPT,silvermarsharchitecturalheri,363000,AVAILABLE
+765223,"The Van Acker Ceramic Prototype Set, 1968",CERAMIC,northbridgemuseumofmoderncra,95000,INACTIVE
+765646,"Sofia Ito, Evening at the Quarry, 1976",PAINTING,abigail.lee_curator,139000,RESERVED
+767524,The Beatles Handwritten Set List,MUSIC_MEMORABILIA,northbridgemuseumofmoderncra,1285000,FULLY_SUBSCRIBED
+767832,Decorative Iron Gate,ARCHITECTURAL_ELEMENT,isaac.rivera,467000,AVAILABLE
+769526,Telecommunications Switching Unit,TECHNOLOGY,quinn.campbell,321000,INACTIVE
+769759,Seattle Photographic Album,PHOTOGRAPH,southbankmaterialcultureinst,1166000,SOLD
+769856,Michael Jordan Game-Worn Sneakers,SPORTS_MEMORABILIA,ironwoodcraftpreservationsoc,402000,INACTIVE
+770407,Historic Concert Cello — Group 5,MUSICAL_INSTRUMENT,southbankmaritimeheritagemus,300000,AVAILABLE
+770629,"Gold and Enamel Memorial Brooch, c. 1842",JEWELRY,ravenwoodcraftpreservationso,603000,SOLD
+770948,"Screen-Used The Reading Room Prop, 1968",FILM_PROP,CeliaSterling,596000,SOLD
+771673,Fantasy Film Sword Prop — Group 2,FILM_PROP,nathan.hassan,159000,AVAILABLE
+771978,"Amara Bell Concert Violin, 1867",MUSICAL_INSTRUMENT,martinheritagesales,431000,UNDER_OFFER
+772345,"Arthur Navarro Tour Outfit and Backstage Passes, 1997",MUSIC_MEMORABILIA,redcedarfolkartfoundation,521000,SOLD
+772819,"Chicago Championship Match-Worn Jersey, 1990",SPORTS_MEMORABILIA,timberlinerestorationfoundat,372000,UNDER_OFFER
+772868,"Henri Matisse, Femme assise, 1942",DRAWING,aaron.olsen,123000,AVAILABLE
+774286,Early Scientific Treatise,RARE_BOOK,chloe.shah,432000,INACTIVE
+774370,"Gold and Enamel Memorial Brooch, c. 2003",JEWELRY,cedarpointculturalmemoryproj,384000,AVAILABLE
+774564,Science-Fiction Helmet Prop — Group 3,FILM_PROP,mwexler_alt,1213000,SOLD
+774793,Night Tram Sculpture,SCULPTURE,omar.owens,550000,UNDER_REVIEW
+775069,Studio Ceramic Vessel Set — Group 9,CERAMIC,willowmererailwayhistorycent,164000,AVAILABLE
+775451,Modular Chair Prototype,DESIGN_OBJECT,keira.nguyen,442000,INACTIVE
+775686,Studio Ceramic Vessel Set — Group 13,CERAMIC,isaac.rivera,532000,UNDER_REVIEW
+778072,Designer Performance Costume — Group 2,FASHION,CelesteRoth,332000,AVAILABLE
+779332,"Excavated Ceramic Vessel with Field Archive, c. 354",ARCHAEOLOGICAL_OBJECT,cassidy.ito,879000,PARTIALLY_SUBSCRIBED
+780076,Jazz Club Upright Piano — Group 8,MUSICAL_INSTRUMENT,meridianhassancollections,647000,SOLD
+780240,"Richmond Botanical Specimen Collection, 1797",NATURAL_HISTORY,chloe.shah,506000,SOLD
+780807,David Bowie Ziggy Stardust Tour Costume,FASHION,keira.nguyen,170000,INACTIVE
+781037,"Camille Dawson, Cloud over the Foundry, bronze, 1762",SCULPTURE,ftran_westhave,859000,WITHDRAWN
+781387,"Journal of the Los Angeles Expedition, 2001–2003",MANUSCRIPT,theo.foster,510000,SOLD
+782149,Victorian Mourning Brooch — Group 2,JEWELRY,ramirezauctionpartners,553000,AVAILABLE
+782210,Closed Theatre Records — Group 4,ARCHIVAL_COLLECTION,harborlightpublicartconserva,1665000,INACTIVE
+782892,"Amara Kapoor, Coastal Light, 1991",PAINTING,santiago.jordan,421000,SUBMITTED
+785278,"Rowan Hart, River Bend, 2018",PAINTING,isaac.rivera,1493000,SOLD
+787607,Study for a Procession Print,PRINT,parkhurstceramicsmuseum,472000,AVAILABLE
+788635,Study for a Procession,PAINTING,granitehillmuseumoflocalindu,609000,INACTIVE
+789462,"Nadia Mercer Studio Ceramic Vessel Set, 1901",CERAMIC,longfellowestatecollection,566000,SOLD
+790121,Studio Ceramic Vessel Set — Group 4,CERAMIC,ironwoodcraftpreservatio_org,148000,INACTIVE
+790243,"Camille Foster, Study for The Long Platform, 1852",DRAWING,wellingtonmaterialcultureins,801000,WITHDRAWN
+790712,"Mercury Records Silver Presentation Service, 1800",METALWORK,longfellowestatecollection,667000,SOLD
+791226,Arcade Development Console,TECHNOLOGY,orchardhousecommunityartsfou,523000,SOLD
+791765,"Pablo Picasso, Femme au béret et à la robe quadrillée, 1937",PAINTING,aiden.patel,313000,INACTIVE
+795897,"Westhaven Works Processional Banner, 1940",TEXTILE,northbridgemuseumofmoderncra,315000,AVAILABLE
+795936,"Iris Bell, Study for Salt Marsh at Dusk, 1814",DRAWING,emilia.sullivan_curator,132000,UNDER_OFFER
+797035,House at Low Tide Study,DRAWING,elena.desai,968000,SOLD
+797202,Theatre Lobby Bench — Group 5,FURNITURE,chloe.singh,169000,SUBMITTED
+800617,Early Medical Imaging Unit,SCIENTIFIC_INSTRUMENT,heritagerowceramicsmuseum,1347000,FULLY_SUBSCRIBED
+801260,Exploration Journal — Group 4,MANUSCRIPT,ironwoodcraftpreservationsoc,1080000,SOLD
+802184,"St. Elian Parish Material Culture Collection, 1756–1781",COLLECTION,lila.estrada,894000,PARTIALLY_SUBSCRIBED
+804115,"Journal of the Boston Expedition, 1909–1911",MANUSCRIPT,fairmontmaritimeheritagemuse,454000,AVAILABLE
+804493,Screen-Used Hero Prop — Group 3,FILM_PROP,darius.howell,1033000,SOLD
+805138,Stained-Glass Window from a Closed Railway Chapel,ARCHITECTURAL_ELEMENT,jade.campbell,207000,AVAILABLE
+806062,"Redwood Civic Association Silver Presentation Service, 1802",METALWORK,lana.vasquez,200000,AVAILABLE
+806449,Signed Recording Contract — Group 2,MUSIC_MEMORABILIA,akira.bennett,186000,AVAILABLE
+806806,Oakland Photographic Album,PHOTOGRAPH,anthony.garcia,153000,SALE_PENDING
+806995,"Priya Foster Couture Evening Coat, 1997",FASHION,georgia.park,419000,UNDER_REVIEW
+807073,"Samuel Kapoor, After the Storm, lithograph, 2017",PRINT,highlandartistslegacytru_org,191000,AVAILABLE
+808361,"Orion Press Painted Stage Backdrop, 1832",THEATRE_OBJECT,windermeremuseumofmoderncraf,183000,AVAILABLE
+808557,Winter Garden Study,DRAWING,delilah.kim,1386000,FULLY_SUBSCRIBED
+808576,"Celia Ortega Studio Ceramic Vessel Set, 1864",CERAMIC,henry.reed,1346000,SOLD
+809279,"North Coast Railway Ceremonial Presentation Object, 1965",HISTORIC_OBJECT,silvermarsharchitecturalheri,290000,UNDER_REVIEW
+810152,"New Orleans Championship Match-Worn Jersey, 1939",SPORTS_MEMORABILIA,foundryxucollections,497000,RESERVED
+810163,The Long Platform — Group 2,PAINTING,quinn.campbell,4572000,SOLD
+811047,Excavated Architectural Fragment,ARCHAEOLOGICAL_OBJECT,longfellowestatecollection,515000,UNDER_OFFER
+811347,"Granite Bay Film Society Processional Banner, 1951",TEXTILE,yara.diaz,708000,INACTIVE
+813282,"Camille Dawson, Signal Field, 1960",PAINTING,wexlercollection,576000,UNDER_OFFER
+813422,Touring Electric Guitar,MUSICAL_INSTRUMENT,quinn.cho,477000,INACTIVE
+813944,"Westhaven Works Processional Banner, 1874",TEXTILE,felix.romero,1545000,FULLY_SUBSCRIBED
+814136,Salt Marsh at Dusk Sculpture,SCULPTURE,ashcroftcollection,898000,SOLD
+814450,"Linden Library Processional Cross, c. 1889",RELIGIOUS_OBJECT,walkercollections,368000,UNDER_REVIEW
+814776,Exhibition Lighting Prototype — Group 4,DESIGN_OBJECT,ravenwoodcraftpreservationso,465000,AVAILABLE
+816357,"Santiago Ito Couture Evening Coat, 1905",FASHION,priya.campbell,1309000,SOLD
+816563,"Milo Morrow Library Chair, 1799",FURNITURE,chloe.edwards,607000,SOLD
+817447,Annotated Poetry Volume — Group 4,RARE_BOOK,zimmermancollections,1495000,SOLD
+817486,San Jose Photographic Album,PHOTOGRAPH,ashlandestatecollection,421000,AVAILABLE
+817768,Signed First Edition,RARE_BOOK,lucia.knight,337000,INACTIVE
+818172,"Santiago Kwon, Market Morning, 1957",PAINTING,zane.flores_director,658000,SOLD
+818852,"Linden Library Computing Prototype, 2014",TECHNOLOGY,leo.ortiz,687000,SOLD
+819713,Denver Photographic Album,PHOTOGRAPH,heritagerowceramicsmuseum,477000,INACTIVE
+819850,"St. Elian Parish Control Panel, 1907",INDUSTRIAL_OBJECT,elenacollector1,713000,SOLD
+820432,"Iris Ortega, Green Passage, lithograph, 2007",PRINT,atlaspatelauctions,184000,UNDER_REVIEW
+821150,"Elena Caldwell, House at Low Tide, 1838",PAINTING,sofia.rivera,425000,INACTIVE
+821610,Historic Concert Cello — Group 4,MUSICAL_INSTRUMENT,henry.franklin,559000,AVAILABLE
+821910,"Mercury Records Stained-Glass Window, 1776",ARCHITECTURAL_ELEMENT,rosemontmuseumofmoderncraftd,188000,AVAILABLE
+822384,"Journal of the Detroit Expedition, 1788–1790",MANUSCRIPT,mina.singh,595000,SOLD
+823631,Mosaic Interior Panel,ARCHITECTURAL_ELEMENT,windermerepublicartconservan,390000,AVAILABLE
+823635,"Darius Caldwell, Harbour Series I, 2017",PAINTING,yara.diaz,2820000,FULLY_SUBSCRIBED
+823705,"Screen-Used The North Courtyard Prop, 1950",FILM_PROP,windermeredesignheritage_org,1178000,FULLY_SUBSCRIBED
+823963,River Bend,PAINTING,eastgateindustrialartsmuseum,1927000,FULLY_SUBSCRIBED
+824441,Political Campaign Banner,HISTORIC_OBJECT,aaliyah.zimmerman,120000,INACTIVE
+824483,Walnut Reading Chair — Group 6,FURNITURE,wellingtonmaterialcultureins,1128000,SOLD
+824614,"Noelle Hart Tour Outfit and Backstage Passes, 1989",MUSIC_MEMORABILIA,ironwoodcraftpreservationsoc,824000,SOLD
+824801,Science-Fiction Helmet Prop — Group 2,FILM_PROP,avane_alt,939000,SOLD
+825088,"Pablo Picasso, Visage aux yeux rieurs, ceramic plate, 1969",CERAMIC,jade.campbell,435000,AVAILABLE
+825384,"Screen-Used The North Courtyard Prop, 2010",FILM_PROP,reina.rivera,857000,SOLD
+825470,Concorde Cabin Instrument Panel,TRANSPORTATION,zane.flores_director,2311000,INACTIVE
+825529,Handwoven Wall Textile — Group 2,TEXTILE,chloe.singh,1319000,INACTIVE
+825763,Victorian Era Monocle — Group 4,HISTORIC_OBJECT,liucollections,544000,SUBMITTED
+826797,"Santiago Kapoor Exhibition Lamp Prototype, 1977",DESIGN_OBJECT,ftran_westhave,757000,REJECTED
+827447,Historic Restaurant Sign — Group 4,HISTORIC_OBJECT,ashlandestatecollection,314000,AVAILABLE
+828051,"Lucien Kapoor Concert Violin, 1813",MUSICAL_INSTRUMENT,aaliyah.zimmerman,1366000,FULLY_SUBSCRIBED
+829247,"Redwood Civic Association Computing Prototype, 1951",TECHNOLOGY,elmsteadhistoricalsociety,1110000,SOLD
+829475,"Felix Bennett, Blue Room with Fig Tree, lithograph, 1753",PRINT,tanglewoodmuseumofmoderncraf,278000,AVAILABLE
+832641,"Harcourt Estate Computing Prototype, 1953",TECHNOLOGY,yara.shah,2325000,SOLD
+834441,Modernist Writing Desk — Group 4,FURNITURE,lorenzo.ellis,632000,SOLD
+835710,Nineteenth-Century Brass Transit Telescope,SCIENTIFIC_INSTRUMENT,malik.johnson,195000,AVAILABLE
+836241,"Gabriel Navarro, The Reading Room, 1918",PAINTING,aldergrovefurnituredesignarc,650000,SOLD
+836483,"Nadia Bell Couture Evening Coat, 1906",FASHION,EleanorRook,274000,UNDER_REVIEW
+836498,Coastal Survey Atlas,MAP,chloe.singh,491000,INACTIVE
+836511,Tour Outfit — Group 3,MUSIC_MEMORABILIA,jocelyn.huang,1410000,SOLD
+837387,"Annotated Production Script, 1991",FILM_AND_MEDIA,khalil.kapoor,787000,SOLD
+837571,"Annotated Production Script, 1928",FILM_AND_MEDIA,rosemonthistoricalsociety,280000,AVAILABLE
+838117,Screen-Used Hero Prop — Group 2,FILM_PROP,millerauctionpartners,636000,SOLD
+838649,Screen-Used Hero Prop,FILM_PROP,windermeremuseumofmoderncraf,1325000,FULLY_SUBSCRIBED
+840619,"Harcourt Estate Material Culture Collection, 1864–1889",COLLECTION,elias.estrada,239000,INACTIVE
+840644,"Rowan Ito, Blue Room with Fig Tree, 1979",PAINTING,nia.jensen,721000,SOLD
+841653,Festival Mask with 1905 Collection Notes,ETHNOGRAPHIC_OBJECT,akira.bennett,587000,SOLD
+841821,Historic Restaurant Sign — Group 7,HISTORIC_OBJECT,OscarBexley,247000,UNDER_REVIEW
+843448,"Rafael Rivera, Chicago at Night, 1970",PHOTOGRAPH,oakhollowmuseumofappliedarts,657000,SOLD
+843941,"Sofia Ortega, After the Storm, bronze, 1935",SCULPTURE,theo.foster,1811000,INACTIVE
+845317,"Milo Roth Precision Microscope, 1982",SCIENTIFIC_INSTRUMENT,isaac.rivera,842000,WITHDRAWN
+846239,"Rosa Alvarez Library Chair, 1765",FURNITURE,ruby.dubois,1533000,SOLD
+846734,"Louise Bourgeois, Spider IV, conceived 1996 and cast 1997",SCULPTURE,lana.vasquez,8100000,DISPUTED
+847379,"Bay City Foundry Silver Presentation Service, 1872",METALWORK,redcedarfolkartfoundation,187000,AVAILABLE
+847957,"St. Elian Parish Material Culture Collection, 1808–1833",COLLECTION,abigail.lee_curator,392000,AVAILABLE
+848043,Foundry Pressure Gauge — Group 3,INDUSTRIAL_OBJECT,ronanA,69000,UNDER_REVIEW
+848109,Concert Poster Archive — Group 3,MUSIC_MEMORABILIA,windermeredesignheritage_org,656000,SOLD
+848360,"Arthur Mercer, New York at Night, 1887",PHOTOGRAPH,jade.campbell,792000,WITHDRAWN
+849464,Harbour Series I Study,DRAWING,quinn.cho,405000,RESERVED
+849534,"Linden Library Control Panel, 1907",INDUSTRIAL_OBJECT,yorkfieldfurnituredesignarch,546000,SOLD
+851025,The Long Platform,PAINTING,eastgateindustrialartsmuseum,440000,AVAILABLE
+851615,Railway Engineering Map — Group 2,MAP,DominicHale,246000,UNDER_REVIEW
+852232,Art Deco Silver Tea Service — Group 6,METALWORK,noelle.lee,312000,AVAILABLE
+853686,Film Festival Print,FILM_AND_MEDIA,jade.campbell,733000,SOLD
+853991,"Westhaven Works Painted Stage Backdrop, 1910",THEATRE_OBJECT,stonefieldpublicartconservan,289000,UNDER_OFFER
+857120,Early Scientific Treatise — Group 2,RARE_BOOK,parkhurstceramicsmuseum,208000,INACTIVE
+858051,Modular Chair Prototype — Group 2,DESIGN_OBJECT,lorenzo.ellis,1557000,FULLY_SUBSCRIBED
+858641,"Rafael Kwon, Denver at Night, 1857",PHOTOGRAPH,felix.romero,318000,AVAILABLE
+859324,"Theo Hart, Red Bridge, 2018",PAINTING,wellingtonmaterialcultureins,1829000,SOLD
+859782,"Gold and Enamel Memorial Brooch, c. 1869",JEWELRY,MWexler,1193000,SOLD
+861033,"Lucien Kwon, Winter Garden, 1839",PAINTING,TheoKincaid,1644000,SOLD
+862426,"Priya Ingram, Study for Winter Garden, 1989",DRAWING,zane.thomas,741000,SOLD
+863538,"Katsushika Hokusai, Under the Wave off Kanagawa (The Great Wave), c. 1831",PRINT,northbridgemuseumofmoderncra,3200000,DISPUTED
+864614,"Noelle Serrat Precision Microscope, 1990",SCIENTIFIC_INSTRUMENT,abigail.martinez,540000,SOLD
+865047,"Westhaven Works Computing Prototype, 1996",TECHNOLOGY,tanglewoodfolkartarchive,8046000,FULLY_SUBSCRIBED
+865158,"Darius Ortega Concert Violin, 1771",MUSICAL_INSTRUMENT,naomi.reyes,660000,SOLD
+865250,"Harcourt Estate Material Culture Collection, 1977–2002",COLLECTION,windermerepublicartconservan,132000,INACTIVE
+866006,Red Bridge Study,DRAWING,nadia_whitmore,1099000,SOLD
+866118,"Elias Kapoor, The Reading Room, bronze, 1839",SCULPTURE,daniel.hall,624000,SOLD
+867104,"Westhaven Works Stained-Glass Window, 1804",ARCHITECTURAL_ELEMENT,hana.dubois,621000,SOLD
+867116,Evening at the Quarry,PAINTING,camila.park,259000,INACTIVE
+867169,Salt Marsh at Dusk Study,DRAWING,aiden.patel,149000,INACTIVE
+869156,"Mara Morrow Studio Ceramic Vessel Set, 1837",CERAMIC,alejandro.walker,197000,UNDER_OFFER
+869233,"Iris Novak, The Long Platform, bronze, 1776",SCULPTURE,greatlakesindustrialartsmuse,3135000,FULLY_SUBSCRIBED
+870868,"Gabriel Navarro Studio Ceramic Vessel Set, 1860",CERAMIC,eastgatefolkartarchive,375000,INACTIVE
+871284,Signal Field,PAINTING,silvermarsharchitecturalheri,439000,AVAILABLE
+871881,"Screen-Used Three Cypress Trees Prop, 2001",FILM_PROP,gianna.young,199000,RESERVED
+873275,"Screen-Used Black Orchard Prop, 2001",FILM_PROP,southbanktextilearchive,1196000,INACTIVE
+874002,"Riverside Theatre Processional Banner, 1997",TEXTILE,greatlakesindustrialartsmuse,293000,INACTIVE
+875192,Community Festival Banner — Group 2,TEXTILE,granitehillbotanicalheritage,144000,AVAILABLE
+875389,"Elena Ito Tour Outfit and Backstage Passes, 1976",MUSIC_MEMORABILIA,rosemontdesignheritagecenter,381000,AVAILABLE
+875421,"Celia Roth Library Chair, 1917",FURNITURE,fairmontdesignheritagecenter,1417000,INACTIVE
+876670,"St. Elian Parish Computing Prototype, 1987",TECHNOLOGY,ashlandmuseumofprintedarts,203000,AVAILABLE
+877535,"Cypress Observatory Control Panel, 1964",INDUSTRIAL_OBJECT,georgia.park,255000,INACTIVE
+877832,"Camille Dawson, Salt Marsh at Dusk, lithograph, 1967",PRINT,tanglewoodfolkartarchive,1414000,SOLD
+878377,"Rafael Ren Studio Ceramic Vessel Set, 1813",CERAMIC,redcedarfolkartfoundation,830000,WITHDRAWN
+879833,"Signal Loom, 1982",TEXTILE,northbridgemuseumofmoderncra,145000,INACTIVE
+880419,"Gold and Enamel Memorial Brooch, c. 1888",JEWELRY,priya.nelson,1974000,SOLD
+881689,"Riverside Theatre Press, Illustrated First Edition, 1836",RARE_BOOK,nathan.hassan,670000,SOLD
+882348,"Mercury Records Silver Presentation Service, 1985",METALWORK,windermerepublicartconservan,460000,AVAILABLE
+882885,"Rosa Navarro, Black Orchard, 1851",PAINTING,croth_alt,296000,RESERVED
+882909,Match-Worn Football Shirt — Group 4,SPORTS_MEMORABILIA,chloe.edwards,317000,RESERVED
+883059,Nintendo PlayStation Prototype Console,TECHNOLOGY,elmsteadculturalpreservation,475000,AVAILABLE
+883230,"Jonas Bell, Studio with Copper Vessel, bronze, 1754",SCULPTURE,vivian.reyes_finance,834000,WITHDRAWN
+883466,Folk Costume Ensemble — Group 2,ETHNOGRAPHIC_OBJECT,mina.singh,1241000,SOLD
+883529,Studio Ceramic Vessel Set — Group 10,CERAMIC,aldergrovefurnituredesignarc,143000,AVAILABLE
+884513,"Santiago Ren Couture Evening Coat, 1911",FASHION,ironwoodcraftpreservatio_org,477000,AVAILABLE
+884946,"Gold and Enamel Memorial Brooch, c. 1773",JEWELRY,javier.hayes,969000,SOLD
+885279,Closed Theatre Records — Group 2,ARCHIVAL_COLLECTION,foxgloveartistslegacytrust,434000,INACTIVE
+886243,"Screen-Used After the Storm Prop, 1942",FILM_PROP,meridiancolemancollections,803000,SOLD
+886866,After the Storm,PAINTING,windermeredesignheritagecent,484000,INACTIVE
+886901,The Reading Room Print,PRINT,rosemontmuseumofmoderncraftd,315000,INACTIVE
+886985,Modernist Writing Desk,FURNITURE,rosemonthistoricalsociety,402000,INACTIVE
+887617,"Gold and Enamel Memorial Brooch, c. 1790",JEWELRY,nadia_whitmore,1205000,SOLD
+888120,Art Nouveau Pendant — Group 4,JEWELRY,howardfineobjects,1311000,SOLD
+888925,"Elena Maren Tour Outfit and Backstage Passes, 1960",MUSIC_MEMORABILIA,harper.hernandez,401000,AVAILABLE
+889332,"Rafael Saito, Savannah at Night, 1932",PHOTOGRAPH,silvermarsharchitecturalheri,694000,SOLD
+889384,Festival Mask with 1981 Collection Notes,ETHNOGRAPHIC_OBJECT,TheoKincaid,1337000,SOLD
+892537,"Meridian Studio Ceremonial Presentation Object, 1928",HISTORIC_OBJECT,aldergrovefurnituredesignarc,844000,WITHDRAWN
+894215,"Cypress Observatory Processional Banner, 1799",TEXTILE,georgia.park,148000,AVAILABLE
+894359,"Screen-Used Study for a Procession Prop, 1948",FILM_PROP,OscarBexley,298000,UNDER_REVIEW
+894954,Machine Shop Sign,INDUSTRIAL_OBJECT,arcadialamauctions,3398000,SOLD
+895126,"Cypress Observatory Computing Prototype, 1991",TECHNOLOGY,franklincollections,1026000,SOLD
+896189,"Mara Cole Library Chair, 1887",FURNITURE,isabel.carter,189000,INACTIVE
+896648,"Gold and Enamel Memorial Brooch, c. 1771",JEWELRY,windermeremuseumofmoderncraf,814000,WITHDRAWN
+898079,Red Bridge — Group 2,PAINTING,priya.nelson,480000,SALE_PENDING
+899946,"Amina Voss, Philadelphia at Night, 1982",PHOTOGRAPH,hearthstonefolkartarchiv_org,41000,AVAILABLE
+900123,Exhibition Lighting Prototype — Group 2,DESIGN_OBJECT,amir.saito_director,763000,INACTIVE
+901440,"Elias Quinn Exhibition Lamp Prototype, 1942",DESIGN_OBJECT,clara.yoon,318000,UNDER_OFFER
+902420,Championship Boxing Gloves — Group 6,SPORTS_MEMORABILIA,greatlakesindustrialartsmuse,771000,SOLD
+903587,Match-Worn Football Shirt — Group 5,SPORTS_MEMORABILIA,crossventuresart,210000,UNDER_REVIEW
+904819,Match-Worn Football Shirt — Group 3,SPORTS_MEMORABILIA,zimmermancollections,532000,AVAILABLE
+904846,"Mateo Kapoor, Harbour Series I, bronze, 1986",SCULPTURE,daniel.campbell,181000,INACTIVE
+906083,Star Wars Lightsaber Prop,FILM_PROP,hearthstonefolkartarchive,553000,SOLD
+906734,Festival Mask with 1856 Collection Notes,ETHNOGRAPHIC_OBJECT,ruby.reed,1181000,SOLD
+907508,Historic Shopfront Sign — Group 3,ARCHITECTURAL_ELEMENT,sofia.rivera,991000,SOLD
+907681,"Nadia Dawson, Baltimore at Night, 1934",PHOTOGRAPH,delilah.kim,155000,SALE_PENDING
+908965,"Samuel Vale Library Chair, 1834",FURNITURE,parkhurstceramicsmuseum,395000,INACTIVE
+909280,Marionette Theatre Figures — Group 3,THEATRE_OBJECT,harper.ellis,137000,UNDER_REVIEW
+909345,"Vivienne Westwood Punk Ensemble, c. 1977",FASHION,ftran_westhave,105000,AVAILABLE
+909710,River Bend Print,PRINT,silvermarshdecorativeartsarc,425000,AVAILABLE
+909836,The North Courtyard Study,DRAWING,aaron.olsen,418000,INACTIVE
+910060,Historic Motorcycle — Group 2,TRANSPORTATION,reina.reed,167000,AVAILABLE
+911728,"Samuel Ingram, Study for Orchard Interior, 1983",DRAWING,quarrylanecraftpreservations,407000,SALE_PENDING
+911740,"Rafael Ren Exhibition Lamp Prototype, 1996",DESIGN_OBJECT,ramirezauctionpartners,358000,UNDER_REVIEW
+914727,Composer’s Working Notebook,MANUSCRIPT,cole.thomas_director,182000,INACTIVE
+915711,"Mara Roth Exhibition Lamp Prototype, 1955",DESIGN_OBJECT,OscarBexley,130000,SALE_PENDING
+916764,"Redwood Civic Association Ceremonial Presentation Object, 1815",HISTORIC_OBJECT,CelesteRoth,307000,UNDER_OFFER
+917016,"Bay City Foundry Processional Cross, c. 1803",RELIGIOUS_OBJECT,renee.kim,629000,SOLD
+917194,"Riverside Theatre Material Culture Collection, 1972–1997",COLLECTION,silvermarsharchitecturalheri,356000,UNDER_REVIEW
+921076,Prince Purple Rain Tour Guitar,MUSICAL_INSTRUMENT,tanglewoodculturalmemoryproj,714000,INACTIVE
+921233,"St. Elian Parish Material Culture Collection, 1849–1874",COLLECTION,priya.nelson,1119000,INACTIVE
+922177,Runway Evening Dress,FASHION,abigail.lee_curator,1324000,SOLD
+922271,"Rowan Ortega, Factory Window, bronze, 1874",SCULPTURE,andersonartadvisory,857000,SOLD
+923571,Coastal Light — Group 2,PAINTING,caleb.campbell,1346000,SOLD
+923654,"Orion Press Computing Prototype, 1948",TECHNOLOGY,heritagerowdecorativeartsarc,1150000,FULLY_SUBSCRIBED
+924096,Embroidered Civic Standard — Group 3,TEXTILE,farah.vasquez,465000,AVAILABLE
+925110,Coastal Light Sculpture,SCULPTURE,harper7,858000,SOLD
+925323,"Jonas Novak, Orchard Interior, bronze, 1931",SCULPTURE,ftran_westhave,458000,AVAILABLE
+925447,"Jonas Foster, Coastal Light, bronze, 1992",SCULPTURE,eva.howell,298000,AVAILABLE
+926044,"Bay City Foundry Press, Illustrated First Edition, 1931",RARE_BOOK,ashlandestatecollection,151000,AVAILABLE
+926291,Exhibition Lighting Prototype — Group 3,DESIGN_OBJECT,theo.foster,320000,AVAILABLE
+926676,"Annotated Production Script, 1976",FILM_AND_MEDIA,ashlanddecorativeartsarchive,295000,RESERVED
+927057,"Felix Ellis Precision Microscope, 1929",SCIENTIFIC_INSTRUMENT,eastgateindustrialartsmuseum,721000,SOLD
+927995,"Celia Quinn Couture Evening Coat, 1951",FASHION,farah.stone,293000,SALE_PENDING
+929680,Studio Ceramic Vessel Set — Group 8,CERAMIC,sofia.hayes,100000,AVAILABLE
+929915,"North Coast Railway Press, Illustrated First Edition, 1844",RARE_BOOK,southbanktextilearchive,302000,AVAILABLE
+930211,"Milo Voss, The Long Platform, 1958",PAINTING,rosemonthistoricalsociety,2019000,SOLD
+930837,"Lucien Serrat Tour Outfit and Backstage Passes, 1996",MUSIC_MEMORABILIA,khalil.kapoor,4417000,SOLD
+931365,"Gabriel Hart Studio Ceramic Vessel Set, 1835",CERAMIC,vivienne.cross,438000,UNDER_REVIEW
+931373,Signed Tournament Racket — Group 4,SPORTS_MEMORABILIA,zimmermancollections,907000,SOLD
+931923,Victorian Era Monocle — Group 2,HISTORIC_OBJECT,jade.campbell,418000,AVAILABLE
+933680,Factory Window Study,DRAWING,orchardhousecommunityartsfou,156000,AVAILABLE
+934594,Mosaic Interior Panel — Group 5,ARCHITECTURAL_ELEMENT,windermeremuseumofmoderncraf,412000,UNDER_REVIEW
+934771,"Westhaven Works Archive, 1839–1869",ARCHIVAL_COLLECTION,leo.lane,1041000,FULLY_SUBSCRIBED
+935640,Fantasy Film Sword Prop,FILM_PROP,hearthstonefolkartarchive,420000,INACTIVE
+935794,"Rafael Dawson, After the Storm, bronze, 1902",SCULPTURE,mwexler_alt,2418000,SOLD
+936185,Jazz Club Upright Piano — Group 7,MUSICAL_INSTRUMENT,aldergrovefurnituredesignarc,954000,SOLD
+936207,"Silver Processional Cross, c. 1510",RELIGIOUS_OBJECT,yasmin.roberts,739000,REJECTED
+937046,"Felix Cole, Green Passage, 1947",PAINTING,delilah.kim,328000,AVAILABLE
+937090,"Cypress Observatory Stained-Glass Window, 1820",ARCHITECTURAL_ELEMENT,quinn.cho,133000,INACTIVE
+937500,"Theo Roth Precision Microscope, 1935",SCIENTIFIC_INSTRUMENT,southbanktextilearchive,585000,SOLD
+938198,"Screen-Used Study for a Procession Prop, 1997",FILM_PROP,vivienne.cross,678000,SOLD
+938560,"Westhaven Works Control Panel, 1876",INDUSTRIAL_OBJECT,mwexler_alt,398000,AVAILABLE
+939472,Three Cypress Trees Print,PRINT,lana.mendez,1172000,INACTIVE
+940101,Embroidered Civic Standard,TEXTILE,ashlandestatecollection,104000,INACTIVE
+940912,"Iris Serrat Concert Violin, 1781",MUSICAL_INSTRUMENT,cassidy.ito,151000,AVAILABLE
+942716,Tour Outfit — Group 2,MUSIC_MEMORABILIA,oakhollowmuseumofappliedarts,2298000,FULLY_SUBSCRIBED
+943131,House at Low Tide — Group 2,PAINTING,anthony.garcia,1181000,SOLD
+943204,"Barbara Hepworth, Small Form, 1963",SCULPTURE,jade.campbell,1320000,FULLY_SUBSCRIBED
+943293,"New York Railway Carriage Panel, 1923",TRANSPORTATION,malik.johnson,776000,WITHDRAWN
+943922,"Leila Cole, Market Morning, 1825",PAINTING,georgia.park,1362000,FULLY_SUBSCRIBED
+944393,Signed First Edition — Group 7,RARE_BOOK,lorenzo.valdez,1368000,SOLD
+945032,"Screen-Used Winter Garden Prop, 1972",FILM_PROP,delilah.kim,4293000,SOLD
+945432,"Harcourt Estate Control Panel, 1903",INDUSTRIAL_OBJECT,emilia.cho,704000,SOLD
+945869,"Nadia Alvarez Couture Evening Coat, 2011",FASHION,howellartadvisory,1315000,SOLD
+947032,Historic Household Interior Group,COLLECTION,julia.roberts,294000,INACTIVE
+948303,Victorian Era Monocle,HISTORIC_OBJECT,aaron.olsen,398000,INACTIVE
+948596,Touring Electric Guitar — Group 2,MUSICAL_INSTRUMENT,chloe.singh,601000,SOLD
+949399,"Screen-Used The North Courtyard Prop, 2002",FILM_PROP,santiago.jordan,487000,SOLD
+950401,"Screen-Used Night Tram Prop, 1943",FILM_PROP,EleanorRook,6366000,SOLD
+951007,"Amara Vale, Green Passage, 1989",PAINTING,willowmererailwayhistorycent,633000,SOLD
+951978,Public Transit Destination Sign — Group 2,TRANSPORTATION,croth_alt,3037000,SOLD
+952298,Traditional Craft Tool Set,ETHNOGRAPHIC_OBJECT,yasmin.roberts,468000,AVAILABLE
+953193,"North Coast Railway Processional Cross, c. 1897",RELIGIOUS_OBJECT,elmsteadculturalmemoryprojec,304000,INACTIVE
+954215,Signed Tournament Racket,SPORTS_MEMORABILIA,aaliyah.zimmerman,246000,INACTIVE
+955368,"St. Elian Parish Computing Prototype, 1996",TECHNOLOGY,highlandartistslegacytrust,266000,RESERVED
+955842,"New Orleans Championship Match-Worn Jersey, 1898",SPORTS_MEMORABILIA,avane_alt,1374000,SOLD
+956030,"Journal of the Detroit Expedition, 1799–1801",MANUSCRIPT,adamscollections,1708000,SOLD
+957777,"Mara Serrat, Denver at Night, 1930",PHOTOGRAPH,emilia.ortiz,706000,SOLD
+958093,Annotated Travel Diary — Group 3,MANUSCRIPT,elmsteadculturalmemoryprojec,878000,PARTIALLY_SUBSCRIBED
+958793,Handwoven Wall Textile — Group 4,TEXTILE,wexlercollection,221000,AVAILABLE
+961382,"Detroit Railway Carriage Panel, 1991",TRANSPORTATION,ruby.reed,1203000,SOLD
+961753,Sapphire Signet Ring,JEWELRY,bishopheritagesales,2684000,SOLD
+964355,Signal Field Sculpture,SCULPTURE,northbridgemuseumofmoderncra,1194000,INACTIVE
+965198,"Lucien Havel, Coastal Light, 1822",PAINTING,ashlandmuseumofprintedarts,612000,SOLD
+965934,"Harcourt Estate Ceremonial Presentation Object, 1755",HISTORIC_OBJECT,oakhollowdesignheritagecente,286000,AVAILABLE
+966247,"Seattle Championship Match-Worn Jersey, 1978",SPORTS_MEMORABILIA,CelesteRoth,1242000,SOLD
+966693,"Camille Rivera, Evening at the Quarry, 1856",PAINTING,lorenzo.ellis,515000,INACTIVE
+967143,"Marc Chagall, Bouquet au village, 1969",PAINTING,harper.ellis,238000,AVAILABLE
+967567,"Rosa Rivera, Denver at Night, 1936",PHOTOGRAPH,parkhurstcommunityartsfounda,460000,AVAILABLE
+968772,"Felix Kwon Tour Outfit and Backstage Passes, 1950",MUSIC_MEMORABILIA,heritagerowceramicsmuseum,856000,WITHDRAWN
+970381,Black Orchard Sculpture,SCULPTURE,fairmontdesignheritagecenter,1544000,INACTIVE
+971682,"Journal of the Denver Expedition, 1882–1884",MANUSCRIPT,theo.kim,785000,WITHDRAWN
+972330,"Amara Quinn Art Glass Panel, 1942",GLASS,malik.johnson,111000,AVAILABLE
+972692,"Harcourt Estate Computing Prototype, 1944",TECHNOLOGY,rothartadvisory,293000,UNDER_OFFER
+972697,"Santiago Navarro, The North Courtyard, 1812",PAINTING,vanefamilyoffice,255000,UNDER_OFFER
+973072,Annotated Poetry Volume — Group 2,RARE_BOOK,AuggieVane,954000,SOLD
+973314,"Westhaven Works Stained-Glass Window, 1976",ARCHITECTURAL_ELEMENT,CeliaSterling,347000,UNDER_REVIEW
+973595,"Sofia Desai Couture Evening Coat, 1977",FASHION,willowmererailwayhistorycent,145000,INACTIVE
+975230,Hand-Coloured Regional Map — Group 2,MAP,rosemontmuseumofmoderncraftd,85000,AVAILABLE
+975385,Jazz Club Upright Piano — Group 4,MUSICAL_INSTRUMENT,highlandartistslegacytrust,621000,SOLD
+975821,"Annotated Production Script, 1948",FILM_AND_MEDIA,bellwethermaterialcultureins,70000,AVAILABLE
+979319,Coastal Light Print,PRINT,abigail.bennett,304000,UNDER_REVIEW
+980053,"Riverside Theatre Control Panel, 1998",INDUSTRIAL_OBJECT,renee.kim,761000,WITHDRAWN
+980069,"Amara Maren Couture Evening Coat, 1999",FASHION,ronanA,3336000,SOLD
+980331,Signed First Edition — Group 3,RARE_BOOK,abigail.martinez,150000,AVAILABLE
+981070,Local Newspaper Photograph Archive — Group 4,ARCHIVAL_COLLECTION,santiago.jordan,174000,INACTIVE
+981607,"Baltimore Championship Match-Worn Jersey, 1960",SPORTS_MEMORABILIA,sofia.rivera,380000,INACTIVE
+981857,"Jonas Saito, Red Bridge, 1996",PAINTING,henry.reed,413000,AVAILABLE
+981988,"Santiago Hart, Cloud over the Foundry, 1993",PAINTING,blair.sims,863000,SOLD
+982547,"Arthur Ito, New Orleans at Night, 2016",PHOTOGRAPH,wellingtonmaterialcultureins,1153000,FULLY_SUBSCRIBED
+983142,"Iris Ren Tour Outfit and Backstage Passes, 1957",MUSIC_MEMORABILIA,keira.nguyen,790000,SOLD
+983290,"Bay City Foundry Ceremonial Presentation Object, 1954",HISTORIC_OBJECT,andersonartadvisory,484000,SUBMITTED
+985787,Local Newspaper Photograph Archive,ARCHIVAL_COLLECTION,priya.lane,243000,INACTIVE
+986501,Historic Racing Helmet,SPORTS_MEMORABILIA,elmsteadculturalpreservation,368000,AVAILABLE
+988409,"Journal of the New Orleans Expedition, 1795–1797",MANUSCRIPT,zane.flores_director,832000,SOLD
+988868,"Amara Navarro, Red Bridge, 1970",PAINTING,heritagerowdecorativeartsarc,398000,INACTIVE
+988871,"Survey Map of Austin, 1958",MAP,granitehillbotanicalheritage,506000,SOLD
+989166,"Mara Morrow, Harbour Series I, bronze, 1830",SCULPTURE,pineharbormaterialcultureins,211000,UNDER_REVIEW
+990518,Screen-Used Hero Prop — Group 4,FILM_PROP,reina.chen,386000,RESERVED
+990888,"Gold and Enamel Memorial Brooch, c. 1991",JEWELRY,jade.campbell,736000,REJECTED
+991017,Triceratops Frill Fragment with Collection Records,NATURAL_HISTORY,amir.miller,314000,AVAILABLE
+992431,Detroit Photographic Album,PHOTOGRAPH,eastgatefolkartarchive,261000,INACTIVE
+992551,"Ansel Dawson, Signal Field, lithograph, 1870",PRINT,quarrylanecraftpreservations,929000,PARTIALLY_SUBSCRIBED
+993039,"Ansel Saito, The North Courtyard, 1979",PAINTING,aiden.patel,664000,SOLD
+993909,"Journal of the Boston Expedition, 1808–1810",MANUSCRIPT,EleanorRook,209000,UNDER_REVIEW
+994218,"Noelle Saito, Study for a Procession, bronze, 1944",SCULPTURE,alejandro.walker,1584000,SOLD
+995034,"San Jose Championship Match-Worn Jersey, 1927",SPORTS_MEMORABILIA,xavier.jacobs,531000,AVAILABLE
+995598,Handwritten Set List — Group 2,MUSIC_MEMORABILIA,quarrylanecraftpreservations,316000,SALE_PENDING
+997104,House at Low Tide Sculpture,SCULPTURE,imani.reed,783000,WITHDRAWN
+997761,"Harcourt Estate Stained-Glass Window, 1806",ARCHITECTURAL_ELEMENT,ronanA,983000,SOLD
+998987,"Elena Ingram, Denver at Night, 1935",PHOTOGRAPH,georgia.park,146000,INACTIVE
+999319,"Imani Quinn, Harbour Series I, 1825",PAINTING,windermeredesignheritage_org,672000,SOLD
+999501,"Journal of the Los Angeles Expedition, 1831–1833",MANUSCRIPT,heritagerowceramicsmuseum,614000,SOLD
+999874,Historic Concert Cello,MUSICAL_INSTRUMENT,farah.stone,367000,INACTIVE
