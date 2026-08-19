@@ -3,7 +3,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Box, Button, Collapse, Divider, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-import { DataTable, Warning } from '@/components';
+import { DataTable, Warning } from '@sqlvalley/ui';
 import { ExerciseSection } from '@/learning/components/ExerciseSection';
 import type { DatasetSize } from '@/mockData';
 import type { SqlQueryResult } from '@sqlvalley/sql-grading';

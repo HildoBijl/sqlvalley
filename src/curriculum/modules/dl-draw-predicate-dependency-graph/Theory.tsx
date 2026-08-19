@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link, IDL } from '@/components';
+import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link, IDL } from '@sqlvalley/ui';
 
 import { SampleDatalogScriptForDependencyGraph, SecondDependencyGraph, CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory';
 

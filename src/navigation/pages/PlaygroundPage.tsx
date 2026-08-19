@@ -18,7 +18,7 @@ import {
   Download,
   Refresh,
 } from '@mui/icons-material';
-import { SQLEditor, DataTable } from '@/components';
+import { SQLEditor, DataTable } from '@sqlvalley/ui';
 import { usePlaygroundDatabase } from '@/learning/databases';
 
 interface QueryHistory {

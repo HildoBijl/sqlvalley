@@ -2,8 +2,8 @@ import { type ReactNode } from 'react'
 
 import { useRefWithValue } from '@sqlvalley/utils/dom';
 import { useThemeColor } from '@/theme';
-import { Page, Section, Par, List, Info, Warning, Term, Em, DL, IDL } from '@/components';
-import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@/components';
+import { Page, Section, Par, List, Info, Warning, Term, Em, DL, IDL } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
 
 import { SQLValleySchema } from '../../utils';
 

@@ -3,8 +3,8 @@ import { useTheme } from '@mui/material/';
 
 import { useRefWithValue } from '@sqlvalley/utils/dom';
 import { useThemeColor } from '@/theme';
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, DL, IDL } from '@/components';
-import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@/components';
+import { Page, Section, Par, List, Info, Warning, Term, Em, M, DL, IDL } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@sqlvalley/ui';
 
 function DPGDL({ children }: { children: ReactNode }) {
   return <DL style={{ padding: '10px 20px' }}>{children}</DL>

@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Quote, Info, Term, Em, DL, IDL } from '@/components';
+import { Page, Section, Par, List, Quote, Info, Term, Em, DL, IDL } from '@sqlvalley/ui';
 
 import { FigureExampleDLQuery } from '../../utils';
 

@@ -1,4 +1,4 @@
-import { Page, Section, Par, RA, Term, Em, RelationName, PrimaryKey } from '@/components';
+import { Page, Section, Par, RA, Term, Em, RelationName, PrimaryKey } from '@sqlvalley/ui';
 import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
 
 import { CompaniesSchema, ShoppingSchema } from '../../utils';

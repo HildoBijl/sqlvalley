@@ -2,11 +2,11 @@ import { Box } from '@mui/material';
 
 import { useRefWithValue } from '@sqlvalley/utils/dom';
 import { useThemeColor } from '@/theme';
-import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/components';
-import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@/components';
+import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@/learning/databases';
-import { useQueryResult } from '@/components/sql/sqljs';
-import { DataTable, ISQL } from '@/components';
+import { useQueryResult } from '@sqlvalley/ui/sql/sqljs';
+import { DataTable, ISQL } from '@sqlvalley/ui';
 
 export function Theory() {
   const now = new Date();

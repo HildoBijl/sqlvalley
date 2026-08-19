@@ -2,11 +2,11 @@ import { Box } from '@mui/material';
 
 import { useRefWithValue } from '@sqlvalley/utils/dom';
 import { useThemeColor } from '@/theme';
-import { Page, Section, Par, List, Warning, Info, Term, Em, ISQL } from '@/components';
-import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@/components';
+import { Page, Section, Par, List, Warning, Info, Term, Em, ISQL } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@/learning/databases';
-import { useQueryResult } from '@/components/sql/sqljs';
-import { DataTable } from '@/components';
+import { useQueryResult } from '@sqlvalley/ui/sql/sqljs';
+import { DataTable } from '@sqlvalley/ui';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 import { FigureTwoTables } from '../database/Theory';

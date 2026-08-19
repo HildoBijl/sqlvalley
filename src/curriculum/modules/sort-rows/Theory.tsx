@@ -3,11 +3,11 @@ import { Box } from '@mui/material';
 import { Vector } from '@sqlvalley/utils/geometry';
 import { useRefWithValue, useRefWithElement } from '@sqlvalley/utils/dom';
 import { useThemeColor } from '@/theme';
-import { Page, Par, Section, Warning, Term, Em } from '@/components';
-import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@/components';
+import { Page, Par, Section, Warning, Term, Em } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@/learning/databases';
-import { useQueryResult } from '@/components/sql/sqljs';
-import { DataTable, ISQL, SQLDisplay } from '@/components';
+import { useQueryResult } from '@sqlvalley/ui/sql/sqljs';
+import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/ui';
 
 export function Theory() {
   return <Page>

@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Em } from '@/components';
+import { Page, Section, Par, List, Em } from '@sqlvalley/ui';
 
 import { DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory';
 

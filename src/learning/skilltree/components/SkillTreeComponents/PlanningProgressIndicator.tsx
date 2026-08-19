@@ -1,6 +1,6 @@
 import { Box, LinearProgress, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Link } from '@/components';
+import { Link } from '@sqlvalley/ui';
 
 interface PlanningProgressIndicatorProps {
   nextStepName: string;

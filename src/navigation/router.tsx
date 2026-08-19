@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
-import { LoadingScreen, ErrorBoundary } from '@/components';
+import { LoadingScreen, ErrorBoundary } from '@sqlvalley/ui';
 
 import HomePage from './pages/HomePage';
 import LearningOverviewPage from './pages/LearningOverview/SqlLearningOverviewPage';

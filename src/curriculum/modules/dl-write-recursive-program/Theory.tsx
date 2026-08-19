@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Warning, Em, Term, DL, IDL } from '@/components';
+import { Page, Section, Par, List, Warning, Em, Term, DL, IDL } from '@sqlvalley/ui';
 
 export function Theory() {
   return <Page>

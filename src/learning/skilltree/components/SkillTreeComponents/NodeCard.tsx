@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 import { ButtonBase, useTheme } from '@mui/material/';
-import { Element, Rectangle } from '@/components';
+import { Element, Rectangle } from '@sqlvalley/ui';
 import type { Module } from '@sqlvalley/skill-tree-definition';
 import { Vector } from '@sqlvalley/utils/geometry';
 import { NodeCompletedMark } from './Icons/NodeCompletedMark';

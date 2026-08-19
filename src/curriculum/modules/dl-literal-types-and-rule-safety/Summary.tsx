@@ -1,4 +1,4 @@
-import { Page, Section, Par, Term, Em, IDL } from '@/components';
+import { Page, Section, Par, Term, Em, IDL } from '@sqlvalley/ui';
 
 import { FigureExampleDLQuery } from '../../utils';
 

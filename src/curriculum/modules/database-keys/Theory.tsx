@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Warning, Info, Term, Em, RelationName, PrimaryKey, ISQL } from '@/components';
+import { Page, Section, Par, List, Warning, Info, Term, Em, RelationName, PrimaryKey, ISQL } from '@sqlvalley/ui';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 

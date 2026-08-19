@@ -1,4 +1,4 @@
-import { Page, Par, Section, Warning, Info, Term, Em, M, BM, RelationName, Link } from '@/components';
+import { Page, Par, Section, Warning, Info, Term, Em, M, BM, RelationName, Link } from '@sqlvalley/ui';
 import { FigureExampleRAQuery } from '../../utils';
 
 export function Theory() {

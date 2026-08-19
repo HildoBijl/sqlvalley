@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { Curve, Drawing } from '@/components';
+import { Curve, Drawing } from '@sqlvalley/ui';
 import type { Module } from '@sqlvalley/skill-tree-definition';
 import type { Vector } from '@sqlvalley/utils/geometry';
 import { useTheme } from '@mui/material/';

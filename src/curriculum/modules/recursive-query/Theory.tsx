@@ -1,6 +1,6 @@
-import { Page, Section, Par, List, Info, Warning, Quote, Term, Em, M } from '@/components';
+import { Page, Section, Par, List, Info, Warning, Quote, Term, Em, M } from '@sqlvalley/ui';
 
-import { useQueryResult } from '@/components/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/ui/sql/sqljs';
 import { useTheorySampleDatabase } from '@/learning/databases';
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 

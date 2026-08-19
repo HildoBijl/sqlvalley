@@ -9,7 +9,8 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "packages/*/src"
   ],
   "references": [
     {

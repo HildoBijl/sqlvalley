@@ -2,10 +2,10 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
 import CheckIcon from '@mui/icons-material/Check';
 
 import { useRefWithValue } from '@sqlvalley/utils/dom';
-import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@/components';
-import { type DrawingData, Drawing, Element, useRefWithBounds } from '@/components';
-import { useQueryResult } from '@/components/sql/sqljs';
-import { DataTable } from '@/components';
+import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, useRefWithBounds } from '@sqlvalley/ui';
+import { useQueryResult } from '@sqlvalley/ui/sql/sqljs';
+import { DataTable } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@/learning/databases';
 import { FigureExampleRAQuery } from '../../utils';
 

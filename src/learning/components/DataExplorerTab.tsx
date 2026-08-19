@@ -15,7 +15,7 @@ import {
   DialogActions,
 } from '@mui/material';
 import { AccountTree } from '@mui/icons-material';
-import { DataTable } from '@/components';
+import { DataTable } from '@sqlvalley/ui';
 import { useDatabase } from '@/learning/databases';
 import { buildSchema, defaultDatasetSize, type TableKey } from '@/mockData';
 

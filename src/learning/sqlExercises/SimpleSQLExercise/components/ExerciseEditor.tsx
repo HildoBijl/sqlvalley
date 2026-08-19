@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 
-import { SQLEditor } from '@/components';
+import { SQLEditor } from '@sqlvalley/ui';
 
 interface ExerciseEditorProps {
   query: string;

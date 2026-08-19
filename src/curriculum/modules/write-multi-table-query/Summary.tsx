@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Term, Em } from '@/components';
-import { ISQL } from '@/components';
+import { Page, Section, Par, List, Term, Em } from '@sqlvalley/ui';
+import { ISQL } from '@sqlvalley/ui';
 
 export function Summary() {
   return <Page>

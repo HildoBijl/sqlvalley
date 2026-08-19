@@ -1,6 +1,6 @@
 import { type CSSProperties } from 'react';
 
-import * as glyphs from '@/assets/glyphs';
+import * as glyphs from '../../../../assets/glyphs';
 
 import { type ElementProps, getDefaultElement, Element } from './Element';
 
