@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import type { Module } from '@/curriculum';
+import type { Module } from '@/learning/skillTreeDefinition';
 import { getPrerequisites } from '@/learning/skillTreeDefinition';
 
 export function useHoverState(

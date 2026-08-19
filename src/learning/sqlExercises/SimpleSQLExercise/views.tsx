@@ -8,7 +8,7 @@ import { ExerciseEditor } from './components/ExerciseEditor';
 import { ExerciseResults } from './components/ExerciseResults';
 import { ExerciseSolution } from './components/ExerciseSolution';
 import type { SimpleSQLCheckResult } from './types';
-import { useSimpleSQLRuntime } from './runtime';
+import { useSqlModuleContext } from '../SqlModule';
 
 export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
   value,
@@ -16,7 +16,7 @@ export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
   onChange,
   onSubmit,
 }: SimpleExerciseInputProps<Parameters, string>) {
-  const runtime = useSimpleSQLRuntime();
+  const runtime = useSqlModuleContext();
   return (
     <ExerciseEditor
       query={value}
@@ -32,7 +32,7 @@ export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
 export function SQLExerciseOutput<Parameters extends Record<string, unknown>>({
   state,
 }: SimpleExerciseOutputProps<Parameters, string, SimpleSQLCheckResult>) {
-  const runtime = useSimpleSQLRuntime();
+  const runtime = useSqlModuleContext();
   const complete = 'solved' in state || 'givenUp' in state;
   return (
     <ExerciseResults
@@ -52,7 +52,7 @@ export function createSQLProblem<Parameters extends Record<string, unknown>>(
   getProblem: (parameters: Parameters) => string,
 ) {
   return function SQLExerciseProblem({ parameters }: { parameters: Parameters }) {
-    const runtime = useSimpleSQLRuntime();
+    const runtime = useSqlModuleContext();
     return (
       <ExerciseDescription
         title={title}

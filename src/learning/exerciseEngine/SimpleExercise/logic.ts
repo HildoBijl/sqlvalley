@@ -1,4 +1,4 @@
-import type { StoredExerciseState } from '@/store';
+import type { StoredExerciseState } from '../storedState';
 import type { SimpleExerciseStoredState } from './types';
 
 export const emptySimpleExerciseState: SimpleExerciseStoredState = {};

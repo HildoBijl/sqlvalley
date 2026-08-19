@@ -1,46 +1,32 @@
-import type { ReactNode } from 'react';
-
 import type {
-  AsyncExerciseReducer,
-  ExerciseActionResult,
+  SkillId,
   StoredExerciseAction,
   StoredExerciseEvent,
-  StoredExerciseInstance,
   StoredExerciseState,
-} from '@/store';
+} from '../storedState';
+import type { ExerciseDefinition } from './definition';
 
-export interface ExerciseHelpers {
-  selectRandomly<T>(items: readonly T[]): T;
-  randomInt(min: number, max: number): number;
-}
-
-export interface ExerciseDescriptor<Parameters extends Record<string, unknown>> {
-  exerciseId: string;
-  version: number;
-  parameters: Parameters;
-}
-
-export type ExerciseReducer<
+/** Dynamically generated data about the current exercise. */
+export interface ExerciseData<
   Parameters extends Record<string, unknown>,
-  Action extends StoredExerciseAction,
-  State extends StoredExerciseState,
-> = (args: {
-  parameters: Parameters;
-  action: Action;
-  previousState: State;
-}) => State;
-
-export interface ExerciseSessionOptions<
-  Parameters extends Record<string, unknown>,
-  Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 > {
-  skillId: string;
-  reducer?: ExerciseReducer<Parameters, Action, State>;
-  initialState: State;
-  isComplete: (state: State) => boolean;
-  isSolved: (state: State) => boolean;
-  startNewExercise?: () => void;
+  parameters: Parameters;
+  state: State;
+  events: StoredExerciseEvent[];
+  draftInput: unknown;
+  pending: boolean;
+}
+
+/** Handlers connecting the exercise to the data store, set up by the manager. */
+export interface ExerciseControls<Action extends StoredExerciseAction> {
+  submitAction: (action: Action) => Promise<void>;
+  setDraftInput: (draftInput: unknown) => void;
+  startNewExercise: () => void;
+}
+
+export interface ExerciseSkill {
+  id: SkillId;
 }
 
 export interface ExerciseContextValue<
@@ -48,32 +34,16 @@ export interface ExerciseContextValue<
   Action extends StoredExerciseAction,
   State extends StoredExerciseState,
 > {
-  skillId: string;
-  descriptor: ExerciseDescriptor<Parameters> | null;
-  instance: StoredExerciseInstance | null;
-  state: State;
-  events: StoredExerciseEvent[];
-  parameters: Parameters | null;
-  draftInput: unknown;
-  pending: boolean;
-  startExercise: (descriptor: ExerciseDescriptor<Parameters>) => void;
-  startNewExercise: () => void;
-  submitAction: (action: Action) => State;
-  processAction: (
-    action: Action,
-    run: AsyncExerciseReducer,
-    options: {
-      isComplete: (state: StoredExerciseState) => boolean;
-      isSolved: (state: StoredExerciseState) => boolean;
-    },
-  ) => Promise<ExerciseActionResult>;
-  setDraftInput: (draftInput: unknown) => void;
+  definition: ExerciseDefinition<Parameters, Action, State>;
+  data: ExerciseData<Parameters, State>;
+  controls: ExerciseControls<Action>;
+  skill: ExerciseSkill;
 }
 
-export interface ExerciseProps<
-  Parameters extends Record<string, unknown>,
-  Action extends StoredExerciseAction,
-  State extends StoredExerciseState,
-> extends ExerciseSessionOptions<Parameters, Action, State> {
-  children: ReactNode;
+export interface ExerciseProps {
+  value: ExerciseContextValue<
+    Record<string, unknown>,
+    StoredExerciseAction,
+    StoredExerciseState
+  >;
 }

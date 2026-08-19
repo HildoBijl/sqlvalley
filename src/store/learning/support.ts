@@ -7,9 +7,11 @@ import type {
   ModuleType,
   ConceptModuleState,
   SkillModuleState,
+} from './types';
+import type {
   StoredExerciseEvent,
   StoredExerciseInstance,
-} from './types';
+} from '@/learning/exerciseEngine/storedState';
 
 export function createModuleState(
   id: string,
@@ -65,6 +67,7 @@ function normalizeStoredExerciseEvent(value: unknown): StoredExerciseEvent | nul
     timestamp,
     action: isRecord(value.action) ? { ...value.action } : {},
     resultingState: isRecord(value.resultingState) ? { ...value.resultingState } : {},
+    report: value.report,
   };
 }
 

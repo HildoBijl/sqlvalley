@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import type { ExerciseHelpers } from '../Exercise';
+import type { ExerciseId, ExerciseVersion } from '../storedState';
 import type {
   SimpleExerciseCheckResult,
   SimpleExerciseInputProps,
@@ -33,20 +33,18 @@ export interface SimpleExerciseSpecification<
   Input,
   CheckResult = SimpleExerciseCheckResult,
 > extends SimpleExerciseRenderSpec<Parameters, Input, CheckResult> {
-  exerciseId: string;
-  version: number;
+  exerciseId: ExerciseId;
+  version: ExerciseVersion;
   generateParameters: (
-    helpers: ExerciseHelpers,
+    moduleContext: unknown,
     context?: { previousParameters?: Parameters | null },
   ) => Parameters;
   validateInput?: (
-    args: { parameters: Parameters; input: Input },
+    args: { parameters: Parameters; input: Input; moduleContext: unknown },
   ) => SimpleExerciseValidationResult | Promise<SimpleExerciseValidationResult>;
-  checkInput: (args: { parameters: Parameters; input: Input }) => CheckResult | Promise<CheckResult>;
+  checkInput: (
+    args: { parameters: Parameters; input: Input; moduleContext: unknown },
+  ) => CheckResult | Promise<CheckResult>;
   isCorrect?: (result: CheckResult) => boolean;
   getFeedback?: (result: CheckResult) => string | undefined;
 }
-
-export type SimpleExerciseInputAction<Input> =
-  | { type: 'input'; input: Input }
-  | { type: 'give-up' };

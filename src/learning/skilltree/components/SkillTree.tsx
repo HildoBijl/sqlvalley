@@ -1,5 +1,5 @@
 import { Curve, Drawing } from '@/components';
-import type { Module } from '@/curriculum';
+import type { Module } from '@/learning/skillTreeDefinition';
 import { isReadyToLearn } from '@/learning/skillTreeDefinition';
 import type { Vector } from '@/utils/geometry';
 import { useTheme } from '@mui/material/';

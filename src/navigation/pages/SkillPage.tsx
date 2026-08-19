@@ -83,6 +83,7 @@ export default function SkillPage() {
     isLoading,
     skillMeta,
     exerciseDefinitions,
+    moduleProvider: ModuleProvider,
     error: contentError,
   } = useSkillContent(skillId, {
     loadExercises: !hasStaticPractice,
@@ -189,7 +190,13 @@ export default function SkillPage() {
           )}
 
           {currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
-            <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
+            ModuleProvider ? (
+              <ModuleProvider skillId={skillId ?? ''}>
+                <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
+              </ModuleProvider>
+            ) : (
+              <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
+            )
           )}
 
           {currentTab === 'theory' && <TheoryTab contentId={skillMeta.id} />}
