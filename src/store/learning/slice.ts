@@ -13,7 +13,7 @@ import type {
   StoredExerciseAction,
   StoredExerciseInstance,
   StoredExerciseState,
-} from '@/learning/exerciseEngine/storedState';
+} from '@sqlvalley/exercise-engine/storedState';
 import {
   createModuleState,
   normalizeConceptModuleState,

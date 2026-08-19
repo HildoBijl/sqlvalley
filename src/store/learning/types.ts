@@ -2,7 +2,7 @@
  * Learning store types.
  */
 
-import type { StoredExerciseInstance } from '@/learning/exerciseEngine/storedState';
+import type { StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState';
 
 interface BaseModuleState {
   id: string;

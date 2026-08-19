@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { type Module, skillTree } from '../skillTree';
 import { skillExerciseLoaders } from '../utils/loaders';
 
-import type { AnyExerciseDefinition, ModuleProviderComponent } from '@/learning/exerciseEngine';
+import type { AnyExerciseDefinition, ModuleProviderComponent } from '@sqlvalley/exercise-engine';
 
 type SkillExerciseLoader = (typeof skillExerciseLoaders)[keyof typeof skillExerciseLoaders];
 type SkillExerciseModule = Record<string, unknown>;

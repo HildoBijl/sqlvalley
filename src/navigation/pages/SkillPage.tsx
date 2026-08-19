@@ -27,7 +27,7 @@ import { StoryTab, SummaryTab, TheoryTab, VideoTab } from '@/learning/components
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
 import { useModuleProgress } from '@/learning/progress';
-import { ExerciseManager } from '@/learning/exerciseEngine';
+import { ExerciseManager } from '@sqlvalley/exercise-engine';
 import { useAdminMode } from '@/store/adminMode';
 
 import type { TabConfig } from '@/learning/types';

@@ -15,6 +15,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@sqlvalley/exercise-engine": "*",
     "@sqlvalley/skill-tree-definition": "*",
     "@sqlvalley/sql-grading": "*",
     "@sqlvalley/utils": "*",

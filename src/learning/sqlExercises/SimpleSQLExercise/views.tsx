@@ -2,7 +2,7 @@ import type {
   SimpleExerciseInputProps,
   SimpleExerciseOutputProps,
   SimpleExerciseStoredState,
-} from '@/learning/exerciseEngine';
+} from '@sqlvalley/exercise-engine';
 import { ExerciseDescription } from './components/ExerciseDescription';
 import { ExerciseEditor } from './components/ExerciseEditor';
 import { ExerciseResults } from './components/ExerciseResults';

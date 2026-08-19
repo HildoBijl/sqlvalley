@@ -1,0 +1,20 @@
+{
+  "name": "@sqlvalley/exercise-engine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./storedState": "./src/storedState.ts"
+  },
+  "dependencies": {
+    "@sqlvalley/utils": "*"
+  },
+  "peerDependencies": {
+    "@mui/icons-material": "^6.4.7",
+    "@mui/material": "^6.4.7",
+    "react": "^19.0.0"
+  }
+}

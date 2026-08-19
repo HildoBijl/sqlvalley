@@ -11,7 +11,7 @@ import type {
 import type {
   StoredExerciseEvent,
   StoredExerciseInstance,
-} from '@/learning/exerciseEngine/storedState';
+} from '@sqlvalley/exercise-engine/storedState';
 
 export function createModuleState(
   id: string,

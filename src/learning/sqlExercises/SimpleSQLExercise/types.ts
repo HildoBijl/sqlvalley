@@ -1,5 +1,5 @@
-import type { ExerciseId, ExerciseVersion } from '@/learning/exerciseEngine';
-import type { SimpleExerciseCheckResult, SimpleExerciseFeedbackType } from '@/learning/exerciseEngine';
+import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-engine';
+import type { SimpleExerciseCheckResult, SimpleExerciseFeedbackType } from '@sqlvalley/exercise-engine';
 import type { CompareOptions } from '@sqlvalley/sql-grading';
 
 export interface SimpleSQLExerciseDefinition<Parameters extends Record<string, unknown>> {

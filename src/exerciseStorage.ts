@@ -1,5 +1,5 @@
 import { useLearningStore, type SkillModuleState } from '@/store';
-import type { ExerciseStorage } from '@/learning/exerciseEngine';
+import type { ExerciseStorage } from '@sqlvalley/exercise-engine';
 
 /**
  * Adapts the learning store to ExerciseStorage. getInstance returns the raw last

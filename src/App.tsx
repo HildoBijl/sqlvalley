@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { router } from '@/navigation';
-import { ExerciseStorageProvider } from '@/learning/exerciseEngine';
+import { ExerciseStorageProvider } from '@sqlvalley/exercise-engine';
 import { getTheme, ColorModeContext } from './theme';
 import { SQLJSProvider, DatabaseProvider } from './components/sql/sqljs';
 import { ErrorBoundary } from './components';
