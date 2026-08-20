@@ -4,11 +4,13 @@ import type { Vector } from '@/utils/geometry';
 import { SkillTree } from './SkillTree';
 import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro';
 import { PlanningProgressIndicator } from './SkillTreeComponents/PlanningProgressIndicator';
+import { SkillTreeIntro } from './SkillTreeComponents/SkillTreeIntro';
 import { TreeLegend } from './SkillTreeComponents/TreeLegend';
 import { ZoomControls } from './SkillTreeComponents/ZoomControls';
 import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI';
 import type { SkillTreeSettings } from '../types/SkillTreeSettings';
 import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform';
+import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro';
 import { useSkillTreePlanning } from '../utils/logic/useSkillTreePlanning';
 import type { ModulePositionMeta } from '../utils/positionProcessing';
 
@@ -79,6 +81,8 @@ export function SkillTreeCanvas({
     togglePlanningMode,
   } = useSkillTreePlanning(treeId, memoryStoreAPI);
 
+  const { showIntro, setShowIntro, openIntro } = useSkillTreeIntro(memoryStoreAPI);
+
   const theme = useTheme();
 
   const nextStepModule = goalProgress.nextStepId ? skillTree[goalProgress.nextStepId] : null;
@@ -107,6 +111,7 @@ export function SkillTreeCanvas({
         onTogglePlanningMode={allowPlanningMode ? togglePlanningMode : undefined}
         planningMode={allowPlanningMode ? planningMode : false}
         allowZoom={allowZoom}
+        onHelp={openIntro}
       />
       {allowPlanningMode && planningMode && (
         <PlanningProgressIndicator
@@ -158,6 +163,8 @@ export function SkillTreeCanvas({
         open={showPlanningModeModal}
         onClose={() => setShowPlanningModeModal(false)}
       />
+
+      <SkillTreeIntro open={showIntro} onClose={() => setShowIntro(false)} />
     </div>
   );
 }
