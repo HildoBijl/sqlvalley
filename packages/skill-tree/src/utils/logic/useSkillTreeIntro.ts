@@ -1,24 +1,12 @@
 import { useState, useEffect } from "react";
-import { useSkillTreeSettingsStore } from "@/store";
 import { SkillTreeMemoryStoreAPI } from "../../types/SkillTreeMemoryStoreAPI";
 
+const noop = () => {};
+
 export function useSkillTreeIntro(memoryStoreAPI?: SkillTreeMemoryStoreAPI) {
-  const storeHasSeenIntro = useSkillTreeSettingsStore(
-    (state) => state.hasSeenSkillTreeIntro,
-  );
-  const storeSetHasSeenIntro = useSkillTreeSettingsStore(
-    (state) => state.setHasSeenSkillTreeIntro,
-  );
-  const hasHydrated = useSkillTreeSettingsStore((state) => state._hasHydrated);
-
-  const hasSeenIntro = memoryStoreAPI?.hasSeenSkillTreeIntro !== undefined
-    ? memoryStoreAPI.hasSeenSkillTreeIntro
-    : storeHasSeenIntro;
-
-  const setHasSeenIntro = (value: boolean) =>
-    memoryStoreAPI?.setHasSeenSkillTreeIntro
-      ? memoryStoreAPI.setHasSeenSkillTreeIntro(value)
-      : storeSetHasSeenIntro(value);
+  const hasSeenIntro = memoryStoreAPI?.hasSeenSkillTreeIntro ?? false;
+  const setHasSeenIntro = memoryStoreAPI?.setHasSeenSkillTreeIntro ?? noop;
+  const hasHydrated = memoryStoreAPI?.hasHydrated !== false;
 
   const [showIntro, setShowIntro] = useState(false);
 

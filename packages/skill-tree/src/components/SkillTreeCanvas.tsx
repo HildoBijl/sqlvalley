@@ -25,7 +25,6 @@ import type { ModulePositionMeta } from '../utils/positionProcessing';
  * @param isCompleted - Function to check if a module is completed.
  */
 export interface SkillTreeCanvasProps {
-  treeId: string;
   skillTree: Record<string, Module>;
   modulePositions: Record<string, ModulePositionMeta>;
   treeBounds: {
@@ -43,7 +42,6 @@ export interface SkillTreeCanvasProps {
 }
 
 export function SkillTreeCanvas({
-  treeId,
   skillTree,
   modulePositions,
   treeBounds,
@@ -79,7 +77,7 @@ export function SkillTreeCanvas({
     showPlanningModeModal,
     setShowPlanningModeModal,
     togglePlanningMode,
-  } = useSkillTreePlanning(treeId, memoryStoreAPI);
+  } = useSkillTreePlanning(memoryStoreAPI);
 
   const { showIntro, setShowIntro, openIntro } = useSkillTreeIntro(memoryStoreAPI);
 

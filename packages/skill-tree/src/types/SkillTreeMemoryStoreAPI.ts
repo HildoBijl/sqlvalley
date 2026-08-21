@@ -10,4 +10,7 @@ export interface SkillTreeMemoryStoreAPI {
     setHideLegend?: (value: boolean) => void;
     hasSeenSkillTreeIntro?: boolean;
     setHasSeenSkillTreeIntro?: (seen: boolean) => void;
+    // False while a persisted store is still rehydrating, so the intro is not
+    // shown to someone who has already seen it. Absent means ready.
+    hasHydrated?: boolean;
 }

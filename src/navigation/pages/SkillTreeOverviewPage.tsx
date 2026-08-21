@@ -58,11 +58,11 @@ export function SkillTreeOverviewPage({
 
   const hideLegend = useSkillTreeSettingsStore((s) => s.hideLegend);
   const setHideLegend = useSkillTreeSettingsStore((s) => s.setHideLegend);
+  const hasHydrated = useSkillTreeSettingsStore((s) => s._hasHydrated);
 
   return (
     <Container maxWidth={false} sx={{ py: 4, maxWidth: '1400px' }}>
       <SkillTreeCanvas
-        treeId={treeId}
         skillTree={skillTree}
         modulePositions={modulePositions}
         treeBounds={treeBounds}
@@ -79,6 +79,7 @@ export function SkillTreeOverviewPage({
           setHasSeenSkillTreeIntro,
           hideLegend,
           setHideLegend,
+          hasHydrated,
         }}
         settings={{
           allowZoom: true,
