@@ -17,7 +17,7 @@ import {
 import { AccountTree } from '@mui/icons-material';
 import { DataTable } from '@sqlvalley/ui';
 import { useDatabase } from '@/learning/databases';
-import { buildSchema, defaultDatasetSize, type TableKey } from '@/mockData';
+import { buildSchema, defaultDatasetSize, type TableKey } from '@sqlvalley/mock-data';
 
 interface DataExplorerTabProps {
   tables: TableKey[];

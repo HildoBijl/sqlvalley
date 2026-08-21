@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { ModuleContextProvider } from '@sqlvalley/exercise-engine';
 import { useDatabase } from '@/learning/databases';
 import { useSettingsStore } from '@/store';
-import type { DatasetSize, TableKey } from '@/mockData';
+import type { DatasetSize, TableKey } from '@sqlvalley/mock-data';
 
 import {
   normalizeSqlInput,
