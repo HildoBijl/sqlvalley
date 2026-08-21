@@ -34,7 +34,7 @@ import {
   VideoTab,
 } from '@/learning/components/TabContent/ContentTab';
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
-import { useModuleProgress } from '@/learning/progress';
+import { useModuleProgress } from '@sqlvalley/progress';
 import {
   arePrerequisitesCompleted,
   getGoalPath,
@@ -94,7 +94,9 @@ export default function ConceptPage() {
     },
   );
 
-  const { isCompleted: isModuleCompleted } = useModuleProgress(skillTree);
+  const moduleStates = useLearningStore((state) => state.modules);
+
+  const { isCompleted: isModuleCompleted } = useModuleProgress(skillTree, moduleStates);
   const isCompleted = conceptId
     ? isModuleCompleted(conceptId)
     : (moduleState.understood ?? false);
