@@ -49,6 +49,13 @@ export function SkillTreeOverviewPage({
     (s) => s.setHasAccessedPlanningMode,
   );
 
+  const hasSeenSkillTreeIntro = useSkillTreeSettingsStore(
+    (s) => s.hasSeenSkillTreeIntro,
+  );
+  const setHasSeenSkillTreeIntro = useSkillTreeSettingsStore(
+    (s) => s.setHasSeenSkillTreeIntro,
+  );
+
   const hideLegend = useSkillTreeSettingsStore((s) => s.hideLegend);
   const setHideLegend = useSkillTreeSettingsStore((s) => s.setHideLegend);
 
@@ -68,6 +75,8 @@ export function SkillTreeOverviewPage({
           setGoalNodeId: (id) => setGoalNodeId(treeId, id),
           hasAccessedPlanningMode,
           setHasAccessedPlanningMode,
+          hasSeenSkillTreeIntro,
+          setHasSeenSkillTreeIntro,
           hideLegend,
           setHideLegend,
         }}
