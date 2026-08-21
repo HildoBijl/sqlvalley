@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 
 import { Vector } from '@sqlvalley/utils/geometry';
 import { useRefWithValue } from '@sqlvalley/utils/dom';
-import { useThemeColor } from '@/theme';
+import { useThemeColor } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
 import { Page, Section, Par } from '@sqlvalley/ui';
 import { SQLDisplay } from '@sqlvalley/sql';

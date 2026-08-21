@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 
 import { useRefWithValue } from '@sqlvalley/utils/dom';
-import { useThemeColor } from '@/theme';
+import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Em, RelationName } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';

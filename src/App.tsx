@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { router } from '@/navigation';
 import { ExerciseStorageProvider } from '@sqlvalley/exercise-engine';
-import { getTheme, ColorModeContext } from './theme';
+import { getTheme, ColorModeContext } from '@sqlvalley/ui';
 import { SQLJSProvider, DatabaseProvider } from '@sqlvalley/sql/sqljs';
 import { ErrorBoundary } from '@sqlvalley/ui';
 import { exerciseStorage } from './exerciseStorage';
