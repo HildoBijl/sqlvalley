@@ -4,7 +4,7 @@ import { Box, Button, Collapse, Divider, ToggleButton, ToggleButtonGroup, Typogr
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import { DataTable, Warning } from '@sqlvalley/ui';
-import { ExerciseSection } from '@/learning/components/ExerciseSection';
+import { ExerciseSection } from '@sqlvalley/ui';
 import type { DatasetSize } from '@sqlvalley/mock-data';
 import type { SqlQueryResult } from '@sqlvalley/sql-grading';
 
