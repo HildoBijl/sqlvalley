@@ -1,5 +1,3 @@
-import type { RefObject } from 'react';
-import { useState } from 'react';
 import { useTheme } from '@mui/material/';
 import type { Module } from '@sqlvalley/skill-tree-definition';
 import type { Vector } from '@sqlvalley/utils/geometry';
@@ -23,11 +21,6 @@ import type { ModulePositionMeta } from '../utils/positionProcessing';
  * @param treeBounds - The bounding box of the tree layout.
  * @param visiblePaths - Array of connector objects with points arrays and from/to node IDs.
  * @param isCompleted - Function to check if a module is completed.
- * @param getProgress - Function to get progress string for a module.
- * @param hoveredId - ID of the currently hovered node, or null if none.
- * @param setHoveredId - Function to set the hovered node ID.
- * @param containerRef - Ref to the container div for the tree.
- * @param nodeRefs - Ref to a map of node IDs to their corresponding div elements.
  */
 export interface SkillTreeCanvasProps {
   treeId: string;
@@ -43,11 +36,6 @@ export interface SkillTreeCanvasProps {
   };
   visiblePaths: { points: Vector[]; from: string; to: string }[];
   isCompleted?: (id: string) => boolean;
-  getProgress?: (id: string) => string | null;
-  hoveredId: string | null;
-  setHoveredId: (id: string | null) => void;
-  containerRef: RefObject<HTMLDivElement | null>;
-  nodeRefs: RefObject<Map<string, HTMLDivElement | null>>;
   settings?: SkillTreeSettings;
   memoryStoreAPI?: SkillTreeMemoryStoreAPI;
 }
@@ -59,10 +47,6 @@ export function SkillTreeCanvas({
   treeBounds,
   visiblePaths,
   isCompleted,
-  getProgress,
-  setHoveredId,
-  containerRef,
-  nodeRefs,
   settings,
   memoryStoreAPI,
 }: SkillTreeCanvasProps) {
@@ -77,9 +61,6 @@ export function SkillTreeCanvas({
   const resolvedIsCompleted = staticMode
     ? () => false
     : (isCompleted ?? (() => false));
-  const resolvedGetProgress = staticMode ? () => null : (getProgress ?? (() => null));
-
-  const [isPanning] = useState(false);
 
   const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform({
     treeBounds,
@@ -146,7 +127,7 @@ export function SkillTreeCanvas({
         style={{
           width: '100%',
           height: '100%',
-          cursor: isPanning ? 'grabbing' : 'grab',
+          cursor: 'grab',
           touchAction: 'none',
         }}
       >
@@ -163,10 +144,6 @@ export function SkillTreeCanvas({
             treeBounds={treeBounds}
             visiblePaths={visiblePaths}
             isCompleted={resolvedIsCompleted}
-            getProgress={resolvedGetProgress}
-            setHoveredId={setHoveredId}
-            containerRef={containerRef}
-            nodeRefs={nodeRefs}
             planningMode={allowPlanningMode ? planningMode : false}
             goalNodeId={goalNodeId}
             setGoalNodeId={setGoalNodeId}

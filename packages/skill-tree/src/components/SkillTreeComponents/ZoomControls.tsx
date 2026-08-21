@@ -1,5 +1,6 @@
 import { Box, Button, Tooltip } from "@mui/material";
 import { Add, Remove, Refresh, OutlinedFlag } from "@mui/icons-material";
+import { treeColors } from "../../utils/graphics/treeColors";
 
 /*
  * ZoomControls component that provides buttons for zooming in, zooming out, resetting the view, and centering the view.
@@ -91,9 +92,9 @@ export function ZoomControls({
               minWidth: "40px",
               fontSize: "15px",
               ...(planningMode && {
-                backgroundColor: "purple",
-                borderColor: "purple",
-                "&:hover": { backgroundColor: "#6a0dad" },
+                backgroundColor: treeColors.goal,
+                borderColor: treeColors.goal,
+                "&:hover": { backgroundColor: treeColors.goalHover },
               }),
             }}
           >
