@@ -4,11 +4,9 @@
 
 import { asRecord } from './utils';
 
-export const LEGACY_APP_STORAGE_KEY = 'sqltutor-storage';
-export const LEGACY_SETTINGS_STORAGE_KEY = 'sqltutor-settings';
-export const LEGACY_LEARNING_STORAGE_KEY = 'sqltutor-learning';
-export const LEGACY_SPLIT_STORAGE_MIGRATION_KEY = 'sqltutor-storage-migrated-v1';
-export const SPLIT_STORAGE_MIGRATION_KEY = 'sqlvalley-storage-migrated-v1';
+const LEGACY_APP_STORAGE_KEY = 'sqltutor-storage';
+const LEGACY_SPLIT_STORAGE_MIGRATION_KEY = 'sqltutor-storage-migrated-v1';
+const SPLIT_STORAGE_MIGRATION_KEY = 'sqlvalley-storage-migrated-v1';
 
 type RecordValue = Record<string, unknown>;
 
@@ -73,10 +71,13 @@ function pickSettingsStateFromLegacyRoot(legacyState: RecordValue): RecordValue 
 function pickLearningStateFromLegacyRoot(legacyState: RecordValue): RecordValue {
   const nested = asRecord(legacyState.learning);
   const source = Object.keys(nested).length > 0 ? nested : legacyState;
-  const components = asRecord(source.components);
+  const modulesSource = asRecord(source.modules);
+  const componentsSource = asRecord(source.components);
+  const modulesCandidate =
+    Object.keys(modulesSource).length > 0 ? modulesSource : componentsSource;
 
-  const safeComponents = Object.fromEntries(
-    Object.entries(components).filter(
+  const safeModules = Object.fromEntries(
+    Object.entries(modulesCandidate).filter(
       ([id, component]) =>
         id.length > 0 &&
         Boolean(component) &&
@@ -85,7 +86,7 @@ function pickLearningStateFromLegacyRoot(legacyState: RecordValue): RecordValue 
     ),
   );
 
-  return Object.keys(safeComponents).length > 0 ? { components: safeComponents } : {};
+  return Object.keys(safeModules).length > 0 ? { modules: safeModules } : {};
 }
 
 function writeVersionedState(

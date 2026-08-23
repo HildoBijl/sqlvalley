@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
 
-import { useRefWithValue } from '@/utils/dom';
-import { useThemeColor } from '@/theme';
-import { Page, Section, Par, List, Info, Term, Link } from '@/components';
-import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@/components';
-import { useTheorySampleDatabase } from '@/learning/databases';
-import { useQueryResult } from '@/components/sql/sqljs';
-import { DataTable } from '@/components';
+import { useRefWithValue } from '@sqlvalley/utils/dom';
+import { useThemeColor } from '@sqlvalley/ui';
+import { Page, Section, Par, List, Info, Term, Link } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
+import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { DataTable } from '@sqlvalley/sql';
 
 export function Theory() {
   return <Page>
@@ -31,7 +31,7 @@ WHERE current_salary > 200000
       <Par><pre><code>{`highEarners(fn, ln) :- employees(_, fn, ln, _, _, _, _, _, s), s > 200000.
 ?- highEarners(fn, ln).`}</code></pre></Par>
       <Par>In <Term>relational algebra</Term> (a more theoretical and mathematical query language) this is done using</Par>
-      <Par><pre><code>highEarners ← ∏<sub>first_name,last_name</sub>(σ<sub>current_salary &gt; 200000</sub>(employees))</code></pre></Par>
+      <Par><pre><code>highEarners â† âˆ<sub>first_name,last_name</sub>(Ïƒ<sub>current_salary &gt; 200000</sub>(employees))</code></pre></Par>
       <Par>Or in an object-database like <Link to="https://www.mongodb.com/">MongoDB</Link> the query looks like this.</Par>
       <Par><pre><code>{`db.employees.find(
   { current_salary: { $gt: 200000 } },

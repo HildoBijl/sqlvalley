@@ -1,47 +1,56 @@
-import { Suspense, useEffect, useMemo, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, Alert, CircularProgress, Button, Box } from '@mui/material';
-import { MenuBook, Lightbulb, Bolt, EditNote, Storage, Edit, CheckCircle } from '@mui/icons-material';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Alert, Box, Button, CircularProgress, Container } from '@mui/material';
+import { Bolt, CheckCircle, Edit, EditNote, Lightbulb, MenuBook, Storage } from '@mui/icons-material';
 
-import { useLearningStore, useSettingsStore, type SkillComponentState } from '@/store';
-import { moduleComponents, moduleIndex } from '@/curriculum';
+import {
+  type SkillModuleState,
+  useLearningStore,
+  useSettingsStore,
+  useSkillTreeSettingsStore,
+} from '@/store';
+import { skillTree } from '@/curriculum';
+import {
+  defaultSkillTreeVisualization,
+  isSkillTreeVisualizationId,
+  skillTreeVisualizationById,
+  type SkillTreeVisualizationId,
+} from '@/curriculum/skillTreeVisualizations';
+import { moduleComponents } from '@/curriculum/utils/loaders';
 import { getModuleTables } from '@/curriculum/utils/moduleAccess';
-
-import { useContentTabs } from '@/learning/hooks/useContentTabs';
-import { useSkillContent } from '@/learning/hooks/useSkillContent';
-import { useSkillExerciseController } from '@/learning/hooks/useSkillExerciseController';
-import { useModuleProgress } from '@/learning/hooks/useModuleProgress';
-import { useAdminMode } from '@/learning/hooks/useAdminMode';
-import { useSkillTreeHistory } from '@/learning/hooks/useSkillTreeHistory';
-import { getBackToLearningPathFromHistory } from '@/learning/utils/skillTreeTracking';
 
 import { ContentHeader } from '@/learning/components/ContentHeader';
 import { ContentTabs } from '@/learning/components/ContentTabs';
-import { StoryTab, TheoryTab, VideoTab, SummaryTab } from '@/learning/components/TabContent/ContentTab';
-import { CompletionDialog, SkillPracticeTab } from '@/learning/components/SkillPractice';
 import { DataExplorerTab } from '@/learning/components/DataExplorerTab';
+import { SkillCompletionDialog } from '@/learning/components/SkillCompletionDialog';
+import { StoryTab, SummaryTab, TheoryTab, VideoTab } from '@/learning/components/TabContent/ContentTab';
+import { useContentTabs } from '@/learning/hooks/useContentTabs';
+import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
+import { DEFAULT_EXERCISES_TO_COMPLETE, useModuleProgress } from '@sqlvalley/progress';
+import { ExerciseManager } from '@sqlvalley/exercise-engine';
+import { useAdminMode } from '@/store/adminMode';
 
 import type { TabConfig } from '@/learning/types';
-
-const REQUIRED_EXERCISE_COUNT = 3;
 
 export default function SkillPage() {
   const { skillId } = useParams<{ skillId: string }>();
   const navigate = useNavigate();
 
   const hideStories = useSettingsStore((state) => state.hideStories);
-  const components = useLearningStore((state) => state.components);
+  const completeSkill = useLearningStore((state) => state.completeSkill);
   const isAdmin = useAdminMode();
   const [showCompletionDialog, setShowCompletionDialog] = useState(false);
-  const skillTreeHistory = useSkillTreeHistory();
+  const skillTreeHistory = useSkillTreeSettingsStore(
+    (state) => state.lastVisitedSkillTrees,
+  );
   const backToLearningPath = useMemo(
     () => getBackToLearningPathFromHistory(skillTreeHistory, skillId),
     [skillTreeHistory, skillId],
   );
 
-  // Check what practice mode this skill uses
   const hasStaticPractice = Boolean(skillId && moduleComponents[skillId]?.Practice);
-  const hasTables = getModuleTables(skillId) !== undefined;
+  const tables = useMemo(() => skillId ? getModuleTables(skillId) : [], [skillId]);
+  const hasTables = tables.length > 0;
 
   const allTabs: TabConfig[] = [
     { key: 'story', label: 'Story', icon: <MenuBook /> },
@@ -52,7 +61,6 @@ export default function SkillPage() {
     { key: 'summary', label: 'Summary', icon: <Bolt /> },
   ];
 
-  // Filter tabs based on availability
   const availableTabs = allTabs.filter((tab) => {
     if (tab.key === 'story' && hideStories) return false;
     if (tab.key === 'data' && !hasTables) return false;
@@ -64,34 +72,30 @@ export default function SkillPage() {
     handleTabChange,
     selectTab,
     tabs,
-    componentState,
-    setComponentState,
-  } = useContentTabs<SkillComponentState>(skillId, 'skill', availableTabs, {
+    moduleState,
+  } = useContentTabs<SkillModuleState>(skillId, 'skill', availableTabs, {
     defaultTab: 'theory',
   });
 
-  const { isLoading, skillMeta, skillModule, error: contentError } = useSkillContent(skillId, {
+  const {
+    isLoading,
+    skillMeta,
+    exerciseDefinitions,
+    moduleProvider: ModuleProvider,
+    error: contentError,
+  } = useSkillContent(skillId, {
     loadExercises: !hasStaticPractice,
   });
 
-  // Determine practice availability
-  const hasInteractivePractice = Boolean(skillModule);
+  const hasInteractivePractice = Boolean(exerciseDefinitions?.length);
   const hasPractice = hasStaticPractice || hasInteractivePractice;
 
-  // Only use exercise controller for interactive practice
-  const controller = useSkillExerciseController({
-    skillId: skillId ?? '',
-    skillModule: hasInteractivePractice ? skillModule : null,
-    requiredCount: REQUIRED_EXERCISE_COUNT,
-    componentState,
-    setComponentState,
-  });
+  const moduleStates = useLearningStore((state) => state.modules);
 
-  const { isCompleted } = useModuleProgress(moduleIndex, components);
+  const { isCompleted } = useModuleProgress(skillTree, moduleStates);
   const isSkillMastered = skillId ? isCompleted(skillId) : false;
   const summaryUnlocked = isSkillMastered || isAdmin;
 
-  // Filter out practice tab if no practice available
   const visibleTabs = useMemo(() => {
     let filtered = tabs;
     if (!hasPractice) {
@@ -103,11 +107,21 @@ export default function SkillPage() {
     return filtered;
   }, [tabs, hasPractice, summaryUnlocked]);
 
-  // Handle static practice completion
   const handleStaticComplete = () => {
-    setComponentState({ numSolved: REQUIRED_EXERCISE_COUNT });
+    if (!skillId) return;
+    completeSkill(skillId);
     setShowCompletionDialog(true);
   };
+
+  // Show the completion dialog once, when the learner crosses the required count.
+  const prevSolvedRef = useRef(moduleState.numSolved ?? 0);
+  useEffect(() => {
+    const solved = moduleState.numSolved ?? 0;
+    const crossed = prevSolvedRef.current < DEFAULT_EXERCISES_TO_COMPLETE &&
+      solved >= DEFAULT_EXERCISES_TO_COMPLETE;
+    prevSolvedRef.current = solved;
+    if (crossed) setShowCompletionDialog(true);
+  }, [moduleState.numSolved]);
 
   useEffect(() => {
     if (!summaryUnlocked && currentTab === 'summary') {
@@ -138,16 +152,14 @@ export default function SkillPage() {
     );
   }
 
-  // Only show progress for interactive practice
   const progressInfo =
     hasInteractivePractice && currentTab === 'practice'
       ? {
-        current: componentState.numSolved ?? 0,
-        required: REQUIRED_EXERCISE_COUNT,
-      }
+          current: moduleState.numSolved ?? 0,
+          required: DEFAULT_EXERCISES_TO_COMPLETE,
+        }
       : undefined;
 
-  const { practice, status, actions } = controller;
   const showStoryButton = visibleTabs.some((tab) => tab.key === 'story');
 
   return (
@@ -178,27 +190,20 @@ export default function SkillPage() {
           )}
 
           {currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
-            <SkillPracticeTab
-              practice={practice}
-              status={status}
-              actions={actions}
-              dialogs={controller.dialogs.giveUp}
-              isAdmin={isAdmin}
-            />
+            ModuleProvider ? (
+              <ModuleProvider skillId={skillId ?? ''}>
+                <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
+              </ModuleProvider>
+            ) : (
+              <ExerciseManager skillId={skillId ?? ''} exercises={exerciseDefinitions ?? []} />
+            )
           )}
 
           {currentTab === 'theory' && <TheoryTab contentId={skillMeta.id} />}
           {currentTab === 'video' && <VideoTab contentId={skillMeta.id} />}
           {currentTab === 'summary' && summaryUnlocked && <SummaryTab contentId={skillMeta.id} />}
           {currentTab === 'story' && <StoryTab contentId={skillMeta.id} />}
-          {currentTab === 'data' && hasTables &&
-            (status.dbReady ? (
-              <DataExplorerTab skillId={skillId ?? ''} />
-            ) : (
-              <Typography variant="body1" color="text.secondary">
-                Database is loading...
-              </Typography>
-            ))}
+          {currentTab === 'data' && hasTables && <DataExplorerTab tables={tables} />}
         </ContentTabs>
       )}
 
@@ -217,38 +222,16 @@ export default function SkillPage() {
         </Box>
       )}
 
-      {/* Completion dialog for interactive practice */}
-      <CompletionDialog
-        open={controller.dialogs.completion.open}
-        onClose={controller.dialogs.completion.close}
-        skillName={skillMeta.name}
-        onViewStory={
-          showStoryButton
-            ? () => {
-              controller.dialogs.completion.close();
-              selectTab('story');
-            }
-            : undefined
-        }
-        onViewSummary={() => {
-          controller.dialogs.completion.close();
-          selectTab('summary');
-        }}
-        onContinueLearning={() => navigate(backToLearningPath)}
-        showStoryButton={showStoryButton}
-      />
-
-      {/* Completion dialog for static practice */}
-      <CompletionDialog
+      <SkillCompletionDialog
         open={showCompletionDialog}
         onClose={() => setShowCompletionDialog(false)}
         skillName={skillMeta.name}
         onViewStory={
           showStoryButton
             ? () => {
-              setShowCompletionDialog(false);
-              selectTab('story');
-            }
+                setShowCompletionDialog(false);
+                selectTab('story');
+              }
             : undefined
         }
         onViewSummary={() => {
@@ -262,9 +245,6 @@ export default function SkillPage() {
   );
 }
 
-/**
- * Static practice tab that renders a Practice.tsx component with completion props.
- */
 function StaticPracticeTab({
   moduleId,
   onComplete,
@@ -287,4 +267,40 @@ function StaticPracticeTab({
       </Suspense>
     </Box>
   );
+}
+
+function normalizeSkillTreeHistory(
+  history: readonly string[],
+): SkillTreeVisualizationId[] {
+  const result: SkillTreeVisualizationId[] = [];
+  const seen = new Set<SkillTreeVisualizationId>();
+
+  for (const value of history) {
+    if (!isSkillTreeVisualizationId(value) || seen.has(value)) {
+      continue;
+    }
+    seen.add(value);
+    result.push(value);
+  }
+
+  return result;
+}
+
+function getBackToLearningPathFromHistory(
+  history: readonly string[],
+  moduleId?: string,
+): string {
+  const normalized = normalizeSkillTreeHistory(history);
+  const fallbackId = normalized[0] ?? defaultSkillTreeVisualization;
+
+  if (moduleId) {
+    for (const treeId of normalized) {
+      const tree = skillTreeVisualizationById.get(treeId);
+      if (tree?.moduleIds.has(moduleId)) {
+        return tree.path;
+      }
+    }
+  }
+
+  return skillTreeVisualizationById.get(fallbackId)?.path ?? '/learn';
 }

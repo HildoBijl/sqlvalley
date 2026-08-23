@@ -1,0 +1,45 @@
+import type { SVGProps, HTMLAttributes, CanvasHTMLAttributes } from 'react';
+import type { Vector, Rectangle } from '@sqlvalley/utils';
+
+import { type FigureProps, type FigureData, getDefaultFigure } from '../Figure';
+
+export interface DrawingData {
+	id: string;
+	bounds: Rectangle;
+	figure: FigureData | null;
+	svg: SVGSVGElement | null;
+	svgDefs: SVGDefsElement | null;
+	htmlContents: HTMLDivElement | null;
+	canvas: HTMLCanvasElement | null;
+	getFigureScale: () => number | undefined;
+	getCoordinates: (cPoint: Vector, figureRect?: DOMRect) => Vector | undefined;
+	getPointFromEvent: (event: MouseEvent | TouchEvent) => Vector | undefined;
+	contains: (point: Vector) => boolean;
+	applyBounds: (point: Vector) => Vector;
+}
+
+export interface DrawingProps<TRef = DrawingData> extends Omit<FigureProps<TRef>, 'aspectRatio' | 'maxWidth'> {
+	maxWidth?: ((bounds: Rectangle) => number | undefined) | 'fill' | number;
+	width: number;
+	height: number;
+	autoScale?: boolean;
+	useSvg?: boolean;
+	svgProps?: SVGProps<SVGSVGElement>;
+	htmlProps?: HTMLAttributes<HTMLDivElement>;
+	disableSVGPointerEvents?: boolean;
+	useCanvas?: boolean;
+	canvasProps?: CanvasHTMLAttributes<HTMLCanvasElement>;
+}
+
+export const getDefaultDrawing = (): DrawingProps => {
+	const { aspectRatio, maxWidth, ref, ...defaultFigure } = getDefaultFigure(); // Remove unnecessary attributes.
+	return {
+		...defaultFigure,
+		maxWidth: (bounds) => bounds.width,
+		width: 400,
+		height: 300,
+		autoScale: true,
+		useSvg: true,
+		useCanvas: false,
+	}
+};

@@ -2,10 +2,12 @@ import { StrictMode, useEffect, useMemo } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { router } from './navigation';
-import { getTheme, ColorModeContext } from './theme';
-import { SQLJSProvider, DatabaseProvider } from './components/sql/sqljs';
-import { ErrorBoundary } from './components';
+import { router } from '@/navigation';
+import { ExerciseStorageProvider } from '@sqlvalley/exercise-engine';
+import { getTheme, ColorModeContext } from '@sqlvalley/ui';
+import { SQLJSProvider, DatabaseProvider } from '@sqlvalley/sql/sqljs';
+import { ErrorBoundary } from '@sqlvalley/ui';
+import { exerciseStorage } from './exerciseStorage';
 import { useHasHydrated, useSettingsStore } from './store';
 
 export function App() {
@@ -33,7 +35,9 @@ export function App() {
             <CssBaseline />
             <SQLJSProvider>
               <DatabaseProvider>
-                <RouterProvider router={router} />
+                <ExerciseStorageProvider storage={exerciseStorage}>
+                  <RouterProvider router={router} />
+                </ExerciseStorageProvider>
               </DatabaseProvider>
             </SQLJSProvider>
           </ThemeProvider>

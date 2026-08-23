@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Em, DL, IDL } from '@/components';
-import { ManualExerciseSet } from '@/learning/components/SkillPractice';
+import { Page, Section, Par, List, Em, DL, IDL } from '@sqlvalley/ui';
+import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
 
 export function Practice() {
 	return <Page>

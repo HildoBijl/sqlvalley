@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { DL } from '@/components';
+import { DL } from '@sqlvalley/ui';
 import { FigureExampleRAQuery } from './raQueryFigures';
 
 type Props = ComponentProps<typeof FigureExampleRAQuery>;

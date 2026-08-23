@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Term, M } from '@/components';
+import { Page, Section, Par, List, Term, M } from '@sqlvalley/ui';
 import { FigureExampleRAQuery } from '../../utils';
 
 export function Summary() {
@@ -14,9 +14,9 @@ export function Summary() {
       <Par>The relational algebra query has turned into a <Term>relational algebra script</Term>, where the last line (without assignment) gives the output of the script.</Par>
       <Par>When tackling tough data requests, there are a few tips and tricks that can help.</Par>
       <List useNumbers items={[
-        <Par>First <Term>execute the request manually</Term> (for a few tuples) to gain some intuition of the data and the steps need to tackle the request.</Par>,
-        <Par>Set up the script, keeping assigned relations <Term>intuitive</Term> and <Term>based on keys</Term>. Sometimes you need combinations of keys.</Par>,
-        <Par>When the request has the words "never" or "every", first <Term>do the opposite</Term> and then flip the result around.</Par>,
+        <Par key={0}>First <Term>execute the request manually</Term> (for a few tuples) to gain some intuition of the data and the steps need to tackle the request.</Par>,
+        <Par key={1}>Set up the script, keeping assigned relations <Term>intuitive</Term> and <Term>based on keys</Term>. Sometimes you need combinations of keys.</Par>,
+        <Par key={2}>When the request has the words "never" or "every", first <Term>do the opposite</Term> and then flip the result around.</Par>,
       ]} />
     </Section>
   </Page>;

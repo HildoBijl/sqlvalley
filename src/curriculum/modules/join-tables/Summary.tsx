@@ -1,4 +1,5 @@
-import { Page, Par, List, Section, Term, ISQL } from '@/components';
+import { Page, Par, List, Section, Term } from '@sqlvalley/ui';
+import { ISQL } from '@sqlvalley/sql';
 
 import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { QueryResult } from '@/components/sql/sqljs/types';
+import type { QueryResult } from '@sqlvalley/sql/sqljs/types';
 
 // Content validation schemas
 export const ComponentMetaSchema = z.object({

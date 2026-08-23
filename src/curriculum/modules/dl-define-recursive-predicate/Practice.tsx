@@ -1,5 +1,5 @@
-import { Page, Section, Par, Term, Em, DL, IDL } from '@/components';
-import { ManualExerciseSet } from '@/learning/components/SkillPractice';
+import { Page, Section, Par, Term, Em, DL, IDL } from '@sqlvalley/ui';
+import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
 
 import { SQLValleySchema } from '../../utils';
 

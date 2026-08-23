@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
 
-import { useRefWithValue } from '@/utils/dom';
-import { useThemeColor } from '@/theme';
-import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/components';
-import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@/components';
-import { useTheorySampleDatabase } from '@/learning/databases';
-import { useQueryResult } from '@/components/sql/sqljs';
-import { DataTable, ISQL } from '@/components';
+import { useRefWithValue } from '@sqlvalley/utils/dom';
+import { useThemeColor } from '@sqlvalley/ui';
+import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
+import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { DataTable, ISQL } from '@sqlvalley/sql';
 
 export function Theory() {
   const now = new Date();
@@ -53,7 +53,7 @@ export function Theory() {
         <><strong>Other</strong>
           <List items={[
             <>The <ISQL>BOOLEAN</ISQL> type stores either <ISQL>TRUE</ISQL> or <ISQL>FALSE</ISQL>.</>,
-            <>Depending on which DBMS you are using, you may use the the <ISQL>INTEGER[]</ISQL> or <ISQL>TEXT[]</ISQL> types for lists, the <ISQL>JSON</ISQL> type for Javascript objects, the <ISQL>XML</ISQL> type for XML data, and various other options.</>,
+            <>Depending on which DBMS you are using, you may use the the <ISQL>INTEGER[]</ISQL> or <ISQL>TEXT[]</ISQL> types for lists, the <ISQL>JSON</ISQL> type for JavaScript objects, the <ISQL>XML</ISQL> type for XML data, and various other options.</>,
           ]} /></>,
       ]} />
       <Par>It's not necessary to remember all these types. The main lesson is that every data type has limitations on exactly what it can store and with what precision. These limitations should be taken into account.</Par>

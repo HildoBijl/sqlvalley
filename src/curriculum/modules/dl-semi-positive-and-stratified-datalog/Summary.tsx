@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Term, Em } from '@/components';
+import { Page, Section, Par, List, Term, Em } from '@sqlvalley/ui';
 
 import { DatalogTypeVennDiagram } from './Theory';
 

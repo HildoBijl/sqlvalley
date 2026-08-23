@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 
-import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@/components';
+import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@sqlvalley/ui';
 
-import { useQueryResult, type QueryResult } from '@/components/sql/sqljs';
-import { useTheorySampleDatabase } from '@/learning/databases';
+import { useQueryResult, type QueryResult } from '@sqlvalley/sql/sqljs';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 
 export function Theory() {

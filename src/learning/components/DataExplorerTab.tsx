@@ -15,13 +15,12 @@ import {
   DialogActions,
 } from '@mui/material';
 import { AccountTree } from '@mui/icons-material';
-import { DataTable } from '@/components';
-import { useDatabase } from '@/learning/databases';
-import { buildSchema } from '@/mockData';
-import { getModuleTables, getModuleSize } from '@/curriculum/utils/moduleAccess';
+import { DataTable } from '@sqlvalley/sql';
+import { useDatabase } from '@sqlvalley/sql/databases';
+import { buildSchema, defaultDatasetSize, type TableKey } from '@sqlvalley/mock-data';
 
 interface DataExplorerTabProps {
-  skillId: string;
+  tables: TableKey[];
 }
 
 interface TableInfo {
@@ -45,19 +44,18 @@ interface Relationship {
   toColumn: string;
 }
 
-export function DataExplorerTab({ skillId }: DataExplorerTabProps) {
+export function DataExplorerTab({ tables }: DataExplorerTabProps) {
   const [selectedTable, setSelectedTable] = useState<string>('');
   const [isErDiagramOpen, setIsErDiagramOpen] = useState(false);
 
-  const resolvedTables = useMemo(() => getModuleTables(skillId) ?? [], [skillId]);
-  const resolvedSize = useMemo(() => getModuleSize(skillId, 'full'), [skillId]);
+  const resolvedSize = defaultDatasetSize;
   const schemaSource = useMemo(
-    () => buildSchema({ tables: resolvedTables, size: resolvedSize }),
-    [resolvedTables, resolvedSize],
+    () => buildSchema({ tables, size: resolvedSize }),
+    [tables, resolvedSize],
   );
   
   const { tableNames, executeQuery, queryResult } = useDatabase({
-    moduleId: skillId,
+    tables,
     size: 'full',
     resetOnSchemaChange: false,
   });

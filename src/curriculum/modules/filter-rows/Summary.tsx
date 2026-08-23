@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Warning, Term, Em } from '@/components';
-import { ISQL } from '@/components';
+import { Page, Section, Par, List, Warning, Term, Em } from '@sqlvalley/ui';
+import { ISQL } from '@sqlvalley/sql';
 
 import { FigureFiltering } from './Theory';
 

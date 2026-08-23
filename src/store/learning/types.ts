@@ -2,83 +2,26 @@
  * Learning store types.
  */
 
-import type { ExerciseAction, ExerciseStatus } from '@/learning/engine';
+import type { StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState';
 
-export type ExerciseInstanceId = string;
-
-export interface StoredAttempt<Input = string> {
-  index: number;
-  input: Input;
-  normalizedInput: string;
-  status: 'invalid' | 'incorrect' | 'correct';
-  timestamp: number;
-}
-
-export interface StoredExerciseState<Exercise = unknown, Input = string> {
-  exercise: Exercise;
-  status: ExerciseStatus;
-  attempts: StoredAttempt<Input>[];
-  generatedAt?: number;
-}
-
-export interface StoredExerciseEvent {
-  timestamp: number;
-  action: ExerciseAction<unknown, unknown>;
-  resultingState: StoredExerciseState;
-}
-
-export interface StoredExerciseInstance {
-  id: ExerciseInstanceId;
-  skillId: string;
-  createdAt: number;
-  completedAt?: number;
-  finalStatus: ExerciseStatus;
-  events: StoredExerciseEvent[];
-}
-
-export interface QueryHistory {
-  query: string;
-  timestamp: number;
-  success: boolean;
-  rowCount?: number;
-}
-
-export interface SavedQuery {
-  name: string;
-  query: string;
-}
-
-interface BaseComponentState {
+interface BaseModuleState {
   id: string;
   tab?: string;
   lastAccessed?: number;
+  understood?: true;
 }
 
-export interface ConceptComponentState extends BaseComponentState {
-  type: 'concept';
-  understood?: boolean;
-}
+export type ConceptModuleState = BaseModuleState;
 
-export interface SkillComponentState extends BaseComponentState {
-  type: 'skill';
+export interface SkillModuleState extends BaseModuleState {
   numSolved: number;
-  instances: Record<ExerciseInstanceId, StoredExerciseInstance>;
-  currentInstanceId?: ExerciseInstanceId;
+  exercises: StoredExerciseInstance[];
 }
 
-export interface PlaygroundComponentState extends BaseComponentState {
-  type: 'playground';
-  savedQueries?: SavedQuery[];
-  history?: QueryHistory[];
-}
+export type ModuleState = ConceptModuleState | SkillModuleState;
 
-export type ComponentState =
-  | ConceptComponentState
-  | SkillComponentState
-  | PlaygroundComponentState;
-
-export type ComponentType = ComponentState['type'];
+export type ModuleType = 'concept' | 'skill';
 
 export interface LearningState {
-  components: Record<string, ComponentState>;
+  modules: Record<string, ModuleState>;
 }

@@ -13,13 +13,12 @@ import {
   migrateLearningPersistedState,
   LEARNING_STORE_VERSION,
 } from './version';
+import { migrateLegacyStorageIfNeeded } from '../legacyMigration';
+import { createStore, type HydrationState } from '../utils';
 import {
   LEGACY_LEARNING_STORAGE_KEY,
-  migrateLegacyStorageIfNeeded,
-} from '../legacyMigration';
-import { createStore, type HydrationState } from '../utils';
-
-export const LEARNING_STORAGE_KEY = 'sqlvalley-learning';
+  LEARNING_STORAGE_KEY,
+} from './constants';
 
 export interface LearningStoreState
   extends LearningState,

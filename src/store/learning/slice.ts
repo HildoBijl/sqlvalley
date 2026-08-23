@@ -3,33 +3,59 @@
  */
 
 import type {
-  ComponentState,
-  ComponentType,
-  ConceptComponentState,
+  ModuleState,
+  ModuleType,
+  ConceptModuleState,
   LearningState,
-  PlaygroundComponentState,
-  SkillComponentState,
-  StoredExerciseEvent,
-  StoredExerciseInstance,
+  SkillModuleState,
 } from './types';
+import type {
+  StoredExerciseAction,
+  StoredExerciseInstance,
+  StoredExerciseState,
+} from '@sqlvalley/exercise-engine/storedState';
 import {
-  createComponentState,
-  DEFAULT_COMPONENT_TYPE,
-  normalizeComponentState,
+  createModuleState,
+  normalizeConceptModuleState,
+  normalizeSkillModuleState,
 } from './support';
 import type { SetState, GetState } from '../utils';
 
 export const initialLearningState: LearningState = {
-  components: {} as Record<string, ComponentState>,
+  modules: {} as Record<string, ModuleState>,
 };
 
 export interface LearningActions {
-  updateComponent: (id: string, data: Partial<ComponentState>) => void;
-  getComponent: (id: string) => ComponentState;
-  resetComponent: (id: string, type?: ComponentType) => void;
+  setModuleTab: (id: string, type: ModuleType, tab: string) => void;
+  completeConcept: (conceptId: string) => void;
+  completeSkill: (skillId: string) => void;
+  startNewExercise: (
+    skillId: string,
+    exerciseId: string,
+    version: number,
+    parameters: Record<string, unknown>,
+  ) => void;
+  submitExerciseAction: (
+    skillId: string,
+    action: StoredExerciseAction,
+    resultingState: StoredExerciseState,
+    report: unknown,
+    exerciseDone: boolean,
+    increaseSolvedCounter: boolean,
+  ) => void;
+  setExerciseDraftInput: (skillId: string, draftInput: unknown) => void;
+  getModule: (id: string, type: ModuleType) => ModuleState;
+  resetModule: (id: string, type: ModuleType) => void;
   getCurrentExerciseInstance: (skillId: string) => StoredExerciseInstance | null;
   getAllExerciseInstances: (skillId: string) => StoredExerciseInstance[];
-  getExerciseHistory: (skillId: string, instanceId: string) => StoredExerciseEvent[];
+}
+
+function getConceptModuleForUpdate(moduleId: string, state: LearningState): ConceptModuleState {
+  return normalizeConceptModuleState(moduleId, state.modules[moduleId]);
+}
+
+function getSkillModuleForUpdate(moduleId: string, state: LearningState): SkillModuleState {
+  return normalizeSkillModuleState(moduleId, state.modules[moduleId]);
 }
 
 export function createLearningActions(
@@ -37,110 +63,178 @@ export function createLearningActions(
   get: GetState<LearningState>,
 ): LearningActions {
   return {
-    updateComponent: (id, data) =>
+    setModuleTab: (id, type, tab) =>
       set((state) => {
-        const prev = state.components[id];
-        const nextType = (data.type ?? prev?.type ?? DEFAULT_COMPONENT_TYPE) as ComponentType;
-        let nextState: ComponentState;
+        const now = Date.now();
+        const nextState =
+          type === 'skill'
+            ? {
+              ...getSkillModuleForUpdate(id, state),
+              tab,
+              lastAccessed: now,
+            }
+            : {
+              ...getConceptModuleForUpdate(id, state),
+              tab,
+              lastAccessed: now,
+            };
 
-        switch (nextType) {
-          case 'concept': {
-            const previous = prev?.type === 'concept' ? prev : undefined;
-            nextState = {
-              ...createComponentState(id, 'concept'),
-              ...(previous ?? {}),
-              ...(data as Partial<ConceptComponentState>),
-              id,
-              type: 'concept',
-              lastAccessed: Date.now(),
-            };
-            break;
-          }
-          case 'playground': {
-            const previous = prev?.type === 'playground' ? prev : undefined;
-            nextState = {
-              ...createComponentState(id, 'playground'),
-              ...(previous ?? {}),
-              ...(data as Partial<PlaygroundComponentState>),
-              id,
-              type: 'playground',
-              lastAccessed: Date.now(),
-            };
-            break;
-          }
-          case 'skill':
-          default: {
-            const previous = prev?.type === 'skill' ? prev : undefined;
-            const incoming = data as Partial<SkillComponentState>;
-            const baseSkill = createComponentState(id, 'skill') as SkillComponentState;
-            const nextSkill: SkillComponentState = {
-              ...baseSkill,
-              ...(previous ?? {}),
-              ...incoming,
-              id,
-              type: 'skill',
-              lastAccessed: Date.now(),
-              instances: incoming.instances ?? previous?.instances ?? baseSkill.instances,
-              numSolved: incoming.numSolved ?? previous?.numSolved ?? baseSkill.numSolved,
-              currentInstanceId:
-                incoming.currentInstanceId ?? previous?.currentInstanceId ?? baseSkill.currentInstanceId,
-            };
-            nextState = nextSkill;
-            break;
-          }
-        }
         return {
-          components: {
-            ...state.components,
+          modules: {
+            ...state.modules,
             [id]: nextState,
           },
         };
       }),
 
-    getComponent: (id) => {
-      const existing = get().components[id];
-      return existing ?? createComponentState(id);
-    },
-
-    resetComponent: (id, type) =>
+    completeConcept: (conceptId) =>
       set((state) => {
-        const targetType = (type ?? state.components[id]?.type ?? DEFAULT_COMPONENT_TYPE) as ComponentType;
+        const currentConcept = getConceptModuleForUpdate(conceptId, state);
+
         return {
-          components: {
-            ...state.components,
-            [id]: createComponentState(id, targetType),
+          modules: {
+            ...state.modules,
+            [conceptId]: {
+              ...currentConcept,
+              understood: true,
+              lastAccessed: Date.now(),
+            },
+          },
+        };
+      }),
+
+    completeSkill: (skillId) =>
+      set((state) => {
+        const currentSkill = getSkillModuleForUpdate(skillId, state);
+
+        return {
+          modules: {
+            ...state.modules,
+            [skillId]: {
+              ...currentSkill,
+              understood: true,
+              lastAccessed: Date.now(),
+            },
+          },
+        };
+      }),
+
+    startNewExercise: (skillId, exerciseId, version, parameters) =>
+      set((state) => {
+        const skillModule = getSkillModuleForUpdate(skillId, state);
+        const newExercise: StoredExerciseInstance = {
+          exerciseId,
+          version,
+          parameters: { ...parameters },
+          createdAt: Date.now(),
+          events: [],
+          draftInput: undefined,
+        };
+
+        return {
+          modules: {
+            ...state.modules,
+            [skillId]: {
+              ...skillModule,
+              lastAccessed: Date.now(),
+              exercises: [...skillModule.exercises, newExercise],
+            },
+          },
+        };
+      }),
+
+    submitExerciseAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) =>
+      set((state) => {
+        const skillModule = getSkillModuleForUpdate(skillId, state);
+        if (skillModule.exercises.length === 0) {
+          throw new Error(`Cannot submit exercise action for "${skillId}" without an active exercise.`);
+        }
+
+        const lastIndex = skillModule.exercises.length - 1;
+        const currentExercise = skillModule.exercises[lastIndex];
+        const updatedExercise: StoredExerciseInstance = {
+          ...currentExercise,
+          events: [
+            ...currentExercise.events,
+            {
+              timestamp: Date.now(),
+              action: { ...action },
+              resultingState: { ...resultingState },
+              report,
+            },
+          ],
+          draftInput: exerciseDone ? undefined : currentExercise.draftInput,
+        };
+
+        const exercises = [
+          ...skillModule.exercises.slice(0, -1),
+          updatedExercise,
+        ];
+
+        return {
+          modules: {
+            ...state.modules,
+            [skillId]: {
+              ...skillModule,
+              lastAccessed: Date.now(),
+              numSolved: increaseSolvedCounter ? skillModule.numSolved + 1 : skillModule.numSolved,
+              exercises,
+            },
+          },
+        };
+      }),
+
+    setExerciseDraftInput: (skillId, draftInput) =>
+      set((state) => {
+        const skillModule = getSkillModuleForUpdate(skillId, state);
+        if (skillModule.exercises.length === 0) {
+          throw new Error(`Cannot set draft input for "${skillId}" without an active exercise.`);
+        }
+
+        const updatedExercise: StoredExerciseInstance = {
+          ...skillModule.exercises[skillModule.exercises.length - 1],
+          draftInput,
+        };
+        const exercises = [
+          ...skillModule.exercises.slice(0, -1),
+          updatedExercise,
+        ];
+
+        return {
+          modules: {
+            ...state.modules,
+            [skillId]: {
+              ...skillModule,
+              lastAccessed: Date.now(),
+              exercises,
+            },
+          },
+        };
+      }),
+
+    getModule: (id, type) =>
+      type === 'skill'
+        ? normalizeSkillModuleState(id, get().modules[id])
+        : normalizeConceptModuleState(id, get().modules[id]),
+
+    resetModule: (id, type) =>
+      set((state) => {
+        return {
+          modules: {
+            ...state.modules,
+            [id]: createModuleState(id, type),
           },
         };
       }),
 
     getCurrentExerciseInstance: (skillId) => {
-      const component = get().components[skillId];
-      if (!component || component.type !== 'skill') {
-        return null;
-      }
-      const { currentInstanceId, instances } = component;
-      if (!currentInstanceId) {
-        return null;
-      }
-      return instances[currentInstanceId] ?? null;
+      const skillModule = normalizeSkillModuleState(skillId, get().modules[skillId]);
+      return skillModule.exercises[skillModule.exercises.length - 1] ?? null;
     },
 
     getAllExerciseInstances: (skillId) => {
-      const component = get().components[skillId];
-      if (!component || component.type !== 'skill') {
-        return [];
-      }
-      return Object.values(component.instances);
-    },
-
-    getExerciseHistory: (skillId, instanceId) => {
-      const component = get().components[skillId];
-      if (!component || component.type !== 'skill') {
-        return [];
-      }
-      return component.instances[instanceId]?.events ?? [];
+      const skillModule = normalizeSkillModuleState(skillId, get().modules[skillId]);
+      return [...skillModule.exercises];
     },
   };
 }
-
-export { normalizeComponentState };

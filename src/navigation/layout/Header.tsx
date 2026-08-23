@@ -1,12 +1,18 @@
-import { AppBar, Toolbar, Typography, Box, Button, Container } from '@mui/material';
+import { useMemo } from 'react';
+import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material';
 import {
   AutoStories as LearnIcon,
   // PlayArrow as PlaygroundIcon,
 } from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAdminMode } from '@/learning/hooks/useAdminMode';
-import { useSkillTreeHistory } from '@/learning/hooks/useSkillTreeHistory';
-import { getSkillTreeDefinitions } from '@/learning/utils/skillTreeTracking';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  defaultSkillTreeVisualization,
+  isSkillTreeVisualizationId,
+  skillTreeVisualizationDefinitions,
+  type SkillTreeVisualizationId,
+} from '@/curriculum/skillTreeVisualizations';
+import { useAdminMode } from '@/store/adminMode';
+import { useSkillTreeSettingsStore } from '@/store';
 import { SettingsMenu } from './Settings';
 
 export function Header() {
@@ -14,8 +20,13 @@ export function Header() {
   const location = useLocation();
   const isAdmin = useAdminMode();
   const skillTreeHistory = useSkillTreeHistory();
-  const navItems = getSkillTreeDefinitions()
-    .filter((tree) => isAdmin || skillTreeHistory.includes(tree.id))
+  const visibleTreeIds =
+    skillTreeHistory.length > 0
+      ? skillTreeHistory
+      : [defaultSkillTreeVisualization];
+  const visibleTreeIdSet = new Set(visibleTreeIds);
+  const navItems = skillTreeVisualizationDefinitions
+    .filter((tree) => isAdmin || visibleTreeIdSet.has(tree.id))
     .map((tree) => ({
       path: tree.path,
       label: tree.label,
@@ -73,4 +84,26 @@ export function Header() {
       </Container>
     </AppBar>
   );
+}
+
+function useSkillTreeHistory(): SkillTreeVisualizationId[] {
+  const history = useSkillTreeSettingsStore((state) => state.lastVisitedSkillTrees);
+  return useMemo(() => normalizeSkillTreeHistory(history), [history]);
+}
+
+function normalizeSkillTreeHistory(
+  history: readonly string[],
+): SkillTreeVisualizationId[] {
+  const result: SkillTreeVisualizationId[] = [];
+  const seen = new Set<SkillTreeVisualizationId>();
+
+  for (const value of history) {
+    if (!isSkillTreeVisualizationId(value) || seen.has(value)) {
+      continue;
+    }
+    seen.add(value);
+    result.push(value);
+  }
+
+  return result;
 }

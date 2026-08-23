@@ -3,45 +3,36 @@
  */
 
 import type {
-  ComponentState,
-  ConceptComponentState,
-  PlaygroundComponentState,
-  SkillComponentState,
+  ModuleState,
+  ModuleType,
+  ConceptModuleState,
+  SkillModuleState,
 } from './types';
+import type {
+  StoredExerciseEvent,
+  StoredExerciseInstance,
+} from '@sqlvalley/exercise-engine/storedState';
 
-export const DEFAULT_COMPONENT_TYPE: ComponentState['type'] = 'skill';
-
-export function createComponentState(
+export function createModuleState(
   id: string,
-  type: ComponentState['type'] = DEFAULT_COMPONENT_TYPE,
-): ComponentState {
+  type: ModuleType,
+): ModuleState {
   switch (type) {
     case 'concept':
       return {
-        type: 'concept',
         id,
-        understood: false,
-        tab: undefined,
-        lastAccessed: undefined,
-      };
-    case 'playground':
-      return {
-        type: 'playground',
-        id,
-        savedQueries: [],
-        history: [],
+        understood: undefined,
         tab: undefined,
         lastAccessed: undefined,
       };
     case 'skill':
     default:
       return {
-        type: 'skill',
         id,
         tab: undefined,
         numSolved: 0,
-        instances: {},
-        currentInstanceId: undefined,
+        understood: undefined,
+        exercises: [],
         lastAccessed: undefined,
       };
   }
@@ -58,51 +49,131 @@ export function coerceTimestamp(value: unknown): number | undefined {
   return Number.isNaN(asNumber) ? undefined : asNumber;
 }
 
-export function normalizeComponentState(
-  id: string,
-  state: Partial<ComponentState> | undefined,
-): ComponentState {
-  if (!state || !('type' in state) || !state.type) {
-    return createComponentState(id);
-  }
-  const desiredType = state.type;
-  const lastAccessed = coerceTimestamp(state.lastAccessed);
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
 
-  switch (desiredType) {
-    case 'concept': {
-      const normalized: ConceptComponentState = {
-        ...createComponentState(id, 'concept'),
-        ...(state as Partial<ConceptComponentState>),
-        id,
-        type: 'concept',
-        lastAccessed,
-      };
-      return normalized;
-    }
-    case 'playground': {
-      const normalized: PlaygroundComponentState = {
-        ...createComponentState(id, 'playground'),
-        ...(state as Partial<PlaygroundComponentState>),
-        id,
-        type: 'playground',
-        lastAccessed,
-      };
-      return normalized;
-    }
-    case 'skill':
-    default: {
-      const partialSkill = state as Partial<SkillComponentState>;
-      const normalized: SkillComponentState = {
-        ...createComponentState(id, 'skill'),
-        ...partialSkill,
-        id,
-        type: 'skill',
-        lastAccessed,
-        instances: partialSkill.instances ?? {},
-        numSolved: partialSkill.numSolved ?? 0,
-        currentInstanceId: partialSkill.currentInstanceId ?? undefined,
-      };
-      return normalized;
-    }
+function normalizeStoredExerciseEvent(value: unknown): StoredExerciseEvent | null {
+  if (!isRecord(value)) {
+    return null;
   }
+
+  const timestamp = coerceTimestamp(value.timestamp);
+  if (timestamp === undefined) {
+    return null;
+  }
+
+  return {
+    timestamp,
+    action: isRecord(value.action) ? { ...value.action } : {},
+    resultingState: isRecord(value.resultingState) ? { ...value.resultingState } : {},
+    report: value.report,
+  };
+}
+
+function normalizeStoredExerciseInstance(value: unknown): StoredExerciseInstance | null {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  const exerciseIdRaw = value.exerciseId;
+  const exerciseId = typeof exerciseIdRaw === 'string' ? exerciseIdRaw.trim() : '';
+  if (!exerciseId) {
+    return null;
+  }
+
+  const version = typeof value.version === 'number' && Number.isFinite(value.version)
+    ? value.version
+    : 1;
+  const createdAt = coerceTimestamp(value.createdAt) ?? Date.now();
+  const parameters = isRecord(value.parameters) ? { ...value.parameters } : {};
+  const events = Array.isArray(value.events)
+    ? value.events
+      .map((entry) => normalizeStoredExerciseEvent(entry))
+      .filter((entry): entry is StoredExerciseEvent => entry !== null)
+    : [];
+
+  return {
+    exerciseId,
+    version,
+    parameters,
+    createdAt,
+    events,
+    draftInput: value.draftInput,
+  };
+}
+
+interface LegacyModuleShape {
+  tab?: unknown;
+  lastAccessed?: unknown;
+  understood?: unknown;
+  numSolved?: unknown;
+  exercises?: unknown;
+}
+
+function normalizeCommonModuleFields(
+  id: string,
+  state: LegacyModuleShape | undefined,
+): Pick<ModuleState, 'id' | 'tab' | 'lastAccessed' | 'understood'> {
+  return {
+    id,
+    tab: typeof state?.tab === 'string' ? state.tab : undefined,
+    lastAccessed: coerceTimestamp(state?.lastAccessed),
+    understood: state?.understood === true ? true : undefined,
+  };
+}
+
+export function normalizeConceptModuleState(
+  id: string,
+  state: Partial<ModuleState> | undefined,
+): ConceptModuleState {
+  const base = createModuleState(id, 'concept') as ConceptModuleState;
+  const common = normalizeCommonModuleFields(id, state as LegacyModuleShape | undefined);
+  return {
+    ...base,
+    ...common,
+  };
+}
+
+export function normalizeSkillModuleState(
+  id: string,
+  state: Partial<ModuleState> | undefined,
+): SkillModuleState {
+  const base = createModuleState(id, 'skill') as SkillModuleState;
+  const partialSkill = state as Partial<SkillModuleState> | undefined;
+  const common = normalizeCommonModuleFields(id, state as LegacyModuleShape | undefined);
+
+  const normalized: SkillModuleState = {
+    ...base,
+    ...common,
+    numSolved: typeof partialSkill?.numSolved === 'number' ? partialSkill.numSolved : 0,
+    exercises: Array.isArray(partialSkill?.exercises)
+      ? partialSkill.exercises
+        .map((exercise) => normalizeStoredExerciseInstance(exercise))
+        .filter((exercise): exercise is StoredExerciseInstance => exercise !== null)
+      : [],
+  };
+  return normalized;
+}
+
+function looksLikeSkillModule(state: Partial<ModuleState> & { type?: unknown }): boolean {
+  return (
+    state.type === 'skill' ||
+    typeof (state as Partial<SkillModuleState>).numSolved === 'number' ||
+    Array.isArray((state as Partial<SkillModuleState>).exercises)
+  );
+}
+
+export function normalizeModuleState(
+  id: string,
+  state: Partial<ModuleState> | undefined,
+): ModuleState {
+  if (!state) {
+    return createModuleState(id, 'skill');
+  }
+  const stateRecord = state as Partial<ModuleState> & { type?: unknown };
+  if (looksLikeSkillModule(stateRecord)) {
+    return normalizeSkillModuleState(id, stateRecord);
+  }
+  return normalizeConceptModuleState(id, stateRecord);
 }

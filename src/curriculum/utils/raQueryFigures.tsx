@@ -1,12 +1,26 @@
+import { type ReactNode } from 'react';
 import { Box } from '@mui/material';
 
-import { useRefWithValue } from '@/utils/dom';
-import { useThemeColor } from '@/theme';
-import { type DrawingData, Drawing, Element, Curve, useRefWithBounds, DataTable, RA } from '@/components';
-import { useTheorySampleDatabase } from '@/learning/databases';
-import { useQueryResult } from '@/components/sql/sqljs';
+import { useRefWithValue } from '@sqlvalley/utils/dom';
+import { useThemeColor } from '@sqlvalley/ui';
+import { type DrawingData, Drawing, Element, Curve, useRefWithBounds, RA } from '@sqlvalley/ui';
+import { DataTable } from '@sqlvalley/sql';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
+import { useQueryResult } from '@sqlvalley/sql/sqljs';
 
-export function FigureExampleRAQuery({ query = <></>, actualQuery = '', below = false, tableWidth = 300, tableScale = 0.8, delta = 20, arrowLength = 50, arrowRadius = 60, Component = RA }) {
+type FigureExampleRAQueryProps = {
+  query?: ReactNode;
+  actualQuery?: string;
+  below?: boolean;
+  tableWidth?: number;
+  tableScale?: number;
+  delta?: number;
+  arrowLength?: number;
+  arrowRadius?: number;
+  Component?: React.ComponentType<any>;
+};
+
+export function FigureExampleRAQuery({ query = <></>, actualQuery = '', below = false, tableWidth = 300, tableScale = 0.8, delta = 20, arrowLength = 50, arrowRadius = 60, Component = RA }: FigureExampleRAQueryProps) {
   const themeColor = useThemeColor();
   const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 

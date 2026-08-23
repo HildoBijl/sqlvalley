@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   IconButton,
   Tooltip,
@@ -16,37 +16,25 @@ import {
   Check,
   AdminPanelSettings,
 } from '@mui/icons-material';
-import { ColorModeContext } from '@/theme';
+import { ColorModeContext } from '@sqlvalley/ui';
+import { setAdminModeEnabled, useAdminMode } from '@/store/adminMode';
 
-const APP_STORAGE_KEYS = [
-  'sqlvalley-settings',
-  'sqlvalley-learning',
-  'sqlvalley-storage-migrated-v1',
-  'sqlvalley-storage',
-  'sqltutor-settings',
-  'sqltutor-learning',
-  'sqltutor-storage',
-  'sqltutor-storage-migrated-v1',
-] as const;
-const SKILL_TREE_HISTORY_KEY = 'sqlvalley-skilltree-history';
-const LEGACY_SKILL_TREE_HISTORY_KEY = 'sqltutor-skilltree-history';
+const RESETTABLE_STORAGE_PREFIXES = ['sqlvalley-', 'sqltutor-'] as const;
+const RESETTABLE_STORAGE_KEY_PREFIXES = ['component-'] as const;
+const RESETTABLE_STORAGE_KEYS = new Set(['admin']);
+
+function isResettableStorageKey(key: string): boolean {
+  return (
+    RESETTABLE_STORAGE_KEYS.has(key) ||
+    RESETTABLE_STORAGE_PREFIXES.some((prefix) => key.startsWith(prefix)) ||
+    RESETTABLE_STORAGE_KEY_PREFIXES.some((prefix) => key.startsWith(prefix))
+  );
+}
 
 export function SettingsMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [adminEnabled, setAdminEnabled] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return Boolean(window.localStorage.getItem('admin'));
-  });
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const syncAdmin = () => {
-      setAdminEnabled(Boolean(window.localStorage.getItem('admin')));
-    };
-    window.addEventListener('storage', syncAdmin);
-    return () => window.removeEventListener('storage', syncAdmin);
-  }, []);
+  const adminEnabled = useAdminMode();
 
   const { mode, toggleColorMode } = useContext(ColorModeContext);
   const isLight = mode === 'light';
@@ -65,20 +53,7 @@ export function SettingsMenu() {
 
   const handleAdminToggle = () => {
     const next = !adminEnabled;
-    setAdminEnabled(next);
-    try {
-      if (typeof window !== 'undefined') {
-        if (next) {
-          window.localStorage.setItem('admin', 'true');
-        } else {
-          window.localStorage.removeItem('admin');
-        }
-        window.dispatchEvent(new CustomEvent('admin-mode-change', { detail: { enabled: next } }));
-      }
-    } catch (err) {
-      console.error('Failed to update admin mode:', err);
-      alert('Unable to change admin mode right now.');
-    }
+    setAdminModeEnabled(next);
   };
 
   const handleReset = () => {
@@ -95,26 +70,17 @@ export function SettingsMenu() {
       for (let i = 0; i < window.localStorage.length; i++) {
         const key = window.localStorage.key(i);
         if (!key) continue;
-        if (
-          APP_STORAGE_KEYS.some((appKey) => appKey === key) ||
-          key === SKILL_TREE_HISTORY_KEY ||
-          key === LEGACY_SKILL_TREE_HISTORY_KEY ||
-          key.startsWith('component-') ||
-          key === 'admin'
-        ) {
+        if (isResettableStorageKey(key)) {
           keysToRemove.push(key);
         }
       }
       keysToRemove.forEach((k) => window.localStorage.removeItem(k));
+      setAdminModeEnabled(false);
 
       window.location.reload();
     } catch (err) {
       console.error('Failed to reset data:', err);
       alert('Sorry, something went wrong resetting your data.');
-    }
-    setAdminEnabled(false);
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('admin-mode-change', { detail: { enabled: false } }));
     }
     handleClose();
   };
