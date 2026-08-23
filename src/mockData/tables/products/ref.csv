@@ -1,0 +1,1251 @@
+p_id;name;category;owned_by;est_value;status;phase;event;listed_at;is_relevant
+100001;Leonardo da Vinci, Mona Lisa;PAINTING;bobby;;DRAFT;1;2;2023-02-09;FALSE
+100002;Apollo 11 Command Module Columbia;TRANSPORTATION;caesar;;DRAFT;1;2;2023-02-09;FALSE
+100003;Antonio Stradivari, Messiah Violin, 1716;MUSICAL_INSTRUMENT;caesar;;DRAFT;1;2;2023-02-09;FALSE
+100004;The Imperial State Crown;JEWELRY;caesar;;DRAFT;1;2;2023-02-09;FALSE
+100005;DeLorean Time Machine from Back to the Future;FILM_PROP;caesar;;DRAFT;1;2;2023-02-09;FALSE
+100006;Michelangelo, David;SCULPTURE;bobby;;DRAFT;1;2;2023-02-09;FALSE
+100007;The Rosetta Stone;HISTORIC_OBJECT;bobby;;DRAFT;1;2;2023-02-09;FALSE
+100008;Vincent van Gogh, The Starry Night, 1889;PAINTING;bobby;;DRAFT;1;2;2023-02-09;FALSE
+100009;The Orlov Modular Chair Series, 1974;FURNITURE;aaliyah.baker;180000;SOLD;1;4;2023-04-11;FALSE
+100010;Signal Loom, 1982;TEXTILE;ari.turner;145000;SOLD;1;4;2023-04-11;FALSE
+100011;The Van Acker Ceramic Prototype Set, 1968;CERAMIC;celine.irwin;95000;SOLD;1;4;2023-04-11;FALSE
+100012;The Luma-3 Exhibition Lamp, 1979;DESIGN_OBJECT;gran_merc4;120000;SOLD;1;4;2023-04-11;FALSE
+100013;"Blue Factory Window, 1934; acquired 1978";PAINTING;harper7;180000;SOLD;1;4;2023-04-11;FALSE
+100014;Salt Marsh at Dusk Study;DRAWING;rothcapital2;149000;SOLD;1;5;2023-05-20;FALSE
+100015;Elias Cole Exhibition Lamp Prototype, 1889;DESIGN_OBJECT;granitehillmuseumoflocalindu;120000;INACTIVE;1;5;2023-05-30;FALSE
+100016;Walnut Reading Chair;FURNITURE;meridianmillercollections;70000;SOLD;1;5;2023-05-08;FALSE
+100017;The North Courtyard Print;PRINT;vanefamilyoffice;80000;SOLD;1;5;2023-05-17;FALSE
+100018;Factory Window Print;PRINT;southbankmaritimeheritagemus;204000;SOLD;1;5;2023-05-06;FALSE
+100019;Community Festival Banner;TEXTILE;howardfineobjects;160000;SOLD;1;5;2023-05-23;FALSE
+100020;Theatre Lobby Bench;FURNITURE;cedarpointculturalmemoryproj;69000;INACTIVE;1;5;2023-05-11;FALSE
+100021;Lucien Roth, Savannah at Night, 1915;PHOTOGRAPH;gmercer_family1;189000;SOLD;1;5;2023-05-28;FALSE
+100022;Handwoven Wall Textile;TEXTILE;parkhurstcommunityartsfounda;99000;INACTIVE;1;5;2023-05-06;FALSE
+100023;Local Newspaper Photograph Archive;ARCHIVAL_COLLECTION;santiago.jordan;243000;SOLD;1;5;2023-06-01;FALSE
+100024;Family Correspondence Archive;ARCHIVAL_COLLECTION;longfellowestatecollection;238000;AVAILABLE;1;5;2023-05-20;FALSE
+100025;Evening at the Quarry;PAINTING;vcross_alt;259000;SOLD;1;5;2023-05-19;FALSE
+100026;Samuel Roth Studio Ceramic Vessel Set, 1933;CERAMIC;bobby;323000;SOLD;2;11;2023-08-18;FALSE
+100027;Green Passage;PAINTING;stonefieldhistorichousefound;371000;INACTIVE;2;11;2023-07-20;FALSE
+100028;Closed Theatre Records;ARCHIVAL_COLLECTION;ashlandestatecollection;125000;INACTIVE;2;11;2023-08-04;FALSE
+100029;Studio Ceramic Vessel Set;CERAMIC;chloe.singh;69000;INACTIVE;2;11;2023-07-18;FALSE
+100030;Samuel Vale Library Chair, 1834;FURNITURE;howellartadvisory;395000;SOLD;2;11;2023-08-05;FALSE
+100031;The Long Platform Print;PRINT;cedarpointculturalmemoryproj;41000;INACTIVE;2;11;2023-08-21;FALSE
+100032;Factory Window Sculpture;SCULPTURE;davisauctionpartners;167000;SOLD;2;11;2023-08-24;FALSE
+100033;Evening at the Quarry Print;PRINT;chloe.singh;58000;INACTIVE;2;11;2023-08-06;FALSE
+100034;Industrial Design Radio;DESIGN_OBJECT;georgia.lee;111000;SALE_PENDING;2;11;2023-07-23;FALSE
+100035;Mara Cole Library Chair, 1887;FURNITURE;isabel.carter;189000;INACTIVE;2;11;2023-08-05;FALSE
+100036;Cloud over the Foundry;PAINTING;vanefamilyoffice;870000;SALE_PENDING;2;11;2023-08-01;FALSE
+100037;Coastal Survey Atlas;MAP;chloe.singh;491000;INACTIVE;2;11;2023-08-11;FALSE
+100038;Mara Quinn Studio Ceramic Vessel Set, 1862;CERAMIC;southbankmaritimeheritagemus;121000;SOLD;2;11;2023-07-23;FALSE
+100039;Railway Engineering Map;MAP;felix.romero;211000;SOLD;2;11;2023-07-21;FALSE
+100040;Amina Novak, Signal Field, bronze, 1995;SCULPTURE;sabrina.edwards;529000;INACTIVE;2;11;2023-08-08;FALSE
+100041;Austin Photographic Album;PHOTOGRAPH;augvane7;254000;SOLD;2;11;2023-08-16;FALSE
+100042;Amina Bell, Red Bridge, bronze, 1924;SCULPTURE;blair.kaur;711000;SOLD;2;11;2023-08-24;FALSE
+100043;Orion Press Press, Illustrated First Edition, 1872;RARE_BOOK;helvale7;460000;SOLD;2;11;2023-08-08;FALSE
+100044;Mercury Records Archive, 1867–1897;ARCHIVAL_COLLECTION;nadi_whit5;146000;SALE_PENDING;2;11;2023-08-24;FALSE
+100045;Studio Ceramic Vessel Set — Group 2;CERAMIC;vanefamilyoffice;158000;SOLD;2;11;2023-07-19;FALSE
+100046;Harbour Series I;PAINTING;bellwethermaterialcultureins;235000;AVAILABLE;2;12;2023-08-30;FALSE
+100047;Political Campaign Banner;HISTORIC_OBJECT;aaliyah.zimmerman;120000;SALE_PENDING;2;12;2023-08-30;FALSE
+100048;After the Storm;PAINTING;windermeredesignheritagecent;484000;INACTIVE;2;12;2023-08-29;FALSE
+100049;Darius Hart, After the Storm, 1957;PAINTING;choiartadvisory;563000;SOLD;2;12;2023-08-27;FALSE
+100050;Three Cypress Trees Print;PRINT;lana.mendez;1172000;INACTIVE;2;12;2023-08-25;FALSE
+100051;Journal of the Savannah Expedition, 1999–2001;MANUSCRIPT;silvermarshdecorativeartsarc;534000;INACTIVE;2;12;2023-08-25;FALSE
+100052;Camille Rivera, Evening at the Quarry, 1856;PAINTING;lorenzo.ellis;515000;INACTIVE;2;12;2023-08-26;FALSE
+100053;Modular Chair Prototype;DESIGN_OBJECT;keira.nguyen;442000;INACTIVE;2;12;2023-08-28;FALSE
+100054;Celia Alvarez, Orchard Interior, lithograph, 1951;PRINT;pineharborrailwayhistorycent;198000;SOLD;2;12;2023-08-28;FALSE
+100055;Santiago Roth Library Chair, 1871;FURNITURE;sabrina.shah;336000;SOLD;2;12;2023-08-28;FALSE
+100056;Studio Ceramic Vessel Set — Group 3;CERAMIC;foundryzimmermanfineobjects;268000;SOLD;2;12;2023-08-28;FALSE
+100057;Exploration Journal;MANUSCRIPT;castillocollections;292000;SOLD;2;12;2023-08-30;FALSE
+100058;Signal Field Study;DRAWING;ashcroftcapital2;144000;SOLD;2;12;2023-08-29;FALSE
+100059;Granite Bay Film Society Processional Cross, c. 1997;RELIGIOUS_OBJECT;naomi.campbell;149000;INACTIVE;2;12;2023-08-28;FALSE
+100060;The Reading Room Print;PRINT;erook_family4;315000;SOLD;2;12;2023-08-26;FALSE
+100061;Local Newspaper Photograph Archive — Group 2;ARCHIVAL_COLLECTION;eastgatefolkartarchive;367000;AVAILABLE;2;12;2023-08-27;FALSE
+100062;Los Angeles Photographic Album;PHOTOGRAPH;kai.chen;94000;SOLD;2;12;2023-08-29;FALSE
+100063;Annotated Travel Diary;MANUSCRIPT;ruby.reed;755000;SOLD;2;12;2023-08-29;FALSE
+100064;Orion Press Archive, 1949–1979;ARCHIVAL_COLLECTION;nathan58;987000;SOLD;2;12;2023-08-27;FALSE
+100065;Camille Ellis, Study for Blue Room with Fig Tree, 1969;DRAWING;aldergrovefurnituredesignarc;248000;INACTIVE;2;12;2023-08-27;FALSE
+100066;Standing Form Study;DRAWING;foundryxucollections;69000;SOLD;2;12;2023-08-28;FALSE
+100067;Gabriel Navarro Studio Ceramic Vessel Set, 1860;CERAMIC;andersonartadvisory;375000;SOLD;2;12;2023-08-26;FALSE
+100068;Riverside Theatre Ceremonial Presentation Object, 1969;HISTORIC_OBJECT;ftran_westhave;768000;SOLD;2;12;2023-08-27;FALSE
+100069;Exhibition Lighting Prototype;DESIGN_OBJECT;maplecrossinghistorichousefo;148000;INACTIVE;2;12;2023-08-26;FALSE
+100070;Historic Concert Cello;MUSICAL_INSTRUMENT;farah.stone;367000;INACTIVE;2;12;2023-08-30;FALSE
+100071;Embroidered Civic Standard;TEXTILE;ashlandestatecollection;104000;INACTIVE;2;12;2023-08-30;FALSE
+100072;North Coast Railway Press, Illustrated First Edition, 1915;RARE_BOOK;ironwoodcraftpreservationsoc;864000;INACTIVE;2;12;2023-08-30;FALSE
+100073;Signal Field Sculpture;SCULPTURE;farahholdings1;1194000;SOLD;2;12;2023-08-29;FALSE
+100074;Orion Press Processional Banner, 1873;TEXTILE;vanefamilyoffice;408000;SOLD;2;12;2023-08-27;FALSE
+100075;Studio Ceramic Vessel Set — Group 4;CERAMIC;ironwoodcraftpreservatio_org;148000;INACTIVE;2;12;2023-08-31;FALSE
+100076;The Reading Room;PAINTING;abigail.lee_curator;535000;INACTIVE;2;12;2023-08-27;FALSE
+100077;Hand-Coloured Regional Map;MAP;PriyaSethi;377000;SOLD;2;12;2023-08-26;FALSE
+100078;Riverside Theatre Processional Banner, 1965;TEXTILE;windermeredesignheritage_org;313000;SOLD;2;12;2023-08-26;FALSE
+100079;Modernist Writing Desk;FURNITURE;rosemonthistoricalsociety;402000;INACTIVE;2;12;2023-08-26;FALSE
+100080;Sofia Serrat, River Bend, 1888;PAINTING;isabel.carter;457000;INACTIVE;2;12;2023-08-25;FALSE
+100081;Theatre Lobby Bench — Group 2;FURNITURE;crosscapital2;257000;SOLD;2;12;2023-08-28;FALSE
+100082;Amara Navarro, Red Bridge, 1970;PAINTING;heritagerowdecorativeartsarc;398000;AVAILABLE;2;12;2023-08-27;FALSE
+100083;Jonas Ferrand Studio Ceramic Vessel Set, 1991;CERAMIC;abigail.lee_curator;265000;INACTIVE;2;12;2023-08-28;FALSE
+100084;Closed Theatre Records — Group 2;ARCHIVAL_COLLECTION;ravenwoodcraftpreservationso;434000;SOLD;2;12;2023-08-25;FALSE
+100085;Composer’s Working Notebook;MANUSCRIPT;cole.thomas_director;182000;INACTIVE;2;12;2023-08-26;FALSE
+100086;Exploration Journal — Group 2;MANUSCRIPT;fairmontdesignheritagecenter;647000;SOLD;2;12;2023-08-30;FALSE
+100087;Imani Desai Studio Ceramic Vessel Set, 1978;CERAMIC;caesar;287000;SOLD;2;12;2023-08-27;FALSE
+100088;Standing Form;PAINTING;sabrina.shah;183000;SOLD;2;12;2023-08-27;FALSE
+100089;Coastal Survey Atlas — Group 2;MAP;cedarpointculturalmemoryproj;958000;INACTIVE;2;12;2023-08-27;FALSE
+100090;Signed First Edition;RARE_BOOK;ashlanddecorativeartsarchive;337000;SOLD;2;12;2023-08-27;FALSE
+100091;Market Morning;PAINTING;quinn.campbell;366000;SOLD;2;12;2023-08-30;FALSE
+100092;Local Newspaper Photograph Archive — Group 3;ARCHIVAL_COLLECTION;wexlercollection;231000;SOLD;2;12;2023-08-29;FALSE
+100093;Riverside Theatre Processional Banner, 1997;TEXTILE;elmsteadculturalpreservation;293000;SOLD;2;12;2023-08-29;FALSE
+100094;Meridian Studio Archive, 1946–1976;ARCHIVAL_COLLECTION;lucia.knight;458000;SOLD;2;12;2023-08-30;FALSE
+100095;Night Tram Print;PRINT;farah.stone;297000;INACTIVE;2;12;2023-08-28;FALSE
+100096;Lucien Bennett Library Chair, 1943;FURNITURE;cassidy.mason;338000;SOLD;2;12;2023-08-29;FALSE
+100097;Local Newspaper Photograph Archive — Group 4;ARCHIVAL_COLLECTION;ramirezauctionpartners;174000;SOLD;2;12;2023-08-29;FALSE
+100098;Harcourt Estate Archive, 1896–1926;ARCHIVAL_COLLECTION;ari.morgan;1183000;AVAILABLE;2;12;2023-08-25;FALSE
+100099;North Coast Railway Processional Cross, c. 1897;RELIGIOUS_OBJECT;brookfieldhistorichousefound;304000;SOLD;2;12;2023-08-27;FALSE
+100100;Detroit Photographic Album;PHOTOGRAPH;henry.ellis;261000;SOLD;2;12;2023-08-31;FALSE
+100101;Milo Rivera, River Bend, bronze, 1901;SCULPTURE;isabel.carter;439000;INACTIVE;2;13;2023-09-06;FALSE
+100102;Westhaven Works Control Panel, 2000;INDUSTRIAL_OBJECT;meridianmillercollections;171000;SOLD;2;13;2023-09-03;FALSE
+100103;Sofia Desai Couture Evening Coat, 1977;FASHION;willowmererailwayhistorycent;145000;INACTIVE;2;13;2023-09-04;FALSE
+100104;Handwoven Wall Textile — Group 2;TEXTILE;chloe.singh;1319000;INACTIVE;2;13;2023-09-05;FALSE
+100105;Coastal Light;PAINTING;elliscollections;457000;SOLD;2;13;2023-09-02;FALSE
+100106;Early Electron Microscope Control Unit;SCIENTIFIC_INSTRUMENT;castillocollections;589000;SOLD;2;13;2023-09-07;FALSE
+100107;Orion Press Ceremonial Presentation Object, 1889;HISTORIC_OBJECT;vivcro_hold4;759000;SOLD;2;13;2023-09-02;FALSE
+100108;Studio Ceramic Collection;COLLECTION;valeheritagefund;555000;SOLD;2;13;2023-09-05;FALSE
+100109;Historic Household Interior Group;COLLECTION;ashcroftcollection;294000;AVAILABLE;2;13;2023-09-06;FALSE
+100110;Cypress Observatory Control Panel, 1964;INDUSTRIAL_OBJECT;georgia.park;255000;INACTIVE;2;13;2023-09-04;FALSE
+100111;Theatre Mask Collection;THEATRE_OBJECT;zane.thomas;596000;SOLD;2;13;2023-09-01;FALSE
+100112;Alexander McQueen Runway Jacket, Autumn/Winter 1998;FASHION;ashcroftcollection;733000;SOLD;2;13;2023-09-06;FALSE
+100113;The North Courtyard;PAINTING;andersonartadvisory;1223000;SOLD;2;13;2023-09-07;FALSE
+100114;J.R.R. Tolkien, The Hobbit, first edition, 1937;RARE_BOOK;obexley_family3;1254000;SOLD;2;13;2023-09-04;FALSE
+100115;Samuel Ellis, Orchard Interior, bronze, 1843;SCULPTURE;avane_alt;452000;SOLD;2;13;2023-09-04;FALSE
+100116;Orion Press Ceremonial Presentation Object, 1906;HISTORIC_OBJECT;northbridgemuseumofmoderncra;427000;SOLD;2;13;2023-09-07;FALSE
+100117;Seventeenth-Century Portolan Chart;MAP;malwex_hold3;545000;SOLD;2;13;2023-09-07;FALSE
+100118;Embroidered Festival Vestments, c. 1880;RELIGIOUS_OBJECT;tanglewoodmuseumofmoderncraf;108000;INACTIVE;2;13;2023-09-01;FALSE
+100119;Concert Poster Archive;MUSIC_MEMORABILIA;nadi_whit5;731000;SOLD;2;13;2023-09-02;FALSE
+100120;Nadia Bennett Concert Violin, 1700;MUSICAL_INSTRUMENT;ashcroftcollection;948000;AVAILABLE;2;13;2023-09-06;FALSE
+100121;Camille Saito Exhibition Lamp Prototype, 1901;DESIGN_OBJECT;malik.johnson;399000;SOLD;2;13;2023-09-23;FALSE
+100122;Early Scientific Treatise;RARE_BOOK;vanefamilyoffice;432000;SOLD;2;13;2023-09-09;FALSE
+100123;Orchard Interior Study;DRAWING;brookfieldhistorichousefound;123000;SOLD;2;13;2023-09-24;FALSE
+100124;Henry Moore, Maquette for Reclining Figure, 1952;SCULPTURE;amir.saito_director;960000;AVAILABLE;2;13;2023-09-29;FALSE
+100125;Baltimore Championship Match-Worn Jersey, 1960;SPORTS_MEMORABILIA;sofia.rivera;380000;INACTIVE;2;13;2023-09-30;FALSE
+100126;Milo Serrat, Blue Room with Fig Tree, 1894;PAINTING;ironwoodcraftpreservatio_org;1485000;SALE_PENDING;2;13;2023-09-11;FALSE
+100127;Handwoven Wall Textile — Group 3;TEXTILE;erook_family4;124000;SOLD;2;13;2023-09-27;FALSE
+100128;Prince Purple Rain Tour Guitar;MUSICAL_INSTRUMENT;ashcroftcollection;714000;SOLD;2;13;2023-09-28;FALSE
+100129;Meridian Studio Silver Presentation Service, 1793;METALWORK;windermeredesignheritagecent;405000;INACTIVE;2;13;2023-09-16;FALSE
+100130;Closed Factory Neon Sign;INDUSTRIAL_OBJECT;aldergrovefurnituredesignarc;607000;INACTIVE;2;13;2023-09-30;FALSE
+100131;Bay City Foundry Computing Prototype, 1992;TECHNOLOGY;adriana.adams;657000;SOLD;2;13;2023-09-10;FALSE
+100132;Harcourt Estate Material Culture Collection, 1864–1889;COLLECTION;elias.estrada;239000;INACTIVE;2;13;2023-09-24;FALSE
+100133;Apple-1 Computer;TECHNOLOGY;imani.thomas;382000;SOLD;2;13;2023-09-19;FALSE
+100134;Local Club Memorabilia Collection;COLLECTION;imani.reed;353000;SOLD;2;13;2023-09-24;FALSE
+100135;Joan Miró, Peinture, 1953;PAINTING;ironwoodcraftpreservatio_org;310000;SALE_PENDING;2;13;2023-09-17;FALSE
+100136;Yayoi Kusama, Pumpkin, 1994;PAINTING;windermeredesignheritagecent;778000;INACTIVE;2;13;2023-09-22;FALSE
+100137;Annotated Poetry Volume;RARE_BOOK;windermeredesignheritagecent;470000;INACTIVE;2;13;2023-09-08;FALSE
+100138;Noelle Maren Art Glass Panel, 1847;GLASS;abigail.lee_curator;196000;INACTIVE;2;13;2023-09-13;FALSE
+100139;Sofia Ortega, After the Storm, bronze, 1935;SCULPTURE;theo.foster;1811000;INACTIVE;2;13;2023-09-20;FALSE
+100140;Studio Ceramic Vessel Set — Group 5;CERAMIC;cassidy.ito;199000;AVAILABLE;2;13;2023-09-17;FALSE
+100141;Harcourt Estate Painted Stage Backdrop, 1980;THEATRE_OBJECT;foxgloveculturalpreservation;433000;INACTIVE;2;13;2023-09-15;FALSE
+100142;Closed Theatre Records — Group 3;ARCHIVAL_COLLECTION;hearthstonemuseumofappliedar;491000;INACTIVE;2;13;2023-09-29;FALSE
+100143;Nirvana Backstage Pass and Set List;MUSIC_MEMORABILIA;aldergrovefurnituredesignarc;414000;INACTIVE;2;13;2023-09-25;FALSE
+100144;Westhaven Works Ceremonial Presentation Object, 2002;HISTORIC_OBJECT;aldergrovefurnituredesignarc;455000;INACTIVE;2;13;2023-09-20;FALSE
+100145;Harcourt Estate Painted Stage Backdrop, 1989;THEATRE_OBJECT;wexlercapital2;322000;SOLD;2;13;2023-09-14;FALSE
+100146;Henri Matisse, Icare from Jazz, 1947;PRINT;delilah.kim;234000;SOLD;2;13;2023-09-18;FALSE
+100147;Community Ritual Mask;ETHNOGRAPHIC_OBJECT;theo_kinc2;764000;SOLD;2;13;2023-09-15;FALSE
+100148;Linden Library Archive, 2012–2042;ARCHIVAL_COLLECTION;PriyaSethi;403000;SOLD;2;13;2023-09-20;FALSE
+100149;Elena Caldwell, House at Low Tide, 1838;PAINTING;sofia.rivera;425000;INACTIVE;2;13;2023-09-13;FALSE
+100150;Touring Electric Guitar;MUSICAL_INSTRUMENT;howardfineobjects;477000;AVAILABLE;2;13;2023-09-30;FALSE
+100151;Studio with Copper Vessel Study;DRAWING;aiden.patel;217000;SOLD;2;13;2023-09-09;FALSE
+100152;Mateo Quinn Exhibition Lamp Prototype, 1973;DESIGN_OBJECT;pineharbormaterialcultureins;957000;INACTIVE;2;13;2023-09-14;FALSE
+100153;Rosa Desai, Evening at the Quarry, lithograph, 1767;PRINT;stonefieldpublicartconservan;582000;INACTIVE;2;13;2023-09-12;FALSE
+100154;Designer Performance Costume;FASHION;chloe.singh;282000;INACTIVE;2;13;2023-09-19;FALSE
+100155;Screen-Used Black Orchard Prop, 2001;FILM_PROP;northbridgemuseumofmoderncra;1196000;SOLD;2;13;2023-09-10;FALSE
+100156;Cypress Observatory Stained-Glass Window, 1820;ARCHITECTURAL_ELEMENT;elena.desai;133000;SOLD;2;13;2023-09-13;FALSE
+100157;David Bowie Ziggy Stardust Tour Costume;FASHION;keira.nguyen;170000;INACTIVE;2;13;2023-09-22;FALSE
+100158;Michael Jordan Game-Worn Sneakers;SPORTS_MEMORABILIA;ironwoodcraftpreservationsoc;402000;AVAILABLE;2;13;2023-09-08;FALSE
+100159;Mateo Kapoor, Harbour Series I, bronze, 1986;SCULPTURE;vanefamilyoffice;181000;SOLD;2;13;2023-09-19;FALSE
+100160;Helen Frankenthaler, Untitled, 1965;PAINTING;hearthstonemuseumofappliedar;1141000;INACTIVE;2;13;2023-09-28;FALSE
+100161;Victorian Era Monocle;HISTORIC_OBJECT;sabrina.shah;398000;SOLD;2;13;2023-09-25;FALSE
+100162;Lucien Havel, Signal Field, lithograph, 1988;PRINT;vivian.reyes_finance;649000;INACTIVE;2;13;2023-09-28;FALSE
+100163;Study for a Procession;PAINTING;EleanorRook;609000;SOLD;2;13;2023-09-10;FALSE
+100164;Handwritten Lyrics for a 1970s Rock Single;MANUSCRIPT;nathan58;266000;SOLD;2;13;2023-09-19;FALSE
+100165;Brass Surveying Transit;SCIENTIFIC_INSTRUMENT;harper.hernandez;375000;INACTIVE;2;13;2023-09-12;FALSE
+100166;Fantasy Film Sword Prop;FILM_PROP;nathan58;420000;SOLD;2;14;2023-11-08;FALSE
+100167;Elias Ellis Tour Outfit and Backstage Passes, 1968;MUSIC_MEMORABILIA;lorenzo.ellis;638000;INACTIVE;2;14;2023-11-14;FALSE
+100168;Art Deco Cinema Ticket Booth;ARCHITECTURAL_ELEMENT;ashlandmuseumofprintedarts;1018000;SOLD;2;14;2023-10-26;FALSE
+100169;Bon Jovi Slippery When Wet Tour Outfit;MUSIC_MEMORABILIA;stonefieldpublicartconservan;426000;INACTIVE;2;14;2023-10-27;FALSE
+100170;Muhammad Ali Training Robe;SPORTS_MEMORABILIA;howellartadvisory;390000;SOLD;2;14;2023-11-09;FALSE
+100171;Elias Ingram, Black Orchard, 1802;PAINTING;lana.mendez;1727000;INACTIVE;2;14;2023-11-07;FALSE
+100172;Samuel Saito Exhibition Lamp Prototype, 1972;DESIGN_OBJECT;liucollections;535000;SOLD;2;14;2023-10-07;FALSE
+100173;Amina Vale, Study for a Procession, lithograph, 1929;PRINT;emilia.cho;1428000;INACTIVE;2;14;2023-10-25;FALSE
+100174;Elena Ingram, Denver at Night, 1935;PHOTOGRAPH;georgia.park;146000;INACTIVE;2;14;2023-11-11;FALSE
+100175;Factory Window;PAINTING;tanglewoodmuseumofmoderncraf;221000;INACTIVE;2;14;2023-10-12;FALSE
+100176;Signed Recording Contract;MUSIC_MEMORABILIA;bobby;250000;AVAILABLE;2;14;2023-10-28;FALSE
+100177;Cypress Observatory Control Panel, 1901;INDUSTRIAL_OBJECT;jade.campbell;726000;AVAILABLE;2;14;2023-10-24;FALSE
+100178;Estate Collection of Studio Ceramics, 1948–1972;COLLECTION;crossventuresart;1700000;SOLD;2;14;2023-10-22;FALSE
+100179;Darius Cole, Three Cypress Trees, 1756;PAINTING;leo.lane;1409000;AVAILABLE;2;14;2023-11-13;FALSE
+100180;Meridian Studio Material Culture Collection, 1969–1994;COLLECTION;aldergrovefurnituredesignarc;208000;INACTIVE;2;14;2023-11-07;FALSE
+100181;Concorde Cabin Instrument Panel;TRANSPORTATION;zane.flores_director;2311000;INACTIVE;2;14;2023-10-20;FALSE
+100182;Macintosh 128K Prototype;TECHNOLOGY;ari.morgan;2003000;INACTIVE;2;14;2023-10-17;FALSE
+100183;St. Elian Parish Control Panel, 1891;INDUSTRIAL_OBJECT;santiago.jordan;1305000;SOLD;2;14;2023-10-30;FALSE
+100184;Winter Garden Print;PRINT;henry.reed;140000;INACTIVE;2;14;2023-11-05;FALSE
+100185;Art Nouveau Sapphire Dragonfly Brooch;JEWELRY;augvane7;1336000;SOLD;2;14;2023-10-18;FALSE
+100186;Closed Cinema Ticket Machine;HISTORIC_OBJECT;bellwethermaterialcultureins;423000;INACTIVE;2;14;2023-10-29;FALSE
+100187;Signed First Edition — Group 2;RARE_BOOK;fairmontmaritimeheritagemuse;547000;SOLD;2;14;2023-11-16;FALSE
+100188;St. Elian Parish Material Culture Collection, 1849–1874;COLLECTION;atlastaylorauctions;1119000;SOLD;2;14;2023-10-24;FALSE
+100189;Exhibition Lighting Prototype — Group 2;DESIGN_OBJECT;amir.saito_director;763000;INACTIVE;2;14;2023-10-13;FALSE
+100190;Orchard Interior Print;PRINT;southbankmaterialcultureinst;117000;AVAILABLE;2;14;2023-10-15;FALSE
+100191;Celia Roth Library Chair, 1917;FURNITURE;avane_alt;1417000;SOLD;2;14;2023-10-30;FALSE
+100192;Private Letters of a Modernist Architect, 1919–1947;ARCHIVAL_COLLECTION;yara.diaz;506000;INACTIVE;2;14;2023-10-14;FALSE
+100193;Journal of the Boston Expedition, 1901–1903;MANUSCRIPT;georgia.park;377000;INACTIVE;2;14;2023-11-11;FALSE
+100194;Early Scientific Treatise — Group 2;RARE_BOOK;theo_kinc2;208000;SOLD;2;14;2023-11-12;FALSE
+100195;Closed Theatre Records — Group 4;ARCHIVAL_COLLECTION;ari.turner;1665000;SOLD;2;14;2023-10-11;FALSE
+100196;Noelle Kapoor Library Chair, 1795;FURNITURE;nathan58;624000;SOLD;2;14;2023-10-12;FALSE
+100197;Redwood Civic Association Archive, 1943–1973;ARCHIVAL_COLLECTION;stonefieldhistorichousefound;761000;INACTIVE;2;14;2023-11-02;FALSE
+100198;Signed Tournament Racket;SPORTS_MEMORABILIA;aaliyah.zimmerman;246000;INACTIVE;2;14;2023-10-10;FALSE
+100199;The Long Platform Study;DRAWING;jade.campbell;321000;SOLD;2;14;2023-11-03;FALSE
+100200;Art Nouveau Pendant;JEWELRY;ashlandmuseumofprintedarts;923000;SOLD;2;14;2023-11-17;FALSE
+100201;Roger Federer Match-Used Racket;SPORTS_MEMORABILIA;arcadialamauctions;359000;SOLD;2;14;2023-10-30;FALSE
+100202;Darius Mercer, Winter Garden, 1868;PAINTING;longfellowestatecollection;996000;AVAILABLE;2;14;2023-10-24;FALSE
+100203;Red Bridge Print;PRINT;ashlandestatecollection;309000;AVAILABLE;2;14;2023-10-24;FALSE
+100204;Amara Serrat Exhibition Lamp Prototype, 2007;DESIGN_OBJECT;adamscollections;136000;SALE_PENDING;2;14;2023-11-10;FALSE
+100205;Elias Quinn Library Chair, 1991;FURNITURE;georgia.lee;284000;SALE_PENDING;2;14;2023-10-05;FALSE
+100206;Marc Chagall, The Circus, lithograph, 1967;PRINT;farah.vasquez;314000;SOLD;2;14;2023-10-28;FALSE
+100207;Astronomical Compendium;SCIENTIFIC_INSTRUMENT;kai.kaur;1079000;SOLD;2;14;2023-10-09;FALSE
+100208;Historic Shopfront Sign;ARCHITECTURAL_ELEMENT;EleanorRook;266000;SOLD;2;14;2023-10-10;FALSE
+100209;Studio Ceramic Vessel Set — Group 6;CERAMIC;parkhurstpublicartconservanc;1091000;SOLD;2;14;2023-10-30;FALSE
+100210;Studio Ceramic Collection — Group 2;COLLECTION;ironwoodcraftpreservatio_org;562000;INACTIVE;2;14;2023-10-20;FALSE
+100211;Theatre Lobby Bench — Group 3;FURNITURE;harper.flores;751000;SOLD;2;14;2023-10-18;FALSE
+100212;Black Orchard Sculpture;SCULPTURE;heritagerowmaterialculturein;1544000;SOLD;2;14;2023-11-12;FALSE
+100213;Henri Cartier-Bresson, Behind the Gare Saint-Lazare, 1932;PHOTOGRAPH;howellartadvisory;94000;SOLD;2;14;2023-11-18;FALSE
+100214;Painted Scenery from the Riverside Theatre;THEATRE_OBJECT;elias.estrada;494000;INACTIVE;2;14;2023-11-06;FALSE
+100215;Textile Mill Time Clock;INDUSTRIAL_OBJECT;GrantMercer;366000;SOLD;2;14;2023-10-12;FALSE
+100216;Granite Bay Film Society Processional Banner, 1951;TEXTILE;yara.diaz;708000;AVAILABLE;2;14;2023-11-01;FALSE
+100217;Priya Kwon Couture Evening Coat, 1952;FASHION;eastgaterailwayhistorycenter;169000;INACTIVE;2;14;2023-10-28;FALSE
+100218;Studio Ceramic Vessel Set — Group 7;CERAMIC;liucollections;480000;SOLD;2;14;2023-11-11;FALSE
+100219;Roman Coin Hoard with Excavation Archive;ARCHAEOLOGICAL_OBJECT;pineharbormaterialcultureins;344000;INACTIVE;2;14;2023-11-16;FALSE
+100220;Diane Arbus, Identical Twins, Roselle, New Jersey, 1967;PHOTOGRAPH;vivienne.cross;345000;SOLD;2;14;2023-10-20;FALSE
+100221;Jurassic Park Raptor Maquette;FILM_PROP;ashcroftcollection;771000;AVAILABLE;2;14;2023-11-18;FALSE
+100222;Telecommunications Switching Unit;TECHNOLOGY;bobby;321000;SOLD;2;14;2023-11-04;FALSE
+100223;Westhaven Works Archive, 1817–1847;ARCHIVAL_COLLECTION;rosemontdesignheritagecenter;1329000;SOLD;2;14;2023-10-11;FALSE
+100224;Stained-Glass Study Panel;GLASS;EleanorRook;340000;SOLD;2;14;2023-10-20;FALSE
+100225;Harcourt Estate Material Culture Collection, 1977–2002;COLLECTION;reina.reed;132000;SOLD;2;14;2023-10-13;FALSE
+100226;Rafael Cole, Night Tram, 1941;PAINTING;ftran_westhave;423000;SOLD;2;14;2023-10-16;FALSE
+100227;Alexander Calder, Small Standing Mobile, c. 1965;SCULPTURE;adamscollections;722000;SOLD;2;14;2023-11-07;FALSE
+100228;Mateo Voss Couture Evening Coat, 1931;FASHION;cole.thomas_director;627000;INACTIVE;2;14;2023-11-07;FALSE
+100229;Joan Miró, Le Lézard aux plumes d’or, 1971;PRINT;ftran_westhave;63000;SOLD;2;14;2023-10-30;FALSE
+100230;Handwritten Set List;MUSIC_MEMORABILIA;quarrylanemuseumofphotograph;2065000;SALE_PENDING;2;14;2023-11-11;FALSE
+100231;Sofia Quinn, Market Morning, 1825;PAINTING;harper.hernandez;598000;SALE_PENDING;2;14;2023-10-26;FALSE
+100232;The North Courtyard Study;DRAWING;gran_merc4;418000;SOLD;2;14;2023-10-26;FALSE
+100233;Mercury Records Processional Banner, 1780;TEXTILE;westhavencraftpreservationso;138000;INACTIVE;2;14;2023-11-13;FALSE
+100234;Closed Theatre Records — Group 5;ARCHIVAL_COLLECTION;vcross_alt;303000;SOLD;2;14;2023-10-06;FALSE
+100235;Portland Photographic Album;PHOTOGRAPH;andersonartadvisory;217000;SOLD;2;14;2023-10-24;FALSE
+100236;Denver Photographic Album;PHOTOGRAPH;ashcroftcollection;477000;SOLD;2;14;2023-10-06;FALSE
+100237;Detroit Railway Carriage Panel, 1933;TRANSPORTATION;sabrina.edwards;2619000;INACTIVE;2;14;2023-10-21;FALSE
+100238;Art Deco Silver Tea Service;METALWORK;lana.mendez;188000;AVAILABLE;2;14;2023-10-26;FALSE
+100239;Keith Haring, Pop Shop I, 1987;PRINT;georgia.park;267000;INACTIVE;2;14;2023-11-16;FALSE
+100240;Alien Xenomorph Production Head;FILM_PROP;abigail.morgan;212000;AVAILABLE;2;14;2023-10-31;FALSE
+100241;Jazz Club Upright Piano;MUSICAL_INSTRUMENT;ashlanddecorativeartsarchive;667000;SOLD;2;14;2023-11-04;FALSE
+100242;Screen-Used Market Morning Prop, 1993;FILM_PROP;tanglewoodculturalmemory_org;668000;INACTIVE;2;14;2023-10-21;FALSE
+100243;Vintage Racing Car Body;TRANSPORTATION;stonefieldhistorichousefound;489000;INACTIVE;2;14;2023-11-07;FALSE
+100244;Match-Worn Football Shirt;SPORTS_MEMORABILIA;silvermarshdecorativeartsarc;227000;SALE_PENDING;2;14;2023-11-05;FALSE
+100245;Blade Runner Spinner Miniature;FILM_PROP;southbanktextilearchive;674000;SOLD;2;14;2023-10-10;FALSE
+100246;Katsushika Hokusai, Under the Wave off Kanagawa (The Great Wave), c. 1831;PRINT;vanefamilyoffice;3200000;DISPUTED;2;15;2023-11-19;TRUE
+100247;Andy Warhol, Flowers, 1964;PAINTING;rothartadvisory;5400000;DISPUTED;2;15;2023-11-25;TRUE
+100248;Louise Bourgeois, Spider IV, conceived 1996 and cast 1997;SCULPTURE;wexlercollection;8100000;DISPUTED;2;15;2023-11-24;TRUE
+100249;Banksy, Love is in the Air, 2005;PAINTING;crossventuresart;4700000;DISPUTED;2;15;2023-11-28;TRUE
+100250;Gerhard Richter, Abstraktes Bild 747-1, 1991;PAINTING;ashcroftcollection;9400000;DISPUTED;2;15;2023-11-27;TRUE
+100251;Redwood Civic Association Archive, 1806–1836;ARCHIVAL_COLLECTION;christian.walker;258000;SOLD;2;15;2023-11-20;FALSE
+100252;Modernist Writing Desk — Group 2;FURNITURE;ruby.reed;196000;SOLD;2;15;2023-11-22;FALSE
+100253;Le Mans Racing Steering Wheel;TRANSPORTATION;georgia.park;900000;AVAILABLE;2;15;2023-11-28;FALSE
+100254;Championship Boxing Gloves;SPORTS_MEMORABILIA;MWexler;414000;SOLD;2;15;2023-11-30;FALSE
+100255;Screen-Used Study for a Procession Prop, 1933;FILM_PROP;foundryzimmermanfineobjects;1591000;SOLD;2;15;2023-11-22;FALSE
+100256;Madonna Blond Ambition Tour Costume Sketches;MUSIC_MEMORABILIA;granitehillbotanicalheritage;116000;SOLD;2;15;2023-11-23;FALSE
+100257;Nineteenth-Century Brass Transit Telescope;SCIENTIFIC_INSTRUMENT;henry.ellis;195000;SOLD;2;15;2023-11-22;FALSE
+100258;Original Animation Cells from a 1940s Feature Film;FILM_AND_MEDIA;TheoKincaid;137000;AVAILABLE;2;15;2023-11-19;FALSE
+100259;Mercury Records Silver Presentation Service, 1848;METALWORK;farahholdings1;698000;SOLD;2;15;2023-11-19;FALSE
+100260;Theo Havel Exhibition Lamp Prototype, 1988;DESIGN_OBJECT;stonefieldpublicartconservan;2553000;FULLY_SUBSCRIBED;2;15;2023-11-26;FALSE
+100261;Mercury Records Archive, 2004–2034;ARCHIVAL_COLLECTION;ruby.reed;821000;SOLD;2;15;2023-11-22;FALSE
+100262;North Coast Railway Press, Illustrated First Edition, 1844;RARE_BOOK;tariqinvests;302000;SALE_PENDING;2;15;2023-11-29;FALSE
+100263;Annotated Shooting Script for a 1970s Science-Fiction Film;FILM_AND_MEDIA;sabrina.edwards;218000;AVAILABLE;2;15;2023-11-23;FALSE
+100264;Pablo Picasso, Visage aux yeux rieurs, ceramic plate, 1969;CERAMIC;sabrina.shah;435000;SOLD;2;15;2023-11-20;FALSE
+100265;Historic Restaurant Sign;HISTORIC_OBJECT;harper.hernandez;552000;SOLD;2;15;2023-11-30;FALSE
+100266;Jazz Club Upright Piano — Group 2;MUSICAL_INSTRUMENT;crosscapital2;152000;SOLD;2;15;2023-11-26;FALSE
+100267;Rafael Ren Studio Ceramic Vessel Set, 1813;CERAMIC;ashlandmuseumofprintedarts;830000;SOLD;2;15;2023-11-25;FALSE
+100268;Santiago Quinn Concert Violin, 1965;MUSICAL_INSTRUMENT;vivcro_hold4;960000;SOLD;2;15;2023-11-26;FALSE
+100269;Black Orchard Print;PRINT;aaron.olsen;250000;SOLD;2;15;2023-11-26;FALSE
+100270;Imani Quinn, Harbour Series I, 1825;PAINTING;andersonartadvisory;672000;SOLD;2;15;2023-11-23;FALSE
+100271;Claude Monet, Nymphéas, c. 1916;PAINTING;caesar;1071000;SOLD;2;15;2023-11-21;FALSE
+100272;Egon Schiele, Seated Figure Study, 1917;DRAWING;ashlandmuseumofprintedarts;290000;SOLD;2;15;2023-11-25;FALSE
+100273;Ansel Adams, Moonrise, Hernandez, New Mexico, 1941;PHOTOGRAPH;ari.turner;596000;SOLD;2;15;2023-11-24;FALSE
+100274;Marc Chagall, Bouquet au village, 1969;PAINTING;valeheritagefund;238000;SOLD;2;15;2023-11-28;FALSE
+100275;House at Low Tide;PAINTING;lana.vasquez;1495000;SOLD;2;15;2023-11-29;FALSE
+100276;Sofia Roth, The Long Platform, bronze, 1860;SCULPTURE;heritagerowmaterialculturein;954000;SOLD;2;15;2023-11-25;FALSE
+100277;Mercury Records Computing Prototype, 1955;TECHNOLOGY;CelesteRoth;152000;SOLD;2;15;2023-11-27;FALSE
+100278;Jonas Cole, Cloud over the Foundry, lithograph, 1893;PRINT;nadi_whit5;289000;AVAILABLE;2;15;2023-11-23;FALSE
+100279;Pablo Picasso, La Colombe, 1949;PRINT;windermerepublicartconservan;210000;SOLD;2;15;2023-11-29;FALSE
+100280;Samuel Ellis, River Bend, bronze, 1853;SCULPTURE;howellartadvisory;511000;SOLD;2;15;2023-11-25;FALSE
+100281;Journal of the Baltimore Expedition, 1757–1759;MANUSCRIPT;stonefieldpublicartconservan;344000;AVAILABLE;2;15;2023-11-27;FALSE
+100282;Stained-Glass Window from a Closed Railway Chapel;ARCHITECTURAL_ELEMENT;ruby.reed;207000;SOLD;2;15;2023-11-26;FALSE
+100283;Campaign Megaphone from the 1968 Election;HISTORIC_OBJECT;heritagerowdecorativeartsarc;128000;AVAILABLE;2;15;2023-11-29;FALSE
+100284;Triceratops Frill Fragment with Collection Records;NATURAL_HISTORY;redcedarfolkartfoundation;314000;SOLD;2;15;2023-11-24;FALSE
+100285;Ansel Kwon, Market Morning, 1838;PAINTING;javier.hayes;227000;SOLD;2;15;2023-11-25;FALSE
+100286;Nintendo PlayStation Prototype Console;TECHNOLOGY;foundrybennettfineobjects;475000;AVAILABLE;2;15;2023-11-25;FALSE
+100287;Signal Field;PAINTING;silvermarsharchitecturalheri;439000;AVAILABLE;2;15;2023-11-20;FALSE
+100288;Roy Lichtenstein, Brushstroke, 1965;PRINT;northbridgemuseumofmoderncra;740000;REJECTED;2;15;2023-11-22;FALSE
+100289;Sofia Roth, Evening at the Quarry, 1866;PAINTING;redcedarfolkartfoundation;740000;REJECTED;2;15;2023-11-20;FALSE
+100290;Folk Costume Ensemble;ETHNOGRAPHIC_OBJECT;foundryxucollections;2255000;SOLD;2;15;2023-11-28;FALSE
+100291;Mercury Records Silver Presentation Service, 1985;METALWORK;CelesteRoth;460000;SOLD;2;15;2023-11-29;FALSE
+100292;Science-Fiction Helmet Prop;FILM_PROP;castillocollections;343000;SOLD;2;15;2023-11-25;FALSE
+100293;Santiago Ito, House at Low Tide, 1753;PAINTING;fairmontmaritimeheritagemuse;1938000;SOLD;2;15;2023-11-22;FALSE
+100294;Redwood Civic Association Silver Presentation Service, 1802;METALWORK;ronashcroft7;200000;SOLD;2;15;2023-11-19;FALSE
+100295;Altair 8800 Computer;TECHNOLOGY;georgia.park;1352000;FULLY_SUBSCRIBED;2;15;2023-11-28;FALSE
+100296;Pablo Picasso, Étude de tête, 1962;DRAWING;amir.saito_director;274000;AVAILABLE;2;15;2023-11-24;FALSE
+100297;Leila Mercer, Green Passage, 1904;PAINTING;highlandartistslegacytru_org;384000;AVAILABLE;2;15;2023-11-22;FALSE
+100298;Iris Novak, Winter Garden, 1976;PAINTING;valeheritagefund;241000;SOLD;2;15;2023-11-30;FALSE
+100299;Standing Form Sculpture;SCULPTURE;ashlandestatecollection;159000;AVAILABLE;2;15;2023-11-20;FALSE
+100300;Granite Bay Film Society Press, Illustrated First Edition, 1760;RARE_BOOK;harborlightdecorativeartsarc;226000;AVAILABLE;2;15;2023-11-24;FALSE
+100301;Barbara Hepworth, Small Form, 1963;SCULPTURE;lana.vasquez;1320000;SOLD;2;15;2023-11-26;FALSE
+100302;Iron Meteorite, 42 kg;NATURAL_HISTORY;helval_hold6;857000;SOLD;2;15;2023-11-19;FALSE
+100303;Westhaven Works Material Culture Collection, 1849–1874;COLLECTION;selene78;103000;SOLD;2;15;2023-11-19;FALSE
+100304;Orion Press Computing Prototype, 1948;TECHNOLOGY;heritagerowdecorativeartsarc;1150000;FULLY_SUBSCRIBED;2;15;2023-11-30;FALSE
+100305;Vivienne Westwood Punk Ensemble, c. 1977;FASHION;ronash_hold5;105000;SOLD;2;15;2023-11-20;FALSE
+100306;Cindy Sherman, Untitled Film Still #21, 1978;PHOTOGRAPH;stoneartadvisory;478000;SOLD;2;15;2023-11-23;FALSE
+100307;Carved Festival Mask with 1930s Field Notes;ETHNOGRAPHIC_OBJECT;PriyaSethi;213000;SOLD;2;15;2023-11-28;FALSE
+100308;Alberto Giacometti, Figurine, c. 1950;SCULPTURE;psethi_family6;1437000;SOLD;2;15;2023-11-19;FALSE
+100309;Imani Ito Tour Outfit and Backstage Passes, 1968;MUSIC_MEMORABILIA;leo.lane;172000;AVAILABLE;2;15;2023-11-30;FALSE
+100310;Los Angeles Championship Match-Worn Jersey, 1955;SPORTS_MEMORABILIA;EleanorRook;636000;SOLD;2;15;2023-11-23;FALSE
+100311;Annotated Production Script, 1948;FILM_AND_MEDIA;bellwethermaterialcultureins;70000;AVAILABLE;2;15;2023-11-20;FALSE
+100312;Star Wars Lightsaber Prop;FILM_PROP;crossventuresart;553000;SOLD;2;15;2023-11-25;FALSE
+100313;Charles Darwin, On the Origin of Species, first edition, 1859;RARE_BOOK;rosemontdesignheritagecenter;634000;SOLD;2;15;2023-11-19;FALSE
+100314;Olympic Relay Torch, 1968;SPORTS_MEMORABILIA;tanglewoodmuseumofmoderncraf;145000;AVAILABLE;2;15;2023-11-21;FALSE
+100315;Ancient Coin Group;ARCHAEOLOGICAL_OBJECT;harper7;731000;SOLD;2;15;2023-11-23;FALSE
+100316;Ansel Ren Concert Violin, 2016;MUSICAL_INSTRUMENT;farah.vasquez;260000;SOLD;2;15;2023-11-26;FALSE
+100317;The Beatles Handwritten Set List;MUSIC_MEMORABILIA;helvale7;1285000;SOLD;2;15;2023-11-29;FALSE
+100318;St. Elian Parish Computing Prototype, 1987;TECHNOLOGY;camila.park;203000;SOLD;2;15;2023-11-29;FALSE
+100319;Meridian Studio Processional Banner, 1850;TEXTILE;foundryzimmermanfineobjects;122000;AVAILABLE;2;15;2023-11-25;FALSE
+100320;Annotated Production Script, 1952;FILM_AND_MEDIA;meridianmillercollections;392000;SOLD;2;15;2023-11-23;FALSE
+100321;Iris Serrat Concert Violin, 1781;MUSICAL_INSTRUMENT;howardfineobjects;151000;SOLD;2;15;2023-11-23;FALSE
+100322;Factory Window Study;DRAWING;gmercer_family1;156000;SOLD;2;15;2023-11-21;FALSE
+100323;Archive of the Meridian Press, 1924–1962;ARCHIVAL_COLLECTION;jade.campbell;221000;SOLD;2;15;2023-11-30;FALSE
+100324;George Orwell, Nineteen Eighty-Four, first edition, 1949;RARE_BOOK;augvan_hold1;416000;SOLD;2;15;2023-11-23;FALSE
+100325;Silver Processional Cross, c. 1510;RELIGIOUS_OBJECT;yasmin.roberts;739000;REJECTED;2;15;2023-11-20;FALSE
+100326;Alberto Giacometti, Portrait Study, c. 1955;DRAWING;northbridgemuseumofmoderncra;56000;SOLD;2;15;2023-11-26;FALSE
+100327;Orion Press Painted Stage Backdrop, 1832;THEATRE_OBJECT;selene78;183000;SOLD;2;15;2023-11-28;FALSE
+100328;Rowan Ortega, Cloud over the Foundry, bronze, 2013;SCULPTURE;eastgaterailwayhistorycenter;260000;AVAILABLE;2;15;2023-11-23;FALSE
+100329;Elena Maren Tour Outfit and Backstage Passes, 1989;MUSIC_MEMORABILIA;liucollections;729000;SOLD;2;15;2023-11-22;FALSE
+100330;Denver Railway Carriage Panel, 1899;TRANSPORTATION;kai.chen;408000;SOLD;2;15;2023-11-23;FALSE
+100331;Jean-Michel Basquiat, Untitled Head, 1982;PAINTING;AuggieVane;384000;SOLD;2;15;2023-11-30;FALSE
+100332;Agnes Martin, Untitled, 1990;PAINTING;georgia.park;442000;AVAILABLE;2;15;2023-11-30;FALSE
+100333;Amara Quinn Art Glass Panel, 1942;GLASS;gmercer_family1;111000;AVAILABLE;2;15;2023-11-21;FALSE
+100334;Cypress Observatory Processional Banner, 1799;TEXTILE;georgia.park;148000;AVAILABLE;2;15;2023-11-30;FALSE
+100335;Santiago Kwon, Market Morning, 1957;PAINTING;zane.flores_director;658000;AVAILABLE;2;15;2023-11-26;FALSE
+100336;David Hockney, Study for a Pool, 1970;PAINTING;reese.wilson;214000;AVAILABLE;2;15;2023-11-30;FALSE
+100337;Harcourt Estate Archive, 1881–1911;ARCHIVAL_COLLECTION;foundryzimmermanfineobjects;429000;SOLD;2;15;2023-11-27;FALSE
+100338;Mara Kwon, Coastal Light, 1939;PAINTING;martinheritagesales;454000;SOLD;2;15;2023-11-21;FALSE
+100339;Nicolas de Staël, Composition, 1950;PAINTING;TheoKincaid;861000;SOLD;2;15;2023-11-19;FALSE
+100340;Sofia Navarro Exhibition Lamp Prototype, 2008;DESIGN_OBJECT;DominicHale;478000;SOLD;2;15;2023-11-20;FALSE
+100341;Valentina Morrow, Factory Window, bronze, 1830;SCULPTURE;valeheritagefund;645000;SOLD;2;15;2023-11-20;FALSE
+100342;Red Bridge Sculpture;SCULPTURE;HelenaVale;246000;SOLD;2;15;2023-11-21;FALSE
+100343;Henri Matisse, Femme assise, 1942;DRAWING;ramirezauctionpartners;123000;SOLD;2;15;2023-11-20;FALSE
+100344;Early Medical Imaging Unit;SCIENTIFIC_INSTRUMENT;psethi_family6;1347000;SOLD;2;15;2023-11-28;FALSE
+100345;Pablo Picasso, Femme au béret et à la robe quadrillée, 1937;PAINTING;aaron.olsen;313000;SOLD;2;15;2023-11-19;FALSE
+100346;Darius Ito, Signal Field, 1904;PAINTING;vanefamilyoffice;1201000;SOLD;2;15;2023-11-29;FALSE
+100347;Harcourt Estate Archive, 1964–1994;ARCHIVAL_COLLECTION;abigail.bennett;832000;AVAILABLE;2;15;2023-11-23;FALSE
+100348;The Long Platform;PAINTING;wexlercapital2;440000;SOLD;2;15;2023-11-21;FALSE
+100349;Roman Domestic Vessel;ARCHAEOLOGICAL_OBJECT;ronashcroft7;139000;SALE_PENDING;2;15;2023-11-21;FALSE
+100350;Tour Outfit;MUSIC_MEMORABILIA;cassidy.ito;220000;SOLD;2;15;2023-11-25;FALSE
+100351;Redwood Civic Association Computing Prototype, 1995;TECHNOLOGY;copperlinemuseumofphotograph;788000;SOLD;2;15;2023-11-25;FALSE
+100352;Screen-Used Market Morning Prop, 1961;FILM_PROP;silvermarshdecorativeartsarc;127000;AVAILABLE;2;15;2023-11-20;FALSE
+100353;Elena Foster, Black Orchard, 1756;PAINTING;noelle.palmer;1063000;SOLD;2;15;2023-11-27;FALSE
+100354;Victorian Era Monocle — Group 2;HISTORIC_OBJECT;liucollections;418000;SOLD;2;15;2023-11-28;FALSE
+100355;Blue Room with Fig Tree;PAINTING;andersonartadvisory;435000;SOLD;2;15;2023-11-19;FALSE
+100356;Historic Racing Helmet;SPORTS_MEMORABILIA;nathan58;368000;SOLD;2;15;2023-11-25;FALSE
+100357;Milo Ortega Concert Violin, 1939;MUSICAL_INSTRUMENT;southbanktextilearchive;489000;SOLD;2;15;2023-11-25;FALSE
+100358;Hand-Coloured Regional Map — Group 2;MAP;gran_merc4;85000;SOLD;2;15;2023-11-28;FALSE
+100359;Mara Novak, Red Bridge, bronze, 2015;SCULPTURE;celrot_hold2;1081000;SOLD;2;15;2023-11-22;FALSE
+100360;Bay City Foundry Silver Presentation Service, 1872;METALWORK;greatlakesindustrialartsmuse;187000;SOLD;2;15;2023-11-29;FALSE
+100361;Screen-Used The North Courtyard Prop, 2002;FILM_PROP;windermerepublicartconservan;487000;SALE_PENDING;2;15;2023-11-30;FALSE
+100362;River Bend;PAINTING;elmsteadculturalpreservation;1927000;SOLD;2;15;2023-11-22;FALSE
+100363;Screen-Used Red Bridge Prop, 1997;FILM_PROP;elmsteadculturalpreservation;454000;SOLD;2;15;2023-11-19;FALSE
+100364;Ceremonial Chalice;RELIGIOUS_OBJECT;rosemontmuseumofmoderncraftd;248000;SOLD;2;15;2023-11-29;FALSE
+100365;Screen-Used Hero Prop;FILM_PROP;celine.irwin;1325000;SOLD;2;15;2023-11-27;FALSE
+100366;Westhaven Works Processional Banner, 1940;TEXTILE;ronashcroft7;315000;SOLD;2;15;2023-11-26;FALSE
+100367;Exploration Journal — Group 3;MANUSCRIPT;nia.jensen;140000;SOLD;2;15;2023-11-24;FALSE
+100368;Championship Boxing Gloves — Group 2;SPORTS_MEMORABILIA;rosemontmuseumofmoderncraftd;315000;SOLD;2;15;2023-11-23;FALSE
+100369;Mosaic Interior Panel;ARCHITECTURAL_ELEMENT;vcross_alt;390000;SOLD;2;15;2023-11-29;FALSE
+100370;Signed Recording Contract — Group 2;MUSIC_MEMORABILIA;GrantMercer;186000;AVAILABLE;2;15;2023-11-28;FALSE
+100371;Black Orchard;PAINTING;vanecapital2;399000;SALE_PENDING;2;15;2024-01-17;FALSE
+100372;Ansel Foster Art Glass Panel, 1893;GLASS;meridianmillercollections;199000;SOLD;2;15;2023-12-04;FALSE
+100373;Jonas Morrow, Salt Marsh at Dusk, bronze, 2018;SCULPTURE;zane.flores_director;454000;AVAILABLE;2;15;2024-01-06;FALSE
+100374;Santa Clara Championship Match-Worn Jersey, 1951;SPORTS_MEMORABILIA;yorkfieldfurnituredesignarch;610000;SOLD;2;15;2024-01-23;FALSE
+100375;Lucien Kapoor Concert Violin, 1813;MUSICAL_INSTRUMENT;aaliyah.zimmerman;1366000;FULLY_SUBSCRIBED;2;15;2024-01-04;FALSE
+100376;Journal of the Denver Expedition, 1956–1958;MANUSCRIPT;naomi.campbell;530000;SOLD;2;15;2023-12-17;FALSE
+100377;Festival Vestment Set;RELIGIOUS_OBJECT;sofia.rivera;1839000;FULLY_SUBSCRIBED;2;15;2024-01-08;FALSE
+100378;Ansel Saito, The North Courtyard, 1979;PAINTING;windermerepublicartconservan;664000;SOLD;2;15;2023-12-24;FALSE
+100379;Festival Mask with 1840 Collection Notes;ETHNOGRAPHIC_OBJECT;cedarpointculturalmemoryproj;2519000;FULLY_SUBSCRIBED;2;15;2023-12-15;FALSE
+100380;Oakland Championship Match-Worn Jersey, 2011;SPORTS_MEMORABILIA;julia.roberts;383000;AVAILABLE;2;15;2024-01-27;FALSE
+100381;Mercury Records Processional Cross, c. 1887;RELIGIOUS_OBJECT;wexlercapital2;608000;SOLD;2;15;2023-12-15;FALSE
+100382;Walnut Reading Chair — Group 2;FURNITURE;greatlakesindustrialartsmuse;875000;SOLD;2;15;2023-12-13;FALSE
+100383;Jonas Foster, Coastal Light, bronze, 1992;SCULPTURE;walkercollections;298000;AVAILABLE;2;15;2023-12-02;FALSE
+100384;Screen-Used Black Orchard Prop, 1990;FILM_PROP;windermeredesignheritagecent;1262000;AVAILABLE;2;15;2024-01-25;FALSE
+100385;Amara Foster Concert Violin, 2000;MUSICAL_INSTRUMENT;quarrylanemuseumofphotograph;1380000;FULLY_SUBSCRIBED;2;15;2023-12-09;FALSE
+100386;Rafael Bennett Precision Microscope, 1865;SCIENTIFIC_INSTRUMENT;stonefieldhistorichousefound;410000;AVAILABLE;2;15;2024-01-22;FALSE
+100387;River Bend Print;PRINT;silvermarshdecorativeartsarc;425000;AVAILABLE;2;15;2024-01-14;FALSE
+100388;Jazz Club Upright Piano — Group 3;MUSICAL_INSTRUMENT;nathan.hassan;467000;AVAILABLE;2;15;2024-01-20;FALSE
+100389;Winter Garden;PAINTING;rosemonthistoricalsociety;1236000;FULLY_SUBSCRIBED;2;15;2023-12-24;FALSE
+100390;Santiago Kapoor Exhibition Lamp Prototype, 1977;DESIGN_OBJECT;ftran_westhave;757000;REJECTED;2;15;2024-01-27;FALSE
+100391;Richmond Botanical Specimen Collection, 1797;NATURAL_HISTORY;ftran_westhave;506000;SOLD;2;15;2024-01-24;FALSE
+100392;Jonas Saito, Red Bridge, 1996;PAINTING;henry.reed;413000;AVAILABLE;2;15;2024-01-04;FALSE
+100393;Mateo Navarro Exhibition Lamp Prototype, 1986;DESIGN_OBJECT;leo.lane;1674000;AVAILABLE;2;15;2023-12-26;FALSE
+100394;Linden Library Processional Cross, c. 1772;RELIGIOUS_OBJECT;nathan58;341000;SOLD;2;15;2024-01-20;FALSE
+100395;Red Bridge;PAINTING;sabrina.edwards;3525000;FULLY_SUBSCRIBED;2;15;2024-01-12;FALSE
+100396;Seattle Railway Carriage Panel, 1924;TRANSPORTATION;heritagerowdecorativeartsarc;1920000;FULLY_SUBSCRIBED;2;15;2024-01-17;FALSE
+100397;Meridian Studio Processional Cross, c. 1784;RELIGIOUS_OBJECT;jade.campbell;437000;SOLD;2;15;2024-01-09;FALSE
+100398;Festival Mask with 1920 Collection Notes;ETHNOGRAPHIC_OBJECT;cole.thomas_director;1608000;FULLY_SUBSCRIBED;2;15;2023-12-20;FALSE
+100399;Lucien Quinn, Study for Black Orchard, 1995;DRAWING;vanefamilyoffice;3192000;AVAILABLE;2;15;2024-01-25;FALSE
+100400;Linden Library Archive, 1821–1851;ARCHIVAL_COLLECTION;harper.hernandez;561000;SOLD;2;15;2023-12-10;FALSE
+100401;Brass Surveying Transit — Group 2;SCIENTIFIC_INSTRUMENT;foundrybennettfineobjects;1118000;SOLD;2;15;2024-01-18;FALSE
+100402;Riverside Theatre Ceremonial Presentation Object, 1929;HISTORIC_OBJECT;howellartadvisory;457000;SALE_PENDING;2;15;2023-12-08;FALSE
+100403;Milo Roth Precision Microscope, 1982;SCIENTIFIC_INSTRUMENT;emilia.cho;842000;SOLD;2;15;2024-01-20;FALSE
+100404;Sofia Vale Exhibition Lamp Prototype, 1887;DESIGN_OBJECT;castillocollections;495000;SOLD;2;15;2023-12-04;FALSE
+100405;Darius Caldwell, House at Low Tide, lithograph, 1870;PRINT;adamscollections;154000;SOLD;2;15;2023-12-11;FALSE
+100406;Bay City Foundry Processional Cross, c. 1821;RELIGIOUS_OBJECT;dhale_family5;2297000;SOLD;2;15;2024-01-28;FALSE
+100407;Mara Cole, River Bend, 1834;PAINTING;northbridgemuseumofmoderncra;1621000;SOLD;2;15;2024-01-19;FALSE
+100408;Signed First Edition — Group 3;RARE_BOOK;cassidy.ito;150000;SOLD;2;15;2023-12-15;FALSE
+100409;Festival Mask with 1905 Collection Notes;ETHNOGRAPHIC_OBJECT;ftran_westhave;587000;SOLD;2;15;2023-12-13;FALSE
+100410;Arthur Ferrand Tour Outfit and Backstage Passes, 2010;MUSIC_MEMORABILIA;georgia_elli;774000;SOLD;2;15;2023-12-25;FALSE
+100411;Westhaven Works Processional Banner, 1874;TEXTILE;valeheritagefund;1545000;SOLD;2;15;2023-12-26;FALSE
+100412;Signed Tournament Racket — Group 2;SPORTS_MEMORABILIA;vivcross7;849000;SOLD;2;15;2024-01-05;FALSE
+100413;Journal of the Los Angeles Expedition, 2001–2003;MANUSCRIPT;redcedarfolkartfoundation;510000;SOLD;2;15;2023-12-09;FALSE
+100414;Granite Bay Film Society Ceremonial Presentation Object, 1772;HISTORIC_OBJECT;reese.wilson;153000;AVAILABLE;2;15;2024-01-15;FALSE
+100415;Camille Dawson, Cloud over the Foundry, bronze, 1762;SCULPTURE;ftran_westhave;859000;SOLD;2;15;2023-12-18;FALSE
+100416;Meridian Studio Ceremonial Presentation Object, 1779;HISTORIC_OBJECT;georgia_elli;343000;SOLD;2;15;2024-01-31;FALSE
+100417;Early Personal Computer;TECHNOLOGY;priya.nelson;3203000;SOLD;2;15;2024-01-16;FALSE
+100418;St. Elian Parish Control Panel, 1919;INDUSTRIAL_OBJECT;maplecrossinghistorichousefo;695000;AVAILABLE;2;15;2023-12-06;FALSE
+100419;Miniature Effects Vehicle;FILM_PROP;tanglewoodfolkartarchive;334000;SOLD;2;15;2024-01-12;FALSE
+100420;Carved Stone Door Surround;ARCHITECTURAL_ELEMENT;elias.garcia;108000;SOLD;2;15;2024-01-21;FALSE
+100421;Rosa Caldwell Studio Ceramic Vessel Set, 1950;CERAMIC;zane.thomas;973000;SOLD;2;15;2024-01-23;FALSE
+100422;Local Newspaper Photograph Archive — Group 5;ARCHIVAL_COLLECTION;ashlandestatecollection;1595000;FULLY_SUBSCRIBED;2;15;2024-01-25;FALSE
+100423;Historic Restaurant Sign — Group 2;HISTORIC_OBJECT;wellingtonmaterialcultureins;186000;AVAILABLE;2;15;2023-12-15;FALSE
+100424;Annotated Production Script, 1977;FILM_AND_MEDIA;sabrina.edwards;639000;SALE_PENDING;2;15;2024-01-15;FALSE
+100425;Rafael Maren, Signal Field, bronze, 1921;SCULPTURE;HelenaVale;963000;SOLD;2;15;2024-01-15;FALSE
+100426;Granite Bay Film Society Processional Banner, 1969;TEXTILE;felix.romero;808000;WITHDRAWN;2;15;2023-12-25;FALSE
+100427;Arthur Ito, New Orleans at Night, 2016;PHOTOGRAPH;wellingtonmaterialcultureins;1153000;FULLY_SUBSCRIBED;2;15;2023-12-22;FALSE
+100428;Camille Novak, Coastal Light, bronze, 1894;SCULPTURE;greatlakesindustrialartsmuse;1600000;AVAILABLE;2;15;2024-01-23;FALSE
+100429;Miniature Effects Vehicle — Group 2;FILM_PROP;longfellowestatecollection;323000;AVAILABLE;2;15;2023-12-01;FALSE
+100430;Theo Roth Precision Microscope, 1935;SCIENTIFIC_INSTRUMENT;avane_alt;585000;SOLD;2;15;2024-01-07;FALSE
+100431;Bay City Foundry Press, Illustrated First Edition, 1931;RARE_BOOK;ashlandestatecollection;151000;AVAILABLE;2;15;2024-01-29;FALSE
+100432;Philadelphia Railway Carriage Panel, 1935;TRANSPORTATION;CelesteRoth;425000;SOLD;2;15;2024-01-02;FALSE
+100433;Historic Household Interior Group — Group 2;COLLECTION;oakhollowmuseumofappliedarts;742000;REJECTED;2;15;2024-01-14;FALSE
+100434;Felix Ferrand, Standing Form, bronze, 1927;SCULPTURE;wexlercollection;709000;SOLD;2;15;2023-12-23;FALSE
+100435;Riverside Theatre Silver Presentation Service, 1884;METALWORK;isaac.shah;973000;SOLD;2;15;2023-12-24;FALSE
+100436;Westhaven Works Processional Banner, 1778;TEXTILE;bellwethermaterialcultureins;144000;AVAILABLE;2;15;2023-12-03;FALSE
+100437;Arcade Development Console;TECHNOLOGY;yorkfieldfurnituredesignarch;523000;SOLD;2;15;2023-12-25;FALSE
+100438;Jazz Club Upright Piano — Group 4;MUSICAL_INSTRUMENT;malik.johnson;621000;SOLD;2;15;2023-12-26;FALSE
+100439;Hand-Coloured Regional Map — Group 3;MAP;caesar;850000;SOLD;2;15;2024-01-10;FALSE
+100440;Rosa Voss Tour Outfit and Backstage Passes, 1985;MUSIC_MEMORABILIA;aiden.patel;867000;SOLD;2;15;2023-12-22;FALSE
+100441;Harcourt Estate Computing Prototype, 1995;TECHNOLOGY;franklincollections;465000;SOLD;2;15;2023-12-09;FALSE
+100442;Journal of the Los Angeles Expedition, 1831–1833;MANUSCRIPT;windermeredesignheritage_org;614000;SOLD;2;15;2024-01-09;FALSE
+100443;Nadia Quinn Library Chair, 1933;FURNITURE;wellingtonmaterialcultureins;990000;FULLY_SUBSCRIBED;2;15;2023-12-27;FALSE
+100444;After the Storm Print;PRINT;ronanA;488000;SOLD;2;15;2024-01-13;FALSE
+100445;Mara Serrat, Study for The Long Platform, 2015;DRAWING;zane.flores_director;322000;AVAILABLE;2;15;2024-01-29;FALSE
+100446;Priya Voss, The North Courtyard, 1872;PAINTING;valecapital2;327000;SOLD;2;15;2024-01-31;FALSE
+100447;Felix Bennett, Blue Room with Fig Tree, lithograph, 1753;PRINT;tanglewoodmuseumofmoderncraf;278000;AVAILABLE;2;15;2024-01-30;FALSE
+100448;Gold and Enamel Memorial Brooch, c. 2001;JEWELRY;elmsteadculturalpreservation;2036000;SOLD;2;15;2023-12-17;FALSE
+100449;Theo Vale Couture Evening Coat, 1993;FASHION;lorenzo.xu;456000;SOLD;2;15;2024-01-09;FALSE
+100450;Jonas Novak, Orchard Interior, bronze, 1931;SCULPTURE;sofia.hayes;458000;SOLD;2;15;2023-12-21;FALSE
+100451;Screen-Used House at Low Tide Prop, 1948;FILM_PROP;malik.johnson;357000;SOLD;2;15;2023-12-03;FALSE
+100452;Westhaven Works Archive, 1839–1869;ARCHIVAL_COLLECTION;leo.lane;1041000;FULLY_SUBSCRIBED;2;15;2023-12-21;FALSE
+100453;Celia Desai, Studio with Copper Vessel, 1956;PAINTING;georgia.lee;240000;AVAILABLE;2;15;2024-01-23;FALSE
+100454;Elias Desai, Study for Harbour Series I, 1964;DRAWING;windermeredesignheritagecent;608000;SOLD;2;15;2023-12-07;FALSE
+100455;Priya Desai, Black Orchard, lithograph, 1944;PRINT;stonefieldpublicartconservan;176000;AVAILABLE;2;15;2023-12-31;FALSE
+100456;Cypress Observatory Ceremonial Presentation Object, 1935;HISTORIC_OBJECT;eastgateindustrialartsmuseum;425000;SOLD;2;15;2024-01-25;FALSE
+100457;Three Cypress Trees;PAINTING;rosemonthistoricalsociety;2585000;FULLY_SUBSCRIBED;2;15;2024-01-30;FALSE
+100458;Family Correspondence Archive — Group 2;ARCHIVAL_COLLECTION;aldergrovefurnituredesignarc;508000;SOLD;2;15;2024-01-10;FALSE
+100459;Mara Cole, Studio with Copper Vessel, 1978;PAINTING;farah.stone;886000;PARTIALLY_SUBSCRIBED;2;15;2024-01-27;FALSE
+100460;Nadia Mercer Studio Ceramic Vessel Set, 1901;CERAMIC;longfellowestatecollection;566000;SOLD;2;15;2024-01-19;FALSE
+100461;Early Television Camera;FILM_AND_MEDIA;wexlercollection;594000;SOLD;2;15;2024-01-09;FALSE
+100462;Felix Cole, Study for Market Morning, 1796;DRAWING;santiago.alvarez;424000;SOLD;2;15;2023-12-18;FALSE
+100463;Traditional Craft Tool Set;ETHNOGRAPHIC_OBJECT;rothcapital2;468000;SOLD;2;15;2024-01-25;FALSE
+100464;Fossil Fish Slab;NATURAL_HISTORY;delilah.kim;758000;REJECTED;2;15;2023-12-22;FALSE
+100465;Rosa Saito Precision Microscope, 1762;SCIENTIFIC_INSTRUMENT;highlandartistslegacytru_org;307000;SALE_PENDING;2;15;2023-12-07;FALSE
+100466;Cypress Observatory Computing Prototype, 1973;TECHNOLOGY;windermerepublicartconservan;1330000;AVAILABLE;2;15;2023-12-05;FALSE
+100467;Theo Dawson, Philadelphia at Night, 1975;PHOTOGRAPH;elmsteadculturalpreservation;532000;SOLD;2;15;2023-12-30;FALSE
+100468;Riverside Theatre Control Panel, 1998;INDUSTRIAL_OBJECT;lucia.tran;761000;SOLD;2;15;2023-12-22;FALSE
+100469;Westhaven Works Computing Prototype, 1996;TECHNOLOGY;rosemontmuseumofmoderncraftd;8046000;SALE_PENDING;2;15;2024-01-07;FALSE
+100470;Arthur Ferrand, Monterey at Night, 1952;PHOTOGRAPH;harborlightdecorativeartsarc;172000;AVAILABLE;2;15;2023-12-01;FALSE
+100471;Darius Caldwell, Harbour Series I, 2017;PAINTING;yara.diaz;2820000;FULLY_SUBSCRIBED;2;15;2024-03-16;FALSE
+100472;Samuel Ferrand, Factory Window, bronze, 1750;SCULPTURE;crossventuresart;1046000;AVAILABLE;2;15;2024-03-06;FALSE
+100473;Camille Desai, Denver at Night, 1967;PHOTOGRAPH;windermerepublicartconservan;839000;SOLD;2;15;2024-03-09;FALSE
+100474;Celia Roth, Blue Room with Fig Tree, bronze, 1920;SCULPTURE;timberlinerestorationfoundat;1108000;SOLD;2;15;2024-02-06;FALSE
+100475;Lucien Havel, Coastal Light, 1822;PAINTING;noelle.palmer;612000;SOLD;2;15;2024-02-28;FALSE
+100476;Richmond Photographic Album;PHOTOGRAPH;vanefamilyoffice;457000;AVAILABLE;2;15;2024-03-28;FALSE
+100477;Historic Prayer Book;RELIGIOUS_OBJECT;cole.thomas_director;667000;SALE_PENDING;2;15;2024-02-09;FALSE
+100478;Amara Vale, Green Passage, 1989;PAINTING;willowmererailwayhistorycent;633000;AVAILABLE;2;15;2024-03-12;FALSE
+100479;Fantasy Film Sword Prop — Group 2;FILM_PROP;nathan.hassan;159000;AVAILABLE;2;15;2024-03-17;FALSE
+100480;Celia Morrow Art Glass Panel, 1821;GLASS;tanglewoodculturalmemory_org;1754000;AVAILABLE;2;15;2024-02-17;FALSE
+100481;Ansel Dawson, Signal Field, lithograph, 1870;PRINT;crosscapital2;929000;AVAILABLE;2;15;2024-03-08;FALSE
+100482;Camille Saito, House at Low Tide, 2004;PAINTING;nathan58;361000;AVAILABLE;2;15;2024-03-19;FALSE
+100483;Telecommunications Switching Unit — Group 2;TECHNOLOGY;chloe.singh;1852000;FULLY_SUBSCRIBED;2;15;2024-02-25;FALSE
+100484;Black Orchard Study;DRAWING;ronash_hold5;637000;AVAILABLE;2;15;2024-02-25;FALSE
+100485;Rafael Alvarez Concert Violin, 1713;MUSICAL_INSTRUMENT;CeliaSterling;1168000;SOLD;2;15;2024-02-13;FALSE
+100486;Winter Garden Study;DRAWING;delilah.kim;1386000;SALE_PENDING;2;15;2024-03-25;FALSE
+100487;Meridian Studio Ceremonial Presentation Object, 1928;HISTORIC_OBJECT;aldergrovefurnituredesignarc;844000;AVAILABLE;2;15;2024-03-10;FALSE
+100488;Gabriel Ellis Exhibition Lamp Prototype, 1925;DESIGN_OBJECT;santiago.alvarez;808000;SOLD;2;15;2024-03-17;FALSE
+100489;Cypress Observatory Control Panel, 1976;INDUSTRIAL_OBJECT;helvale7;153000;SOLD;2;15;2024-03-07;FALSE
+100490;Linden Library Control Panel, 1907;INDUSTRIAL_OBJECT;ashcroftcapital2;546000;SOLD;2;15;2024-02-11;FALSE
+100491;Amara Cole, Philadelphia at Night, 1975;PHOTOGRAPH;GrantMercer;249000;AVAILABLE;2;15;2024-03-08;FALSE
+100492;Granite Bay Film Society Computing Prototype, 1947;TECHNOLOGY;stonefieldhistorichousefound;610000;SOLD;2;15;2024-03-11;FALSE
+100493;Modular Chair Prototype — Group 2;DESIGN_OBJECT;lorenzo.ellis;1557000;FULLY_SUBSCRIBED;2;15;2024-02-10;FALSE
+100494;Screen-Used The North Courtyard Prop, 1950;FILM_PROP;crossventuresart;1178000;SOLD;2;15;2024-02-14;FALSE
+100495;Gold and Enamel Memorial Brooch, c. 1825;JEWELRY;tanglewoodmuseumofmoderncraf;1771000;FULLY_SUBSCRIBED;2;15;2024-02-28;FALSE
+100496;Denver Railway Carriage Panel, 1988;TRANSPORTATION;keira.nguyen;933000;PARTIALLY_SUBSCRIBED;2;15;2024-02-15;FALSE
+100497;Victorian Mourning Brooch;JEWELRY;liucollections;552000;SOLD;2;15;2024-02-22;FALSE
+100498;Seattle Championship Match-Worn Jersey, 2018;SPORTS_MEMORABILIA;crossventuresart;1824000;SOLD;2;15;2024-02-02;FALSE
+100499;Darius Ren, Factory Window, bronze, 2012;SCULPTURE;theo_kinc2;483000;SOLD;2;15;2024-02-29;FALSE
+100500;Bay City Foundry Stained-Glass Window, 1799;ARCHITECTURAL_ELEMENT;stoneartadvisory;1765000;SOLD;2;15;2024-02-27;FALSE
+100501;Riverside Theatre Ceremonial Presentation Object, 1781;HISTORIC_OBJECT;foxgloveartistslegacytrust;856000;SOLD;2;15;2024-03-02;FALSE
+100502;Harcourt Estate Processional Cross, c. 1789;RELIGIOUS_OBJECT;lila.estrada;1863000;FULLY_SUBSCRIBED;2;15;2024-02-19;FALSE
+100503;Concert Poster Archive — Group 2;MUSIC_MEMORABILIA;eastgaterailwayhistorycenter;257000;AVAILABLE;2;15;2024-02-15;FALSE
+100504;Decorative Iron Gate;ARCHITECTURAL_ELEMENT;cassidy.ito;467000;SOLD;2;15;2024-03-29;FALSE
+100505;Imani Kwon, Winter Garden, 1759;PAINTING;northbridgemuseumofmoderncra;2445000;SOLD;2;15;2024-03-30;FALSE
+100506;House at Low Tide Sculpture;SCULPTURE;robertsheritagesales;783000;SOLD;2;15;2024-02-17;FALSE
+100507;Excavated Ceramic Vessel with Field Archive, c. 354;ARCHAEOLOGICAL_OBJECT;nadia_whitmore;879000;SOLD;2;15;2024-02-28;FALSE
+100508;Harcourt Estate Processional Banner, 1762;TEXTILE;silvermarshdecorativeartsarc;709000;AVAILABLE;2;15;2024-03-13;FALSE
+100509;Screen-Used Harbour Series I Prop, 1978;FILM_PROP;xavier.jacobs;746000;REJECTED;2;15;2024-03-01;FALSE
+100510;Mercury Records Archive, 1977–2007;ARCHIVAL_COLLECTION;eastgateindustrialartsmuseum;3404000;SOLD;2;15;2024-02-01;FALSE
+100511;Embroidered Civic Standard — Group 2;TEXTILE;vcross_alt;446000;SOLD;2;15;2024-02-20;FALSE
+100512;Orion Press Computing Prototype, 1994;TECHNOLOGY;harper.hernandez;737000;REJECTED;2;15;2024-03-25;FALSE
+100513;Imani Cole Studio Ceramic Vessel Set, 1871;CERAMIC;stonefieldpublicartconservan;1070000;FULLY_SUBSCRIBED;2;15;2024-02-20;FALSE
+100514;Samuel Kapoor, After the Storm, lithograph, 2017;PRINT;highlandartistslegacytru_org;191000;AVAILABLE;2;15;2024-03-12;FALSE
+100515;Harcourt Estate Processional Cross, c. 1782;RELIGIOUS_OBJECT;wexlercollection;520000;SOLD;2;15;2024-03-27;FALSE
+100516;New York Railway Carriage Panel, 1923;TRANSPORTATION;ronashcroft7;776000;AVAILABLE;2;15;2024-02-15;FALSE
+100517;Granite Bay Film Society Painted Stage Backdrop, 1866;THEATRE_OBJECT;georgia_elli;1033000;SOLD;2;15;2024-03-29;FALSE
+100518;Westhaven Works Computing Prototype, 2007;TECHNOLOGY;cedarpointculturalmemoryproj;1563000;AVAILABLE;2;15;2024-02-05;FALSE
+100519;New Orleans Championship Match-Worn Jersey, 1965;SPORTS_MEMORABILIA;osca_bexl6;4418000;SOLD;2;15;2024-02-01;FALSE
+100520;Bay City Foundry Processional Cross, c. 1803;RELIGIOUS_OBJECT;lucia.knight;629000;SOLD;2;15;2024-03-09;FALSE
+100521;Rowan Voss, The Reading Room, 1936;PAINTING;rosemontdesignheritagecenter;1290000;SOLD;2;15;2024-02-20;FALSE
+100522;Samuel Alvarez Couture Evening Coat, 1910;FASHION;abigail.lee_curator;1410000;FULLY_SUBSCRIBED;2;15;2024-02-03;FALSE
+100523;Ansel Kapoor Library Chair, 1860;FURNITURE;abigail.bennett;311000;SOLD;2;15;2024-03-05;FALSE
+100524;Valentina Ito, Study for Signal Field, 1778;DRAWING;willowmererailwayhistorycent;500000;SOLD;2;15;2024-02-27;FALSE
+100525;Mara Kwon Library Chair, 1972;FURNITURE;elias.estrada;2739000;FULLY_SUBSCRIBED;2;15;2024-03-28;FALSE
+100526;Elena Maren Tour Outfit and Backstage Passes, 1960;MUSIC_MEMORABILIA;harper.hernandez;401000;AVAILABLE;2;15;2024-03-01;FALSE
+100527;Darius Mercer, The North Courtyard, 1947;PAINTING;aaron.olsen;1291000;SOLD;2;15;2024-02-27;FALSE
+100528;Amara Kwon, Harbour Series I, 1866;PAINTING;harper7;1725000;SOLD;2;15;2024-03-05;FALSE
+100529;Gold and Enamel Memorial Brooch, c. 2003;JEWELRY;cedarpointculturalmemoryproj;384000;AVAILABLE;2;15;2024-02-20;FALSE
+100530;Linden Library Silver Presentation Service, 1877;METALWORK;andersonartadvisory;831000;SOLD;2;15;2024-03-23;FALSE
+100531;Riverside Theatre Silver Presentation Service, 1767;METALWORK;chloe.singh;250000;AVAILABLE;2;15;2024-02-21;FALSE
+100532;Mercury Records Press, Illustrated First Edition, 1821;RARE_BOOK;naomi.reyes;1567000;SOLD;2;15;2024-02-29;FALSE
+100533;Santiago Ren Couture Evening Coat, 1911;FASHION;ironwoodcraftpreservatio_org;477000;AVAILABLE;2;15;2024-02-08;FALSE
+100534;New York Railway Carriage Panel, 2007;TRANSPORTATION;southbanktextilearchive;1144000;SOLD;2;15;2024-03-21;FALSE
+100535;Mercury Records Silver Presentation Service, 1800;METALWORK;longfellowestatecollection;667000;AVAILABLE;2;15;2024-02-16;FALSE
+100536;Mercury Records Stained-Glass Window, 1776;ARCHITECTURAL_ELEMENT;ari.turner;188000;SOLD;2;15;2024-02-15;FALSE
+100537;Los Angeles Railway Carriage Panel, 1962;TRANSPORTATION;wexlercapital2;1047000;SOLD;2;15;2024-03-16;FALSE
+100538;Historic Motorcycle;TRANSPORTATION;longfellowestatecollection;664000;SOLD;2;15;2024-02-11;FALSE
+100539;Mateo Foster Concert Violin, 1896;MUSICAL_INSTRUMENT;nadia_whitmore;498000;SOLD;2;15;2024-03-11;FALSE
+100540;Samuel Novak, House at Low Tide, 1890;PAINTING;sabrina.shah;1621000;SOLD;2;15;2024-02-24;FALSE
+100541;Film Festival Print;FILM_AND_MEDIA;greatlakesindustrialartsmuse;733000;SOLD;2;15;2024-03-17;FALSE
+100542;Historic Restaurant Sign — Group 3;HISTORIC_OBJECT;ironwoodcraftpreservationsoc;805000;WITHDRAWN;2;15;2024-02-27;FALSE
+100543;Annotated Travel Diary — Group 2;MANUSCRIPT;naomi.campbell;394000;AVAILABLE;2;15;2024-02-14;FALSE
+100544;Public Transit Destination Sign;TRANSPORTATION;yasmin.roberts;306000;SOLD;2;15;2024-03-07;FALSE
+100545;Cypress Observatory Processional Cross, c. 1936;RELIGIOUS_OBJECT;abigail.lee_curator;498000;SOLD;2;15;2024-03-17;FALSE
+100546;Local Newspaper Photograph Archive — Group 6;ARCHIVAL_COLLECTION;santiago.jordan;887000;SOLD;2;15;2024-02-24;FALSE
+100547;Annotated Production Script, 1928;FILM_AND_MEDIA;rosemonthistoricalsociety;280000;AVAILABLE;2;15;2024-02-28;FALSE
+100548;Amina Desai, Portland at Night, 1854;PHOTOGRAPH;adamscollections;323000;SOLD;2;15;2024-02-03;FALSE
+100549;Historic Household Interior Group — Group 3;COLLECTION;jocelyn.huang;1918000;SOLD;2;15;2024-02-23;FALSE
+100550;Valentina Saito Library Chair, 1988;FURNITURE;lucia.knight;369000;SOLD;2;15;2024-02-12;FALSE
+100551;Study for a Procession Sculpture;SCULPTURE;quarrylanemuseumofphotograph;3593000;FULLY_SUBSCRIBED;2;15;2024-02-21;FALSE
+100552;Savannah Championship Match-Worn Jersey, 1952;SPORTS_MEMORABILIA;wexlercollection;87000;AVAILABLE;2;15;2024-03-14;FALSE
+100553;Carved Stone Door Surround — Group 2;ARCHITECTURAL_ELEMENT;northbridgemuseumofmoderncra;229000;SOLD;2;15;2024-02-04;FALSE
+100554;Gold and Enamel Memorial Brooch, c. 1925;JEWELRY;crossventuresart;771000;SOLD;2;15;2024-03-12;FALSE
+100555;Theo Novak, Three Cypress Trees, 1906;PAINTING;cedarpointculturalmemoryproj;983000;AVAILABLE;2;15;2024-02-25;FALSE
+100556;Elena Kapoor, Orchard Interior, 1953;PAINTING;meridianmillercollections;1322000;SOLD;2;15;2024-02-28;FALSE
+100557;Denver Championship Match-Worn Jersey, 1922;SPORTS_MEMORABILIA;clara.ross;519000;SOLD;2;15;2024-03-31;FALSE
+100558;Local Newspaper Photograph Archive — Group 7;ARCHIVAL_COLLECTION;psethi_family6;2116000;SOLD;2;15;2024-02-16;FALSE
+100559;Noelle Serrat Precision Microscope, 1990;SCIENTIFIC_INSTRUMENT;elmsteadculturalmemoryprojec;540000;SOLD;2;15;2024-03-08;FALSE
+100560;Rafael Kwon, Denver at Night, 1857;PHOTOGRAPH;OscarBexley;318000;SOLD;2;15;2024-02-08;FALSE
+100561;Elena Voss, Baltimore at Night, 1988;PHOTOGRAPH;eastgaterailwayhistorycenter;103000;AVAILABLE;2;15;2024-03-29;FALSE
+100562;Noelle Bennett, Blue Room with Fig Tree, bronze, 1903;SCULPTURE;ari.morgan;974000;FULLY_SUBSCRIBED;2;15;2024-03-10;FALSE
+100563;Mercury Records Press, Illustrated First Edition, 1762;RARE_BOOK;celine.irwin;919000;SOLD;2;15;2024-02-11;FALSE
+100564;Arcade Development Console — Group 2;TECHNOLOGY;emilia.sullivan_curator;708000;SALE_PENDING;2;15;2024-03-11;FALSE
+100565;Riverside Theatre Stained-Glass Window, 1868;ARCHITECTURAL_ELEMENT;vanefamilyoffice;483000;SOLD;2;15;2024-03-21;FALSE
+100566;Opera Scenery Panel;THEATRE_OBJECT;willowmererailwayhistorycent;419000;AVAILABLE;2;15;2024-03-18;FALSE
+100567;Mosaic Interior Panel — Group 2;ARCHITECTURAL_ELEMENT;osca_bexl6;366000;SOLD;2;15;2024-02-09;FALSE
+100568;Early Scientific Treatise — Group 3;RARE_BOOK;cole.thomas_director;100000;AVAILABLE;2;15;2024-03-23;FALSE
+100569;North Coast Railway Silver Presentation Service, 1919;METALWORK;rothartadvisory;1622000;SOLD;2;15;2024-03-07;FALSE
+100570;Lucien Alvarez Tour Outfit and Backstage Passes, 1960;MUSIC_MEMORABILIA;elias.estrada;670000;AVAILABLE;2;15;2024-03-05;FALSE
+100571;New Orleans Botanical Specimen Collection, 1774;NATURAL_HISTORY;georgia.lee;939000;PARTIALLY_SUBSCRIBED;2;15;2024-02-08;FALSE
+100572;Seattle Championship Match-Worn Jersey, 1962;SPORTS_MEMORABILIA;rosemontmuseumofmoderncraftd;253000;SOLD;2;15;2024-02-24;FALSE
+100573;Felix Kwon Tour Outfit and Backstage Passes, 1950;MUSIC_MEMORABILIA;walkercollections;856000;SOLD;2;15;2024-02-05;FALSE
+100574;Survey Map of Denver, 1816;MAP;cedarpointculturalmemoryproj;1150000;SALE_PENDING;2;15;2024-02-09;FALSE
+100575;St. Elian Parish Material Culture Collection, 1756–1781;COLLECTION;lila.estrada;894000;AVAILABLE;2;15;2024-02-15;FALSE
+100576;Imani Bell Exhibition Lamp Prototype, 1981;DESIGN_OBJECT;tanglewoodculturalmemoryproj;397000;SOLD;2;15;2024-02-14;FALSE
+100577;Jonas Roth, Study for Harbour Series I, 1750;DRAWING;elmsteadculturalmemoryprojec;418000;SALE_PENDING;2;15;2024-03-06;FALSE
+100578;Jonas Bell, Studio with Copper Vessel, bronze, 1754;SCULPTURE;vivian.reyes_finance;834000;WITHDRAWN;2;15;2024-03-08;FALSE
+100579;Westhaven Works Archive, 1924–1954;ARCHIVAL_COLLECTION;rosemontdesignheritagecenter;2462000;FULLY_SUBSCRIBED;2;15;2024-02-11;FALSE
+100580;Gold and Enamel Memorial Brooch, c. 1771;JEWELRY;ari.turner;814000;SOLD;2;15;2024-03-03;FALSE
+100581;Night Tram;PAINTING;henry.reed;862000;WITHDRAWN;2;15;2024-02-25;FALSE
+100582;Santiago Saito Tour Outfit and Backstage Passes, 1955;MUSIC_MEMORABILIA;isabel.carter;1221000;FULLY_SUBSCRIBED;2;15;2024-02-29;FALSE
+100583;Elena Quinn Tour Outfit and Backstage Passes, 1953;MUSIC_MEMORABILIA;lana.mendez;956000;SALE_PENDING;2;15;2024-02-07;FALSE
+100584;Jazz Club Upright Piano — Group 5;MUSICAL_INSTRUMENT;quarrylanemuseumofphotograph;299000;AVAILABLE;2;15;2024-03-08;FALSE
+100585;Camille Foster, Study for The Long Platform, 1852;DRAWING;wellingtonmaterialcultureins;801000;SALE_PENDING;2;15;2024-03-30;FALSE
+100586;New York Railway Carriage Panel, 1889;TRANSPORTATION;ruby.reed;2871000;SOLD;2;15;2024-02-11;FALSE
+100587;Detroit Botanical Specimen Collection, 1803;NATURAL_HISTORY;andersonartadvisory;4805000;SOLD;2;15;2024-03-25;FALSE
+100588;Elena Morrow Exhibition Lamp Prototype, 1980;DESIGN_OBJECT;reese.wilson;2299000;FULLY_SUBSCRIBED;2;15;2024-03-24;FALSE
+100589;Exhibition Lighting Prototype — Group 3;DESIGN_OBJECT;bishopheritagesales;320000;SOLD;2;15;2024-03-26;FALSE
+100590;Riverside Theatre Control Panel, 1877;INDUSTRIAL_OBJECT;greatlakesindustrialartsmuse;696000;AVAILABLE;2;15;2024-02-06;FALSE
+100591;Match-Worn Football Shirt — Group 2;SPORTS_MEMORABILIA;reyesfineobjects;380000;SOLD;3;16;2024-04-08;FALSE
+100592;Iris Ferrand, After the Storm, 1894;PAINTING;farah.vasquez;3071000;SOLD;3;16;2024-04-05;FALSE
+100593;Nadia Serrat Art Glass Panel, 1855;GLASS;blair.kaur;2087000;SOLD;3;16;2024-04-11;FALSE
+100594;Journal of the Denver Expedition, 1882–1884;MANUSCRIPT;windermeremuseumofmoderncraf;785000;SOLD;3;16;2024-04-14;FALSE
+100595;Harbour Series I Sculpture;SCULPTURE;liucollections;877000;SOLD;3;16;2024-04-04;FALSE
+100596;Los Angeles Championship Match-Worn Jersey, 1964;SPORTS_MEMORABILIA;oakhollowmuseumofappliedarts;2034000;SALE_PENDING;3;16;2024-04-06;FALSE
+100597;Philadelphia Championship Match-Worn Jersey, 1930;SPORTS_MEMORABILIA;ironwoodcraftpreservatio_org;6762000;FULLY_SUBSCRIBED;3;16;2024-04-18;FALSE
+100598;Salt Marsh at Dusk;PAINTING;vanecapital2;580000;SOLD;3;16;2024-04-20;FALSE
+100599;Studio with Copper Vessel;PAINTING;jade.campbell;2973000;AVAILABLE;3;16;2024-04-01;FALSE
+100600;Gold and Enamel Memorial Brooch, c. 1991;JEWELRY;jade.campbell;736000;REJECTED;3;16;2024-04-04;FALSE
+100601;Savannah Photographic Album;PHOTOGRAPH;leo.lane;911000;AVAILABLE;3;16;2024-04-07;FALSE
+100602;Journal of the Boston Expedition, 1909–1911;MANUSCRIPT;southbankmaritimeheritagemus;454000;SOLD;3;16;2024-04-17;FALSE
+100603;Priya Navarro Library Chair, 1835;FURNITURE;windermerepublicartconservan;1656000;SOLD;3;16;2024-04-15;FALSE
+100604;Excavated Ceramic Vessel with Field Archive, c. 511;ARCHAEOLOGICAL_OBJECT;adamscollections;712000;SOLD;3;16;2024-04-02;FALSE
+100605;Redwood Civic Association Painted Stage Backdrop, 1989;THEATRE_OBJECT;crossventuresart;198000;SOLD;3;16;2024-04-02;FALSE
+100606;Leila Cole, Market Morning, 1825;PAINTING;georgia.park;1362000;FULLY_SUBSCRIBED;3;16;2024-04-11;FALSE
+100607;Arthur Mercer, New York at Night, 1887;PHOTOGRAPH;akira.bennett;792000;SOLD;3;16;2024-04-18;FALSE
+100608;Mercury Records Archive, 1810–1840;ARCHIVAL_COLLECTION;celine.irwin;599000;SOLD;3;16;2024-04-01;FALSE
+100609;Journal of the Savannah Expedition, 1863–1865;MANUSCRIPT;cedarpointculturalmemoryproj;738000;REJECTED;3;16;2024-04-02;FALSE
+100610;Orchard Interior;PAINTING;howellartadvisory;293000;SOLD;3;16;2024-04-06;FALSE
+100611;Bay City Foundry Painted Stage Backdrop, 1768;THEATRE_OBJECT;aaron.olsen;676000;SOLD;3;17;2024-04-23;FALSE
+100612;Jonas Kapoor, House at Low Tide, bronze, 1769;SCULPTURE;celine.irwin;1622000;FULLY_SUBSCRIBED;3;17;2024-04-23;FALSE
+100613;Concert Poster Archive — Group 3;MUSIC_MEMORABILIA;anthony.garcia;656000;SOLD;3;17;2024-04-24;FALSE
+100614;Iris Novak, The Long Platform, bronze, 1776;SCULPTURE;celine.irwin;3135000;SOLD;3;17;2024-04-23;FALSE
+100615;Amina Alvarez, The Reading Room, 1825;PAINTING;wexlercollection;1114000;SOLD;3;17;2024-04-25;FALSE
+100616;Amara Voss Couture Evening Coat, 1959;FASHION;ronanA;731000;SOLD;3;17;2024-04-23;FALSE
+100617;Rafael Rivera, Chicago at Night, 1970;PHOTOGRAPH;oakhollowdesignheritagecente;657000;SOLD;3;17;2024-04-22;FALSE
+100618;Arthur Navarro Tour Outfit and Backstage Passes, 1997;MUSIC_MEMORABILIA;keystonepatelfineobjects;521000;SOLD;3;17;2024-04-24;FALSE
+100619;Valentina Ellis Couture Evening Coat, 1957;FASHION;bellwethermaterialcultureins;885000;PARTIALLY_SUBSCRIBED;3;17;2024-04-23;FALSE
+100620;Survey Map of Los Angeles, 1830;MAP;chloe.shah;2895000;SOLD;3;17;2024-04-24;FALSE
+100621;Concert Poster Archive — Group 4;MUSIC_MEMORABILIA;eastgateindustrialartsmuseum;862000;SOLD;3;17;2024-04-24;FALSE
+100622;Elena Navarro Concert Violin, 1695;MUSICAL_INSTRUMENT;yasmin.roberts;659000;SOLD;3;17;2024-04-23;FALSE
+100623;Orchard Interior Sculpture;SCULPTURE;keystoneandersonauctions;4683000;SOLD;3;17;2024-04-23;FALSE
+100624;Nadia Vale, Cloud over the Foundry, bronze, 1791;SCULPTURE;ari.morgan;915000;PARTIALLY_SUBSCRIBED;3;17;2024-04-22;FALSE
+100625;Cloud over the Foundry Print;PRINT;lana.vasquez;771000;SOLD;3;17;2024-04-25;FALSE
+100626;Tour Outfit — Group 2;MUSIC_MEMORABILIA;crownyoungfineobjects;2298000;SOLD;3;17;2024-04-23;FALSE
+100627;Blue Room with Fig Tree Sculpture;SCULPTURE;ruby.reed;1244000;SOLD;3;17;2024-04-23;FALSE
+100628;Philadelphia Railway Carriage Panel, 2006;TRANSPORTATION;DominicHale;873000;AVAILABLE;3;17;2024-04-24;FALSE
+100629;Amara Voss, Study for Coastal Light, 1774;DRAWING;TheoKincaid;2196000;SOLD;3;17;2024-04-25;FALSE
+100630;Harbour Series I Print;PRINT;bellwethermaterialcultureins;607000;SALE_PENDING;3;17;2024-04-23;FALSE
+100631;Gold and Enamel Memorial Brooch, c. 1878;JEWELRY;amir.saito_director;1303000;FULLY_SUBSCRIBED;3;18;2024-05-02;FALSE
+100632;Boston Photographic Album;PHOTOGRAPH;chloe.wilson;217000;SOLD;3;18;2024-05-02;FALSE
+100633;Tour Stage Jacket;FASHION;farah.vasquez;446000;SOLD;3;18;2024-05-02;FALSE
+100634;Survey Map of Austin, 1958;MAP;nia.sims;506000;SOLD;3;18;2024-05-06;FALSE
+100635;North Coast Railway Material Culture Collection, 1764–1789;COLLECTION;cassidy.mason;550000;SOLD;3;18;2024-05-03;FALSE
+100636;Felix Ellis Precision Microscope, 1929;SCIENTIFIC_INSTRUMENT;granitehillmuseumoflocalindu;721000;SOLD;3;18;2024-05-07;FALSE
+100637;Elias Serrat, Red Bridge, 1827;PAINTING;cassidy.ito;543000;SOLD;3;18;2024-05-04;FALSE
+100638;Journal of the Oakland Expedition, 1828–1830;MANUSCRIPT;liucollections;216000;SOLD;3;18;2024-05-04;FALSE
+100639;Orion Press Control Panel, 1957;INDUSTRIAL_OBJECT;rothcapital2;633000;SOLD;3;18;2024-05-05;FALSE
+100640;Walnut Reading Chair — Group 3;FURNITURE;southbankmaterialcultureinst;3711000;AVAILABLE;3;18;2024-05-08;FALSE
+100641;Rafael Ito, River Bend, bronze, 1885;SCULPTURE;farah.stone;6283000;FULLY_SUBSCRIBED;3;18;2024-04-26;FALSE
+100642;Cypress Observatory Processional Banner, 1762;TEXTILE;northbridgemuseumofmoderncra;1513000;SOLD;3;18;2024-05-04;FALSE
+100643;Valentina Roth, Study for Factory Window, 2018;DRAWING;TheoKincaid;439000;SOLD;3;18;2024-05-01;FALSE
+100644;Annotated Travel Diary — Group 3;MANUSCRIPT;harper.flores;878000;SOLD;3;18;2024-04-29;FALSE
+100645;Amina Kapoor Concert Violin, 1830;MUSICAL_INSTRUMENT;harper7;179000;SOLD;3;18;2024-04-26;FALSE
+100646;Journal of the Chicago Expedition, 1937–1939;MANUSCRIPT;hearthstonefolkartarchiv_org;862000;WITHDRAWN;3;18;2024-04-27;FALSE
+100647;Railway Station Clock;TRANSPORTATION;akira.bennett;6910000;SOLD;3;18;2024-04-29;FALSE
+100648;Signed Tournament Racket — Group 3;SPORTS_MEMORABILIA;windermerepublicartconservan;382000;SOLD;3;18;2024-05-05;FALSE
+100649;Journal of the Denver Expedition, 1759–1761;MANUSCRIPT;tanglewoodculturalmemoryproj;2004000;FULLY_SUBSCRIBED;3;18;2024-05-08;FALSE
+100650;Harcourt Estate Control Panel, 1903;INDUSTRIAL_OBJECT;farah.vasquez;704000;SOLD;3;18;2024-05-04;FALSE
+100651;Granite Bay Film Society Processional Cross, c. 1965;RELIGIOUS_OBJECT;ironwoodcraftpreservatio_org;554000;SOLD;3;19;2024-05-26;FALSE
+100652;Amina Kwon, Savannah at Night, 1994;PHOTOGRAPH;gran_merc4;187000;SOLD;3;19;2024-05-22;FALSE
+100653;Green Passage Sculpture;SCULPTURE;rosemontmuseumofmoderncraftd;89000;SOLD;3;19;2024-05-18;FALSE
+100654;Walnut Reading Chair — Group 4;FURNITURE;longfellowestatecollection;275000;AVAILABLE;3;19;2024-05-21;FALSE
+100655;Family Correspondence Archive — Group 3;ARCHIVAL_COLLECTION;howellartadvisory;567000;SOLD;3;19;2024-05-24;FALSE
+100656;Modernist Writing Desk — Group 3;FURNITURE;lana.vasquez;43000;SOLD;3;19;2024-05-20;FALSE
+100657;Walnut Reading Chair — Group 5;FURNITURE;hearthstonefolkartarchiv_org;255000;AVAILABLE;3;19;2024-05-11;FALSE
+100658;Ceremonial Chalice — Group 2;RELIGIOUS_OBJECT;harper.hernandez;660000;SOLD;3;19;2024-05-16;FALSE
+100659;Community Festival Banner — Group 2;TEXTILE;northbridgemuseumofmoderncra;144000;SOLD;3;19;2024-05-27;FALSE
+100660;Studio Ceramic Vessel Set — Group 8;CERAMIC;harper7;100000;SOLD;3;19;2024-05-12;FALSE
+100661;Theatre Lobby Bench — Group 4;FURNITURE;leo.lane;292000;AVAILABLE;3;19;2024-05-11;FALSE
+100662;Local Newspaper Photograph Archive — Group 8;ARCHIVAL_COLLECTION;malwexler7;252000;SOLD;3;19;2024-05-20;FALSE
+100663;Touring Electric Guitar — Group 2;MUSICAL_INSTRUMENT;chloe.singh;601000;AVAILABLE;3;19;2024-05-15;FALSE
+100664;Meridian Studio Archive, 1894–1924;ARCHIVAL_COLLECTION;quarrylanemuseumofphotograph;125000;AVAILABLE;3;19;2024-05-15;FALSE
+100665;Historic Restaurant Sign — Group 4;HISTORIC_OBJECT;ashlandestatecollection;314000;AVAILABLE;3;19;2024-05-22;FALSE
+100666;Historic Concert Cello — Group 2;MUSICAL_INSTRUMENT;selene78;212000;SOLD;3;19;2024-05-20;FALSE
+100667;Camille Mercer Concert Violin, 1801;MUSICAL_INSTRUMENT;ashcroftcapital2;289000;SOLD;3;19;2024-05-24;FALSE
+100668;Amina Voss, Philadelphia at Night, 1982;PHOTOGRAPH;hearthstonefolkartarchiv_org;41000;SALE_PENDING;3;19;2024-05-22;FALSE
+100669;Festival Vestment Set — Group 2;RELIGIOUS_OBJECT;foundrybennettfineobjects;524000;SOLD;3;20;2024-05-31;FALSE
+100670;Studio Ceramic Vessel Set — Group 9;CERAMIC;willowmererailwayhistorycent;164000;AVAILABLE;3;20;2024-05-28;FALSE
+100671;Riverside Theatre Processional Banner, 1951;TEXTILE;georgia.lee;216000;AVAILABLE;3;20;2024-06-02;FALSE
+100672;Blue Room with Fig Tree Print;PRINT;silvermarsharchitecturalheri;266000;AVAILABLE;3;20;2024-05-30;FALSE
+100673;The Reading Room Sculpture;SCULPTURE;pineharborrailwayhistorycent;303000;SOLD;3;20;2024-05-29;FALSE
+100674;Samuel Hart, Study for Red Bridge, 1990;DRAWING;ashcroftcollection;1033000;SOLD;3;20;2024-05-28;FALSE
+100675;Three Cypress Trees Study;DRAWING;keira.nguyen;198000;AVAILABLE;3;20;2024-06-08;FALSE
+100676;Exhibition Lighting Prototype — Group 4;DESIGN_OBJECT;andersonartadvisory;465000;SOLD;3;20;2024-05-31;FALSE
+100677;Studio Ceramic Vessel Set — Group 10;CERAMIC;aldergrovefurnituredesignarc;143000;AVAILABLE;3;20;2024-05-28;FALSE
+100678;Historic Concert Cello — Group 3;MUSICAL_INSTRUMENT;ashcroftcollection;242000;SOLD;3;20;2024-05-28;FALSE
+100679;New Orleans Photographic Album;PHOTOGRAPH;emilia.sullivan_curator;83000;AVAILABLE;3;20;2024-05-30;FALSE
+100680;Journal of the Richmond Expedition, 1871–1873;MANUSCRIPT;silvermarsharchitecturalheri;363000;AVAILABLE;3;20;2024-06-07;FALSE
+100681;Studio Ceramic Collection — Group 3;COLLECTION;reese.wilson;681000;AVAILABLE;4;23;2024-01-10;FALSE
+100682;Westhaven Works Stained-Glass Window, 1957;ARCHITECTURAL_ELEMENT;rothartadvisory;600000;SOLD;4;23;2023-12-13;FALSE
+100683;Rowan Hart, River Bend, 2018;PAINTING;santiago.alvarez;1493000;SOLD;4;23;2024-04-14;FALSE
+100684;Theo Rivera Library Chair, 1810;FURNITURE;copperlinemuseumofphotograph;789000;SOLD;4;23;2024-01-19;FALSE
+100685;Coastal Survey Atlas — Group 3;MAP;emilia.sullivan_curator;324000;SALE_PENDING;4;23;2023-10-31;FALSE
+100686;Iris Maren Studio Ceramic Vessel Set, 1953;CERAMIC;aaliyah.zimmerman;692000;SOLD;4;23;2024-02-29;FALSE
+100687;Three Cypress Trees Sculpture;SCULPTURE;westhavencraftpreservationso;613000;SOLD;4;23;2023-10-31;FALSE
+100688;Noelle Havel Tour Outfit and Backstage Passes, 1974;MUSIC_MEMORABILIA;henry.reed;937000;SOLD;4;23;2023-10-03;FALSE
+100689;Monterey Championship Match-Worn Jersey, 1928;SPORTS_MEMORABILIA;georgia.lee;1041000;SOLD;4;23;2023-09-05;FALSE
+100690;Art Deco Silver Tea Service — Group 2;METALWORK;farah.vasquez;1308000;SOLD;4;23;2024-02-22;FALSE
+100691;North Coast Railway Processional Cross, c. 1785;RELIGIOUS_OBJECT;bishopheritagesales;353000;SOLD;4;23;2024-05-02;FALSE
+100692;Gabriel Voss Concert Violin, 1703;MUSICAL_INSTRUMENT;nathan.hassan;546000;SALE_PENDING;4;23;2024-03-02;FALSE
+100693;Night Tram Study;DRAWING;ari.morgan;311000;SALE_PENDING;4;23;2024-04-21;FALSE
+100694;New York Championship Match-Worn Jersey, 1923;SPORTS_MEMORABILIA;ashlanddecorativeartsarchive;2275000;SOLD;4;23;2024-01-22;FALSE
+100695;Factory Time Clock;INDUSTRIAL_OBJECT;beatrice.kim;256000;SOLD;4;23;2023-10-31;FALSE
+100696;Miniature Effects Vehicle — Group 3;FILM_PROP;delilah.kim;1004000;AVAILABLE;4;23;2024-04-06;FALSE
+100697;Marionette Theatre Figures;THEATRE_OBJECT;sabrina.edwards;837000;SOLD;4;23;2023-11-14;FALSE
+100698;House at Low Tide — Group 2;PAINTING;valecapital2;1181000;SOLD;4;23;2023-10-19;FALSE
+100699;Local Newspaper Photograph Archive — Group 9;ARCHIVAL_COLLECTION;daniel.hall;715000;SOLD;4;23;2023-10-23;FALSE
+100700;Historic Herbarium Collection;NATURAL_HISTORY;beatrice.kim;1044000;SOLD;4;23;2024-03-03;FALSE
+100701;Austin Botanical Specimen Collection, 1974;NATURAL_HISTORY;wellingtonmaterialcultureins;1542000;AVAILABLE;4;24;2024-10-13;FALSE
+100702;Gabriel Ortega, Detroit at Night, 1918;PHOTOGRAPH;psethi_family6;520000;SOLD;4;24;2024-10-31;FALSE
+100703;Coastal Light Sculpture;SCULPTURE;davisauctionpartners;858000;SOLD;4;24;2024-10-08;FALSE
+100704;Studio with Copper Vessel Sculpture;SCULPTURE;fairmontmaritimeheritagemuse;664000;SOLD;4;24;2024-10-12;FALSE
+100705;Jonas Novak, Harbour Series I, bronze, 1925;SCULPTURE;maplecrossinghistorichousefo;835000;SOLD;4;24;2024-10-03;FALSE
+100706;Samuel Ortega, Portland at Night, 1894;PHOTOGRAPH;vivian.reyes_finance;228000;AVAILABLE;4;24;2024-10-25;FALSE
+100707;Chicago Photographic Album;PHOTOGRAPH;khalil.johnson;2052000;SOLD;4;24;2024-09-30;FALSE
+100708;Rowan Ingram, Coastal Light, 1797;PAINTING;malwexler7;1745000;SOLD;4;24;2024-10-03;FALSE
+100709;Rowan Ren, Harbour Series I, bronze, 2017;SCULPTURE;nathan58;1328000;SOLD;4;24;2024-10-05;FALSE
+100710;Priya Foster Studio Ceramic Vessel Set, 1805;CERAMIC;rosemontmuseumofmoderncraftd;1164000;SOLD;4;24;2024-10-12;FALSE
+100711;Historic Household Interior Group — Group 4;COLLECTION;elmsteadculturalmemoryprojec;1815000;SOLD;4;24;2024-09-30;FALSE
+100712;Leila Maren Couture Evening Coat, 1955;FASHION;aaron.olsen;4278000;SOLD;4;24;2024-10-09;FALSE
+100713;Screen-Used Orchard Interior Prop, 1940;FILM_PROP;rothcapital2;2677000;SOLD;4;24;2024-10-30;FALSE
+100714;Rowan Kwon, Savannah at Night, 1963;PHOTOGRAPH;castillocollections;1414000;AVAILABLE;4;24;2024-10-03;FALSE
+100715;Gold and Enamel Memorial Brooch, c. 1790;JEWELRY;OscarBexley;1205000;SOLD;4;24;2024-10-02;FALSE
+100716;Gabriel Serrat Tour Outfit and Backstage Passes, 1986;MUSIC_MEMORABILIA;redcedarfolkartfoundation;1118000;SOLD;4;24;2024-10-21;FALSE
+100717;Mara Ellis, Night Tram, 1889;PAINTING;santiago.jordan;360000;SALE_PENDING;4;24;2024-10-20;FALSE
+100718;Westhaven Works Control Panel, 1876;INDUSTRIAL_OBJECT;akira.bennett;398000;SOLD;4;24;2024-10-19;FALSE
+100719;Iris Quinn, Study for Signal Field, 2004;DRAWING;clara.ross;600000;SOLD;4;24;2024-10-02;FALSE
+100720;Annotated Poetry Volume — Group 2;RARE_BOOK;rosemontmuseumofmoderncraftd;954000;SOLD;4;24;2024-10-04;FALSE
+100721;Felix Roth, House at Low Tide, bronze, 1915;SCULPTURE;lucia.knight;1705000;SOLD;4;24;2024-10-31;FALSE
+100722;Handwoven Wall Textile — Group 4;TEXTILE;theo_kinc2;221000;AVAILABLE;4;24;2024-10-29;FALSE
+100723;Signed First Edition — Group 4;RARE_BOOK;ari.morgan;828000;SOLD;4;24;2024-10-25;FALSE
+100724;New Orleans Championship Match-Worn Jersey, 1898;SPORTS_MEMORABILIA;chloe.shah;1374000;SOLD;4;24;2024-10-21;FALSE
+100725;Victorian Era Monocle — Group 3;HISTORIC_OBJECT;howardfineobjects;2636000;SOLD;4;24;2024-10-19;FALSE
+100726;St. Elian Parish Material Culture Collection, 1808–1833;COLLECTION;abigail.lee_curator;392000;AVAILABLE;4;24;2024-10-13;FALSE
+100727;The Long Platform — Group 2;PAINTING;meridianmillercollections;4572000;SOLD;4;24;2024-10-29;FALSE
+100728;Seattle Photographic Album;PHOTOGRAPH;southbankmaterialcultureinst;1166000;SOLD;4;24;2024-10-08;FALSE
+100729;Camille Maren Tour Outfit and Backstage Passes, 1976;MUSIC_MEMORABILIA;jade.campbell;525000;SOLD;4;24;2024-10-13;FALSE
+100730;Tour Outfit — Group 3;MUSIC_MEMORABILIA;davisauctionpartners;1410000;SOLD;4;24;2024-10-06;FALSE
+100731;Mara Morrow, House at Low Tide, 1982;PAINTING;yara.shah;691000;SOLD;4;24;2024-10-13;FALSE
+100732;Theo Navarro, Standing Form, 1796;PAINTING;wexlercollection;1464000;SOLD;4;24;2024-10-07;FALSE
+100733;Machine Shop Sign;INDUSTRIAL_OBJECT;ftran_westhave;3398000;SOLD;4;24;2024-09-30;FALSE
+100734;Redwood Civic Association Silver Presentation Service, 1871;METALWORK;vanecapital2;3749000;SOLD;4;24;2024-10-12;FALSE
+100735;Screen-Used The North Courtyard Prop, 2010;FILM_PROP;meridianmillercollections;857000;SALE_PENDING;4;24;2024-10-07;FALSE
+100736;Journal of the Detroit Expedition, 1799–1801;MANUSCRIPT;rothcapital2;1708000;SOLD;4;24;2024-10-19;FALSE
+100737;Championship Boxing Gloves — Group 3;SPORTS_MEMORABILIA;ashcroftcapital2;4733000;SOLD;4;24;2024-10-26;FALSE
+100738;Richmond Botanical Specimen Collection, 1858;NATURAL_HISTORY;howardfineobjects;1574000;AVAILABLE;4;24;2024-10-09;FALSE
+100739;Screen-Used Night Tram Prop, 1943;FILM_PROP;ronash_hold5;6366000;SOLD;4;24;2024-09-30;FALSE
+100740;Ansel Vale, Salt Marsh at Dusk, 1968;PAINTING;rosemonthistoricalsociety;1915000;SOLD;4;24;2024-10-20;FALSE
+100741;Public Transit Destination Sign — Group 2;TRANSPORTATION;rothartadvisory;3037000;SOLD;4;24;2024-10-15;FALSE
+100742;Redwood Civic Association Computing Prototype, 1951;TECHNOLOGY;santiago.jordan;1110000;SOLD;4;24;2024-10-03;FALSE
+100743;Art Deco Silver Tea Service — Group 3;METALWORK;lorenzo.ellis;7828000;SOLD;4;24;2024-10-08;FALSE
+100744;Stained-Glass Study Panel — Group 2;GLASS;TheoKincaid;1465000;SOLD;4;24;2024-10-11;FALSE
+100745;Study for a Procession Print;PRINT;vanefamilyoffice;472000;SOLD;4;24;2024-10-25;FALSE
+100746;Detroit Railway Carriage Panel, 1991;TRANSPORTATION;ruby.reed;1203000;SOLD;4;24;2024-10-26;FALSE
+100747;Darius Ferrand Tour Outfit and Backstage Passes, 2010;MUSIC_MEMORABILIA;ashcroftcollection;956000;SOLD;4;24;2024-10-29;FALSE
+100748;Embroidered Civic Standard — Group 3;TEXTILE;walkercollections;465000;SOLD;4;24;2024-10-09;FALSE
+100749;Priya Navarro Couture Evening Coat, 2001;FASHION;ironwoodcraftpreservatio_org;1617000;SALE_PENDING;4;24;2024-10-27;FALSE
+100750;Screen-Used Market Morning Prop, 1935;FILM_PROP;farah.vasquez;167000;AVAILABLE;4;24;2024-10-19;FALSE
+100751;Political Campaign Banner — Group 2;HISTORIC_OBJECT;eastgateindustrialartsmuseum;2586000;SOLD;4;24;2024-10-27;FALSE
+100752;Match-Worn Football Shirt — Group 3;SPORTS_MEMORABILIA;zimmermancollections;532000;AVAILABLE;4;24;2024-10-18;FALSE
+100753;Science-Fiction Helmet Prop — Group 2;FILM_PROP;lana.vasquez;939000;SOLD;4;24;2024-10-24;FALSE
+100754;Handwoven Wall Textile — Group 5;TEXTILE;cedarpointculturalmemoryproj;689000;SOLD;4;24;2024-10-23;FALSE
+100755;Red Bridge Study;DRAWING;farah.vasquez;1099000;SOLD;4;24;2024-10-13;FALSE
+100756;Early Medical Imaging Unit — Group 2;SCIENTIFIC_INSTRUMENT;sofia.rivera;1380000;SOLD;4;24;2024-10-28;FALSE
+100757;Art Deco Silver Tea Service — Group 4;METALWORK;malwex_hold3;342000;SOLD;4;24;2024-10-16;FALSE
+100758;Darius Alvarez Library Chair, 1874;FURNITURE;chloe.wilson;636000;SOLD;4;24;2024-10-03;FALSE
+100759;Fantasy Film Sword Prop — Group 3;FILM_PROP;erook_family4;750000;SOLD;4;24;2024-10-19;FALSE
+100760;Rafael Dawson, Harbour Series I, lithograph, 1990;PRINT;malwex_hold3;286000;AVAILABLE;4;24;2024-10-01;FALSE
+100761;Annotated Production Script, 1962;FILM_AND_MEDIA;obexley_family3;2766000;SOLD;4;24;2024-10-28;FALSE
+100762;Riverside Theatre Processional Banner, 1940;TEXTILE;valecapital2;1081000;AVAILABLE;4;24;2024-10-11;FALSE
+100763;Annotated Production Script, 1991;FILM_AND_MEDIA;windermerepublicartconservan;787000;SOLD;4;24;2024-10-11;FALSE
+100764;Foundry Pressure Gauge;INDUSTRIAL_OBJECT;farah.vasquez;1451000;SOLD;4;24;2024-09-29;FALSE
+100765;Meridian Studio Silver Presentation Service, 1854;METALWORK;ashcroftcollection;569000;SOLD;4;24;2024-10-17;FALSE
+100766;Noelle Ferrand Precision Microscope, 1820;SCIENTIFIC_INSTRUMENT;foundrybennettfineobjects;1107000;SOLD;4;24;2024-10-23;FALSE
+100767;Screen-Used Winter Garden Prop, 1972;FILM_PROP;ronashcroft7;4293000;SOLD;4;24;2024-10-25;FALSE
+100768;Stained-Glass Study Panel — Group 3;GLASS;cassidy.ito;977000;SOLD;4;24;2024-10-26;FALSE
+100769;Harcourt Estate Press, Illustrated First Edition, 1997;RARE_BOOK;stonefieldhistorichousefound;4070000;SOLD;4;24;2024-10-01;FALSE
+100770;Studio Ceramic Collection — Group 4;COLLECTION;santiago.alvarez;2301000;SOLD;4;24;2024-10-23;FALSE
+100771;Mara Ito, Study for Three Cypress Trees, 1971;DRAWING;yorkfieldfurnituredesignarch;352000;SOLD;4;25;2024-12-03;FALSE
+100772;Runway Evening Dress;FASHION;abigail.lee_curator;1324000;SOLD;4;25;2024-12-01;FALSE
+100773;Santiago Kwon Couture Evening Coat, 2016;FASHION;andersonartadvisory;556000;SOLD;4;25;2024-12-18;FALSE
+100774;Detroit Championship Match-Worn Jersey, 2000;SPORTS_MEMORABILIA;jade.campbell;1094000;SALE_PENDING;4;25;2024-12-14;FALSE
+100775;Mara Serrat Art Glass Panel, 1909;GLASS;mateo.hayes;1088000;SOLD;4;25;2024-11-21;FALSE
+100776;Denver Championship Match-Worn Jersey, 1909;SPORTS_MEMORABILIA;yorkfieldfurnituredesignarch;347000;SOLD;4;25;2024-12-17;FALSE
+100777;Screen-Used Market Morning Prop, 1974;FILM_PROP;walkercollections;412000;SOLD;4;25;2024-11-04;FALSE
+100778;Modernist Writing Desk — Group 4;FURNITURE;lorenzo.ellis;632000;SOLD;4;25;2024-11-14;FALSE
+100779;Elias Kapoor, The Reading Room, bronze, 1839;SCULPTURE;crossventuresart;624000;SOLD;4;25;2024-12-24;FALSE
+100780;Signed Tournament Racket — Group 4;SPORTS_MEMORABILIA;zimmermancollections;907000;AVAILABLE;4;25;2024-12-27;FALSE
+100781;Market Morning Sculpture;SCULPTURE;vanefamilyoffice;676000;SOLD;4;25;2024-12-17;FALSE
+100782;Industrial Design Radio — Group 2;DESIGN_OBJECT;bianca.bennett;781000;SOLD;4;25;2024-11-28;FALSE
+100783;Redwood Civic Association Ceremonial Presentation Object, 1815;HISTORIC_OBJECT;celrot_hold2;307000;AVAILABLE;4;25;2024-12-16;FALSE
+100784;Sapphire Signet Ring;JEWELRY;dhale_family5;2684000;SOLD;4;25;2024-12-25;FALSE
+100785;New York Botanical Specimen Collection, 1809;NATURAL_HISTORY;henry.franklin;382000;SOLD;4;25;2024-12-12;FALSE
+100786;Composer’s Working Notebook — Group 2;MANUSCRIPT;harper7;514000;SOLD;4;25;2024-12-15;FALSE
+100787;Mercury Records Ceremonial Presentation Object, 1771;HISTORIC_OBJECT;hearthstonemuseumofappliedar;749000;SOLD;4;25;2024-12-08;FALSE
+100788;Harcourt Estate Ceremonial Presentation Object, 1755;HISTORIC_OBJECT;meridianmillercollections;286000;SOLD;4;25;2024-11-29;FALSE
+100789;Santiago Ingram, Harbour Series I, bronze, 1813;SCULPTURE;ruby.reed;5505000;SOLD;4;25;2024-12-07;FALSE
+100790;Signed First Edition — Group 5;RARE_BOOK;ronash_hold5;533000;SOLD;4;25;2024-11-06;FALSE
+100791;Rafael Dawson, After the Storm, bronze, 1902;SCULPTURE;mina.singh;2418000;SOLD;4;25;2024-12-25;FALSE
+100792;Concert Poster Archive — Group 5;MUSIC_MEMORABILIA;arcadiathomasauctions;300000;AVAILABLE;4;25;2024-11-23;FALSE
+100793;Salt Marsh at Dusk Print;PRINT;sabrina.shah;312000;SOLD;4;25;2024-11-09;FALSE
+100794;Samuel Novak Studio Ceramic Vessel Set, 1933;CERAMIC;norrisfineobjects;311000;UNDER_OFFER;4;25;2024-12-06;FALSE
+100795;Camille Dawson, Signal Field, 1960;PAINTING;daniel.hall;576000;SOLD;4;25;2024-12-22;FALSE
+100796;Mara Serrat, Denver at Night, 1930;PHOTOGRAPH;ari.turner;706000;SOLD;4;25;2024-12-09;FALSE
+100797;Meridian Studio Archive, 1974–2004;ARCHIVAL_COLLECTION;malik.johnson;301000;SOLD;4;25;2024-11-25;FALSE
+100798;Amara Vale, House at Low Tide, 1934;PAINTING;farah.vasquez;1247000;SOLD;4;25;2024-12-18;FALSE
+100799;Festival Mask with 1842 Collection Notes;ETHNOGRAPHIC_OBJECT;rothartadvisory;435000;SOLD;4;25;2024-11-09;FALSE
+100800;Evening at the Quarry — Group 2;PAINTING;ftran_westhave;1574000;SOLD;4;25;2024-12-19;FALSE
+100801;Screen-Used Hero Prop — Group 2;FILM_PROP;millerauctionpartners;636000;SOLD;4;25;2024-11-08;FALSE
+100802;Gold and Enamel Memorial Brooch, c. 1869;JEWELRY;abigail.bennett;1193000;SOLD;4;25;2024-11-05;FALSE
+100803;Screen-Used Study for a Procession Prop, 1997;FILM_PROP;lucia.knight;678000;SOLD;4;25;2024-11-04;FALSE
+100804;The North Courtyard Sculpture;SCULPTURE;vivian.reyes_finance;763000;SOLD;4;25;2024-12-09;FALSE
+100805;Historic Concert Cello — Group 4;MUSICAL_INSTRUMENT;imani.thomas;559000;SOLD;4;25;2024-11-11;FALSE
+100806;Iris Caldwell Tour Outfit and Backstage Passes, 2013;MUSIC_MEMORABILIA;howellartadvisory;865000;SOLD;4;25;2024-11-28;FALSE
+100807;Screen-Used Coastal Light Prop, 1934;FILM_PROP;lucia.knight;336000;SOLD;4;25;2024-11-26;FALSE
+100808;Jonas Cole, House at Low Tide, bronze, 1851;SCULPTURE;stoneheritagesales;257000;SOLD;4;25;2024-11-01;FALSE
+100809;Mineral Specimen Cabinet;NATURAL_HISTORY;lorenzo.ellis;384000;UNDER_OFFER;4;25;2024-12-04;FALSE
+100810;The Reading Room — Group 2;PAINTING;leo.lane;1663000;AVAILABLE;4;25;2024-12-02;FALSE
+100811;Elias Cole, Studio with Copper Vessel, 2006;PAINTING;rothartadvisory;252000;SOLD;4;25;2024-11-28;FALSE
+100812;Designer Performance Costume — Group 2;FASHION;wexlercollection;332000;SOLD;4;25;2024-11-21;FALSE
+100813;Winter Garden Sculpture;SCULPTURE;GrantMercer;650000;SOLD;4;25;2024-12-24;FALSE
+100814;Annotated Travel Diary — Group 4;MANUSCRIPT;imani.reed;222000;SOLD;4;25;2024-12-20;FALSE
+100815;Amara Bell Concert Violin, 1867;MUSICAL_INSTRUMENT;helval_hold6;431000;SOLD;4;25;2024-12-15;FALSE
+100816;Westhaven Works Painted Stage Backdrop, 1910;THEATRE_OBJECT;stonefieldpublicartconservan;289000;UNDER_OFFER;4;25;2024-12-04;FALSE
+100817;Amina Kwon, Harbour Series I, 1947;PAINTING;ftran_westhave;639000;SOLD;4;25;2024-11-21;FALSE
+100818;Rosa Saito Concert Violin, 1666;MUSICAL_INSTRUMENT;castillocollections;255000;SOLD;4;25;2024-11-12;FALSE
+100819;Elena Havel Concert Violin, 1650;MUSICAL_INSTRUMENT;fairmontmaritimeheritagemuse;997000;SOLD;4;25;2024-11-26;FALSE
+100820;Closed Theatre Records — Group 6;ARCHIVAL_COLLECTION;amir.saito_director;1034000;AVAILABLE;4;25;2024-12-02;FALSE
+100821;Sofia Saito, Baltimore at Night, 1858;PHOTOGRAPH;pineharbormaterialcultureins;559000;RESERVED;4;25;2024-12-27;FALSE
+100822;Imani Havel, Red Bridge, 1927;PAINTING;beatrice.kim;1502000;SOLD;4;25;2024-11-26;FALSE
+100823;Art Deco Silver Tea Service — Group 5;METALWORK;croth_alt;777000;REJECTED;4;25;2024-12-04;FALSE
+100824;Studio Ceramic Collection — Group 5;COLLECTION;andersonartadvisory;397000;SOLD;4;25;2024-11-12;FALSE
+100825;Gold and Enamel Memorial Brooch, c. 1782;JEWELRY;eastgateindustrialartsmuseum;642000;SOLD;4;25;2024-11-14;FALSE
+100826;Salt Marsh at Dusk — Group 2;PAINTING;yorkfieldfurnituredesignarch;478000;SOLD;4;25;2024-12-29;FALSE
+100827;Santa Clara Photographic Album;PHOTOGRAPH;sabrina.shah;84000;SOLD;4;25;2024-11-08;FALSE
+100828;Orion Press Ceremonial Presentation Object, 1990;HISTORIC_OBJECT;vanefamilyoffice;271000;SOLD;4;25;2024-12-09;FALSE
+100829;Three Cypress Trees — Group 2;PAINTING;ashcroftcollection;1535000;SOLD;4;25;2024-11-21;FALSE
+100830;Amina Voss Exhibition Lamp Prototype, 1954;DESIGN_OBJECT;quarrylanemuseumofphotograph;368000;RESERVED;4;25;2024-12-30;FALSE
+100831;Historic Concert Cello — Group 5;MUSICAL_INSTRUMENT;redcedarfolkartfoundation;300000;SOLD;4;25;2024-11-15;FALSE
+100832;Designer Performance Costume — Group 3;FASHION;aaron.olsen;344000;SOLD;4;25;2024-12-23;FALSE
+100833;Iris Kapoor Exhibition Lamp Prototype, 1992;DESIGN_OBJECT;serena.owens;2968000;SOLD;4;25;2024-12-14;FALSE
+100834;Amara Navarro, Study for The Reading Room, 1942;DRAWING;amir.saito_director;297000;AVAILABLE;4;25;2024-11-24;FALSE
+100835;Excavated Architectural Fragment;ARCHAEOLOGICAL_OBJECT;longfellowestatecollection;515000;UNDER_OFFER;4;25;2024-12-23;FALSE
+100836;Theo Hart, Red Bridge, 2018;PAINTING;wellingtonmaterialcultureins;1829000;SOLD;4;25;2024-12-30;FALSE
+100837;Santiago Navarro, The North Courtyard, 1812;PAINTING;ari.turner;255000;SOLD;4;25;2024-12-20;FALSE
+100838;Gabriel Quinn, Evening at the Quarry, 1838;PAINTING;northbridgemuseumofmoderncra;318000;SOLD;4;25;2024-11-17;FALSE
+100839;Studio Ceramic Vessel Set — Group 11;CERAMIC;christian.tran;1574000;SOLD;4;25;2024-11-01;FALSE
+100840;Historic Household Interior Group — Group 5;COLLECTION;wexlercollection;1721000;AVAILABLE;4;25;2024-12-22;FALSE
+100841;Bay City Foundry Ceremonial Presentation Object, 1899;HISTORIC_OBJECT;isaac.shah;162000;SOLD;4;25;2024-12-26;FALSE
+100842;Chicago Championship Match-Worn Jersey, 2017;SPORTS_MEMORABILIA;celrot_hold2;578000;SOLD;4;25;2024-11-21;FALSE
+100843;Sofia Ellis Art Glass Panel, 1924;GLASS;tanglewoodmuseumofmoderncraf;764000;SOLD;4;25;2024-12-23;FALSE
+100844;Original Animation Cell Set;FILM_AND_MEDIA;mina.singh;463000;SOLD;4;25;2024-11-03;FALSE
+100845;Festival Mask with 1894 Collection Notes;ETHNOGRAPHIC_OBJECT;wexlercollection;214000;SOLD;4;25;2024-11-23;FALSE
+100846;Rosa Rivera, Denver at Night, 1936;PHOTOGRAPH;parkhurstcommunityartsfounda;460000;AVAILABLE;4;25;2024-11-10;FALSE
+100847;San Jose Championship Match-Worn Jersey, 1992;SPORTS_MEMORABILIA;robertsheritagesales;551000;SOLD;4;25;2024-11-29;FALSE
+100848;Art Nouveau Pendant — Group 2;JEWELRY;helvale7;642000;SOLD;4;25;2024-11-30;FALSE
+100849;Elena Havel Concert Violin, 1772;MUSICAL_INSTRUMENT;vanecapital2;430000;SOLD;4;25;2024-12-12;FALSE
+100850;Cloud over the Foundry Sculpture;SCULPTURE;howellartadvisory;558000;SOLD;4;25;2024-11-12;FALSE
+100851;Tour Stage Jacket — Group 2;FASHION;martinheritagesales;566000;SOLD;4;25;2024-11-21;FALSE
+100852;Historic Herbarium Collection — Group 2;NATURAL_HISTORY;julia.roberts;462000;AVAILABLE;4;25;2024-11-08;FALSE
+100853;Mara Kapoor Library Chair, 1922;FURNITURE;naomi.campbell;335000;AVAILABLE;4;25;2024-11-28;FALSE
+100854;Walnut Reading Chair — Group 6;FURNITURE;wellingtonmaterialcultureins;1128000;SOLD;4;25;2024-11-27;FALSE
+100855;Priya Desai, Blue Room with Fig Tree, bronze, 1826;SCULPTURE;vivian.reyes_finance;1496000;SOLD;4;25;2024-11-06;FALSE
+100856;Studio with Copper Vessel Print;PRINT;quarrylanemuseumofphotograph;562000;AVAILABLE;4;25;2024-12-14;FALSE
+100857;After the Storm Sculpture;SCULPTURE;sofia.rivera;1151000;SOLD;4;25;2024-11-12;FALSE
+100858;Santiago Roth, Evening at the Quarry, 1826;PAINTING;aiden.patel;2343000;SOLD;4;25;2024-12-28;FALSE
+100859;Salt Marsh at Dusk Sculpture;SCULPTURE;parkhurstceramicsmuseum;898000;SOLD;4;25;2024-12-30;FALSE
+100860;Mara Morrow Studio Ceramic Vessel Set, 1837;CERAMIC;alejandro.walker;197000;UNDER_OFFER;4;25;2024-12-14;FALSE
+100861;Historic Prayer Book — Group 2;RELIGIOUS_OBJECT;georgia.park;1354000;SOLD;4;25;2024-11-15;FALSE
+100862;Gold and Enamel Memorial Brooch, c. 1773;JEWELRY;stoneheritagesales;969000;SALE_PENDING;4;25;2024-11-19;FALSE
+100863;Orion Press Ceremonial Presentation Object, 1834;HISTORIC_OBJECT;caleb.brooks;367000;UNDER_OFFER;4;25;2024-12-05;FALSE
+100864;Folk Costume Ensemble — Group 2;ETHNOGRAPHIC_OBJECT;valeheritagefund;1241000;SOLD;4;25;2024-12-28;FALSE
+100865;Telecommunications Switching Unit — Group 3;TECHNOLOGY;EleanorRook;766000;SOLD;4;25;2024-11-09;FALSE
+100866;Mateo Navarro Exhibition Lamp Prototype, 1936;DESIGN_OBJECT;parkhurstcommunityartsfounda;478000;WITHDRAWN;4;25;2024-11-15;FALSE
+100867;Art Nouveau Pendant — Group 3;JEWELRY;willowmererailwayhistorycent;395000;UNDER_OFFER;4;25;2024-12-07;FALSE
+100868;The Long Platform Sculpture;SCULPTURE;ashcroftcollection;402000;SOLD;4;25;2024-11-04;FALSE
+100869;Exhibition Lighting Prototype — Group 5;DESIGN_OBJECT;beatrice.kim;1173000;SOLD;4;25;2024-12-30;FALSE
+100870;Harcourt Estate Computing Prototype, 1944;TECHNOLOGY;abigail.bennett;293000;SOLD;4;25;2024-12-05;FALSE
+100871;Harcourt Estate Painted Stage Backdrop, 1754;THEATRE_OBJECT;ruby.reed;231000;SOLD;4;25;2024-12-22;FALSE
+100872;Philadelphia Photographic Album;PHOTOGRAPH;bishopheritagesales;752000;SOLD;4;25;2024-12-25;FALSE
+100873;Theo Saito, The Reading Room, bronze, 1832;SCULPTURE;vanefamilyoffice;484000;SOLD;4;25;2024-11-28;FALSE
+100874;Amara Vale Tour Outfit and Backstage Passes, 2010;MUSIC_MEMORABILIA;clara.ross;316000;SOLD;4;25;2024-12-14;FALSE
+100875;Marionette Theatre Figures — Group 2;THEATRE_OBJECT;augvan_hold1;812000;SOLD;4;25;2024-11-10;FALSE
+100876;Darius Ortega Concert Violin, 1771;MUSICAL_INSTRUMENT;jade.campbell;660000;SOLD;4;25;2024-12-18;FALSE
+100877;Chicago Championship Match-Worn Jersey, 1990;SPORTS_MEMORABILIA;reina.chen;372000;SOLD;4;25;2024-12-13;FALSE
+100878;Santiago Hart, Cloud over the Foundry, 1993;PAINTING;blair.sims;863000;SOLD;4;25;2024-11-30;FALSE
+100879;Portland Botanical Specimen Collection, 1962;NATURAL_HISTORY;aldergrovefurnituredesignarc;799000;SOLD;4;25;2024-11-04;FALSE
+100880;Imani Bennett Exhibition Lamp Prototype, 1891;DESIGN_OBJECT;ruby.reed;927000;SOLD;4;25;2024-12-17;FALSE
+100881;Denver Championship Match-Worn Jersey, 1998;SPORTS_MEMORABILIA;amir.saito_director;315000;AVAILABLE;4;25;2024-11-21;FALSE
+100882;House at Low Tide Study;DRAWING;malwex_hold3;968000;SOLD;4;25;2024-12-24;FALSE
+100883;Iris Bell, Study for Salt Marsh at Dusk, 1814;DRAWING;emilia.sullivan_curator;132000;UNDER_OFFER;4;25;2024-12-19;FALSE
+100884;Elias Quinn Exhibition Lamp Prototype, 1942;DESIGN_OBJECT;gran_merc4;318000;SOLD;4;25;2024-12-23;FALSE
+100885;Felix Cole, Green Passage, 1947;PAINTING;osca_bexl6;328000;SOLD;4;25;2024-11-30;FALSE
+100886;Mara Kapoor, Santa Clara at Night, 1856;PHOTOGRAPH;celine.irwin;248000;SOLD;4;25;2024-12-17;FALSE
+100887;Riverside Theatre Computing Prototype, 1999;TECHNOLOGY;santiago.alvarez;281000;SOLD;4;25;2024-11-14;FALSE
+100888;Mercury Records Silver Presentation Service, 1931;METALWORK;keystonemillerauctions;526000;RESERVED;4;25;2024-12-25;FALSE
+100889;Darius Maren, The Reading Room, lithograph, 1804;PRINT;lana.vasquez;597000;SOLD;4;25;2024-11-30;FALSE
+100890;Noelle Ortega, Monterey at Night, 1957;PHOTOGRAPH;vivian.reyes_finance;301000;AVAILABLE;4;25;2024-11-25;FALSE
+100891;Sofia Ferrand Tour Outfit and Backstage Passes, 1954;MUSIC_MEMORABILIA;abigail.bennett;418000;SOLD;4;25;2024-12-03;FALSE
+100892;Annotated Production Script, 1956;FILM_AND_MEDIA;chloe.wilson;71000;SOLD;4;25;2024-12-25;FALSE
+100893;Art Deco Silver Tea Service — Group 6;METALWORK;caesar;312000;SOLD;4;25;2024-11-04;FALSE
+100894;Sapphire Signet Ring — Group 2;JEWELRY;wexlercollection;1044000;SOLD;4;25;2024-12-19;FALSE
+100895;Elena Mercer Concert Violin, 1848;MUSICAL_INSTRUMENT;avane_alt;2272000;SOLD;4;25;2024-11-04;FALSE
+100896;San Jose Championship Match-Worn Jersey, 1895;SPORTS_MEMORABILIA;southbankmaritimeheritagemus;217000;SALE_PENDING;4;25;2024-12-05;FALSE
+100897;Ancient Coin Group — Group 2;ARCHAEOLOGICAL_OBJECT;chloe63;2140000;SOLD;4;25;2024-11-02;FALSE
+100898;Screen-Used After the Storm Prop, 1942;FILM_PROP;CeliaSterling;803000;SOLD;4;25;2024-12-31;FALSE
+100899;Gabriel Navarro, The Reading Room, 1918;PAINTING;aldergrovefurnituredesignarc;650000;SOLD;4;25;2024-12-13;FALSE
+100900;Bay City Foundry Processional Banner, 1897;TEXTILE;crossventuresart;1000000;SOLD;4;25;2024-12-21;FALSE
+100901;San Jose Championship Match-Worn Jersey, 1927;SPORTS_MEMORABILIA;GrantMercer;531000;SOLD;4;25;2024-11-12;FALSE
+100902;Screen-Used Hero Prop — Group 3;FILM_PROP;santiago.alvarez;1033000;SOLD;4;25;2024-11-11;FALSE
+100903;Meridian Studio Press, Illustrated First Edition, 1839;RARE_BOOK;wexlercollection;314000;AVAILABLE;4;25;2024-11-04;FALSE
+100904;Early Personal Computer — Group 2;TECHNOLOGY;vanecapital2;513000;SOLD;4;25;2024-12-30;FALSE
+100905;Amina Cole Tour Outfit and Backstage Passes, 1971;MUSIC_MEMORABILIA;liucollections;398000;SOLD;4;25;2024-11-10;FALSE
+100906;Milo Ren, Coastal Light, 1930;PAINTING;emilia.sullivan_curator;1609000;SOLD;4;25;2024-11-09;FALSE
+100907;Noelle Hart Tour Outfit and Backstage Passes, 1989;MUSIC_MEMORABILIA;ironwoodcraftpreservationsoc;824000;SOLD;4;25;2024-12-31;FALSE
+100908;Festival Mask with 1856 Collection Notes;ETHNOGRAPHIC_OBJECT;foundrybennettfineobjects;1181000;SOLD;4;25;2024-11-28;FALSE
+100909;Victorian Mourning Brooch — Group 2;JEWELRY;liucollections;553000;SOLD;4;25;2024-11-29;FALSE
+100910;Machine Shop Sign — Group 2;INDUSTRIAL_OBJECT;vanecapital2;406000;SOLD;4;25;2024-11-17;FALSE
+100911;Lucien Serrat Tour Outfit and Backstage Passes, 1996;MUSIC_MEMORABILIA;oakhollowmuseumofappliedarts;4417000;SOLD;4;25;2024-12-14;FALSE
+100912;Chicago Botanical Specimen Collection, 1973;NATURAL_HISTORY;valecapital2;288000;SOLD;4;25;2024-11-25;FALSE
+100913;Tour Outfit — Group 4;MUSIC_MEMORABILIA;kara.martin;935000;SOLD;4;25;2024-12-27;FALSE
+100914;Riverside Theatre Press, Illustrated First Edition, 1836;RARE_BOOK;nathan.hassan;670000;SOLD;4;25;2024-12-15;FALSE
+100915;Annotated Production Script, 1974;FILM_AND_MEDIA;castillocollections;299000;SOLD;4;25;2024-12-02;FALSE
+100916;Screen-Used The Reading Room Prop, 1968;FILM_PROP;vanefamilyoffice;596000;SOLD;4;25;2024-12-19;FALSE
+100917;Screen-Used Signal Field Prop, 1944;FILM_PROP;rothartadvisory;1186000;SOLD;4;25;2024-12-22;FALSE
+100918;Rafael Dawson, Coastal Light, lithograph, 1824;PRINT;elmsteadculturalpreservation;1656000;SOLD;4;25;2024-11-03;FALSE
+100919;Elias Serrat, Philadelphia at Night, 1840;PHOTOGRAPH;psethi_family6;1019000;SOLD;4;25;2024-12-14;FALSE
+100920;Theo Bell Concert Violin, 1993;MUSICAL_INSTRUMENT;windermeredesignheritage_org;274000;SOLD;4;25;2024-11-27;FALSE
+100921;Art Nouveau Pendant — Group 4;JEWELRY;vanecapital2;1311000;SOLD;4;25;2024-11-10;FALSE
+100922;Historic Concert Cello — Group 6;MUSICAL_INSTRUMENT;caleb.brooks;558000;UNDER_OFFER;4;25;2024-12-06;FALSE
+100923;Mara Kwon, Night Tram, bronze, 1850;SCULPTURE;hearthstonemuseumofappliedar;340000;AVAILABLE;4;25;2024-11-23;FALSE
+100924;San Jose Championship Match-Worn Jersey, 1924;SPORTS_MEMORABILIA;camila.park;750000;AVAILABLE;4;25;2024-12-06;FALSE
+100925;Celia Ortega Studio Ceramic Vessel Set, 1864;CERAMIC;henry.reed;1346000;SOLD;4;25;2024-12-09;FALSE
+100926;Rosa Havel, Los Angeles at Night, 1867;PHOTOGRAPH;ari.turner;342000;SOLD;4;25;2024-11-13;FALSE
+100927;Historic Racing Helmet — Group 2;SPORTS_MEMORABILIA;blair.kaur;341000;SOLD;4;25;2024-11-15;FALSE
+100928;Nadia Ortega Couture Evening Coat, 1915;FASHION;norrisfineobjects;284000;AVAILABLE;4;25;2024-11-11;FALSE
+100929;Gabriel Ortega, New York at Night, 1968;PHOTOGRAPH;emilia.sullivan_curator;402000;UNDER_OFFER;4;25;2024-12-25;FALSE
+100930;Celia Morrow, After the Storm, bronze, 1895;SCULPTURE;windermeredesignheritage_org;760000;SOLD;4;25;2024-11-01;FALSE
+100931;Santiago Saito Couture Evening Coat, 1914;FASHION;hana.dubois;358000;AVAILABLE;4;25;2024-11-18;FALSE
+100932;Ansel Maren Couture Evening Coat, 1925;FASHION;ronash_hold5;992000;SOLD;4;25;2024-12-31;FALSE
+100933;Historic Motorcycle — Group 2;TRANSPORTATION;reina.reed;167000;AVAILABLE;4;25;2024-11-02;FALSE
+100934;Annotated Poetry Volume — Group 3;RARE_BOOK;daniel.ito;1207000;SOLD;4;25;2024-12-13;FALSE
+100935;Screen-Used Orchard Interior Prop, 1982;FILM_PROP;henry.ellis;1414000;SOLD;4;25;2024-11-08;FALSE
+100936;Orion Press Silver Presentation Service, 2011;METALWORK;elliscollections;529000;SOLD;4;25;2024-11-23;FALSE
+100937;Runway Evening Dress — Group 2;FASHION;mina.singh;726000;AVAILABLE;4;25;2024-12-11;FALSE
+100938;Lucien Kwon, Winter Garden, 1839;PAINTING;stoneheritagesales;1644000;SOLD;4;25;2024-12-24;FALSE
+100939;Decorative Iron Gate — Group 2;ARCHITECTURAL_ELEMENT;rothartadvisory;1950000;SOLD;4;25;2024-12-12;FALSE
+100940;Community Ritual Mask — Group 2;ETHNOGRAPHIC_OBJECT;harper.flores;1152000;SOLD;4;25;2024-11-28;FALSE
+100941;Screen-Used Three Cypress Trees Prop, 1936;FILM_PROP;reina.reed;1369000;SOLD;4;25;2024-11-09;FALSE
+100942;Early Personal Computer — Group 3;TECHNOLOGY;fairmontmaritimeheritagemuse;847000;SOLD;4;25;2024-12-04;FALSE
+100943;Screen-Used The Reading Room Prop, 1942;FILM_PROP;vivian.reyes_finance;650000;AVAILABLE;4;25;2024-12-31;FALSE
+100944;Tour Stage Jacket — Group 3;FASHION;franklincollections;472000;SOLD;4;25;2024-12-15;FALSE
+100945;San Jose Photographic Album;PHOTOGRAPH;ashlandestatecollection;421000;AVAILABLE;4;25;2024-11-18;FALSE
+100946;Milo Morrow Library Chair, 1799;FURNITURE;chloe.edwards;607000;SOLD;4;25;2024-11-19;FALSE
+100947;Samuel Serrat, Denver at Night, 2008;PHOTOGRAPH;gmercer_family1;246000;SOLD;4;25;2024-11-14;FALSE
+100948;Elias Bell, Winter Garden, 1763;PAINTING;reese.wilson;836000;SOLD;4;25;2024-12-26;FALSE
+100949;Elena Ito Tour Outfit and Backstage Passes, 1976;MUSIC_MEMORABILIA;davisauctionpartners;381000;SOLD;4;25;2024-11-07;FALSE
+100950;Closed Cinema Ticket Machine — Group 2;HISTORIC_OBJECT;ftran_westhave;1239000;SOLD;4;25;2024-12-20;FALSE
+100951;Modular Chair Prototype — Group 3;DESIGN_OBJECT;westhavencraftpreservationso;856000;AVAILABLE;4;25;2025-02-10;FALSE
+100952;Orion Press Computing Prototype, 1988;TECHNOLOGY;davisauctionpartners;624000;SOLD;4;25;2025-02-13;FALSE
+100953;Oakland Championship Match-Worn Jersey, 1914;SPORTS_MEMORABILIA;ashcroftcollection;1751000;SOLD;4;25;2025-02-24;FALSE
+100954;Mercury Records Processional Cross, c. 1993;RELIGIOUS_OBJECT;renee.kim;54000;SOLD;4;25;2025-02-15;FALSE
+100955;Lucien Voss Concert Violin, 2009;MUSICAL_INSTRUMENT;andersonartadvisory;118000;SOLD;4;25;2025-02-17;FALSE
+100956;Noelle Caldwell Library Chair, 1797;FURNITURE;blair.kaur;1329000;SOLD;4;25;2025-01-26;FALSE
+100957;Rosa Alvarez Library Chair, 1765;FURNITURE;ruby.dubois;1533000;SOLD;4;25;2025-01-08;FALSE
+100958;Felix Bennett, Green Passage, bronze, 1891;SCULPTURE;paola.santos;471000;SOLD;4;25;2025-02-17;FALSE
+100959;Harbour Series I — Group 2;PAINTING;gmercer_family1;538000;SOLD;4;25;2025-01-24;FALSE
+100960;Nadia Dawson, Baltimore at Night, 1934;PHOTOGRAPH;ftran_westhave;155000;SOLD;4;25;2025-01-19;FALSE
+100961;Gold and Enamel Memorial Brooch, c. 1798;JEWELRY;ronashcroft7;1130000;SOLD;4;25;2025-01-15;FALSE
+100962;Winter Garden — Group 2;PAINTING;psethi_family6;350000;SOLD;4;25;2025-02-23;FALSE
+100963;Riverside Theatre Ceremonial Presentation Object, 1934;HISTORIC_OBJECT;abigail.irwin;488000;UNDER_REVIEW;4;25;2025-02-28;FALSE
+100964;Community Ritual Mask — Group 3;ETHNOGRAPHIC_OBJECT;isaac.shah;163000;SOLD;4;25;2025-02-15;FALSE
+100965;Railway Station Clock — Group 2;TRANSPORTATION;ironwoodcraftpreservationsoc;1410000;SOLD;4;25;2025-02-08;FALSE
+100966;Studio with Copper Vessel — Group 2;PAINTING;augvan_hold1;1391000;SOLD;4;25;2025-02-01;FALSE
+100967;Annotated Production Script, 1976;FILM_AND_MEDIA;vanecapital2;295000;SOLD;4;25;2025-01-06;FALSE
+100968;Studio Ceramic Vessel Set — Group 12;CERAMIC;aiden.patel;144000;SOLD;4;25;2025-01-16;FALSE
+100969;Oakland Photographic Album;PHOTOGRAPH;abigail.bennett;153000;SOLD;4;25;2025-01-18;FALSE
+100970;Santiago Ito Couture Evening Coat, 1905;FASHION;priya.campbell;1309000;SOLD;4;25;2025-02-18;FALSE
+100971;Nadia Ito, Study for Standing Form, 1902;DRAWING;tessa.lee;309000;SALE_PENDING;4;25;2025-01-18;FALSE
+100972;Tour Stage Jacket — Group 4;FASHION;emilia.cho;1149000;SOLD;4;25;2025-01-12;FALSE
+100973;Monterey Championship Match-Worn Jersey, 1951;SPORTS_MEMORABILIA;oakhollowmuseumofappliedarts;377000;SOLD;4;25;2025-02-18;FALSE
+100974;Cypress Observatory Computing Prototype, 1989;TECHNOLOGY;crossventuresart;674000;SOLD;4;25;2025-01-28;FALSE
+100975;Studio Ceramic Collection — Group 6;COLLECTION;adriana.adams;1216000;SOLD;4;25;2025-02-13;FALSE
+100976;Foundry Pressure Gauge — Group 2;INDUSTRIAL_OBJECT;granitehillmuseumoflocalindu;225000;SOLD;4;25;2025-02-15;FALSE
+100977;Camille Cole, Market Morning, 1763;PAINTING;redcedarfolkartfoundation;1161000;SOLD;4;25;2025-02-26;FALSE
+100978;Championship Boxing Gloves — Group 4;SPORTS_MEMORABILIA;ronashcroft7;685000;SOLD;4;25;2025-02-16;FALSE
+100979;Granite Bay Film Society Painted Stage Backdrop, 1892;THEATRE_OBJECT;farah.vasquez;478000;SOLD;4;25;2025-01-07;FALSE
+100980;Sofia Ellis, Standing Form, 1763;PAINTING;sabrina.shah;125000;SOLD;4;25;2025-02-24;FALSE
+100981;Signal Field Print;PRINT;bianca.bennett;225000;SOLD;4;25;2025-01-08;FALSE
+100982;Santiago Bennett, Study for Orchard Interior, 1769;DRAWING;aaron.olsen;469000;SOLD;4;25;2025-01-14;FALSE
+100983;Santiago Kwon, Factory Window, bronze, 1918;SCULPTURE;ashlanddecorativeartsarchive;686000;SOLD;4;25;2025-01-18;FALSE
+100984;Gold and Enamel Memorial Brooch, c. 1842;JEWELRY;fairmontmaritimeheritagemuse;603000;SOLD;4;25;2025-01-20;FALSE
+100985;New Orleans Championship Match-Worn Jersey, 1939;SPORTS_MEMORABILIA;southbankmaritimeheritagemus;497000;SOLD;4;25;2025-01-02;FALSE
+100986;Mosaic Interior Panel — Group 3;ARCHITECTURAL_ELEMENT;tariqinvests;1032000;SOLD;4;25;2025-02-04;FALSE
+100987;Cypress Observatory Computing Prototype, 1991;TECHNOLOGY;wexlercapital2;1026000;SOLD;4;25;2025-01-24;FALSE
+100988;Winter Garden — Group 3;PAINTING;rosemontmuseumofmoderncraftd;248000;SOLD;4;25;2025-01-16;FALSE
+100989;Mercury Records Processional Cross, c. 1775;RELIGIOUS_OBJECT;howellartadvisory;1402000;SOLD;4;25;2025-02-15;FALSE
+100990;Rafael Ren Exhibition Lamp Prototype, 1996;DESIGN_OBJECT;vanecapital2;358000;AVAILABLE;4;25;2025-02-23;FALSE
+100991;Early Scientific Treatise — Group 4;RARE_BOOK;blair.kaur;621000;SOLD;4;25;2025-02-15;FALSE
+100992;Stained-Glass Study Panel — Group 4;GLASS;beatrice.kim;534000;SOLD;4;25;2025-01-04;FALSE
+100993;Annotated Production Script, 2018;FILM_AND_MEDIA;vanefamilyoffice;510000;SOLD;4;25;2025-01-11;FALSE
+100994;Coastal Light Print;PRINT;crossventuresart;304000;SOLD;4;25;2025-02-06;FALSE
+100995;Public Transit Destination Sign — Group 3;TRANSPORTATION;blair.kaur;1218000;SOLD;4;25;2025-02-08;FALSE
+100996;Celia Quinn Couture Evening Coat, 1951;FASHION;farah.stone;293000;SALE_PENDING;4;25;2025-01-19;FALSE
+100997;Historic Restaurant Sign — Group 5;HISTORIC_OBJECT;farahholdings1;409000;SOLD;4;25;2025-01-13;FALSE
+100998;Nadia Bell Couture Evening Coat, 1906;FASHION;clara.ross;274000;SOLD;4;25;2025-02-15;FALSE
+100999;Monterey Photographic Album;PHOTOGRAPH;elenacollector1;280000;UNDER_REVIEW;4;25;2025-02-04;FALSE
+101000;Studio Ceramic Vessel Set — Group 13;CERAMIC;cassidy.mason;532000;SOLD;4;25;2025-02-13;FALSE
+101001;Mara Roth Exhibition Lamp Prototype, 1955;DESIGN_OBJECT;gran_merc4;130000;SOLD;4;25;2025-01-17;FALSE
+101002;Theatre Mask Collection — Group 2;THEATRE_OBJECT;vanefamilyoffice;562000;SOLD;4;25;2025-01-04;FALSE
+101003;Mara Morrow, Harbour Series I, bronze, 1830;SCULPTURE;pineharbormaterialcultureins;211000;UNDER_REVIEW;4;25;2025-02-15;FALSE
+101004;St. Elian Parish Silver Presentation Service, 1993;METALWORK;clara.yoon;322000;SOLD;4;25;2025-01-16;FALSE
+101005;Jazz Club Upright Piano — Group 6;MUSICAL_INSTRUMENT;zane.thomas;72000;SOLD;4;25;2025-02-17;FALSE
+101006;Sofia Ito, Evening at the Quarry, 1976;PAINTING;abigail.lee_curator;139000;RESERVED;4;25;2025-01-07;FALSE
+101007;Science-Fiction Helmet Prop — Group 3;FILM_PROP;wexlercollection;1213000;SOLD;4;25;2025-01-17;FALSE
+101008;Westhaven Works Material Culture Collection, 1998–2023;COLLECTION;zimmermancollections;576000;SALE_PENDING;4;25;2025-01-10;FALSE
+101009;Leila Serrat Couture Evening Coat, 1974;FASHION;sabrina.shah;346000;SALE_PENDING;4;25;2025-01-21;FALSE
+101010;Walnut Reading Chair — Group 7;FURNITURE;crownyoungfineobjects;1213000;SOLD;4;25;2025-01-21;FALSE
+101011;Harcourt Estate Stained-Glass Window, 1806;ARCHITECTURAL_ELEMENT;crosscapital2;983000;SOLD;4;25;2025-01-10;FALSE
+101012;Elena Voss Couture Evening Coat, 1966;FASHION;tanglewoodculturalmemory_org;3159000;SOLD;4;25;2025-01-26;FALSE
+101013;Theo Navarro Precision Microscope, 1940;SCIENTIFIC_INSTRUMENT;howardfineobjects;1250000;SOLD;4;25;2025-02-11;FALSE
+101014;Rosa Navarro, Black Orchard, 1851;PAINTING;crossventuresart;296000;SOLD;4;25;2025-01-08;FALSE
+101015;Celia Mercer Tour Outfit and Backstage Passes, 1963;MUSIC_MEMORABILIA;CelesteRoth;829000;SOLD;4;25;2025-02-24;FALSE
+101016;Art Deco Silver Tea Service — Group 7;METALWORK;liam.martin;723000;SOLD;4;25;2025-01-07;FALSE
+101017;Journal of the New York Expedition, 1983–1985;MANUSCRIPT;wexlercollection;333000;SOLD;4;25;2025-01-28;FALSE
+101018;Ancient Coin Group — Group 3;ARCHAEOLOGICAL_OBJECT;GrantMercer;390000;SOLD;4;25;2025-02-02;FALSE
+101019;Elena Caldwell, Philadelphia at Night, 1952;PHOTOGRAPH;andersonheritagesales;558000;UNDER_REVIEW;4;25;2025-02-08;FALSE
+101020;Gold and Enamel Memorial Brooch, c. 1888;JEWELRY;malwex_hold3;1974000;SOLD;4;25;2025-01-13;FALSE
+101021;Festival Mask with 1912 Collection Notes;ETHNOGRAPHIC_OBJECT;ashcroftcollection;673000;SOLD;4;25;2025-02-17;FALSE
+101022;Journal of the Boston Expedition, 1808–1810;MANUSCRIPT;davisauctionpartners;209000;SOLD;4;25;2025-02-09;FALSE
+101023;North Coast Railway Computing Prototype, 2010;TECHNOLOGY;PriyaSethi;1308000;SOLD;4;25;2025-02-10;FALSE
+101024;Screen-Used Study for a Procession Prop, 1948;FILM_PROP;juniperridgeartistslegacytru;298000;SOLD;4;25;2025-01-20;FALSE
+101025;Historic Motorcycle — Group 3;TRANSPORTATION;ari.turner;462000;SOLD;4;25;2025-02-25;FALSE
+101026;Philadelphia Championship Match-Worn Jersey, 1981;SPORTS_MEMORABILIA;davisauctionpartners;505000;SOLD;4;25;2025-01-19;FALSE
+101027;Art Deco Silver Tea Service — Group 8;METALWORK;lorenzo.valdez;634000;SOLD;4;25;2025-02-20;FALSE
+101028;Samuel Ingram, Study for Orchard Interior, 1983;DRAWING;ashcroftcapital2;407000;SOLD;4;25;2025-01-14;FALSE
+101029;Rosa Havel, The Reading Room, bronze, 1880;SCULPTURE;malik.johnson;326000;SOLD;4;25;2025-01-31;FALSE
+101030;Early Personal Computer — Group 4;TECHNOLOGY;vanefamilyoffice;230000;AVAILABLE;4;25;2025-01-09;FALSE
+101031;Linden Library Computing Prototype, 2014;TECHNOLOGY;noelle.palmer;687000;SOLD;4;25;2025-02-09;FALSE
+101032;Screen-Used Three Cypress Trees Prop, 2001;FILM_PROP;foundrybennettfineobjects;199000;SOLD;4;25;2025-01-06;FALSE
+101033;Designer Performance Costume — Group 4;FASHION;eastgateindustrialartsmuseum;941000;SOLD;4;25;2025-02-25;FALSE
+101034;Iris Ren Tour Outfit and Backstage Passes, 1957;MUSIC_MEMORABILIA;keira.nguyen;790000;SOLD;4;25;2025-01-03;FALSE
+101035;St. Elian Parish Computing Prototype, 1996;TECHNOLOGY;vanefamilyoffice;266000;SOLD;4;25;2025-01-03;FALSE
+101036;Handwritten Set List — Group 2;MUSIC_MEMORABILIA;delilah.kim;316000;SOLD;4;25;2025-01-13;FALSE
+101037;Victorian Mourning Brooch — Group 3;JEWELRY;imani.thomas;1247000;SOLD;4;25;2025-01-10;FALSE
+101038;Studio Ceramic Vessel Set — Group 14;CERAMIC;nwhitmore_family2;483000;SOLD;4;25;2025-01-11;FALSE
+101039;Linden Library Processional Cross, c. 1889;RELIGIOUS_OBJECT;julia.roberts;368000;SOLD;4;25;2025-02-10;FALSE
+101040;Meridian Studio Computing Prototype, 2015;TECHNOLOGY;christian.tran;1975000;SOLD;4;25;2025-02-14;FALSE
+101041;Closed Theatre Records — Group 7;ARCHIVAL_COLLECTION;julia.roberts;2314000;SOLD;4;25;2025-02-09;FALSE
+101042;Festival Vestment Set — Group 3;RELIGIOUS_OBJECT;greatlakesindustrialartsmuse;849000;SOLD;4;25;2025-01-05;FALSE
+101043;Gabriel Bennett Couture Evening Coat, 1901;FASHION;foundrybennettfineobjects;416000;AVAILABLE;4;25;2025-01-08;FALSE
+101044;Linden Library Processional Banner, 1854;TEXTILE;stoneartadvisory;142000;SOLD;4;25;2025-02-13;FALSE
+101045;Stained-Glass Study Panel — Group 5;GLASS;ironwoodcraftpreservatio_org;670000;SOLD;4;25;2025-02-26;FALSE
+101046;Harbour Series I Study;DRAWING;ashcroftcollection;405000;SOLD;4;25;2025-01-05;FALSE
+101047;Embroidered Civic Standard — Group 4;TEXTILE;daniel.campbell;990000;SOLD;4;25;2025-01-30;FALSE
+101048;Oakland Championship Match-Worn Jersey, 1964;SPORTS_MEMORABILIA;keystonepatelfineobjects;1189000;SOLD;4;25;2025-01-29;FALSE
+101049;Milo Voss, The Long Platform, 1958;PAINTING;rosemonthistoricalsociety;2019000;SOLD;4;25;2025-01-17;FALSE
+101050;Mosaic Interior Panel — Group 4;ARCHITECTURAL_ELEMENT;psethi_family6;883000;SOLD;4;25;2025-02-07;FALSE
+101051;Westhaven Works Press, Illustrated First Edition, 1823;RARE_BOOK;keira.nguyen;808000;SOLD;4;25;2025-01-28;FALSE
+101052;Machine Shop Sign — Group 3;INDUSTRIAL_OBJECT;ironwoodcraftpreservatio_org;380000;UNDER_REVIEW;4;25;2025-02-17;FALSE
+101053;Mateo Voss, Cloud over the Foundry, 1825;PAINTING;keystonemillerauctions;195000;UNDER_REVIEW;4;25;2025-01-20;FALSE
+101054;Camille Dawson, Salt Marsh at Dusk, lithograph, 1967;PRINT;imani.thomas;1414000;SOLD;4;25;2025-01-03;FALSE
+101055;Historic Restaurant Sign — Group 6;HISTORIC_OBJECT;keira.nguyen;193000;UNDER_REVIEW;4;25;2025-01-26;FALSE
+101056;Green Passage — Group 2;PAINTING;lorenzo.valdez;3507000;SOLD;4;25;2025-01-25;FALSE
+101057;Cypress Observatory Press, Illustrated First Edition, 1791;RARE_BOOK;howellartadvisory;764000;SOLD;4;25;2025-02-02;FALSE
+101058;Gabriel Caldwell, Study for Standing Form, 1953;DRAWING;farah.vasquez;332000;SOLD;4;25;2025-01-13;FALSE
+101059;Harcourt Estate Processional Cross, c. 1778;RELIGIOUS_OBJECT;harper.hernandez;266000;SALE_PENDING;4;25;2025-01-11;FALSE
+101060;Match-Worn Football Shirt — Group 4;SPORTS_MEMORABILIA;chloe.edwards;317000;RESERVED;4;25;2025-01-09;FALSE
+101061;Amara Alvarez, Study for Factory Window, 1858;DRAWING;elea_rook7;2460000;SOLD;4;25;2025-01-18;FALSE
+101062;Signed Tournament Racket — Group 5;SPORTS_MEMORABILIA;blair.kaur;1613000;SOLD;4;25;2025-02-13;FALSE
+101063;Screen-Used Market Morning Prop, 1936;FILM_PROP;longfellowestatecollection;467000;AVAILABLE;4;25;2025-01-21;FALSE
+101064;Modernist Writing Desk — Group 5;FURNITURE;stonefieldpublicartconservan;161000;AVAILABLE;4;25;2025-01-16;FALSE
+101065;Screen-Used Hero Prop — Group 4;FILM_PROP;nadia_whitmore;386000;SOLD;4;25;2025-01-03;FALSE
+101066;Early Television Camera — Group 2;FILM_AND_MEDIA;DominicHale;1365000;SOLD;4;25;2025-02-13;FALSE
+101067;Cypress Observatory Control Panel, 1963;INDUSTRIAL_OBJECT;tessa.lee;1343000;SOLD;4;25;2025-01-22;FALSE
+101068;Historic Shopfront Sign — Group 2;ARCHITECTURAL_ELEMENT;choiartadvisory;599000;SOLD;4;25;2025-01-28;FALSE
+101069;Evening at the Quarry — Group 3;PAINTING;abigail.morgan;1078000;AVAILABLE;4;25;2025-01-09;FALSE
+101070;Red Bridge — Group 2;PAINTING;brookfieldhistorichousefound;480000;SOLD;4;25;2025-01-15;FALSE
+101071;River Bend Study;DRAWING;wexlercapital2;385000;SOLD;4;25;2025-01-22;FALSE
+101072;Baltimore Photographic Album;PHOTOGRAPH;hana.dubois;144000;UNDER_REVIEW;4;25;2025-02-02;FALSE
+101073;Oakland Championship Match-Worn Jersey, 1945;SPORTS_MEMORABILIA;nadia_whitmore;680000;SOLD;4;25;2025-01-25;FALSE
+101074;Victorian Mourning Brooch — Group 4;JEWELRY;blair.kaur;587000;SOLD;4;25;2025-01-17;FALSE
+101075;Signed First Edition — Group 6;RARE_BOOK;TheoKincaid;1396000;SOLD;4;25;2025-01-10;FALSE
+101076;Ansel Foster Couture Evening Coat, 1912;FASHION;howellartadvisory;358000;SOLD;4;25;2025-01-09;FALSE
+101077;Railway Engineering Map — Group 2;MAP;avane_alt;246000;SOLD;4;25;2025-02-04;FALSE
+101078;Priya Ingram, Study for Winter Garden, 1989;DRAWING;beatrice.kim;741000;SOLD;4;25;2025-02-28;FALSE
+101079;New Orleans Championship Match-Worn Jersey, 2010;SPORTS_MEMORABILIA;nathan58;258000;SOLD;4;25;2025-01-20;FALSE
+101080;North Coast Railway Archive, 1873–1903;ARCHIVAL_COLLECTION;eastgateindustrialartsmuseum;1072000;SOLD;4;25;2025-02-15;FALSE
+101081;Mara Saito Art Glass Panel, 1911;GLASS;windermeredesignheritagecent;464000;RESERVED;4;25;2025-01-04;FALSE
+101082;Market Morning — Group 2;PAINTING;ftran_westhave;733000;SOLD;4;25;2025-02-13;FALSE
+101083;Orion Press Press, Illustrated First Edition, 2000;RARE_BOOK;emilia.sullivan_curator;449000;UNDER_REVIEW;4;25;2025-01-30;FALSE
+101084;Industrial Design Radio — Group 3;DESIGN_OBJECT;santiago.jordan;328000;SOLD;4;25;2025-02-13;FALSE
+101085;Night Tram Sculpture;SCULPTURE;omar.owens;550000;UNDER_REVIEW;4;25;2025-01-21;FALSE
+101086;Harcourt Estate Control Panel, 1911;INDUSTRIAL_OBJECT;wexlercapital2;490000;SOLD;4;25;2025-01-12;FALSE
+101087;Screen-Used Red Bridge Prop, 2010;FILM_PROP;foundryxucollections;626000;SOLD;4;25;2025-01-27;FALSE
+101088;Screen-Used Three Cypress Trees Prop, 1996;FILM_PROP;liucollections;306000;SOLD;4;25;2025-01-23;FALSE
+101089;Coastal Light — Group 2;PAINTING;nadia_whitmore;1346000;SOLD;4;25;2025-02-13;FALSE
+101090;Imani Havel, Three Cypress Trees, bronze, 1943;SCULPTURE;nathan.hassan;960000;SOLD;4;25;2025-01-03;FALSE
+101091;Elena Vale, Study for Signal Field, 2007;DRAWING;ruby.reed;271000;SOLD;4;25;2025-01-04;FALSE
+101092;Priya Foster Couture Evening Coat, 1997;FASHION;georgia.park;419000;UNDER_REVIEW;4;25;2025-01-20;FALSE
+101093;Signed First Edition — Group 7;RARE_BOOK;lorenzo.valdez;1368000;SOLD;4;25;2025-01-07;FALSE
+101094;Seattle Championship Match-Worn Jersey, 1978;SPORTS_MEMORABILIA;meridianmillercollections;1242000;SOLD;4;25;2025-02-25;FALSE
+101095;Felix Ito Couture Evening Coat, 1975;FASHION;avane_alt;1405000;SOLD;4;25;2025-02-28;FALSE
+101096;Riverside Theatre Material Culture Collection, 1972–1997;COLLECTION;silvermarsharchitecturalheri;356000;UNDER_REVIEW;4;25;2025-02-02;FALSE
+101097;Rowan Roth, The Long Platform, bronze, 1939;SCULPTURE;arcadialamauctions;3459000;SALE_PENDING;4;25;2025-02-04;FALSE
+101098;Telecommunications Switching Unit — Group 4;TECHNOLOGY;vivienne.cross;438000;SOLD;4;25;2025-01-28;FALSE
+101099;Mara Havel Tour Outfit and Backstage Passes, 2011;MUSIC_MEMORABILIA;meridiancolemancollections;930000;AVAILABLE;4;25;2025-01-30;FALSE
+101100;Cypress Observatory Processional Cross, c. 1842;RELIGIOUS_OBJECT;ashlandmuseumofprintedarts;203000;RESERVED;4;25;2025-01-01;FALSE
+101101;Gabriel Ito Concert Violin, 1811;MUSICAL_INSTRUMENT;rosemonthistoricalsociety;2975000;SOLD;4;25;2025-04-14;FALSE
+101102;Granite Bay Film Society Computing Prototype, 1990;TECHNOLOGY;nathan.hassan;895000;SOLD;4;25;2025-03-18;FALSE
+101103;Festival Mask with 1981 Collection Notes;ETHNOGRAPHIC_OBJECT;bobby;1337000;SOLD;4;25;2025-03-27;FALSE
+101104;Composer’s Working Notebook — Group 3;MANUSCRIPT;davisauctionpartners;377000;SOLD;4;25;2025-04-10;FALSE
+101105;Nadia Alvarez Couture Evening Coat, 2011;FASHION;imani.thomas;1315000;SOLD;4;25;2025-03-23;FALSE
+101106;Standing Form Print;PRINT;elea_rook7;758000;SOLD;4;25;2025-04-13;FALSE
+101107;Detroit Railway Carriage Panel, 1891;TRANSPORTATION;PriyaSethi;361000;SALE_PENDING;4;25;2025-03-22;FALSE
+101108;Match-Worn Football Shirt — Group 5;SPORTS_MEMORABILIA;heritagerowceramicsmuseum;210000;SOLD;4;25;2025-03-24;FALSE
+101109;Handwoven Wall Textile — Group 6;TEXTILE;cole.thomas_director;233000;UNDER_REVIEW;4;25;2025-03-09;FALSE
+101110;Evening at the Quarry Sculpture;SCULPTURE;ronash_hold5;593000;SOLD;4;25;2025-04-18;FALSE
+101111;Celia Serrat Exhibition Lamp Prototype, 1941;DESIGN_OBJECT;oakhollowmuseumofappliedarts;141000;SOLD;4;25;2025-03-30;FALSE
+101112;House at Low Tide Print;PRINT;andersonartadvisory;270000;SOLD;4;25;2025-04-15;FALSE
+101113;Arthur Dawson, Factory Window, 1867;PAINTING;paola.santos;3380000;SOLD;4;25;2025-03-27;FALSE
+101114;North Coast Railway Control Panel, 1922;INDUSTRIAL_OBJECT;georgia.park;139000;SUBMITTED;4;25;2025-04-26;FALSE
+101115;Fantasy Film Sword Prop — Group 4;FILM_PROP;ruby.reed;542000;SOLD;4;25;2025-03-09;FALSE
+101116;Orion Press Ceremonial Presentation Object, 1799;HISTORIC_OBJECT;cassidy.ito;192000;SOLD;4;25;2025-04-09;FALSE
+101117;Cypress Observatory Stained-Glass Window, 1844;ARCHITECTURAL_ELEMENT;ari.turner;968000;SOLD;4;25;2025-03-15;FALSE
+101118;Iris Ortega, Green Passage, lithograph, 2007;PRINT;windermeremuseumofmoderncraf;184000;SOLD;4;25;2025-03-26;FALSE
+101119;Public Transit Destination Sign — Group 4;TRANSPORTATION;jade.campbell;1399000;SOLD;4;25;2025-03-25;FALSE
+101120;Match-Worn Football Shirt — Group 6;SPORTS_MEMORABILIA;meridianmillercollections;1879000;SOLD;4;25;2025-03-11;FALSE
+101121;Orion Press Computing Prototype, 1979;TECHNOLOGY;quinn.cho;241000;REJECTED;4;25;2025-03-07;FALSE
+101122;Granite Bay Film Society Material Culture Collection, 1851–1876;COLLECTION;rothartadvisory;756000;SOLD;4;25;2025-04-19;FALSE
+101123;Bay City Foundry Press, Illustrated First Edition, 1877;RARE_BOOK;GrantMercer;244000;SOLD;4;25;2025-03-17;FALSE
+101124;Blue Room with Fig Tree Study;DRAWING;crossventuresart;587000;SOLD;4;25;2025-03-16;FALSE
+101125;Brass Surveying Transit — Group 3;SCIENTIFIC_INSTRUMENT;mwexler_alt;390000;SOLD;4;25;2025-04-05;FALSE
+101126;Winter Garden — Group 4;PAINTING;harborlightdecorativeartsarc;258000;UNDER_REVIEW;4;25;2025-03-11;FALSE
+101127;Green Passage — Group 3;PAINTING;farah.stone;271000;UNDER_REVIEW;4;25;2025-03-07;FALSE
+101128;Elena Ito, Green Passage, 1897;PAINTING;norrisfineobjects;366000;UNDER_REVIEW;4;25;2025-04-03;FALSE
+101129;Gabriel Mercer Tour Outfit and Backstage Passes, 1952;MUSIC_MEMORABILIA;hana.dubois;168000;SUBMITTED;4;25;2025-04-21;FALSE
+101130;Early Personal Computer — Group 5;TECHNOLOGY;santiago.monroe;834000;SOLD;4;25;2025-04-27;FALSE
+101131;Journal of the Detroit Expedition, 1788–1790;MANUSCRIPT;celine.palmer;595000;SOLD;4;25;2025-03-23;FALSE
+101132;Noelle Ingram Art Glass Panel, 1756;GLASS;brookfieldhistorichousefound;167000;SOLD;4;25;2025-03-10;FALSE
+101133;Valentina Serrat, Salt Marsh at Dusk, lithograph, 1935;PRINT;southbanktextilearchive;550000;SOLD;4;25;2025-04-06;FALSE
+101134;Excavated Ceramic Vessel with Field Archive, c. 255;ARCHAEOLOGICAL_OBJECT;hana.dubois;1177000;SOLD;4;25;2025-03-25;FALSE
+101135;Arthur Cole Tour Outfit and Backstage Passes, 1962;MUSIC_MEMORABILIA;foundryxufineobjects;1140000;SOLD;4;25;2025-04-06;FALSE
+101136;Carved Stone Door Surround — Group 3;ARCHITECTURAL_ELEMENT;chloe.wilson;1314000;SOLD;4;25;2025-03-28;FALSE
+101137;Noelle Bennett Tour Outfit and Backstage Passes, 1969;MUSIC_MEMORABILIA;farah.stone;720000;SOLD;4;25;2025-03-07;FALSE
+101138;Historic Motorcycle — Group 4;TRANSPORTATION;celine.kapoor;915000;SOLD;4;25;2025-03-29;FALSE
+101139;Screen-Used Hero Prop — Group 5;FILM_PROP;southbankmaterialcultureinst;1064000;SOLD;4;25;2025-04-26;FALSE
+101140;Art Nouveau Pendant — Group 5;JEWELRY;vivcross7;446000;SOLD;4;25;2025-04-14;FALSE
+101141;Arthur Ellis, Oakland at Night, 1996;PHOTOGRAPH;arcadialamauctions;387000;SOLD;4;25;2025-04-07;FALSE
+101142;Bay City Foundry Press, Illustrated First Edition, 1966;RARE_BOOK;augvan_hold1;528000;SOLD;4;25;2025-03-19;FALSE
+101143;Cloud over the Foundry — Group 2;PAINTING;gianna.jensen;1224000;SOLD;4;25;2025-03-28;FALSE
+101144;Historic Restaurant Sign — Group 7;HISTORIC_OBJECT;helval_hold6;247000;SOLD;4;25;2025-03-01;FALSE
+101145;Amara Kapoor, Coastal Light, 1991;PAINTING;elliscollections;421000;SOLD;4;25;2025-04-16;FALSE
+101146;Victorian Era Monocle — Group 4;HISTORIC_OBJECT;ashcroftcapital2;544000;SOLD;4;25;2025-04-25;FALSE
+101147;Rowan Ito, Blue Room with Fig Tree, 1979;PAINTING;naomi.reyes;721000;SOLD;4;25;2025-03-04;FALSE
+101148;Foundry Pressure Gauge — Group 3;INDUSTRIAL_OBJECT;nadia_whitmore;69000;SOLD;4;25;2025-04-04;FALSE
+101149;Chicago Railway Carriage Panel, 2012;TRANSPORTATION;lorenzo.xu;1124000;SOLD;4;25;2025-04-12;FALSE
+101150;Walnut Reading Chair — Group 8;FURNITURE;nora.desai;371000;SOLD;4;25;2025-03-14;FALSE
+101151;Elias Ellis, Seattle at Night, 1854;PHOTOGRAPH;cassidy.mason;135000;SOLD;4;25;2025-04-03;FALSE
+101152;Lucien Cole, Signal Field, 1815;PAINTING;paola.santos;793000;SOLD;4;25;2025-03-08;FALSE
+101153;Screen-Used Black Orchard Prop, 1940;FILM_PROP;howellartadvisory;549000;SOLD;4;25;2025-04-25;FALSE
+101154;The Reading Room — Group 3;PAINTING;keystonepatelfineobjects;1390000;SOLD;4;25;2025-04-28;FALSE
+101155;Amara Novak Tour Outfit and Backstage Passes, 1968;MUSIC_MEMORABILIA;gmercer_family1;507000;SOLD;4;25;2025-03-04;FALSE
+101156;Gabriel Mercer, Factory Window, bronze, 1815;SCULPTURE;crosscapital2;3425000;SOLD;4;25;2025-03-20;FALSE
+101157;Theo Voss, Salt Marsh at Dusk, lithograph, 1874;PRINT;meridianmillercollections;144000;SOLD;4;25;2025-04-03;FALSE
+101158;River Bend Sculpture;SCULPTURE;psethi_family6;1670000;SOLD;4;25;2025-03-01;FALSE
+101159;Valentina Ferrand Studio Ceramic Vessel Set, 1785;CERAMIC;vcross_alt;334000;SOLD;4;25;2025-03-03;FALSE
+101160;Journal of the New York Expedition, 1879–1881;MANUSCRIPT;davisauctionpartners;1864000;SOLD;4;25;2025-03-20;FALSE
+101161;Theatre Lobby Bench — Group 5;FURNITURE;chloe.singh;169000;SUBMITTED;4;25;2025-04-23;FALSE
+101162;Science-Fiction Helmet Prop — Group 4;FILM_PROP;vivian.reyes_finance;578000;UNDER_REVIEW;4;25;2025-03-26;FALSE
+101163;Orchard Interior — Group 2;PAINTING;blair.kaur;575000;SOLD;4;25;2025-04-29;FALSE
+101164;Felix Ellis, Orchard Interior, 1957;PAINTING;zimmermancollections;943000;SOLD;4;25;2025-04-15;FALSE
+101165;Victorian Era Monocle — Group 5;HISTORIC_OBJECT;westhavencraftpreservationso;775000;SOLD;4;25;2025-03-25;FALSE
+101166;Local Club Memorabilia Collection — Group 2;COLLECTION;davisauctionpartners;579000;SOLD;4;25;2025-03-26;FALSE
+101167;Amara Maren Couture Evening Coat, 1999;FASHION;ashcroftcapital2;3336000;SOLD;4;25;2025-03-08;FALSE
+101168;Camille Ito, Three Cypress Trees, bronze, 1793;SCULPTURE;lorenzo.ellis;1556000;SOLD;4;25;2025-03-14;FALSE
+101169;Mara Ingram Couture Evening Coat, 1922;FASHION;heritagerowceramicsmuseum;404000;SOLD;4;25;2025-04-16;FALSE
+101170;Film Festival Print — Group 2;FILM_AND_MEDIA;lucia.knight;199000;SOLD;4;25;2025-03-23;FALSE
+101171;Gold and Enamel Memorial Brooch, c. 1884;JEWELRY;DominicHale;1339000;SOLD;4;25;2025-03-17;FALSE
+101172;Baltimore Botanical Specimen Collection, 1906;NATURAL_HISTORY;ashcroftcollection;192000;SOLD;4;25;2025-03-12;FALSE
+101173;Gabriel Hart Studio Ceramic Vessel Set, 1835;CERAMIC;vanefamilyoffice;438000;SOLD;4;25;2025-04-01;FALSE
+101174;Signed Recording Contract — Group 3;MUSIC_MEMORABILIA;caesar;229000;SOLD;4;25;2025-03-19;FALSE
+101175;Annotated Poetry Volume — Group 4;RARE_BOOK;zimmermancollections;1495000;SALE_PENDING;4;25;2025-04-01;FALSE
+101176;Amara Roth, The Reading Room, 1883;PAINTING;southbanktextilearchive;240000;SOLD;4;25;2025-03-11;FALSE
+101177;Championship Boxing Gloves — Group 5;SPORTS_MEMORABILIA;aaliyah.baker;1078000;SOLD;4;25;2025-04-22;FALSE
+101178;Mosaic Interior Panel — Group 5;ARCHITECTURAL_ELEMENT;ari.turner;412000;SOLD;4;25;2025-03-29;FALSE
+101179;Rowan Ortega, Factory Window, bronze, 1874;SCULPTURE;northbridgemuseumofmoderncra;857000;SOLD;4;25;2025-03-04;FALSE
+101180;Vintage Racing Car Body — Group 2;TRANSPORTATION;ari.turner;311000;SOLD;4;25;2025-04-07;FALSE
+101181;Amina Kapoor, The Reading Room, 1925;PAINTING;HelenaVale;619000;SOLD;4;25;2025-04-02;FALSE
+101182;Excavated Ceramic Vessel with Field Archive, c. 269;ARCHAEOLOGICAL_OBJECT;harborlightdecorativeartsarc;632000;SALE_PENDING;4;25;2025-03-07;FALSE
+101183;Ansel Ferrand, Philadelphia at Night, 1982;PHOTOGRAPH;croth_alt;164000;SOLD;4;25;2025-03-15;FALSE
+101184;Celia Morrow Exhibition Lamp Prototype, 1951;DESIGN_OBJECT;fairmontmaritimeheritagemuse;1420000;SOLD;4;25;2025-04-30;FALSE
+101185;Priya Alvarez Exhibition Lamp Prototype, 1977;DESIGN_OBJECT;psethi_family6;568000;SOLD;4;25;2025-04-15;FALSE
+101186;Historic Shopfront Sign — Group 3;ARCHITECTURAL_ELEMENT;sofia.rivera;991000;SOLD;4;25;2025-04-05;FALSE
+101187;Ansel Saito Tour Outfit and Backstage Passes, 1996;MUSIC_MEMORABILIA;liucollections;684000;SOLD;4;25;2025-04-23;FALSE
+101188;Amara Ito Couture Evening Coat, 1958;FASHION;farah.stone;498000;UNDER_REVIEW;4;25;2025-04-04;FALSE
+101189;Nadia Roth, New York at Night, 2011;PHOTOGRAPH;highlandartistslegacytru_org;652000;SOLD;4;25;2025-04-27;FALSE
+101190;Screen-Used Signal Field Prop, 1991;FILM_PROP;vivian.vega;589000;SOLD;4;25;2025-04-29;FALSE
+101191;Studio Ceramic Vessel Set — Group 15;CERAMIC;malwexler7;456000;SOLD;4;25;2025-03-05;FALSE
+101192;Local Club Memorabilia Collection — Group 3;COLLECTION;windermeredesignheritagecent;448000;UNDER_REVIEW;4;25;2025-03-28;FALSE
+101193;Excavated Architectural Fragment — Group 2;ARCHAEOLOGICAL_OBJECT;dhale_family5;323000;SOLD;4;25;2025-03-05;FALSE
+101194;Priya Morrow, After the Storm, bronze, 1761;SCULPTURE;isabel.carter;604000;SOLD;4;25;2025-03-15;FALSE
+101195;Foundry Pressure Gauge — Group 4;INDUSTRIAL_OBJECT;bobby;210000;SALE_PENDING;4;25;2025-03-30;FALSE
+101196;Handwoven Wall Textile — Group 7;TEXTILE;isaac.shah;263000;SOLD;4;25;2025-03-08;FALSE
+101197;Chicago Championship Match-Worn Jersey, 1937;SPORTS_MEMORABILIA;yara.diaz;1396000;SOLD;4;25;2025-04-13;FALSE
+101198;Historic Concert Cello — Group 7;MUSICAL_INSTRUMENT;vivcross7;1694000;SOLD;4;25;2025-03-09;FALSE
+101199;Camille Morrow Tour Outfit and Backstage Passes, 2000;MUSIC_MEMORABILIA;castillocollections;560000;SOLD;4;25;2025-04-05;FALSE
+101200;Mercury Records Computing Prototype, 1986;TECHNOLOGY;quarrylanecraftpreservations;991000;SOLD;4;25;2025-04-08;FALSE
+101201;Rowan Roth, Richmond at Night, 1949;PHOTOGRAPH;walkercollections;1664000;SOLD;4;25;2025-04-22;FALSE
+101202;North Coast Railway Ceremonial Presentation Object, 1965;HISTORIC_OBJECT;silvermarsharchitecturalheri;290000;UNDER_REVIEW;4;25;2025-03-21;FALSE
+101203;Political Campaign Banner — Group 3;HISTORIC_OBJECT;ronanA;744000;SOLD;4;25;2025-03-29;FALSE
+101204;Westhaven Works Stained-Glass Window, 1804;ARCHITECTURAL_ELEMENT;hana.dubois;621000;SOLD;4;25;2025-03-19;FALSE
+101205;Mineral Specimen Cabinet — Group 2;NATURAL_HISTORY;valecapital2;3490000;SOLD;4;25;2025-04-26;FALSE
+101206;Harcourt Estate Computing Prototype, 1953;TECHNOLOGY;yara.shah;2325000;SOLD;4;25;2025-03-24;FALSE
+101207;Signed Recording Contract — Group 4;MUSIC_MEMORABILIA;vcross_alt;420000;SOLD;4;25;2025-03-11;FALSE
+101208;Elias Bennett, Study for Red Bridge, 1879;DRAWING;quinn.campbell;163000;SOLD;4;25;2025-03-27;FALSE
+101209;Factory Time Clock — Group 2;INDUSTRIAL_OBJECT;southbankmaritimeheritagemus;1580000;SOLD;4;25;2025-04-07;FALSE
+101210;Mara Morrow, Austin at Night, 1958;PHOTOGRAPH;atlascolemanadvisory;106000;UNDER_REVIEW;4;25;2025-04-02;FALSE
+101211;Rafael Saito, Savannah at Night, 1932;PHOTOGRAPH;silvermarsharchitecturalheri;694000;SOLD;4;25;2025-04-16;FALSE
+101212;Early Personal Computer — Group 6;TECHNOLOGY;georgia.park;2323000;SOLD;4;25;2025-03-21;FALSE
+101213;Cypress Observatory Stained-Glass Window, 1926;ARCHITECTURAL_ELEMENT;farah.vasquez;403000;SOLD;4;25;2025-03-16;FALSE
+101214;Screen-Used Orchard Interior Prop, 2003;FILM_PROP;harborlightdecorativeartsarc;218000;UNDER_REVIEW;4;25;2025-03-02;FALSE
+101215;Meridian Studio Material Culture Collection, 1965–1990;COLLECTION;ari.turner;795000;SOLD;4;25;2025-04-13;FALSE
+101216;Exploration Journal — Group 4;MANUSCRIPT;ironwoodcraftpreservationsoc;1080000;SOLD;4;25;2025-04-08;FALSE
+101217;Machine Shop Sign — Group 4;INDUSTRIAL_OBJECT;crossventuresart;1348000;SOLD;4;25;2025-03-25;FALSE
+101218;Green Passage — Group 4;PAINTING;stonefieldmaterialcultureins;1442000;SOLD;4;25;2025-04-08;FALSE
+101219;Amina Rivera Art Glass Panel, 2014;GLASS;harborlightdecorativeartsarc;1182000;SOLD;4;25;2025-04-27;FALSE
+101220;Samuel Ferrand, After the Storm, bronze, 2001;SCULPTURE;northbridgemuseumofmoderncra;986000;SOLD;4;25;2025-03-23;FALSE
+101221;Annotated Production Script, 2015;FILM_AND_MEDIA;psethi_family6;2047000;SOLD;4;25;2025-03-14;FALSE
+101222;Felix Serrat, Night Tram, lithograph, 1973;PRINT;aaliyah.baker;253000;SOLD;4;25;2025-03-31;FALSE
+101223;Annotated Travel Diary — Group 5;MANUSCRIPT;farah.stone;234000;UNDER_REVIEW;4;25;2025-03-17;FALSE
+101224;Noelle Saito, Study for a Procession, bronze, 1944;SCULPTURE;alejandro.walker;1584000;SOLD;4;25;2025-04-09;FALSE
+101225;Modular Chair Prototype — Group 4;DESIGN_OBJECT;nadi_whit5;71000;SOLD;4;25;2025-03-09;FALSE
+101226;Survey Map of Santa Clara, 1948;MAP;eastgaterailwayhistorycenter;889000;SOLD;4;25;2025-03-09;FALSE
+101227;Marionette Theatre Figures — Group 3;THEATRE_OBJECT;foundryzimmermanfineobjects;137000;SOLD;4;25;2025-04-03;FALSE
+101228;St. Elian Parish Control Panel, 1907;INDUSTRIAL_OBJECT;elenacollector1;713000;SOLD;4;25;2025-03-21;FALSE
+101229;Mercury Records Processional Cross, c. 2010;RELIGIOUS_OBJECT;valentina.klein;1009000;SOLD;4;25;2025-04-10;FALSE
+101230;Studio Ceramic Collection — Group 7;COLLECTION;stonefieldhistorichousefound;678000;SOLD;4;25;2025-04-21;FALSE
+101231;Harcourt Estate Computing Prototype, 1992;TECHNOLOGY;wexlercapital2;401000;SOLD;4;25;2025-03-04;FALSE
+101232;Cypress Observatory Painted Stage Backdrop, 1982;THEATRE_OBJECT;vanefamilyoffice;563000;SOLD;4;25;2025-03-30;FALSE
+101233;Journal of the New Orleans Expedition, 1795–1797;MANUSCRIPT;zane.flores_director;832000;SOLD;4;25;2025-04-18;FALSE
+101234;Philadelphia Championship Match-Worn Jersey, 1967;SPORTS_MEMORABILIA;khalil.johnson;265000;SOLD;4;25;2025-04-17;FALSE
+101235;St. Elian Parish Press, Illustrated First Edition, 1952;RARE_BOOK;gran_merc4;100000;SOLD;4;25;2025-03-08;FALSE
+101236;Screen-Used Hero Prop — Group 6;FILM_PROP;andersonheritagesales;546000;UNDER_REVIEW;4;25;2025-03-27;FALSE
+101237;Bay City Foundry Ceremonial Presentation Object, 1954;HISTORIC_OBJECT;walkercollections;484000;SOLD;4;25;2025-04-07;FALSE
+101238;Jazz Club Upright Piano — Group 7;MUSICAL_INSTRUMENT;aldergrovefurnituredesignarc;954000;AVAILABLE;4;25;2025-03-05;FALSE
+101239;Milo Ferrand, Factory Window, bronze, 1906;SCULPTURE;santiago.jordan;1571000;SOLD;4;25;2025-04-17;FALSE
+101240;St. Elian Parish Processional Banner, 1862;TEXTILE;valecapital2;415000;SOLD;4;25;2025-03-19;FALSE
+101241;The Long Platform Sculpture — Group 2;SCULPTURE;reina.chen;499000;SOLD;4;25;2025-03-28;FALSE
+101242;Championship Boxing Gloves — Group 6;SPORTS_MEMORABILIA;rosemontdesignheritagecenter;771000;SOLD;4;25;2025-04-28;FALSE
+101243;Westhaven Works Stained-Glass Window, 1976;ARCHITECTURAL_ELEMENT;santiago.alvarez;347000;SOLD;4;25;2025-03-06;FALSE
+101244;Redwood Civic Association Archive, 1792–1822;ARCHIVAL_COLLECTION;julia.roberts;1547000;SOLD;4;25;2025-03-11;FALSE
+101245;Jazz Club Upright Piano — Group 8;MUSICAL_INSTRUMENT;cassidy.ito;647000;SOLD;4;25;2025-03-11;FALSE
+101246;Festival Mask with 1922 Collection Notes;ETHNOGRAPHIC_OBJECT;eastgateindustrialartsmuseum;729000;SOLD;4;25;2025-04-01;FALSE
+101247;Noelle Bennett, Three Cypress Trees, 1987;PAINTING;valecapital2;1895000;SOLD;4;25;2025-04-27;FALSE
+101248;Screen-Used Night Tram Prop, 1956;FILM_PROP;crownyoungfineobjects;149000;SOLD;4;25;2025-04-30;FALSE
+101249;Samuel Navarro Tour Outfit and Backstage Passes, 2017;MUSIC_MEMORABILIA;farah.stone;508000;UNDER_REVIEW;4;25;2025-03-31;FALSE
+101250;Hand-Coloured Regional Map — Group 4;MAP;andersonartadvisory;1023000;SOLD;4;25;2025-03-06;FALSE
