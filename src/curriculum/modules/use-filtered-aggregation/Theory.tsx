@@ -10,48 +10,48 @@ export function Theory() {
     </Section>
 
     <Section title={<>Filter rows <Em>before</Em> aggregating using <ISQL>WHERE</ISQL></>}>
-      <Par>Let's consider the financial performance of the company per quarter.</Par>
-      <FigureSingleTable query={`SELECT * FROM quarterly_performance`} tableScale={0.8} tableWidth={800} />
-      <Par>Suppose that we want to get the average revenue for the <Em>first half</Em> of each year (January through June). How would we do that?</Par>
+      <Par>Let's consider the financial performance of the company per category and quarter.</Par>
+      <FigureSingleTable query={`SELECT * FROM quarterly_performance`} tableScale={0.8} tableWidth={900} />
+      <Par>Suppose that we want to get the total revenue for the <Em>first half</Em> of each year (January through June). How would we do that?</Par>
       <Par>The key is to first add a <ISQL>WHERE</ISQL> clause to select the rows that we want, throwing out the ones that we don't.</Par>
       <FigureExampleQuery query={`
 SELECT *
 FROM quarterly_performance
-WHERE quarter <= 2;`} tableScale={0.8} tableWidth={800} below />
+WHERE quarter IN ('Q1', 'Q2');`} tableScale={0.8} tableWidth={900} below />
       <Par>Then we apply aggregation to this new table in the usual way. SQL will group the rows, calculate aggregates, and generate the output.</Par>
       <FigureExampleQuery query={`
-SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
+SELECT fiscal_year, SUM(revenue) AS revenue_q12
 FROM quarterly_performance
-WHERE quarter <= 2
-GROUP BY fiscal_year;`} tableScale={0.8} tableWidth={220} />
+WHERE quarter IN ('Q1', 'Q2')
+GROUP BY fiscal_year;`} tableScale={0.8} tableWidth={260} />
       <Par>Note that <ISQL>GROUP BY</ISQL> is written <Em>after</Em> the <ISQL>WHERE</ISQL> clause. This is to signify that the grouping (and subsequently the aggregation) is done <Em>after</Em> running the <ISQL>WHERE</ISQL> clause.</Par>
     </Section>
 
     <Section title={<>Filter rows <Em>after</Em> aggregating using <ISQL>HAVING</ISQL></>}>
-      <Par>Extending on the previous example, suppose that we only care about the years whose average revenue in quarters 1 and 2 exceeded five million. In this case, we want to apply a filter to the <Em>aggregated</Em> table. Specifically, we want to filter on the new column "average_revenue_q12".</Par>
+      <Par>Extending on the previous example, suppose that we only care about the years whose total revenue in quarters 1 and 2 exceeded five million. In this case, we want to apply a filter to the <Em>aggregated</Em> table. Specifically, we want to filter on the new column "revenue_q12".</Par>
       <Par>The overly long and inconvenient way to do so, would be through a <Term>subquery</Term>.</Par>
       <FigureExampleQuery query={`
 SELECT *
 FROM (
-  SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
+  SELECT fiscal_year, SUM(revenue) AS revenue_q12
   FROM quarterly_performance
-  WHERE quarter <= 2
+  WHERE quarter IN ('Q1', 'Q2')
   GROUP BY fiscal_year
 ) 
-WHERE average_revenue_q12 > 5000000;`} tableScale={0.8} tableWidth={220} />
+WHERE revenue_q12 > 5000000;`} tableScale={0.8} tableWidth={260} />
       <Par>Note that we took our aggregated table and treated it as a new table. It works, but it's a bit cumbersome, and since this is a use-case that occurs often in practice, SQL has a cleaner solution. We add a <ISQL>HAVING</ISQL> clause <Em>after</Em> the <ISQL>GROUP BY</ISQL> clause to filter the resulting table.</Par>
       <FigureExampleQuery query={`
-SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
+SELECT fiscal_year, SUM(revenue) AS revenue_q12
 FROM quarterly_performance
-WHERE quarter <= 2
+WHERE quarter IN ('Q1', 'Q2')
 GROUP BY fiscal_year
-HAVING AVG(revenue) > 5000000;`} tableScale={0.8} tableWidth={220} />
+HAVING SUM(revenue) > 5000000;`} tableScale={0.8} tableWidth={260} />
       <Par>This does the exact same thing, and it looks a lot cleaner!</Par>
 
       <Par>The <ISQL>HAVING</ISQL> clause works the same as the <ISQL>WHERE</ISQL> clause: you can set up any filter you like. However, keep in mind that the <ISQL>HAVING</ISQL> clause operates on the <Em>aggregated</Em> table. Just as within <ISQL>SELECT</ISQL>, you may only use <Em>grouping columns</Em> and <Em>results of aggregation functions</Em>. Using the columns from the original table here will make no sense, and usually results in an error.</Par>
       <Warning>
-        <Par sx={{ mb: 1 }}>You may be wondering why we wrote <ISQL>{`HAVING AVG(revenue) > 5000000`}</ISQL> rather than <ISQL>{`HAVING average_revenue_q12 > 5000000`}</ISQL>. The latter would be clearer!</Par>
-        <Par sx={{ mb: 1 }}>The problem here is the evaluation order that SQL uses. The <ISQL>SELECT</ISQL> clause (and with that the creation of the "average_revenue_q12" alias) is only run <Em>after</Em> the <ISQL>HAVING</ISQL> clause. So at the <ISQL>HAVING</ISQL> clause, the name "average_revenue_q12" does not exist yet! Most DBMSs will throw an error if you try to use an alias in your <ISQL>HAVING</ISQL> clause. Some DBMSs, like SQLite, do allow it through a work-around, but it's still not recommended.</Par>
+        <Par sx={{ mb: 1 }}>You may be wondering why we wrote <ISQL>{`HAVING SUM(revenue) > 5000000`}</ISQL> rather than <ISQL>{`HAVING revenue_q12 > 5000000`}</ISQL>. The latter would be clearer!</Par>
+        <Par sx={{ mb: 1 }}>The problem here is the evaluation order that SQL uses. The <ISQL>SELECT</ISQL> clause (and with that the creation of the "revenue_q12" alias) is only run <Em>after</Em> the <ISQL>HAVING</ISQL> clause. So at the <ISQL>HAVING</ISQL> clause, the name "revenue_q12" does not exist yet! Most DBMSs will throw an error if you try to use an alias in your <ISQL>HAVING</ISQL> clause. Some DBMSs, like SQLite, do allow it through a work-around, but it's still not recommended.</Par>
         <Par>The solution is to write the same calculation again. It's a bit double, but it works. If we <Em>really</Em> don't want to repeat our calculations, we can use a subquery after all.</Par>
       </Warning>
     </Section>

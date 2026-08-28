@@ -26,13 +26,13 @@ function FigureAggregation() {
   const themeColor = useThemeColor();
   const db = useTheorySampleDatabase();
   const dataFull = useQueryResult(db?.database, 'SELECT * FROM quarterly_performance;');
-  const dataAggregated = useQueryResult(db?.database, 'SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance GROUP BY fiscal_year;');
+  const dataAggregated = useQueryResult(db?.database, 'SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(DISTINCT quarter) AS num_quarters, COUNT(DISTINCT category) AS num_categories FROM quarterly_performance GROUP BY fiscal_year;');
   const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
   const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
   const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
   const w1 = 900;
-  const w2 = 500;
+  const w2 = 680;
   const delta = 20;
   const arrowMargin = 5;
   const h1 = t1Bounds?.height ?? 200;

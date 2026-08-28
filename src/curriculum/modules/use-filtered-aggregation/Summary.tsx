@@ -13,11 +13,11 @@ export function Summary() {
       ]} />
       <Info>You may <Em>not</Em> use columns from the original table in the <ISQL>HAVING</ISQL> filter, other than those given at <ISQL>GROUP BY</ISQL>. You <Em>can</Em> use additional aggregation functions.</Info>
       <FigureExampleQuery query={`
-SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
+SELECT fiscal_year, SUM(revenue) AS revenue_q12
 FROM quarterly_performance
-WHERE quarter <= 2
+WHERE quarter IN ('Q1', 'Q2')
 GROUP BY fiscal_year
-HAVING AVG(revenue) > 5000000;`} tableScale={0.8} tableWidth={220} />
+HAVING SUM(revenue) > 5000000;`} tableScale={0.8} tableWidth={260} />
       <Warning>In most DBMSs you <Em>cannot</Em> use the aliases defined in the <ISQL>SELECT</ISQL> clause within the <ISQL>HAVING</ISQL> clause. This means you may have to repeat calculations.</Warning>
       <Par>When using aggregation, it is common to process values. This processing can happen both before and after aggregation.</Par>
       <FigureExampleQuery query={`

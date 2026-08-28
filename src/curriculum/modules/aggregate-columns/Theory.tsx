@@ -10,8 +10,8 @@ export function Theory() {
     </Section>
 
     <Section title="Aggregate columns using an aggregation function">
-      <Par>Let's consider the financial performance of the company per quarter. How can we extract the total revenue throughout the years from this table?</Par>
-      <FigureSingleTable query={`SELECT * FROM quarterly_performance`} tableScale={0.8} tableWidth={800} />
+      <Par>Let's consider the financial performance of the company per category and quarter. How can we extract the total revenue throughout the years from this table?</Par>
+      <FigureSingleTable query={`SELECT * FROM quarterly_performance`} tableScale={0.8} tableWidth={900} />
       <Par>To get the total revenue, we have to add up all the values from the <Em>revenue</Em> column. We can do this through the <Term>aggregation function</Term> <ISQL>SUM</ISQL>.</Par>
       <FigureExampleQuery query={`
 SELECT SUM(revenue)
@@ -23,9 +23,10 @@ FROM quarterly_performance;`} tableWidth={160} />
 SELECT
   quarter,
   fiscal_year,
+  category,
   revenue,
   SUM(revenue)
-FROM quarterly_performance;`} tableWidth={340} /></Warning>
+FROM quarterly_performance;`} tableWidth={420} /></Warning>
     </Section>
 
     <Section title="Use multiple aggregation functions">
@@ -42,7 +43,7 @@ FROM quarterly_performance;`} tableWidth={340} /></Warning>
 SELECT
   MAX(revenue) AS highest_revenue,
   AVG(revenue) AS average_revenue,
-  COUNT(revenue) AS num_quarters
+  COUNT(revenue) AS num_records
 FROM quarterly_performance;`} tableWidth={320} />
       <Info>
         <Par>Whenever aggregation functions encounter <ISQL>NULL</ISQL> values, they generally <Em>ignore</Em> them. Any <ISQL>NULL</ISQL> values are first removed, and <Em>only then</Em> will aggregation be applied. Aggregation functions only return <ISQL>NULL</ISQL> when <Em>all</Em> values in the column equal <ISQL>NULL</ISQL>. For example:</Par>
@@ -52,7 +53,7 @@ FROM quarterly_performance;`} tableWidth={320} />
         ]} />
         <Par>To find the number of rows in the table, irrespective of <ISQL>NULL</ISQL> values, use <ISQL>COUNT(*)</ISQL> instead.</Par>
       </Info>
-      <Warning>Aggregation functions don't care about duplicates. When using <ISQL>COUNT</ISQL> on some column, it simply counts the number of values that are not <ISQL>NULL</ISQL>, regardless of any duplicate values being present. So <ISQL>COUNT(fiscal_year)</ISQL> results in <ISQL>6</ISQL>. If you want the number of <Em>unique</Em> values, apply <ISQL>DISTINCT</ISQL> to the column <Em>before</Em> aggregating. So <ISQL>COUNT(DISTINCT fiscal_year)</ISQL> will result in <ISQL>2</ISQL>.</Warning>
+      <Warning>Aggregation functions don't care about duplicates. When using <ISQL>COUNT</ISQL> on some column, it simply counts the number of values that are not <ISQL>NULL</ISQL>, regardless of any duplicate values being present. If you want the number of <Em>unique</Em> values, apply <ISQL>DISTINCT</ISQL> to the column <Em>before</Em> aggregating. So <ISQL>COUNT(DISTINCT fiscal_year)</ISQL> counts the number of different fiscal years.</Warning>
     </Section>
 
     <Section title="Group rows before aggregating">
@@ -60,21 +61,21 @@ FROM quarterly_performance;`} tableWidth={320} />
       <FigureExampleQuery query={`
 SELECT
   fiscal_year,
+  SUM(revenue) AS total_revenue,
   MAX(revenue) AS highest_revenue,
-  AVG(revenue) AS average_revenue,
-  COUNT(revenue) AS num_quarters
+  COUNT(DISTINCT quarter) AS num_quarters
 FROM quarterly_performance
 GROUP BY fiscal_year;`} tableWidth={500} />
-      <Par>We could add multiple grouping columns, separated by commas. For our example that's not so useful, but if the table for instance had multiple entries per quarter (like one for each month) then a grouping by quarter <Em>would</Em> make sense.</Par>
+      <Par>We could add multiple grouping columns, separated by commas. Our financial table has multiple category rows per quarter, so grouping by year and quarter gives us quarterly totals.</Par>
       <FigureExampleQuery query={`
 SELECT
   fiscal_year,
   quarter,
-  MAX(revenue) AS highest_revenue,
-  AVG(revenue) AS average_revenue,
-  COUNT(revenue) AS num_rows_in_quarter
+  SUM(revenue) AS total_revenue,
+  MAX(revenue) AS highest_category_revenue,
+  COUNT(category) AS num_categories
 FROM quarterly_performance
-GROUP BY fiscal_year, quarter;`} tableWidth={500} />
+GROUP BY fiscal_year, quarter;`} tableWidth={560} />
       <Info>Earlier we saw that we should not add regular columns to a <ISQL>SELECT</ISQL> statement when using aggregation. Grouping is an exception: when we group by certain columns, then we <Em>can</Em> add these grouping columns to our <ISQL>SELECT</ISQL> statement. In fact, it's very helpful to do so, to get sensible data! After all, the above tables wouldn't make sense if we didn't show the "fiscal_year" in them.</Info>
     </Section>
   </Page>;

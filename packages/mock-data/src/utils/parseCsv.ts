@@ -9,6 +9,7 @@
 export function parseCsv(raw: string): Record<string, string>[] {
   if (!raw) return [];
   const source = raw.replace(/^\uFEFF/, '');
+  const delimiter = detectDelimiter(source);
   const rows: string[][] = [];
   let currentCell = '';
   let currentRow: string[] = [];
@@ -29,7 +30,7 @@ export function parseCsv(raw: string): Record<string, string>[] {
       continue;
     }
 
-    if (char === ',' && !inQuotes) {
+    if (char === delimiter && !inQuotes) {
       currentRow.push(currentCell);
       currentCell = '';
       continue;
@@ -70,11 +71,23 @@ export function parseCsv(raw: string): Record<string, string>[] {
     .filter((entry) => headers.some((header) => (entry[header] ?? '').trim().length > 0));
 }
 
+function detectDelimiter(source: string): ',' | ';' {
+  const headerEnd = source.search(/\r?\n/);
+  const header = headerEnd === -1 ? source : source.slice(0, headerEnd);
+  const commas = (header.match(/,/g) ?? []).length;
+  const semicolons = (header.match(/;/g) ?? []).length;
+  return semicolons > commas ? ';' : ',';
+}
+
+function isNullLiteral(value: string | undefined): boolean {
+  return (value ?? '').trim().toUpperCase() === 'NULL';
+}
+
 /**
  * Convert a string value to a number, or null if invalid/empty.
  */
 export function numberOrNull(value: string | undefined): number | null {
-  if (!value) return null;
+  if (!value || isNullLiteral(value)) return null;
   const normalized = value.replace(/[^0-9.-]/g, '');
   if (!normalized) return null;
   const parsed = Number(normalized);
@@ -85,7 +98,7 @@ export function numberOrNull(value: string | undefined): number | null {
  * Convert a string value to a boolean, or null if invalid/empty.
  */
 export function booleanOrNull(value: string | undefined): boolean | null {
-  if (!value) return null;
+  if (!value || isNullLiteral(value)) return null;
   const normalized = value.trim().toLowerCase();
   if (normalized === 'true') return true;
   if (normalized === 'false') return false;
@@ -97,6 +110,7 @@ export function booleanOrNull(value: string | undefined): boolean | null {
  */
 export function stringOrNull(value: string | undefined): string | null {
   const trimmed = (value ?? '').trim();
+  if (isNullLiteral(trimmed)) return null;
   return trimmed.length === 0 ? null : trimmed;
 }
 
@@ -105,7 +119,7 @@ export function stringOrNull(value: string | undefined): string | null {
  */
 export function idOrNull(value: string | undefined): number | string | null {
   const trimmed = (value ?? '').trim();
-  if (!trimmed) return null;
+  if (!trimmed || isNullLiteral(trimmed)) return null;
   const numeric = Number(trimmed);
   return Number.isFinite(numeric) ? numeric : trimmed;
 }

@@ -11,7 +11,7 @@ export function Summary() {
 SELECT
   SUM(revenue) AS total_revenue,
   MAX(revenue) AS highest_revenue,
-  COUNT(revenue) AS num_quarters
+  COUNT(revenue) AS num_records
 FROM quarterly_performance;`} tableWidth={320} />
 
       <Par>Common aggregation functions include <ISQL>SUM</ISQL>, <ISQL>MAX</ISQL>, <ISQL>MIN</ISQL>, <ISQL>AVG</ISQL> and <ISQL>COUNT</ISQL>.</Par>
@@ -22,9 +22,9 @@ SELECT
   fiscal_year,
   SUM(revenue) AS total_revenue,
   MAX(revenue) AS highest_revenue,
-  COUNT(revenue) AS num_quarters
+  COUNT(DISTINCT quarter) AS num_quarters
 FROM quarterly_performance
-GROUP BY fiscal_year;`} tableWidth={400} />
+GROUP BY fiscal_year;`} tableWidth={460} />
       <Warning>When using an aggregated query, the <ISQL>SELECT</ISQL> clause may <Em>only</Em> contain columns from the <ISQL>GROUP BY</ISQL> clause and results from aggregation functions.</Warning>
     </Section>
   </Page>;
