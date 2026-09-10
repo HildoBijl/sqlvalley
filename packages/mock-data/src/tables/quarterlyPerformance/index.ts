@@ -1,6 +1,6 @@
-import type { ColumnTypes } from '../../parseCsv'
+import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
+
 import type { TableDefinition } from '../types'
-import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './quarterlyPerformanceFull.csv?raw'
 import smallCsv from './quarterlyPerformanceSmall.csv?raw'

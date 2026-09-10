@@ -4,6 +4,7 @@ import { type TableKey, tableRegistry } from '../tables'
 
 // Build SQL statements to create and populate a dataset.
 export function buildDatasetSql({ tables, size = 'small' }: { tables: TableKey[], size?: DatasetSize }): string {
+	console.log(tables)
 	if (!Array.isArray(tables)) throw new TypeError('Expected tables to be an array.')
 	if (size !== 'small' && size !== 'full') throw new TypeError(`Unknown dataset size "${size}".`)
 	if (tables.length === 0) return ''

@@ -25,7 +25,7 @@ const tableIntroduction: Record<TableKey, ModuleId | ModuleId[]> = {
 } as const;
 
 // Invert the table introduction: which module introduces which table?
-const moduleTableIntroduction: Record<ModuleId, TableKey[]> = {};
+const moduleTableIntroduction: Partial<Record<ModuleId, TableKey[]>> = {};
 allTableKeys.forEach(table => {
 	const moduleOrList = tableIntroduction[table];
 	const moduleIds = Array.isArray(moduleOrList) ? moduleOrList : [moduleOrList];
@@ -41,6 +41,6 @@ allTableKeys.forEach(table => {
 // Get the tables required for a given module ID. Gives an empty list when no tables are found.
 export function getModuleTables(moduleId: ModuleId): TableKey[] {
 	const prerequisites = getPrerequisites(skillTree, moduleId);
-	const introducedTables = Array.from(prerequisites).flatMap(prerequisite => moduleTableIntroduction[prerequisite]);
+	const introducedTables = Array.from(prerequisites).flatMap(prerequisite => moduleTableIntroduction[prerequisite] ?? []);
 	return Array.from(new Set(introducedTables));
 }

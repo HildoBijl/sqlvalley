@@ -51,11 +51,19 @@ export function DatabaseProvider({ children }: DatabaseProviderProps) {
   const createDatabase = useCallback((schema: string) => {
     if (!SQLJS) return null;
 
+    let db: any | null = null;
     try {
-      const db = new SQLJS.Database();
+      db = new SQLJS.Database();
       db.run(schema);
       return db;
     } catch (error) {
+      if (db && typeof db.close === 'function') {
+        try {
+          db.close();
+        } catch (closeError) {
+          console.warn('Failed to close database after initialization failed:', closeError);
+        }
+      }
       console.error('Failed to create database instance:', error);
       return null;
     }
@@ -71,9 +79,8 @@ export function DatabaseProvider({ children }: DatabaseProviderProps) {
 
   // Get or create a database for the given key and schema
   const getDatabase = useCallback((key: string, schema: string, options?: GetDatabaseOptions) => {
-    const existing = databasesRef.current[key];
-    if (existing?.instance) {
-      return existing.instance;
+    if (key in databasesRef.current) {
+      return databasesRef.current[key]?.instance ?? null;
     }
 
     const newInstance = createDatabase(schema);
@@ -86,13 +93,12 @@ export function DatabaseProvider({ children }: DatabaseProviderProps) {
         }
       : null;
 
-    updateDatabases((prev) => ({
-      ...prev,
-      [key]: entry,
-    }));
+    const next = { ...databasesRef.current, [key]: entry };
+    databasesRef.current = next;
+    setDatabases(next);
 
     return newInstance;
-  }, [createDatabase, updateDatabases]);
+  }, [createDatabase]);
 
   // Reset a specific database
   const resetDatabase = useCallback((key: string) => {
