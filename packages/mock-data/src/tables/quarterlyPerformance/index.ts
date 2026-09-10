@@ -1,10 +1,11 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './quarterlyPerformanceFull.csv?raw'
 import smallCsv from './quarterlyPerformanceSmall.csv?raw'
 
-const attributes = {
+const columns = {
   quarter: 'number',
   fiscal_year: 'number',
   revenue: 'number',
@@ -12,12 +13,12 @@ const attributes = {
   total_transactions: 'number',
   growth_rate: 'number',
   updated_at: 'date',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const quarterlyPerformanceTable: TableDefinition = {
   name: 'quarterly_performance',
-  attributes,
-  createStatement: `CREATE TABLE quarterly_performance (
+  columns,
+  createTableSql: `CREATE TABLE quarterly_performance (
   quarter INTEGER,
   fiscal_year INTEGER,
   revenue REAL,
@@ -27,8 +28,8 @@ export const quarterlyPerformanceTable: TableDefinition = {
   updated_at DATETIME,
   PRIMARY KEY (quarter, fiscal_year)
 );`,
-  rows: {
-    full: buildRows(parseCsv(fullCsv), attributes),
-    small: buildRows(parseCsv(smallCsv), attributes),
+  rowsBySize: {
+    full: buildTableRows(parseCsv(fullCsv), columns),
+    small: buildTableRows(parseCsv(smallCsv), columns),
   },
 }

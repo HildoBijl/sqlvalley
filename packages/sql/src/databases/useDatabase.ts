@@ -4,7 +4,7 @@
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useDatabaseContext, type QueryResult } from '../sqljs';
-import { type DatasetSize, type TableKey, buildSchema, getCompletionSchema, defaultDatasetSize, allTables } from '@sqlvalley/mock-data';
+import { type DatasetSize, type TableKey, buildDatasetSql, buildCompletionSchema, defaultDatasetSize, allTableKeys } from '@sqlvalley/mock-data';
 
 interface DatabaseOptions {
   /** Tables included in the database. Defaults to all tables. */
@@ -68,18 +68,18 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
     if (tables?.length) {
       return Array.from(new Set(tables)) as TableKey[];
     }
-    return allTables;
+    return allTableKeys;
   }, [tables]);
 
   // Build the schema SQL
   const resolvedSchema = useMemo(
-    () => buildSchema({ tables: resolvedTables, size: resolvedSize }),
+    () => buildDatasetSql({ tables: resolvedTables, size: resolvedSize }),
     [resolvedTables, resolvedSize],
   );
 
   // Build completion schema for SQL editor
   const completionSchema = useMemo(
-    () => getCompletionSchema(resolvedTables),
+    () => buildCompletionSchema(resolvedTables),
     [resolvedTables],
   );
 

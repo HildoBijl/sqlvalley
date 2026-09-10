@@ -1,26 +1,27 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './allocationsFull.csv?raw'
 import smallCsv from './allocationsSmall.csv?raw'
 
-const attributes = {
+const columns = {
   e_id: 'number',
   d_id: 'number',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const allocationsTable: TableDefinition = {
   name: 'allocations',
-  attributes,
-  createStatement: `CREATE TABLE allocations (
+  columns,
+  createTableSql: `CREATE TABLE allocations (
   e_id INTEGER NOT NULL,
   d_id INTEGER NOT NULL,
   PRIMARY KEY (e_id, d_id),
   FOREIGN KEY (e_id) REFERENCES employees(e_id),
   FOREIGN KEY (d_id) REFERENCES departments(d_id)
 );`,
-  rows: {
-    full: buildRows(parseCsv(fullCsv), attributes),
-    small: buildRows(parseCsv(smallCsv), attributes),
+  rowsBySize: {
+    full: buildTableRows(parseCsv(fullCsv), columns),
+    small: buildTableRows(parseCsv(smallCsv), columns),
   },
 }

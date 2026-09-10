@@ -1,10 +1,11 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './employeesFull.csv?raw'
 import smallCsv from './employeesSmall.csv?raw'
 
-const attributes = {
+const columns = {
 	e_id: 'number',
 	first_name: 'string',
 	last_name: 'string',
@@ -14,12 +15,12 @@ const attributes = {
 	city: 'string',
 	hire_date: 'date',
 	current_salary: 'number',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const employeesTable: TableDefinition = {
 	name: 'employees',
-	attributes,
-	createStatement: `CREATE TABLE employees (
+	columns,
+	createTableSql: `CREATE TABLE employees (
   e_id INTEGER PRIMARY KEY,
   first_name TEXT,
   last_name TEXT,
@@ -30,8 +31,8 @@ export const employeesTable: TableDefinition = {
   hire_date DATE,
   current_salary REAL
 );`,
-	rows: {
-		full: buildRows(parseCsv(fullCsv), attributes),
-		small: buildRows(parseCsv(smallCsv), attributes),
+	rowsBySize: {
+		full: buildTableRows(parseCsv(fullCsv), columns),
+		small: buildTableRows(parseCsv(smallCsv), columns),
 	},
 }

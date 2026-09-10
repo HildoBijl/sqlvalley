@@ -6,7 +6,7 @@ import type { SettingsState, Theme } from './types';
 import type { SetState } from '../utils';
 
 export type { SettingsState } from './types';
-import type { DatasetSize } from '@sqlvalley/mock-data/types';
+import type { DatasetSize } from '@sqlvalley/mock-data';
 
 export const initialSettingsState: SettingsState = {
   currentTheme: 'light',

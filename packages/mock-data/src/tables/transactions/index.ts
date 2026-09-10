@@ -1,10 +1,11 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './transactionsFull.csv?raw'
 import smallCsv from './transactionsSmall.csv?raw'
 
-const attributes = {
+const columns = {
   t_id: 'number',
   vendor: 'string',
   buyer: 'string',
@@ -13,12 +14,12 @@ const attributes = {
   price: 'number',
   validated_by: 'number',
   status: 'string',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const transactionsTable: TableDefinition = {
   name: 'transactions',
-  attributes,
-  createStatement: `CREATE TABLE transactions (
+  columns,
+  createTableSql: `CREATE TABLE transactions (
   t_id INTEGER PRIMARY KEY,
   vendor TEXT,
   buyer TEXT,
@@ -32,8 +33,8 @@ export const transactionsTable: TableDefinition = {
   FOREIGN KEY (prod_id) REFERENCES products(p_id),
   FOREIGN KEY (validated_by) REFERENCES employees(e_id)
 );`,
-  rows: {
-    full: buildRows(parseCsv(fullCsv), attributes),
-    small: buildRows(parseCsv(smallCsv), attributes),
+  rowsBySize: {
+    full: buildTableRows(parseCsv(fullCsv), columns),
+    small: buildTableRows(parseCsv(smallCsv), columns),
   },
 }

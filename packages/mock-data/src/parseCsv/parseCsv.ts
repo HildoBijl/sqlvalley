@@ -93,27 +93,3 @@ export function parseCsv(raw: string): ParsedCsv {
 		})
 	return { headers, records }
 }
-
-// Convert a string value to a boolean, or null if invalid/empty.
-export function booleanOrNull(value: string | undefined): boolean | null {
-	const normalized = (value ?? '').trim().toLowerCase()
-	if (!normalized) return null
-	if (normalized === 'true') return true
-	if (normalized === 'false') return false
-	throw new TypeError(`Expected "true" or "false", received "${value}".`)
-}
-
-// Convert a string value to a number, or null if invalid/empty.
-export function numberOrNull(value: string | undefined): number | null {
-	const trimmed = (value ?? '').trim()
-	if (!trimmed) return null
-	const parsed = Number(trimmed)
-	if (!Number.isFinite(parsed)) throw new TypeError(`Expected a valid finite number, received "${value}".`)
-	return parsed
-}
-
-// Trim a string value, returning null if empty.
-export function stringOrNull(value: string | undefined): string | null {
-	const trimmed = (value ?? '').trim()
-	return trimmed.length === 0 ? null : trimmed
-}

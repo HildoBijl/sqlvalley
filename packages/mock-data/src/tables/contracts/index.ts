@@ -1,10 +1,11 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './contractsFull.csv?raw'
 import smallCsv from './contractsSmall.csv?raw'
 
-const attributes = {
+const columns = {
   e_id: 'number',
   position: 'string',
   salary: 'number',
@@ -12,12 +13,12 @@ const attributes = {
   end_date: 'date',
   perf_score: 'number',
   status: 'string',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const contractsTable: TableDefinition = {
   name: 'contracts',
-  attributes,
-  createStatement: `CREATE TABLE contracts (
+  columns,
+  createTableSql: `CREATE TABLE contracts (
   e_id INTEGER NOT NULL,
   position TEXT,
   salary REAL,
@@ -27,8 +28,8 @@ export const contractsTable: TableDefinition = {
   status TEXT,
   FOREIGN KEY (e_id) REFERENCES employees(e_id)
 );`,
-  rows: {
-    full: buildRows(parseCsv(fullCsv), attributes),
-    small: buildRows(parseCsv(smallCsv), attributes),
+  rowsBySize: {
+    full: buildTableRows(parseCsv(fullCsv), columns),
+    small: buildTableRows(parseCsv(smallCsv), columns),
   },
 }

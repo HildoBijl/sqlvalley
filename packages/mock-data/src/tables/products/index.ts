@@ -1,22 +1,23 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './productsFull.csv?raw'
 import smallCsv from './productsSmall.csv?raw'
 
-const attributes = {
+const columns = {
   p_id: 'number',
   name: 'string',
   category: 'string',
   owned_by: 'string',
   est_value: 'number',
   status: 'string',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const productsTable: TableDefinition = {
   name: 'products',
-  attributes,
-  createStatement: `CREATE TABLE products (
+  columns,
+  createTableSql: `CREATE TABLE products (
   p_id INTEGER PRIMARY KEY,
   name TEXT,
   category TEXT,
@@ -25,8 +26,8 @@ export const productsTable: TableDefinition = {
   status TEXT,
   FOREIGN KEY (owned_by) REFERENCES accounts(username)
 );`,
-  rows: {
-    full: buildRows(parseCsv(fullCsv), attributes),
-    small: buildRows(parseCsv(smallCsv), attributes),
+  rowsBySize: {
+    full: buildTableRows(parseCsv(fullCsv), columns),
+    small: buildTableRows(parseCsv(smallCsv), columns),
   },
 }

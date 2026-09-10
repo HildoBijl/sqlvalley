@@ -1,10 +1,11 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './accountsFull.csv?raw'
 import smallCsv from './accountsSmall.csv?raw'
 
-const attributes = {
+const columns = {
   username: 'string',
   phone: 'string',
   email: 'string',
@@ -15,12 +16,12 @@ const attributes = {
   city: 'string',
   created_at: 'date',
   last_login_at: 'date',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const accountsTable: TableDefinition = {
   name: 'accounts',
-  attributes,
-  createStatement: `CREATE TABLE accounts (
+  columns,
+  createTableSql: `CREATE TABLE accounts (
   username TEXT PRIMARY KEY,
   phone TEXT,
   email TEXT,
@@ -32,8 +33,8 @@ export const accountsTable: TableDefinition = {
   created_at TEXT,
   last_login_at TEXT
 );`,
-  rows: {
-    full: buildRows(parseCsv(fullCsv), attributes),
-    small: buildRows(parseCsv(smallCsv), attributes),
+  rowsBySize: {
+    full: buildTableRows(parseCsv(fullCsv), columns),
+    small: buildTableRows(parseCsv(smallCsv), columns),
   },
 }

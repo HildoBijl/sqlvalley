@@ -2,7 +2,7 @@
  * Defines which module has access to which mock data table.
  */
 
-import { type TableKey, allTables } from '@sqlvalley/mock-data';
+import { type TableKey, allTableKeys } from '@sqlvalley/mock-data';
 import { getPrerequisites } from '@sqlvalley/skill-tree-definition';
 import { type ModuleId, skillTree } from '../skillTree';
 
@@ -26,7 +26,7 @@ const tableIntroduction: Record<TableKey, ModuleId | ModuleId[]> = {
 
 // Invert the table introduction: which module introduces which table?
 const moduleTableIntroduction: Record<ModuleId, TableKey[]> = {};
-allTables.forEach(table => {
+allTableKeys.forEach(table => {
 	const moduleOrList = tableIntroduction[table];
 	const moduleIds = Array.isArray(moduleOrList) ? moduleOrList : [moduleOrList];
 	moduleIds.forEach(moduleId => {

@@ -1,10 +1,11 @@
-import type { TableDefinition, Attributes } from '../../types'
-import { parseCsv, buildRows } from '../../utils'
+import type { ColumnTypes } from '../../parseCsv'
+import type { TableDefinition } from '../types'
+import { buildTableRows, parseCsv } from '../../parseCsv'
 
 import fullCsv from './expensesFull.csv?raw'
 import smallCsv from './expensesSmall.csv?raw'
 
-const attributes = {
+const columns = {
   exp_id: 'number',
   amount: 'number',
   d_id: 'number',
@@ -12,12 +13,12 @@ const attributes = {
   date: 'date',
   requested_by: 'number',
   approved_by: 'number',
-} as const satisfies Attributes
+} as const satisfies ColumnTypes
 
 export const expensesTable: TableDefinition = {
   name: 'expenses',
-  attributes,
-  createStatement: `CREATE TABLE expenses (
+  columns,
+  createTableSql: `CREATE TABLE expenses (
   exp_id INTEGER PRIMARY KEY,
   amount REAL,
   d_id INTEGER,
@@ -29,8 +30,8 @@ export const expensesTable: TableDefinition = {
   FOREIGN KEY (requested_by) REFERENCES employees(e_id),
   FOREIGN KEY (approved_by) REFERENCES employees(e_id)
 );`,
-  rows: {
-    full: buildRows(parseCsv(fullCsv), attributes),
-    small: buildRows(parseCsv(smallCsv), attributes),
+  rowsBySize: {
+    full: buildTableRows(parseCsv(fullCsv), columns),
+    small: buildTableRows(parseCsv(smallCsv), columns),
   },
 }
