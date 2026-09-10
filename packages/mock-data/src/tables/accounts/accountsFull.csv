@@ -1,4 +1,4 @@
-username,phone,email,verified,first_name,last_name,address,city,created_at,last_login_at
+username,phone,email,email_verified,first_name,last_name,address,city,created_at,last_login_at
 Jim_Business,807-445-2302,jimbiz@amma-zone.com,TRUE,Jim,Business,54106 Cherokee Point,San Francisco,7/7/2015,12/11/2024
 XxMrMelonxX,544-524-1488,truthseeker@y.com,TRUE,Melon,Dusk,510 Lighthouse Bay Crossing,New York,7/15/2015,5/5/2025
 CANTSPOTUS,790-301-5422,don_tram@mail.ru,FALSE,Donnel,Tram,02 Anthes Drive,Washington DC,7/19/2015,8/29/2025

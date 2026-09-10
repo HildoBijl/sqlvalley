@@ -1,8 +1,8 @@
-import type { TableDefinition, Attributes } from '../../types';
-import { parseCsv, buildRows } from '../../utils';
+import type { TableDefinition, Attributes } from '../../types'
+import { parseCsv, buildRows } from '../../utils'
 
-import fullCsv from './quarterlyPerformanceFull.csv?raw';
-import smallCsv from './quarterlyPerformanceSmall.csv?raw';
+import fullCsv from './quarterlyPerformanceFull.csv?raw'
+import smallCsv from './quarterlyPerformanceSmall.csv?raw'
 
 const attributes = {
   quarter: 'number',
@@ -12,7 +12,7 @@ const attributes = {
   total_transactions: 'number',
   growth_rate: 'number',
   updated_at: 'date',
-} as const satisfies Attributes;
+} as const satisfies Attributes
 
 export const quarterlyPerformanceTable: TableDefinition = {
   name: 'quarterly_performance',
@@ -31,4 +31,4 @@ export const quarterlyPerformanceTable: TableDefinition = {
     full: buildRows(parseCsv(fullCsv), attributes),
     small: buildRows(parseCsv(smallCsv), attributes),
   },
-};
+}

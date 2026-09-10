@@ -1,17 +1,17 @@
-import type { TableDefinition, Attributes } from '../../types';
-import { parseCsv, buildRows } from '../../utils';
+import type { TableDefinition, Attributes } from '../../types'
+import { parseCsv, buildRows } from '../../utils'
 
-import fullCsv from './productsFull.csv?raw';
-import smallCsv from './productsSmall.csv?raw';
+import fullCsv from './productsFull.csv?raw'
+import smallCsv from './productsSmall.csv?raw'
 
 const attributes = {
-  p_id: 'id',
+  p_id: 'number',
   name: 'string',
   category: 'string',
   owned_by: 'string',
   est_value: 'number',
   status: 'string',
-} as const satisfies Attributes;
+} as const satisfies Attributes
 
 export const productsTable: TableDefinition = {
   name: 'products',
@@ -29,4 +29,4 @@ export const productsTable: TableDefinition = {
     full: buildRows(parseCsv(fullCsv), attributes),
     small: buildRows(parseCsv(smallCsv), attributes),
   },
-};
+}

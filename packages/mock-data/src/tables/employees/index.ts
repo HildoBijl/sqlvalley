@@ -1,11 +1,11 @@
-import type { TableDefinition, Attributes } from '../../types';
-import { parseCsv, buildRows } from '../../utils';
+import type { TableDefinition, Attributes } from '../../types'
+import { parseCsv, buildRows } from '../../utils'
 
-import fullCsv from './employeesFull.csv?raw';
-import smallCsv from './employeesSmall.csv?raw';
+import fullCsv from './employeesFull.csv?raw'
+import smallCsv from './employeesSmall.csv?raw'
 
 const attributes = {
-	e_id: 'id',
+	e_id: 'number',
 	first_name: 'string',
 	last_name: 'string',
 	phone: 'string',
@@ -14,7 +14,7 @@ const attributes = {
 	city: 'string',
 	hire_date: 'date',
 	current_salary: 'number',
-} as const satisfies Attributes;
+} as const satisfies Attributes
 
 export const employeesTable: TableDefinition = {
 	name: 'employees',
@@ -34,4 +34,4 @@ export const employeesTable: TableDefinition = {
 		full: buildRows(parseCsv(fullCsv), attributes),
 		small: buildRows(parseCsv(smallCsv), attributes),
 	},
-};
+}

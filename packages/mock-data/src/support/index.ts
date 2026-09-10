@@ -1,2 +1,2 @@
-export * from './buildSchema';
-export * from './getCompletionSchema';
+export * from './buildSchema'
+export * from './getCompletionSchema'

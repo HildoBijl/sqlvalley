@@ -1,18 +1,18 @@
-import type { TableDefinition, Attributes } from '../../types';
-import { parseCsv, buildRows } from '../../utils';
+import type { TableDefinition, Attributes } from '../../types'
+import { parseCsv, buildRows } from '../../utils'
 
-import fullCsv from './expensesFull.csv?raw';
-import smallCsv from './expensesSmall.csv?raw';
+import fullCsv from './expensesFull.csv?raw'
+import smallCsv from './expensesSmall.csv?raw'
 
 const attributes = {
-  exp_id: 'id',
+  exp_id: 'number',
   amount: 'number',
-  d_id: 'id',
+  d_id: 'number',
   description: 'string',
   date: 'date',
-  requested_by: 'id',
-  approved_by: 'id',
-} as const satisfies Attributes;
+  requested_by: 'number',
+  approved_by: 'number',
+} as const satisfies Attributes
 
 export const expensesTable: TableDefinition = {
   name: 'expenses',
@@ -33,4 +33,4 @@ export const expensesTable: TableDefinition = {
     full: buildRows(parseCsv(fullCsv), attributes),
     small: buildRows(parseCsv(smallCsv), attributes),
   },
-};
+}

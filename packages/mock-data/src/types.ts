@@ -1,30 +1,15 @@
-/**
- * Type definitions for mock data tables.
- */
+export type DatasetSize = 'full' | 'small' // Available dataset sizes.
+export type SqlCell = string | number | null | boolean // SQL cell value types.
+export type AttributeType = 'string' | 'number' | 'boolean' | 'date' // Attribute type definitions for automatic row building.
+export type Attributes = Record<string, AttributeType> // Map of column names to their attribute types.
 
-/** Available dataset sizes */
-export type DatasetSize = 'full' | 'small';
-
-/** SQL cell value types */
-export type SqlCell = string | number | null | boolean;
-
-/** Attribute type definitions for automatic row building */
-export type AttributeType = 'id' | 'string' | 'number' | 'boolean' | 'date';
-
-/** Map of column names to their attribute types */
-export type Attributes = Record<string, AttributeType>;
-
-/** Table definition with full and small row sets */
+// Table definition with full and small row sets.
 export interface TableDefinition {
-  /** Table name in the database */
-  name: string;
-  /** Attribute definitions for each column (useful for ER diagrams, etc.) */
-  attributes: Attributes;
-  /** CREATE TABLE statement */
-  createStatement: string;
-  /** Row data for different dataset sizes */
-  rows: {
-    full: SqlCell[][];
-    small: SqlCell[][];
-  };
+	name: string // Table name in the database.
+	attributes: Attributes // Attribute definitions for each column (useful for ER diagrams, etc.).
+	createStatement: string // CREATE TABLE statement.
+	rows: { // Row data for different dataset sizes.
+		full: SqlCell[][]
+		small: SqlCell[][]
+	}
 }

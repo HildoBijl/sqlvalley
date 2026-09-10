@@ -1,13 +1,13 @@
-import type { TableDefinition, Attributes } from '../../types';
-import { parseCsv, buildRows } from '../../utils';
+import type { TableDefinition, Attributes } from '../../types'
+import { parseCsv, buildRows } from '../../utils'
 
-import fullCsv from './allocationsFull.csv?raw';
-import smallCsv from './allocationsSmall.csv?raw';
+import fullCsv from './allocationsFull.csv?raw'
+import smallCsv from './allocationsSmall.csv?raw'
 
 const attributes = {
-  e_id: 'id',
-  d_id: 'id',
-} as const satisfies Attributes;
+  e_id: 'number',
+  d_id: 'number',
+} as const satisfies Attributes
 
 export const allocationsTable: TableDefinition = {
   name: 'allocations',
@@ -23,4 +23,4 @@ export const allocationsTable: TableDefinition = {
     full: buildRows(parseCsv(fullCsv), attributes),
     small: buildRows(parseCsv(smallCsv), attributes),
   },
-};
+}
