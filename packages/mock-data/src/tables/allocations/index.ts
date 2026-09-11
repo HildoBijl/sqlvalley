@@ -1,5 +1,3 @@
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './allocationsFull.csv?raw'
@@ -8,9 +6,9 @@ import smallCsv from './allocationsSmall.csv?raw'
 const columns = {
   e_id: 'number',
   d_id: 'number',
-} as const satisfies ColumnTypes
+} as const
 
-export const allocationsTable: TableDefinition = {
+const table: TableDefinition = {
   name: 'allocations',
   columns,
   createTableSql: `CREATE TABLE allocations (
@@ -20,8 +18,10 @@ export const allocationsTable: TableDefinition = {
   FOREIGN KEY (e_id) REFERENCES employees(e_id),
   FOREIGN KEY (d_id) REFERENCES departments(d_id)
 );`,
-  rowsBySize: {
-    full: buildTableRows(parseCsv(fullCsv), columns),
-    small: buildTableRows(parseCsv(smallCsv), columns),
+  csvBySize: {
+    full: fullCsv,
+    small: smallCsv,
   },
 }
+
+export default table

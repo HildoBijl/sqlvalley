@@ -1,5 +1,3 @@
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './productsFull.csv?raw'
@@ -12,9 +10,9 @@ const columns = {
   owned_by: 'string',
   est_value: 'number',
   status: 'string',
-} as const satisfies ColumnTypes
+} as const
 
-export const productsTable: TableDefinition = {
+const table: TableDefinition = {
   name: 'products',
   columns,
   createTableSql: `CREATE TABLE products (
@@ -26,8 +24,10 @@ export const productsTable: TableDefinition = {
   status TEXT,
   FOREIGN KEY (owned_by) REFERENCES accounts(username)
 );`,
-  rowsBySize: {
-    full: buildTableRows(parseCsv(fullCsv), columns),
-    small: buildTableRows(parseCsv(smallCsv), columns),
+  csvBySize: {
+    full: fullCsv,
+    small: smallCsv,
   },
 }
+
+export default table

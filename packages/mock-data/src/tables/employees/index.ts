@@ -1,5 +1,3 @@
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './employeesFull.csv?raw'
@@ -15,9 +13,9 @@ const columns = {
 	city: 'string',
 	hire_date: 'date',
 	current_salary: 'number',
-} as const satisfies ColumnTypes
+} as const
 
-export const employeesTable: TableDefinition = {
+const table: TableDefinition = {
 	name: 'employees',
 	columns,
 	createTableSql: `CREATE TABLE employees (
@@ -31,8 +29,10 @@ export const employeesTable: TableDefinition = {
   hire_date DATE,
   current_salary REAL
 );`,
-	rowsBySize: {
-		full: buildTableRows(parseCsv(fullCsv), columns),
-		small: buildTableRows(parseCsv(smallCsv), columns),
+	csvBySize: {
+		full: fullCsv,
+		small: smallCsv,
 	},
 }
+
+export default table

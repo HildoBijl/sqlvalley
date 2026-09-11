@@ -1,15 +1,14 @@
-import type { ColumnTypes, ColumnValue } from '../parseCsv'
+import type { ColumnTypes } from '../parseCsv'
 
-// Table definition with full and small row sets.
 export interface TableDefinition {
-	name: string // Table name in the database.
+	name: string
 	columns: ColumnTypes
 	createTableSql: string
-	rowsBySize: {
-		full: ColumnValue[][]
-		small: ColumnValue[][]
+	csvBySize: {
+		full: string
+		small: string
 	}
 }
 
-export type DatasetSize = keyof TableDefinition['rowsBySize']
+export type DatasetSize = keyof TableDefinition['csvBySize']
 export const defaultDatasetSize: DatasetSize = 'small'

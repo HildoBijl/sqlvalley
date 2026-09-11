@@ -1,5 +1,5 @@
-import type { ParsedCsv } from './parseCsv'
 import { type ColumnTypes, type ColumnValue, converters } from './valueConversion'
+import type { ParsedCsv } from './parseCsv'
 
 // Build SQL rows from parsed CSV using the declared column types.
 export function buildTableRows({ headers, records }: ParsedCsv, columns: ColumnTypes): ColumnValue[][] {

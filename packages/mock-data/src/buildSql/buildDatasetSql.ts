@@ -1,10 +1,10 @@
-import type { ColumnValue } from '../parseCsv'
-import type { DatasetSize } from '../tables'
-import { type TableKey, tableRegistry } from '../tables'
+import { type ColumnValue, buildTableRows, parseCsv } from '../parseCsv'
+import { type DatasetSize, type TableDefinition, type TableKey, tableRegistry } from '../tables'
+
+const tableSqlCache = new WeakMap<TableDefinition, Map<DatasetSize, string>>()
 
 // Build SQL statements to create and populate a dataset.
 export function buildDatasetSql({ tables, size = 'small' }: { tables: TableKey[], size?: DatasetSize }): string {
-	console.log(tables)
 	if (!Array.isArray(tables)) throw new TypeError('Expected tables to be an array.')
 	if (size !== 'small' && size !== 'full') throw new TypeError(`Unknown dataset size "${size}".`)
 	if (tables.length === 0) return ''
@@ -15,11 +15,24 @@ export function buildDatasetSql({ tables, size = 'small' }: { tables: TableKey[]
 		if (!definition) throw new TypeError(`Unknown table "${tableKey}".`)
 		if (seen.has(definition.name)) return
 		seen.add(definition.name)
-		statements.push(definition.createTableSql)
-		const rows = definition.rowsBySize[size]
-		if (rows.length > 0) statements.push(buildInsertSql(definition.name, Object.keys(definition.columns), rows))
+		statements.push(getTableSql(definition, size))
 	})
 	return statements.join('\n\n').trim()
+}
+
+function getTableSql(definition: TableDefinition, size: DatasetSize): string {
+	let sqlBySize = tableSqlCache.get(definition)
+	if (!sqlBySize) {
+		sqlBySize = new Map()
+		tableSqlCache.set(definition, sqlBySize)
+	}
+	const cachedSql = sqlBySize.get(size)
+	if (cachedSql !== undefined) return cachedSql
+	const rows = buildTableRows(parseCsv(definition.csvBySize[size]), definition.columns)
+	const insertSql = buildInsertSql(definition.name, Object.keys(definition.columns), rows)
+	const sql = [definition.createTableSql, insertSql].filter(Boolean).join('\n\n').trim()
+	sqlBySize.set(size, sql)
+	return sql
 }
 
 function buildInsertSql(table: string, columns: string[], rows: ColumnValue[][]): string {
@@ -30,7 +43,7 @@ function buildInsertSql(table: string, columns: string[], rows: ColumnValue[][])
 	})
 	const columnList = columns.map(formatSqlIdentifier).join(', ')
 	const values = rows.map(row => `(${row.map(formatSqlValue).join(', ')})`).join(',\n    ')
-	return `INSERT INTO ${formatSqlIdentifier(table)} (${columnList}) VALUES\n    ${values}`
+	return `INSERT INTO ${formatSqlIdentifier(table)} (${columnList}) VALUES\n    ${values};`
 }
 
 function formatSqlIdentifier(identifier: string): string {

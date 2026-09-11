@@ -1,30 +1,32 @@
 import type { TableDefinition } from './types'
 
-import { accountsTable } from './accounts'
-import { allocationsTable } from './allocations'
-import { contractsTable } from './contracts'
-import { departmentsTable } from './departments'
-import { employeesTable } from './employees'
-import { expensesTable } from './expenses'
-import { productsTable } from './products'
-import { quarterlyPerformanceTable } from './quarterlyPerformance'
-import { transactionsTable } from './transactions'
+import departments from './departments'
+import employees from './employees'
+import contracts from './contracts'
+import allocations from './allocations'
+
+import expenses from './expenses'
+import quarterlyPerformance from './quarterlyPerformance'
+
+import accounts from './accounts'
+import products from './products'
+import transactions from './transactions'
 
 export const tableRegistry = {
 	// Company internals.
-	departments: departmentsTable,
-	employees: employeesTable,
-	contracts: contractsTable,
-	allocations: allocationsTable,
+	departments,
+	employees,
+	contracts,
+	allocations,
 
 	// Financials.
-	expenses: expensesTable,
-	quarterlyPerformance: quarterlyPerformanceTable,
+	expenses,
+	quarterlyPerformance,
 
 	// Sales.
-	accounts: accountsTable,
-	products: productsTable,
-	transactions: transactionsTable,
+	accounts,
+	products,
+	transactions,
 } satisfies Record<string, TableDefinition>
 
 export type TableKey = keyof typeof tableRegistry

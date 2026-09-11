@@ -1,5 +1,3 @@
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './accountsFull.csv?raw'
@@ -11,14 +9,14 @@ const columns = {
 	email: 'string',
 	email_verified: 'boolean',
 	first_name: 'string',
-	last_name: "string",
+	last_name: 'string',
 	address: 'string',
 	city: 'string',
 	created_at: 'date',
 	last_login_at: 'date',
-} as const satisfies ColumnTypes
+} as const
 
-export const accountsTable: TableDefinition = {
+const table: TableDefinition = {
 	name: 'accounts',
 	columns,
 	createTableSql: `CREATE TABLE accounts (
@@ -33,8 +31,10 @@ export const accountsTable: TableDefinition = {
   created_at TEXT,
   last_login_at TEXT
 );`,
-	rowsBySize: {
-		full: buildTableRows(parseCsv(fullCsv), columns),
-		small: buildTableRows(parseCsv(smallCsv), columns),
+	csvBySize: {
+		full: fullCsv,
+		small: smallCsv,
 	},
 }
+
+export default table

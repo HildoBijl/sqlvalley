@@ -1,5 +1,3 @@
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './expensesFull.csv?raw'
@@ -13,9 +11,9 @@ const columns = {
   date: 'date',
   requested_by: 'number',
   approved_by: 'number',
-} as const satisfies ColumnTypes
+} as const
 
-export const expensesTable: TableDefinition = {
+const table: TableDefinition = {
   name: 'expenses',
   columns,
   createTableSql: `CREATE TABLE expenses (
@@ -30,8 +28,10 @@ export const expensesTable: TableDefinition = {
   FOREIGN KEY (requested_by) REFERENCES employees(e_id),
   FOREIGN KEY (approved_by) REFERENCES employees(e_id)
 );`,
-  rowsBySize: {
-    full: buildTableRows(parseCsv(fullCsv), columns),
-    small: buildTableRows(parseCsv(smallCsv), columns),
+  csvBySize: {
+    full: fullCsv,
+    small: smallCsv,
   },
 }
+
+export default table

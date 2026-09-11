@@ -1,5 +1,3 @@
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './contractsFull.csv?raw'
@@ -13,9 +11,9 @@ const columns = {
   end_date: 'date',
   perf_score: 'number',
   status: 'string',
-} as const satisfies ColumnTypes
+} as const
 
-export const contractsTable: TableDefinition = {
+const table: TableDefinition = {
   name: 'contracts',
   columns,
   createTableSql: `CREATE TABLE contracts (
@@ -28,8 +26,10 @@ export const contractsTable: TableDefinition = {
   status TEXT,
   FOREIGN KEY (e_id) REFERENCES employees(e_id)
 );`,
-  rowsBySize: {
-    full: buildTableRows(parseCsv(fullCsv), columns),
-    small: buildTableRows(parseCsv(smallCsv), columns),
+  csvBySize: {
+    full: fullCsv,
+    small: smallCsv,
   },
 }
+
+export default table

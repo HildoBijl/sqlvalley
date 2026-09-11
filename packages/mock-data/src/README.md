@@ -102,8 +102,6 @@ The CSV parser is intentionally strict:
 A table definition follows this pattern:
 
 ```ts
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './departmentsFull.csv?raw'
@@ -112,9 +110,9 @@ import smallCsv from './departmentsSmall.csv?raw'
 const columns = {
 	id: 'number',
 	name: 'string',
-} as const satisfies ColumnTypes
+} as const
 
-export const departmentsTable: TableDefinition = {
+const table: TableDefinition = {
 	name: 'departments',
 	columns,
 	createTableSql: `
@@ -123,11 +121,13 @@ export const departmentsTable: TableDefinition = {
 			name TEXT NOT NULL
 		)
 	`,
-	rowsBySize: {
-		full: buildTableRows(parseCsv(fullCsv), columns),
-		small: buildTableRows(parseCsv(smallCsv), columns),
+	csvBySize: {
+		full: fullCsv,
+		small: smallCsv,
 	},
 }
+
+export default table
 ```
 
 The order of keys in `columns` determines the order used by generated `INSERT` statements. Keep it aligned with the intended database-column order.
@@ -143,7 +143,7 @@ When adding or removing a column, update all three sources together:
 To add a new table:
 
 1. Create a folder under [`tables/`](./tables/) with an `index.ts`, a small CSV, and a full CSV.
-2. Export a `TableDefinition` from its `index.ts`.
+2. Default-export a `TableDefinition` named `table` from its `index.ts`.
 3. Import that definition in [`tables/registry.ts`](./tables/registry.ts).
 4. Add it to `tableRegistry` under the key other packages should use.
 
@@ -157,5 +157,5 @@ parseCsv -> tables -> buildSql -> public package API
 ```
 
 - [`parseCsv/`](./parseCsv/) parses CSV input and converts cell values.
-- [`tables/`](./tables/) defines and registers the available datasets.
-- [`buildSql/`](./buildSql/) consumes the registry to generate SQL and completion metadata.
+- [`tables/`](./tables/) defines and registers the available datasets without parsing their CSV data.
+- [`buildSql/`](./buildSql/) parses requested datasets and generates SQL and completion metadata. Generated table SQL is cached by table definition and dataset size.

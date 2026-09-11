@@ -1,5 +1,3 @@
-import { type ColumnTypes, buildTableRows, parseCsv } from '../../parseCsv'
-
 import type { TableDefinition } from '../types'
 
 import fullCsv from './quarterlyPerformanceFull.csv?raw'
@@ -13,9 +11,9 @@ const columns = {
   total_transactions: 'number',
   growth_rate: 'number',
   updated_at: 'date',
-} as const satisfies ColumnTypes
+} as const
 
-export const quarterlyPerformanceTable: TableDefinition = {
+const table: TableDefinition = {
   name: 'quarterly_performance',
   columns,
   createTableSql: `CREATE TABLE quarterly_performance (
@@ -28,8 +26,10 @@ export const quarterlyPerformanceTable: TableDefinition = {
   updated_at DATETIME,
   PRIMARY KEY (quarter, fiscal_year)
 );`,
-  rowsBySize: {
-    full: buildTableRows(parseCsv(fullCsv), columns),
-    small: buildTableRows(parseCsv(smallCsv), columns),
+  csvBySize: {
+    full: fullCsv,
+    small: smallCsv,
   },
 }
+
+export default table
