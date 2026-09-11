@@ -17,15 +17,13 @@ import {
   AdminPanelSettings,
 } from '@mui/icons-material';
 import { ColorModeContext } from '@sqlvalley/ui';
-import { setAdminModeEnabled, useAdminMode } from '@/store/adminMode';
+import { useAdminMode, useSettingsStore } from '@/store';
 
 const RESETTABLE_STORAGE_PREFIXES = ['sqlvalley-'] as const;
 const RESETTABLE_STORAGE_KEY_PREFIXES = ['component-'] as const;
-const RESETTABLE_STORAGE_KEYS = new Set(['admin']);
 
 function isResettableStorageKey(key: string): boolean {
   return (
-    RESETTABLE_STORAGE_KEYS.has(key) ||
     RESETTABLE_STORAGE_PREFIXES.some((prefix) => key.startsWith(prefix)) ||
     RESETTABLE_STORAGE_KEY_PREFIXES.some((prefix) => key.startsWith(prefix))
   );
@@ -35,6 +33,7 @@ export function SettingsMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const adminEnabled = useAdminMode();
+  const setAdminModeEnabled = useSettingsStore((state) => state.setAdminModeEnabled);
 
   const { mode, toggleColorMode } = useContext(ColorModeContext);
   const isLight = mode === 'light';
@@ -75,8 +74,6 @@ export function SettingsMenu() {
         }
       }
       keysToRemove.forEach((k) => window.localStorage.removeItem(k));
-      setAdminModeEnabled(false);
-
       window.location.reload();
     } catch (err) {
       console.error('Failed to reset data:', err);

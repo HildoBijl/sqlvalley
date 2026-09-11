@@ -1,6 +1,9 @@
 import { createRoot } from 'react-dom/client';
+import { installAdminModeCommand } from '@/store';
 import { App } from './App';
 import './index.css';
+
+installAdminModeCommand();
 
 // Initialize error tracking
 if (import.meta.env.PROD) {

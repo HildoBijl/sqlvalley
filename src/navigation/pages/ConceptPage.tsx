@@ -11,11 +11,11 @@ import {
 
 import {
   type ConceptModuleState,
+	useAdminMode,
   useLearningStore,
   useSettingsStore,
   useSkillTreeSettingsStore,
 } from '@/store';
-import { useAdminMode } from '@/store/adminMode';
 import { skillTree, type Module } from '@/curriculum';
 import {
   defaultSkillTreeVisualization,

@@ -11,8 +11,7 @@ import {
   skillTreeVisualizationDefinitions,
   type SkillTreeVisualizationId,
 } from '@/curriculum/skillTreeVisualizations';
-import { useAdminMode } from '@/store/adminMode';
-import { useSkillTreeSettingsStore } from '@/store';
+import { useAdminMode, useSkillTreeSettingsStore } from '@/store';
 import { SettingsMenu } from './Settings';
 
 export function Header() {
