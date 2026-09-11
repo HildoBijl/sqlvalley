@@ -41,7 +41,7 @@ interface CreateStoreOptions<
 	version: number
 	migrate: (persistedState: unknown, fromVersion: number) => TPersistedState
 	partialize: (state: TState) => TPersistedState
-	rehydrate?: (state: TState, persisted: TPersistedState) => void
+	normalize: (persistedState: TPersistedState | undefined) => Partial<TState>
 }
 
 export function createStore<
@@ -55,7 +55,7 @@ export function createStore<
 	version,
 	migrate,
 	partialize,
-	rehydrate,
+	normalize,
 }: CreateStoreOptions<TState, TActions, TPersistedState>): UseBoundStore<
 	StoreApi<TState & TActions & HydrationState>
 > {
@@ -86,13 +86,13 @@ export function createStore<
 			version,
 			migrate: (persistedState, fromVersion) => migrate(persistedState, fromVersion),
 			partialize: state => partialize(state as unknown as TState),
+			merge: (persistedState, currentState) => ({
+				...currentState,
+				...normalize(persistedState as TPersistedState | undefined),
+			}),
 			onRehydrateStorage: () => (state, error) => {
 				if (error) console.error(`Failed to rehydrate store "${storageKey}":`, error)
 				if (state) {
-					if (rehydrate) {
-						const persisted = partialize(state as unknown as TState)
-						rehydrate(state as unknown as TState, persisted)
-					}
 					state.setHasHydrated(true)
 					return
 				}
@@ -100,6 +100,5 @@ export function createStore<
 			},
 		}),
 	)
-
 	return useStore
 }

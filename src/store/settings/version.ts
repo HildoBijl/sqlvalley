@@ -9,10 +9,7 @@ const MIGRATIONS: Array<(state: PersistedSettings) => PersistedSettings> = [
 	state => state,
 ]
 
-export function migrateSettingsPersistedState(
-	persistedState: unknown,
-	fromVersion: number,
-): PersistedSettings {
+export function migrateSettingsPersistedState(persistedState: unknown, fromVersion: number): PersistedSettings {
 	const state = asRecord(persistedState) as PersistedSettings
 	return runMigrations(state, fromVersion, SETTINGS_STORE_VERSION, MIGRATIONS)
 }

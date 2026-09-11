@@ -1,13 +1,11 @@
 import { type HydrationState, createStore } from '../utils'
 import { SETTINGS_STORAGE_KEY } from './constants'
-import { type PersistedSettings, partializeSettings, rehydrateSettings } from './persist'
-import { type SettingsActions, type SettingsState, createSettingsActions, initialSettingsState } from './slice'
+import { type SettingsState } from './types'
+import { type PersistedSettings, normalizePersistedSettings, partializeSettings } from './persist'
+import { type SettingsActions, createSettingsActions, initialSettingsState } from './slice'
 import { SETTINGS_STORE_VERSION, migrateSettingsPersistedState } from './version'
 
-export interface SettingsStoreState
-	extends SettingsState,
-		SettingsActions,
-		HydrationState {}
+export interface SettingsStoreState extends SettingsState, SettingsActions, HydrationState { }
 
 export const useSettingsStore = createStore<
 	SettingsState,
@@ -20,5 +18,5 @@ export const useSettingsStore = createStore<
 	version: SETTINGS_STORE_VERSION,
 	migrate: migrateSettingsPersistedState,
 	partialize: partializeSettings,
-	rehydrate: rehydrateSettings,
+	normalize: normalizePersistedSettings,
 })

@@ -17,12 +17,9 @@ export interface SettingsActions {
 	setPracticeDatasetSize: (size: DatasetSize) => void
 }
 
-export function createSettingsActions(
-	set: SetState<SettingsState>,
-): SettingsActions {
+export function createSettingsActions(set: SetState<SettingsState>): SettingsActions {
 	return {
-		toggleHideStories: () =>
-			set(state => ({ hideStories: !state.hideStories })),
+		toggleHideStories: () => set(state => ({ hideStories: !state.hideStories })),
 		setTheme: theme => set({ currentTheme: theme }),
 		setPracticeDatasetSize: size => set({ practiceDatasetSize: size }),
 	}

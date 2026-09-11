@@ -11,17 +11,8 @@ export function partializeLearning(state: LearningState): PersistedLearning {
 	}
 }
 
-export function rehydrateLearning(
-	state: LearningState,
-	persisted: PersistedLearning | undefined,
-): void {
+export function normalizePersistedLearning(persisted: PersistedLearning | undefined): Partial<LearningState> {
 	const rawModules = persisted?.modules
-	if (!rawModules) return
-
-	state.modules = Object.fromEntries(
-		Object.entries(rawModules).map(([id, value]) => [
-			id,
-			normalizeModuleState(id, value as Partial<ModuleState> | undefined),
-		]),
-	)
+	if (!rawModules) return {}
+	return { modules: Object.fromEntries(Object.entries(rawModules).map(([id, value]) => [id, normalizeModuleState(id, value as Partial<ModuleState> | undefined),])) }
 }

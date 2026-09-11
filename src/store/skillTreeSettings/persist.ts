@@ -1,9 +1,8 @@
 import type { SkillTreeSettingsState } from './types'
 
-function normalizeHistory(raw: unknown): string[] {
+function normalizeLastVisitedSkillTrees(raw: unknown): string[] {
 	const result: string[] = []
 	const seen = new Set<string>()
-
 	if (Array.isArray(raw)) {
 		for (const value of raw) {
 			if (typeof value !== 'string') continue
@@ -13,50 +12,41 @@ function normalizeHistory(raw: unknown): string[] {
 			result.push(id)
 		}
 	}
-
 	return result
 }
 
 export interface PersistedSkillTreeSettings {
-	goalNodeID?: Record<string, string | null>
+	hasSeenSkillTreeIntro?: boolean
 	hideLegend?: boolean
+	lastVisitedSkillTrees?: string[]
+
 	hasAccessedPlanningMode?: boolean
 	planningMode?: Record<string, boolean>
-	lastVisitedSkillTrees?: string[]
-	hasSeenSkillTreeIntro?: boolean
+	goalNodeID?: Record<string, string | null>
 }
 
-export function partializeSkillTreeSettings(
-	state: SkillTreeSettingsState,
-): PersistedSkillTreeSettings {
+export function partializeSkillTreeSettings(state: SkillTreeSettingsState): PersistedSkillTreeSettings {
 	return {
-		goalNodeID: state.goalNodeID,
+		hasSeenSkillTreeIntro: state.hasSeenSkillTreeIntro,
 		hideLegend: state.hideLegend,
+		lastVisitedSkillTrees: state.lastVisitedSkillTrees,
+
 		hasAccessedPlanningMode: state.hasAccessedPlanningMode,
 		planningMode: state.planningMode,
-		lastVisitedSkillTrees: state.lastVisitedSkillTrees,
-		hasSeenSkillTreeIntro: state.hasSeenSkillTreeIntro,
+		goalNodeID: state.goalNodeID,
 	}
 }
 
-export function rehydrateSkillTreeSettings(
-	state: SkillTreeSettingsState,
-	persisted: PersistedSkillTreeSettings | undefined,
-): void {
-	if (!persisted) return
+export function normalizePersistedSkillTreeSettings(persisted: PersistedSkillTreeSettings | undefined): Partial<SkillTreeSettingsState> {
+	if (!persisted) return {}
+	const normalized: Partial<SkillTreeSettingsState> = {}
 
-	if (persisted.goalNodeID) state.goalNodeID = persisted.goalNodeID
-	if (typeof persisted.hideLegend === 'boolean') state.hideLegend = persisted.hideLegend
-	if (typeof persisted.hasAccessedPlanningMode === 'boolean') state.hasAccessedPlanningMode = persisted.hasAccessedPlanningMode
-	if (typeof persisted.hasSeenSkillTreeIntro === 'boolean') state.hasSeenSkillTreeIntro = persisted.hasSeenSkillTreeIntro
+	if (typeof persisted.hasSeenSkillTreeIntro === 'boolean') normalized.hasSeenSkillTreeIntro = persisted.hasSeenSkillTreeIntro
+	if (typeof persisted.hideLegend === 'boolean') normalized.hideLegend = persisted.hideLegend
+	if (persisted.lastVisitedSkillTrees) normalized.lastVisitedSkillTrees = normalizeLastVisitedSkillTrees(persisted.lastVisitedSkillTrees)
 
-	if (persisted.planningMode && typeof persisted.planningMode === 'object') {
-		state.planningMode = persisted.planningMode
-	}
-
-	if (persisted.lastVisitedSkillTrees) {
-		state.lastVisitedSkillTrees = normalizeHistory(
-			persisted.lastVisitedSkillTrees,
-		)
-	}
+	if (typeof persisted.hasAccessedPlanningMode === 'boolean') normalized.hasAccessedPlanningMode = persisted.hasAccessedPlanningMode
+	if (persisted.planningMode && typeof persisted.planningMode === 'object') normalized.planningMode = persisted.planningMode
+	if (persisted.goalNodeID) normalized.goalNodeID = persisted.goalNodeID
+	return normalized
 }

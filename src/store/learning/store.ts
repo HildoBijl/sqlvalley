@@ -1,6 +1,6 @@
 import { type HydrationState, createStore } from '../utils'
 import { LEARNING_STORAGE_KEY } from './constants'
-import { type PersistedLearning, partializeLearning, rehydrateLearning } from './persist'
+import { type PersistedLearning, normalizePersistedLearning, partializeLearning } from './persist'
 import { type LearningActions, createLearningActions, initialLearningState } from './slice'
 import type { LearningState } from './types'
 import { LEARNING_STORE_VERSION, migrateLearningPersistedState } from './version'
@@ -21,5 +21,5 @@ export const useLearningStore = createStore<
 	version: LEARNING_STORE_VERSION,
 	migrate: migrateLearningPersistedState,
 	partialize: partializeLearning,
-	rehydrate: rehydrateLearning,
+	normalize: normalizePersistedLearning,
 })

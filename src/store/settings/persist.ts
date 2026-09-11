@@ -16,13 +16,11 @@ export function partializeSettings(state: SettingsState): PersistedSettings {
 	}
 }
 
-export function rehydrateSettings(
-	state: SettingsState,
-	persisted: PersistedSettings | undefined,
-): void {
-	if (!persisted) return
-
-	if (persisted.currentTheme) state.currentTheme = persisted.currentTheme
-	if (typeof persisted.hideStories === 'boolean') state.hideStories = persisted.hideStories
-	if (persisted.practiceDatasetSize) state.practiceDatasetSize = persisted.practiceDatasetSize
+export function normalizePersistedSettings(persisted: PersistedSettings | undefined): Partial<SettingsState> {
+	if (!persisted) return {}
+	const normalized: Partial<SettingsState> = {}
+	if (persisted.currentTheme) normalized.currentTheme = persisted.currentTheme
+	if (typeof persisted.hideStories === 'boolean') normalized.hideStories = persisted.hideStories
+	if (persisted.practiceDatasetSize) normalized.practiceDatasetSize = persisted.practiceDatasetSize
+	return normalized
 }
