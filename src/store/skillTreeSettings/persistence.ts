@@ -1,20 +1,6 @@
 import { asRecord, parseRecord } from '../infrastructure'
 import type { SkillTreeSettingsState } from './state'
-
-function normalizeRecentSkillTreeIds(raw: unknown): string[] {
-	const result: string[] = []
-	const seen = new Set<string>()
-	if (Array.isArray(raw)) {
-		for (const value of raw) {
-			if (typeof value !== 'string') continue
-			const id = value.trim()
-			if (!id || seen.has(id)) continue
-			seen.add(id)
-			result.push(id)
-		}
-	}
-	return result
-}
+import { normalizeSkillTreeIds } from './normalization'
 
 export interface PersistedSkillTreeSettings {
 	hasSeenSkillTreeIntro?: boolean
@@ -44,7 +30,7 @@ export function normalizePersistedSkillTreeSettings(persisted: unknown): Partial
 
 	if (typeof source.hasSeenSkillTreeIntro === 'boolean') normalized.hasSeenSkillTreeIntro = source.hasSeenSkillTreeIntro
 	if (typeof source.hideLegend === 'boolean') normalized.hideLegend = source.hideLegend
-	if (Array.isArray(source.recentSkillTreeIds)) normalized.recentSkillTreeIds = normalizeRecentSkillTreeIds(source.recentSkillTreeIds)
+	if (Array.isArray(source.recentSkillTreeIds)) normalized.recentSkillTreeIds = normalizeSkillTreeIds(source.recentSkillTreeIds)
 
 	if (typeof source.hasSeenPlanningModeIntro === 'boolean') normalized.hasSeenPlanningModeIntro = source.hasSeenPlanningModeIntro
 	const planningModeByTreeId = parseRecord(source.planningModeByTreeId, (value): value is boolean => typeof value === 'boolean')

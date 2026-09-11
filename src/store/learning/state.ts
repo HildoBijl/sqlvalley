@@ -6,8 +6,11 @@ interface BaseModuleState {
 	lastAccessed?: number
 	understood?: true
 }
-export type ConceptModuleState = BaseModuleState
+export interface ConceptModuleState extends BaseModuleState {
+	moduleType: 'concept'
+}
 export interface SkillModuleState extends BaseModuleState {
+	moduleType: 'skill'
 	solvedExerciseCount: number
 	exerciseHistory: StoredExerciseInstance[]
 }
@@ -22,12 +25,12 @@ export const initialLearningState: LearningState = {
 	modules: {} as Record<string, ModuleState>,
 }
 
-export function createModuleState(id: string, type: ModuleType): ModuleState {
-	switch (type) {
+export function createModuleState(id: string, moduleType: ModuleType): ModuleState {
+	switch (moduleType) {
 		case 'concept':
-			return { id }
+			return { id, moduleType }
 		case 'skill':
 		default:
-			return { id, solvedExerciseCount: 0, exerciseHistory: [] }
+			return { id, moduleType, solvedExerciseCount: 0, exerciseHistory: [] }
 	}
 }

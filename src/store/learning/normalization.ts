@@ -69,12 +69,9 @@ export function normalizeSkillModuleState(id: string, state: unknown): SkillModu
 	return normalized
 }
 
-function looksLikeSkillModule(state: Record<string, unknown>): boolean {
-	return state.type === 'skill' || typeof state.solvedExerciseCount === 'number' || Array.isArray(state.exerciseHistory)
-}
-
 export function normalizeModuleState(id: string, state: unknown): ModuleState | null {
 	if (!isRecord(state)) return null
-	if (looksLikeSkillModule(state)) return normalizeSkillModuleState(id, state)
-	return normalizeConceptModuleState(id, state)
+	if (state.moduleType === 'concept') return normalizeConceptModuleState(id, state)
+	if (state.moduleType === 'skill') return normalizeSkillModuleState(id, state)
+	return null
 }

@@ -1,7 +1,7 @@
 import { asRecord, runMigrations } from '../infrastructure'
 import type { PersistedLearning } from './persistence'
 
-export const LEARNING_STORAGE_VERSION = 6
+export const LEARNING_STORAGE_VERSION = 7
 
 // Migrations: index i transforms payload from version i to i+1.
 const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
@@ -144,6 +144,17 @@ const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
 			if (typeof module.numSolved !== 'number' && !Array.isArray(module.exercises)) return [moduleId, module]
 			const { numSolved, exercises, ...rest } = module
 			return [moduleId, { ...rest, solvedExerciseCount: numSolved, exerciseHistory: exercises }]
+		}))
+		return { ...state, modules: migratedModules as PersistedLearning['modules'] }
+	},
+
+	// v6 -> v7: add an explicit discriminator to every module.
+	state => {
+		const modules = asRecord(asRecord(state).modules)
+		const migratedModules = Object.fromEntries(Object.entries(modules).map(([moduleId, moduleValue]) => {
+			const module = asRecord(moduleValue)
+			const moduleType = typeof module.solvedExerciseCount === 'number' || Array.isArray(module.exerciseHistory) ? 'skill' : 'concept'
+			return [moduleId, { ...module, moduleType }]
 		}))
 		return { ...state, modules: migratedModules as PersistedLearning['modules'] }
 	},

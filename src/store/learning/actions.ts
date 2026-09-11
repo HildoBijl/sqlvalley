@@ -5,7 +5,7 @@ import type { ConceptModuleState, LearningState, ModuleType, SkillModuleState } 
 import { normalizeConceptModuleState, normalizeSkillModuleState } from './normalization'
 
 export interface LearningActions {
-	setModuleTab: (id: string, type: ModuleType, tab: string) => void
+	setModuleTab: (id: string, moduleType: ModuleType, tab: string) => void
 	completeConcept: (conceptId: string) => void
 	completeSkill: (skillId: string) => void
 	startNewExercise: (skillId: string, exerciseId: string, version: number, parameters: Record<string, unknown>) => void
@@ -23,9 +23,9 @@ function getSkillModuleForUpdate(moduleId: string, state: LearningState): SkillM
 
 export function createLearningActions(set: SetState<LearningState>): LearningActions {
 	return {
-		setModuleTab: (id, type, tab) => set(state => {
+		setModuleTab: (id, moduleType, tab) => set(state => {
 			const now = Date.now()
-			const nextState = type === 'skill'
+			const nextState = moduleType === 'skill'
 				? { ...getSkillModuleForUpdate(id, state), tab, lastAccessed: now, }
 				: { ...getConceptModuleForUpdate(id, state), tab, lastAccessed: now }
 			return { modules: { ...state.modules, [id]: nextState } }

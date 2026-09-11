@@ -1,5 +1,6 @@
 import { asRecord, runMigrations } from '../infrastructure'
 import type { PersistedSkillTreeSettings } from './persistence'
+import { normalizeSkillTreeIds } from './normalization'
 
 export const SKILL_TREE_SETTINGS_STORAGE_VERSION = 3
 
@@ -10,21 +11,6 @@ interface LegacySkillTreeSettings extends PersistedSkillTreeSettings {
 	goalNodeID?: unknown
 }
 
-function normalizeHistory(raw: unknown): string[] {
-	const result: string[] = []
-	const seen = new Set<string>()
-	if (Array.isArray(raw)) {
-		for (const value of raw) {
-			if (typeof value !== 'string') continue
-			const id = value.trim()
-			if (!id || seen.has(id)) continue
-			seen.add(id)
-			result.push(id)
-		}
-	}
-	return result
-}
-
 // Migrations: index i transforms payload from version i to i+1.
 const MIGRATIONS: Array<(state: PersistedSkillTreeSettings) => PersistedSkillTreeSettings> = [
 	// v0 -> v1: no-op (initial versioned payload)
@@ -33,7 +19,7 @@ const MIGRATIONS: Array<(state: PersistedSkillTreeSettings) => PersistedSkillTre
 	// v1 -> v2: move skill-tree history into this store.
 	state => {
 		const legacyState = state as LegacySkillTreeSettings
-		return { ...state, lastVisitedSkillTrees: normalizeHistory(legacyState.lastVisitedSkillTrees) } as PersistedSkillTreeSettings
+		return { ...state, lastVisitedSkillTrees: normalizeSkillTreeIds(legacyState.lastVisitedSkillTrees) } as PersistedSkillTreeSettings
 	},
 
 	// v2 -> v3: clarify collection and per-tree field names.
@@ -42,7 +28,7 @@ const MIGRATIONS: Array<(state: PersistedSkillTreeSettings) => PersistedSkillTre
 		const { lastVisitedSkillTrees, hasAccessedPlanningMode, planningMode, goalNodeID, ...rest } = legacyState
 		return {
 			...rest,
-			recentSkillTreeIds: normalizeHistory(lastVisitedSkillTrees),
+			recentSkillTreeIds: normalizeSkillTreeIds(lastVisitedSkillTrees),
 			hasSeenPlanningModeIntro: hasAccessedPlanningMode,
 			planningModeByTreeId: planningMode,
 			goalNodeIdByTreeId: goalNodeID,
