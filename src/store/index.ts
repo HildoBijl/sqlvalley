@@ -1,8 +1,4 @@
-/**
- * Store package. API for the memory store.
- */
-
-export * from './settings';
-export * from './learning';
-export * from './skillTreeSettings';
-export * from './hooks';
+export * from './settings'
+export * from './learning'
+export * from './skillTreeSettings'
+export * from './hooks'

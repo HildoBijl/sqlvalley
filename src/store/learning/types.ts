@@ -1,27 +1,19 @@
-/**
- * Learning store types.
- */
-
-import type { StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState';
+import type { StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState'
 
 interface BaseModuleState {
-  id: string;
-  tab?: string;
-  lastAccessed?: number;
-  understood?: true;
+	id: string
+	tab?: string
+	lastAccessed?: number
+	understood?: true
 }
-
-export type ConceptModuleState = BaseModuleState;
-
+export type ConceptModuleState = BaseModuleState
 export interface SkillModuleState extends BaseModuleState {
-  numSolved: number;
-  exercises: StoredExerciseInstance[];
+	numSolved: number
+	exercises: StoredExerciseInstance[]
 }
+export type ModuleState = ConceptModuleState | SkillModuleState
 
-export type ModuleState = ConceptModuleState | SkillModuleState;
-
-export type ModuleType = 'concept' | 'skill';
-
+export type ModuleType = 'concept' | 'skill'
 export interface LearningState {
-  modules: Record<string, ModuleState>;
+	modules: Record<string, ModuleState>
 }
