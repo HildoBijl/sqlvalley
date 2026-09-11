@@ -9,12 +9,12 @@ import { SQLJSProvider } from '@sqlvalley/sqljs';
 import { DatabaseProvider } from '@sqlvalley/sql/databases';
 import { ErrorBoundary } from '@sqlvalley/ui';
 import { exerciseStorage } from './exerciseStorage';
-import { useHasHydrated, useSettingsStore } from './store';
+import { useSettingsStore, useStoresHydrated } from './store';
 
 export function App() {
   const mode = useSettingsStore((s) => s.currentTheme);
   const setTheme = useSettingsStore((s) => s.setTheme);
-  const isStoreReady = useHasHydrated();
+  const isStoreReady = useStoresHydrated();
 
   const muiTheme = useMemo(() => getTheme(mode), [mode]);
 

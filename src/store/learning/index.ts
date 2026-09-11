@@ -1,5 +1,5 @@
 export { useLearningStore } from './store'
-export { createModuleState } from './support'
+export { createModuleState } from './state'
 
 export type { LearningStoreState } from './store'
 export type {
@@ -7,4 +7,4 @@ export type {
 	ModuleType,
 	ConceptModuleState,
 	SkillModuleState,
-} from './types'
+} from './state'

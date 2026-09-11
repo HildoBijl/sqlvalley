@@ -1,7 +1,6 @@
-import { asRecord } from '../utils'
-import { isRecord } from '../validation'
-import type { LearningState, ModuleState } from './types'
-import { normalizeModuleState } from './support'
+import { asRecord, isRecord } from '../infrastructure'
+import type { LearningState, ModuleState } from './state'
+import { normalizeModuleState } from './normalization'
 
 export interface PersistedLearning {
 	modules?: Record<string, Partial<ModuleState> | ModuleState>

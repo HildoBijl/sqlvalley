@@ -1,13 +1,14 @@
-import { type HydrationState, createStore } from '../utils'
-import { LEARNING_STORAGE_KEY } from './constants'
-import { type PersistedLearning, normalizePersistedLearning, partializeLearning } from './persist'
-import { type LearningActions, createLearningActions, initialLearningState } from './slice'
-import type { LearningState } from './types'
-import { LEARNING_STORE_VERSION, migrateLearningPersistedState } from './version'
+import { type HydrationState, createPersistedStore } from '../infrastructure'
+import { type LearningState, initialLearningState } from './state'
+import { type LearningActions, createLearningActions } from './actions'
+import { type PersistedLearning, normalizePersistedLearning, partializeLearning } from './persistence'
+import { LEARNING_STORE_VERSION, migrateLearningPersistedState } from './migrations'
+
+const LEARNING_STORAGE_KEY = 'sqlvalley-learning'
 
 export interface LearningStoreState extends LearningState, LearningActions, HydrationState { }
 
-export const useLearningStore = createStore<LearningState, LearningActions, PersistedLearning>({
+export const useLearningStore = createPersistedStore<LearningState, LearningActions, PersistedLearning>({
 	initialState: initialLearningState,
 	createActions: (set, get) => createLearningActions(set, get),
 	storageKey: LEARNING_STORAGE_KEY,

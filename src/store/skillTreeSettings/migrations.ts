@@ -1,5 +1,5 @@
-import { asRecord, runMigrations } from '../utils'
-import type { PersistedSkillTreeSettings } from './persist'
+import { asRecord, runMigrations } from '../infrastructure'
+import type { PersistedSkillTreeSettings } from './persistence'
 
 export const SKILL_TREE_SETTINGS_STORE_VERSION = 2
 

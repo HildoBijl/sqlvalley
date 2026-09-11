@@ -1,5 +1,5 @@
-import { asRecord, runMigrations } from '../utils'
-import type { PersistedLearning } from './persist'
+import { asRecord, runMigrations } from '../infrastructure'
+import type { PersistedLearning } from './persistence'
 
 export const LEARNING_STORE_VERSION = 5
 

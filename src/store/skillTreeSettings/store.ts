@@ -1,13 +1,14 @@
-import { type HydrationState, createStore } from '../utils'
-import { SKILL_TREE_STORAGE_KEY } from './constants'
-import { type SkillTreeSettingsState } from './types'
-import { type PersistedSkillTreeSettings, normalizePersistedSkillTreeSettings, partializeSkillTreeSettings } from './persist'
-import { type SkillTreeSettingsActions, createSkillTreeSettingsActions, initialSkillTreeSettingsState } from './slice'
-import { SKILL_TREE_SETTINGS_STORE_VERSION, migrateSkillTreeSettingsPersistedState } from './version'
+import { type HydrationState, createPersistedStore } from '../infrastructure'
+import { type SkillTreeSettingsState, initialSkillTreeSettingsState } from './state'
+import { type SkillTreeSettingsActions, createSkillTreeSettingsActions } from './actions'
+import { type PersistedSkillTreeSettings, normalizePersistedSkillTreeSettings, partializeSkillTreeSettings } from './persistence'
+import { SKILL_TREE_SETTINGS_STORE_VERSION, migrateSkillTreeSettingsPersistedState } from './migrations'
+
+const SKILL_TREE_STORAGE_KEY = 'sqlvalley-skilltree'
 
 export interface SkillTreeSettingsStoreState extends SkillTreeSettingsState, SkillTreeSettingsActions, HydrationState { }
 
-export const useSkillTreeSettingsStore = createStore<SkillTreeSettingsState, SkillTreeSettingsActions, PersistedSkillTreeSettings>({
+export const useSkillTreeSettingsStore = createPersistedStore<SkillTreeSettingsState, SkillTreeSettingsActions, PersistedSkillTreeSettings>({
 	initialState: initialSkillTreeSettingsState,
 	createActions: set => createSkillTreeSettingsActions(set),
 	storageKey: SKILL_TREE_STORAGE_KEY,

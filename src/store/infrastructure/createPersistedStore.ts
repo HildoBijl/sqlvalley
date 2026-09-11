@@ -11,23 +11,7 @@ export interface HydrationState {
 export type SetState<T> = (partial: Partial<T> | ((state: T) => Partial<T>)) => void
 export type GetState<T> = () => T
 
-export function asRecord(value: unknown): Record<string, unknown> {
-	if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
-	return value as Record<string, unknown>
-}
-
-export function runMigrations<TState>(persistedState: TState, fromVersion: number, targetVersion: number, migrations: Array<(state: TState) => TState>): TState {
-	if (!Number.isInteger(targetVersion) || targetVersion < 0) throw new Error(`Invalid target store version "${targetVersion}".`)
-	if (migrations.length !== targetVersion) throw new Error(`Store version ${targetVersion} requires ${targetVersion} migrations, but received ${migrations.length}.`)
-	const sourceVersion = Number.isInteger(fromVersion) && fromVersion >= 0 ? fromVersion : 0
-	if (sourceVersion >= targetVersion) return persistedState
-	let state = persistedState
-	const migrationsToRun = migrations.slice(sourceVersion, targetVersion)
-	for (const migrate of migrationsToRun) { state = migrate(state) }
-	return state
-}
-
-interface CreateStoreOptions<TState extends object, TActions extends object, TPersistedState extends object> {
+interface CreatePersistedStoreOptions<TState extends object, TActions extends object, TPersistedState extends object> {
 	initialState: TState
 	createActions: (set: SetState<TState>, get: GetState<TState>) => TActions
 	storageKey: string
@@ -37,7 +21,7 @@ interface CreateStoreOptions<TState extends object, TActions extends object, TPe
 	normalize: (persistedState: TPersistedState | undefined) => Partial<TState>
 }
 
-export function createStore<TState extends object, TActions extends object, TPersistedState extends object>({
+export function createPersistedStore<TState extends object, TActions extends object, TPersistedState extends object>({
 	initialState,
 	createActions,
 	storageKey,
@@ -45,7 +29,7 @@ export function createStore<TState extends object, TActions extends object, TPer
 	migrate,
 	partialize,
 	normalize,
-}: CreateStoreOptions<TState, TActions, TPersistedState>): UseBoundStore<StoreApi<TState & TActions & HydrationState>> {
+}: CreatePersistedStoreOptions<TState, TActions, TPersistedState>): UseBoundStore<StoreApi<TState & TActions & HydrationState>> {
 	type StoreState = TState & TActions & HydrationState
 
 	const creator: StateCreator<StoreState> = (set, get) => {
@@ -88,6 +72,6 @@ export function createStore<TState extends object, TActions extends object, TPer
 			},
 		}),
 	)
-	
+
 	return useStore
 }

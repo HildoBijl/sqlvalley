@@ -1,12 +1,8 @@
 import type { StoredExerciseAction, StoredExerciseInstance, StoredExerciseState } from '@sqlvalley/exercise-engine/storedState'
 
-import type { GetState, SetState } from '../utils'
-import type { ConceptModuleState, LearningState, ModuleState, ModuleType, SkillModuleState } from './types'
-import { createModuleState, normalizeConceptModuleState, normalizeSkillModuleState } from './support'
-
-export const initialLearningState: LearningState = {
-	modules: {} as Record<string, ModuleState>,
-}
+import type { GetState, SetState } from '../infrastructure'
+import { type ConceptModuleState, type LearningState, type ModuleState, type ModuleType, type SkillModuleState, createModuleState } from './state'
+import { normalizeConceptModuleState, normalizeSkillModuleState } from './normalization'
 
 export interface LearningActions {
 	setModuleTab: (id: string, type: ModuleType, tab: string) => void

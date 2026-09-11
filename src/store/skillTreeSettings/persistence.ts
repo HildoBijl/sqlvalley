@@ -1,6 +1,5 @@
-import { asRecord } from '../utils'
-import { parseRecord } from '../validation'
-import type { SkillTreeSettingsState } from './types'
+import { asRecord, parseRecord } from '../infrastructure'
+import type { SkillTreeSettingsState } from './state'
 
 function normalizeLastVisitedSkillTrees(raw: unknown): string[] {
 	const result: string[] = []

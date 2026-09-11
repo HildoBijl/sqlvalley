@@ -1,8 +1,7 @@
 import { type DatasetSize, datasetSizes } from '@sqlvalley/mock-data'
 
-import { asRecord } from '../utils'
-import { isIncluded } from '../validation'
-import { type SettingsState, type Theme, themes } from './types'
+import { asRecord, isIncluded } from '../infrastructure'
+import { type SettingsState, type Theme, themes } from './state'
 
 export interface PersistedSettings {
 	adminModeEnabled?: boolean

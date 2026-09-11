@@ -1,17 +1,7 @@
 import type { StoredExerciseEvent, StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState'
 
-import { isRecord } from '../validation'
-import type { ConceptModuleState, ModuleState, ModuleType, SkillModuleState } from './types'
-
-export function createModuleState(id: string, type: ModuleType): ModuleState {
-	switch (type) {
-		case 'concept':
-			return { id }
-		case 'skill':
-		default:
-			return { id, numSolved: 0, exercises: [] }
-	}
-}
+import { isRecord } from '../infrastructure'
+import { type ConceptModuleState, type ModuleState, type SkillModuleState, createModuleState } from './state'
 
 export function coerceTimestamp(value: unknown): number | undefined {
 	if (typeof value === 'number') return Number.isFinite(value) ? value : undefined

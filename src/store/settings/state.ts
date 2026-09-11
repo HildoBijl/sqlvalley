@@ -9,3 +9,10 @@ export interface SettingsState {
 	hideStories: boolean
 	practiceDatasetSize: DatasetSize
 }
+
+export const initialSettingsState: SettingsState = {
+	adminModeEnabled: false,
+	currentTheme: 'light',
+	hideStories: true,
+	practiceDatasetSize: 'full',
+}

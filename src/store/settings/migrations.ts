@@ -1,5 +1,5 @@
-import { asRecord, runMigrations } from '../utils'
-import type { PersistedSettings } from './persist'
+import { asRecord, runMigrations } from '../infrastructure'
+import type { PersistedSettings } from './persistence'
 
 export const SETTINGS_STORE_VERSION = 1
 

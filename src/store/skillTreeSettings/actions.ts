@@ -1,15 +1,5 @@
-import type { SetState } from '../utils'
-import type { SkillTreeSettingsState } from './types'
-
-export const initialSkillTreeSettingsState: SkillTreeSettingsState = {
-	hasSeenSkillTreeIntro: false,
-	hideLegend: false,
-	lastVisitedSkillTrees: [],
-
-	hasAccessedPlanningMode: false,
-	planningMode: {},
-	goalNodeID: {},
-}
+import type { SetState } from '../infrastructure'
+import type { SkillTreeSettingsState } from './state'
 
 export interface SkillTreeSettingsActions {
 	setHasSeenSkillTreeIntro: (seen: boolean) => void

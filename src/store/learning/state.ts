@@ -17,3 +17,17 @@ export type ModuleType = 'concept' | 'skill'
 export interface LearningState {
 	modules: Record<string, ModuleState>
 }
+
+export const initialLearningState: LearningState = {
+	modules: {} as Record<string, ModuleState>,
+}
+
+export function createModuleState(id: string, type: ModuleType): ModuleState {
+	switch (type) {
+		case 'concept':
+			return { id }
+		case 'skill':
+		default:
+			return { id, numSolved: 0, exercises: [] }
+	}
+}
