@@ -1,3 +1,5 @@
+import { asRecord } from '../utils'
+import { parseRecord } from '../validation'
 import type { SkillTreeSettingsState } from './types'
 
 function normalizeLastVisitedSkillTrees(raw: unknown): string[] {
@@ -37,16 +39,19 @@ export function partializeSkillTreeSettings(state: SkillTreeSettingsState): Pers
 	}
 }
 
-export function normalizePersistedSkillTreeSettings(persisted: PersistedSkillTreeSettings | undefined): Partial<SkillTreeSettingsState> {
-	if (!persisted) return {}
+export function normalizePersistedSkillTreeSettings(persisted: unknown): Partial<SkillTreeSettingsState> {
+	const source = asRecord(persisted)
 	const normalized: Partial<SkillTreeSettingsState> = {}
 
-	if (typeof persisted.hasSeenSkillTreeIntro === 'boolean') normalized.hasSeenSkillTreeIntro = persisted.hasSeenSkillTreeIntro
-	if (typeof persisted.hideLegend === 'boolean') normalized.hideLegend = persisted.hideLegend
-	if (persisted.lastVisitedSkillTrees) normalized.lastVisitedSkillTrees = normalizeLastVisitedSkillTrees(persisted.lastVisitedSkillTrees)
+	if (typeof source.hasSeenSkillTreeIntro === 'boolean') normalized.hasSeenSkillTreeIntro = source.hasSeenSkillTreeIntro
+	if (typeof source.hideLegend === 'boolean') normalized.hideLegend = source.hideLegend
+	if (Array.isArray(source.lastVisitedSkillTrees)) normalized.lastVisitedSkillTrees = normalizeLastVisitedSkillTrees(source.lastVisitedSkillTrees)
 
-	if (typeof persisted.hasAccessedPlanningMode === 'boolean') normalized.hasAccessedPlanningMode = persisted.hasAccessedPlanningMode
-	if (persisted.planningMode && typeof persisted.planningMode === 'object') normalized.planningMode = persisted.planningMode
-	if (persisted.goalNodeID) normalized.goalNodeID = persisted.goalNodeID
+	if (typeof source.hasAccessedPlanningMode === 'boolean') normalized.hasAccessedPlanningMode = source.hasAccessedPlanningMode
+	const planningMode = parseRecord(source.planningMode, (value): value is boolean => typeof value === 'boolean')
+	if (planningMode) normalized.planningMode = planningMode
+	const goalNodeID = parseRecord(source.goalNodeID, (value): value is string | null => typeof value === 'string' || value === null)
+	if (goalNodeID) normalized.goalNodeID = goalNodeID
+	
 	return normalized
 }

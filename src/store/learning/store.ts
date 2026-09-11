@@ -5,16 +5,9 @@ import { type LearningActions, createLearningActions, initialLearningState } fro
 import type { LearningState } from './types'
 import { LEARNING_STORE_VERSION, migrateLearningPersistedState } from './version'
 
-export interface LearningStoreState
-	extends LearningState,
-		LearningActions,
-		HydrationState {}
+export interface LearningStoreState extends LearningState, LearningActions, HydrationState { }
 
-export const useLearningStore = createStore<
-	LearningState,
-	LearningActions,
-	PersistedLearning
->({
+export const useLearningStore = createStore<LearningState, LearningActions, PersistedLearning>({
 	initialState: initialLearningState,
 	createActions: (set, get) => createLearningActions(set, get),
 	storageKey: LEARNING_STORAGE_KEY,

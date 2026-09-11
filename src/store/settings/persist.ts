@@ -1,6 +1,8 @@
-import type { DatasetSize } from '@sqlvalley/mock-data'
+import { type DatasetSize, datasetSizes } from '@sqlvalley/mock-data'
 
-import type { SettingsState, Theme } from './types'
+import { asRecord } from '../utils'
+import { isIncluded } from '../validation'
+import { type SettingsState, type Theme, themes } from './types'
 
 export interface PersistedSettings {
 	currentTheme?: Theme
@@ -16,11 +18,11 @@ export function partializeSettings(state: SettingsState): PersistedSettings {
 	}
 }
 
-export function normalizePersistedSettings(persisted: PersistedSettings | undefined): Partial<SettingsState> {
-	if (!persisted) return {}
+export function normalizePersistedSettings(persisted: unknown): Partial<SettingsState> {
+	const source = asRecord(persisted)
 	const normalized: Partial<SettingsState> = {}
-	if (persisted.currentTheme) normalized.currentTheme = persisted.currentTheme
-	if (typeof persisted.hideStories === 'boolean') normalized.hideStories = persisted.hideStories
-	if (persisted.practiceDatasetSize) normalized.practiceDatasetSize = persisted.practiceDatasetSize
+	if (isIncluded(themes, source.currentTheme)) normalized.currentTheme = source.currentTheme
+	if (typeof source.hideStories === 'boolean') normalized.hideStories = source.hideStories
+	if (isIncluded(datasetSizes, source.practiceDatasetSize)) normalized.practiceDatasetSize = source.practiceDatasetSize
 	return normalized
 }

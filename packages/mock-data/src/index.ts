@@ -1,2 +1,2 @@
-export { type DatasetSize, type TableKey, defaultDatasetSize, allTableKeys } from './tables'
+export { type DatasetSize, type TableKey, datasetSizes, defaultDatasetSize, allTableKeys } from './tables'
 export * from './buildSql'

@@ -1,14 +1,12 @@
 import type { ColumnTypes } from '../parseCsv'
 
+export const datasetSizes = ['full', 'small'] as const
+export type DatasetSize = (typeof datasetSizes)[number]
+export const defaultDatasetSize: DatasetSize = 'small'
+
 export interface TableDefinition {
 	name: string
 	columns: ColumnTypes
 	createTableSql: string
-	csvBySize: {
-		full: string
-		small: string
-	}
+	csvBySize: Record<DatasetSize, string>
 }
-
-export type DatasetSize = keyof TableDefinition['csvBySize']
-export const defaultDatasetSize: DatasetSize = 'small'

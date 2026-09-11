@@ -1,6 +1,7 @@
 import type { DatasetSize } from '@sqlvalley/mock-data'
 
-export type Theme = 'light' | 'dark'
+export const themes = ['light', 'dark'] as const
+export type Theme = (typeof themes)[number]
 
 export interface SettingsState {
 	currentTheme: Theme

@@ -3,8 +3,6 @@ import type { DatasetSize } from '@sqlvalley/mock-data'
 import type { SetState } from '../utils'
 import type { SettingsState, Theme } from './types'
 
-export type { SettingsState } from './types'
-
 export const initialSettingsState: SettingsState = {
 	currentTheme: 'light',
 	hideStories: true,

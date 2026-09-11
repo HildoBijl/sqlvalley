@@ -1,52 +1,38 @@
 import type { SetState } from '../utils'
 import type { SkillTreeSettingsState } from './types'
 
-export type { SkillTreeSettingsState } from './types'
-
 export const initialSkillTreeSettingsState: SkillTreeSettingsState = {
-	goalNodeID: {},
+	hasSeenSkillTreeIntro: false,
 	hideLegend: false,
+	lastVisitedSkillTrees: [],
+
 	hasAccessedPlanningMode: false,
 	planningMode: {},
-	lastVisitedSkillTrees: [],
-	hasSeenSkillTreeIntro: false,
+	goalNodeID: {},
 }
 
 export interface SkillTreeSettingsActions {
-	setGoalNodeID: (treeId: string, id: string | null) => void
+	setHasSeenSkillTreeIntro: (seen: boolean) => void
 	setHideLegend: (hide: boolean) => void
+	markSkillTreeVisited: (treeId: string) => void
+
 	setHasAccessedPlanningMode: (accessed: boolean) => void
 	setPlanningMode: (treeId: string, planningMode: boolean) => void
-	markSkillTreeVisited: (treeId: string) => void
-	setHasSeenSkillTreeIntro: (seen: boolean) => void
+	setGoalNodeID: (treeId: string, id: string | null) => void
 }
 
-export function createSkillTreeSettingsActions(
-	set: SetState<SkillTreeSettingsState>,
-): SkillTreeSettingsActions {
+export function createSkillTreeSettingsActions(set: SetState<SkillTreeSettingsState>): SkillTreeSettingsActions {
 	return {
-		setGoalNodeID: (treeId, id) =>
-			set(state => ({
-				goalNodeID: { ...state.goalNodeID, [treeId]: id },
-			})),
+		setHasSeenSkillTreeIntro: seen => set({ hasSeenSkillTreeIntro: seen }),
 		setHideLegend: hide => set({ hideLegend: hide }),
-		setHasAccessedPlanningMode: accessed =>
-			set({ hasAccessedPlanningMode: accessed }),
-		setPlanningMode: (treeId, planningMode) =>
-			set(state => ({
-				planningMode: { ...state.planningMode, [treeId]: planningMode },
-			})),
 		markSkillTreeVisited: treeId => {
 			const normalizedTreeId = treeId.trim()
 			if (!normalizedTreeId) return
-
-			set(state => ({
-				lastVisitedSkillTrees: [
-					normalizedTreeId,
-					...state.lastVisitedSkillTrees.filter(id => id !== normalizedTreeId),
-				],
-			}))
+			set(state => ({ lastVisitedSkillTrees: [normalizedTreeId, ...state.lastVisitedSkillTrees.filter(id => id !== normalizedTreeId)] }))
 		},
-		setHasSeenSkillTreeIntro: seen => set({ hasSeenSkillTreeIntro: seen }),
+
+		setPlanningMode: (treeId, planningMode) => set(state => ({ planningMode: { ...state.planningMode, [treeId]: planningMode } })),
+		setHasAccessedPlanningMode: accessed => set({ hasAccessedPlanningMode: accessed }),
+		setGoalNodeID: (treeId, id) => set(state => ({ goalNodeID: { ...state.goalNodeID, [treeId]: id } })),
 	}
 }
