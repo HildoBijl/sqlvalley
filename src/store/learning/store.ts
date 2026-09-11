@@ -1,6 +1,5 @@
-import { migrateLegacyStorageIfNeeded } from '../legacyMigration'
 import { type HydrationState, createStore } from '../utils'
-import { LEGACY_LEARNING_STORAGE_KEY, LEARNING_STORAGE_KEY } from './constants'
+import { LEARNING_STORAGE_KEY } from './constants'
 import { type PersistedLearning, partializeLearning, rehydrateLearning } from './persist'
 import { type LearningActions, createLearningActions, initialLearningState } from './slice'
 import type { LearningState } from './types'
@@ -23,11 +22,4 @@ export const useLearningStore = createStore<
 	migrate: migrateLearningPersistedState,
 	partialize: partializeLearning,
 	rehydrate: rehydrateLearning,
-	prepare: () =>
-		migrateLegacyStorageIfNeeded({
-			domain: 'learning',
-			targetKey: LEARNING_STORAGE_KEY,
-			legacySplitKey: LEGACY_LEARNING_STORAGE_KEY,
-			targetVersion: LEARNING_STORE_VERSION,
-		}),
 })

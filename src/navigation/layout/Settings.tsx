@@ -19,7 +19,7 @@ import {
 import { ColorModeContext } from '@sqlvalley/ui';
 import { setAdminModeEnabled, useAdminMode } from '@/store/adminMode';
 
-const RESETTABLE_STORAGE_PREFIXES = ['sqlvalley-', 'sqltutor-'] as const;
+const RESETTABLE_STORAGE_PREFIXES = ['sqlvalley-'] as const;
 const RESETTABLE_STORAGE_KEY_PREFIXES = ['component-'] as const;
 const RESETTABLE_STORAGE_KEYS = new Set(['admin']);
 

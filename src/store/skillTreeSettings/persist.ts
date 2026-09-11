@@ -1,8 +1,4 @@
 import type { SkillTreeSettingsState } from './types'
-import {
-	LEGACY_SKILL_TREE_HISTORY_KEY,
-	SKILL_TREE_HISTORY_KEY,
-} from './constants'
 
 function normalizeHistory(raw: unknown): string[] {
 	const result: string[] = []
@@ -19,24 +15,6 @@ function normalizeHistory(raw: unknown): string[] {
 	}
 
 	return result
-}
-
-function readLegacyHistoryFromStorage(): string[] | null {
-	if (typeof window === 'undefined') return null
-
-	const keys = [SKILL_TREE_HISTORY_KEY, LEGACY_SKILL_TREE_HISTORY_KEY]
-	for (const key of keys) {
-		const raw = window.localStorage.getItem(key)
-		if (!raw) continue
-
-		try {
-			return normalizeHistory(JSON.parse(raw))
-		} catch {
-			// Ignore malformed history and try the next key.
-		}
-	}
-
-	return null
 }
 
 export interface PersistedSkillTreeSettings {
@@ -80,9 +58,5 @@ export function rehydrateSkillTreeSettings(
 		state.lastVisitedSkillTrees = normalizeHistory(
 			persisted.lastVisitedSkillTrees,
 		)
-		return
 	}
-
-	const legacyHistory = readLegacyHistoryFromStorage()
-	if (legacyHistory) state.lastVisitedSkillTrees = legacyHistory
 }

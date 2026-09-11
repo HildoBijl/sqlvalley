@@ -42,7 +42,6 @@ interface CreateStoreOptions<
 	migrate: (persistedState: unknown, fromVersion: number) => TPersistedState
 	partialize: (state: TState) => TPersistedState
 	rehydrate?: (state: TState, persisted: TPersistedState) => void
-	prepare?: () => void
 }
 
 export function createStore<
@@ -57,12 +56,9 @@ export function createStore<
 	migrate,
 	partialize,
 	rehydrate,
-	prepare,
 }: CreateStoreOptions<TState, TActions, TPersistedState>): UseBoundStore<
 	StoreApi<TState & TActions & HydrationState>
 > {
-	prepare?.()
-
 	type StoreState = TState & TActions & HydrationState
 
 	const creator: StateCreator<StoreState> = (set, get) => {
