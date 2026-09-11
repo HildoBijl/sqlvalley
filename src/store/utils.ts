@@ -1,5 +1,7 @@
 import { type StateCreator, type StoreApi, type UseBoundStore, create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { createJSONStorage, persist } from 'zustand/middleware'
+
+import { safeStorage } from './safeStorage'
 
 export interface HydrationState {
 	_hasHydrated: boolean
@@ -14,27 +16,16 @@ export function asRecord(value: unknown): Record<string, unknown> {
 	return value as Record<string, unknown>
 }
 
-export function runMigrations<TState>(
-	persistedState: TState,
-	fromVersion: number,
-	targetVersion: number,
-	migrations: Array<(state: TState) => TState>,
-): TState {
+export function runMigrations<TState>(persistedState: TState, fromVersion: number, targetVersion: number, migrations: Array<(state: TState) => TState>): TState {
 	const sourceVersion = Number.isFinite(fromVersion) ? fromVersion : 0
 	if (sourceVersion >= targetVersion) return persistedState
 	let state = persistedState
 	const migrationsToRun = migrations.slice(sourceVersion, targetVersion)
-	for (const migrate of migrationsToRun) {
-		state = migrate(state)
-	}
+	for (const migrate of migrationsToRun) { state = migrate(state) }
 	return state
 }
 
-interface CreateStoreOptions<
-	TState extends object,
-	TActions extends object,
-	TPersistedState extends object,
-> {
+interface CreateStoreOptions<TState extends object, TActions extends object, TPersistedState extends object> {
 	initialState: TState
 	createActions: (set: SetState<TState>, get: GetState<TState>) => TActions
 	storageKey: string
@@ -44,11 +35,7 @@ interface CreateStoreOptions<
 	normalize: (persistedState: TPersistedState | undefined) => Partial<TState>
 }
 
-export function createStore<
-	TState extends object,
-	TActions extends object,
-	TPersistedState extends object,
->({
+export function createStore<TState extends object, TActions extends object, TPersistedState extends object>({
 	initialState,
 	createActions,
 	storageKey,
@@ -56,9 +43,7 @@ export function createStore<
 	migrate,
 	partialize,
 	normalize,
-}: CreateStoreOptions<TState, TActions, TPersistedState>): UseBoundStore<
-	StoreApi<TState & TActions & HydrationState>
-> {
+}: CreateStoreOptions<TState, TActions, TPersistedState>): UseBoundStore<StoreApi<TState & TActions & HydrationState>> {
 	type StoreState = TState & TActions & HydrationState
 
 	const creator: StateCreator<StoreState> = (set, get) => {
@@ -83,6 +68,7 @@ export function createStore<
 	const useStore = create<StoreState>()(
 		persist(creator, {
 			name: storageKey,
+			storage: createJSONStorage(() => safeStorage),
 			version,
 			migrate: (persistedState, fromVersion) => migrate(persistedState, fromVersion),
 			partialize: state => partialize(state as unknown as TState),
@@ -96,9 +82,10 @@ export function createStore<
 					state.setHasHydrated(true)
 					return
 				}
-				useStore.setState({ _hasHydrated: true } as Partial<StoreState>)
+				Promise.resolve().then(() => useStore.setState({ _hasHydrated: true } as Partial<StoreState>))
 			},
 		}),
 	)
+	
 	return useStore
 }
