@@ -1,12 +1,10 @@
-import { type HydrationState, createPersistedStore } from '../infrastructure'
+import { createPersistedStore } from '../infrastructure'
 import { type SettingsState, initialSettingsState } from './state'
 import { type SettingsActions, createSettingsActions } from './actions'
-import { type PersistedSettings, normalizePersistedSettings, partializeSettings } from './persistence'
-import { SETTINGS_STORE_VERSION, migrateSettingsPersistedState } from './migrations'
+import { type PersistedSettings, getPersistedSettings, normalizePersistedSettings } from './persistence'
+import { SETTINGS_STORAGE_VERSION, migrateSettings } from './migrations'
 
 const SETTINGS_STORAGE_KEY = 'sqlvalley-settings'
-
-export interface SettingsStoreState extends SettingsState, SettingsActions, HydrationState { }
 
 export const useSettingsStore = createPersistedStore<
 	SettingsState,
@@ -16,8 +14,8 @@ export const useSettingsStore = createPersistedStore<
 	initialState: initialSettingsState,
 	createActions: set => createSettingsActions(set),
 	storageKey: SETTINGS_STORAGE_KEY,
-	version: SETTINGS_STORE_VERSION,
-	migrate: migrateSettingsPersistedState,
-	partialize: partializeSettings,
+	version: SETTINGS_STORAGE_VERSION,
+	migrate: migrateSettings,
+	getPersistedState: getPersistedSettings,
 	normalize: normalizePersistedSettings,
 })

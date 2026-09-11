@@ -10,7 +10,7 @@ The store consists of two layers:
 - [`infrastructure/`](./infrastructure/) contains the shared store factory, storage adapter, migration runner, and validation helpers.
 - [`settings/`](./settings/), [`learning/`](./learning/), and [`skillTreeSettings/`](./skillTreeSettings/) contain independent stores with separate persisted storage keys.
 
-[`useStoresHydrated.ts`](./useStoresHydrated.ts) provides the cross-store hydration check used while starting the application.
+[`hooks.ts`](./hooks.ts) provides the cross-store hydration check used while starting the application.
 
 
 ## Store structure
@@ -29,6 +29,6 @@ A store may add focused files where needed. For example, the learning store uses
 
 ## Adding a store
 
-Create a sibling folder using the structure above, assemble it with `createPersistedStore`, and export only its intended public API from the folder's `index.ts`. Then add that barrel to the root [`index.ts`](./index.ts) and include its hydration state in [`useStoresHydrated.ts`](./useStoresHydrated.ts).
+Create a sibling folder using the structure above, assemble it with `createPersistedStore`, and export only its intended public API from the folder's `index.ts`. Then add that barrel to the root [`index.ts`](./index.ts) and include its hydration state in [`hooks.ts`](./hooks.ts).
 
 Keep storage keys unchanged after release. When a persisted representation changes, increment its version and add the corresponding migration before changing application code that reads the new shape.

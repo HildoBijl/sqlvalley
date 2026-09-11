@@ -8,8 +8,8 @@ interface BaseModuleState {
 }
 export type ConceptModuleState = BaseModuleState
 export interface SkillModuleState extends BaseModuleState {
-	numSolved: number
-	exercises: StoredExerciseInstance[]
+	solvedExerciseCount: number
+	exerciseHistory: StoredExerciseInstance[]
 }
 export type ModuleState = ConceptModuleState | SkillModuleState
 
@@ -28,6 +28,6 @@ export function createModuleState(id: string, type: ModuleType): ModuleState {
 			return { id }
 		case 'skill':
 		default:
-			return { id, numSolved: 0, exercises: [] }
+			return { id, solvedExerciseCount: 0, exerciseHistory: [] }
 	}
 }

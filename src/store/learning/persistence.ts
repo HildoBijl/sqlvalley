@@ -6,7 +6,7 @@ export interface PersistedLearning {
 	modules?: Record<string, Partial<ModuleState> | ModuleState>
 }
 
-export function partializeLearning(state: LearningState): PersistedLearning {
+export function getPersistedLearning(state: LearningState): PersistedLearning {
 	return {
 		modules: state.modules,
 	}

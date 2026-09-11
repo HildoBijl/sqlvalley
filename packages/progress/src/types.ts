@@ -1,7 +1,7 @@
 /** The little a module's stored state needs to expose for progress tracking. */
 export interface ModuleProgressState {
   understood?: boolean;
-  numSolved?: number;
+  solvedExerciseCount?: number;
 }
 
 export interface RawModuleCompletion<Id extends string = string> {

@@ -1,7 +1,7 @@
 import { asRecord, parseRecord } from '../infrastructure'
 import type { SkillTreeSettingsState } from './state'
 
-function normalizeLastVisitedSkillTrees(raw: unknown): string[] {
+function normalizeRecentSkillTreeIds(raw: unknown): string[] {
 	const result: string[] = []
 	const seen = new Set<string>()
 	if (Array.isArray(raw)) {
@@ -19,22 +19,22 @@ function normalizeLastVisitedSkillTrees(raw: unknown): string[] {
 export interface PersistedSkillTreeSettings {
 	hasSeenSkillTreeIntro?: boolean
 	hideLegend?: boolean
-	lastVisitedSkillTrees?: string[]
+	recentSkillTreeIds?: string[]
 
-	hasAccessedPlanningMode?: boolean
-	planningMode?: Record<string, boolean>
-	goalNodeID?: Record<string, string | null>
+	hasSeenPlanningModeIntro?: boolean
+	planningModeByTreeId?: Record<string, boolean>
+	goalNodeIdByTreeId?: Record<string, string | null>
 }
 
-export function partializeSkillTreeSettings(state: SkillTreeSettingsState): PersistedSkillTreeSettings {
+export function getPersistedSkillTreeSettings(state: SkillTreeSettingsState): PersistedSkillTreeSettings {
 	return {
 		hasSeenSkillTreeIntro: state.hasSeenSkillTreeIntro,
 		hideLegend: state.hideLegend,
-		lastVisitedSkillTrees: state.lastVisitedSkillTrees,
+		recentSkillTreeIds: state.recentSkillTreeIds,
 
-		hasAccessedPlanningMode: state.hasAccessedPlanningMode,
-		planningMode: state.planningMode,
-		goalNodeID: state.goalNodeID,
+		hasSeenPlanningModeIntro: state.hasSeenPlanningModeIntro,
+		planningModeByTreeId: state.planningModeByTreeId,
+		goalNodeIdByTreeId: state.goalNodeIdByTreeId,
 	}
 }
 
@@ -44,13 +44,13 @@ export function normalizePersistedSkillTreeSettings(persisted: unknown): Partial
 
 	if (typeof source.hasSeenSkillTreeIntro === 'boolean') normalized.hasSeenSkillTreeIntro = source.hasSeenSkillTreeIntro
 	if (typeof source.hideLegend === 'boolean') normalized.hideLegend = source.hideLegend
-	if (Array.isArray(source.lastVisitedSkillTrees)) normalized.lastVisitedSkillTrees = normalizeLastVisitedSkillTrees(source.lastVisitedSkillTrees)
+	if (Array.isArray(source.recentSkillTreeIds)) normalized.recentSkillTreeIds = normalizeRecentSkillTreeIds(source.recentSkillTreeIds)
 
-	if (typeof source.hasAccessedPlanningMode === 'boolean') normalized.hasAccessedPlanningMode = source.hasAccessedPlanningMode
-	const planningMode = parseRecord(source.planningMode, (value): value is boolean => typeof value === 'boolean')
-	if (planningMode) normalized.planningMode = planningMode
-	const goalNodeID = parseRecord(source.goalNodeID, (value): value is string | null => typeof value === 'string' || value === null)
-	if (goalNodeID) normalized.goalNodeID = goalNodeID
+	if (typeof source.hasSeenPlanningModeIntro === 'boolean') normalized.hasSeenPlanningModeIntro = source.hasSeenPlanningModeIntro
+	const planningModeByTreeId = parseRecord(source.planningModeByTreeId, (value): value is boolean => typeof value === 'boolean')
+	if (planningModeByTreeId) normalized.planningModeByTreeId = planningModeByTreeId
+	const goalNodeIdByTreeId = parseRecord(source.goalNodeIdByTreeId, (value): value is string | null => typeof value === 'string' || value === null)
+	if (goalNodeIdByTreeId) normalized.goalNodeIdByTreeId = goalNodeIdByTreeId
 	
 	return normalized
 }

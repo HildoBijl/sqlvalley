@@ -14,7 +14,7 @@ import type {
 export const DEFAULT_EXERCISES_TO_COMPLETE = 3;
 
 function getSkillSolvedCount(moduleState: ModuleProgressState | undefined): number {
-  const solved = moduleState?.numSolved;
+  const solved = moduleState?.solvedExerciseCount;
   return typeof solved === 'number' ? solved : 0;
 }
 

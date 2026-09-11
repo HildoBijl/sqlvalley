@@ -1,7 +1,7 @@
 import type { StoredExerciseAction, StoredExerciseInstance, StoredExerciseState } from '@sqlvalley/exercise-engine/storedState'
 
-import type { GetState, SetState } from '../infrastructure'
-import { type ConceptModuleState, type LearningState, type ModuleState, type ModuleType, type SkillModuleState, createModuleState } from './state'
+import type { SetState } from '../infrastructure'
+import type { ConceptModuleState, LearningState, ModuleType, SkillModuleState } from './state'
 import { normalizeConceptModuleState, normalizeSkillModuleState } from './normalization'
 
 export interface LearningActions {
@@ -11,10 +11,6 @@ export interface LearningActions {
 	startNewExercise: (skillId: string, exerciseId: string, version: number, parameters: Record<string, unknown>) => void
 	submitExerciseAction: (skillId: string, action: StoredExerciseAction, resultingState: StoredExerciseState, report: unknown, exerciseDone: boolean, increaseSolvedCounter: boolean) => void
 	setExerciseDraftInput: (skillId: string, draftInput: unknown) => void
-	getModule: (id: string, type: ModuleType) => ModuleState
-	resetModule: (id: string, type: ModuleType) => void
-	getCurrentExerciseInstance: (skillId: string) => StoredExerciseInstance | null
-	getAllExerciseInstances: (skillId: string) => StoredExerciseInstance[]
 }
 
 function getConceptModuleForUpdate(moduleId: string, state: LearningState): ConceptModuleState {
@@ -25,7 +21,7 @@ function getSkillModuleForUpdate(moduleId: string, state: LearningState): SkillM
 	return normalizeSkillModuleState(moduleId, state.modules[moduleId])
 }
 
-export function createLearningActions(set: SetState<LearningState>, get: GetState<LearningState>): LearningActions {
+export function createLearningActions(set: SetState<LearningState>): LearningActions {
 	return {
 		setModuleTab: (id, type, tab) => set(state => {
 			const now = Date.now()
@@ -68,17 +64,17 @@ export function createLearningActions(set: SetState<LearningState>, get: GetStat
 			return {
 				modules: {
 					...state.modules,
-					[skillId]: { ...skillModule, lastAccessed: Date.now(), exercises: [...skillModule.exercises, newExercise] },
+					[skillId]: { ...skillModule, lastAccessed: Date.now(), exerciseHistory: [...skillModule.exerciseHistory, newExercise] },
 				},
 			}
 		}),
 
 		submitExerciseAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) => set(state => {
 			const skillModule = getSkillModuleForUpdate(skillId, state)
-			if (skillModule.exercises.length === 0) throw new Error(`Cannot submit exercise action for "${skillId}" without an active exercise.`)
+			if (skillModule.exerciseHistory.length === 0) throw new Error(`Cannot submit exercise action for "${skillId}" without an active exercise.`)
 
-			const lastIndex = skillModule.exercises.length - 1
-			const currentExercise = skillModule.exercises[lastIndex]
+			const lastIndex = skillModule.exerciseHistory.length - 1
+			const currentExercise = skillModule.exerciseHistory[lastIndex]
 			const updatedExercise: StoredExerciseInstance = {
 				...currentExercise,
 				events: [
@@ -93,15 +89,15 @@ export function createLearningActions(set: SetState<LearningState>, get: GetStat
 				draftInput: exerciseDone ? undefined : currentExercise.draftInput,
 			}
 
-			const exercises = [...skillModule.exercises.slice(0, -1), updatedExercise]
+			const exerciseHistory = [...skillModule.exerciseHistory.slice(0, -1), updatedExercise]
 			return {
 				modules: {
 					...state.modules,
 					[skillId]: {
 						...skillModule,
 						lastAccessed: Date.now(),
-						numSolved: increaseSolvedCounter ? skillModule.numSolved + 1 : skillModule.numSolved,
-						exercises,
+						solvedExerciseCount: increaseSolvedCounter ? skillModule.solvedExerciseCount + 1 : skillModule.solvedExerciseCount,
+						exerciseHistory,
 					},
 				},
 			}
@@ -109,30 +105,16 @@ export function createLearningActions(set: SetState<LearningState>, get: GetStat
 
 		setExerciseDraftInput: (skillId, draftInput) => set(state => {
 			const skillModule = getSkillModuleForUpdate(skillId, state)
-			if (skillModule.exercises.length === 0) throw new Error(`Cannot set draft input for "${skillId}" without an active exercise.`)
+			if (skillModule.exerciseHistory.length === 0) throw new Error(`Cannot set draft input for "${skillId}" without an active exercise.`)
 
-			const updatedExercise: StoredExerciseInstance = { ...skillModule.exercises[skillModule.exercises.length - 1], draftInput }
-			const exercises = [...skillModule.exercises.slice(0, -1), updatedExercise]
+			const updatedExercise: StoredExerciseInstance = { ...skillModule.exerciseHistory[skillModule.exerciseHistory.length - 1], draftInput }
+			const exerciseHistory = [...skillModule.exerciseHistory.slice(0, -1), updatedExercise]
 			return {
 				modules: {
 					...state.modules,
-					[skillId]: { ...skillModule, lastAccessed: Date.now(), exercises },
+					[skillId]: { ...skillModule, lastAccessed: Date.now(), exerciseHistory },
 				},
 			}
 		}),
-
-		getModule: (id, type) => type === 'skill' ? normalizeSkillModuleState(id, get().modules[id]) : normalizeConceptModuleState(id, get().modules[id]),
-
-		resetModule: (id, type) => set(state => ({ modules: { ...state.modules, [id]: createModuleState(id, type) } })),
-
-		getCurrentExerciseInstance: skillId => {
-			const skillModule = normalizeSkillModuleState(skillId, get().modules[skillId])
-			return skillModule.exercises[skillModule.exercises.length - 1] ?? null
-		},
-
-		getAllExerciseInstances: skillId => {
-			const skillModule = normalizeSkillModuleState(skillId, get().modules[skillId])
-			return [...skillModule.exercises]
-		},
 	}
 }

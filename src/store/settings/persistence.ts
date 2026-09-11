@@ -1,19 +1,19 @@
 import { type DatasetSize, datasetSizes } from '@sqlvalley/mock-data'
 
 import { asRecord, isIncluded } from '../infrastructure'
-import { type SettingsState, type Theme, themes } from './state'
+import { type SettingsState, type ThemeMode, themeModes } from './state'
 
 export interface PersistedSettings {
 	adminModeEnabled?: boolean
-	currentTheme?: Theme
+	themeMode?: ThemeMode
 	hideStories?: boolean
 	practiceDatasetSize?: DatasetSize
 }
 
-export function partializeSettings(state: SettingsState): PersistedSettings {
+export function getPersistedSettings(state: SettingsState): PersistedSettings {
 	return {
 		adminModeEnabled: state.adminModeEnabled,
-		currentTheme: state.currentTheme,
+		themeMode: state.themeMode,
 		hideStories: state.hideStories,
 		practiceDatasetSize: state.practiceDatasetSize,
 	}
@@ -23,7 +23,7 @@ export function normalizePersistedSettings(persisted: unknown): Partial<Settings
 	const source = asRecord(persisted)
 	const normalized: Partial<SettingsState> = {}
 	if (typeof source.adminModeEnabled === 'boolean') normalized.adminModeEnabled = source.adminModeEnabled
-	if (isIncluded(themes, source.currentTheme)) normalized.currentTheme = source.currentTheme
+	if (isIncluded(themeModes, source.themeMode)) normalized.themeMode = source.themeMode
 	if (typeof source.hideStories === 'boolean') normalized.hideStories = source.hideStories
 	if (isIncluded(datasetSizes, source.practiceDatasetSize)) normalized.practiceDatasetSize = source.practiceDatasetSize
 	return normalized

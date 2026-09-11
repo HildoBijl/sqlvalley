@@ -10,8 +10,8 @@ export function useSkillTreePlanning(memoryStoreAPI?: SkillTreeMemoryStoreAPI) {
   const goalNodeId = memoryStoreAPI?.goalNodeId ?? null;
   const setGoalNodeId = memoryStoreAPI?.setGoalNodeId ?? noop;
 
-  const hasAccessedPlanningMode = memoryStoreAPI?.hasAccessedPlanningMode ?? false;
-  const setHasAccessedPlanningMode = memoryStoreAPI?.setHasAccessedPlanningMode ?? noop;
+  const hasSeenPlanningModeIntro = memoryStoreAPI?.hasSeenPlanningModeIntro ?? false;
+  const setHasSeenPlanningModeIntro = memoryStoreAPI?.setHasSeenPlanningModeIntro ?? noop;
 
   const [goalProgress, setGoalProgress] = useState({
     completed: 0,
@@ -35,9 +35,9 @@ export function useSkillTreePlanning(memoryStoreAPI?: SkillTreeMemoryStoreAPI) {
   );
 
   const togglePlanningMode = () => {
-    if (!planningMode && !hasAccessedPlanningMode) {
+    if (!planningMode && !hasSeenPlanningModeIntro) {
       setShowPlanningModeModal(true);
-      setHasAccessedPlanningMode(true);
+      setHasSeenPlanningModeIntro(true);
     }
     setPlanningMode(!planningMode);
   };

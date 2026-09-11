@@ -41,7 +41,7 @@ export default function SkillPage() {
 	const isAdmin = useAdminMode();
 	const [showCompletionDialog, setShowCompletionDialog] = useState(false);
 	const skillTreeHistory = useSkillTreeSettingsStore(
-		(state) => state.lastVisitedSkillTrees,
+		(state) => state.recentSkillTreeIds,
 	);
 	const backToLearningPath = useMemo(
 		() => getBackToLearningPathFromHistory(skillTreeHistory, skillId),
@@ -114,14 +114,14 @@ export default function SkillPage() {
 	};
 
 	// Show the completion dialog once, when the learner crosses the required count.
-	const prevSolvedRef = useRef(moduleState.numSolved ?? 0);
+	const prevSolvedRef = useRef(moduleState.solvedExerciseCount ?? 0);
 	useEffect(() => {
-		const solved = moduleState.numSolved ?? 0;
+		const solved = moduleState.solvedExerciseCount ?? 0;
 		const crossed = prevSolvedRef.current < DEFAULT_EXERCISES_TO_COMPLETE &&
 			solved >= DEFAULT_EXERCISES_TO_COMPLETE;
 		prevSolvedRef.current = solved;
 		if (crossed) setShowCompletionDialog(true);
-	}, [moduleState.numSolved]);
+	}, [moduleState.solvedExerciseCount]);
 
 	useEffect(() => {
 		if (!summaryUnlocked && currentTab === 'summary') {
@@ -155,7 +155,7 @@ export default function SkillPage() {
 	const progressInfo =
 		hasInteractivePractice && currentTab === 'practice'
 			? {
-				current: moduleState.numSolved ?? 0,
+				current: moduleState.solvedExerciseCount ?? 0,
 				required: DEFAULT_EXERCISES_TO_COMPLETE,
 			}
 			: undefined;

@@ -12,8 +12,8 @@ import { exerciseStorage } from './exerciseStorage';
 import { useSettingsStore, useStoresHydrated } from './store';
 
 export function App() {
-  const mode = useSettingsStore((s) => s.currentTheme);
-  const setTheme = useSettingsStore((s) => s.setTheme);
+  const mode = useSettingsStore((s) => s.themeMode);
+  const setThemeMode = useSettingsStore((s) => s.setThemeMode);
   const isStoreReady = useStoresHydrated();
 
   const muiTheme = useMemo(() => getTheme(mode), [mode]);
@@ -22,7 +22,7 @@ export function App() {
     document.documentElement.setAttribute('data-theme', mode);
   }, [mode]);
 
-  const toggleColorMode = () => setTheme(mode === 'light' ? 'dark' : 'light');
+  const toggleColorMode = () => setThemeMode(mode === 'light' ? 'dark' : 'light');
 
   if (!isStoreReady) {
     return null;

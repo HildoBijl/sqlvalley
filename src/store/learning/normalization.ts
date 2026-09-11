@@ -63,14 +63,14 @@ export function normalizeSkillModuleState(id: string, state: unknown): SkillModu
 	const normalized: SkillModuleState = {
 		...base,
 		...common,
-		numSolved: typeof partialSkill.numSolved === 'number' && Number.isInteger(partialSkill.numSolved) && partialSkill.numSolved >= 0 ? partialSkill.numSolved : 0,
-		exercises: Array.isArray(partialSkill.exercises) ? partialSkill.exercises.map(exercise => normalizeStoredExerciseInstance(exercise)).filter((exercise): exercise is StoredExerciseInstance => exercise !== null) : [],
+		solvedExerciseCount: typeof partialSkill.solvedExerciseCount === 'number' && Number.isInteger(partialSkill.solvedExerciseCount) && partialSkill.solvedExerciseCount >= 0 ? partialSkill.solvedExerciseCount : 0,
+		exerciseHistory: Array.isArray(partialSkill.exerciseHistory) ? partialSkill.exerciseHistory.map(exercise => normalizeStoredExerciseInstance(exercise)).filter((exercise): exercise is StoredExerciseInstance => exercise !== null) : [],
 	}
 	return normalized
 }
 
 function looksLikeSkillModule(state: Record<string, unknown>): boolean {
-	return state.type === 'skill' || typeof state.numSolved === 'number' || Array.isArray(state.exercises)
+	return state.type === 'skill' || typeof state.solvedExerciseCount === 'number' || Array.isArray(state.exerciseHistory)
 }
 
 export function normalizeModuleState(id: string, state: unknown): ModuleState | null {

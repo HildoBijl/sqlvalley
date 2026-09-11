@@ -4,8 +4,8 @@ export interface SkillTreeMemoryStoreAPI {
     setPlanningMode?: (value: boolean) => void;
     goalNodeId?: string | null;
     setGoalNodeId?: (id: string | null) => void;
-    hasAccessedPlanningMode?: boolean;
-    setHasAccessedPlanningMode?: (value: boolean) => void;
+    hasSeenPlanningModeIntro?: boolean;
+    setHasSeenPlanningModeIntro?: (value: boolean) => void;
     hideLegend?: boolean;
     setHideLegend?: (value: boolean) => void;
     hasSeenSkillTreeIntro?: boolean;

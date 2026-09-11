@@ -86,7 +86,7 @@ export function Header() {
 }
 
 function useSkillTreeHistory(): SkillTreeVisualizationId[] {
-  const history = useSkillTreeSettingsStore((state) => state.lastVisitedSkillTrees);
+  const history = useSkillTreeSettingsStore((state) => state.recentSkillTreeIds);
   return useMemo(() => normalizeSkillTreeHistory(history), [history]);
 }
 

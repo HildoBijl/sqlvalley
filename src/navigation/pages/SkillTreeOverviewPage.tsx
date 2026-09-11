@@ -35,20 +35,20 @@ export function SkillTreeOverviewPage({
   const treeBounds = useTreeBounds(modulePositions);
 
   const planningMode = useSkillTreeSettingsStore(
-    (s) => s.planningMode[treeId] ?? false,
+    (s) => s.planningModeByTreeId[treeId] ?? false,
   );
   const setPlanningMode = useSkillTreeSettingsStore((s) => s.setPlanningMode);
 
   const goalNodeId = useSkillTreeSettingsStore(
-    (s) => s.goalNodeID[treeId] ?? null,
+    (s) => s.goalNodeIdByTreeId[treeId] ?? null,
   );
-  const setGoalNodeId = useSkillTreeSettingsStore((s) => s.setGoalNodeID);
+  const setGoalNodeId = useSkillTreeSettingsStore((s) => s.setGoalNodeId);
 
-  const hasAccessedPlanningMode = useSkillTreeSettingsStore(
-    (s) => s.hasAccessedPlanningMode,
+  const hasSeenPlanningModeIntro = useSkillTreeSettingsStore(
+    (s) => s.hasSeenPlanningModeIntro,
   );
-  const setHasAccessedPlanningMode = useSkillTreeSettingsStore(
-    (s) => s.setHasAccessedPlanningMode,
+  const setHasSeenPlanningModeIntro = useSkillTreeSettingsStore(
+    (s) => s.setHasSeenPlanningModeIntro,
   );
 
   const hasSeenSkillTreeIntro = useSkillTreeSettingsStore(
@@ -60,7 +60,7 @@ export function SkillTreeOverviewPage({
 
   const hideLegend = useSkillTreeSettingsStore((s) => s.hideLegend);
   const setHideLegend = useSkillTreeSettingsStore((s) => s.setHideLegend);
-  const hasHydrated = useSkillTreeSettingsStore((s) => s._hasHydrated);
+  const hasHydrated = useSkillTreeSettingsStore((s) => s.hasHydrated);
 
   return (
     <Container maxWidth={false} sx={{ py: 4, maxWidth: '1400px' }}>
@@ -75,8 +75,8 @@ export function SkillTreeOverviewPage({
           setPlanningMode: (value) => setPlanningMode(treeId, value),
           goalNodeId,
           setGoalNodeId: (id) => setGoalNodeId(treeId, id),
-          hasAccessedPlanningMode,
-          setHasAccessedPlanningMode,
+          hasSeenPlanningModeIntro,
+          setHasSeenPlanningModeIntro,
           hasSeenSkillTreeIntro,
           setHasSeenSkillTreeIntro,
           hideLegend,

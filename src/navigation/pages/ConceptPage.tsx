@@ -50,7 +50,7 @@ export default function ConceptPage() {
   const isAdmin = useAdminMode();
   const [showCompletionDialog, setShowCompletionDialog] = useState(false);
   const skillTreeHistoryRaw = useSkillTreeSettingsStore(
-    (state) => state.lastVisitedSkillTrees,
+    (state) => state.recentSkillTreeIds,
   );
   const skillTreeHistory = useMemo(
     () => normalizeSkillTreeHistory(skillTreeHistoryRaw),
@@ -129,13 +129,13 @@ export default function ConceptPage() {
     );
   }, [conceptId, skillTreeHistory]);
 
-  const goalNodeID = useSkillTreeSettingsStore((state) =>
-    conceptTree ? (state.goalNodeID[conceptTree.id] ?? null) : null,
+  const goalNodeId = useSkillTreeSettingsStore((state) =>
+    conceptTree ? (state.goalNodeIdByTreeId[conceptTree.id] ?? null) : null,
   );
 
   const goalPath = useMemo(
-    () => (goalNodeID ? getGoalPath(skillTree, goalNodeID) : new Set<string>()),
-    [goalNodeID],
+    () => (goalNodeId ? getGoalPath(skillTree, goalNodeId) : new Set<string>()),
+    [goalNodeId],
   );
 
   const treeModuleIds = conceptTree?.moduleIds ?? new Set<string>();
@@ -145,10 +145,10 @@ export default function ConceptPage() {
   const allPrereqsDone = (id: string) =>
     arePrerequisitesCompleted(skillTree, id, isModuleCompleted);
 
-  const nextUp = goalNodeID
+  const nextUp = goalNodeId
     ? (() => {
-        if (isReadyToLearn(skillTree, goalNodeID, isModuleCompleted)) {
-          return [goalNodeID];
+        if (isReadyToLearn(skillTree, goalNodeId, isModuleCompleted)) {
+          return [goalNodeId];
         }
         return allFollowUps.filter((id) => goalPath.has(id) && allPrereqsDone(id));
       })()

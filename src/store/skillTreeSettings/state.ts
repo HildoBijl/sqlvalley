@@ -1,19 +1,19 @@
 export interface SkillTreeSettingsState {
 	hasSeenSkillTreeIntro: boolean
 	hideLegend: boolean
-	lastVisitedSkillTrees: string[]
+	recentSkillTreeIds: string[]
 	
-	hasAccessedPlanningMode: boolean
-	planningMode: Record<string, boolean>
-	goalNodeID: Record<string, string | null>
+	hasSeenPlanningModeIntro: boolean
+	planningModeByTreeId: Record<string, boolean>
+	goalNodeIdByTreeId: Record<string, string | null>
 }
 
 export const initialSkillTreeSettingsState: SkillTreeSettingsState = {
 	hasSeenSkillTreeIntro: false,
 	hideLegend: false,
-	lastVisitedSkillTrees: [],
+	recentSkillTreeIds: [],
 
-	hasAccessedPlanningMode: false,
-	planningMode: {},
-	goalNodeID: {},
+	hasSeenPlanningModeIntro: false,
+	planningModeByTreeId: {},
+	goalNodeIdByTreeId: {},
 }

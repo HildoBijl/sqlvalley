@@ -4,20 +4,18 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { safeStorage } from './safeStorage'
 
 export interface HydrationState {
-	_hasHydrated: boolean
+	hasHydrated: boolean
 	setHasHydrated: (hasHydrated: boolean) => void
 }
 
 export type SetState<T> = (partial: Partial<T> | ((state: T) => Partial<T>)) => void
-export type GetState<T> = () => T
-
 interface CreatePersistedStoreOptions<TState extends object, TActions extends object, TPersistedState extends object> {
 	initialState: TState
-	createActions: (set: SetState<TState>, get: GetState<TState>) => TActions
+	createActions: (set: SetState<TState>) => TActions
 	storageKey: string
 	version: number
 	migrate: (persistedState: unknown, fromVersion: number) => TPersistedState
-	partialize: (state: TState) => TPersistedState
+	getPersistedState: (state: TState) => TPersistedState
 	normalize: (persistedState: TPersistedState | undefined) => Partial<TState>
 }
 
@@ -27,12 +25,12 @@ export function createPersistedStore<TState extends object, TActions extends obj
 	storageKey,
 	version,
 	migrate,
-	partialize,
+	getPersistedState,
 	normalize,
 }: CreatePersistedStoreOptions<TState, TActions, TPersistedState>): UseBoundStore<StoreApi<TState & TActions & HydrationState>> {
 	type StoreState = TState & TActions & HydrationState
 
-	const creator: StateCreator<StoreState> = (set, get) => {
+	const creator: StateCreator<StoreState> = set => {
 		const scopedSet: SetState<TState> = partial => {
 			set(state => {
 				const scopedState = state as unknown as TState
@@ -41,13 +39,11 @@ export function createPersistedStore<TState extends object, TActions extends obj
 			})
 		}
 
-		const scopedGet: GetState<TState> = () => get() as unknown as TState
-
 		return {
 			...initialState,
-			...createActions(scopedSet, scopedGet),
-			_hasHydrated: false,
-			setHasHydrated: hasHydrated => set({ _hasHydrated: hasHydrated } as Partial<StoreState>),
+			...createActions(scopedSet),
+			hasHydrated: false,
+			setHasHydrated: hasHydrated => set({ hasHydrated } as Partial<StoreState>),
 		}
 	}
 
@@ -57,7 +53,7 @@ export function createPersistedStore<TState extends object, TActions extends obj
 			storage: createJSONStorage(() => safeStorage),
 			version,
 			migrate: (persistedState, fromVersion) => migrate(persistedState, fromVersion),
-			partialize: state => partialize(state as unknown as TState),
+			partialize: state => getPersistedState(state as unknown as TState),
 			merge: (persistedState, currentState) => ({
 				...currentState,
 				...normalize(persistedState as TPersistedState | undefined),
@@ -68,7 +64,7 @@ export function createPersistedStore<TState extends object, TActions extends obj
 					state.setHasHydrated(true)
 					return
 				}
-				Promise.resolve().then(() => useStore.setState({ _hasHydrated: true } as Partial<StoreState>))
+				Promise.resolve().then(() => useStore.setState({ hasHydrated: true } as Partial<StoreState>))
 			},
 		}),
 	)
