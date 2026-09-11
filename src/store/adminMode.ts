@@ -10,27 +10,27 @@ function canUseWindow(): boolean {
 export function isAdminModeEnabled(): boolean {
 	if (!canUseWindow()) return false
 	try {
-		return Boolean(window.localStorage.getItem(ADMIN_MODE_STORAGE_KEY))
+		return window.localStorage.getItem(ADMIN_MODE_STORAGE_KEY) === 'true'
 	} catch {
 		return false
 	}
 }
 
-export function setAdminModeEnabled(enabled: boolean): void {
-	if (!canUseWindow()) return
+export function setAdminModeEnabled(enabled: boolean): boolean {
+	if (!canUseWindow()) return false
 	try {
 		if (enabled) window.localStorage.setItem(ADMIN_MODE_STORAGE_KEY, 'true')
 		else window.localStorage.removeItem(ADMIN_MODE_STORAGE_KEY)
-		window.dispatchEvent(new CustomEvent(ADMIN_MODE_CHANGE_EVENT, { detail: { enabled } }))
 	} catch (error) {
 		console.error('Failed to update admin mode:', error)
+		return isAdminModeEnabled()
 	}
+	window.dispatchEvent(new CustomEvent(ADMIN_MODE_CHANGE_EVENT, { detail: { enabled } }))
+	return enabled
 }
 
 export function toggleAdminMode(): boolean {
-	const next = !isAdminModeEnabled()
-	setAdminModeEnabled(next)
-	return next
+	return setAdminModeEnabled(!isAdminModeEnabled())
 }
 
 export function useAdminMode(): boolean {

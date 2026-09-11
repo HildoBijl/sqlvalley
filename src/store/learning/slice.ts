@@ -49,35 +49,33 @@ export function createLearningActions(set: SetState<LearningState>, get: GetStat
 			}
 		}),
 
-		completeSkill: skillId =>
-			set(state => {
-				const currentSkill = getSkillModuleForUpdate(skillId, state)
-				return {
-					modules: {
-						...state.modules,
-						[skillId]: { ...currentSkill, understood: true, lastAccessed: Date.now() },
-					},
-				}
-			}),
+		completeSkill: skillId => set(state => {
+			const currentSkill = getSkillModuleForUpdate(skillId, state)
+			return {
+				modules: {
+					...state.modules,
+					[skillId]: { ...currentSkill, understood: true, lastAccessed: Date.now() },
+				},
+			}
+		}),
 
-		startNewExercise: (skillId, exerciseId, version, parameters) =>
-			set(state => {
-				const skillModule = getSkillModuleForUpdate(skillId, state)
-				const newExercise: StoredExerciseInstance = {
-					exerciseId,
-					version,
-					parameters: { ...parameters },
-					createdAt: Date.now(),
-					events: [],
-					draftInput: undefined,
-				}
-				return {
-					modules: {
-						...state.modules,
-						[skillId]: { ...skillModule, lastAccessed: Date.now(), exercises: [...skillModule.exercises, newExercise] },
-					},
-				}
-			}),
+		startNewExercise: (skillId, exerciseId, version, parameters) => set(state => {
+			const skillModule = getSkillModuleForUpdate(skillId, state)
+			const newExercise: StoredExerciseInstance = {
+				exerciseId,
+				version,
+				parameters: { ...parameters },
+				createdAt: Date.now(),
+				events: [],
+				draftInput: undefined,
+			}
+			return {
+				modules: {
+					...state.modules,
+					[skillId]: { ...skillModule, lastAccessed: Date.now(), exercises: [...skillModule.exercises, newExercise] },
+				},
+			}
+		}),
 
 		submitExerciseAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) => set(state => {
 			const skillModule = getSkillModuleForUpdate(skillId, state)

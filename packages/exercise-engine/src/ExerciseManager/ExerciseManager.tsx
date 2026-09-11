@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { Alert, Typography } from '@mui/material';
 import { sample } from '@step-wise/js-utils';
 
@@ -48,6 +48,7 @@ export function ExerciseManager({
   const active = matched && matched.version === instance?.version ? matched : null;
 
   const [pending, setPending] = useState(false);
+  const pendingRef = useRef(false);
 
   const startExercise = useCallback((definition: AnyExerciseDefinition) => {
     const current = storage.getInstance(skillId);
@@ -79,7 +80,8 @@ export function ExerciseManager({
   }, [active, instance, skillId, storage]);
 
   const submitAction = useCallback(async (action: StoredExerciseAction) => {
-    if (!active) return;
+    if (!active || pendingRef.current) return;
+    pendingRef.current = true;
     setPending(true);
     try {
       const current = storage.getInstance(skillId);
@@ -100,12 +102,14 @@ export function ExerciseManager({
         active.isSolved(state) && !active.isSolved(previousState),
       );
     } finally {
+      pendingRef.current = false;
       setPending(false);
     }
   }, [active, moduleContext, skillId, storage]);
 
   const setDraftInput = useCallback((draftInput: unknown) => {
-    if (!storage.getInstance(skillId)) return;
+    const current = storage.getInstance(skillId);
+    if (!current) return;
     storage.setDraftInput(skillId, draftInput);
   }, [skillId, storage]);
 
