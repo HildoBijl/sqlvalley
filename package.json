@@ -7,8 +7,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run build --workspace=@sqlvalley/sql && vite",
-    "build": "npm run build --workspace=@sqlvalley/sql && tsc && vite build",
+    "dev": "npm run build --workspace=@sqlvalley/sqljs && vite",
+    "build": "npm run build --workspace=@sqlvalley/sqljs && tsc && vite build",
     "lint": "eslint . --report-unused-disable-directives",
     "lint:strict": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -32,6 +32,7 @@
     "@sqlvalley/skill-tree-definition": "*",
     "@sqlvalley/sql": "*",
     "@sqlvalley/sql-grading": "*",
+    "@sqlvalley/sqljs": "*",
     "@sqlvalley/ui": "*",
     "@step-wise/geometry": "^0.1.0",
     "@uiw/react-codemirror": "^4.21.21",

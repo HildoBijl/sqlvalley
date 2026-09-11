@@ -6,7 +6,7 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds, RA } from '@sqlvalley/ui';
 import { DataTable } from '@sqlvalley/sql';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
-import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/sql/databases';
 
 type FigureExampleRAQueryProps = {
   query?: ReactNode;

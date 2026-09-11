@@ -5,7 +5,7 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Term } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Line, useRefWithBounds } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
-import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/sql/databases';
 import { DataTable } from '@sqlvalley/sql';
 
 export function Theory() {

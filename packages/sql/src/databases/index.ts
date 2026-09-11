@@ -11,5 +11,6 @@ export {
   useTheorySampleDatabase,
 } from './useDatabase';
 
-// Re-export QueryResult type for convenience
-export type { QueryResult } from '../sqljs';
+export * from './DatabaseProvider';
+export * from './useQuery';
+export * from './types';

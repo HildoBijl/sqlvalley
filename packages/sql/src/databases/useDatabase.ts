@@ -3,7 +3,8 @@
  */
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDatabaseContext, type QueryResult } from '../sqljs';
+import { useDatabaseContext } from './DatabaseProvider';
+import type { QueryResult } from './types';
 import { type DatasetSize, type TableKey, buildDatasetSql, buildCompletionSchema, defaultDatasetSize, allTableKeys } from '@sqlvalley/mock-data';
 
 interface DatabaseOptions {

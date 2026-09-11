@@ -5,7 +5,7 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em, Link, Glyph } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
-import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/sql/databases';
 import { DataTable } from '@sqlvalley/sql';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';

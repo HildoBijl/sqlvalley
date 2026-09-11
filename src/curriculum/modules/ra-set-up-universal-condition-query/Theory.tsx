@@ -4,7 +4,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useRefWithValue } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, useRefWithBounds } from '@sqlvalley/ui';
-import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/sql/databases';
 import { DataTable } from '@sqlvalley/sql';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
 import { FigureExampleRAQuery } from '../../utils';

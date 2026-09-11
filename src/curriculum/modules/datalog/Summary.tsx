@@ -1,6 +1,6 @@
 import { Page, Section, Par, Term, Em, DL } from '@sqlvalley/ui';
 
-import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/sql/databases';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
 
 import { DatalogFacts, DatalogOutput } from './Theory';

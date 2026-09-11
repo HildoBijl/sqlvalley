@@ -4,7 +4,7 @@
  */
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode, useRef } from 'react';
-import { useSQLJS } from './SQLJSProvider';
+import { useSQLJS } from '@sqlvalley/sqljs';
 import type { ManagedDatabase, GetDatabaseOptions } from './types';
 
 type DatabaseState = Record<string, ManagedDatabase | null>;

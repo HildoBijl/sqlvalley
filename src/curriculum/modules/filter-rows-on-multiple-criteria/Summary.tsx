@@ -5,7 +5,7 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
-import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/sql/databases';
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
 
 import { FigureMergingTables } from './Theory';

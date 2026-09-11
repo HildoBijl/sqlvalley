@@ -1,6 +1,6 @@
 import { Page, Section, Par, Quote, List, Info, Term, Em, M } from '@sqlvalley/ui';
 
-import { useQueryResult } from '@sqlvalley/sql/sqljs';
+import { useQueryResult } from '@sqlvalley/sql/databases';
 import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
 
 export function Summary() {
