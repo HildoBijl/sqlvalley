@@ -10,8 +10,7 @@ import {
 } from '@mui/icons-material';
 
 import {
-  type ConceptModuleState,
-	useAdminMode,
+  useAdminMode,
   useLearningStore,
   useSettingsStore,
   useSkillTreeSettingsStore,
@@ -85,7 +84,7 @@ export default function ConceptPage() {
     selectTab,
     tabs,
     moduleState,
-  } = useContentTabs<ConceptModuleState>(
+  } = useContentTabs(
     conceptId,
     'concept',
     availableTabs,

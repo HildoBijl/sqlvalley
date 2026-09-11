@@ -1,4 +1,5 @@
 import type { StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState'
+import type { ModuleType } from '@sqlvalley/skill-tree-definition'
 
 interface BaseModuleState {
 	id: string
@@ -6,17 +7,16 @@ interface BaseModuleState {
 	lastAccessed?: number
 	understood?: true
 }
-export interface ConceptModuleState extends BaseModuleState {
+export interface ConceptState extends BaseModuleState {
 	moduleType: 'concept'
 }
-export interface SkillModuleState extends BaseModuleState {
+export interface SkillState extends BaseModuleState {
 	moduleType: 'skill'
 	solvedExerciseCount: number
 	exerciseHistory: StoredExerciseInstance[]
 }
-export type ModuleState = ConceptModuleState | SkillModuleState
+export type ModuleState = ConceptState | SkillState
 
-export type ModuleType = 'concept' | 'skill'
 export interface LearningState {
 	modules: Record<string, ModuleState>
 }
@@ -25,6 +25,9 @@ export const initialLearningState: LearningState = {
 	modules: {} as Record<string, ModuleState>,
 }
 
+export function createModuleState(id: string, moduleType: 'concept'): ConceptState
+export function createModuleState(id: string, moduleType: 'skill'): SkillState
+export function createModuleState(id: string, moduleType: ModuleType): ModuleState
 export function createModuleState(id: string, moduleType: ModuleType): ModuleState {
 	switch (moduleType) {
 		case 'concept':

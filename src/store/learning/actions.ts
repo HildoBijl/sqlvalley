@@ -1,8 +1,8 @@
+import type { ModuleType } from '@sqlvalley/skill-tree-definition'
 import type { StoredExerciseAction, StoredExerciseInstance, StoredExerciseState } from '@sqlvalley/exercise-engine/storedState'
 
 import type { SetState } from '../infrastructure'
-import type { ConceptModuleState, LearningState, ModuleType, SkillModuleState } from './state'
-import { normalizeConceptModuleState, normalizeSkillModuleState } from './normalization'
+import { type ConceptState, type LearningState, type SkillState, createModuleState } from './state'
 
 export interface LearningActions {
 	setModuleTab: (id: string, moduleType: ModuleType, tab: string) => void
@@ -13,12 +13,14 @@ export interface LearningActions {
 	setExerciseDraftInput: (skillId: string, draftInput: unknown) => void
 }
 
-function getConceptModuleForUpdate(moduleId: string, state: LearningState): ConceptModuleState {
-	return normalizeConceptModuleState(moduleId, state.modules[moduleId])
+function getConceptModuleForUpdate(moduleId: string, state: LearningState): ConceptState {
+	const module = state.modules[moduleId]
+	return module?.moduleType === 'concept' ? module : createModuleState(moduleId, 'concept')
 }
 
-function getSkillModuleForUpdate(moduleId: string, state: LearningState): SkillModuleState {
-	return normalizeSkillModuleState(moduleId, state.modules[moduleId])
+function getSkillModuleForUpdate(moduleId: string, state: LearningState): SkillState {
+	const module = state.modules[moduleId]
+	return module?.moduleType === 'skill' ? module : createModuleState(moduleId, 'skill')
 }
 
 export function createLearningActions(set: SetState<LearningState>): LearningActions {

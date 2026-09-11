@@ -38,7 +38,6 @@ export function createPersistedStore<TState extends object, TActions extends obj
 				return nextState as Partial<StoreState>
 			})
 		}
-
 		return {
 			...initialState,
 			...createActions(scopedSet),

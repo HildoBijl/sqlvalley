@@ -1,4 +1,4 @@
-import { useLearningStore, type SkillModuleState } from '@/store';
+import { useLearningStore } from '@/store';
 import type { ExerciseStorage } from '@sqlvalley/exercise-engine';
 
 /**
@@ -8,8 +8,9 @@ import type { ExerciseStorage } from '@sqlvalley/exercise-engine';
  */
 export const exerciseStorage: ExerciseStorage = {
   getInstance: (skillId) => {
-    const module = useLearningStore.getState().modules[skillId] as SkillModuleState | undefined;
-    return module?.exerciseHistory?.[module.exerciseHistory.length - 1] ?? null;
+    const module = useLearningStore.getState().modules[skillId];
+    if (module?.moduleType !== 'skill') return null;
+    return module.exerciseHistory[module.exerciseHistory.length - 1] ?? null;
   },
   subscribe: (listener) => useLearningStore.subscribe(listener),
   startExercise: (skillId, exerciseId, version, parameters) =>

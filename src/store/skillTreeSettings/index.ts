@@ -1,3 +1,1 @@
-export { useSkillTreeSettingsStore } from './store'
-
-export type { SkillTreeSettingsState } from './state'
+export * from './store'

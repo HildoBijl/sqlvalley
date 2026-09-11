@@ -4,7 +4,6 @@ import { Alert, Box, Button, CircularProgress, Container } from '@mui/material';
 import { Bolt, CheckCircle, Edit, EditNote, Lightbulb, MenuBook, Storage } from '@mui/icons-material';
 
 import {
-	type SkillModuleState,
 	useAdminMode,
 	useLearningStore,
 	useSettingsStore,
@@ -73,7 +72,7 @@ export default function SkillPage() {
 		selectTab,
 		tabs,
 		moduleState,
-	} = useContentTabs<SkillModuleState>(skillId, 'skill', availableTabs, {
+	} = useContentTabs(skillId, 'skill', availableTabs, {
 		defaultTab: 'theory',
 	});
 
