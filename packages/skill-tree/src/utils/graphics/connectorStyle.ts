@@ -1,5 +1,5 @@
-import type { Module } from '@sqlvalley/skill-tree-definition';
-import { isReadyToLearn } from '@sqlvalley/skill-tree-definition';
+import { isReadyToLearn } from '@sqlvalley/progress'
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { treeColors } from './treeColors';
 
 export function isConnectorInGoalPath(
@@ -19,7 +19,7 @@ export function resolveConnectorStyle(
   goalPath: Set<string>,
   localHoveredId: string | null,
   isCompletedFn: (id: string) => boolean,
-  skillTree: Record<string, Module>,
+  moduleTree: ModuleTree,
   isConnectorInHoveredPath: (connector: { from: string; to: string }) => boolean,
   staticMode?: boolean,
 ) {
@@ -38,7 +38,7 @@ export function resolveConnectorStyle(
     fromCompleted,
     toCompleted: isCompletedFn(connector.to),
     isNextToLearn:
-      isReadyToLearn(skillTree, connector.to, isCompletedFn) && fromCompleted,
+      isReadyToLearn(moduleTree, connector.to, isCompletedFn) && fromCompleted,
     staticMode,
   });
 }

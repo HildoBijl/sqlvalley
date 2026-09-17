@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import type { Module } from '@sqlvalley/skill-tree-definition';
-import { getGoalPath, getGoalProgress } from '@sqlvalley/skill-tree-definition';
+import { getGoalPath, getGoalProgress } from '@sqlvalley/progress'
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 /*
  * Track progress towards the planning-mode goal.
@@ -9,7 +9,8 @@ import { getGoalPath, getGoalProgress } from '@sqlvalley/skill-tree-definition';
  */
 export function useGoalProgress(
   goalNodeId: string | null | undefined,
-  skillTree: Record<string, Module>,
+  moduleTree: ModuleTree,
+  modulePresentation: Record<string, { name: string }>,
   isCompleted: (id: string) => boolean,
   onGoalProgressChange?: (
     completedCount: number,
@@ -19,17 +20,18 @@ export function useGoalProgress(
   ) => void,
 ): Set<string> {
   const goalPath = useMemo(
-    () => (goalNodeId ? getGoalPath(skillTree, goalNodeId) : new Set<string>()),
-    [goalNodeId, skillTree],
+    () => (goalNodeId ? getGoalPath(moduleTree, goalNodeId) : new Set<string>()),
+    [goalNodeId, moduleTree],
   );
 
   useEffect(() => {
     if (onGoalProgressChange && goalNodeId) {
-      const { completedCount, totalCount, nextStepName, nextStepId } =
-        getGoalProgress(skillTree, goalNodeId, isCompleted);
+      const { completedCount, totalCount, nextStepId } =
+        getGoalProgress(moduleTree, goalNodeId, isCompleted);
+      const nextStepName = nextStepId ? modulePresentation[nextStepId]?.name ?? null : null
       onGoalProgressChange(completedCount, totalCount, nextStepName, nextStepId);
     }
-  }, [goalNodeId, isCompleted, onGoalProgressChange, skillTree]);
+  }, [goalNodeId, isCompleted, modulePresentation, moduleTree, onGoalProgressChange]);
 
   return goalPath;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { type Module, skillTree } from '../skillTree';
+import { type Module, moduleTree } from '../moduleDefinition'
 import { skillExerciseLoaders } from '../utils/loaders';
 
 import type { AnyExerciseDefinition, ModuleProviderComponent } from '@sqlvalley/exercise-engine';
@@ -52,7 +52,7 @@ export function useSkillContent(
     updateState({ isLoading: true, exerciseDefinitions: null, moduleProvider: null, error: null });
 
     const entry =
-      Object.values(skillTree).find((item) => item.type === 'skill' && item.id === skillId) ||
+      Object.values(moduleTree).find((item) => item.type === 'skill' && item.id === skillId) ||
       null;
     updateState({ skillMeta: entry });
 

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import type { Module } from '@sqlvalley/skill-tree-definition';
-import { getPrerequisites } from '@sqlvalley/skill-tree-definition';
+import { getPrerequisiteIds } from '@sqlvalley/progress'
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 export function useHoverState(
-  skillTree: Record<string, Module>,
+  moduleTree: ModuleTree,
+  modulePresentation: Record<string, { description: string }>,
   onNavigate: (id: string) => void,
 ) {
   const [localHoveredId, setLocalHoveredId] = useState<string | null>(null);
@@ -13,11 +14,10 @@ export function useHoverState(
 
   const handleHoverStart = (id: string) => {
     setLocalHoveredId(id);
-    const chain = getPrerequisites(skillTree, id);
+    const chain = getPrerequisiteIds(moduleTree, id);
     setPrerequisites(chain);
 
-    const item = skillTree[id];
-    setTooltip(item.description || 'No description available');
+    setTooltip(modulePresentation[id]?.description ?? 'No description available');
   };
 
   const handleHoverEnd = () => {

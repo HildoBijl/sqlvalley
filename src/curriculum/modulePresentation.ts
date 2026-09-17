@@ -1,4 +1,4 @@
-import type { ModuleId } from './moduleDefinition'
+import { type ModuleId, isModuleId } from './moduleDefinition'
 
 export interface ModulePresentation {
 	name: string
@@ -222,3 +222,7 @@ export const modulePresentation = {
 		description: 'How can we safely combine recursion and negation in Datalog programs to guarantee well-defined behavior?',
 	},
 } satisfies Record<ModuleId, ModulePresentation>
+
+export function getModulePresentation(moduleId: string): ModulePresentation | undefined {
+	return isModuleId(moduleId) ? modulePresentation[moduleId] : undefined
+}

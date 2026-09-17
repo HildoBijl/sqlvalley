@@ -9,9 +9,10 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@sqlvalley/skill-tree-definition": "*",
+    "@sqlvalley/progress": "*",
     "@sqlvalley/ui": "*",
     "@step-wise/geometry": "^0.1.0",
+    "@step-wise/module-tree-definition": "^0.2.0",
     "@step-wise/react-utils": "^0.1.0",
     "@use-gesture/react": "^10.3.1"
   },

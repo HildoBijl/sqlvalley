@@ -1,5 +1,5 @@
 import type { StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState'
-import type { ModuleType } from '@sqlvalley/skill-tree-definition'
+import type { ModuleType } from '@step-wise/module-tree-definition'
 
 interface BaseModuleState {
 	id: string

@@ -1,7 +1,7 @@
 import { Curve, Drawing } from '@sqlvalley/ui';
-import type { Module } from '@sqlvalley/skill-tree-definition';
-import { isReadyToLearn } from '@sqlvalley/skill-tree-definition';
+import { isReadyToLearn } from '@sqlvalley/progress'
 import type { Vector } from '@step-wise/geometry';
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { useTheme } from '@mui/material/';
 import { NodeCard } from './SkillTreeComponents/NodeCard';
 import { Tooltip } from './SkillTreeComponents/Tooltip';
@@ -15,14 +15,16 @@ import { useGoalProgress } from '../utils/logic/useGoalProgress';
  * This is a pure rendering component without zoom/pan controls.
  * Uses the Drawing library for coordinate-based positioning.
  *
- * @param skillTree - Skill tree modules keyed by module ID.
+ * @param moduleTree - Modules keyed by module ID.
+ * @param modulePresentation - Display names and descriptions keyed by module ID.
  * @param modulePositions - Array of module position data entries to display.
  * @param treeBounds - The bounding box of the tree layout.
  * @param visiblePaths - Array of connector objects with points arrays and from/to node IDs.
  * @param isCompleted - Function to check if a module is completed.
  */
 interface SkillTreeProps {
-  skillTree: Record<string, Module>;
+  moduleTree: ModuleTree;
+  modulePresentation: Record<string, { name: string; description: string }>;
   modulePositions: Record<string, ModulePositionMeta>;
   treeBounds: {
     minX: number;
@@ -48,7 +50,8 @@ interface SkillTreeProps {
 }
 
 export function SkillTree({
-  skillTree,
+  moduleTree,
+  modulePresentation,
   modulePositions,
   treeBounds,
   visiblePaths,
@@ -64,7 +67,7 @@ export function SkillTree({
 
 
   const onNavigate = (id: string) => {
-    const item = skillTree[id];
+    const item = moduleTree[id];
     window.location.href = item.type === 'skill' ? `/skill/${id}` : `/concept/${id}`;
   }
   
@@ -78,11 +81,12 @@ export function SkillTree({
     isConnectorInHoveredPath,
     handlePointerDown,
     handlePointerOutside,
-  } = useHoverState(skillTree, onNavigate);
+  } = useHoverState(moduleTree, modulePresentation, onNavigate);
 
   const goalPath = useGoalProgress(
     goalNodeId,
-    skillTree,
+    moduleTree,
+    modulePresentation,
     isCompleted,
     onGoalProgressChange,
   );
@@ -114,7 +118,7 @@ export function SkillTree({
             goalPath,
             localHoveredId,
             isCompleted,
-            skillTree,
+            moduleTree,
             isConnectorInHoveredPath,
             staticMode,
           );
@@ -132,10 +136,10 @@ export function SkillTree({
         })}
 
         {Object.values(modulePositions).map((positionData) => {
-          const item = skillTree[positionData.id];
+          const item = moduleTree[positionData.id];
           if (!item) return null;
 
-          const readyToLearn = isReadyToLearn(skillTree, item.id, isCompleted);
+          const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted);
 
           return (
             <g
@@ -150,6 +154,7 @@ export function SkillTree({
             >
               <NodeCard
                 item={item}
+                name={modulePresentation[item.id]?.name ?? item.id}
                 positionData={modulePositions[item.id]}
                 completed={isCompleted(item.id)}
                 isHovered={localHoveredId === item.id}

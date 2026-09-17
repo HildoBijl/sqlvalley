@@ -15,7 +15,7 @@ import {
   useSettingsStore,
   useSkillTreeSettingsStore,
 } from '@/store';
-import { skillTree, type Module } from '@/curriculum';
+import { type Module, getModulePresentation, moduleTree } from '@/curriculum'
 import {
   defaultSkillTreeVisualization,
   isSkillTreeVisualizationId,
@@ -34,11 +34,7 @@ import {
 } from '@/learning/components/TabContent/ContentTab';
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useModuleProgress } from '@sqlvalley/progress';
-import {
-  arePrerequisitesCompleted,
-  getGoalPath,
-  isReadyToLearn,
-} from '@sqlvalley/skill-tree-definition';
+import { arePrerequisitesCompleted, getGoalPath, isReadyToLearn } from '@sqlvalley/progress'
 import type { TabConfig } from '@/learning/types';
 
 export default function ConceptPage() {
@@ -62,7 +58,7 @@ export default function ConceptPage() {
 
   const conceptMeta = useMemo<Module | undefined>(() => {
     if (!conceptId) return undefined;
-    return Object.values(skillTree).find(
+    return Object.values(moduleTree).find(
       (item) => item.type === 'concept' && item.id === conceptId,
     );
   }, [conceptId]);
@@ -95,7 +91,7 @@ export default function ConceptPage() {
 
   const moduleStates = useLearningStore((state) => state.modules);
 
-  const { isCompleted: isModuleCompleted } = useModuleProgress(skillTree, moduleStates);
+  const { isCompleted: isModuleCompleted } = useModuleProgress(moduleTree, moduleStates);
   const isCompleted = conceptId
     ? isModuleCompleted(conceptId)
     : (moduleState.understood ?? false);
@@ -133,20 +129,20 @@ export default function ConceptPage() {
   );
 
   const goalPath = useMemo(
-    () => (goalNodeId ? getGoalPath(skillTree, goalNodeId) : new Set<string>()),
+    () => (goalNodeId ? getGoalPath(moduleTree, goalNodeId) : new Set<string>()),
     [goalNodeId],
   );
 
   const treeModuleIds = conceptTree?.moduleIds ?? new Set<string>();
   const allFollowUps = conceptId
-    ? (skillTree[conceptId]?.followUps ?? []).filter((id) => treeModuleIds.has(id))
+    ? (moduleTree[conceptId]?.continuationIds ?? []).filter((id) => treeModuleIds.has(id))
     : [];
   const allPrereqsDone = (id: string) =>
-    arePrerequisitesCompleted(skillTree, id, isModuleCompleted);
+    arePrerequisitesCompleted(moduleTree, id, isModuleCompleted);
 
   const nextUp = goalNodeId
     ? (() => {
-        if (isReadyToLearn(skillTree, goalNodeId, isModuleCompleted)) {
+        if (isReadyToLearn(moduleTree, goalNodeId, isModuleCompleted)) {
           return [goalNodeId];
         }
         return allFollowUps.filter((id) => goalPath.has(id) && allPrereqsDone(id));
@@ -175,11 +171,14 @@ export default function ConceptPage() {
     setShowCompletionDialog(true);
   };
 
+  const presentation = getModulePresentation(conceptMeta.id)
+  if (!presentation) throw new Error(`Missing presentation for module "${conceptMeta.id}".`)
+
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <ContentHeader
-        title={conceptMeta.name}
-        description={conceptMeta.description}
+        title={presentation.name}
+        description={presentation.description}
         onBack={() => navigate(backToLearningPath)}
         icon={<School color="primary" sx={{ fontSize: 32 }} />}
         isCompleted={isCompleted}
@@ -218,10 +217,10 @@ export default function ConceptPage() {
 
       <ConceptCompletionDialog
         open={showCompletionDialog}
-        conceptName={conceptMeta.name}
+        conceptName={presentation.name}
         nextUp={nextUp}
         onNavigateToNext={(id) => {
-          const type = skillTree[id]?.type;
+          const type = moduleTree[id]?.type;
           navigate(type === 'skill' ? `/skill/${id}` : `/concept/${id}`);
         }}
         onClose={() => setShowCompletionDialog(false)}

@@ -3,8 +3,9 @@
  * This file re-exports everything that needs to be accessible from the curriculum folder.
  */
 
-// Skill tree definition
-export * from './skillTree';
+// Module tree definition and presentation.
+export * from './moduleDefinition'
+export * from './modulePresentation'
 
 // Skill tree visualizations
 export * from './skillTreeVisualizations';

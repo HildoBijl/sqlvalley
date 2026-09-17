@@ -1,4 +1,4 @@
-import type { SkillTree } from '@sqlvalley/skill-tree-definition';
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { type VectorLike as VectorInput, Vector, ensureVector } from '@step-wise/geometry';
 
 export interface ModulePositionMetaRaw {
@@ -18,9 +18,9 @@ export interface ModuleConnector {
   to: string;
 }
 
-export interface ProcessModulePositionsOptions<Id extends string> {
+export interface ProcessModulePositionsOptions {
   rawPositions: Record<string, ModulePositionMetaRaw>;
-  skillTree: SkillTree<Id>;
+  moduleTree: ModuleTree;
   cardHeight: number;
   computeConnectorPath: (
     from: ModulePositionMeta,
@@ -35,17 +35,17 @@ export interface ProcessedModulePositions {
   connectors: ModuleConnector[];
 }
 
-export function processModulePositions<Id extends string>({
+export function processModulePositions({
   rawPositions,
-  skillTree,
+  moduleTree,
   cardHeight,
   computeConnectorPath,
   treeName = 'Skill Tree',
-}: ProcessModulePositionsOptions<Id>): ProcessedModulePositions {
+}: ProcessModulePositionsOptions): ProcessedModulePositions {
   const modulePositions: Record<string, ModulePositionMeta> = {};
 
   Object.entries(rawPositions).forEach(([id, positionDataRaw]) => {
-    if (!skillTree[id as Id]) {
+    if (!moduleTree[id]) {
       throw new Error(
         `Invalid module ID "${id}" encountered when defining module positions for the ${treeName}.`,
       );
@@ -61,11 +61,11 @@ export function processModulePositions<Id extends string>({
   });
 
   Object.values(modulePositions).forEach((positionData) => {
-    const module = skillTree[positionData.id as Id];
+    const module = moduleTree[positionData.id];
     const { position } = positionData;
 
     const prerequisiteRefPoint = position.add([0, -cardHeight / 2]);
-    positionData.prerequisitesPathOrder = module.prerequisites
+    positionData.prerequisitesPathOrder = module.prerequisiteIds
       .filter((id) => Boolean(rawPositions[id]))
       .map((id) => {
         const { position: prerequisitePosition } = modulePositions[id];
@@ -77,7 +77,7 @@ export function processModulePositions<Id extends string>({
       .map((data) => data.id);
 
     const followUpRefPoint = position.add([0, cardHeight / 2]);
-    positionData.followUpsPathOrder = module.followUps
+    positionData.followUpsPathOrder = module.continuationIds
       .filter((id) => Boolean(rawPositions[id]))
       .map((id) => {
         const { position: followUpPosition } = modulePositions[id];

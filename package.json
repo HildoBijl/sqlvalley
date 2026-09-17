@@ -29,7 +29,6 @@
     "@sqlvalley/mock-data": "*",
     "@sqlvalley/progress": "*",
     "@sqlvalley/skill-tree": "*",
-    "@sqlvalley/skill-tree-definition": "*",
     "@sqlvalley/sql": "*",
     "@sqlvalley/sql-grading": "*",
     "@sqlvalley/sqljs": "*",

@@ -9,7 +9,7 @@ import {
 	useSettingsStore,
 	useSkillTreeSettingsStore,
 } from '@/store';
-import { skillTree } from '@/curriculum';
+import { getModulePresentation, moduleTree } from '@/curriculum'
 import {
 	defaultSkillTreeVisualization,
 	isSkillTreeVisualizationId,
@@ -91,7 +91,7 @@ export default function SkillPage() {
 
 	const moduleStates = useLearningStore((state) => state.modules);
 
-	const { isCompleted } = useModuleProgress(skillTree, moduleStates);
+	const { isCompleted } = useModuleProgress(moduleTree, moduleStates);
 	const isSkillMastered = skillId ? isCompleted(skillId) : false;
 	const summaryUnlocked = isSkillMastered || isAdmin;
 
@@ -160,12 +160,14 @@ export default function SkillPage() {
 			: undefined;
 
 	const showStoryButton = visibleTabs.some((tab) => tab.key === 'story');
+	const presentation = getModulePresentation(skillMeta.id)
+	if (!presentation) throw new Error(`Missing presentation for module "${skillMeta.id}".`)
 
 	return (
 		<Container maxWidth="lg" sx={{ py: 3 }}>
 			<ContentHeader
-				title={skillMeta.name}
-				description={skillMeta.description}
+				title={presentation.name}
+				description={presentation.description}
 				onBack={() => navigate(backToLearningPath)}
 				icon={<EditNote color="primary" sx={{ fontSize: 32 }} />}
 				isCompleted={isSkillMastered}
@@ -232,7 +234,7 @@ export default function SkillPage() {
 			<SkillCompletionDialog
 				open={showCompletionDialog}
 				onClose={() => setShowCompletionDialog(false)}
-				skillName={skillMeta.name}
+				skillName={presentation.name}
 				onViewStory={
 					showStoryButton
 						? () => {

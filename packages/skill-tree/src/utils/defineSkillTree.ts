@@ -1,4 +1,4 @@
-import type { SkillTree } from '@sqlvalley/skill-tree-definition';
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { computeConnectorPath } from './graphics/pathCalculations';
 import { type GridPosition, gridToPixels } from './gridLayout';
 import {
@@ -8,10 +8,10 @@ import {
 } from './positionProcessing';
 import { cardHeight } from './settings';
 
-export interface SkillTreeDefinitionOptions<Id extends string> {
+export interface SkillTreeDefinitionOptions {
   // The display name of the tree, used in error messages.
   name: string;
-  skillTree: SkillTree<Id>;
+  moduleTree: ModuleTree;
   // The modules shown in this tree, mapped to the grid cell they sit on.
   // A module is part of this tree exactly when its ID appears here.
   nodes: Record<string, GridPosition>;
@@ -27,11 +27,11 @@ export interface SkillTreeDefinitionOptions<Id extends string> {
  * @param options: The tree name, the skill tree it draws from, and the grid cell per module.
  * @returns The positioned modules and the connectors between them.
  */
-export function defineSkillTree<Id extends string>({
+export function defineSkillTree({
   name,
-  skillTree,
+  moduleTree,
   nodes,
-}: SkillTreeDefinitionOptions<Id>): ProcessedModulePositions {
+}: SkillTreeDefinitionOptions): ProcessedModulePositions {
   const rawPositions: Record<string, ModulePositionMetaRaw> = {};
   Object.entries(nodes).forEach(([id, cell]) => {
     rawPositions[id] = { position: gridToPixels(cell) };
@@ -39,7 +39,7 @@ export function defineSkillTree<Id extends string>({
 
   return processModulePositions({
     rawPositions,
-    skillTree,
+    moduleTree,
     cardHeight,
     computeConnectorPath,
     treeName: name,

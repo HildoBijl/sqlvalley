@@ -1,4 +1,4 @@
-import type { ModuleType } from '@sqlvalley/skill-tree-definition'
+import type { ModuleType } from '@step-wise/module-tree-definition'
 import type { StoredExerciseAction, StoredExerciseInstance, StoredExerciseState } from '@sqlvalley/exercise-engine/storedState'
 
 import type { SetState } from '../infrastructure'

@@ -1,4 +1,4 @@
-import { skillTree } from '@/curriculum/skillTree';
+import { moduleTree } from '@/curriculum/moduleDefinition'
 import {
   defineSkillTree,
   type GridPosition,
@@ -36,7 +36,7 @@ const nodes: Record<string, GridPosition> = {
 
 const processedModulePositions = defineSkillTree({
   name: 'RA Skill Tree',
-  skillTree,
+  moduleTree,
   nodes,
 });
 

@@ -1,4 +1,4 @@
-import type { ModuleType } from '@sqlvalley/skill-tree-definition'
+import type { ModuleType } from '@step-wise/module-tree-definition'
 
 import { type ConceptState, type ModuleState, type SkillState, createModuleState } from './state'
 import { useLearningStore } from './store'

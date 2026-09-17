@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { getModules, type SkillTree } from '@sqlvalley/skill-tree-definition';
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 import {
   getRawModuleCompletion,
@@ -8,33 +8,33 @@ import {
 } from './logic';
 import type { ModuleProgressState } from './types';
 
-function useRawModuleCompletion<Id extends string>(
-  skillTree: SkillTree<Id>,
+function useRawModuleCompletion(
+  moduleTree: ModuleTree,
   moduleStates: Record<string, ModuleProgressState>,
 ) {
   return useMemo(
-    () => getRawModuleCompletion(skillTree, moduleStates),
-    [skillTree, moduleStates],
+    () => getRawModuleCompletion(moduleTree, moduleStates),
+    [moduleTree, moduleStates],
   );
 }
 
-export function useModuleCompletion<Id extends string>(
-  skillTree: SkillTree<Id>,
+export function useModuleCompletion(
+  moduleTree: ModuleTree,
   moduleStates: Record<string, ModuleProgressState>,
 ) {
-  const rawCompletion = useRawModuleCompletion(skillTree, moduleStates);
+  const rawCompletion = useRawModuleCompletion(moduleTree, moduleStates);
 
   return useMemo(
-    () => processModuleCompletion(skillTree, rawCompletion),
-    [skillTree, rawCompletion],
+    () => processModuleCompletion(moduleTree, rawCompletion),
+    [moduleTree, rawCompletion],
   );
 }
 
-export function useModuleProgress<Id extends string>(
-  skillTree: SkillTree<Id>,
+export function useModuleProgress(
+  moduleTree: ModuleTree,
   moduleStates: Record<string, ModuleProgressState>,
 ) {
-  const modules = useMemo(() => getModules(skillTree), [skillTree]);
+  const modules = useMemo(() => Object.values(moduleTree), [moduleTree]);
   const concepts = useMemo(
     () => modules.filter((module) => module.type === 'concept'),
     [modules],
@@ -43,15 +43,15 @@ export function useModuleProgress<Id extends string>(
     () => modules.filter((module) => module.type === 'skill'),
     [modules],
   );
-  const processed = useModuleCompletion(skillTree, moduleStates);
+  const processed = useModuleCompletion(moduleTree, moduleStates);
 
   const isCompleted = useCallback(
-    (id: Id) => processed.completed.has(id),
+    (id: string) => processed.completed.has(id),
     [processed],
   );
 
   const getProgress = useCallback(
-    (id: Id) => {
+    (id: string) => {
       const progress = processed.skillProgress[id];
       if (progress === undefined) return null;
       return `${progress}/${processed.requiredCount}`;

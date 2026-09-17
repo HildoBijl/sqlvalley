@@ -1,7 +1,7 @@
 import { type SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import type { ModuleType } from '@sqlvalley/skill-tree-definition';
+import type { ModuleType } from '@step-wise/module-tree-definition'
 
 import {
 	type ConceptState,

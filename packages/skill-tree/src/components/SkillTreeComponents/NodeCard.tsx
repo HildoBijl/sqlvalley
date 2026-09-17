@@ -1,6 +1,6 @@
 import { ButtonBase, useTheme } from '@mui/material/';
 import { Element, Rectangle } from '@sqlvalley/ui';
-import type { Module } from '@sqlvalley/skill-tree-definition';
+import type { Module } from '@step-wise/module-tree-definition'
 import { Vector } from '@step-wise/geometry';
 import { NodeCompletedMark } from './Icons/NodeCompletedMark';
 import { NodeGoalPin } from './Icons/NodeGoalPin';
@@ -16,6 +16,7 @@ import { cardHeight, cardWidth } from '../../utils/settings';
  */
 interface NodeCardProps {
   item: Module;
+  name: string;
   positionData: ModulePositionMeta;
   completed: boolean;
   isHovered: boolean;
@@ -34,6 +35,7 @@ interface NodeCardProps {
 
 export function NodeCard({
   item,
+  name,
   positionData,
   completed,
   isHovered,
@@ -187,7 +189,7 @@ export function NodeCard({
                     : theme.palette.text.primary,
               }}
             >
-              {item.name}
+              {name}
             </div>
           </div>
         </ButtonBase>

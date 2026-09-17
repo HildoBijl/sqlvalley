@@ -1,5 +1,7 @@
 import { type ConceptDefinition, type ModuleTreeDefinition, type SkillDefinition, createModuleTree } from '@step-wise/module-tree-definition'
 
+export type { Module, ModuleType } from '@step-wise/module-tree-definition'
+
 const concept = (...prerequisites: string[]): ConceptDefinition => ({ type: 'concept', prerequisites })
 const skill = (...prerequisites: string[]): SkillDefinition => ({ type: 'skill', prerequisites })
 
@@ -68,3 +70,7 @@ const moduleDefinition = {
 export type ModuleId = keyof typeof moduleDefinition
 
 export const moduleTree = createModuleTree(moduleDefinition)
+
+export function isModuleId(value: string): value is ModuleId {
+	return value in moduleDefinition
+}
