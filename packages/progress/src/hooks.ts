@@ -2,18 +2,20 @@ import { useCallback, useMemo } from 'react'
 
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 
-import type { ModuleProgressState } from './types'
-import { getProcessedModuleCompletion } from './logic'
+import { type ModuleCompletionState, getCompletedModuleIds } from './completion'
 
-export function useModuleProgress(
+export function useModuleCompletion(
 	moduleTree: ModuleTree,
-	moduleStates: Record<string, ModuleProgressState>,
+	moduleStates: Record<string, ModuleCompletionState>,
 ) {
-	const completion = useMemo(
-		() => getProcessedModuleCompletion(moduleTree, moduleStates),
+	const completedModuleIds = useMemo(
+		() => getCompletedModuleIds(moduleTree, moduleStates),
 		[moduleTree, moduleStates],
 	)
 
-	const isCompleted = useCallback((id: string) => completion.completed.has(id), [completion])
+	const isCompleted = useCallback(
+		(id: string) => completedModuleIds.has(id),
+		[completedModuleIds],
+	)
 	return { isCompleted }
 }

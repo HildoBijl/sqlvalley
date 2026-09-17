@@ -33,8 +33,8 @@ import {
   VideoTab,
 } from '@/learning/components/TabContent/ContentTab';
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
-import { useModuleProgress } from '@sqlvalley/progress';
-import { arePrerequisitesCompleted, getGoalPath, isReadyToLearn } from '@sqlvalley/progress'
+import { useModuleCompletion } from '@sqlvalley/progress';
+import { areDirectPrerequisitesCompleted, getGoalPathModuleIds, isReadyToLearn } from '@sqlvalley/progress'
 import type { TabConfig } from '@/learning/types';
 
 export default function ConceptPage() {
@@ -91,7 +91,7 @@ export default function ConceptPage() {
 
   const moduleStates = useLearningStore((state) => state.modules);
 
-  const { isCompleted: isModuleCompleted } = useModuleProgress(moduleTree, moduleStates);
+  const { isCompleted: isModuleCompleted } = useModuleCompletion(moduleTree, moduleStates);
   const isCompleted = conceptId
     ? isModuleCompleted(conceptId)
     : (moduleState.understood ?? false);
@@ -129,7 +129,7 @@ export default function ConceptPage() {
   );
 
   const goalPath = useMemo(
-    () => (goalNodeId ? getGoalPath(moduleTree, goalNodeId) : new Set<string>()),
+    () => (goalNodeId ? getGoalPathModuleIds(moduleTree, goalNodeId) : new Set<string>()),
     [goalNodeId],
   );
 
@@ -138,7 +138,7 @@ export default function ConceptPage() {
     ? (moduleTree[conceptId]?.continuationIds ?? []).filter((id) => treeModuleIds.has(id))
     : [];
   const allPrereqsDone = (id: string) =>
-    arePrerequisitesCompleted(moduleTree, id, isModuleCompleted);
+    areDirectPrerequisitesCompleted(moduleTree, id, isModuleCompleted);
 
   const nextUp = goalNodeId
     ? (() => {

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Container } from '@mui/material';
 import { modulePresentation, moduleTree } from '@/curriculum'
 import type { SkillTreeVisualizationId } from '@/curriculum/skillTreeVisualizations';
-import { useModuleProgress } from '@sqlvalley/progress';
+import { useModuleCompletion } from '@sqlvalley/progress';
 import {
   SkillTreeCanvas,
   useTreeBounds,
@@ -31,7 +31,7 @@ export function SkillTreeOverviewPage({
 
   const moduleStates = useLearningStore((state) => state.modules);
 
-  const { isCompleted } = useModuleProgress(moduleTree, moduleStates);
+  const { isCompleted } = useModuleCompletion(moduleTree, moduleStates);
   const treeBounds = useTreeBounds(modulePositions);
 
   const planningMode = useSkillTreeSettingsStore(

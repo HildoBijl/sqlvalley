@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { getGoalPath, getGoalProgress } from '@sqlvalley/progress'
+import { getGoalPathModuleIds, getGoalProgress } from '@sqlvalley/progress'
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 /*
@@ -20,7 +20,7 @@ export function useGoalProgress(
   ) => void,
 ): Set<string> {
   const goalPath = useMemo(
-    () => (goalNodeId ? getGoalPath(moduleTree, goalNodeId) : new Set<string>()),
+    () => (goalNodeId ? getGoalPathModuleIds(moduleTree, goalNodeId) : new Set<string>()),
     [goalNodeId, moduleTree],
   );
 

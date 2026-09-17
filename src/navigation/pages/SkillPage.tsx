@@ -26,7 +26,7 @@ import { SkillCompletionDialog } from '@/learning/components/SkillCompletionDial
 import { StoryTab, SummaryTab, TheoryTab, VideoTab } from '@/learning/components/TabContent/ContentTab';
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
-import { DEFAULT_EXERCISES_TO_COMPLETE, useModuleProgress } from '@sqlvalley/progress';
+import { EXERCISES_REQUIRED_FOR_SKILL_COMPLETION, useModuleCompletion } from '@sqlvalley/progress';
 import { ExerciseManager } from '@sqlvalley/exercise-engine';
 
 import type { TabConfig } from '@/learning/types';
@@ -91,7 +91,7 @@ export default function SkillPage() {
 
 	const moduleStates = useLearningStore((state) => state.modules);
 
-	const { isCompleted } = useModuleProgress(moduleTree, moduleStates);
+	const { isCompleted } = useModuleCompletion(moduleTree, moduleStates);
 	const isSkillMastered = skillId ? isCompleted(skillId) : false;
 	const summaryUnlocked = isSkillMastered || isAdmin;
 
@@ -116,8 +116,8 @@ export default function SkillPage() {
 	const prevSolvedRef = useRef(moduleState.solvedExerciseCount ?? 0);
 	useEffect(() => {
 		const solved = moduleState.solvedExerciseCount ?? 0;
-		const crossed = prevSolvedRef.current < DEFAULT_EXERCISES_TO_COMPLETE &&
-			solved >= DEFAULT_EXERCISES_TO_COMPLETE;
+		const crossed = prevSolvedRef.current < EXERCISES_REQUIRED_FOR_SKILL_COMPLETION &&
+			solved >= EXERCISES_REQUIRED_FOR_SKILL_COMPLETION;
 		prevSolvedRef.current = solved;
 		if (crossed) setShowCompletionDialog(true);
 	}, [moduleState.solvedExerciseCount]);
@@ -155,7 +155,7 @@ export default function SkillPage() {
 		hasInteractivePractice && currentTab === 'practice'
 			? {
 				current: moduleState.solvedExerciseCount ?? 0,
-				required: DEFAULT_EXERCISES_TO_COMPLETE,
+				required: EXERCISES_REQUIRED_FOR_SKILL_COMPLETION,
 			}
 			: undefined;
 

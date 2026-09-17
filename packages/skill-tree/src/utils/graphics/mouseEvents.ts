@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getPrerequisiteIds } from '@sqlvalley/progress'
+import { getTransitivePrerequisiteIds } from '@sqlvalley/progress'
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 export function useHoverState(
@@ -14,7 +14,7 @@ export function useHoverState(
 
   const handleHoverStart = (id: string) => {
     setLocalHoveredId(id);
-    const chain = getPrerequisiteIds(moduleTree, id);
+    const chain = getTransitivePrerequisiteIds(moduleTree, id);
     setPrerequisites(chain);
 
     setTooltip(modulePresentation[id]?.description ?? 'No description available');
