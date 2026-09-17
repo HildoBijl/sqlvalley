@@ -1,8 +1,14 @@
 import { ensureInteger } from '@step-wise/js-utils'
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 
-import type { ModuleCompletion, ModuleProgressState, RawModuleCompletion } from './types'
+import type { ModuleProgressState } from './types'
 import { getPrerequisiteIds } from './moduleTree'
+
+interface ModuleCompletion {
+	completed: Set<string>
+	skillProgress: Partial<Record<string, number>>
+	requiredCount: number
+}
 
 // Exercises a learner must solve before a skill counts as mastered.
 export const DEFAULT_EXERCISES_TO_COMPLETE = 3
@@ -16,11 +22,11 @@ function isUnderstood(moduleState: ModuleProgressState | undefined): boolean {
 	return moduleState?.understood === true
 }
 
-export function getRawModuleCompletion(
+function getRawModuleCompletion(
 	moduleTree: ModuleTree,
 	moduleStates: Record<string, ModuleProgressState>,
 	requiredCount: number = DEFAULT_EXERCISES_TO_COMPLETE,
-): RawModuleCompletion {
+): ModuleCompletion {
 	requiredCount = ensureInteger(requiredCount, { nonNegative: true, nonZero: true })
 	const completed = new Set<string>()
 	const skillProgress: Partial<Record<string, number>> = {}
@@ -41,9 +47,9 @@ export function getRawModuleCompletion(
 	return { completed, skillProgress, requiredCount }
 }
 
-export function processModuleCompletion(
+function processModuleCompletion(
 	moduleTree: ModuleTree,
-	rawCompletion: RawModuleCompletion,
+	rawCompletion: ModuleCompletion,
 ): ModuleCompletion {
 	const completed = new Set(rawCompletion.completed)
 
