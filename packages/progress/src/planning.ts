@@ -2,12 +2,7 @@ import { type ModuleId, type ModuleTree, getModule } from '@step-wise/module-tre
 
 import { getGoalPathModuleIds } from './moduleTree'
 
-export interface GoalProgress {
-	completedCount: number
-	totalCount: number
-	nextStepId: ModuleId | null
-}
-
+// Determine if all direct prerequisites of a module are completed.
 export function areDirectPrerequisitesCompleted(
 	moduleTree: ModuleTree,
 	moduleId: ModuleId,
@@ -16,16 +11,21 @@ export function areDirectPrerequisitesCompleted(
 	return getModule(moduleTree, moduleId).prerequisiteIds.every(isModuleCompleted)
 }
 
-// A module is ready to learn when it is incomplete and all direct prerequisites are complete.
+// Determine if a module is ready to learn: it's incomplete but all its direct prerequisites are complete.
 export function isReadyToLearn(
 	moduleTree: ModuleTree,
 	moduleId: ModuleId,
 	isModuleCompleted: (id: ModuleId) => boolean,
 ): boolean {
-	return !isModuleCompleted(moduleId) &&
-		areDirectPrerequisitesCompleted(moduleTree, moduleId, isModuleCompleted)
+	return !isModuleCompleted(moduleId) && areDirectPrerequisitesCompleted(moduleTree, moduleId, isModuleCompleted)
 }
 
+// Determine, for a specific module, the progress up its prerequisite tree.
+export interface GoalProgress {
+	completedCount: number
+	totalCount: number
+	nextStepId: ModuleId | null
+}
 export function getGoalProgress(
 	moduleTree: ModuleTree,
 	goalId: ModuleId,
@@ -35,7 +35,6 @@ export function getGoalProgress(
 	return {
 		completedCount: goalPathModuleIds.filter(isModuleCompleted).length,
 		totalCount: goalPathModuleIds.length,
-		nextStepId:
-			goalPathModuleIds.find(id => isReadyToLearn(moduleTree, id, isModuleCompleted)) ?? null,
+		nextStepId: goalPathModuleIds.find(id => isReadyToLearn(moduleTree, id, isModuleCompleted)) ?? null,
 	}
 }

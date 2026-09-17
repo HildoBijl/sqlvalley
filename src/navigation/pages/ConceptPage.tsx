@@ -35,6 +35,7 @@ import {
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useModuleCompletion } from '@sqlvalley/progress';
 import { areDirectPrerequisitesCompleted, getGoalPathModuleIds, isReadyToLearn } from '@sqlvalley/progress'
+import type { ModuleId } from '@step-wise/module-tree-definition'
 import type { TabConfig } from '@/learning/types';
 
 export default function ConceptPage() {
@@ -129,16 +130,16 @@ export default function ConceptPage() {
   );
 
   const goalPath = useMemo(
-    () => (goalNodeId ? getGoalPathModuleIds(moduleTree, goalNodeId) : new Set<string>()),
+    () => (goalNodeId ? getGoalPathModuleIds(moduleTree, goalNodeId) : new Set<ModuleId>()),
     [goalNodeId],
   );
 
-  const treeModuleIds = conceptTree?.moduleIds ?? new Set<string>();
+  const treeModuleIds = conceptTree?.moduleIds ?? new Set<ModuleId>();
   const allFollowUps = conceptId
     ? (moduleTree[conceptId]?.continuationIds ?? []).filter((id) => treeModuleIds.has(id))
     : [];
-  const allPrereqsDone = (id: string) =>
-    areDirectPrerequisitesCompleted(moduleTree, id, isModuleCompleted);
+  const allPrereqsDone = (moduleId: ModuleId) =>
+    areDirectPrerequisitesCompleted(moduleTree, moduleId, isModuleCompleted);
 
   const nextUp = goalNodeId
     ? (() => {

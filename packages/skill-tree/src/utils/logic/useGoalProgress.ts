@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { getGoalPathModuleIds, getGoalProgress } from '@sqlvalley/progress'
-import type { ModuleTree } from '@step-wise/module-tree-definition'
+import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
 /*
  * Track progress towards the planning-mode goal.
@@ -8,19 +8,19 @@ import type { ModuleTree } from '@step-wise/module-tree-definition'
  * itself), and reports progress updates through onGoalProgressChange.
  */
 export function useGoalProgress(
-  goalNodeId: string | null | undefined,
+  goalNodeId: ModuleId | null | undefined,
   moduleTree: ModuleTree,
-  modulePresentation: Record<string, { name: string }>,
-  isCompleted: (id: string) => boolean,
+  modulePresentation: Record<ModuleId, { name: string }>,
+  isCompleted: (id: ModuleId) => boolean,
   onGoalProgressChange?: (
     completedCount: number,
     totalCount: number,
     nextStepName: string | null,
-    nextStepId: string | null,
+    nextStepId: ModuleId | null,
   ) => void,
-): Set<string> {
+): Set<ModuleId> {
   const goalPath = useMemo(
-    () => (goalNodeId ? getGoalPathModuleIds(moduleTree, goalNodeId) : new Set<string>()),
+    () => (goalNodeId ? getGoalPathModuleIds(moduleTree, goalNodeId) : new Set<ModuleId>()),
     [goalNodeId, moduleTree],
   );
 
