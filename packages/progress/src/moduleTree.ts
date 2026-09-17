@@ -1,4 +1,9 @@
-import { type ModuleId, type ModuleTree, getModuleIdsBetweenGoalsAndPriorKnowledge } from '@step-wise/module-tree-definition'
+import {
+	type ModuleId,
+	type ModuleTree,
+	getModule,
+	getModuleIdsBetweenGoalsAndPriorKnowledge,
+} from '@step-wise/module-tree-definition'
 
 // Potential module-tree-definition additions: getPrerequisiteIds and getGoalPath.
 // Return all transitive prerequisites of a module, excluding the module itself.
@@ -17,7 +22,7 @@ export function arePrerequisitesCompleted(
 	moduleId: ModuleId,
 	isCompleted: (id: ModuleId) => boolean,
 ): boolean {
-	return moduleTree[moduleId]?.prerequisiteIds.every(isCompleted) ?? true
+	return getModule(moduleTree, moduleId).prerequisiteIds.every(isCompleted)
 }
 
 // A module is ready to learn when it is incomplete and all direct prerequisites are complete.
