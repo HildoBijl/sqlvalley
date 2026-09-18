@@ -6,10 +6,11 @@ import { type ExerciseInstance, type ExerciseSelectionOptions, generateExerciseI
 
 import { type AnyExerciseContextValue, type ExerciseRegistration, ExerciseContext } from '../exerciseContext'
 import { useModuleContext } from '../moduleContext'
-import { useExerciseStorage } from '../storageContext'
+import type { ExerciseStorage } from '../storage'
 import { ExerciseAdminTools } from './ExerciseAdminTools'
 
 interface ExerciseManagerProps {
+	storage: ExerciseStorage
 	skillId: string
 	exercises: readonly ExerciseRegistration[]
 	showAdminControls?: boolean
@@ -21,9 +22,8 @@ export function ExerciseManager(props: ExerciseManagerProps) {
 	return <ExerciseManagerSession key={props.skillId} {...props} />
 }
 
-function ExerciseManagerSession({ skillId, exercises, showAdminControls = false, selectionOptions }: ExerciseManagerProps) {
+function ExerciseManagerSession({ skillId, exercises, storage, showAdminControls = false, selectionOptions }: ExerciseManagerProps) {
 	const moduleContext = useModuleContext()
-	const storage = useExerciseStorage()
 	const getInstanceSnapshot = useCallback(() => storage.getInstance(skillId), [storage, skillId])
 	const instance = useSyncExternalStore(storage.subscribe, getInstanceSnapshot)
 	const byId = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])

@@ -3,12 +3,11 @@ import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { router } from '@/navigation';
-import { ExerciseStorageProvider } from '@sqlvalley/exercise-manager';
 import { getTheme, ColorModeContext } from '@sqlvalley/ui';
 import { SQLJSProvider } from '@sqlvalley/sqljs';
 import { DatabaseProvider } from '@sqlvalley/sql/databases';
 import { ErrorBoundary } from '@sqlvalley/ui';
-import { exerciseStorage, useSettingsStore, useStoresHydrated } from './store'
+import { useSettingsStore, useStoresHydrated } from './store'
 
 export function App() {
 	const mode = useSettingsStore((s) => s.themeMode);
@@ -35,9 +34,7 @@ export function App() {
 						<CssBaseline />
 						<SQLJSProvider>
 							<DatabaseProvider>
-								<ExerciseStorageProvider storage={exerciseStorage}>
-									<RouterProvider router={router} />
-								</ExerciseStorageProvider>
+								<RouterProvider router={router} />
 							</DatabaseProvider>
 						</SQLJSProvider>
 					</ThemeProvider>

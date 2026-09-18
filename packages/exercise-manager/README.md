@@ -39,7 +39,7 @@ The React-independent [`@sqlvalley/exercise-instances`](../exercise-instances/RE
 
 `generateExerciseInstance(exerciseId, definition, context)` from that package awaits parameter and initial-state generation and returns a complete instance with `mode: 'solo'` and an empty `history`. Generating an instance is separate from building its definition or pairing that definition with a renderer.
 
-`ExerciseStorageProvider` receives an application-owned `ExerciseStorage` implementation. Its `startExercise(skillId, exerciseInstance)` stores the generated instance. Submissions append history events containing `action`, `state`, an optional `report`, and `submittedAt`. Upstream `getCurrentState(exerciseInstance)` returns the latest state, falling back to the stored `initialState`.
+`ExerciseManager` receives an application-owned `ExerciseStorage` implementation through its required `storage` prop. Its `startExercise(skillId, exerciseInstance)` stores the generated instance. Submissions append history events containing `action`, `state`, an optional `report`, and `submittedAt`. Upstream `getCurrentState(exerciseInstance)` returns the latest state, falling back to the stored `initialState`.
 
 The manager restores valid instances directly without regenerating parameters or initial state. Pending submissions and generation status remain transient React state; they are not stored and cannot leave a reloaded exercise stuck in a pending state.
 
@@ -64,7 +64,7 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 
 - `exerciseContext/`: renderer registration, React context, and `useExercise`.
 - `components/`: the manager and its internal admin tools.
-- `storage.ts` and `storageContext.tsx`: application storage contract and injection.
+- `storage.ts`: application storage contract, supplied directly to the manager.
 - `moduleContext.tsx`: subject-specific execution context.
 
 The manager provides the exercise context and renders the supplied component directly. The application owns its concrete storage adapter and persistence migrations.
