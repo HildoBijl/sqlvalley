@@ -2,11 +2,12 @@ import { type ReactNode, createContext, useContext, useState, useEffect, useCall
 
 import { useSQLJS } from '@sqlvalley/sqljs'
 
-import type { ManagedDatabase, GetDatabaseOptions } from './types'
+import type { DatabaseSource, ManagedDatabase, GetDatabaseOptions } from './types'
 
 type DatabaseState = Record<string, ManagedDatabase | null>
 
 interface DatabaseContextValue {
+	source: DatabaseSource
 	databases: DatabaseState
 	getDatabase: (key: string, schema: string, options?: GetDatabaseOptions) => any | null
 	resetDatabase: (key: string) => void
@@ -23,10 +24,11 @@ export function useDatabaseContext() {
 }
 
 interface DatabaseProviderProps {
+	source: DatabaseSource
 	children: ReactNode
 }
 
-export function DatabaseProvider({ children }: DatabaseProviderProps) {
+export function DatabaseProvider({ source, children }: DatabaseProviderProps) {
 	const SQLJS = useSQLJS()
 	const [databases, setDatabases] = useState<DatabaseState>({})
 	const databasesRef = useRef<DatabaseState>({})
@@ -194,6 +196,7 @@ export function DatabaseProvider({ children }: DatabaseProviderProps) {
 	}, [resetTransientDatabases])
 
 	const value: DatabaseContextValue = {
+		source,
 		databases,
 		getDatabase,
 		resetDatabase,

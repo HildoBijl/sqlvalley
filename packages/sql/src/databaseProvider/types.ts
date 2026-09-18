@@ -1,3 +1,10 @@
+export interface DatabaseSource {
+	allTables: readonly string[]
+	defaultSize: string
+	buildSql: (options: { tables: string[]; size: string }) => string
+	buildCompletionSchema: (tables: string[]) => Record<string, string[]>
+}
+
 export interface QueryResult {
 	columns: string[]
 	values: any[][]

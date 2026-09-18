@@ -1,15 +1,13 @@
 import { useState, useCallback, useEffect, useMemo } from 'react'
 
-import { type DatasetSize, type TableKey, allTableKeys, buildDatasetSql, buildCompletionSchema, defaultDatasetSize } from '@sqlvalley/mock-data'
-
 import type { QueryResult } from './types'
 import { useDatabaseContext } from './DatabaseProvider'
 
 interface DatabaseOptions {
 	// Tables included in the database. Defaults to all tables.
-	tables?: TableKey[]
+	tables?: string[]
 	// Override dataset size
-	size?: DatasetSize
+	size?: string
 	// Custom cache key for the database instance
 	cacheKey?: string
 	// Whether to reset the database when schema changes
@@ -41,7 +39,7 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
 		persistent = false,
 	} = options
 
-	const { databases: contextDatabases, getDatabase, resetDatabase: resetContextDatabase, isReady: contextReady } = useDatabaseContext()
+	const { source, databases: contextDatabases, getDatabase, resetDatabase: resetContextDatabase, isReady: contextReady } = useDatabaseContext()
 
 	const [currentSchema, setCurrentSchema] = useState<string>('')
 	const [database, setDatabase] = useState<any>(null)
@@ -56,19 +54,19 @@ export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
 		setQueryError(null)
 	}, [])
 
-	const resolvedSize = useMemo(() => size ?? defaultDatasetSize, [size])
+	const resolvedSize = size ?? source.defaultSize
 
 	const resolvedTables = useMemo(() => {
-		if (tables?.length) return Array.from(new Set(tables)) as TableKey[]
-		return allTableKeys
-	}, [tables])
+		if (tables?.length) return Array.from(new Set(tables))
+		return [...source.allTables]
+	}, [tables, source.allTables])
 
 	const resolvedSchema = useMemo(
-		() => buildDatasetSql({ tables: resolvedTables, size: resolvedSize }),
-		[resolvedTables, resolvedSize],
+		() => source.buildSql({ tables: resolvedTables, size: resolvedSize }),
+		[source, resolvedTables, resolvedSize],
 	)
 
-	const completionSchema = useMemo(() => buildCompletionSchema(resolvedTables), [resolvedTables])
+	const completionSchema = useMemo(() => source.buildCompletionSchema(resolvedTables), [source, resolvedTables])
 
 	const contextKey = useMemo(() => {
 		if (cacheKey) return cacheKey
