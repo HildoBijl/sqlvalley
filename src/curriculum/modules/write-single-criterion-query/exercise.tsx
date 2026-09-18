@@ -1,13 +1,13 @@
 import {
-	buildSimpleSQLExercise,
-	type SimpleSQLExerciseDefinition,
+	createMonoSQLExercise,
+	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
 import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
 
 type Parameters = Record<string, never>;
 
-const EXERCISES: SimpleSQLExerciseDefinition<Parameters>[] = [
+const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 	//   {
 	//     id: 'single-refunded',
 	//     prompt: 'Retrieve the validator ID, amount, and status of all transactions that have been refunded.',
@@ -62,7 +62,7 @@ WHERE perf_score < 60;
 ];
 
 export default function buildExercises(): ExerciseRegistration[] {
-	return EXERCISES.map((exercise) => buildSimpleSQLExercise(exercise));
+	return EXERCISES.map((exercise) => createMonoSQLExercise(exercise));
 }
 
 export const ModuleProvider = SqlPracticeProvider;

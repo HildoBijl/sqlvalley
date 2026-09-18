@@ -43,7 +43,9 @@ The React-independent [`@sqlvalley/exercise-instances`](../exercise-instances/RE
 
 The manager restores valid instances directly without regenerating parameters or initial state. Pending submissions and generation status remain transient React state; they are not stored and cannot leave a reloaded exercise stuck in a pending state.
 
-The learning-store v7 to v8 migration converts legacy events into history, supplies the empty initial state used by legacy SimpleExercises, and adds `done: true` to solved/given-up states. The same migration renames instance `createdAt` to `startedAt` and event `timestamp` to `submittedAt`. Existing parameters, reports, drafts, timestamp values, and solved counts are retained. `normalizeExerciseInstance` validates only the current format; historical conversions stay in store migrations.
+The learning-store v7 to v8 migration converts legacy events into history, supplies the empty initial state used by legacy SimpleExercises, and adds `done: true` to solved/given-up states. The same migration renames instance `createdAt` to `startedAt` and event `timestamp` to `submittedAt`. Existing parameters, reports, drafts, timestamp values, and solved counts are retained. `normalizeExerciseInstance` validates only the current format; historical conversions stay in store migrations. The v8 to v9 migration adapts legacy SQL actions to the structured input and state format used by `@step-wise/input-exercises`.
+
+Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../input-exercise-components/README.md).
 
 
 ## Manual verification

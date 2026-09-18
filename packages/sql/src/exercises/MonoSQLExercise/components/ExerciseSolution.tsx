@@ -1,27 +1,27 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react'
 
-import { Box, Button, Collapse, Divider, Typography } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import CodeMirror from '@uiw/react-codemirror';
-import { sql } from '@codemirror/lang-sql';
-import { EditorView } from '@codemirror/view';
+import { Box, Button, Collapse, Divider, Typography } from '@mui/material'
+import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import CodeMirror from '@uiw/react-codemirror'
+import { sql } from '@codemirror/lang-sql'
+import { EditorView } from '@codemirror/view'
 
-import { ExerciseSection } from '@sqlvalley/ui';
+import { ExerciseSection } from '@sqlvalley/ui'
 
 interface PracticeSolution {
-	query: string;
-	explanation?: string | null;
+	query: string
+	explanation?: string | null
 }
 
 interface ExerciseSolutionProps {
-	solution?: PracticeSolution | null;
-	show?: boolean;
+	solution?: PracticeSolution | null
+	show?: boolean
 }
 
 export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProps) {
-	const [expanded, setExpanded] = useState(true);
+	const [expanded, setExpanded] = useState(true)
 
-	const normalizedSolution = solution && solution.query ? solution : null;
+	const normalizedSolution = solution && solution.query ? solution : null
 
 	const readmeTheme = useMemo(
 		() =>
@@ -59,9 +59,9 @@ export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProp
 				{ dark: false },
 			),
 		[],
-	);
+	)
 
-	const extensions = useMemo(() => [sql(), EditorView.lineWrapping, readmeTheme], [readmeTheme]);
+	const extensions = useMemo(() => [sql(), EditorView.lineWrapping, readmeTheme], [readmeTheme])
 
 	const basicSetup = useMemo(
 		() => ({
@@ -74,20 +74,20 @@ export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProp
 			closeBrackets: false,
 		}),
 		[],
-	);
+	)
 
 	useEffect(() => {
 		if (normalizedSolution?.query) {
-			setExpanded(true);
+			setExpanded(true)
 		}
-	}, [normalizedSolution?.query]);
+	}, [normalizedSolution?.query])
 
 	const explanation =
 		normalizedSolution?.explanation ??
-		'We are working on a short explanation for this solution. Check back soon!';
+		'We are working on a short explanation for this solution. Check back soon!'
 
 	if (!normalizedSolution || !show) {
-		return null;
+		return null
 	}
 
 	return (
@@ -100,7 +100,7 @@ export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProp
 					size="small"
 					color="primary"
 					variant="text"
-					onClick={() => setExpanded((prev) => !prev)}
+					onClick={() => setExpanded(prev => !prev)}
 					endIcon={expanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
 					sx={{ textTransform: 'none', fontWeight: 500, px: 1 }}
 				>
@@ -126,5 +126,5 @@ export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProp
 				</Box>
 			</Collapse>
 		</ExerciseSection>
-	);
+	)
 }

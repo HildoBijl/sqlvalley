@@ -15,16 +15,17 @@
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.38.6",
     "@lezer/highlight": "^1.2.3",
-    "@sqlvalley/exercise-engine": "*",
     "@sqlvalley/exercise-instances": "*",
     "@sqlvalley/exercise-manager": "*",
     "@sqlvalley/mock-data": "*",
-    "@sqlvalley/sqljs": "*",
     "@sqlvalley/sql-grading": "*",
+    "@sqlvalley/sqljs": "*",
     "@sqlvalley/ui": "*",
+    "@step-wise/input-exercises": "^0.2.0",
     "@step-wise/js-utils": "^0.1.1",
     "@step-wise/react-utils": "^0.1.0",
-    "@uiw/react-codemirror": "^4.25.3"
+    "@uiw/react-codemirror": "^4.25.3",
+    "@sqlvalley/input-exercise-components": "*"
   },
   "peerDependencies": {
     "@mui/icons-material": "^6.4.7",

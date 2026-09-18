@@ -1,16 +1,16 @@
-import { Box } from '@mui/material';
-import type { SxProps, Theme } from '@mui/material/styles';
+import { Box } from '@mui/material'
+import type { SxProps, Theme } from '@mui/material/styles'
 
-import { SQLEditor } from '../../../components';
+import { SQLEditor } from '../../../components'
 
 interface ExerciseEditorProps {
-	query: string;
-	onQueryChange: (value: string) => void;
-	onExecute: (value?: string) => Promise<void> | void;
-	onLiveExecute: (value: string) => Promise<void> | void;
-	readOnly?: boolean;
-	completionSchema?: Record<string, string[]>;
-	sx?: SxProps<Theme>;
+	query: string
+	onQueryChange: (value: string) => void
+	onExecute: (value?: string) => Promise<void> | void
+	onLiveExecute: (value: string) => Promise<void> | void
+	readOnly?: boolean
+	completionSchema?: Record<string, string[]>
+	sx?: SxProps<Theme>
 }
 
 export function ExerciseEditor({
@@ -37,5 +37,5 @@ export function ExerciseEditor({
 				completionSchema={completionSchema}
 			/>
 		</Box>
-	);
+	)
 }

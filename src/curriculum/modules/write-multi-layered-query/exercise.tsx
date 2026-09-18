@@ -1,13 +1,13 @@
 import {
-	buildSimpleSQLExercise,
-	type SimpleSQLExerciseDefinition,
+	createMonoSQLExercise,
+	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
 import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
 
 type Parameters = Record<string, never>;
 
-const EXERCISES: SimpleSQLExerciseDefinition<Parameters>[] = [
+const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 	{
 		exerciseId: 'multilayered-mock-dept-expense',
 		version: 1,
@@ -118,7 +118,7 @@ WHERE d.nr_employees - COALESCE(sa.only_allocated, 0) > 3;
 ];
 
 export default function buildExercises(): ExerciseRegistration[] {
-	return EXERCISES.map((exercise) => buildSimpleSQLExercise(exercise));
+	return EXERCISES.map((exercise) => createMonoSQLExercise(exercise));
 }
 
 export const ModuleProvider = SqlPracticeProvider;

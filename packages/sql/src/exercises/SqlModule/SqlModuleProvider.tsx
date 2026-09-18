@@ -12,7 +12,7 @@ import {
 	type SqlExecutionResult,
 	type SqlQueryResult,
 } from '@sqlvalley/sql-grading';
-import type { SimpleSQLCheckResult } from '../SimpleSQLExercise/types';
+import type { MonoSQLCheckResult } from '../MonoSQLExercise/types';
 import type { SqlModuleContext } from './context';
 
 const SMALL_DATASET_WARNING =
@@ -96,7 +96,7 @@ export function SqlModuleProvider({
 		rawInput: string,
 		solution: string,
 		comparisonOptions?: CompareOptions,
-	): Promise<SimpleSQLCheckResult> => {
+	): Promise<MonoSQLCheckResult> => {
 		const query = rawInput.trim();
 		lastExecutedQueryRef.current = query;
 		latestQueryKeyRef.current = normalizeSqlInput(query);

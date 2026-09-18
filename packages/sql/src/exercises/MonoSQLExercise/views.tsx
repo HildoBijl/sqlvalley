@@ -1,23 +1,22 @@
-import type {
-	SimpleExerciseInputProps,
-	SimpleExerciseOutputProps,
-	SimpleExerciseStoredState,
-} from '@sqlvalley/exercise-engine';
-import { Alert } from '@mui/material';
-import { ExerciseDescription } from './components/ExerciseDescription';
-import { ExerciseEditor } from './components/ExerciseEditor';
-import { ExerciseResults } from './components/ExerciseResults';
-import { ExerciseSolution } from './components/ExerciseSolution';
-import type { SimpleSQLCheckResult } from './types';
-import { useSqlModuleContext } from '../SqlModule';
+import { Alert } from '@mui/material'
+
+import type { MonoExerciseState } from '@step-wise/input-exercises'
+import type { MonoExerciseInputProps, MonoExerciseOutputProps } from '@sqlvalley/input-exercise-components'
+
+import { useSqlModuleContext } from '../SqlModule'
+import type { MonoSQLCheckResult } from './types'
+import { ExerciseDescription } from './components/ExerciseDescription'
+import { ExerciseEditor } from './components/ExerciseEditor'
+import { ExerciseResults } from './components/ExerciseResults'
+import { ExerciseSolution } from './components/ExerciseSolution'
 
 export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
 	value,
 	disabled,
 	onChange,
 	onSubmit,
-}: SimpleExerciseInputProps<Parameters, string>) {
-	const runtime = useSqlModuleContext();
+}: MonoExerciseInputProps<Parameters, string>) {
+	const runtime = useSqlModuleContext()
 	return (
 		<>
 			<ExerciseEditor
@@ -34,14 +33,14 @@ export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
 				</Alert>
 			) : null}
 		</>
-	);
+	)
 }
 
 export function SQLExerciseOutput<Parameters extends Record<string, unknown>>({
 	state,
-}: SimpleExerciseOutputProps<Parameters, string, SimpleSQLCheckResult>) {
-	const runtime = useSqlModuleContext();
-	const complete = 'solved' in state || 'givenUp' in state;
+}: MonoExerciseOutputProps<Parameters, string, MonoSQLCheckResult>) {
+	const runtime = useSqlModuleContext()
+	const complete = state.done === true
 	return (
 		<ExerciseResults
 			queryResult={runtime.queryResult}
@@ -52,7 +51,7 @@ export function SQLExerciseOutput<Parameters extends Record<string, unknown>>({
 			onDatasetSizeChange={runtime.setDatasetSize}
 			datasetWarning={runtime.datasetWarning}
 		/>
-	);
+	)
 }
 
 export function createSQLProblem<Parameters extends Record<string, unknown>>(
@@ -60,15 +59,15 @@ export function createSQLProblem<Parameters extends Record<string, unknown>>(
 	getProblem: (parameters: Parameters) => string,
 ) {
 	return function SQLExerciseProblem({ parameters }: { parameters: Parameters }) {
-		const runtime = useSqlModuleContext();
+		const runtime = useSqlModuleContext()
 		return (
 			<ExerciseDescription
 				title={title}
 				description={getProblem(parameters)}
 				tableNames={runtime.tableNames}
 			/>
-		);
-	};
+		)
+	}
 }
 
 export function createSQLSolution<Parameters extends Record<string, unknown>>(
@@ -77,9 +76,9 @@ export function createSQLSolution<Parameters extends Record<string, unknown>>(
 	return function SQLExerciseSolution({
 		parameters,
 	}: {
-		parameters: Parameters;
-		state: SimpleExerciseStoredState;
+		parameters: Parameters
+		state: MonoExerciseState
 	}) {
-		return <ExerciseSolution solution={{ query: getSolution(parameters) }} />;
-	};
+		return <ExerciseSolution solution={{ query: getSolution(parameters) }} />
+	}
 }

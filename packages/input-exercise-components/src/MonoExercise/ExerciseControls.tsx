@@ -1,11 +1,11 @@
-import { Box, Button } from '@mui/material';
-import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material';
+import { Box, Button } from '@mui/material'
+import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material'
 
-import { useSimpleExerciseControls } from './controlsContext';
+import { useMonoExerciseControls } from './controlsContext'
 
 export function ExerciseControls() {
 	const { solved, givenUp, canSubmit, canGiveUp, onSubmit, onGiveUp, onNext, adminControls } =
-		useSimpleExerciseControls();
+		useMonoExerciseControls()
 
 	return (
 		<Box
@@ -70,5 +70,5 @@ export function ExerciseControls() {
 				)}
 			</Box>
 		</Box>
-	);
+	)
 }

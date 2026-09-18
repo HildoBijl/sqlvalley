@@ -1,22 +1,22 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react'
 
-import { Box, Button, Collapse, Divider, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Box, Button, Collapse, Divider, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
-import { Warning } from '@sqlvalley/ui';
-import { DataTable } from '../../../components';
-import { ExerciseSection } from '@sqlvalley/ui';
-import type { DatasetSize } from '@sqlvalley/mock-data';
-import type { SqlQueryResult } from '@sqlvalley/sql-grading';
+import { Warning } from '@sqlvalley/ui'
+import { DataTable } from '../../../components'
+import { ExerciseSection } from '@sqlvalley/ui'
+import type { DatasetSize } from '@sqlvalley/mock-data'
+import type { SqlQueryResult } from '@sqlvalley/sql-grading'
 
 interface ExerciseResultsProps {
-	queryResult: ReadonlyArray<SqlQueryResult> | null;
-	queryError: Error | null;
-	hasExecuted: boolean;
-	isComplete: boolean;
-	datasetSize: DatasetSize;
-	onDatasetSizeChange: (size: DatasetSize) => void;
-	datasetWarning?: string | null;
+	queryResult: ReadonlyArray<SqlQueryResult> | null
+	queryError: Error | null
+	hasExecuted: boolean
+	isComplete: boolean
+	datasetSize: DatasetSize
+	onDatasetSizeChange: (size: DatasetSize) => void
+	datasetWarning?: string | null
 }
 
 function ResultsPlaceholder({ message, children }: { message: string; children?: ReactNode }) {
@@ -33,7 +33,7 @@ function ResultsPlaceholder({ message, children }: { message: string; children?:
 			<Typography color="text.secondary">{message}</Typography>
 			{children ? <Box sx={{ mt: 2, textAlign: 'left' }}>{children}</Box> : null}
 		</Box>
-	);
+	)
 }
 
 export function ExerciseResults({
@@ -45,22 +45,22 @@ export function ExerciseResults({
 	onDatasetSizeChange,
 	datasetWarning,
 }: ExerciseResultsProps) {
-	const [expanded, setExpanded] = useState(() => !isComplete);
-	let content: ReactNode = null;
-	const emptyMessage = 'Query executed successfully but returned no rows.';
-	const hasResultSet = Boolean(queryResult && queryResult.length > 0);
-	const hasRows = Boolean(hasResultSet && queryResult?.[0]?.values && queryResult[0].values.length > 0);
-	const isEmptyResult = hasExecuted && !queryError && (!hasResultSet || !hasRows);
-	const showWarning = Boolean(datasetWarning && isEmptyResult);
+	const [expanded, setExpanded] = useState(() => !isComplete)
+	let content: ReactNode = null
+	const emptyMessage = 'Query executed successfully but returned no rows.'
+	const hasResultSet = Boolean(queryResult && queryResult.length > 0)
+	const hasRows = Boolean(hasResultSet && queryResult?.[0]?.values && queryResult[0].values.length > 0)
+	const isEmptyResult = hasExecuted && !queryError && (!hasResultSet || !hasRows)
+	const showWarning = Boolean(datasetWarning && isEmptyResult)
 
 	useEffect(() => {
-		setExpanded(!isComplete);
-	}, [isComplete]);
+		setExpanded(!isComplete)
+	}, [isComplete])
 
 	if (queryError) {
-		content = <ResultsPlaceholder message="No results due to query error" />;
+		content = <ResultsPlaceholder message="No results due to query error" />
 	} else if (hasResultSet) {
-		const [firstResult] = queryResult ?? [];
+		const [firstResult] = queryResult ?? []
 
 		content = hasRows ? (
 			<DataTable data={firstResult} />
@@ -68,13 +68,13 @@ export function ExerciseResults({
 			<ResultsPlaceholder message={emptyMessage}>
 				{showWarning ? <Warning>{datasetWarning}</Warning> : null}
 			</ResultsPlaceholder>
-		);
+		)
 	} else {
 		content = (
 			<ResultsPlaceholder message={hasExecuted ? emptyMessage : 'Execute your query to preview results.'}>
 				{showWarning ? <Warning>{datasetWarning}</Warning> : null}
 			</ResultsPlaceholder>
-		);
+		)
 	}
 
 	return (
@@ -89,8 +89,8 @@ export function ExerciseResults({
 						exclusive
 						value={datasetSize}
 						onChange={(_event, nextValue) => {
-							if (!nextValue) return;
-							onDatasetSizeChange(nextValue as DatasetSize);
+							if (!nextValue) return
+							onDatasetSizeChange(nextValue as DatasetSize)
 						}}
 						sx={{
 							flexWrap: 'wrap',
@@ -108,7 +108,7 @@ export function ExerciseResults({
 						size="small"
 						color="primary"
 						variant="text"
-						onClick={() => setExpanded((prev) => !prev)}
+						onClick={() => setExpanded(prev => !prev)}
 						endIcon={expanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
 						sx={{ textTransform: 'none', fontWeight: 500, px: 1 }}
 					>
@@ -122,5 +122,5 @@ export function ExerciseResults({
 				<Box sx={{ px: 2.5, pb: 2.5 }}>{content}</Box>
 			</Collapse>
 		</ExerciseSection>
-	);
+	)
 }

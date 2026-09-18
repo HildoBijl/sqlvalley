@@ -1,10 +1,10 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
-import { Flag } from '@mui/icons-material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material'
+import { Flag } from '@mui/icons-material'
 
 interface GiveUpDialogProps {
-	open: boolean;
-	onConfirm: () => void;
-	onCancel: () => void;
+	open: boolean
+	onConfirm: () => void
+	onCancel: () => void
 }
 
 export function GiveUpDialog({ open, onConfirm, onCancel }: GiveUpDialogProps) {
@@ -24,6 +24,6 @@ export function GiveUpDialog({ open, onConfirm, onCancel }: GiveUpDialogProps) {
 				</Button>
 			</DialogActions>
 		</Dialog>
-	);
+	)
 }
 

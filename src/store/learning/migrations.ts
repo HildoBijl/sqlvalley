@@ -1,7 +1,7 @@
 import { asRecord, runMigrations } from '../infrastructure'
 import type { PersistedLearning } from './persistence'
 
-export const LEARNING_STORAGE_VERSION = 8
+export const LEARNING_STORAGE_VERSION = 9
 
 // Migrations: index i transforms payload from version i to i+1.
 const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
@@ -177,6 +177,30 @@ const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
 				// All legacy SimpleExercises began with an empty state.
 				const version = typeof instance.version === 'number' && Number.isSafeInteger(instance.version) && instance.version > 0 ? instance.version : 1
 				return { ...instance, version, startedAt: timestamp(createdAt), mode: 'solo', initialState: {}, history }
+			})
+			return [moduleId, { ...module, exerciseHistory }]
+		}))
+		return { ...state, modules: migratedModules as PersistedLearning['modules'] }
+	},
+	
+	// v8 -> v9: adopt structured mono input actions and the upstream attempted flag.
+	state => {
+		const modules = asRecord(asRecord(state).modules)
+		const migratedModules = Object.fromEntries(Object.entries(modules).map(([moduleId, moduleValue]) => {
+			const module = asRecord(moduleValue)
+			if (module.moduleType !== 'skill' || !Array.isArray(module.exerciseHistory)) return [moduleId, module]
+			const exerciseHistory = module.exerciseHistory.map(value => {
+				const instance = asRecord(value)
+				let attempted = false
+				const history = (Array.isArray(instance.history) ? instance.history : []).map(value => {
+					const event = asRecord(value)
+					const action = asRecord(event.action)
+					if (action.type === 'input') attempted = true
+					const migratedAction = action.type === 'give-up' ? { ...action, type: 'giveUp' }
+						: action.type === 'input' && typeof action.input === 'string' ? { ...action, input: { query: { type: 'SQL', value: action.input } } } : action
+					return { ...event, action: migratedAction, state: { ...asRecord(event.state), ...(attempted ? { attempted: true } : {}) } }
+				})
+				return { ...instance, history }
 			})
 			return [moduleId, { ...module, exerciseHistory }]
 		}))

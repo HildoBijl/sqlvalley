@@ -1,3 +1,3 @@
 export * from '@sqlvalley/sql-grading';
-export * from './SimpleSQLExercise';
+export * from './MonoSQLExercise';
 export * from './SqlModule';

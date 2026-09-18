@@ -1,36 +1,32 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Alert, Box } from '@mui/material'
 
-import type { PlainDataValue } from '@step-wise/js-utils'
-import { getCurrentState } from '@step-wise/exercise-definition'
+import { type InputExerciseAction, type MonoExerciseState, getLastRawInput } from '@step-wise/input-exercises'
+import { type ExerciseParameters, getCurrentState } from '@step-wise/exercise-definition'
 
 import { useExercise, useModuleContext } from '@sqlvalley/exercise-manager'
-import type { SimpleExerciseReport } from './buildSimpleExercise'
-import { SimpleExerciseControlsContext } from './controlsContext'
+
+import type { MonoExerciseReport } from './types'
+import { MonoExerciseControlsContext } from './controlsContext'
 import { ExerciseControls } from './ExerciseControls'
 import { GiveUpDialog } from './GiveUpDialog'
-import { isSimpleExerciseGivenUp, isSimpleExerciseSolved } from './logic'
-import type { SimpleExerciseRenderSpec } from './specifications'
-import type { SimpleExerciseStoredState } from './types'
+import type { MonoExerciseRenderSpec } from './specifications'
 
-interface SimpleExerciseComponentProps<
+interface MonoExerciseProps<
 	Parameters extends Record<string, unknown>,
 	Input,
 	CheckResult,
 > {
-	spec: SimpleExerciseRenderSpec<Parameters, Input, CheckResult>
+	spec: MonoExerciseRenderSpec<Parameters, Input, CheckResult>
 }
 
-/**
- * Renders the active exercise from context and handles submit/give-up. Feedback is
- * derived from the latest stored report, so it survives a reload without regrading.
- */
-export function SimpleExerciseComponent<
+// Restores feedback from the stored report without regrading on reload.
+export function MonoExercise<
 	Parameters extends Record<string, unknown>,
 	Input,
 	CheckResult,
->({ spec }: SimpleExerciseComponentProps<Parameters, Input, CheckResult>) {
-	const { exerciseInstance, pending, controls } = useExercise()
+>({ spec }: MonoExerciseProps<Parameters, Input, CheckResult>) {
+	const { exerciseInstance, pending, controls } = useExercise<ExerciseParameters, InputExerciseAction, MonoExerciseState>()
 	const moduleContext = useModuleContext()
 	const { history, draftInput } = exerciseInstance
 	const state = getCurrentState(exerciseInstance)
@@ -39,16 +35,14 @@ export function SimpleExerciseComponent<
 	const [giveUpOpen, setGiveUpOpen] = useState(false)
 
 	const lastSubmittedInput = useMemo(() => {
-		for (let i = history.length - 1; i >= 0; i -= 1) {
-			if (history[i].action.type === 'input') return history[i].action.input as Input
-		}
-		return undefined
-	}, [history])
+		const rawInput = getLastRawInput(exerciseInstance)
+		return rawInput ? spec.fromRawInput(rawInput) : undefined
+	}, [exerciseInstance, spec])
 	const input = (draftInput !== undefined ? draftInput : lastSubmittedInput ?? spec.initialInput) as Input
 
 	const latestEvent = history[history.length - 1]
 	const report = latestEvent?.action.type === 'input'
-		? (latestEvent.report as SimpleExerciseReport | undefined)
+		? (latestEvent.report as MonoExerciseReport | undefined)
 		: undefined
 	const feedback = !feedbackCleared && report ? report : null
 	const lastResult = (report?.result ?? null) as CheckResult | null
@@ -63,18 +57,18 @@ export function SimpleExerciseComponent<
 
 	const handleSubmit = useCallback(() => {
 		setFeedbackCleared(false)
-		void controls.submitAction({ type: 'input', input: input as PlainDataValue })
-	}, [controls, input])
+		void controls.submitAction({ type: 'input', input: spec.toRawInput(input) })
+	}, [controls, input, spec])
 
 	const handleGiveUp = useCallback(() => {
 		setGiveUpOpen(false)
-		void controls.submitAction({ type: 'give-up' })
+		void controls.submitAction({ type: 'giveUp' })
 	}, [controls])
 
 	const params = exerciseInstance.parameters as Parameters
-	const storedState = state as SimpleExerciseStoredState
-	const solved = isSimpleExerciseSolved(storedState)
-	const givenUp = isSimpleExerciseGivenUp(storedState)
+	const storedState = state
+	const solved = storedState.solved === true
+	const givenUp = storedState.givenUp === true
 	const complete = solved || givenUp
 	const availabilityArgs = { parameters: params, input, moduleContext }
 	const canSubmit = !complete && !pending && !(spec.isInputEmpty?.(input) ?? false) &&
@@ -94,7 +88,7 @@ export function SimpleExerciseComponent<
 				onSubmit={handleSubmit}
 			/>
 			{feedback ? <Alert severity={feedback.type} sx={{ mt: 1.5 }}>{feedback.message}</Alert> : null}
-			<SimpleExerciseControlsContext.Provider
+			<MonoExerciseControlsContext.Provider
 				value={{
 					solved,
 					givenUp,
@@ -107,7 +101,7 @@ export function SimpleExerciseComponent<
 				}}
 			>
 				<ExerciseControls />
-			</SimpleExerciseControlsContext.Provider>
+			</MonoExerciseControlsContext.Provider>
 			{Output ? (
 				<Output parameters={params} input={input} result={lastResult} state={storedState} />
 			) : null}

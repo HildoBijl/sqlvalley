@@ -1,14 +1,14 @@
-import { Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material'
 
 interface ExerciseDescriptionProps {
-	title: string;
-	description?: string;
-	tableNames?: string[];
+	title: string
+	description?: string
+	tableNames?: string[]
 }
 
 export function ExerciseDescription({ title, description, tableNames }: ExerciseDescriptionProps) {
 	if (!description) {
-		return null;
+		return null
 	}
 
 	return (
@@ -23,5 +23,5 @@ export function ExerciseDescription({ title, description, tableNames }: Exercise
 				</Typography>
 			)}
 		</Paper>
-	);
+	)
 }

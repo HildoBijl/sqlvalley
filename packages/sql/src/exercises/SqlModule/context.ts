@@ -1,7 +1,7 @@
 import { useModuleContext } from '@sqlvalley/exercise-manager';
 import type { DatasetSize } from '@sqlvalley/mock-data';
 import type { CompareOptions, SqlQueryResult } from '@sqlvalley/sql-grading';
-import type { SimpleSQLCheckResult } from '../SimpleSQLExercise/types';
+import type { MonoSQLCheckResult } from '../MonoSQLExercise/types';
 
 /**
  * The SQL module's environment: the shared live-query runtime plus a grade()
@@ -24,7 +24,7 @@ export interface SqlModuleContext {
 		query: string,
 		solution: string,
 		comparisonOptions?: CompareOptions,
-	) => Promise<SimpleSQLCheckResult>;
+	) => Promise<MonoSQLCheckResult>;
 }
 
 export function useSqlModuleContext(): SqlModuleContext {
