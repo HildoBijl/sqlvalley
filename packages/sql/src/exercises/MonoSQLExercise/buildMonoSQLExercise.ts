@@ -33,5 +33,5 @@ export function buildMonoSQLExercise<Parameters extends Record<string, unknown>>
 			}
 		},
 	})
-	return { metadata: { ...exercise.metadata, version: spec.version }, generateParameters: exercise.generateParameters, getInitialState: exercise.getInitialState, processSoloAction: exercise.processSoloAction }
+	return { metadata: exercise.metadata, generateParameters: exercise.generateParameters, getInitialState: exercise.getInitialState, processSoloAction: exercise.processSoloAction }
 }

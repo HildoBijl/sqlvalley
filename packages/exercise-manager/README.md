@@ -1,13 +1,13 @@
 # Exercise manager
 
-Runs solo exercises using `@step-wise/exercise-definition`, with React presentation and application storage supplied separately. Exercise renderers are supplied by consumers; the manager does not depend on input-exercise logic or UI.
+Runs solo exercises using `@step-wise/exercise-definition`, with React presentation and application storage supplied separately. Exercise renderers are supplied by consumers; the manager uses the upstream input type for drafts and does not own grading logic or input UI.
 
 
 ## Definitions and registrations
 
-`ExerciseDefinition`, imported from `@sqlvalley/exercise-instances`, specializes the upstream `Exercise` type: `processSoloAction` is required, group processing is omitted, and metadata includes an explicit version. Definitions contain no React components.
+`ExerciseRegistration['definition']` selects the upstream `Exercise` fields the manager needs and requires `processSoloAction`. Group processing is omitted from this contract. Metadata version is optional and defaults to `1` when generating or matching saved instances. Definitions contain no React components.
 
-`ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts and an optional `getSolutionInput` admin helper. Pass registrations to `ExerciseManager` through its `exercises` prop.
+`ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts and an optional `getSolutionInput` admin helper. Pass registrations to `ExerciseManager` through its `exercises` prop. The admin solution helper returns `InputExerciseRawInput`, matching the instance draft and `ExerciseControls.setDraftInput`. Passing `undefined` clears a draft.
 
 ```tsx
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'

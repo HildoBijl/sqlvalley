@@ -1,4 +1,5 @@
-import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState, SkillId } from '@sqlvalley/exercise-instances'
+import type { SkillId } from '@step-wise/module-tree-definition'
+import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } from '@sqlvalley/exercise-instances'
 
 // Snapshots must retain their reference until changed, as required by useSyncExternalStore.
 export interface ExerciseStorage {
@@ -13,5 +14,5 @@ export interface ExerciseStorage {
 		exerciseDone: boolean,
 		increaseSolvedCounter: boolean,
 	): void
-	setDraftInput(skillId: SkillId, draftInput: unknown): void
+	setDraftInput(skillId: SkillId, draftInput: ExerciseInstance['draftInput']): void
 }

@@ -4,7 +4,7 @@ import type { MonoExerciseFeedbackType } from '@sqlvalley/input-exercise-compone
 
 export interface MonoSQLExerciseSpec<Parameters extends Record<string, unknown>> {
 	exerciseId: ExerciseId
-	version: ExerciseVersion
+	version?: ExerciseVersion
 	generateParameters: (moduleContext: unknown) => Parameters | Promise<Parameters>
 	problem: string | ((parameters: Parameters) => string)
 	solution: string | ((parameters: Parameters) => string)

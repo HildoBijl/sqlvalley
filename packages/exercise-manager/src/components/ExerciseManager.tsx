@@ -3,7 +3,7 @@ import { Alert, Button, Typography } from '@mui/material'
 
 import { sample } from '@step-wise/js-utils'
 import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
-import { generateExerciseInstance } from '@sqlvalley/exercise-instances'
+import { type ExerciseInstance, generateExerciseInstance } from '@sqlvalley/exercise-instances'
 
 import { type AnyExerciseContextValue, type ExerciseRegistration, ExerciseContext } from '../exerciseContext'
 import { useModuleContext } from '../moduleContext'
@@ -28,7 +28,7 @@ function ExerciseManagerSession({ skillId, exercises, showAdminControls = false 
 	const instance = useSyncExternalStore(storage.subscribe, getInstanceSnapshot)
 	const byId = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])
 	const matched = instance ? byId.get(instance.exerciseId) : undefined
-	const active = matched?.definition.metadata.version === instance?.version ? matched : undefined
+	const active = (matched?.definition.metadata.version ?? 1) === instance?.version ? matched : undefined
 	const [pending, setPending] = useState(false)
 	const [generating, setGenerating] = useState(false)
 	const [error, setError] = useState<string | null>(null)
@@ -67,7 +67,7 @@ function ExerciseManagerSession({ skillId, exercises, showAdminControls = false 
 		const current = storage.getInstance(skillId)
 		const registration = current ? byId.get(current.exerciseId) : undefined
 		let cancelled = false
-		if (!current || !registration || registration.definition.metadata.version !== current.version) {
+		if (!current || !registration || (registration.definition.metadata.version ?? 1) !== current.version) {
 			void startExercise(registration ?? sample(exercises), () => !cancelled)
 		}
 		return () => { cancelled = true }
@@ -115,7 +115,7 @@ function ExerciseManagerSession({ skillId, exercises, showAdminControls = false 
 		}
 	}, [active, generating, moduleContext, moduleReady, skillId, storage])
 
-	const setDraftInput = useCallback((draftInput: unknown) => {
+	const setDraftInput = useCallback((draftInput: ExerciseInstance['draftInput']) => {
 		if (storage.getInstance(skillId)) storage.setDraftInput(skillId, draftInput)
 	}, [skillId, storage])
 

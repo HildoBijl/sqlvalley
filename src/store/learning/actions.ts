@@ -10,7 +10,7 @@ export interface LearningActions {
 	completeSkill: (skillId: string) => void
 	startNewExercise: (skillId: string, exerciseInstance: ExerciseInstance) => void
 	submitExerciseAction: (skillId: string, action: ExerciseAction, resultingState: ExerciseState, report: ExerciseReport | undefined, exerciseDone: boolean, increaseSolvedCounter: boolean) => void
-	setExerciseDraftInput: (skillId: string, draftInput: unknown) => void
+	setExerciseDraftInput: (skillId: string, draftInput: ExerciseInstance['draftInput']) => void
 }
 
 function getConceptModuleForUpdate(moduleId: string, state: LearningState): ConceptState {

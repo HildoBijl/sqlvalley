@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Alert, Box } from '@mui/material'
 
-import { type InputExerciseAction, type InputExerciseRawInput, type MonoExerciseState, getLastRawInput } from '@step-wise/input-exercises'
+import { type InputExerciseAction, type MonoExerciseState, getLastRawInput } from '@step-wise/input-exercises'
 import { type ExerciseParameters, getCurrentState } from '@step-wise/exercise-definition'
 
 import { useExercise, useModuleContext } from '@sqlvalley/exercise-manager'
@@ -39,7 +39,7 @@ export function MonoExercise<
 		return rawInput ? spec.fromRawInput(rawInput) : undefined
 	}, [exerciseInstance, spec])
 	const input = draftInput !== undefined
-		? spec.fromRawInput(draftInput as InputExerciseRawInput)
+		? spec.fromRawInput(draftInput)
 		: lastSubmittedInput ?? spec.initialInput
 
 	const latestEvent = history[history.length - 1]

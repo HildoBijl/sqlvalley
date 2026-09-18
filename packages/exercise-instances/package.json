@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@step-wise/exercise-definition": "^0.2.0",
-    "@step-wise/js-utils": "^0.1.1"
+    "@step-wise/js-utils": "^0.1.1",
+    "@step-wise/input-exercises": "^0.2.0"
   }
 }
