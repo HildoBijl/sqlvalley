@@ -183,7 +183,7 @@ const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
 		return { ...state, modules: migratedModules as PersistedLearning['modules'] }
 	},
 	
-	// v8 -> v9: adopt structured mono input actions and the upstream attempted flag.
+	// v8 -> v9: adopt structured mono inputs and drafts, and the upstream attempted flag.
 	state => {
 		const modules = asRecord(asRecord(state).modules)
 		const migratedModules = Object.fromEntries(Object.entries(modules).map(([moduleId, moduleValue]) => {
@@ -200,7 +200,10 @@ const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
 						: action.type === 'input' && typeof action.input === 'string' ? { ...action, input: { query: { type: 'SQL', value: action.input } } } : action
 					return { ...event, action: migratedAction, state: { ...asRecord(event.state), ...(attempted ? { attempted: true } : {}) } }
 				})
-				return { ...instance, history }
+				const draft = typeof instance.draftInput === 'string'
+					? { draftInput: { query: { type: 'SQL', value: instance.draftInput } } }
+					: {}
+				return { ...instance, ...draft, history }
 			})
 			return [moduleId, { ...module, exerciseHistory }]
 		}))

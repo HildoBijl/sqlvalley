@@ -36,7 +36,7 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 			},
 		},
 		isSolved: state => state.solved === true,
-		getSolutionInput: parameters => resolveValue(spec.solution, parameters as Parameters).trim(),
+		getSolutionInput: parameters => toRawInput(resolveValue(spec.solution, parameters as Parameters).trim()),
 		Component: () => <MonoExercise spec={renderSpec} />,
 	}
 }

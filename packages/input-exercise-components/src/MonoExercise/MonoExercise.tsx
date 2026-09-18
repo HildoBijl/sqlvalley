@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Alert, Box } from '@mui/material'
 
-import { type InputExerciseAction, type MonoExerciseState, getLastRawInput } from '@step-wise/input-exercises'
+import { type InputExerciseAction, type InputExerciseRawInput, type MonoExerciseState, getLastRawInput } from '@step-wise/input-exercises'
 import { type ExerciseParameters, getCurrentState } from '@step-wise/exercise-definition'
 
 import { useExercise, useModuleContext } from '@sqlvalley/exercise-manager'
@@ -38,7 +38,9 @@ export function MonoExercise<
 		const rawInput = getLastRawInput(exerciseInstance)
 		return rawInput ? spec.fromRawInput(rawInput) : undefined
 	}, [exerciseInstance, spec])
-	const input = (draftInput !== undefined ? draftInput : lastSubmittedInput ?? spec.initialInput) as Input
+	const input = draftInput !== undefined
+		? spec.fromRawInput(draftInput as InputExerciseRawInput)
+		: lastSubmittedInput ?? spec.initialInput
 
 	const latestEvent = history[history.length - 1]
 	const report = latestEvent?.action.type === 'input'
@@ -49,10 +51,10 @@ export function MonoExercise<
 
 	const handleInputChange = useCallback(
 		(value: Input) => {
-			controls.setDraftInput(value)
+			controls.setDraftInput(spec.toRawInput(value))
 			setFeedbackCleared(true)
 		},
-		[controls],
+		[controls, spec],
 	)
 
 	const handleSubmit = useCallback(() => {
