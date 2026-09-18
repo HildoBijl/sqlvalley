@@ -1,172 +1,175 @@
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Alert, Typography } from '@mui/material';
-import { sample } from '@step-wise/js-utils';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { Alert, Button, Typography } from '@mui/material'
 
-import type {
-	StoredExerciseAction,
-	StoredExerciseInstance,
-	StoredExerciseState,
-} from '../storedState';
-import { Exercise, type AnyExerciseContextValue, type AnyExerciseDefinition } from '../Exercise';
-import { useModuleContext } from '../moduleContext';
-import { useExerciseStorage } from '../storageContext';
-import { ExerciseAdminTools } from './ExerciseAdminTools';
+import { sample } from '@step-wise/js-utils'
+import { type ExerciseAction, type ExerciseParameters, type ExerciseState, isStateDone } from '@step-wise/exercise-definition'
+
+import type { StoredExerciseInstance } from '../storedState'
+import { type AnyExerciseContextValue, type ExerciseRegistration, Exercise } from '../Exercise'
+import { useModuleContext } from '../moduleContext'
+import { useExerciseStorage } from '../storageContext'
+import { ExerciseAdminTools } from './ExerciseAdminTools'
 
 interface ExerciseManagerProps {
-	skillId: string;
-	exercises: ReadonlyArray<AnyExerciseDefinition>;
-	showAdminControls?: boolean;
+	skillId: string
+	exercises: readonly ExerciseRegistration[]
+	showAdminControls?: boolean
 }
 
-function readLatestState(instance: StoredExerciseInstance): StoredExerciseState {
-	return { ...(instance.events[instance.events.length - 1]?.resultingState ?? {}) };
+// Keep asynchronous work and local rendering state scoped to one skill.
+export function ExerciseManager(props: ExerciseManagerProps) {
+	return <ExerciseManagerSession key={props.skillId} {...props} />
 }
 
-/**
- * Owns exercise selection, lifecycle, and all the control handlers for a skill.
- * Fed the definitions by the page, it keeps one active exercise in the store and
- * hands a ready-made { definition, data, controls, skill } context to a thin Exercise.
- */
-export function ExerciseManager({
-	skillId,
-	exercises,
-	showAdminControls = false,
-}: ExerciseManagerProps) {
-	const moduleContext = useModuleContext();
-	const storage = useExerciseStorage();
-	const getInstanceSnapshot = useCallback(
-		() => storage.getInstance(skillId),
-		[storage, skillId],
-	);
-	const instance = useSyncExternalStore(storage.subscribe, getInstanceSnapshot);
+function readLatestState(instance: StoredExerciseInstance, initialState: ExerciseState): ExerciseState {
+	return { ...(instance.events[instance.events.length - 1]?.resultingState ?? initialState) } as ExerciseState
+}
 
-	const byId = useMemo(
-		() => new Map(exercises.map((exercise) => [exercise.exerciseId, exercise])),
-		[exercises],
-	);
-	const matched = instance ? byId.get(instance.exerciseId) ?? null : null;
-	const active = matched && matched.version === instance?.version ? matched : null;
+function ExerciseManagerSession({ skillId, exercises, showAdminControls = false }: ExerciseManagerProps) {
+	const moduleContext = useModuleContext()
+	const storage = useExerciseStorage()
+	const getInstanceSnapshot = useCallback(() => storage.getInstance(skillId), [storage, skillId])
+	const instance = useSyncExternalStore(storage.subscribe, getInstanceSnapshot)
+	const byId = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])
+	const matched = instance ? byId.get(instance.exerciseId) : undefined
+	const active = matched?.definition.metadata.version === instance?.version ? matched : undefined
+	const [initialized, setInitialized] = useState<{ parameters: Record<string, unknown>; state: ExerciseState } | null>(null)
+	const [pending, setPending] = useState(false)
+	const [generating, setGenerating] = useState(false)
+	const [error, setError] = useState<string | null>(null)
+	const [initializationAttempt, setInitializationAttempt] = useState(0)
+	const pendingRef = useRef(false)
+	const generation = useRef(0)
+	const mounted = useRef(false)
+	const moduleReady = moduleContext == null || (moduleContext as { ready?: boolean }).ready !== false
 
-	const [pending, setPending] = useState(false);
-	const pendingRef = useRef(false);
+	useEffect(() => {
+		mounted.current = true
+		return () => {
+			mounted.current = false
+			generation.current = generation.current + 1
+		}
+	}, [storage])
 
-	const startExercise = useCallback((definition: AnyExerciseDefinition) => {
-		const current = storage.getInstance(skillId);
-		const parameters = definition.generateParameters(moduleContext, {
-			previousParameters: current?.parameters ?? null,
-		});
-		storage.startExercise(skillId, definition.exerciseId, definition.version, parameters);
-	}, [moduleContext, skillId, storage]);
+	const startExercise = useCallback(async (registration: ExerciseRegistration, isCurrent: () => boolean = () => true) => {
+		const request = ++generation.current
+		setGenerating(true)
+		setError(null)
+		try {
+			const definition = registration.definition
+			const parameters = await definition.generateParameters({ example: false, context: moduleContext })
+			if (!mounted.current || request !== generation.current || !isCurrent()) return
+			const state = await definition.getInitialState({ parameters, context: moduleContext })
+			if (!mounted.current || request !== generation.current || !isCurrent()) return
+			storage.startExercise(skillId, registration.exerciseId, definition.metadata.version, parameters)
+			const current = storage.getInstance(skillId)
+			if (current) setInitialized({ parameters: current.parameters, state })
+		} catch (cause) {
+			if (mounted.current && request === generation.current && isCurrent()) setError(cause instanceof Error ? cause.message : 'Unable to generate the exercise.')
+		} finally {
+			if (mounted.current && request === generation.current) setGenerating(false)
+		}
+	}, [moduleContext, skillId, storage])
+
+	// Until instances store initialState, recreate it when restoring an existing instance.
+	useEffect(() => {
+		if (!moduleReady || exercises.length === 0) return
+		const current = storage.getInstance(skillId)
+		const registration = current ? byId.get(current.exerciseId) : undefined
+		let cancelled = false
+		if (!current || !registration || registration.definition.metadata.version !== current.version) {
+			void startExercise(registration ?? sample(exercises), () => !cancelled)
+		} else if (initialized?.parameters !== current.parameters) {
+			setError(null)
+			void Promise.resolve().then(() => registration.definition.getInitialState({
+				parameters: current.parameters as ExerciseParameters,
+				context: moduleContext,
+			})).then(state => {
+				if (!cancelled && storage.getInstance(skillId)?.parameters === current.parameters) setInitialized({ parameters: current.parameters, state })
+			}).catch(cause => {
+				if (!cancelled) setError(cause instanceof Error ? cause.message : 'Unable to initialize the exercise.')
+			})
+		}
+		return () => { cancelled = true }
+	}, [byId, exercises, initializationAttempt, initialized?.parameters, instance?.parameters, moduleContext, moduleReady, skillId, startExercise, storage])
 
 	const startNewExercise = useCallback(() => {
-		const current = storage.getInstance(skillId);
-		const currentDefinition = current ? byId.get(current.exerciseId) : null;
-		const candidates = currentDefinition && exercises.length > 1
-			? exercises.filter((exercise) => exercise.exerciseId !== currentDefinition.exerciseId)
-			: exercises;
-		if (candidates.length === 0) return;
-		const next = sample(candidates);
-		startExercise(next);
-	}, [byId, exercises, skillId, startExercise, storage]);
+		if (!moduleReady || pendingRef.current || generating) return
+		const current = storage.getInstance(skillId)
+		const candidates = current && exercises.length > 1 ? exercises.filter(exercise => exercise.exerciseId !== current.exerciseId) : exercises
+		if (candidates.length > 0) void startExercise(sample(candidates))
+	}, [exercises, generating, moduleReady, skillId, startExercise, storage])
 
 	const selectExercise = useCallback((exerciseId: string) => {
-		const definition = byId.get(exerciseId);
-		if (definition) startExercise(definition);
-	}, [byId, startExercise]);
+		if (!moduleReady || pendingRef.current || generating) return
+		const registration = byId.get(exerciseId)
+		if (registration) void startExercise(registration)
+	}, [byId, generating, moduleReady, startExercise])
 
 	const showSolution = useCallback(() => {
-		if (!active?.getSolutionInput || !instance) return;
-		storage.setDraftInput(skillId, active.getSolutionInput(instance.parameters));
-	}, [active, instance, skillId, storage]);
+		if (active?.getSolutionInput && instance) storage.setDraftInput(skillId, active.getSolutionInput(instance.parameters as ExerciseParameters))
+	}, [active, instance, skillId, storage])
 
-	const submitAction = useCallback(async (action: StoredExerciseAction) => {
-		if (!active || pendingRef.current) return;
-		pendingRef.current = true;
-		setPending(true);
+	const submitAction = useCallback(async (action: ExerciseAction) => {
+		const current = storage.getInstance(skillId)
+		if (!active || !current || initialized?.parameters !== current.parameters || pendingRef.current || generating || !moduleReady) return
+		pendingRef.current = true
+		setPending(true)
+		setError(null)
 		try {
-			const current = storage.getInstance(skillId);
-			if (!current) return;
-			const previousState = readLatestState(current);
-			const { state, report } = await active.reduce(
-				current.parameters,
-				previousState,
+			const previousState = readLatestState(current, initialized.state)
+			const { state, report } = await active.definition.processSoloAction({
+				parameters: current.parameters as ExerciseParameters,
+				state: previousState,
 				action,
-				moduleContext,
-			);
-			storage.submitAction(
-				skillId,
-				action,
-				state,
-				report,
-				active.isComplete(state),
-				active.isSolved(state) && !active.isSolved(previousState),
-			);
+				context: moduleContext,
+			})
+			const latest = storage.getInstance(skillId)
+			if (!mounted.current || latest?.parameters !== current.parameters || latest.events.length !== current.events.length) return
+			storage.submitAction(skillId, action, state, report, isStateDone(state), active.isSolved(state) && !active.isSolved(previousState))
+		} catch (cause) {
+			if (mounted.current) setError(cause instanceof Error ? cause.message : 'Unable to submit your answer.')
 		} finally {
-			pendingRef.current = false;
-			setPending(false);
+			pendingRef.current = false
+			if (mounted.current) setPending(false)
 		}
-	}, [active, moduleContext, skillId, storage]);
+	}, [active, generating, initialized, moduleContext, moduleReady, skillId, storage])
 
 	const setDraftInput = useCallback((draftInput: unknown) => {
-		const current = storage.getInstance(skillId);
-		if (!current) return;
-		storage.setDraftInput(skillId, draftInput);
-	}, [skillId, storage]);
+		if (storage.getInstance(skillId)) storage.setDraftInput(skillId, draftInput)
+	}, [skillId, storage])
 
-	// A module provider may report it isn't ready yet (e.g. its database is still
-	// loading); hold off generating until it is. No provider means always ready.
-	const moduleReady = moduleContext == null ||
-		(moduleContext as { ready?: boolean }).ready !== false;
-
-	// Keep exactly one valid exercise active. Reads live storage so React
-	// StrictMode's double-invoke can't start two.
-	useEffect(() => {
-		if (exercises.length === 0 || !moduleReady) return;
-		const current = storage.getInstance(skillId);
-		const definition = current ? byId.get(current.exerciseId) : undefined;
-		if (current && definition && definition.version === current.version) return;
-		const next = definition ?? sample(exercises);
-		const parameters = next.generateParameters(moduleContext, {
-			previousParameters: current?.parameters ?? null,
-		});
-		storage.startExercise(skillId, next.exerciseId, next.version, parameters);
-	}, [byId, exercises, moduleContext, moduleReady, skillId, storage]);
-
-	if (exercises.length === 0) {
-		return <Alert severity="info">No exercises are available yet.</Alert>;
-	}
-	if (!active || !instance) {
-		return <Typography color="text.secondary">Generating your next exercise...</Typography>;
+	if (exercises.length === 0) return <Alert severity="info">No exercises are available yet.</Alert>
+	if (!active || !instance || initialized?.parameters !== instance.parameters) {
+		if (error) return <Alert severity="error" action={<Button onClick={() => setInitializationAttempt(attempt => attempt + 1)}>Try again</Button>}>{error}</Alert>
+		return <Typography color="text.secondary">Generating your next exercise...</Typography>
 	}
 
-	const exerciseOptions = exercises.map((exercise, index) => ({
-		id: exercise.exerciseId,
-		label: `${index + 1}. ${exercise.exerciseId}`,
-	}));
-
+	const busy = pending || generating || !moduleReady
 	const adminControls = showAdminControls ? (
 		<ExerciseAdminTools
-			options={exerciseOptions}
+			options={exercises.map((exercise, index) => ({ id: exercise.exerciseId, label: (index + 1) + '. ' + exercise.exerciseId }))}
 			selectedExerciseId={active.exerciseId}
-			disabled={pending}
-			solutionDisabled={pending || !active.getSolutionInput}
+			disabled={busy}
+			solutionDisabled={busy || !active.getSolutionInput}
 			onExerciseSelect={selectExercise}
 			onShowSolution={showSolution}
 		/>
-	) : undefined;
-
+	) : undefined
 	const value: AnyExerciseContextValue = {
-		definition: active,
+		definition: active.definition,
 		data: {
-			parameters: instance.parameters,
-			state: readLatestState(instance),
+			parameters: instance.parameters as ExerciseParameters,
+			state: readLatestState(instance, initialized.state),
 			events: instance.events,
 			draftInput: instance.draftInput,
-			pending,
+			pending: busy,
 		},
 		controls: { submitAction, setDraftInput, startNewExercise, adminControls },
 		skill: { id: skillId },
-	};
-
-	return <Exercise value={value} />;
+	}
+	return <>
+		{error && <Alert severity="error">{error}</Alert>}
+		<Exercise key={instance.createdAt} value={value} Component={active.Component} />
+	</>
 }

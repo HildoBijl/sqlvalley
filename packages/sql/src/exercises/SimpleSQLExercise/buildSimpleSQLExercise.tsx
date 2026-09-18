@@ -1,4 +1,4 @@
-import { buildSimpleExercise, type AnyExerciseDefinition } from '@sqlvalley/exercise-engine';
+import { buildSimpleExercise, type ExerciseRegistration } from '@sqlvalley/exercise-engine';
 
 import { normalizeSqlInput, validateSqlInput } from '@sqlvalley/sql-grading';
 import type { SqlModuleContext } from '../SqlModule';
@@ -11,7 +11,7 @@ import type { SimpleSQLCheckResult, SimpleSQLExerciseSpec } from './types';
  */
 export function buildSimpleSQLExercise<Parameters extends Record<string, unknown>>(
 	spec: SimpleSQLExerciseSpec<Parameters>,
-): AnyExerciseDefinition {
+): ExerciseRegistration {
 	const { exerciseId, version, generateParameters, comparisonOptions, title = 'Exercise' } = spec;
 
 	return buildSimpleExercise<Parameters, string, SimpleSQLCheckResult>({

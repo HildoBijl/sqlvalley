@@ -2,7 +2,7 @@ import {
 	buildSimpleSQLExercise,
 	type SimpleSQLExerciseDefinition,
 } from '@sqlvalley/sql';
-import type { AnyExerciseDefinition } from '@sqlvalley/exercise-engine';
+import type { ExerciseRegistration } from '@sqlvalley/exercise-engine';
 import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
 
 type Parameters = Record<string, never>;
@@ -85,7 +85,7 @@ WHERE phone LIKE '408%'
 	//   },
 ];
 
-export default function buildExercises(): AnyExerciseDefinition[] {
+export default function buildExercises(): ExerciseRegistration[] {
 	return EXERCISES.map((exercise) => buildSimpleSQLExercise(exercise));
 }
 

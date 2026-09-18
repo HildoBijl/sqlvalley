@@ -3,16 +3,16 @@ import { useEffect, useState } from 'react';
 import { type Module, moduleTree } from '../moduleDefinition'
 import { skillExerciseLoaders } from '../utils/loaders';
 
-import type { AnyExerciseDefinition, ModuleProviderComponent } from '@sqlvalley/exercise-engine';
+import type { ExerciseRegistration, ModuleProviderComponent } from '@sqlvalley/exercise-engine';
 
 type SkillExerciseLoader = (typeof skillExerciseLoaders)[keyof typeof skillExerciseLoaders];
 type SkillExerciseModule = Record<string, unknown>;
-type BuildExercises = (skillId: string) => AnyExerciseDefinition[];
+type BuildExercises = (skillId: string) => ExerciseRegistration[];
 
 interface SkillContentState {
 	isLoading: boolean;
 	skillMeta: (Module & { database?: string }) | null;
-	exerciseDefinitions: AnyExerciseDefinition[] | null;
+	exerciseDefinitions: ExerciseRegistration[] | null;
 	moduleProvider: ModuleProviderComponent | null;
 	error: string | null;
 }

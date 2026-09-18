@@ -1,62 +1,25 @@
-import type { ComponentType } from 'react';
+import type { ComponentType } from 'react'
 
-import type {
-	ExerciseId,
-	ExerciseVersion,
-	StoredExerciseAction,
-	StoredExerciseState,
-} from '../storedState';
+import type { Exercise, ExerciseAction, ExerciseMetadata, ExerciseParameters, ExerciseState, SoloExerciseReport } from '@step-wise/exercise-definition'
 
-export type Awaitable<T> = T | Promise<T>;
+import type { ExerciseId } from '../storedState'
 
-export interface ReduceResult<State extends StoredExerciseState> {
-	state: State;
-	/** Opaque per-exercise-type data used to build feedback (stored with the action). */
-	report?: unknown;
+type SoloDefinition<Parameters extends ExerciseParameters, Action extends ExerciseAction, State extends ExerciseState> =
+	Exercise<ExerciseMetadata & { version: number }, Action, State, Parameters, SoloExerciseReport, never, unknown>
+
+export type ExerciseDefinition<
+	Parameters extends ExerciseParameters = ExerciseParameters,
+	Action extends ExerciseAction = ExerciseAction,
+	State extends ExerciseState = ExerciseState,
+> = Omit<SoloDefinition<Parameters, Action, State>, 'processSoloAction' | 'processGroupActions'> & {
+	processSoloAction: NonNullable<SoloDefinition<Parameters, Action, State>['processSoloAction']>
 }
 
-/**
- * Grades an action. May be sync or async; `moduleContext` is the subject-specific
- * environment (for SQL: database access) injected by the manager.
- */
-export type ExerciseReducer<
-	Parameters extends Record<string, unknown>,
-	Action extends StoredExerciseAction,
-	State extends StoredExerciseState,
-> = (
-	parameters: Parameters,
-	state: State,
-	action: Action,
-	moduleContext: unknown,
-) => Awaitable<ReduceResult<State>>;
-
-/**
- * A single self-contained exercise: how to generate it, how to reduce an action
- * against its state, and the component that renders it (props-free, context-fed).
- */
-export interface ExerciseDefinition<
-	Parameters extends Record<string, unknown>,
-	Action extends StoredExerciseAction,
-	State extends StoredExerciseState,
-> {
-	exerciseId: ExerciseId;
-	version: ExerciseVersion;
-	generateParameters: (
-		moduleContext: unknown,
-		context?: { previousParameters?: Parameters | null },
-	) => Parameters;
-	initialState: State;
-	isComplete: (state: State) => boolean;
-	isSolved: (state: State) => boolean;
-	/** Optional admin helper that supplies the complete input for this exercise. */
-	getSolutionInput?: (parameters: Parameters) => unknown;
-	reduce: ExerciseReducer<Parameters, Action, State>;
-	Component: ComponentType;
+// Presentation and application identity stay outside the logical exercise definition.
+export interface ExerciseRegistration {
+	exerciseId: ExerciseId
+	definition: ExerciseDefinition
+	Component: ComponentType
+	isSolved: (state: ExerciseState) => boolean
+	getSolutionInput?: (parameters: ExerciseParameters) => unknown
 }
-
-/** An exercise definition with its generics erased, for holding a mixed list. */
-export type AnyExerciseDefinition = ExerciseDefinition<
-	Record<string, unknown>,
-	StoredExerciseAction,
-	StoredExerciseState
->;

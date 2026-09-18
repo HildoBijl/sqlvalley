@@ -38,10 +38,7 @@ export interface SimpleExerciseSpecification<
 > extends SimpleExerciseRenderSpec<Parameters, Input, CheckResult> {
 	exerciseId: ExerciseId;
 	version: ExerciseVersion;
-	generateParameters: (
-		moduleContext: unknown,
-		context?: { previousParameters?: Parameters | null },
-	) => Parameters;
+	generateParameters: (moduleContext: unknown) => Parameters | Promise<Parameters>
 	validateInput?: (
 		args: { parameters: Parameters; input: Input; moduleContext: unknown },
 	) => SimpleExerciseValidationResult | Promise<SimpleExerciseValidationResult>;

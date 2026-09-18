@@ -6,7 +6,7 @@ export type ModuleProviderComponent = ComponentType<{ skillId: string; children:
 /**
  * The subject-specific environment for a module (skill/concept). Opaque to the
  * engine: a SQL module provides database access, a datalog module its own, etc.
- * The ExerciseManager forwards it into generateParameters/reduce.
+ * The ExerciseManager forwards it into generateParameters/getInitialState/processSoloAction.
  */
 const ModuleContext = createContext<unknown>(undefined);
 

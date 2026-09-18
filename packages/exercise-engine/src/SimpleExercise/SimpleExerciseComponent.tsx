@@ -1,22 +1,24 @@
-import { useCallback, useMemo, useState } from 'react';
-import { Alert, Box } from '@mui/material';
+import { useCallback, useMemo, useState } from 'react'
+import { Alert, Box } from '@mui/material'
 
-import { useExercise } from '../Exercise';
-import { useModuleContext } from '../moduleContext';
-import type { SimpleExerciseReport } from './buildSimpleExercise';
-import { SimpleExerciseControlsContext } from './controlsContext';
-import { ExerciseControls } from './ExerciseControls';
-import { GiveUpDialog } from './GiveUpDialog';
-import { isSimpleExerciseGivenUp, isSimpleExerciseSolved } from './logic';
-import type { SimpleExerciseRenderSpec } from './specifications';
-import type { SimpleExerciseStoredState } from './types';
+import type { PlainDataValue } from '@step-wise/js-utils'
+
+import { useExercise } from '../Exercise'
+import { useModuleContext } from '../moduleContext'
+import type { SimpleExerciseReport } from './buildSimpleExercise'
+import { SimpleExerciseControlsContext } from './controlsContext'
+import { ExerciseControls } from './ExerciseControls'
+import { GiveUpDialog } from './GiveUpDialog'
+import { isSimpleExerciseGivenUp, isSimpleExerciseSolved } from './logic'
+import type { SimpleExerciseRenderSpec } from './specifications'
+import type { SimpleExerciseStoredState } from './types'
 
 interface SimpleExerciseComponentProps<
 	Parameters extends Record<string, unknown>,
 	Input,
 	CheckResult,
 > {
-	spec: SimpleExerciseRenderSpec<Parameters, Input, CheckResult>;
+	spec: SimpleExerciseRenderSpec<Parameters, Input, CheckResult>
 }
 
 /**
@@ -28,56 +30,56 @@ export function SimpleExerciseComponent<
 	Input,
 	CheckResult,
 >({ spec }: SimpleExerciseComponentProps<Parameters, Input, CheckResult>) {
-	const { data, controls } = useExercise();
-	const moduleContext = useModuleContext();
-	const { events, draftInput, pending, state } = data;
+	const { data, controls } = useExercise()
+	const moduleContext = useModuleContext()
+	const { events, draftInput, pending, state } = data
 
-	const [feedbackCleared, setFeedbackCleared] = useState(false);
-	const [giveUpOpen, setGiveUpOpen] = useState(false);
+	const [feedbackCleared, setFeedbackCleared] = useState(false)
+	const [giveUpOpen, setGiveUpOpen] = useState(false)
 
 	const lastSubmittedInput = useMemo(() => {
 		for (let i = events.length - 1; i >= 0; i -= 1) {
-			if (events[i].action.type === 'input') return events[i].action.input as Input;
+			if (events[i].action.type === 'input') return events[i].action.input as Input
 		}
-		return undefined;
-	}, [events]);
-	const input = (draftInput !== undefined ? draftInput : lastSubmittedInput ?? spec.initialInput) as Input;
+		return undefined
+	}, [events])
+	const input = (draftInput !== undefined ? draftInput : lastSubmittedInput ?? spec.initialInput) as Input
 
-	const latestEvent = events[events.length - 1];
+	const latestEvent = events[events.length - 1]
 	const report = latestEvent?.action.type === 'input'
 		? (latestEvent.report as SimpleExerciseReport | undefined)
-		: undefined;
-	const feedback = !feedbackCleared && report ? report : null;
-	const lastResult = (report?.result ?? null) as CheckResult | null;
+		: undefined
+	const feedback = !feedbackCleared && report ? report : null
+	const lastResult = (report?.result ?? null) as CheckResult | null
 
 	const handleInputChange = useCallback(
 		(value: Input) => {
-			controls.setDraftInput(value);
-			setFeedbackCleared(true);
+			controls.setDraftInput(value)
+			setFeedbackCleared(true)
 		},
 		[controls],
-	);
+	)
 
 	const handleSubmit = useCallback(() => {
-		setFeedbackCleared(false);
-		void controls.submitAction({ type: 'input', input });
-	}, [controls, input]);
+		setFeedbackCleared(false)
+		void controls.submitAction({ type: 'input', input: input as PlainDataValue })
+	}, [controls, input])
 
 	const handleGiveUp = useCallback(() => {
-		setGiveUpOpen(false);
-		void controls.submitAction({ type: 'give-up' });
-	}, [controls]);
+		setGiveUpOpen(false)
+		void controls.submitAction({ type: 'give-up' })
+	}, [controls])
 
-	const params = data.parameters as Parameters;
-	const storedState = state as SimpleExerciseStoredState;
-	const solved = isSimpleExerciseSolved(storedState);
-	const givenUp = isSimpleExerciseGivenUp(storedState);
-	const complete = solved || givenUp;
-	const availabilityArgs = { parameters: params, input, moduleContext };
+	const params = data.parameters as Parameters
+	const storedState = state as SimpleExerciseStoredState
+	const solved = isSimpleExerciseSolved(storedState)
+	const givenUp = isSimpleExerciseGivenUp(storedState)
+	const complete = solved || givenUp
+	const availabilityArgs = { parameters: params, input, moduleContext }
 	const canSubmit = !complete && !pending && !(spec.isInputEmpty?.(input) ?? false) &&
-		(spec.canSubmit?.(availabilityArgs) ?? true);
-	const canGiveUp = !complete && !pending && (spec.canGiveUp?.(availabilityArgs) ?? true);
-	const { Prompt, Problem, Input: InputComponent, Solution, Payoff, Output } = spec;
+		(spec.canSubmit?.(availabilityArgs) ?? true)
+	const canGiveUp = !complete && !pending && (spec.canGiveUp?.(availabilityArgs) ?? true)
+	const { Prompt, Problem, Input: InputComponent, Solution, Payoff, Output } = spec
 
 	return (
 		<Box>
@@ -112,5 +114,5 @@ export function SimpleExerciseComponent<
 			{solved && lastResult && Payoff ? <Payoff parameters={params} result={lastResult} /> : null}
 			<GiveUpDialog open={giveUpOpen} onConfirm={handleGiveUp} onCancel={() => setGiveUpOpen(false)} />
 		</Box>
-	);
+	)
 }

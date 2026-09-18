@@ -5,10 +5,7 @@ import type { CompareOptions } from '@sqlvalley/sql-grading';
 export interface SimpleSQLExerciseDefinition<Parameters extends Record<string, unknown>> {
 	exerciseId: ExerciseId;
 	version: ExerciseVersion;
-	generateParameters: (
-		moduleContext: unknown,
-		context?: { previousParameters?: Parameters | null },
-	) => Parameters;
+	generateParameters: (moduleContext: unknown) => Parameters | Promise<Parameters>
 	problem: string | ((parameters: Parameters) => string);
 	solution: string | ((parameters: Parameters) => string);
 	comparisonOptions?: CompareOptions;
