@@ -13,6 +13,10 @@ export const exerciseStorage: ExerciseStorage = {
 		if (module?.moduleType !== 'skill') return null
 		return module.exerciseHistory[module.exerciseHistory.length - 1] ?? null
 	},
+	getHistory: skillId => {
+		const module = useLearningStore.getState().modules[skillId]
+		return module?.moduleType === 'skill' ? module.exerciseHistory : []
+	},
 	subscribe: listener => useLearningStore.subscribe(listener),
 	startExercise: (skillId, exerciseInstance) =>
 		useLearningStore.getState().startNewExercise(skillId, exerciseInstance),

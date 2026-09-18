@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import { Alert, Button, Typography } from '@mui/material'
 
-import { sample } from '@step-wise/js-utils'
 import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
-import { type ExerciseInstance, generateExerciseInstance } from '@sqlvalley/exercise-instances'
+import { type ExerciseInstance, type ExerciseSelectionOptions, generateExerciseInstance, selectExercise } from '@sqlvalley/exercise-instances'
 
 import { type AnyExerciseContextValue, type ExerciseRegistration, ExerciseContext } from '../exerciseContext'
 import { useModuleContext } from '../moduleContext'
@@ -14,6 +13,7 @@ interface ExerciseManagerProps {
 	skillId: string
 	exercises: readonly ExerciseRegistration[]
 	showAdminControls?: boolean
+	selectionOptions?: ExerciseSelectionOptions
 }
 
 // Keep asynchronous work and local rendering state scoped to one skill.
@@ -21,7 +21,7 @@ export function ExerciseManager(props: ExerciseManagerProps) {
 	return <ExerciseManagerSession key={props.skillId} {...props} />
 }
 
-function ExerciseManagerSession({ skillId, exercises, showAdminControls = false }: ExerciseManagerProps) {
+function ExerciseManagerSession({ skillId, exercises, showAdminControls = false, selectionOptions }: ExerciseManagerProps) {
 	const moduleContext = useModuleContext()
 	const storage = useExerciseStorage()
 	const getInstanceSnapshot = useCallback(() => storage.getInstance(skillId), [storage, skillId])
@@ -68,19 +68,19 @@ function ExerciseManagerSession({ skillId, exercises, showAdminControls = false 
 		const registration = current ? byId.get(current.exerciseId) : undefined
 		let cancelled = false
 		if (!current || !registration || (registration.definition.metadata.version ?? 1) !== current.version) {
-			void startExercise(registration ?? sample(exercises), () => !cancelled)
+			const selected = registration ?? selectExercise(exercises, storage.getHistory(skillId), selectionOptions)
+			if (selected) void startExercise(selected, () => !cancelled)
 		}
 		return () => { cancelled = true }
-	}, [byId, exercises, initializationAttempt, instance?.parameters, moduleContext, moduleReady, skillId, startExercise, storage])
+	}, [byId, exercises, initializationAttempt, instance?.parameters, moduleContext, moduleReady, selectionOptions, skillId, startExercise, storage])
 
 	const startNewExercise = useCallback(() => {
 		if (!moduleReady || pendingRef.current || generating) return
-		const current = storage.getInstance(skillId)
-		const candidates = current && exercises.length > 1 ? exercises.filter(exercise => exercise.exerciseId !== current.exerciseId) : exercises
-		if (candidates.length > 0) void startExercise(sample(candidates))
-	}, [exercises, generating, moduleReady, skillId, startExercise, storage])
+		const selected = selectExercise(exercises, storage.getHistory(skillId), selectionOptions)
+		if (selected) void startExercise(selected)
+	}, [exercises, generating, moduleReady, selectionOptions, skillId, startExercise, storage])
 
-	const selectExercise = useCallback((exerciseId: string) => {
+	const selectExerciseById = useCallback((exerciseId: string) => {
 		if (!moduleReady || pendingRef.current || generating) return
 		const registration = byId.get(exerciseId)
 		if (registration) void startExercise(registration)
@@ -132,7 +132,7 @@ function ExerciseManagerSession({ skillId, exercises, showAdminControls = false 
 			selectedExerciseId={active.exerciseId}
 			disabled={busy}
 			solutionDisabled={busy || !active.getSolutionInput}
-			onExerciseSelect={selectExercise}
+			onExerciseSelect={selectExerciseById}
 			onShowSolution={showSolution}
 		/>
 	) : undefined

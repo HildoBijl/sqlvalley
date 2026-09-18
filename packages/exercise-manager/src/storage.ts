@@ -4,6 +4,8 @@ import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } 
 // Snapshots must retain their reference until changed, as required by useSyncExternalStore.
 export interface ExerciseStorage {
 	getInstance(skillId: SkillId): ExerciseInstance | null
+	// Oldest first, including the current instance.
+	getHistory(skillId: SkillId): readonly ExerciseInstance[]
 	subscribe(listener: () => void): () => void
 	startExercise(skillId: SkillId, exerciseInstance: ExerciseInstance): void
 	submitAction(

@@ -2,4 +2,5 @@ export type { ExerciseAction, ExerciseReport, ExerciseState } from '@step-wise/e
 
 export * from './types'
 export * from './generation'
+export * from './selection'
 export * from './normalization'

@@ -68,3 +68,10 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 - `moduleContext.tsx`: subject-specific execution context.
 
 The manager provides the exercise context and renders the supplied component directly. The application owns its concrete storage adapter and persistence migrations.
+
+
+## Exercise selection
+
+Automatic selection calls `selectExercise` from `@sqlvalley/exercise-instances` with the skill's history from `ExerciseStorage.getHistory` (oldest first, including the current instance). Pass `selectionOptions={{ dontRepeatBefore: 3, minimumChoices: 2 }}` to `ExerciseManager` to override the defaults in code.
+
+Compatible saved instances are restored directly. Replacing an outdated version preserves the selected exercise ID, and explicit admin selections bypass repeat avoidance. History is read from the store when choosing, so the learning store needs no new persisted fields or migration.
