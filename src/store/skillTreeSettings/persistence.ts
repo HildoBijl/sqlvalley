@@ -37,6 +37,6 @@ export function normalizePersistedSkillTreeSettings(persisted: unknown): Partial
 	if (planningModeByTreeId) normalized.planningModeByTreeId = planningModeByTreeId
 	const goalNodeIdByTreeId = parseRecord(source.goalNodeIdByTreeId, (value): value is string | null => typeof value === 'string' || value === null)
 	if (goalNodeIdByTreeId) normalized.goalNodeIdByTreeId = goalNodeIdByTreeId
-	
+
 	return normalized
 }

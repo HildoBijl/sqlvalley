@@ -9,8 +9,8 @@ import { cardHeight, cardWidth, treeMargin } from './settings';
  * off the grid, ex: { col: 2.5 } sits exactly halfway between columns 2 and 3.
  */
 export interface GridPosition {
-  col: number;
-  row: number;
+	col: number;
+	row: number;
 }
 
 // The distance between the centers of two neighbouring cells. Cells are
@@ -26,8 +26,8 @@ export const rowSpacing = cardHeight * 1.5;
  * @returns The pixel position of the center of that cell.
  */
 export function gridToPixels({ col, row }: GridPosition): Vector {
-  return new Vector(
-    treeMargin + cardWidth / 2 + (col - 1) * columnSpacing,
-    treeMargin + cardHeight / 2 + (row - 1) * rowSpacing,
-  );
+	return new Vector(
+		treeMargin + cardWidth / 2 + (col - 1) * columnSpacing,
+		treeMargin + cardHeight / 2 + (row - 1) * rowSpacing,
+	);
 }

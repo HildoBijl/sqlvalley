@@ -70,8 +70,8 @@ areConnected(a, b) :- areConnected(a, x), knowsEachOther(x, b).
 	},
 	{
 		problem: <>
-		<Par>Let's expand the <IDL>receivedMoneyFrom</IDL> predicate from the Theory page. Earlier, we said that a person A received money from a person Z, if there is a chain of people A, B, ..., Y, Z such that A sold something to B, B sold something to C, etcetera. We now add the requirement that each transaction must be <Em>after</Em> the previous one. So the moment A sold something to B must be <Em>later</Em> than the moment B sold something to C, etcetera.</Par>
-		<Par>Set up a recursive predicate <IDL>receivedMoneyFrom(a, z, lastTransactionAt)</IDL> where A received money from Z, subject to this new date-requirement, and where the last transaction (of A receiving money from B) was at the given <IDL>lastTransactionAt</IDL> date.</Par>
+			<Par>Let's expand the <IDL>receivedMoneyFrom</IDL> predicate from the Theory page. Earlier, we said that a person A received money from a person Z, if there is a chain of people A, B, ..., Y, Z such that A sold something to B, B sold something to C, etcetera. We now add the requirement that each transaction must be <Em>after</Em> the previous one. So the moment A sold something to B must be <Em>later</Em> than the moment B sold something to C, etcetera.</Par>
+			<Par>Set up a recursive predicate <IDL>receivedMoneyFrom(a, z, lastTransactionAt)</IDL> where A received money from Z, subject to this new date-requirement, and where the last transaction (of A receiving money from B) was at the given <IDL>lastTransactionAt</IDL> date.</Par>
 		</>,
 		solution: <>
 			<Par>We start with the base rule. As date we apply the transaction date.</Par>

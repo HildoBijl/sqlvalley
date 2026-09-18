@@ -23,163 +23,163 @@ import { useGoalProgress } from '../utils/logic/useGoalProgress';
  * @param isCompleted - Function to check if a module is completed.
  */
 interface SkillTreeProps {
-  moduleTree: ModuleTree;
-  modulePresentation: Record<string, { name: string; description: string }>;
-  modulePositions: Record<string, ModulePositionMeta>;
-  treeBounds: {
-    minX: number;
-    minY: number;
-    maxX: number;
-    maxY: number;
-    width: number;
-    height: number;
-  };
-  visiblePaths: { points: Vector[]; from: string; to: string }[];
-  isCompleted: (id: string) => boolean;
-  planningMode: boolean;
-  goalNodeId?: string | null;
-  setGoalNodeId?: (id: string | null) => void;
-  onGoalProgressChange?: (
-    completedCount: number,
-    totalCount: number,
-    nextStepName: string | null,
-    nextStepId: string | null,
-  ) => void;
-  nextStepId?: string | null;
-  staticMode?: boolean;
+	moduleTree: ModuleTree;
+	modulePresentation: Record<string, { name: string; description: string }>;
+	modulePositions: Record<string, ModulePositionMeta>;
+	treeBounds: {
+		minX: number;
+		minY: number;
+		maxX: number;
+		maxY: number;
+		width: number;
+		height: number;
+	};
+	visiblePaths: { points: Vector[]; from: string; to: string }[];
+	isCompleted: (id: string) => boolean;
+	planningMode: boolean;
+	goalNodeId?: string | null;
+	setGoalNodeId?: (id: string | null) => void;
+	onGoalProgressChange?: (
+		completedCount: number,
+		totalCount: number,
+		nextStepName: string | null,
+		nextStepId: string | null,
+	) => void;
+	nextStepId?: string | null;
+	staticMode?: boolean;
 }
 
 export function SkillTree({
-  moduleTree,
-  modulePresentation,
-  modulePositions,
-  treeBounds,
-  visiblePaths,
-  isCompleted,
-  planningMode,
-  goalNodeId,
-  setGoalNodeId,
-  onGoalProgressChange,
-  nextStepId,
-  staticMode,
+	moduleTree,
+	modulePresentation,
+	modulePositions,
+	treeBounds,
+	visiblePaths,
+	isCompleted,
+	planningMode,
+	goalNodeId,
+	setGoalNodeId,
+	onGoalProgressChange,
+	nextStepId,
+	staticMode,
 }: SkillTreeProps) {
-  const theme = useTheme();
+	const theme = useTheme();
 
 
-  const onNavigate = (id: string) => {
-    const item = moduleTree[id];
-    window.location.href = item.type === 'skill' ? `/skill/${id}` : `/concept/${id}`;
-  }
-  
-  const {
-    localHoveredId,
-    prerequisites,
-    tooltip,
-    selectedId,
-    handleHoverStart,
-    handleHoverEnd,
-    isConnectorInHoveredPath,
-    handlePointerDown,
-    handlePointerOutside,
-  } = useHoverState(moduleTree, modulePresentation, onNavigate);
+	const onNavigate = (id: string) => {
+		const item = moduleTree[id];
+		window.location.href = item.type === 'skill' ? `/skill/${id}` : `/concept/${id}`;
+	}
 
-  const goalPath = useGoalProgress(
-    goalNodeId,
-    moduleTree,
-    modulePresentation,
-    isCompleted,
-    onGoalProgressChange,
-  );
+	const {
+		localHoveredId,
+		prerequisites,
+		tooltip,
+		selectedId,
+		handleHoverStart,
+		handleHoverEnd,
+		isConnectorInHoveredPath,
+		handlePointerDown,
+		handlePointerOutside,
+	} = useHoverState(moduleTree, modulePresentation, onNavigate);
 
-  return (
-    <div
-      onPointerDown={handlePointerOutside}
-      style={{
-        position: 'relative',
-        width: `${treeBounds.width}px`,
-        height: `${treeBounds.height}px`,
-        marginLeft: '35px',
-        marginTop: '35px',
-        backgroundColor: theme.palette.background.paper,
-      }}
-    >
-      <Drawing
-        width={treeBounds.width}
-        height={treeBounds.height}
-        useSvg={true}
-        useCanvas={false}
-        autoScale={false}
-      >
-        {visiblePaths.map((connector, i) => {
-          const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
-            connector,
-            planningMode,
-            goalNodeId,
-            goalPath,
-            localHoveredId,
-            isCompleted,
-            moduleTree,
-            isConnectorInHoveredPath,
-            staticMode,
-          );
+	const goalPath = useGoalProgress(
+		goalNodeId,
+		moduleTree,
+		modulePresentation,
+		isCompleted,
+		onGoalProgressChange,
+	);
 
-          return (
-            <Curve
-              key={i}
-              points={connector.points}
-              color={strokeColor}
-              size={strokeWidth}
-              curveDistance={20}
-              style={{ opacity }}
-            />
-          );
-        })}
+	return (
+		<div
+			onPointerDown={handlePointerOutside}
+			style={{
+				position: 'relative',
+				width: `${treeBounds.width}px`,
+				height: `${treeBounds.height}px`,
+				marginLeft: '35px',
+				marginTop: '35px',
+				backgroundColor: theme.palette.background.paper,
+			}}
+		>
+			<Drawing
+				width={treeBounds.width}
+				height={treeBounds.height}
+				useSvg={true}
+				useCanvas={false}
+				autoScale={false}
+			>
+				{visiblePaths.map((connector, i) => {
+					const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
+						connector,
+						planningMode,
+						goalNodeId,
+						goalPath,
+						localHoveredId,
+						isCompleted,
+						moduleTree,
+						isConnectorInHoveredPath,
+						staticMode,
+					);
 
-        {Object.values(modulePositions).map((positionData) => {
-          const item = moduleTree[positionData.id];
-          if (!item) return null;
+					return (
+						<Curve
+							key={i}
+							points={connector.points}
+							color={strokeColor}
+							size={strokeWidth}
+							curveDistance={20}
+							style={{ opacity }}
+						/>
+					);
+				})}
 
-          const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted);
+				{Object.values(modulePositions).map((positionData) => {
+					const item = moduleTree[positionData.id];
+					if (!item) return null;
 
-          return (
-            <g
-              key={item.id}
-              onMouseEnter={() => handleHoverStart(item.id)}
-              onMouseLeave={handleHoverEnd}
-              onPointerDown={(e) => {
-                e.stopPropagation();
-                const isGoal = planningMode && goalNodeId === item.id;
-                handlePointerDown(item.id, e, isGoal);
-              }}
-            >
-              <NodeCard
-                item={item}
-                name={modulePresentation[item.id]?.name ?? item.id}
-                positionData={modulePositions[item.id]}
-                completed={isCompleted(item.id)}
-                isHovered={localHoveredId === item.id}
-                readyToLearn={readyToLearn}
-                isPrerequisite={prerequisites.has(item.id)}
-                isSomethingHovered={localHoveredId !== null}
-                isSelected={selectedId === item.id}
-                planningMode={planningMode}
-                hasGoal={planningMode && !!goalNodeId}
-                isGoalNode={planningMode && goalNodeId === item.id}
-                isOnGoalPath={planningMode && goalPath.has(item.id)}
-                onSetGoal={() => {
-                  if (planningMode && setGoalNodeId) {
-                    setGoalNodeId(goalNodeId === item.id ? null : item.id);
-                  }
-                }}
-                nextStepId={nextStepId}
-                staticMode={staticMode}
-              />
-            </g>
-          );
-        })}
+					const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted);
 
-        <Tooltip>{tooltip}</Tooltip>
-      </Drawing>
-    </div>
-  );
+					return (
+						<g
+							key={item.id}
+							onMouseEnter={() => handleHoverStart(item.id)}
+							onMouseLeave={handleHoverEnd}
+							onPointerDown={(e) => {
+								e.stopPropagation();
+								const isGoal = planningMode && goalNodeId === item.id;
+								handlePointerDown(item.id, e, isGoal);
+							}}
+						>
+							<NodeCard
+								item={item}
+								name={modulePresentation[item.id]?.name ?? item.id}
+								positionData={modulePositions[item.id]}
+								completed={isCompleted(item.id)}
+								isHovered={localHoveredId === item.id}
+								readyToLearn={readyToLearn}
+								isPrerequisite={prerequisites.has(item.id)}
+								isSomethingHovered={localHoveredId !== null}
+								isSelected={selectedId === item.id}
+								planningMode={planningMode}
+								hasGoal={planningMode && !!goalNodeId}
+								isGoalNode={planningMode && goalNodeId === item.id}
+								isOnGoalPath={planningMode && goalPath.has(item.id)}
+								onSetGoal={() => {
+									if (planningMode && setGoalNodeId) {
+										setGoalNodeId(goalNodeId === item.id ? null : item.id);
+									}
+								}}
+								nextStepId={nextStepId}
+								staticMode={staticMode}
+							/>
+						</g>
+					);
+				})}
+
+				<Tooltip>{tooltip}</Tooltip>
+			</Drawing>
+		</div>
+	);
 }

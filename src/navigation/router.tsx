@@ -108,8 +108,8 @@ export const router = createBrowserRouter([
 ]);
 
 function ExternalRedirect({ to }: { to: string }) {
-  useEffect(() => {
-    window.location.replace(to);
-  }, [to]);
-  return <div>Redirecting...</div>;
+	useEffect(() => {
+		window.location.replace(to);
+	}, [to]);
+	return <div>Redirecting...</div>;
 };

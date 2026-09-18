@@ -2,7 +2,7 @@ export interface SkillTreeSettingsState {
 	hasSeenSkillTreeIntro: boolean
 	hideLegend: boolean
 	recentSkillTreeIds: string[]
-	
+
 	hasSeenPlanningModeIntro: boolean
 	planningModeByTreeId: Record<string, boolean>
 	goalNodeIdByTreeId: Record<string, string | null>

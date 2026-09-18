@@ -1,6 +1,6 @@
 export { buildSimpleSQLExercise } from './buildSimpleSQLExercise';
 export type {
-  SimpleSQLCheckResult,
-  SimpleSQLExerciseDefinition,
-  SimpleSQLExerciseSpec,
+	SimpleSQLCheckResult,
+	SimpleSQLExerciseDefinition,
+	SimpleSQLExerciseSpec,
 } from './types';

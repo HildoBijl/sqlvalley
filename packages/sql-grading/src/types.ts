@@ -3,20 +3,20 @@
  */
 
 export interface ComparisonResult {
-  match: boolean;
-  feedback: string;
+	match: boolean;
+	feedback: string;
 }
 
 export interface CompareOptions {
-  requireEqualColumnOrder?: boolean;
-  requireEqualColumnNames?: boolean;
-  ignoreRowOrder?: boolean;
-  caseSensitive?: boolean;
+	requireEqualColumnOrder?: boolean;
+	requireEqualColumnNames?: boolean;
+	ignoreRowOrder?: boolean;
+	caseSensitive?: boolean;
 }
 
 export const DEFAULT_OPTIONS: Required<CompareOptions> = {
-  requireEqualColumnOrder: false,
-  requireEqualColumnNames: false,
-  ignoreRowOrder: true,
-  caseSensitive: false,
+	requireEqualColumnOrder: false,
+	requireEqualColumnNames: false,
+	ignoreRowOrder: true,
+	caseSensitive: false,
 };

@@ -4,17 +4,17 @@ import fullCsv from './departmentsFull.csv?raw'
 import smallCsv from './departmentsSmall.csv?raw'
 
 const columns = {
-  d_id: 'number',
-  d_name: 'string',
-  manager_id: 'number',
-  budget: 'number',
-  nr_employees: 'number',
+	d_id: 'number',
+	d_name: 'string',
+	manager_id: 'number',
+	budget: 'number',
+	nr_employees: 'number',
 } as const
 
 const table: TableDefinition = {
-  name: 'departments',
-  columns,
-  createTableSql: `CREATE TABLE departments (
+	name: 'departments',
+	columns,
+	createTableSql: `CREATE TABLE departments (
   d_id INTEGER PRIMARY KEY,
   d_name TEXT NOT NULL,
   manager_id INTEGER,
@@ -22,10 +22,10 @@ const table: TableDefinition = {
   nr_employees INTEGER,
   FOREIGN KEY (manager_id) REFERENCES employees(e_id)
 );`,
-  csvBySize: {
-    full: fullCsv,
-    small: smallCsv,
-  },
+	csvBySize: {
+		full: fullCsv,
+		small: smallCsv,
+	},
 }
 
 export default table

@@ -1,18 +1,18 @@
 import type { ComponentType } from 'react';
 
 import type {
-  ExerciseId,
-  ExerciseVersion,
-  StoredExerciseAction,
-  StoredExerciseState,
+	ExerciseId,
+	ExerciseVersion,
+	StoredExerciseAction,
+	StoredExerciseState,
 } from '../storedState';
 
 export type Awaitable<T> = T | Promise<T>;
 
 export interface ReduceResult<State extends StoredExerciseState> {
-  state: State;
-  /** Opaque per-exercise-type data used to build feedback (stored with the action). */
-  report?: unknown;
+	state: State;
+	/** Opaque per-exercise-type data used to build feedback (stored with the action). */
+	report?: unknown;
 }
 
 /**
@@ -20,14 +20,14 @@ export interface ReduceResult<State extends StoredExerciseState> {
  * environment (for SQL: database access) injected by the manager.
  */
 export type ExerciseReducer<
-  Parameters extends Record<string, unknown>,
-  Action extends StoredExerciseAction,
-  State extends StoredExerciseState,
+	Parameters extends Record<string, unknown>,
+	Action extends StoredExerciseAction,
+	State extends StoredExerciseState,
 > = (
-  parameters: Parameters,
-  state: State,
-  action: Action,
-  moduleContext: unknown,
+	parameters: Parameters,
+	state: State,
+	action: Action,
+	moduleContext: unknown,
 ) => Awaitable<ReduceResult<State>>;
 
 /**
@@ -35,28 +35,28 @@ export type ExerciseReducer<
  * against its state, and the component that renders it (props-free, context-fed).
  */
 export interface ExerciseDefinition<
-  Parameters extends Record<string, unknown>,
-  Action extends StoredExerciseAction,
-  State extends StoredExerciseState,
+	Parameters extends Record<string, unknown>,
+	Action extends StoredExerciseAction,
+	State extends StoredExerciseState,
 > {
-  exerciseId: ExerciseId;
-  version: ExerciseVersion;
-  generateParameters: (
-    moduleContext: unknown,
-    context?: { previousParameters?: Parameters | null },
-  ) => Parameters;
-  initialState: State;
-  isComplete: (state: State) => boolean;
-  isSolved: (state: State) => boolean;
-  /** Optional admin helper that supplies the complete input for this exercise. */
-  getSolutionInput?: (parameters: Parameters) => unknown;
-  reduce: ExerciseReducer<Parameters, Action, State>;
-  Component: ComponentType;
+	exerciseId: ExerciseId;
+	version: ExerciseVersion;
+	generateParameters: (
+		moduleContext: unknown,
+		context?: { previousParameters?: Parameters | null },
+	) => Parameters;
+	initialState: State;
+	isComplete: (state: State) => boolean;
+	isSolved: (state: State) => boolean;
+	/** Optional admin helper that supplies the complete input for this exercise. */
+	getSolutionInput?: (parameters: Parameters) => unknown;
+	reduce: ExerciseReducer<Parameters, Action, State>;
+	Component: ComponentType;
 }
 
 /** An exercise definition with its generics erased, for holding a mixed list. */
 export type AnyExerciseDefinition = ExerciseDefinition<
-  Record<string, unknown>,
-  StoredExerciseAction,
-  StoredExerciseState
+	Record<string, unknown>,
+	StoredExerciseAction,
+	StoredExerciseState
 >;

@@ -6,9 +6,9 @@
  */
 
 export {
-  useDatabase,
-  usePlaygroundDatabase,
-  useTheorySampleDatabase,
+	useDatabase,
+	usePlaygroundDatabase,
+	useTheorySampleDatabase,
 } from './useDatabase';
 
 export * from './DatabaseProvider';

@@ -2,12 +2,12 @@ import { Page, Section, Par, Term, M, BM } from '@sqlvalley/ui';
 import { FigureExampleRAQuery } from '../../utils';
 
 export function Summary() {
-  return <Page>
-    <Section>
-      <Par>The <Term>projection operator</Term> <M>\Pi</M> in relational algebra returns the relation with only the specified attributes.</Par>
-      <FigureExampleRAQuery query={<>∏<sub>d_name, nr_employees</sub>(departments)</>} actualQuery="SELECT d_name, nr_employees FROM departments" />
-      <Par>The projection operator is formally defined as</Par>
-      <BM>{`\\Pi_{A_1, \\ldots, A_n}(r) := \\{ t[S] \\, | \\, t \\in r, S = \\{A_1, \\ldots, A_n\\} \\}.`}</BM>
-    </Section>
-  </Page>;
+	return <Page>
+		<Section>
+			<Par>The <Term>projection operator</Term> <M>\Pi</M> in relational algebra returns the relation with only the specified attributes.</Par>
+			<FigureExampleRAQuery query={<>∏<sub>d_name, nr_employees</sub>(departments)</>} actualQuery="SELECT d_name, nr_employees FROM departments" />
+			<Par>The projection operator is formally defined as</Par>
+			<BM>{`\\Pi_{A_1, \\ldots, A_n}(r) := \\{ t[S] \\, | \\, t \\in r, S = \\{A_1, \\ldots, A_n\\} \\}.`}</BM>
+		</Section>
+	</Page>;
 }

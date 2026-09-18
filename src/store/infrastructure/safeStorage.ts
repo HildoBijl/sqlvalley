@@ -37,7 +37,7 @@ export const safeStorage: StateStorage = {
 			localStorageUnavailable = true
 		}
 	},
-	
+
 	removeItem: key => {
 		memoryStorageValues.delete(key)
 		const storage = getLocalStorage()

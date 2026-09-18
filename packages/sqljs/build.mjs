@@ -12,16 +12,16 @@ const wasmBinary = await readFile(require.resolve('sql.js/dist/sql-wasm.wasm'))
 await rm(outputDirectory, { recursive: true, force: true })
 
 await build({
-  entryPoints: { index: './src/index.ts' },
-  absWorkingDir: packageDirectory,
-  bundle: true,
-  splitting: true,
-  format: 'esm',
-  platform: 'browser',
-  target: 'es2020',
-  jsx: 'automatic',
-  outdir: outputDirectory,
-  sourcemap: true,
-  define: { SQLJS_WASM_BASE64: JSON.stringify(wasmBinary.toString('base64')) },
-  external: ['react', 'react/*', 'sql.js'],
+	entryPoints: { index: './src/index.ts' },
+	absWorkingDir: packageDirectory,
+	bundle: true,
+	splitting: true,
+	format: 'esm',
+	platform: 'browser',
+	target: 'es2020',
+	jsx: 'automatic',
+	outdir: outputDirectory,
+	sourcemap: true,
+	define: { SQLJS_WASM_BASE64: JSON.stringify(wasmBinary.toString('base64')) },
+	external: ['react', 'react/*', 'sql.js'],
 })

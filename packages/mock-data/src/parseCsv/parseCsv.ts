@@ -86,10 +86,10 @@ export function parseCsv(raw: string): ParsedCsv {
 
 	// Extract rows and map them to objects.
 	const records = rows.slice(1).map((cells, index) => {
-			if (cells.length !== headers.length) throw new SyntaxError(`CSV row ${index + 2} has ${cells.length} cells expected ${headers.length}.`)
-			const entry: Record<string, string> = {}
-			headers.forEach((header, index) => { entry[header] = cells[index].trim() })
-			return entry
-		})
+		if (cells.length !== headers.length) throw new SyntaxError(`CSV row ${index + 2} has ${cells.length} cells expected ${headers.length}.`)
+		const entry: Record<string, string> = {}
+		headers.forEach((header, index) => { entry[header] = cells[index].trim() })
+		return entry
+	})
 	return { headers, records }
 }

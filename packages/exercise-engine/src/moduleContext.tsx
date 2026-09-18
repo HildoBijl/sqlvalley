@@ -11,9 +11,9 @@ export type ModuleProviderComponent = ComponentType<{ skillId: string; children:
 const ModuleContext = createContext<unknown>(undefined);
 
 export function ModuleContextProvider({ value, children }: { value: unknown; children: ReactNode }) {
-  return <ModuleContext.Provider value={value}>{children}</ModuleContext.Provider>;
+	return <ModuleContext.Provider value={value}>{children}</ModuleContext.Provider>;
 }
 
 export function useModuleContext(): unknown {
-  return useContext(ModuleContext);
+	return useContext(ModuleContext);
 }

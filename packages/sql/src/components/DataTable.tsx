@@ -1,219 +1,219 @@
 import { type Ref } from 'react';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-  Chip,
-  TablePagination,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+	Paper,
+	Typography,
+	Box,
+	Chip,
+	TablePagination,
 } from '@mui/material';
 import { useState } from 'react';
 
 interface DataTableProps {
-  data: {
-    columns: string[];
-    values: any[][];
-  } | null;
-  maxRows?: number;
-  showPagination?: boolean;
-  highlightHeader?: boolean;
-  compact?: boolean;
-  ref?: Ref<HTMLDivElement>;
+	data: {
+		columns: string[];
+		values: any[][];
+	} | null;
+	maxRows?: number;
+	showPagination?: boolean;
+	highlightHeader?: boolean;
+	compact?: boolean;
+	ref?: Ref<HTMLDivElement>;
 }
 
 export function DataTable({
-  data,
-  maxRows = 100,
-  showPagination = true,
-  highlightHeader = true,
-  compact = false,
-  ref,
+	data,
+	maxRows = 100,
+	showPagination = true,
+	highlightHeader = true,
+	compact = false,
+	ref,
 }: DataTableProps) {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  if (!data || !data.columns || !data.values) {
-    return (
-      <Paper ref={ref} sx={{ p: 3, textAlign: 'center' }}>
-        <Typography color="text.secondary">No data to display</Typography>
-      </Paper>
-    );
-  }
+	if (!data || !data.columns || !data.values) {
+		return (
+			<Paper ref={ref} sx={{ p: 3, textAlign: 'center' }}>
+				<Typography color="text.secondary">No data to display</Typography>
+			</Paper>
+		);
+	}
 
-  const { columns, values } = data;
+	const { columns, values } = data;
 
-  // Limit rows if needed
-  const displayValues = values.slice(0, maxRows);
+	// Limit rows if needed
+	const displayValues = values.slice(0, maxRows);
 
-  // Pagination
-  const paginatedValues = showPagination
-    ? displayValues.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    : displayValues;
+	// Pagination
+	const paginatedValues = showPagination
+		? displayValues.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+		: displayValues;
 
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    // reference param to satisfy noUnusedParameters
-    void _event;
-    setPage(newPage);
-  };
+	const handleChangePage = (_event: unknown, newPage: number) => {
+		// reference param to satisfy noUnusedParameters
+		void _event;
+		setPage(newPage);
+	};
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
 
-  // Format cell value
-  const formatCellValue = (value: any) => {
-    if (value === null || value === undefined) {
-      return <Chip label="NULL" size="small" variant="outlined" />;
-    }
-    if (typeof value === 'boolean') {
-      return (
-        <Chip
-          label={value ? 'TRUE' : 'FALSE'}
-          size="small"
-          color={value ? 'success' : 'default'}
-          variant="outlined"
-        />
-      );
-    }
-    if (typeof value === 'number') {
-      return (
-        <Typography
-          component="span"
-          sx={{ fontFamily: 'monospace', color: 'info.main' }}
-        >
-          {String(value)}
-        </Typography>
-      );
-    }
-    if (typeof value === 'string' && value.length > 50) {
-      return (
-        <Typography
-          component="span"
-          title={value}
-          sx={{
-            display: 'block',
-            maxWidth: 200,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {value}
-        </Typography>
-      );
-    }
-    return String(value);
-  };
+	// Format cell value
+	const formatCellValue = (value: any) => {
+		if (value === null || value === undefined) {
+			return <Chip label="NULL" size="small" variant="outlined" />;
+		}
+		if (typeof value === 'boolean') {
+			return (
+				<Chip
+					label={value ? 'TRUE' : 'FALSE'}
+					size="small"
+					color={value ? 'success' : 'default'}
+					variant="outlined"
+				/>
+			);
+		}
+		if (typeof value === 'number') {
+			return (
+				<Typography
+					component="span"
+					sx={{ fontFamily: 'monospace', color: 'info.main' }}
+				>
+					{String(value)}
+				</Typography>
+			);
+		}
+		if (typeof value === 'string' && value.length > 50) {
+			return (
+				<Typography
+					component="span"
+					title={value}
+					sx={{
+						display: 'block',
+						maxWidth: 200,
+						overflow: 'hidden',
+						textOverflow: 'ellipsis',
+						whiteSpace: 'nowrap',
+					}}
+				>
+					{value}
+				</Typography>
+			);
+		}
+		return String(value);
+	};
 
-  return (
-    <Box ref={ref}>
-      <Paper
-        variant="outlined"
-        sx={{
-          borderRadius: 2,
-          overflow: 'hidden',
-        }}
-      >
-        <Table
-          stickyHeader
-          size={compact ? 'small' : 'medium'}
-          sx={{
-            tableLayout: 'auto',
-            '& .MuiTableHead-root': {
-              backgroundColor: 'background.paper',
-            },
-          }}
-        >
-          <TableHead>
-            <TableRow>
-              {columns.map((column, index) => (
-                <TableCell
-                  key={index}
-                  sx={{
-                    fontWeight: highlightHeader ? 'bold' : 'medium',
-                    bgcolor: highlightHeader ? 'background.paper' : 'transparent',
-                    color: highlightHeader ? 'primary.main' : 'text.primary',
-                    borderBottom: 2,
-                    borderColor: 'primary.main',
-                  }}
-                >
-                  {column}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {paginatedValues.length > 0 ? (
-              paginatedValues.map((row, rowIndex) => (
-                <TableRow
-                  key={rowIndex}
-                  sx={{
-                    '&:nth-of-type(odd)': {
-                      bgcolor: 'action.hover',
-                    },
-                    transition: 'none',
-                  }}
-                >
-                  {row.map((cell, cellIndex) => (
-                    <TableCell key={cellIndex}>{formatCellValue(cell)}</TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} align="center">
-                  <Typography color="text.secondary">No rows returned</Typography>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </Paper>
+	return (
+		<Box ref={ref}>
+			<Paper
+				variant="outlined"
+				sx={{
+					borderRadius: 2,
+					overflow: 'hidden',
+				}}
+			>
+				<Table
+					stickyHeader
+					size={compact ? 'small' : 'medium'}
+					sx={{
+						tableLayout: 'auto',
+						'& .MuiTableHead-root': {
+							backgroundColor: 'background.paper',
+						},
+					}}
+				>
+					<TableHead>
+						<TableRow>
+							{columns.map((column, index) => (
+								<TableCell
+									key={index}
+									sx={{
+										fontWeight: highlightHeader ? 'bold' : 'medium',
+										bgcolor: highlightHeader ? 'background.paper' : 'transparent',
+										color: highlightHeader ? 'primary.main' : 'text.primary',
+										borderBottom: 2,
+										borderColor: 'primary.main',
+									}}
+								>
+									{column}
+								</TableCell>
+							))}
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{paginatedValues.length > 0 ? (
+							paginatedValues.map((row, rowIndex) => (
+								<TableRow
+									key={rowIndex}
+									sx={{
+										'&:nth-of-type(odd)': {
+											bgcolor: 'action.hover',
+										},
+										transition: 'none',
+									}}
+								>
+									{row.map((cell, cellIndex) => (
+										<TableCell key={cellIndex}>{formatCellValue(cell)}</TableCell>
+									))}
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={columns.length} align="center">
+									<Typography color="text.secondary">No rows returned</Typography>
+								</TableCell>
+							</TableRow>
+						)}
+					</TableBody>
+				</Table>
+			</Paper>
 
-      {showPagination && displayValues.length > 0 && (
-        <TablePagination
-          component="div"
-          count={displayValues.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          rowsPerPageOptions={[5, 10, 25, 50]}
-          sx={{
-            '.MuiTablePagination-toolbar': {
-              alignItems: 'center',
-              gap: 1,
-              flexWrap: 'wrap',
-            },
-            '.MuiTablePagination-selectLabel': {
-              m: 0,
-              display: 'flex',
-              alignItems: 'center',
-            },
-            '.MuiTablePagination-displayedRows': {
-              m: 0,
-              display: 'flex',
-              alignItems: 'center',
-            },
-            '.MuiTablePagination-actions': {
-              alignItems: 'center',
-            },
-          }}
-        />
-      )}
+			{showPagination && displayValues.length > 0 && (
+				<TablePagination
+					component="div"
+					count={displayValues.length}
+					page={page}
+					onPageChange={handleChangePage}
+					rowsPerPage={rowsPerPage}
+					onRowsPerPageChange={handleChangeRowsPerPage}
+					rowsPerPageOptions={[5, 10, 25, 50]}
+					sx={{
+						'.MuiTablePagination-toolbar': {
+							alignItems: 'center',
+							gap: 1,
+							flexWrap: 'wrap',
+						},
+						'.MuiTablePagination-selectLabel': {
+							m: 0,
+							display: 'flex',
+							alignItems: 'center',
+						},
+						'.MuiTablePagination-displayedRows': {
+							m: 0,
+							display: 'flex',
+							alignItems: 'center',
+						},
+						'.MuiTablePagination-actions': {
+							alignItems: 'center',
+						},
+					}}
+				/>
+			)}
 
-      {values.length > maxRows && (
-        <Box sx={{ p: 1, bgcolor: 'warning.main', color: 'warning.contrastText' }}>
-          <Typography variant="caption">
-            Showing first {maxRows} of {values.length} rows
-          </Typography>
-        </Box>
-      )}
-    </Box>
-  );
+			{values.length > maxRows && (
+				<Box sx={{ p: 1, bgcolor: 'warning.main', color: 'warning.contrastText' }}>
+					<Typography variant="caption">
+						Showing first {maxRows} of {values.length} rows
+					</Typography>
+				</Box>
+			)}
+		</Box>
+	);
 }

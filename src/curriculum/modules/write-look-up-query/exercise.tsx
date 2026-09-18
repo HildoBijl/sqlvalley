@@ -1,6 +1,6 @@
 import {
-  buildSimpleSQLExercise,
-  type SimpleSQLExerciseDefinition,
+	buildSimpleSQLExercise,
+	type SimpleSQLExerciseDefinition,
 } from '@sqlvalley/sql';
 import type { AnyExerciseDefinition } from '@sqlvalley/exercise-engine';
 import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
@@ -8,12 +8,12 @@ import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
 type Parameters = Record<string, never>;
 
 const EXERCISES: SimpleSQLExerciseDefinition<Parameters>[] = [
-  {
-    exerciseId: 'lookup-manager-city',
-    version: 1,
-    generateParameters: () => ({}),
-    problem: 'Find the names of the departments whose manager lives in Palo Alto.',
-    solution: `
+	{
+		exerciseId: 'lookup-manager-city',
+		version: 1,
+		generateParameters: () => ({}),
+		problem: 'Find the names of the departments whose manager lives in Palo Alto.',
+		solution: `
 SELECT d_name
 FROM departments
 WHERE manager_id IN (
@@ -22,13 +22,13 @@ WHERE manager_id IN (
     WHERE city = 'Palo Alto'
 );
     `,
-  },
-  {
-    exerciseId: 'lookup-employee-position',
-    version: 1,
-    generateParameters: () => ({}),
-    problem: 'Find the first and last name of all employees that have ever worked as a warehouse associate.',
-    solution: `
+	},
+	{
+		exerciseId: 'lookup-employee-position',
+		version: 1,
+		generateParameters: () => ({}),
+		problem: 'Find the first and last name of all employees that have ever worked as a warehouse associate.',
+		solution: `
 SELECT first_name, last_name
 FROM employees
 WHERE e_id IN (
@@ -37,13 +37,13 @@ WHERE e_id IN (
     WHERE position = 'warehouse associate'
 );
     `,
-  },
-  {
-    exerciseId: 'lookup-manager-sick',
-    version: 1,
-    generateParameters: () => ({}),
-    problem: 'Find the names of the departments whose manager has at some point been on sick leave.',
-    solution: `
+	},
+	{
+		exerciseId: 'lookup-manager-sick',
+		version: 1,
+		generateParameters: () => ({}),
+		problem: 'Find the names of the departments whose manager has at some point been on sick leave.',
+		solution: `
 SELECT d_name
 FROM departments
 WHERE manager_id IN (
@@ -52,37 +52,37 @@ WHERE manager_id IN (
     WHERE status = 'sick leave'
 );
     `,
-  },
-  //   {
-  //     id: 'lookup-validator-names',
-  //     prompt: 'Retrieve the names of employees who appear as validators in transactions where the customer ID is the same as the vendor ID.',
-  //     solution: `
-  // SELECT first_name, last_name
-  // FROM employees
-  // WHERE e_id IN (
-  //   SELECT validated_by
-  //   FROM transactions
-  //   WHERE buyer = vendor
-  // );
-  //     `,
-  //   },
-  //   {
-  //     id: 'lookup-before-vendor-created',
-  //     prompt: 'Retrieve all transactions that occurred before the corresponding vendor’s registration date.',
-  //     solution: `
-  // SELECT *
-  // FROM transactions t
-  // WHERE t.date_time < (
-  //     SELECT a.created_at
-  //     FROM accounts a
-  //     WHERE a.username = t.vendor
-  // );
-  //     `,
-  //   },
+	},
+	//   {
+	//     id: 'lookup-validator-names',
+	//     prompt: 'Retrieve the names of employees who appear as validators in transactions where the customer ID is the same as the vendor ID.',
+	//     solution: `
+	// SELECT first_name, last_name
+	// FROM employees
+	// WHERE e_id IN (
+	//   SELECT validated_by
+	//   FROM transactions
+	//   WHERE buyer = vendor
+	// );
+	//     `,
+	//   },
+	//   {
+	//     id: 'lookup-before-vendor-created',
+	//     prompt: 'Retrieve all transactions that occurred before the corresponding vendor’s registration date.',
+	//     solution: `
+	// SELECT *
+	// FROM transactions t
+	// WHERE t.date_time < (
+	//     SELECT a.created_at
+	//     FROM accounts a
+	//     WHERE a.username = t.vendor
+	// );
+	//     `,
+	//   },
 ];
 
 export default function buildExercises(): AnyExerciseDefinition[] {
-  return EXERCISES.map((exercise) => buildSimpleSQLExercise(exercise));
+	return EXERCISES.map((exercise) => buildSimpleSQLExercise(exercise));
 }
 
 export const ModuleProvider = SqlPracticeProvider;

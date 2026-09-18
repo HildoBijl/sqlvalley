@@ -4,20 +4,20 @@ import fullCsv from './transactionsFull.csv?raw'
 import smallCsv from './transactionsSmall.csv?raw'
 
 const columns = {
-  t_id: 'number',
-  vendor: 'string',
-  buyer: 'string',
-  prod_id: 'number',
-  date_time: 'date',
-  price: 'number',
-  validated_by: 'number',
-  status: 'string',
+	t_id: 'number',
+	vendor: 'string',
+	buyer: 'string',
+	prod_id: 'number',
+	date_time: 'date',
+	price: 'number',
+	validated_by: 'number',
+	status: 'string',
 } as const
 
 const table: TableDefinition = {
-  name: 'transactions',
-  columns,
-  createTableSql: `CREATE TABLE transactions (
+	name: 'transactions',
+	columns,
+	createTableSql: `CREATE TABLE transactions (
   t_id INTEGER PRIMARY KEY,
   vendor TEXT,
   buyer TEXT,
@@ -31,10 +31,10 @@ const table: TableDefinition = {
   FOREIGN KEY (prod_id) REFERENCES products(p_id),
   FOREIGN KEY (validated_by) REFERENCES employees(e_id)
 );`,
-  csvBySize: {
-    full: fullCsv,
-    small: smallCsv,
-  },
+	csvBySize: {
+		full: fullCsv,
+		small: smallCsv,
+	},
 }
 
 export default table

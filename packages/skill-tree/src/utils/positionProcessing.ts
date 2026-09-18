@@ -2,108 +2,108 @@ import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { type VectorLike as VectorInput, Vector, ensureVector } from '@step-wise/geometry';
 
 export interface ModulePositionMetaRaw {
-  position: VectorInput;
+	position: VectorInput;
 }
 
 export interface ModulePositionMeta {
-  id: string;
-  position: Vector;
-  prerequisitesPathOrder: string[];
-  followUpsPathOrder: string[];
+	id: string;
+	position: Vector;
+	prerequisitesPathOrder: string[];
+	followUpsPathOrder: string[];
 }
 
 export interface ModuleConnector {
-  points: Vector[];
-  from: string;
-  to: string;
+	points: Vector[];
+	from: string;
+	to: string;
 }
 
 export interface ProcessModulePositionsOptions {
-  rawPositions: Record<string, ModulePositionMetaRaw>;
-  moduleTree: ModuleTree;
-  cardHeight: number;
-  computeConnectorPath: (
-    from: ModulePositionMeta,
-    to: ModulePositionMeta,
-  ) => Vector[];
-  treeName?: string;
+	rawPositions: Record<string, ModulePositionMetaRaw>;
+	moduleTree: ModuleTree;
+	cardHeight: number;
+	computeConnectorPath: (
+		from: ModulePositionMeta,
+		to: ModulePositionMeta,
+	) => Vector[];
+	treeName?: string;
 }
 
 export interface ProcessedModulePositions {
-  modulePositions: Record<string, ModulePositionMeta>;
-  modulePositionList: ModulePositionMeta[];
-  connectors: ModuleConnector[];
+	modulePositions: Record<string, ModulePositionMeta>;
+	modulePositionList: ModulePositionMeta[];
+	connectors: ModuleConnector[];
 }
 
 export function processModulePositions({
-  rawPositions,
-  moduleTree,
-  cardHeight,
-  computeConnectorPath,
-  treeName = 'Skill Tree',
+	rawPositions,
+	moduleTree,
+	cardHeight,
+	computeConnectorPath,
+	treeName = 'Skill Tree',
 }: ProcessModulePositionsOptions): ProcessedModulePositions {
-  const modulePositions: Record<string, ModulePositionMeta> = {};
+	const modulePositions: Record<string, ModulePositionMeta> = {};
 
-  Object.entries(rawPositions).forEach(([id, positionDataRaw]) => {
-    if (!moduleTree[id]) {
-      throw new Error(
-        `Invalid module ID "${id}" encountered when defining module positions for the ${treeName}.`,
-      );
-    }
+	Object.entries(rawPositions).forEach(([id, positionDataRaw]) => {
+		if (!moduleTree[id]) {
+			throw new Error(
+				`Invalid module ID "${id}" encountered when defining module positions for the ${treeName}.`,
+			);
+		}
 
-    modulePositions[id] = {
-      ...positionDataRaw,
-      id,
-      position: ensureVector(positionDataRaw.position, { dimension: 2 }),
-      prerequisitesPathOrder: [],
-      followUpsPathOrder: [],
-    };
-  });
+		modulePositions[id] = {
+			...positionDataRaw,
+			id,
+			position: ensureVector(positionDataRaw.position, { dimension: 2 }),
+			prerequisitesPathOrder: [],
+			followUpsPathOrder: [],
+		};
+	});
 
-  Object.values(modulePositions).forEach((positionData) => {
-    const module = moduleTree[positionData.id];
-    const { position } = positionData;
+	Object.values(modulePositions).forEach((positionData) => {
+		const module = moduleTree[positionData.id];
+		const { position } = positionData;
 
-    const prerequisiteRefPoint = position.add([0, -cardHeight / 2]);
-    positionData.prerequisitesPathOrder = module.prerequisiteIds
-      .filter((id) => Boolean(rawPositions[id]))
-      .map((id) => {
-        const { position: prerequisitePosition } = modulePositions[id];
-        const refPoint = prerequisitePosition.add([0, cardHeight / 2]);
-        const relPoint = refPoint.subtract(prerequisiteRefPoint);
-        return { id, angle: Math.atan2(relPoint.x, -relPoint.y) };
-      })
-      .sort((a, b) => a.angle - b.angle)
-      .map((data) => data.id);
+		const prerequisiteRefPoint = position.add([0, -cardHeight / 2]);
+		positionData.prerequisitesPathOrder = module.prerequisiteIds
+			.filter((id) => Boolean(rawPositions[id]))
+			.map((id) => {
+				const { position: prerequisitePosition } = modulePositions[id];
+				const refPoint = prerequisitePosition.add([0, cardHeight / 2]);
+				const relPoint = refPoint.subtract(prerequisiteRefPoint);
+				return { id, angle: Math.atan2(relPoint.x, -relPoint.y) };
+			})
+			.sort((a, b) => a.angle - b.angle)
+			.map((data) => data.id);
 
-    const followUpRefPoint = position.add([0, cardHeight / 2]);
-    positionData.followUpsPathOrder = module.continuationIds
-      .filter((id) => Boolean(rawPositions[id]))
-      .map((id) => {
-        const { position: followUpPosition } = modulePositions[id];
-        const refPoint = followUpPosition.add([0, -cardHeight / 2]);
-        const relPoint = refPoint.subtract(followUpRefPoint);
-        return { id, angle: Math.atan2(relPoint.x, relPoint.y) };
-      })
-      .sort((a, b) => a.angle - b.angle)
-      .map((data) => data.id);
-  });
+		const followUpRefPoint = position.add([0, cardHeight / 2]);
+		positionData.followUpsPathOrder = module.continuationIds
+			.filter((id) => Boolean(rawPositions[id]))
+			.map((id) => {
+				const { position: followUpPosition } = modulePositions[id];
+				const refPoint = followUpPosition.add([0, -cardHeight / 2]);
+				const relPoint = refPoint.subtract(followUpRefPoint);
+				return { id, angle: Math.atan2(relPoint.x, relPoint.y) };
+			})
+			.sort((a, b) => a.angle - b.angle)
+			.map((data) => data.id);
+	});
 
-  const connectors: ModuleConnector[] = [];
-  Object.values(modulePositions).forEach((positionData) => {
-    positionData.prerequisitesPathOrder.forEach((prerequisiteId) => {
-      const prerequisitePositionData = modulePositions[prerequisiteId];
-      connectors.push({
-        points: computeConnectorPath(prerequisitePositionData, positionData),
-        from: prerequisiteId,
-        to: positionData.id,
-      });
-    });
-  });
+	const connectors: ModuleConnector[] = [];
+	Object.values(modulePositions).forEach((positionData) => {
+		positionData.prerequisitesPathOrder.forEach((prerequisiteId) => {
+			const prerequisitePositionData = modulePositions[prerequisiteId];
+			connectors.push({
+				points: computeConnectorPath(prerequisitePositionData, positionData),
+				from: prerequisiteId,
+				to: positionData.id,
+			});
+		});
+	});
 
-  return {
-    modulePositions,
-    modulePositionList: Object.values(modulePositions),
-    connectors,
-  };
+	return {
+		modulePositions,
+		modulePositionList: Object.values(modulePositions),
+		connectors,
+	};
 }

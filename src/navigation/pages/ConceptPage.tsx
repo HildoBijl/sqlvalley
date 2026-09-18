@@ -2,271 +2,271 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Alert, Box, Button, Container } from '@mui/material';
 import {
-  Bolt,
-  CheckCircle,
-  Lightbulb,
-  MenuBook,
-  School,
+	Bolt,
+	CheckCircle,
+	Lightbulb,
+	MenuBook,
+	School,
 } from '@mui/icons-material';
 
 import { type ModuleId, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 import { areDirectPrerequisitesCompleted, isReadyToLearn, useModuleCompletion } from '@sqlvalley/progress'
 
 import {
-  useAdminMode,
-  useLearningStore,
-  useSettingsStore,
-  useSkillTreeSettingsStore,
+	useAdminMode,
+	useLearningStore,
+	useSettingsStore,
+	useSkillTreeSettingsStore,
 } from '@/store';
 import { type Module, getModulePresentation, moduleTree } from '@/curriculum'
 import {
-  defaultSkillTreeVisualization,
-  isSkillTreeVisualizationId,
-  skillTreeVisualizationById,
-  skillTreeVisualizationDefinitions,
-  type SkillTreeVisualizationId,
+	defaultSkillTreeVisualization,
+	isSkillTreeVisualizationId,
+	skillTreeVisualizationById,
+	skillTreeVisualizationDefinitions,
+	type SkillTreeVisualizationId,
 } from '@/curriculum/skillTreeVisualizations';
 import { ContentHeader } from '@/learning/components/ContentHeader';
 import { ConceptCompletionDialog } from '@/learning/components/ConceptCompletionDialog';
 import { ContentTabs } from '@/learning/components/ContentTabs';
 import {
-  StoryTab,
-  SummaryTab,
-  TheoryTab,
-  VideoTab,
+	StoryTab,
+	SummaryTab,
+	TheoryTab,
+	VideoTab,
 } from '@/learning/components/TabContent/ContentTab';
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import type { TabConfig } from '@/learning/types';
 
 export default function ConceptPage() {
-  const { conceptId } = useParams<{ conceptId: string }>();
-  const navigate = useNavigate();
-  const hideStories = useSettingsStore((state) => state.hideStories);
-  const completeConcept = useLearningStore((state) => state.completeConcept);
-  const isAdmin = useAdminMode();
-  const [showCompletionDialog, setShowCompletionDialog] = useState(false);
-  const skillTreeHistoryRaw = useSkillTreeSettingsStore(
-    (state) => state.recentSkillTreeIds,
-  );
-  const skillTreeHistory = useMemo(
-    () => normalizeSkillTreeHistory(skillTreeHistoryRaw),
-    [skillTreeHistoryRaw],
-  );
-  const backToLearningPath = useMemo(
-    () => getBackToLearningPathFromHistory(skillTreeHistoryRaw, conceptId),
-    [skillTreeHistoryRaw, conceptId],
-  );
+	const { conceptId } = useParams<{ conceptId: string }>();
+	const navigate = useNavigate();
+	const hideStories = useSettingsStore((state) => state.hideStories);
+	const completeConcept = useLearningStore((state) => state.completeConcept);
+	const isAdmin = useAdminMode();
+	const [showCompletionDialog, setShowCompletionDialog] = useState(false);
+	const skillTreeHistoryRaw = useSkillTreeSettingsStore(
+		(state) => state.recentSkillTreeIds,
+	);
+	const skillTreeHistory = useMemo(
+		() => normalizeSkillTreeHistory(skillTreeHistoryRaw),
+		[skillTreeHistoryRaw],
+	);
+	const backToLearningPath = useMemo(
+		() => getBackToLearningPathFromHistory(skillTreeHistoryRaw, conceptId),
+		[skillTreeHistoryRaw, conceptId],
+	);
 
-  const conceptMeta = useMemo<Module | undefined>(() => {
-    if (!conceptId) return undefined;
-    return Object.values(moduleTree).find(
-      (item) => item.type === 'concept' && item.id === conceptId,
-    );
-  }, [conceptId]);
+	const conceptMeta = useMemo<Module | undefined>(() => {
+		if (!conceptId) return undefined;
+		return Object.values(moduleTree).find(
+			(item) => item.type === 'concept' && item.id === conceptId,
+		);
+	}, [conceptId]);
 
-  const allTabs: TabConfig[] = [
-    { key: 'story', label: 'Story', icon: <MenuBook /> },
-    { key: 'theory', label: 'Theory', icon: <Lightbulb /> },
-    // { key: 'video', label: 'Video', icon: <OndemandVideo /> },
-    { key: 'summary', label: 'Summary', icon: <Bolt /> },
-  ];
+	const allTabs: TabConfig[] = [
+		{ key: 'story', label: 'Story', icon: <MenuBook /> },
+		{ key: 'theory', label: 'Theory', icon: <Lightbulb /> },
+		// { key: 'video', label: 'Video', icon: <OndemandVideo /> },
+		{ key: 'summary', label: 'Summary', icon: <Bolt /> },
+	];
 
-  const availableTabs = hideStories
-    ? allTabs.filter((tab) => tab.key !== 'story')
-    : allTabs;
+	const availableTabs = hideStories
+		? allTabs.filter((tab) => tab.key !== 'story')
+		: allTabs;
 
-  const {
-    currentTab,
-    handleTabChange,
-    selectTab,
-    tabs,
-    moduleState,
-  } = useContentTabs(
-    conceptId,
-    'concept',
-    availableTabs,
-    {
-      defaultTab: 'theory',
-    },
-  );
+	const {
+		currentTab,
+		handleTabChange,
+		selectTab,
+		tabs,
+		moduleState,
+	} = useContentTabs(
+		conceptId,
+		'concept',
+		availableTabs,
+		{
+			defaultTab: 'theory',
+		},
+	);
 
-  const moduleStates = useLearningStore((state) => state.modules);
+	const moduleStates = useLearningStore((state) => state.modules);
 
-  const { isCompleted: isModuleCompleted } = useModuleCompletion(moduleTree, moduleStates);
-  const isCompleted = conceptId
-    ? isModuleCompleted(conceptId)
-    : (moduleState.understood ?? false);
-  const summaryUnlocked = isCompleted || isAdmin;
+	const { isCompleted: isModuleCompleted } = useModuleCompletion(moduleTree, moduleStates);
+	const isCompleted = conceptId
+		? isModuleCompleted(conceptId)
+		: (moduleState.understood ?? false);
+	const summaryUnlocked = isCompleted || isAdmin;
 
-  const visibleTabs = useMemo(
-    () =>
-      summaryUnlocked ? tabs : tabs.filter((tab) => tab.key !== 'summary'),
-    [summaryUnlocked, tabs],
-  );
+	const visibleTabs = useMemo(
+		() =>
+			summaryUnlocked ? tabs : tabs.filter((tab) => tab.key !== 'summary'),
+		[summaryUnlocked, tabs],
+	);
 
-  useEffect(() => {
-    if (!summaryUnlocked && currentTab === 'summary') {
-      const fallbackTab =
-        tabs.find((tab) => tab.key === 'theory')?.key ??
-        tabs.find((tab) => tab.key !== 'summary')?.key ??
-        'theory';
-      selectTab(fallbackTab);
-    }
-  }, [currentTab, summaryUnlocked, selectTab, tabs]);
+	useEffect(() => {
+		if (!summaryUnlocked && currentTab === 'summary') {
+			const fallbackTab =
+				tabs.find((tab) => tab.key === 'theory')?.key ??
+				tabs.find((tab) => tab.key !== 'summary')?.key ??
+				'theory';
+			selectTab(fallbackTab);
+		}
+	}, [currentTab, summaryUnlocked, selectTab, tabs]);
 
-  const conceptTree = useMemo(() => {
-    if (!conceptId) return undefined;
-    for (const treeId of skillTreeHistory) {
-      const tree = skillTreeVisualizationById.get(treeId);
-      if (tree?.moduleIds.has(conceptId)) return tree;
-    }
-    return skillTreeVisualizationDefinitions.find((tree) =>
-      tree.moduleIds.has(conceptId),
-    );
-  }, [conceptId, skillTreeHistory]);
+	const conceptTree = useMemo(() => {
+		if (!conceptId) return undefined;
+		for (const treeId of skillTreeHistory) {
+			const tree = skillTreeVisualizationById.get(treeId);
+			if (tree?.moduleIds.has(conceptId)) return tree;
+		}
+		return skillTreeVisualizationDefinitions.find((tree) =>
+			tree.moduleIds.has(conceptId),
+		);
+	}, [conceptId, skillTreeHistory]);
 
-  const goalNodeId = useSkillTreeSettingsStore((state) =>
-    conceptTree ? (state.goalNodeIdByTreeId[conceptTree.id] ?? null) : null,
-  );
+	const goalNodeId = useSkillTreeSettingsStore((state) =>
+		conceptTree ? (state.goalNodeIdByTreeId[conceptTree.id] ?? null) : null,
+	);
 
-  const goalPath = useMemo(
+	const goalPath = useMemo(
 		() => new Set(goalNodeId ? getRequiredModuleIds(moduleTree, [goalNodeId]) : []),
-    [goalNodeId],
-  );
+		[goalNodeId],
+	);
 
-  const treeModuleIds = conceptTree?.moduleIds ?? new Set<ModuleId>();
-  const allFollowUps = conceptId
-    ? (moduleTree[conceptId]?.continuationIds ?? []).filter((id) => treeModuleIds.has(id))
-    : [];
-  const allPrereqsDone = (moduleId: ModuleId) =>
-    areDirectPrerequisitesCompleted(moduleTree, moduleId, isModuleCompleted);
+	const treeModuleIds = conceptTree?.moduleIds ?? new Set<ModuleId>();
+	const allFollowUps = conceptId
+		? (moduleTree[conceptId]?.continuationIds ?? []).filter((id) => treeModuleIds.has(id))
+		: [];
+	const allPrereqsDone = (moduleId: ModuleId) =>
+		areDirectPrerequisitesCompleted(moduleTree, moduleId, isModuleCompleted);
 
-  const nextUp = goalNodeId
-    ? (() => {
-        if (isReadyToLearn(moduleTree, goalNodeId, isModuleCompleted)) {
-          return [goalNodeId];
-        }
-        return allFollowUps.filter((id) => goalPath.has(id) && allPrereqsDone(id));
-      })()
-    : allFollowUps.filter(allPrereqsDone);
+	const nextUp = goalNodeId
+		? (() => {
+			if (isReadyToLearn(moduleTree, goalNodeId, isModuleCompleted)) {
+				return [goalNodeId];
+			}
+			return allFollowUps.filter((id) => goalPath.has(id) && allPrereqsDone(id));
+		})()
+		: allFollowUps.filter(allPrereqsDone);
 
-  if (!conceptMeta) {
-    return (
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Alert severity="error">
-          Concept not found
-          <Button onClick={() => navigate(backToLearningPath)}>
-            Return to learning
-          </Button>
-        </Alert>
-      </Container>
-    );
-  }
+	if (!conceptMeta) {
+		return (
+			<Container maxWidth="lg" sx={{ py: 4 }}>
+				<Alert severity="error">
+					Concept not found
+					<Button onClick={() => navigate(backToLearningPath)}>
+						Return to learning
+					</Button>
+				</Alert>
+			</Container>
+		);
+	}
 
-  const handleComplete = () => {
-    if (!conceptId) {
-      return;
-    }
-    completeConcept(conceptId);
+	const handleComplete = () => {
+		if (!conceptId) {
+			return;
+		}
+		completeConcept(conceptId);
 
-    setShowCompletionDialog(true);
-  };
+		setShowCompletionDialog(true);
+	};
 
-  const presentation = getModulePresentation(conceptMeta.id)
-  if (!presentation) throw new Error(`Missing presentation for module "${conceptMeta.id}".`)
+	const presentation = getModulePresentation(conceptMeta.id)
+	if (!presentation) throw new Error(`Missing presentation for module "${conceptMeta.id}".`)
 
-  return (
-    <Container maxWidth="lg" sx={{ py: 2 }}>
-      <ContentHeader
-        title={presentation.name}
-        description={presentation.description}
-        onBack={() => navigate(backToLearningPath)}
-        icon={<School color="primary" sx={{ fontSize: 32 }} />}
-        isCompleted={isCompleted}
-      />
+	return (
+		<Container maxWidth="lg" sx={{ py: 2 }}>
+			<ContentHeader
+				title={presentation.name}
+				description={presentation.description}
+				onBack={() => navigate(backToLearningPath)}
+				icon={<School color="primary" sx={{ fontSize: 32 }} />}
+				isCompleted={isCompleted}
+			/>
 
-      {visibleTabs.length > 0 && (
-        <ContentTabs
-          value={currentTab}
-          tabs={visibleTabs}
-          onChange={handleTabChange}
-        >
-          {currentTab === 'theory' && <TheoryTab contentId={conceptMeta.id} />}
-          {currentTab === 'video' && <VideoTab contentId={conceptMeta.id} />}
-          {currentTab === 'summary' && summaryUnlocked && (
-            <SummaryTab contentId={conceptMeta.id} />
-          )}
-          {currentTab === 'story' && <StoryTab contentId={conceptMeta.id} />}
-        </ContentTabs>
-      )}
+			{visibleTabs.length > 0 && (
+				<ContentTabs
+					value={currentTab}
+					tabs={visibleTabs}
+					onChange={handleTabChange}
+				>
+					{currentTab === 'theory' && <TheoryTab contentId={conceptMeta.id} />}
+					{currentTab === 'video' && <VideoTab contentId={conceptMeta.id} />}
+					{currentTab === 'summary' && summaryUnlocked && (
+						<SummaryTab contentId={conceptMeta.id} />
+					)}
+					{currentTab === 'story' && <StoryTab contentId={conceptMeta.id} />}
+				</ContentTabs>
+			)}
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-        <span />
+			<Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+				<span />
 
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          {!isCompleted && (
-            <Button
-              variant="contained"
-              onClick={handleComplete}
-              startIcon={<CheckCircle />}
-            >
-              Mark as Complete
-            </Button>
-          )}
-        </Box>
-      </Box>
+				<Box sx={{ display: 'flex', gap: 2 }}>
+					{!isCompleted && (
+						<Button
+							variant="contained"
+							onClick={handleComplete}
+							startIcon={<CheckCircle />}
+						>
+							Mark as Complete
+						</Button>
+					)}
+				</Box>
+			</Box>
 
-      <ConceptCompletionDialog
-        open={showCompletionDialog}
-        conceptName={presentation.name}
-        nextUp={nextUp}
-        onNavigateToNext={(id) => {
-          const type = moduleTree[id]?.type;
-          navigate(type === 'skill' ? `/skill/${id}` : `/concept/${id}`);
-        }}
-        onClose={() => setShowCompletionDialog(false)}
-        onViewSummary={() => {
-          setShowCompletionDialog(false);
-          selectTab('summary');
-        }}
-        onReturnToOverview={() => navigate(backToLearningPath)}
-      />
-    </Container>
-  );
+			<ConceptCompletionDialog
+				open={showCompletionDialog}
+				conceptName={presentation.name}
+				nextUp={nextUp}
+				onNavigateToNext={(id) => {
+					const type = moduleTree[id]?.type;
+					navigate(type === 'skill' ? `/skill/${id}` : `/concept/${id}`);
+				}}
+				onClose={() => setShowCompletionDialog(false)}
+				onViewSummary={() => {
+					setShowCompletionDialog(false);
+					selectTab('summary');
+				}}
+				onReturnToOverview={() => navigate(backToLearningPath)}
+			/>
+		</Container>
+	);
 }
 
 function normalizeSkillTreeHistory(
-  history: readonly string[],
+	history: readonly string[],
 ): SkillTreeVisualizationId[] {
-  const result: SkillTreeVisualizationId[] = [];
-  const seen = new Set<SkillTreeVisualizationId>();
+	const result: SkillTreeVisualizationId[] = [];
+	const seen = new Set<SkillTreeVisualizationId>();
 
-  for (const value of history) {
-    if (!isSkillTreeVisualizationId(value) || seen.has(value)) {
-      continue;
-    }
-    seen.add(value);
-    result.push(value);
-  }
+	for (const value of history) {
+		if (!isSkillTreeVisualizationId(value) || seen.has(value)) {
+			continue;
+		}
+		seen.add(value);
+		result.push(value);
+	}
 
-  return result;
+	return result;
 }
 
 function getBackToLearningPathFromHistory(
-  history: readonly string[],
-  moduleId?: string,
+	history: readonly string[],
+	moduleId?: string,
 ): string {
-  const normalized = normalizeSkillTreeHistory(history);
-  const fallbackId = normalized[0] ?? defaultSkillTreeVisualization;
+	const normalized = normalizeSkillTreeHistory(history);
+	const fallbackId = normalized[0] ?? defaultSkillTreeVisualization;
 
-  if (moduleId) {
-    for (const treeId of normalized) {
-      const tree = skillTreeVisualizationById.get(treeId);
-      if (tree?.moduleIds.has(moduleId)) {
-        return tree.path;
-      }
-    }
-  }
+	if (moduleId) {
+		for (const treeId of normalized) {
+			const tree = skillTreeVisualizationById.get(treeId);
+			if (tree?.moduleIds.has(moduleId)) {
+				return tree.path;
+			}
+		}
+	}
 
-  return skillTreeVisualizationById.get(fallbackId)?.path ?? '/learn';
+	return skillTreeVisualizationById.get(fallbackId)?.path ?? '/learn';
 }

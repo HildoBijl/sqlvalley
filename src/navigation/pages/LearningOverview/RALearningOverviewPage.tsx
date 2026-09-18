@@ -6,11 +6,11 @@ import { SkillTreeOverviewPage } from '../SkillTreeOverviewPage';
  * This page is accessible at /learn-ra and shows the RA skill tree.
  */
 export default function RALearningOverviewPage() {
-  return (
-    <SkillTreeOverviewPage
-      treeId="ra"
-      modulePositions={raModulePositions}
-      visiblePaths={raConnectors}
-    />
-  );
+	return (
+		<SkillTreeOverviewPage
+			treeId="ra"
+			modulePositions={raModulePositions}
+			visiblePaths={raConnectors}
+		/>
+	);
 }

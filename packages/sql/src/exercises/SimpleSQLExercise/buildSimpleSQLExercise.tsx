@@ -10,47 +10,47 @@ import type { SimpleSQLCheckResult, SimpleSQLExerciseSpec } from './types';
  * Its checkInput delegates grading to the SQL module's grade() from moduleContext.
  */
 export function buildSimpleSQLExercise<Parameters extends Record<string, unknown>>(
-  spec: SimpleSQLExerciseSpec<Parameters>,
+	spec: SimpleSQLExerciseSpec<Parameters>,
 ): AnyExerciseDefinition {
-  const { exerciseId, version, generateParameters, comparisonOptions, title = 'Exercise' } = spec;
+	const { exerciseId, version, generateParameters, comparisonOptions, title = 'Exercise' } = spec;
 
-  return buildSimpleExercise<Parameters, string, SimpleSQLCheckResult>({
-    exerciseId,
-    version,
-    generateParameters,
-    initialInput: '',
-    normalizeInput: normalizeSqlInput,
-    isInputEmpty: (input) => !input.trim(),
-    canSubmit: ({ moduleContext }) => {
-      const context = moduleContext as SqlModuleContext;
-      return context.ready && !context.isExecuting && !context.queryError;
-    },
-    canGiveUp: ({ moduleContext }) => !(moduleContext as SqlModuleContext).isExecuting,
-    getSolutionInput: (parameters) => resolveValue(spec.solution, parameters).trim(),
-    validateInput: ({ input }) => {
-      const validation = validateSqlInput(input);
-      return {
-        valid: validation.ok,
-        feedback: validation.message,
-        feedbackType: validation.ok ? undefined : 'warning',
-      };
-    },
-    checkInput: ({ parameters, input, moduleContext }) =>
-      (moduleContext as SqlModuleContext).grade(
-        input,
-        resolveValue(spec.solution, parameters),
-        comparisonOptions,
-      ),
-    Problem: createSQLProblem(title, (parameters) => resolveValue(spec.problem, parameters)),
-    Input: SQLExerciseInput,
-    Solution: createSQLSolution((parameters) => resolveValue(spec.solution, parameters)),
-    Output: SQLExerciseOutput,
-  });
+	return buildSimpleExercise<Parameters, string, SimpleSQLCheckResult>({
+		exerciseId,
+		version,
+		generateParameters,
+		initialInput: '',
+		normalizeInput: normalizeSqlInput,
+		isInputEmpty: (input) => !input.trim(),
+		canSubmit: ({ moduleContext }) => {
+			const context = moduleContext as SqlModuleContext;
+			return context.ready && !context.isExecuting && !context.queryError;
+		},
+		canGiveUp: ({ moduleContext }) => !(moduleContext as SqlModuleContext).isExecuting,
+		getSolutionInput: (parameters) => resolveValue(spec.solution, parameters).trim(),
+		validateInput: ({ input }) => {
+			const validation = validateSqlInput(input);
+			return {
+				valid: validation.ok,
+				feedback: validation.message,
+				feedbackType: validation.ok ? undefined : 'warning',
+			};
+		},
+		checkInput: ({ parameters, input, moduleContext }) =>
+			(moduleContext as SqlModuleContext).grade(
+				input,
+				resolveValue(spec.solution, parameters),
+				comparisonOptions,
+			),
+		Problem: createSQLProblem(title, (parameters) => resolveValue(spec.problem, parameters)),
+		Input: SQLExerciseInput,
+		Solution: createSQLSolution((parameters) => resolveValue(spec.solution, parameters)),
+		Output: SQLExerciseOutput,
+	});
 }
 
 function resolveValue<Parameters extends Record<string, unknown>>(
-  value: string | ((parameters: Parameters) => string),
-  parameters: Parameters,
+	value: string | ((parameters: Parameters) => string),
+	parameters: Parameters,
 ): string {
-  return typeof value === 'function' ? value(parameters) : value;
+	return typeof value === 'function' ? value(parameters) : value;
 }
