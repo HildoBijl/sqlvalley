@@ -18,6 +18,8 @@ export function StoryToggle() {
 }
 ```
 
+`useCurrentExerciseInstance(skillId)` subscribes to the current exercise for a skill and returns its latest instance, or `undefined` when none exists. Import it from `@/store`.
+
 Code outside React can use the same store directly:
 
 ```ts

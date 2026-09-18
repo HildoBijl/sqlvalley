@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Alert, Button, Typography } from '@mui/material'
 
 import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
@@ -11,6 +11,7 @@ import { ExerciseAdminTools } from './ExerciseAdminTools'
 
 interface ExerciseManagerProps {
 	storage: ExerciseStorage
+	currentExerciseInstance: ExerciseInstance | undefined
 	skillId: string
 	exercises: readonly ExerciseRegistration[]
 	showAdminControls?: boolean
@@ -22,16 +23,14 @@ export function ExerciseManager(props: ExerciseManagerProps) {
 	return <ExerciseManagerSession key={props.skillId} {...props} />
 }
 
-function ExerciseManagerSession({ skillId, exercises, storage, showAdminControls = false, selectionOptions }: ExerciseManagerProps) {
+function ExerciseManagerSession({ skillId, exercises, currentExerciseInstance: instance, storage, showAdminControls = false, selectionOptions }: ExerciseManagerProps) {
 	const moduleContext = useModuleContext()
-	const getInstanceSnapshot = useCallback(() => storage.getInstance(skillId), [storage, skillId])
-	const instance = useSyncExternalStore(storage.subscribe, getInstanceSnapshot)
 	const byId = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])
 	const matched = instance ? byId.get(instance.exerciseId) : undefined
 	const active = (matched?.definition.metadata.version ?? 1) === instance?.version ? matched : undefined
 	const [pending, setPending] = useState(false)
 	const [generating, setGenerating] = useState(false)
-	const [error, setError] = useState<string | null>(null)
+	const [error, setError] = useState<string>()
 	const [initializationAttempt, setInitializationAttempt] = useState(0)
 	const pendingRef = useRef(false)
 	const generation = useRef(0)
@@ -49,7 +48,7 @@ function ExerciseManagerSession({ skillId, exercises, storage, showAdminControls
 	const startExercise = useCallback(async (registration: ExerciseRegistration, isCurrent: () => boolean = () => true) => {
 		const request = ++generation.current
 		setGenerating(true)
-		setError(null)
+		setError(undefined)
 		try {
 			const exerciseInstance = await generateExerciseInstance(registration.exerciseId, registration.definition, moduleContext)
 			if (!mounted.current || request !== generation.current || !isCurrent()) return
@@ -95,7 +94,7 @@ function ExerciseManagerSession({ skillId, exercises, storage, showAdminControls
 		if (!active || !current || pendingRef.current || generating || !moduleReady) return
 		pendingRef.current = true
 		setPending(true)
-		setError(null)
+		setError(undefined)
 		try {
 			const previousState = getCurrentState(current)
 			const { state, report } = await active.definition.processSoloAction({

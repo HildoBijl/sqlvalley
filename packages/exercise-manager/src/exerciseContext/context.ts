@@ -10,7 +10,7 @@ export type AnyExerciseContextValue = ExerciseContextValue<
 	ExerciseState
 >
 
-export const ExerciseContext = createContext<AnyExerciseContextValue | null>(null)
+export const ExerciseContext = createContext<AnyExerciseContextValue | undefined>(undefined)
 
 // Access the current exercise (definition, exerciseInstance, controls, skill) from within an ExerciseManager.
 export function useExercise<

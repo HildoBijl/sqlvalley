@@ -1,12 +1,11 @@
 import type { SkillId } from '@step-wise/module-tree-definition'
 import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } from '@sqlvalley/exercise-instances'
 
-// Snapshots must retain their reference until changed, as required by useSyncExternalStore.
+// Imperative reads keep asynchronous operations working with the latest stored data.
 export interface ExerciseStorage {
-	getInstance(skillId: SkillId): ExerciseInstance | null
+	getInstance(skillId: SkillId): ExerciseInstance | undefined
 	// Oldest first, including the current instance.
 	getHistory(skillId: SkillId): readonly ExerciseInstance[]
-	subscribe(listener: () => void): () => void
 	startExercise(skillId: SkillId, exerciseInstance: ExerciseInstance): void
 	submitAction(
 		skillId: SkillId,

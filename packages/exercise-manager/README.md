@@ -39,7 +39,7 @@ The React-independent [`@sqlvalley/exercise-instances`](../exercise-instances/RE
 
 `generateExerciseInstance(exerciseId, definition, context)` from that package awaits parameter and initial-state generation and returns a complete instance with `mode: 'solo'` and an empty `history`. Generating an instance is separate from building its definition or pairing that definition with a renderer.
 
-`ExerciseManager` receives an application-owned `ExerciseStorage` implementation through its required `storage` prop. Its `startExercise(skillId, exerciseInstance)` stores the generated instance. Submissions append history events containing `action`, `state`, an optional `report`, and `submittedAt`. Upstream `getCurrentState(exerciseInstance)` returns the latest state, falling back to the stored `initialState`.
+`ExerciseManager` receives an application-owned `ExerciseStorage` implementation through its required `storage` prop. The caller subscribes to its store and supplies the current instance (or `undefined`) through the required `currentExerciseInstance` prop. The manager renders from that prop and uses storage reads to check the latest data during asynchronous operations. Its `startExercise(skillId, exerciseInstance)` stores the generated instance. Submissions append history events containing `action`, `state`, an optional `report`, and `submittedAt`. Upstream `getCurrentState(exerciseInstance)` returns the latest state, falling back to the stored `initialState`.
 
 The manager restores valid instances directly without regenerating parameters or initial state. Pending submissions and generation status remain transient React state; they are not stored and cannot leave a reloaded exercise stuck in a pending state.
 
