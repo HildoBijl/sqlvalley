@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { Alert, Box } from '@mui/material'
 
 import type { PlainDataValue } from '@step-wise/js-utils'
+import { getCurrentState } from '@step-wise/exercise-definition'
 
 import { useExercise } from '../Exercise'
 import { useModuleContext } from '../moduleContext'
@@ -30,22 +31,23 @@ export function SimpleExerciseComponent<
 	Input,
 	CheckResult,
 >({ spec }: SimpleExerciseComponentProps<Parameters, Input, CheckResult>) {
-	const { data, controls } = useExercise()
+	const { exerciseInstance, pending, controls } = useExercise()
 	const moduleContext = useModuleContext()
-	const { events, draftInput, pending, state } = data
+	const { history, draftInput } = exerciseInstance
+	const state = getCurrentState(exerciseInstance)
 
 	const [feedbackCleared, setFeedbackCleared] = useState(false)
 	const [giveUpOpen, setGiveUpOpen] = useState(false)
 
 	const lastSubmittedInput = useMemo(() => {
-		for (let i = events.length - 1; i >= 0; i -= 1) {
-			if (events[i].action.type === 'input') return events[i].action.input as Input
+		for (let i = history.length - 1; i >= 0; i -= 1) {
+			if (history[i].action.type === 'input') return history[i].action.input as Input
 		}
 		return undefined
-	}, [events])
+	}, [history])
 	const input = (draftInput !== undefined ? draftInput : lastSubmittedInput ?? spec.initialInput) as Input
 
-	const latestEvent = events[events.length - 1]
+	const latestEvent = history[history.length - 1]
 	const report = latestEvent?.action.type === 'input'
 		? (latestEvent.report as SimpleExerciseReport | undefined)
 		: undefined
@@ -70,7 +72,7 @@ export function SimpleExerciseComponent<
 		void controls.submitAction({ type: 'give-up' })
 	}, [controls])
 
-	const params = data.parameters as Parameters
+	const params = exerciseInstance.parameters as Parameters
 	const storedState = state as SimpleExerciseStoredState
 	const solved = isSimpleExerciseSolved(storedState)
 	const givenUp = isSimpleExerciseGivenUp(storedState)

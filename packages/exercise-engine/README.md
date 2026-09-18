@@ -28,23 +28,29 @@ const exercise: ExerciseRegistration = {
 }
 ```
 
-`ExampleExercise` is an application-provided component that reads `useExercise()`. Its context contains the logical definition, current data, controls, and skill identity. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
+`ExampleExercise` is an application-provided component that reads `useExercise()`. Its context contains the logical definition, `exerciseInstance`, transient `pending` status, controls, and skill identity. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
 
 The manager awaits parameter generation, initial-state generation, and action processing. It uses `state.done === true` for completion and the registration's `isSolved` predicate to increment solved counts only on the transition to solved. Errors are shown in the exercise UI. Results from obsolete generation requests or submissions to a replaced instance are ignored.
 
 
 ## Transitional SimpleExercise support
 
-`buildSimpleExercise` returns an `ExerciseRegistration`. It adapts the existing specification to `generateParameters`, `getInitialState`, and `processSoloAction`, retaining validation, feedback reports, and solved/given-up behavior. Completed states additionally contain `done: true`.
+`buildSimpleExercise` currently returns an `ExerciseRegistration`; separating definition building from presentation registration is deferred to the MonoExercise migration. It adapts the existing specification to `generateParameters`, `getInitialState`, and `processSoloAction`, retaining validation, feedback reports, and solved/given-up behavior. Completed states additionally contain `done: true`.
 
-The current specification and persisted store retain their older broad data types. The adapter narrows these at the upstream boundary; authors must provide serializable parameters, input, and grading results. Input-exercise logic has not yet been replaced with `@step-wise/input-exercises`, and the SimpleExercise names remain until that migration.
+The current SimpleExercise specification retains its older broad data types. The adapter narrows these at the upstream boundary; authors must provide serializable parameters, input, and grading results. Input-exercise logic has not yet been replaced with `@step-wise/input-exercises`, and the SimpleExercise names remain until that migration.
 
 
-## Storage boundary
+## Exercise instances and storage
 
-`ExerciseStorageProvider` receives an application-owned `ExerciseStorage` implementation. Existing stored instances still use `events` and `resultingState`; this phase does not migrate persisted history or require resetting progress.
+The React-free `exerciseSelection` folder defines `ExerciseInstance`, extending the upstream `SoloExerciseInstance` with `exerciseId`, `version`, `startedAt`, optional `draftInput`, and `submittedAt` on each `ExerciseEvent`. It is available through `@sqlvalley/exercise-engine/exerciseSelection`, including for application stores.
 
-Initial state is held in memory for the active instance and regenerated when restoring it. Until the storage migration persists initial state, `getInitialState` must return a reproducible result for the same parameters. Existing SimpleExercises return an empty object. Draft input and subsequent states continue to be persisted as before.
+`generateExerciseInstance(exerciseId, definition, context)` awaits parameter and initial-state generation and returns a complete instance with `mode: 'solo'` and an empty `history`. Generating an instance is separate from building its definition or pairing that definition with a renderer.
+
+`ExerciseStorageProvider` receives an application-owned `ExerciseStorage` implementation. Its `startExercise(skillId, exerciseInstance)` stores the generated instance. Submissions append history events containing `action`, `state`, an optional `report`, and `submittedAt`. Upstream `getCurrentState(exerciseInstance)` returns the latest state, falling back to the stored `initialState`.
+
+The manager restores valid instances directly without regenerating parameters or initial state. Pending submissions and generation status remain transient React state; they are not stored and cannot leave a reloaded exercise stuck in a pending state.
+
+The learning-store v7 ? v8 migration converts legacy events into history, supplies the empty initial state used by legacy SimpleExercises, and adds `done: true` to solved/given-up states. The same migration renames instance `createdAt` to `startedAt` and event `timestamp` to `submittedAt`. Existing parameters, reports, drafts, timestamp values, and solved counts are retained. `normalizeExerciseInstance` validates only the current format; historical conversions stay in store migrations.
 
 
 ## Manual verification

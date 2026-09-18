@@ -1,12 +1,12 @@
-import type { StoredExerciseState } from '../storedState';
-import type { SimpleExerciseStoredState } from './types';
+import type { ExerciseState } from '../exerciseSelection'
+import type { SimpleExerciseStoredState } from './types'
 
-export const emptySimpleExerciseState: SimpleExerciseStoredState = {};
+export const emptySimpleExerciseState: SimpleExerciseStoredState = {}
 
-export function isSimpleExerciseSolved(state: StoredExerciseState | undefined): boolean {
-	return !!state && 'solved' in state && state.solved === true;
+export function isSimpleExerciseSolved(state: ExerciseState | undefined): boolean {
+	return !!state && 'solved' in state && state.solved === true
 }
 
-export function isSimpleExerciseGivenUp(state: StoredExerciseState | undefined): boolean {
-	return !!state && 'givenUp' in state && state.givenUp === true;
+export function isSimpleExerciseGivenUp(state: ExerciseState | undefined): boolean {
+	return !!state && 'givenUp' in state && state.givenUp === true
 }

@@ -12,7 +12,7 @@ export type AnyExerciseContextValue = ExerciseContextValue<
 
 export const ExerciseContext = createContext<AnyExerciseContextValue | null>(null)
 
-// Access the current exercise (definition, data, controls, skill) from within an <Exercise>.
+// Access the current exercise (definition, exerciseInstance, controls, skill) from within an <Exercise>.
 export function useExercise<
 	Parameters extends ExerciseParameters = ExerciseParameters,
 	Action extends ExerciseAction = ExerciseAction,

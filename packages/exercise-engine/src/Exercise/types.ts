@@ -2,20 +2,8 @@ import type { ComponentType, ReactNode } from 'react'
 
 import type { ExerciseAction, ExerciseParameters, ExerciseState } from '@step-wise/exercise-definition'
 
-import type { SkillId, StoredExerciseEvent } from '../storedState'
+import type { ExerciseInstance, SkillId } from '../exerciseSelection'
 import type { ExerciseDefinition } from './definition'
-
-// Dynamically generated data about the current exercise.
-export interface ExerciseData<
-	Parameters extends ExerciseParameters,
-	State extends ExerciseState,
-> {
-	parameters: Parameters
-	state: State
-	events: StoredExerciseEvent[]
-	draftInput: unknown
-	pending: boolean
-}
 
 // Handlers connecting the exercise to the data store, set up by the manager.
 export interface ExerciseControls<Action extends ExerciseAction> {
@@ -35,7 +23,8 @@ export interface ExerciseContextValue<
 	State extends ExerciseState,
 > {
 	definition: ExerciseDefinition<Parameters, Action, State>
-	data: ExerciseData<Parameters, State>
+	exerciseInstance: ExerciseInstance<Parameters, Action, State>
+	pending: boolean
 	controls: ExerciseControls<Action>
 	skill: ExerciseSkill
 }

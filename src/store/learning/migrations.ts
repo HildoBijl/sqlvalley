@@ -1,7 +1,7 @@
 import { asRecord, runMigrations } from '../infrastructure'
 import type { PersistedLearning } from './persistence'
 
-export const LEARNING_STORAGE_VERSION = 7
+export const LEARNING_STORAGE_VERSION = 8
 
 // Migrations: index i transforms payload from version i to i+1.
 const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
@@ -155,6 +155,30 @@ const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
 			const module = asRecord(moduleValue)
 			const moduleType = typeof module.solvedExerciseCount === 'number' || Array.isArray(module.exerciseHistory) ? 'skill' : 'concept'
 			return [moduleId, { ...module, moduleType }]
+		}))
+		return { ...state, modules: migratedModules as PersistedLearning['modules'] }
+	},
+
+	// v7 -> v8: adopt solo instances with persisted initial state and upstream history fields.
+	state => {
+		const timestamp = (value: unknown) => typeof value === 'string' ? new Date(value).getTime() : value
+		const modules = asRecord(asRecord(state).modules)
+		const migratedModules = Object.fromEntries(Object.entries(modules).map(([moduleId, moduleValue]) => {
+			const module = asRecord(moduleValue)
+			if (module.moduleType !== 'skill' || !Array.isArray(module.exerciseHistory)) return [moduleId, module]
+			const exerciseHistory = module.exerciseHistory.map(value => {
+				const { events, createdAt, ...instance } = asRecord(value)
+				const history = (Array.isArray(events) ? events : []).map(value => {
+					const { resultingState, timestamp: submittedAt, ...event } = asRecord(value)
+					const previousState = asRecord(resultingState)
+					const done = previousState.solved === true || previousState.givenUp === true
+					return { ...event, submittedAt: timestamp(submittedAt), state: { ...previousState, ...(done ? { done: true } : {}) } }
+				})
+				// All legacy SimpleExercises began with an empty state.
+				const version = typeof instance.version === 'number' && Number.isSafeInteger(instance.version) && instance.version > 0 ? instance.version : 1
+				return { ...instance, version, startedAt: timestamp(createdAt), mode: 'solo', initialState: {}, history }
+			})
+			return [moduleId, { ...module, exerciseHistory }]
 		}))
 		return { ...state, modules: migratedModules as PersistedLearning['modules'] }
 	},

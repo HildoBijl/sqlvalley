@@ -1,5 +1,5 @@
-import type { StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState'
 import type { ModuleType } from '@step-wise/module-tree-definition'
+import type { ExerciseInstance } from '@sqlvalley/exercise-engine/exerciseSelection'
 
 interface BaseModuleState {
 	id: string
@@ -13,7 +13,7 @@ export interface ConceptState extends BaseModuleState {
 export interface SkillState extends BaseModuleState {
 	moduleType: 'skill'
 	solvedExerciseCount: number
-	exerciseHistory: StoredExerciseInstance[]
+	exerciseHistory: ExerciseInstance[]
 }
 export type ModuleState = ConceptState | SkillState
 

@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 
 import type { Exercise, ExerciseAction, ExerciseMetadata, ExerciseParameters, ExerciseState, SoloExerciseReport } from '@step-wise/exercise-definition'
 
-import type { ExerciseId } from '../storedState'
+import type { ExerciseId } from '../exerciseSelection'
 
 type SoloDefinition<Parameters extends ExerciseParameters, Action extends ExerciseAction, State extends ExerciseState> =
 	Exercise<ExerciseMetadata & { version: number }, Action, State, Parameters, SoloExerciseReport, never, unknown>

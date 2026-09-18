@@ -7,7 +7,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./storedState": "./src/storedState.ts"
+    "./exerciseSelection": "./src/exerciseSelection/index.ts"
   },
   "dependencies": {
     "@step-wise/exercise-definition": "^0.2.0",

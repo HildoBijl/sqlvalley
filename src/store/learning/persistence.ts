@@ -1,4 +1,4 @@
-import type { StoredExerciseEvent, StoredExerciseInstance } from '@sqlvalley/exercise-engine/storedState'
+import { type ExerciseInstance, normalizeExerciseInstance } from '@sqlvalley/exercise-engine/exerciseSelection'
 
 import { asRecord, isRecord } from '../infrastructure'
 import { type ConceptState, type LearningState, type ModuleState, type SkillState, createModuleState } from './state'
@@ -41,7 +41,7 @@ function normalizeSkillState(id: string, state: Record<string, unknown>): SkillS
 		...createModuleState(id, 'skill'),
 		...normalizeCommonModuleFields(id, state),
 		solvedExerciseCount: typeof state.solvedExerciseCount === 'number' && Number.isInteger(state.solvedExerciseCount) && state.solvedExerciseCount >= 0 ? state.solvedExerciseCount : 0,
-		exerciseHistory: Array.isArray(state.exerciseHistory) ? state.exerciseHistory.map(exercise => normalizeStoredExerciseInstance(exercise)).filter((exercise): exercise is StoredExerciseInstance => exercise !== null) : [],
+		exerciseHistory: Array.isArray(state.exerciseHistory) ? state.exerciseHistory.map(exercise => normalizeExerciseInstance(exercise)).filter((exercise): exercise is ExerciseInstance => exercise !== null) : [],
 	}
 }
 
@@ -59,29 +59,4 @@ function coerceTimestamp(value: unknown): number | undefined {
 	if (typeof value !== 'string') return undefined
 	const timestamp = new Date(value).getTime()
 	return Number.isFinite(timestamp) ? timestamp : undefined
-}
-
-function normalizeStoredExerciseInstance(value: unknown): StoredExerciseInstance | null {
-	if (!isRecord(value)) return null
-	const exerciseIdRaw = value.exerciseId
-	const exerciseId = typeof exerciseIdRaw === 'string' ? exerciseIdRaw.trim() : ''
-	if (!exerciseId) return null
-	const version = typeof value.version === 'number' && Number.isInteger(value.version) && value.version > 0 ? value.version : 1
-	const createdAt = coerceTimestamp(value.createdAt)
-	if (createdAt === undefined || !isRecord(value.parameters)) return null
-	const parameters = { ...value.parameters }
-	const events = Array.isArray(value.events) ? value.events.map(entry => normalizeStoredExerciseEvent(entry)).filter((entry): entry is StoredExerciseEvent => entry !== null) : []
-	return { exerciseId, version, parameters, createdAt, events, draftInput: value.draftInput }
-}
-
-function normalizeStoredExerciseEvent(value: unknown): StoredExerciseEvent | null {
-	if (!isRecord(value)) return null
-	const timestamp = coerceTimestamp(value.timestamp)
-	if (timestamp === undefined || !isRecord(value.action) || !isRecord(value.resultingState)) return null
-	return {
-		timestamp,
-		action: { ...value.action },
-		resultingState: { ...value.resultingState },
-		report: value.report,
-	}
 }

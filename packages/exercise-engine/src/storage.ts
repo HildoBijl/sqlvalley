@@ -1,33 +1,17 @@
-import type {
-	ExerciseId,
-	ExerciseVersion,
-	SkillId,
-	StoredExerciseAction,
-	StoredExerciseInstance,
-	StoredExerciseState,
-} from './storedState';
+import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState, SkillId } from './exerciseSelection'
 
-/**
- * Storage the engine needs, passed in by the app so it isn't tied to one store.
- * getInstance has to return the same reference when nothing changed, since it feeds
- * useSyncExternalStore.
- */
+// Snapshots must retain their reference until changed, as required by useSyncExternalStore.
 export interface ExerciseStorage {
-	getInstance(skillId: SkillId): StoredExerciseInstance | null;
-	subscribe(listener: () => void): () => void;
-	startExercise(
-		skillId: SkillId,
-		exerciseId: ExerciseId,
-		version: ExerciseVersion,
-		parameters: Record<string, unknown>,
-	): void;
+	getInstance(skillId: SkillId): ExerciseInstance | null
+	subscribe(listener: () => void): () => void
+	startExercise(skillId: SkillId, exerciseInstance: ExerciseInstance): void
 	submitAction(
 		skillId: SkillId,
-		action: StoredExerciseAction,
-		resultingState: StoredExerciseState,
-		report: unknown,
+		action: ExerciseAction,
+		state: ExerciseState,
+		report: ExerciseReport | undefined,
 		exerciseDone: boolean,
 		increaseSolvedCounter: boolean,
-	): void;
-	setDraftInput(skillId: SkillId, draftInput: unknown): void;
+	): void
+	setDraftInput(skillId: SkillId, draftInput: unknown): void
 }

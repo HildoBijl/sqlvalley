@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import type { ExerciseId, ExerciseVersion } from '../storedState';
+import type { ExerciseId, ExerciseVersion } from '../exerciseSelection';
 import type {
 	SimpleExerciseCheckResult,
 	SimpleExerciseInputProps,

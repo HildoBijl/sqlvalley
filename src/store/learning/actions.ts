@@ -1,5 +1,5 @@
 import type { ModuleType } from '@step-wise/module-tree-definition'
-import type { StoredExerciseAction, StoredExerciseInstance, StoredExerciseState } from '@sqlvalley/exercise-engine/storedState'
+import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } from '@sqlvalley/exercise-engine/exerciseSelection'
 
 import type { SetState } from '../infrastructure'
 import { type ConceptState, type LearningState, type SkillState, createModuleState } from './state'
@@ -8,8 +8,8 @@ export interface LearningActions {
 	setModuleTab: (id: string, moduleType: ModuleType, tab: string) => void
 	completeConcept: (conceptId: string) => void
 	completeSkill: (skillId: string) => void
-	startNewExercise: (skillId: string, exerciseId: string, version: number, parameters: Record<string, unknown>) => void
-	submitExerciseAction: (skillId: string, action: StoredExerciseAction, resultingState: StoredExerciseState, report: unknown, exerciseDone: boolean, increaseSolvedCounter: boolean) => void
+	startNewExercise: (skillId: string, exerciseInstance: ExerciseInstance) => void
+	submitExerciseAction: (skillId: string, action: ExerciseAction, resultingState: ExerciseState, report: ExerciseReport | undefined, exerciseDone: boolean, increaseSolvedCounter: boolean) => void
 	setExerciseDraftInput: (skillId: string, draftInput: unknown) => void
 }
 
@@ -53,20 +53,12 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 			}
 		}),
 
-		startNewExercise: (skillId, exerciseId, version, parameters) => set(state => {
+		startNewExercise: (skillId, exerciseInstance) => set(state => {
 			const skillModule = getSkillModuleForUpdate(skillId, state)
-			const newExercise: StoredExerciseInstance = {
-				exerciseId,
-				version,
-				parameters: { ...parameters },
-				createdAt: Date.now(),
-				events: [],
-				draftInput: undefined,
-			}
 			return {
 				modules: {
 					...state.modules,
-					[skillId]: { ...skillModule, lastAccessed: Date.now(), exerciseHistory: [...skillModule.exerciseHistory, newExercise] },
+					[skillId]: { ...skillModule, lastAccessed: Date.now(), exerciseHistory: [...skillModule.exerciseHistory, exerciseInstance] },
 				},
 			}
 		}),
@@ -77,14 +69,14 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 
 			const lastIndex = skillModule.exerciseHistory.length - 1
 			const currentExercise = skillModule.exerciseHistory[lastIndex]
-			const updatedExercise: StoredExerciseInstance = {
+			const updatedExercise: ExerciseInstance = {
 				...currentExercise,
-				events: [
-					...currentExercise.events,
+				history: [
+					...currentExercise.history,
 					{
-						timestamp: Date.now(),
+						submittedAt: Date.now(),
 						action: { ...action },
-						resultingState: { ...resultingState },
+						state: { ...resultingState },
 						report,
 					},
 				],
@@ -109,7 +101,7 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 			const skillModule = getSkillModuleForUpdate(skillId, state)
 			if (skillModule.exerciseHistory.length === 0) throw new Error(`Cannot set draft input for "${skillId}" without an active exercise.`)
 
-			const updatedExercise: StoredExerciseInstance = { ...skillModule.exerciseHistory[skillModule.exerciseHistory.length - 1], draftInput }
+			const updatedExercise: ExerciseInstance = { ...skillModule.exerciseHistory[skillModule.exerciseHistory.length - 1], draftInput }
 			const exerciseHistory = [...skillModule.exerciseHistory.slice(0, -1), updatedExercise]
 			return {
 				modules: {

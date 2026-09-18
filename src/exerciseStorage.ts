@@ -1,5 +1,6 @@
-import { useLearningStore } from '@/store';
-import type { ExerciseStorage } from '@sqlvalley/exercise-engine';
+import type { ExerciseStorage } from '@sqlvalley/exercise-engine'
+
+import { useLearningStore } from '@/store'
 
 /**
  * Adapts the learning store to ExerciseStorage. getInstance returns the raw last
@@ -7,18 +8,18 @@ import type { ExerciseStorage } from '@sqlvalley/exercise-engine';
  * useSyncExternalStore needs.
  */
 export const exerciseStorage: ExerciseStorage = {
-	getInstance: (skillId) => {
-		const module = useLearningStore.getState().modules[skillId];
-		if (module?.moduleType !== 'skill') return null;
-		return module.exerciseHistory[module.exerciseHistory.length - 1] ?? null;
+	getInstance: skillId => {
+		const module = useLearningStore.getState().modules[skillId]
+		if (module?.moduleType !== 'skill') return null
+		return module.exerciseHistory[module.exerciseHistory.length - 1] ?? null
 	},
-	subscribe: (listener) => useLearningStore.subscribe(listener),
-	startExercise: (skillId, exerciseId, version, parameters) =>
-		useLearningStore.getState().startNewExercise(skillId, exerciseId, version, parameters),
+	subscribe: listener => useLearningStore.subscribe(listener),
+	startExercise: (skillId, exerciseInstance) =>
+		useLearningStore.getState().startNewExercise(skillId, exerciseInstance),
 	submitAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) =>
 		useLearningStore.getState().submitExerciseAction(
 			skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter,
 		),
 	setDraftInput: (skillId, draftInput) =>
 		useLearningStore.getState().setExerciseDraftInput(skillId, draftInput),
-};
+}
