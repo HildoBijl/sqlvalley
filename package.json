@@ -25,7 +25,7 @@
     "@mui/material": "^6.4.7",
     "@mui/system": "^7.3.2",
     "@mui/x-data-grid": "^8.3.0",
-    "@sqlvalley/exercise-engine": "*",
+    "@sqlvalley/exercise-manager": "*",
     "@sqlvalley/mock-data": "*",
     "@sqlvalley/progress": "*",
     "@sqlvalley/skill-tree": "*",

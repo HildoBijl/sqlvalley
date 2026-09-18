@@ -12,13 +12,13 @@ export type AnyExerciseContextValue = ExerciseContextValue<
 
 export const ExerciseContext = createContext<AnyExerciseContextValue | null>(null)
 
-// Access the current exercise (definition, exerciseInstance, controls, skill) from within an <Exercise>.
+// Access the current exercise (definition, exerciseInstance, controls, skill) from within an ExerciseManager.
 export function useExercise<
 	Parameters extends ExerciseParameters = ExerciseParameters,
 	Action extends ExerciseAction = ExerciseAction,
 	State extends ExerciseState = ExerciseState,
 >(): ExerciseContextValue<Parameters, Action, State> {
 	const value = useContext(ExerciseContext)
-	if (!value) throw new Error('useExercise must be used within an Exercise component.')
+	if (!value) throw new Error('useExercise must be used within an ExerciseManager.')
 	return value as unknown as ExerciseContextValue<Parameters, Action, State>
 }

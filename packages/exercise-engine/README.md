@@ -1,65 +1,24 @@
 # Exercise engine
 
-Runs solo exercises using `@step-wise/exercise-definition`, with React presentation and application storage supplied separately. The package currently also contains the SimpleExercise renderer and grading adapter.
+This package temporarily owns the SimpleExercise grading adapter and React presentation. Generic exercise lifecycle, contexts, instance generation, and storage contracts now belong to [@sqlvalley/exercise-manager](../exercise-manager/README.md).
 
 
-## Definitions and registrations
+## Current API
 
-`ExerciseDefinition` specializes the upstream `Exercise` type: `processSoloAction` is required, group processing is omitted, and metadata includes an explicit version. Definitions contain no React components.
+`buildSimpleExercise(specification)` adapts the existing specification to the upstream solo exercise contract and pairs it with the SimpleExercise renderer. It currently returns an `ExerciseRegistration` from `@sqlvalley/exercise-manager`. Separating definition building from presentation registration is deferred to the MonoExercise migration.
 
-`ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts and an optional `getSolutionInput` admin helper. Pass registrations to `ExerciseManager` through its `exercises` prop.
+The package also exports SimpleExercise rendering specifications, component props, state helpers, and report types. It retains validation, feedback, solved/given-up behavior, controls, and dialogs. Input-exercise logic has not yet been replaced with `@step-wise/input-exercises`.
 
-```tsx
-import type { ExerciseRegistration } from '@sqlvalley/exercise-engine'
-
-const exercise: ExerciseRegistration = {
-	exerciseId: 'example',
-	definition: {
-		metadata: { version: 1 },
-		generateParameters: async ({ example, context }) => ({ target: example ? 1 : 2 }),
-		getInitialState: async ({ parameters, context }) => ({ attempts: 0 }),
-		processSoloAction: async ({ parameters, state, action, context }) => {
-			const solved = action.answer === parameters.target
-			return { state: { attempts: Number(state.attempts) + 1, solved, done: solved } }
-		},
-	},
-	isSolved: state => state.solved === true,
-	Component: ExampleExercise,
-}
-```
-
-`ExampleExercise` is an application-provided component that reads `useExercise()`. Its context contains the logical definition, `exerciseInstance`, transient `pending` status, controls, and skill identity. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
-
-The manager awaits parameter generation, initial-state generation, and action processing. It uses `state.done === true` for completion and the registration's `isSolved` predicate to increment solved counts only on the transition to solved. Errors are shown in the exercise UI. Results from obsolete generation requests or submissions to a replaced instance are ignored.
+SimpleExercise specifications retain broad data types; authors must supply serializable parameters, input, and grading results. Completed states include `done: true`.
 
 
-## Transitional SimpleExercise support
+## Dependencies
 
-`buildSimpleExercise` currently returns an `ExerciseRegistration`; separating definition building from presentation registration is deferred to the MonoExercise migration. It adapts the existing specification to `generateParameters`, `getInitialState`, and `processSoloAction`, retaining validation, feedback reports, and solved/given-up behavior. Completed states additionally contain `done: true`.
+The SimpleExercise renderer consumes `useExercise` and `useModuleContext` from `@sqlvalley/exercise-manager`. The manager accepts supplied renderers and never imports this package.
 
-The current SimpleExercise specification retains its older broad data types. The adapter narrows these at the upstream boundary; authors must provide serializable parameters, input, and grading results. Input-exercise logic has not yet been replaced with `@step-wise/input-exercises`, and the SimpleExercise names remain until that migration.
-
-
-## Exercise instances and storage
-
-The React-free `exerciseSelection` folder defines `ExerciseInstance`, extending the upstream `SoloExerciseInstance` with `exerciseId`, `version`, `startedAt`, optional `draftInput`, and `submittedAt` on each `ExerciseEvent`. It is available through `@sqlvalley/exercise-engine/exerciseSelection`, including for application stores.
-
-`generateExerciseInstance(exerciseId, definition, context)` awaits parameter and initial-state generation and returns a complete instance with `mode: 'solo'` and an empty `history`. Generating an instance is separate from building its definition or pairing that definition with a renderer.
-
-`ExerciseStorageProvider` receives an application-owned `ExerciseStorage` implementation. Its `startExercise(skillId, exerciseInstance)` stores the generated instance. Submissions append history events containing `action`, `state`, an optional `report`, and `submittedAt`. Upstream `getCurrentState(exerciseInstance)` returns the latest state, falling back to the stored `initialState`.
-
-The manager restores valid instances directly without regenerating parameters or initial state. Pending submissions and generation status remain transient React state; they are not stored and cannot leave a reloaded exercise stuck in a pending state.
-
-The learning-store v7 ? v8 migration converts legacy events into history, supplies the empty initial state used by legacy SimpleExercises, and adds `done: true` to solved/given-up states. The same migration renames instance `createdAt` to `startedAt` and event `timestamp` to `submittedAt`. Existing parameters, reports, drafts, timestamp values, and solved counts are retained. `normalizeExerciseInstance` validates only the current format; historical conversions stay in store migrations.
+Consumers must import manager APIs directly from `@sqlvalley/exercise-manager`, including `ExerciseManager`, `ExerciseStorageProvider`, `ModuleContextProvider`, and `ExerciseRegistration`. Stores import the shared instance format through `@sqlvalley/exercise-manager/exerciseSelection`.
 
 
-## Manual verification
+## Verification
 
-- Open a SQL exercise and check that generation finishes.
-- Submit invalid and incorrect SQL; check validation and grading feedback.
-- Solve an exercise; check completion and the solved count.
-- Give up; check that the solution appears without increasing the solved count.
-- Start another exercise; check that feedback and dialogs reset.
-- Reload before and after submitting; check restoration of input and feedback.
-- In admin mode, switch exercises and show the solution.
-- Navigate away during asynchronous work; check that it does not update another exercise.
+Use the [manager's manual verification checklist](../exercise-manager/README.md#manual-verification) to check generation, grading, giving up, reloads, and admin controls.

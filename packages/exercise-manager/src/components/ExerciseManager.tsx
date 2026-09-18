@@ -5,7 +5,7 @@ import { sample } from '@step-wise/js-utils'
 import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
 
 import { generateExerciseInstance } from '../exerciseSelection'
-import { type AnyExerciseContextValue, type ExerciseRegistration, Exercise } from '../Exercise'
+import { type AnyExerciseContextValue, type ExerciseRegistration, ExerciseContext } from '../exerciseContext'
 import { useModuleContext } from '../moduleContext'
 import { useExerciseStorage } from '../storageContext'
 import { ExerciseAdminTools } from './ExerciseAdminTools'
@@ -143,8 +143,11 @@ function ExerciseManagerSession({ skillId, exercises, showAdminControls = false 
 		controls: { submitAction, setDraftInput, startNewExercise, adminControls },
 		skill: { id: skillId },
 	}
+	const { Component } = active
 	return <>
 		{error && <Alert severity="error">{error}</Alert>}
-		<Exercise key={instance.startedAt} value={value} Component={active.Component} />
+		<ExerciseContext.Provider key={instance.startedAt} value={value}>
+			<Component />
+		</ExerciseContext.Provider>
 	</>
 }

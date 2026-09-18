@@ -1,4 +1,4 @@
-import type { ExerciseDefinition } from '../Exercise/definition'
+import type { ExerciseDefinition } from './definition'
 import type { ExerciseId, ExerciseInstance } from './types'
 
 // Generate a complete instance before handing it to application storage.

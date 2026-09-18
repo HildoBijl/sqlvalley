@@ -1,5 +1,5 @@
 import type { ModuleType } from '@step-wise/module-tree-definition'
-import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } from '@sqlvalley/exercise-engine/exerciseSelection'
+import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } from '@sqlvalley/exercise-manager/exerciseSelection'
 
 import type { SetState } from '../infrastructure'
 import { type ConceptState, type LearningState, type SkillState, createModuleState } from './state'

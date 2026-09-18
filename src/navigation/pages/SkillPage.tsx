@@ -27,7 +27,7 @@ import { StoryTab, SummaryTab, TheoryTab, VideoTab } from '@/learning/components
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
 import { EXERCISES_REQUIRED_FOR_SKILL_COMPLETION, useModuleCompletion } from '@sqlvalley/progress';
-import { ExerciseManager } from '@sqlvalley/exercise-engine';
+import { ExerciseManager } from '@sqlvalley/exercise-manager';
 
 import type { TabConfig } from '@/learning/types';
 

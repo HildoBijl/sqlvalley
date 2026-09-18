@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
-import { ModuleContextProvider } from '@sqlvalley/exercise-engine';
+import { ModuleContextProvider } from '@sqlvalley/exercise-manager';
 import { useDatabase } from '../../databases';
 import type { DatasetSize, TableKey } from '@sqlvalley/mock-data';
 

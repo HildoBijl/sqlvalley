@@ -1,4 +1,5 @@
-import { buildSimpleExercise, type ExerciseRegistration } from '@sqlvalley/exercise-engine';
+import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
+import { buildSimpleExercise } from '@sqlvalley/exercise-engine'
 
 import { normalizeSqlInput, validateSqlInput } from '@sqlvalley/sql-grading';
 import type { SqlModuleContext } from '../SqlModule';

@@ -43,7 +43,7 @@ useLearningStore.getState().completeSkill(skillId)
 - Solved exercise counts
 - Exercise instances with parameters, initial state, history, reports, and draft input
 
-Exercise instances use the shared format from `@sqlvalley/exercise-engine/exerciseSelection`. The engine generates the complete instance; the learning store stores it, appends submission history, and updates progress. The engine also owns instance normalization. Submission pending status is not persisted.
+Exercise instances use the shared format from `@sqlvalley/exercise-manager/exerciseSelection`. The engine generates the complete instance; the learning store stores it, appends submission history, and updates progress. The engine also owns instance normalization. Submission pending status is not persisted.
 
 Every persisted learning module has an explicit `moduleType` discriminator. Callers provide the module type when creating or updating module state; persisted-state normalization does not infer it from the module's shape.
 

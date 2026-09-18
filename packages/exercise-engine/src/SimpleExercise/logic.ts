@@ -1,4 +1,4 @@
-import type { ExerciseState } from '../exerciseSelection'
+import type { ExerciseState } from '@step-wise/exercise-definition'
 import type { SimpleExerciseStoredState } from './types'
 
 export const emptySimpleExerciseState: SimpleExerciseStoredState = {}

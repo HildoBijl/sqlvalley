@@ -1,6 +1,6 @@
 import type { ExerciseParameters, ExerciseReport } from '@step-wise/exercise-definition'
 
-import type { ExerciseRegistration } from '../Exercise'
+import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 import { emptySimpleExerciseState, isSimpleExerciseGivenUp, isSimpleExerciseSolved } from './logic'
 import { SimpleExerciseComponent } from './SimpleExerciseComponent'
 import type { SimpleExerciseSpecification } from './specifications'

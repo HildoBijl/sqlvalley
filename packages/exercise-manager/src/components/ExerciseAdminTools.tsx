@@ -1,18 +1,18 @@
-import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { Lightbulb } from '@mui/icons-material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Lightbulb } from '@mui/icons-material'
 
 interface ExerciseOption {
-	id: string;
-	label: string;
+	id: string
+	label: string
 }
 
 interface ExerciseAdminToolsProps {
-	options: ExerciseOption[];
-	selectedExerciseId: string;
-	disabled: boolean;
-	solutionDisabled: boolean;
-	onExerciseSelect: (exerciseId: string) => void;
-	onShowSolution: () => void;
+	options: ExerciseOption[]
+	selectedExerciseId: string
+	disabled: boolean
+	solutionDisabled: boolean
+	onExerciseSelect: (exerciseId: string) => void
+	onShowSolution: () => void
 }
 
 export function ExerciseAdminTools({
@@ -35,10 +35,10 @@ export function ExerciseAdminTools({
 					labelId="admin-exercise-select-label"
 					label="Exercise"
 					value={selectedExerciseId}
-					onChange={(event) => onExerciseSelect(String(event.target.value))}
+					onChange={event => onExerciseSelect(String(event.target.value))}
 					MenuProps={{ PaperProps: { sx: { maxHeight: 320 } } }}
 				>
-					{options.map((option) => (
+					{options.map(option => (
 						<MenuItem key={option.id} value={option.id} title={option.label}>
 							{option.label}
 						</MenuItem>
@@ -55,5 +55,5 @@ export function ExerciseAdminTools({
 				Show Solution
 			</Button>
 		</Box>
-	);
+	)
 }

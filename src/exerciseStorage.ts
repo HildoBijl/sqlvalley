@@ -1,4 +1,4 @@
-import type { ExerciseStorage } from '@sqlvalley/exercise-engine'
+import type { ExerciseStorage } from '@sqlvalley/exercise-manager'
 
 import { useLearningStore } from '@/store'
 

@@ -1,9 +1,8 @@
-import type { ComponentType, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 import type { ExerciseAction, ExerciseParameters, ExerciseState } from '@step-wise/exercise-definition'
 
-import type { ExerciseInstance, SkillId } from '../exerciseSelection'
-import type { ExerciseDefinition } from './definition'
+import type { ExerciseDefinition, ExerciseInstance, SkillId } from '../exerciseSelection'
 
 // Handlers connecting the exercise to the data store, set up by the manager.
 export interface ExerciseControls<Action extends ExerciseAction> {
@@ -27,13 +26,4 @@ export interface ExerciseContextValue<
 	pending: boolean
 	controls: ExerciseControls<Action>
 	skill: ExerciseSkill
-}
-
-export interface ExerciseProps {
-	Component: ComponentType
-	value: ExerciseContextValue<
-		ExerciseParameters,
-		ExerciseAction,
-		ExerciseState
-	>
 }

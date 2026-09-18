@@ -2,7 +2,7 @@ import {
 	buildSimpleSQLExercise,
 	type SimpleSQLExerciseDefinition,
 } from '@sqlvalley/sql';
-import type { ExerciseRegistration } from '@sqlvalley/exercise-engine';
+import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
 import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
 
 type Parameters = Record<string, never>;
