@@ -5,8 +5,8 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
-import { useQueryResult } from '@sqlvalley/sql/databases';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
 import { DataTable } from '@sqlvalley/sql';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';

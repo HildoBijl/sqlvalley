@@ -19,7 +19,7 @@ import {
 	Refresh,
 } from '@mui/icons-material';
 import { SQLEditor, DataTable } from '@sqlvalley/sql';
-import { usePlaygroundDatabase } from '@sqlvalley/sql/databases';
+import { usePlaygroundDatabase } from '@sqlvalley/sql/databaseProvider';
 
 interface QueryHistory {
 	query: string;

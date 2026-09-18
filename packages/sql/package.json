@@ -7,7 +7,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./databases": "./src/databases/index.ts"
+    "./databaseProvider": "./src/databaseProvider/index.ts"
   },
   "dependencies": {
     "@codemirror/lang-sql": "^6.6.1",

@@ -6,8 +6,8 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
 import { Page, Section, Par } from '@sqlvalley/ui';
 import { SQLDisplay } from '@sqlvalley/sql';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
-import { useQueryResult } from '@sqlvalley/sql/databases';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
 import { DataTable } from '@sqlvalley/sql';
 
 export function Summary() {

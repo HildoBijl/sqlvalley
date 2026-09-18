@@ -2,8 +2,8 @@ import { Fragment } from 'react'
 
 import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@sqlvalley/ui';
 
-import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databases';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
+import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 
 export function Theory() {

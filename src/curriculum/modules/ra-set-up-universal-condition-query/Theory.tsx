@@ -4,9 +4,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useRefWithValue } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, useRefWithBounds } from '@sqlvalley/ui';
-import { useQueryResult } from '@sqlvalley/sql/databases';
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
 import { DataTable } from '@sqlvalley/sql';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databases';
+import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
 import { FigureExampleRAQuery } from '../../utils';
 
 export function Theory() {

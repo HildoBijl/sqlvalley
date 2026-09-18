@@ -1,3 +1,3 @@
 export * from './components';
-export * from './databases';
+export * from './databaseProvider';
 export * from './exercises';
