@@ -1,29 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Alert, Button, Typography } from '@mui/material'
 
 import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
-import { type ExerciseInstance, type ExerciseSelectionOptions, generateExerciseInstance, selectExercise } from '@sqlvalley/exercise-instances'
+import { type ExerciseInstance, generateExerciseInstance, selectExercise } from '@sqlvalley/exercise-instances'
 
-import { type AnyExerciseContextValue, type ExerciseRegistration, ExerciseContext } from '../exerciseContext'
+import type { ExerciseRegistration } from '../exerciseManagerContext'
 import { useModuleContext } from '../moduleContext'
-import type { ExerciseStorage } from '../storage'
-import { ExerciseAdminTools } from './ExerciseAdminTools'
 
-interface ExerciseManagerProps {
-	storage: ExerciseStorage
-	currentExerciseInstance: ExerciseInstance | undefined
-	skillId: string
-	exercises: readonly ExerciseRegistration[]
-	showAdminControls?: boolean
-	selectionOptions?: ExerciseSelectionOptions
-}
+import type { ExerciseSessionOptions } from './types'
 
-// Keep asynchronous work and local rendering state scoped to one skill.
-export function ExerciseManager(props: ExerciseManagerProps) {
-	return <ExerciseManagerSession key={props.skillId} {...props} />
-}
-
-function ExerciseManagerSession({ skillId, exercises, currentExerciseInstance: instance, storage, showAdminControls = false, selectionOptions }: ExerciseManagerProps) {
+// The owning component is keyed by skill ID so each skill gets an isolated session.
+export function useExerciseSession({ skillId, exercises, currentExerciseInstance: instance, storage, selectionOptions }: ExerciseSessionOptions) {
 	const moduleContext = useModuleContext()
 	const byId = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])
 	const matched = instance ? byId.get(instance.exerciseId) : undefined
@@ -118,35 +104,21 @@ function ExerciseManagerSession({ skillId, exercises, currentExerciseInstance: i
 		if (storage.getInstance(skillId)) storage.setDraftInput(skillId, draftInput)
 	}, [skillId, storage])
 
-	if (exercises.length === 0) return <Alert severity="info">No exercises are available yet.</Alert>
-	if (!active || !instance) {
-		if (error) return <Alert severity="error" action={<Button onClick={() => setInitializationAttempt(attempt => attempt + 1)}>Try again</Button>}>{error}</Alert>
-		return <Typography color="text.secondary">Generating your next exercise...</Typography>
-	}
 
-	const busy = pending || generating || !moduleReady
-	const adminControls = showAdminControls ? (
-		<ExerciseAdminTools
-			options={exercises.map((exercise, index) => ({ id: exercise.exerciseId, label: (index + 1) + '. ' + exercise.exerciseId }))}
-			selectedExerciseId={active.exerciseId}
-			disabled={busy}
-			solutionDisabled={busy || !active.getSolutionInput}
-			onExerciseSelect={selectExerciseById}
-			onShowSolution={showSolution}
-		/>
-	) : undefined
-	const value: AnyExerciseContextValue = {
-		definition: active.definition,
-		exerciseInstance: instance,
-		pending: busy,
-		controls: { submitAction, setDraftInput, startNewExercise, adminControls },
-		skill: { id: skillId },
+	const retryGeneration = useCallback(() => setInitializationAttempt(attempt => attempt + 1), [])
+
+	return {
+		registration: active,
+		instance,
+		pending,
+		generating,
+		busy: pending || generating || !moduleReady,
+		error,
+		retryGeneration,
+		submitAction,
+		setDraftInput,
+		startNewExercise,
+		selectExerciseById,
+		showSolution,
 	}
-	const { Component } = active
-	return <>
-		{error && <Alert severity="error">{error}</Alert>}
-		<ExerciseContext.Provider key={instance.startedAt} value={value}>
-			<Component />
-		</ExerciseContext.Provider>
-	</>
 }

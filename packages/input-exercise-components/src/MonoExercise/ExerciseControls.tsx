@@ -1,10 +1,14 @@
 import { Box, Button } from '@mui/material'
 import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material'
 
+import { useExerciseManager } from '@sqlvalley/exercise-manager'
+
+import { ExerciseAdminTools } from '../ExerciseAdminTools'
 import { useMonoExerciseControls } from './controlsContext'
 
 export function ExerciseControls() {
-	const { solved, givenUp, canSubmit, canGiveUp, onSubmit, onGiveUp, onNext, adminControls } =
+	const { showAdminControls } = useExerciseManager()
+	const { solved, givenUp, canSubmit, canGiveUp, onSubmit, onGiveUp, onNext } =
 		useMonoExerciseControls()
 
 	return (
@@ -20,7 +24,7 @@ export function ExerciseControls() {
 			}}
 		>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-				{adminControls}
+				{showAdminControls && <ExerciseAdminTools />}
 			</Box>
 			<Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
 				{!solved ? (

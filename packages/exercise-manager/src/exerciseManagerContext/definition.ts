@@ -6,9 +6,9 @@ import type { ExerciseId } from '@sqlvalley/exercise-instances'
 
 // Presentation and application identity stay outside the logical exercise definition.
 export interface ExerciseRegistration<
-	Parameters extends ExerciseParameters = ExerciseParameters,
 	Action extends ExerciseAction = ExerciseAction,
 	State extends ExerciseState = ExerciseState,
+	Parameters extends ExerciseParameters = ExerciseParameters,
 > {
 	exerciseId: ExerciseId
 	definition: Required<Pick<

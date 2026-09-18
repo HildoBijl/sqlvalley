@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Alert, Box } from '@mui/material'
 
-import { type InputExerciseAction, type MonoExerciseState, getLastRawInput } from '@step-wise/input-exercises'
-import { type ExerciseParameters, getCurrentState } from '@step-wise/exercise-definition'
+import { getLastRawInput } from '@step-wise/input-exercises'
+import { getCurrentState } from '@step-wise/exercise-definition'
 
-import { useExercise, useModuleContext } from '@sqlvalley/exercise-manager'
+import { useCurrentExerciseInstance, useExerciseManager, useModuleContext } from '@sqlvalley/exercise-manager'
 
 import type { MonoExerciseReport } from './types'
+import { isMonoExerciseHistory } from './validation'
 import { MonoExerciseControlsContext } from './controlsContext'
 import { ExerciseControls } from './ExerciseControls'
 import { GiveUpDialog } from './GiveUpDialog'
@@ -26,7 +27,9 @@ export function MonoExercise<
 	Input,
 	CheckResult,
 >({ spec }: MonoExerciseProps<Parameters, Input, CheckResult>) {
-	const { exerciseInstance, pending, controls } = useExercise<ExerciseParameters, InputExerciseAction, MonoExerciseState>()
+	const { pending, controls } = useExerciseManager()
+	const exerciseInstance = useCurrentExerciseInstance()
+	if (!isMonoExerciseHistory(exerciseInstance)) throw new Error('MonoExercise requires mono state and input actions.')
 	const moduleContext = useModuleContext()
 	const { history, draftInput } = exerciseInstance
 	const state = getCurrentState(exerciseInstance)
@@ -99,7 +102,6 @@ export function MonoExercise<
 					onSubmit: handleSubmit,
 					onGiveUp: () => setGiveUpOpen(true),
 					onNext: controls.startNewExercise,
-					adminControls: controls.adminControls,
 				}}
 			>
 				<ExerciseControls />

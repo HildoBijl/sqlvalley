@@ -1,46 +1,29 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { Lightbulb } from '@mui/icons-material'
 
-interface ExerciseOption {
-	id: string
-	label: string
-}
+import { useCurrentExerciseInstance, useExerciseManager } from '@sqlvalley/exercise-manager'
 
-interface ExerciseAdminToolsProps {
-	options: ExerciseOption[]
-	selectedExerciseId: string
-	disabled: boolean
-	solutionDisabled: boolean
-	onExerciseSelect: (exerciseId: string) => void
-	onShowSolution: () => void
-}
-
-export function ExerciseAdminTools({
-	options,
-	selectedExerciseId,
-	disabled,
-	solutionDisabled,
-	onExerciseSelect,
-	onShowSolution,
-}: ExerciseAdminToolsProps) {
+export function ExerciseAdminTools() {
+	const { exerciseIds, pending, controls } = useExerciseManager()
+	const exerciseInstance = useCurrentExerciseInstance()
 	return (
 		<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
 			<FormControl
 				size="small"
 				sx={{ minWidth: { xs: '100%', sm: 240 }, maxWidth: { xs: '100%', sm: 360 } }}
-				disabled={disabled}
+				disabled={pending}
 			>
 				<InputLabel id="admin-exercise-select-label">Exercise</InputLabel>
 				<Select
 					labelId="admin-exercise-select-label"
 					label="Exercise"
-					value={selectedExerciseId}
-					onChange={event => onExerciseSelect(String(event.target.value))}
+					value={exerciseInstance.exerciseId}
+					onChange={event => controls.selectExerciseById(String(event.target.value))}
 					MenuProps={{ PaperProps: { sx: { maxHeight: 320 } } }}
 				>
-					{options.map(option => (
-						<MenuItem key={option.id} value={option.id} title={option.label}>
-							{option.label}
+					{exerciseIds.map((exerciseId, index) => (
+						<MenuItem key={exerciseId} value={exerciseId} title={exerciseId}>
+							{(index + 1) + '. ' + exerciseId}
 						</MenuItem>
 					))}
 				</Select>
@@ -49,8 +32,8 @@ export function ExerciseAdminTools({
 				size="small"
 				variant="outlined"
 				startIcon={<Lightbulb />}
-				disabled={solutionDisabled}
-				onClick={onShowSolution}
+				disabled={pending || !controls.showSolution}
+				onClick={controls.showSolution}
 			>
 				Show Solution
 			</Button>

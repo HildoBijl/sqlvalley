@@ -11,9 +11,9 @@ export type ExerciseEvent<Action extends ExerciseAction = ExerciseAction, State 
 
 // Define an exercise instance. Overwrite the history to use the above events.
 export type ExerciseInstance<
-	Parameters extends ExerciseParameters = ExerciseParameters,
 	Action extends ExerciseAction = ExerciseAction,
 	State extends ExerciseState = ExerciseState,
+	Parameters extends ExerciseParameters = ExerciseParameters,
 > = Omit<SoloExerciseInstance<Action, State, Parameters>, 'history'> & {
 	exerciseId: ExerciseId
 	version: ExerciseVersion

@@ -5,6 +5,8 @@ Runs solo exercises using `@step-wise/exercise-definition`, with React presentat
 
 ## Definitions and registrations
 
+Generic exercise types use the Step-Wise order: `Action, State, Parameters`. The shared context and its hooks return general exercise types without caller-supplied type arguments. Consumers narrow specific action, state, and parameter types with type guards.
+
 `ExerciseRegistration['definition']` selects the upstream `Exercise` fields the manager needs and requires `processSoloAction`. Group processing is omitted from this contract. Metadata version is optional and defaults to `1` when generating or matching saved instances. Definitions contain no React components.
 
 `ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts and an optional `getSolutionInput` admin helper. Pass registrations to `ExerciseManager` through its `exercises` prop. The admin solution helper returns `InputExerciseRawInput`, matching the instance draft and `ExerciseControls.setDraftInput`. Passing `undefined` clears a draft.
@@ -28,7 +30,9 @@ const exercise: ExerciseRegistration = {
 }
 ```
 
-`ExampleExercise` is an application-provided component that reads `useExercise()`. Its context contains the logical definition, `exerciseInstance`, transient `pending` status, controls, and skill identity. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
+`ExampleExercise` is an application-provided component that reads `useExerciseManager()`. `ExerciseManagerContext` contains `currentExercise: { definition, instance }`, `skillId`, transient `pending` status, and controls. It also exposes `showAdminControls` and the available `exerciseIds`. Controls include exercise selection and an optional solution callback; renderers decide how to display the admin tools. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
+
+Import `useCurrentExercise()` to read the definition and instance together, or `useCurrentExerciseInstance()` to read only the instance. These hooks are exported from `@sqlvalley/exercise-manager` and require an enclosing manager. They read context; they do not subscribe to the application store.
 
 The manager awaits parameter generation, initial-state generation, and action processing. It uses `state.done === true` for completion and the registration's `isSolved` predicate to increment solved counts only on the transition to solved. Errors are shown in the exercise UI. Results from obsolete generation requests or submissions to a replaced instance are ignored.
 
@@ -62,12 +66,12 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 
 ## Package structure
 
-- `exerciseContext/`: renderer registration, React context, and `useExercise`.
-- `components/`: the manager and its internal admin tools.
-- `storage.ts`: application storage contract, supplied directly to the manager.
+- `exerciseManagerContext/`: renderer registration, React context, and access hooks.
+- `exerciseManager/`: the rendering component and its internal `useExerciseSession` hook for lifecycle, actions, and status.
+- `exerciseManager/types.ts`: storage contract, session options, and component props.
 - `moduleContext.tsx`: subject-specific execution context.
 
-The manager provides the exercise context and renders the supplied component directly. The application owns its concrete storage adapter and persistence migrations.
+The manager renders the supplied component and provides its exercise context. Its internal `useExerciseSession` hook owns the lifecycle and actions, including fresh storage reads and guards against obsolete asynchronous results. The manager keys its content by skill ID to keep sessions isolated. The application owns its concrete storage adapter and persistence migrations.
 
 
 ## Exercise selection

@@ -1,4 +1,4 @@
-import { type ReactNode, createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
 
 // Shared control state for the exercise buttons.
 export interface MonoExerciseControlsValue {
@@ -9,7 +9,6 @@ export interface MonoExerciseControlsValue {
 	onSubmit: () => void
 	onGiveUp: () => void
 	onNext: () => void
-	adminControls?: ReactNode
 }
 
 export const MonoExerciseControlsContext = createContext<MonoExerciseControlsValue | null>(null)

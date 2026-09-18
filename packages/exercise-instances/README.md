@@ -7,6 +7,8 @@ An exercise definition describes how an exercise works. An **exercise instance**
 
 ## Main functions
 
+Generic exercise types use the Step-Wise order: `Action, State, Parameters`.
+
 - `selectExercise(exercises, history, options?)` randomly chooses an exercise while avoiding recent repeats. Supply history oldest first, including the current exercise. It returns `undefined` if no exercises are available.
 - `generateExerciseInstance(exerciseId, definition, context)` generates the parameters and starting state, then returns an instance with an empty submission history. The version defaults to `1` when omitted from the definition.
 - `normalizeExerciseInstance(value)` checks saved data and returns an instance, or `null` if it is invalid. Invalid drafts and individual history events are discarded.
