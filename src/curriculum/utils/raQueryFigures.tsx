@@ -5,8 +5,7 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds, RA } from '@sqlvalley/ui';
 import { DataTable } from '@sqlvalley/sql';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 type FigureExampleRAQueryProps = {
 	query?: ReactNode;
@@ -26,7 +25,7 @@ export function FigureExampleRAQuery({ query = <></>, actualQuery = '', below = 
 
 	// Set up query data.
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, actualQuery);
+	const data = useQueryResult(db, actualQuery)
 
 	// Find the bounds of the respective elements.
 	const [eRef, eBounds] = useRefWithBounds(drawingData);

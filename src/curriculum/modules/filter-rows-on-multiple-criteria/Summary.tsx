@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
 
 import { FigureMergingTables } from './Theory';
@@ -42,7 +42,7 @@ FROM contracts
 WHERE NOT (status = 'paid leave' OR status = 'sick leave')
   AND start_date < '2023-01-01';`;
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
 	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);

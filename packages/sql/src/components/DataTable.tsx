@@ -14,7 +14,7 @@ import {
 import { useState } from 'react';
 
 interface DataTableProps {
-	data: {
+	data?: {
 		columns: string[];
 		values: any[][];
 	} | null;

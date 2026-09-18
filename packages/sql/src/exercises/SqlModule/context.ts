@@ -10,11 +10,10 @@ import type { MonoSQLCheckResult } from '../MonoSQLExercise/types';
 export interface SqlModuleContext {
 	/** Standard readiness flag the ExerciseManager gates exercise generation on. */
 	ready: boolean;
-	isExecuting: boolean;
 	tableNames: string[];
 	completionSchema: Record<string, string[]>;
-	queryResult: ReadonlyArray<SqlQueryResult> | null;
-	queryError: Error | null;
+	queryResult: ReadonlyArray<SqlQueryResult> | undefined;
+	queryError: Error | undefined;
 	hasExecutedQuery: boolean;
 	datasetSize: DatasetSize;
 	datasetWarning: string | null;

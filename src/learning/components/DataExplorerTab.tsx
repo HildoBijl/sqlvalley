@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
+	Alert,
 	Box,
 	Paper,
 	Typography,
@@ -15,9 +16,10 @@ import {
 	DialogActions,
 } from '@mui/material';
 import { AccountTree } from '@mui/icons-material';
-import { DataTable } from '@sqlvalley/sql';
-import { useDatabase } from '@sqlvalley/sql/databaseProvider';
-import { buildDatasetSql, defaultDatasetSize, type TableKey } from '@sqlvalley/mock-data';
+
+import { type TableKey, buildDatasetSql, buildCompletionSchema, defaultDatasetSize } from '@sqlvalley/mock-data'
+import { DataTable } from '@sqlvalley/sql'
+import { type QueryResult, useDatabase, useQuery } from '@sqlvalley/sql/databaseProvider'
 
 interface DataExplorerTabProps {
 	tables: TableKey[];
@@ -54,32 +56,13 @@ export function DataExplorerTab({ tables }: DataExplorerTabProps) {
 		[tables, resolvedSize],
 	);
 
-	const { tableNames, executeQuery, queryResult } = useDatabase({
-		tables,
-		size: 'full',
-		resetOnSchemaChange: false,
-	});
+	const database = useDatabase({ tables, size: 'full' })
+	const tableNames = useMemo(() => Object.keys(buildCompletionSchema(tables)).sort(), [tables])
+	const activeTable = tableNames.includes(selectedTable) ? selectedTable : tableNames[0]
+	const { results: queryResult, error: queryError, loading } = useQuery(database,
+		activeTable ? 'SELECT * FROM "' + activeTable.replace(/"/g, '""') + '" LIMIT 100' : undefined)
 
-	// Parse schema to extract table information
-	const tableInfo = useMemo(() => parseSchemaForERDiagram(schemaSource || ''), [schemaSource]);
-
-	useEffect(() => {
-		if (tableNames.length === 0) {
-			return;
-		}
-
-		const defaultTable = tableNames[0];
-		if (!selectedTable || !tableNames.includes(selectedTable)) {
-			setSelectedTable(defaultTable);
-			executeQuery(`SELECT * FROM ${defaultTable} LIMIT 100`);
-		}
-	}, [tableNames, selectedTable, executeQuery]);
-
-	const handleTableSelect = (tableName: string) => {
-		setSelectedTable(tableName);
-		// Execute SELECT * to show table data
-		executeQuery(`SELECT * FROM ${tableName} LIMIT 100`);
-	};
+	const tableInfo = useMemo(() => parseSchemaForERDiagram(schemaSource || ''), [schemaSource])
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -106,10 +89,12 @@ export function DataExplorerTab({ tables }: DataExplorerTabProps) {
 				</Button>
 			</Box>
 
+			{queryError && <Alert severity="error">{queryError.message}</Alert>}
+			{loading && <Typography>Loading table data...</Typography>}
 			<TableDataView
 				tableNames={tableNames}
-				selectedTable={selectedTable}
-				onTableSelect={handleTableSelect}
+				selectedTable={activeTable ?? ''}
+				onTableSelect={setSelectedTable}
 				queryResult={queryResult}
 			/>
 
@@ -271,7 +256,7 @@ function TableDataView({
 	tableNames: string[];
 	selectedTable: string;
 	onTableSelect: (tableName: string) => void;
-	queryResult: any[] | null;
+	queryResult: QueryResult[] | undefined
 }) {
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

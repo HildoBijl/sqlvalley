@@ -18,9 +18,9 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 		isInputEmpty: (input: string) => !input.trim(),
 		canSubmit: ({ moduleContext }: { moduleContext: unknown }) => {
 			const context = moduleContext as SqlModuleContext
-			return context.ready && !context.isExecuting && !context.queryError
+			return context.ready && !context.queryError
 		},
-		canGiveUp: ({ moduleContext }: { moduleContext: unknown }) => !(moduleContext as SqlModuleContext).isExecuting,
+		canGiveUp: ({ moduleContext }: { moduleContext: unknown }) => (moduleContext as SqlModuleContext).ready,
 		Problem: createSQLProblem(spec.title ?? 'Exercise', (parameters: Parameters) => resolveValue(spec.problem, parameters)),
 		Input: SQLExerciseInput,
 		Solution: createSQLSolution((parameters: Parameters) => resolveValue(spec.solution, parameters)),

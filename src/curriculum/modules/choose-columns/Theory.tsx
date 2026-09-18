@@ -4,8 +4,8 @@ import { useRefWithValue, useRefWithElement } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, Section, Info, Warning, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
 
 export function Theory() {
@@ -64,7 +64,7 @@ function FigureSelectColumns() {
 SELECT ${c1}, ${c2}, ${c3}
 FROM employees;`
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
 	const [eRef, editor] = useRefWithElement<HTMLElement>();
@@ -110,8 +110,8 @@ FROM employees;`;
 SELECT DISTINCT ${c}
 FROM employees;`;
 	const db = useTheorySampleDatabase();
-	const data1 = useQueryResult(db?.database, query1);
-	const data2 = useQueryResult(db?.database, query2);
+	const data1 = useQueryResult(db, query1)
+	const data2 = useQueryResult(db, query2)
 
 	// Find the table column name bounds.
 	const [e1Ref, e1Bounds] = useRefWithBounds(drawingData);
@@ -164,7 +164,7 @@ export function FigureRenameColumns({ query = '' }) {
 
 	// Set up query data.
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the element bounds.
 	const [eRef, eBounds] = useRefWithBounds(drawingData);

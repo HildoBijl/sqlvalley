@@ -10,8 +10,8 @@ import type { DatasetSize } from '@sqlvalley/mock-data'
 import type { SqlQueryResult } from '@sqlvalley/sql-grading'
 
 interface ExerciseResultsProps {
-	queryResult: ReadonlyArray<SqlQueryResult> | null
-	queryError: Error | null
+	queryResult: ReadonlyArray<SqlQueryResult> | undefined
+	queryError: Error | undefined
 	hasExecuted: boolean
 	isComplete: boolean
 	datasetSize: DatasetSize

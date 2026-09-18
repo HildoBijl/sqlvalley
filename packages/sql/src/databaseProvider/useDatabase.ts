@@ -1,221 +1,65 @@
-import { useState, useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import type { QueryResult } from './types'
-import { useDatabaseContext } from './DatabaseProvider'
+import type { DatabaseHandle, DatabaseOptions } from './types'
+import type { DatabaseCache } from './databaseCache'
+import { useDatabaseContext } from './context'
 
-interface DatabaseOptions {
-	// Tables included in the database. Defaults to all tables.
-	tables?: string[]
-	// Override dataset size
-	size?: string
-	// Custom cache key for the database instance
-	cacheKey?: string
-	// Whether to reset the database when schema changes
-	resetOnSchemaChange?: boolean
-	// Whether to persist the database across page navigations
-	persistent?: boolean
+// All data to request a database gathered into one object.
+interface DatabaseRequest {
+	key: string | undefined
+	signature: string
+	cache: DatabaseCache | undefined
 }
 
-interface UseDatabaseReturn {
-	database: any | null
-	executeQuery: (query: string) => Promise<QueryResult[]>
-	resetDatabase: () => void
-	clearQueryState: () => void
-	isReady: boolean
-	isExecuting: boolean
-	error: string | null
-	queryResult: QueryResult[] | null
-	queryError: Error | null
-	tableNames: string[]
-	completionSchema: Record<string, string[]>
+// The result of the request.
+interface DatabaseState {
+	request: DatabaseRequest
+	database?: DatabaseHandle['database']
+	error?: Error
 }
 
-export function useDatabase(options: DatabaseOptions = {}): UseDatabaseReturn {
-	const {
-		tables,
-		size,
-		cacheKey,
-		resetOnSchemaChange = true,
-		persistent = false,
-	} = options
+// Connection handlers to the database cache.
+interface DatabaseCacheConnection {
+	reset: () => void
+	release: () => void
+}
 
-	const { source, databases: contextDatabases, getDatabase, resetDatabase: resetContextDatabase, isReady: contextReady } = useDatabaseContext()
+// Get a database for the given tables and size. If a key is given, the database is persisted and kept for other places to use the same key.
+export function useDatabase({ key, tables, size }: DatabaseOptions = {}): DatabaseHandle {
+	const { source, cache, error } = useDatabaseContext()
 
-	const [currentSchema, setCurrentSchema] = useState<string>('')
-	const [database, setDatabase] = useState<any>(null)
-	const [error, setError] = useState<string | null>(null)
-	const [isExecuting, setIsExecuting] = useState(false)
-	const [queryResult, setQueryResult] = useState<QueryResult[] | null>(null)
-	const [queryError, setQueryError] = useState<Error | null>(null)
-	const [tableNames, setTableNames] = useState<string[]>([])
+	// Set up a request: a constant object whose data is sufficient to load in the database.
+	const signature = JSON.stringify({ size, tables: [...new Set(tables ?? source.tableKeys)].sort() })
+	const request = useMemo(() => ({ key, signature, cache }), [key, signature, cache])
 
-	const clearQueryState = useCallback(() => {
-		setQueryResult(null)
-		setQueryError(null)
-	}, [])
-
-	const resolvedSize = size ?? source.defaultSize
-
-	const resolvedTables = useMemo(() => {
-		if (tables?.length) return Array.from(new Set(tables))
-		return [...source.allTables]
-	}, [tables, source.allTables])
-
-	const resolvedSchema = useMemo(
-		() => source.buildSql({ tables: resolvedTables, size: resolvedSize }),
-		[source, resolvedTables, resolvedSize],
-	)
-
-	const completionSchema = useMemo(() => source.buildCompletionSchema(resolvedTables), [source, resolvedTables])
-
-	const contextKey = useMemo(() => {
-		if (cacheKey) return cacheKey
-		const tablesSignature = resolvedTables.join('|')
-		return `size=${resolvedSize}:tables=${tablesSignature}`
-	}, [cacheKey, resolvedTables, resolvedSize])
-
-	// Update database when schema changes, provider DB instance changes, or context is ready
+	// Upon mounting, get the database from the cache and store it. Keep a connection handle to release the database upon dismount.
+	const [requestResult, setRequestResult] = useState<DatabaseState>()
+	const cacheConnection = useRef<DatabaseCacheConnection | undefined>(undefined)
 	useEffect(() => {
-		if (!contextReady || !resolvedSchema) return
-
-		const schemaChanged = currentSchema !== resolvedSchema
-		const providerEntry = contextDatabases[contextKey]
-		const providerDb = providerEntry?.instance ?? null
-		const shouldResetForSchema = resetOnSchemaChange && schemaChanged
-
-		if (shouldResetForSchema && providerDb) {
-			resetContextDatabase(contextKey)
-			setDatabase(null)
-			return
-		}
-
-		// If provider has no DB for this context, create it
-		if (!providerDb) {
-			const db = getDatabase(contextKey, resolvedSchema, {
-				persistent,
-				metadata: { size: resolvedSize },
-			})
-			setDatabase(db)
-			setCurrentSchema(resolvedSchema)
-			setError(null)
-			if (db) {
-				try {
-					const tables = db.exec(
-						'SELECT name FROM sqlite_master WHERE type=\'table\' AND name NOT LIKE \'sqlite_%\' ORDER BY name;'
-					)
-					if (tables[0]) {
-						setTableNames(tables[0].values.map((row: any[]) => row[0]))
-					} else {
-						setTableNames([])
-					}
-				} catch (err) {
-					console.warn('Could not fetch table names:', err)
-					setTableNames([])
-				}
-			}
-			return
-		}
-
-		// If provider DB exists but local ref differs, sync it and refresh table names
-		if (providerDb && (database !== providerDb || schemaChanged)) {
-			setDatabase(providerDb)
-			setCurrentSchema(resolvedSchema)
-			setError(null)
-			try {
-				const tables = providerDb.exec(
-					'SELECT name FROM sqlite_master WHERE type=\'table\' AND name NOT LIKE \'sqlite_%\' ORDER BY name;'
-				)
-				if (tables[0]) {
-					setTableNames(tables[0].values.map((row: any[]) => row[0]))
-				} else {
-					setTableNames([])
-				}
-			} catch (err) {
-				console.warn('Could not fetch table names:', err)
-				setTableNames([])
-			}
-		}
-	}, [
-		contextReady,
-		resolvedSchema,
-		currentSchema,
-		contextKey,
-		persistent,
-		resolvedSize,
-		resetOnSchemaChange,
-		getDatabase,
-		resetContextDatabase,
-		contextDatabases,
-		database,
-	])
-
-	const executeQuery = useCallback(async (query: string): Promise<QueryResult[]> => {
-		if (!database) {
-			throw new Error(`Database not ready for ${contextKey}`)
-		}
-
-		setIsExecuting(true)
-		setQueryError(null)
-
+		if (!request.cache) return
 		try {
-			const result = database.exec(query)
-			setQueryResult(result)
-			return result
-		} catch (err) {
-			const message = ((): string => {
-				if (err instanceof Error) return err.message
-				if (typeof err === 'string') return err
-				try {
-					return (err as any)?.message ?? JSON.stringify(err)
-				} catch {
-					return 'Query execution failed'
-				}
-			})()
-			const error = new Error(message || 'Query execution failed')
-			setQueryResult(null)
-			setQueryError(error)
-			throw error
-		} finally {
-			setIsExecuting(false)
+			cacheConnection.current = request.cache.acquire(request.key, request.signature, snapshot => setRequestResult({ request, ...snapshot }))
+		} catch (error) {
+			setRequestResult({ request, error: error instanceof Error ? error : new Error(String(error)) })
 		}
-	}, [database, contextKey])
+		return () => {
+			cacheConnection.current?.release()
+			cacheConnection.current = undefined
+		}
+	}, [request])
 
-	const resetDatabase = useCallback(() => {
-		resetContextDatabase(contextKey)
-		setDatabase(null)
-		clearQueryState()
-		setError(null)
-	}, [contextKey, resetContextDatabase, clearQueryState])
-
+	// Build the Database Handle to return.
+	const currentResult = requestResult?.request === request ? requestResult : undefined
+	const databaseError = error ?? currentResult?.error
+	const reset = useCallback(() => cacheConnection.current?.reset(), [])
 	return {
-		database,
-		executeQuery,
-		resetDatabase,
-		clearQueryState,
-		isReady: contextReady && !!database,
-		isExecuting,
-		error,
-		queryResult,
-		queryError,
-		tableNames,
-		completionSchema,
+		database: currentResult?.database,
+		loading: !databaseError && !currentResult?.database,
+		error: databaseError,
+		reset,
 	}
 }
 
-// Playground database - full dataset, persistent
-export function usePlaygroundDatabase() {
-	return useDatabase({
-		size: 'full',
-		cacheKey: 'playground',
-		persistent: true,
-		resetOnSchemaChange: true,
-	})
-}
-
-// Theory examples - all tables with small dataset
 export function useTheorySampleDatabase() {
-	return useDatabase({
-		size: 'small',
-		resetOnSchemaChange: true,
-	})
+	return useDatabase({ size: 'small' })
 }

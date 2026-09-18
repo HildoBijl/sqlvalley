@@ -5,8 +5,8 @@ import { useRefWithValue, useRefWithElement } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, Section, Warning, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
 
 export function Theory() {
@@ -50,7 +50,7 @@ SELECT *
 FROM departments
 ORDER BY ${sortColumn} DESC;`
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
 	const [eRef, editor] = useRefWithElement<HTMLElement>();
@@ -89,7 +89,7 @@ ORDER BY
   ${sortColumn1} ASC,
   ${sortColumn2} DESC;`
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
 	const [eRef, editor] = useRefWithElement<HTMLElement>();
@@ -143,7 +143,7 @@ FROM departments
 ORDER BY ${sortColumn} DESC
 LIMIT 3;`
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
 	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);
@@ -187,7 +187,7 @@ FROM departments
 ORDER BY ${sortColumn} DESC
 LIMIT 3 OFFSET ${offset};`
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
 	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);
@@ -228,7 +228,7 @@ SELECT *
 FROM departments
 ORDER BY ${sortColumn} ASC NULLS LAST;`
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
 	const [eRef, editor] = useRefWithElement<HTMLElement>();

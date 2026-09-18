@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Em, RelationName } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable } from '@sqlvalley/sql';
 
 export function Theory() {
@@ -60,14 +60,14 @@ export function FigureTerminology({ terminology }: { terminology?: { [key: strin
 
 	// Get data.
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, 'SELECT * FROM departments;');
+	const data = useQueryResult(db, 'SELECT * FROM departments;')
 
 	// Set up reference to the table.
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 	const [tRef, tBounds, table] = useRefWithBounds(drawingData);
 
 	// Find the text nodes.
-	const text = data && data.values[2][1] || '';
+	const text = String(data?.values[2]?.[1] ?? '')
 	const textNodeBounds = useTextNodeBounds(table, text, drawingData, 0, 1);
 	const columnNameNodeBounds = useTextNodeBounds(table, 'd_id', drawingData, 0, 1);
 

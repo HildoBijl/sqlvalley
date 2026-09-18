@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable, ISQL } from '@sqlvalley/sql';
 
 import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
@@ -130,8 +130,8 @@ function FigureNaturalJoinAdjustedTables() {
 	// Get the data.
 	const db = useTheorySampleDatabase();
 	const query1 = departmentsReplacement;
-	const data1 = useQueryResult(db?.database, query1);
-	const data2 = useQueryResult(db?.database, 'SELECT * FROM employees;');
+	const data1 = useQueryResult(db, query1)
+	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 
 	// Set up reference to the table.
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();

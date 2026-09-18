@@ -12,7 +12,7 @@ export function SqlPracticeProvider({ skillId, children }: { skillId: string; ch
 
 	return (
 		<SqlModuleProvider
-			skillId={skillId}
+			key={skillId}
 			tables={tables}
 			datasetSize={datasetSize}
 			setDatasetSize={setDatasetSize}

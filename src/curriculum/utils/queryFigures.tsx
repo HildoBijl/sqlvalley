@@ -5,13 +5,12 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
 import { DataTable, SQLDisplay } from '@sqlvalley/sql';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 export function FigureSingleTable({ query = '', title = '', tableWidth = 800, tableScale = 0.8 }: { query?: string, title?: ReactNode, tableWidth?: number, tableScale?: number }) {
 	// Get the data.
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Check out the table bounds.
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
@@ -37,7 +36,7 @@ export function FigureExampleQuery({ query = '', actualQuery = '', below = false
 
 	// Set up query data.
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, actualQuery || query);
+	const data = useQueryResult(db, actualQuery || query)
 
 	// Find the bounds of the respective elements.
 	const [eRef, eBounds] = useRefWithBounds(drawingData);

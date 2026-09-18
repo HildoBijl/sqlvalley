@@ -6,8 +6,8 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
 import { Page, Section, Par } from '@sqlvalley/ui';
 import { SQLDisplay } from '@sqlvalley/sql';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable } from '@sqlvalley/sql';
 
 export function Summary() {
@@ -34,8 +34,8 @@ function FigureSorting() {
 
 	// Set up data for the two tables.
 	const db = useTheorySampleDatabase();
-	const data1 = useQueryResult(db?.database, 'SELECT * FROM departments');
-	const data2 = useQueryResult(db?.database, query);
+	const data1 = useQueryResult(db, 'SELECT * FROM departments')
+	const data2 = useQueryResult(db, query)
 
 	// Obtain bounds of elements.
 	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);
@@ -73,7 +73,6 @@ function FigureSorting() {
 		<Element position={b2} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>and on equality, sort descending by budget.</span></Element>
 		<Element position={b3} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>Then only pick the first three rows,</span></Element>
 		<Element position={b4} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>after having skipped the first row.</span></Element>
-
 
 		{eBounds ? <>
 			{/* Arrows to explainer text */}

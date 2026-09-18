@@ -4,9 +4,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useRefWithValue } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, useRefWithBounds } from '@sqlvalley/ui';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useQueryResult, useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
+
 import { FigureExampleRAQuery } from '../../utils';
 
 export function Theory() {
@@ -177,9 +177,9 @@ export function ChecklistTable({ all = false, flip = false, scale = 0.8 }) {
 
 function FigureDivisionTable() {
 	const db = useTheorySampleDatabase();
-	const d1 = useQueryResult(db?.database, 'SELECT DISTINCT e_id, status FROM contracts;');
-	const d2 = useQueryResult(db?.database, 'SELECT DISTINCT status FROM contracts;');
-	const d3 = useQueryResult(db?.database, 'SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts);');
+	const d1 = useQueryResult(db, 'SELECT DISTINCT e_id, status FROM contracts;')
+	const d2 = useQueryResult(db, 'SELECT DISTINCT status FROM contracts;')
+	const d3 = useQueryResult(db, 'SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts);')
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);

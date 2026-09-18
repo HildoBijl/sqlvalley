@@ -18,8 +18,13 @@ import {
 	Download,
 	Refresh,
 } from '@mui/icons-material';
-import { SQLEditor, DataTable } from '@sqlvalley/sql';
-import { usePlaygroundDatabase } from '@sqlvalley/sql/databaseProvider';
+
+import { allTableKeys, buildCompletionSchema } from '@sqlvalley/mock-data'
+import { SQLEditor, DataTable } from '@sqlvalley/sql'
+import { useDatabase, useQueryExecution } from '@sqlvalley/sql/databaseProvider'
+
+const completionSchema = buildCompletionSchema(allTableKeys)
+const tableNames = Object.keys(completionSchema).sort()
 
 interface QueryHistory {
 	query: string;
@@ -40,18 +45,10 @@ export default function PlaygroundPage() {
 	const [savedQueries, setSavedQueries] = useState<SavedQuery[]>([]);
 	const [history, setHistory] = useState<QueryHistory[]>([]);
 
-	// Use the playground database hook
-	const {
-		executeQuery,
-		queryResult,
-		queryError,
-		isExecuting,
-		tableNames,
-		completionSchema,
-		resetDatabase,
-		clearQueryState,
-		isReady
-	} = usePlaygroundDatabase();
+	const handle = useDatabase({ key: 'playground', size: 'full' })
+	const { execute: executeQuery, results: queryResult, error: queryError, clear: clearQueryState } = useQueryExecution(handle)
+	const isReady = Boolean(handle.database)
+	const resetDatabase = handle.reset
 
 	// Handle live query execution (for preview results)
 	const handleLiveExecute = useCallback(async (liveQuery: string) => {
@@ -175,6 +172,8 @@ export default function PlaygroundPage() {
 				</Typography>
 			</Box>
 
+			{handle.error && <Alert severity="error">{handle.error.message}</Alert>}
+
 			{/* Database Controls */}
 			<Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
 				<Button
@@ -214,7 +213,7 @@ export default function PlaygroundPage() {
 						<Button
 							startIcon={<PlayArrow />}
 							onClick={handleExecute}
-							disabled={!query.trim() || isExecuting || !isReady}
+							disabled={!query.trim() || !isReady}
 							variant="contained"
 						>
 							Execute

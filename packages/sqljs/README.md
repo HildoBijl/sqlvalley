@@ -79,6 +79,8 @@ export function SQLJSStatus() {
 
 ## Building
 
+The package also exports the SQL.js types `Database`, `SqlJsStatic`, and `QueryExecResult` for consumers that work with the runtime.
+
 The package embeds `sql-wasm.wasm` into its generated JavaScript. Build it before consuming its runtime export:
 
 ```sh

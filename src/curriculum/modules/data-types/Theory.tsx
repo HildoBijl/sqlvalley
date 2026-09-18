@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable, ISQL } from '@sqlvalley/sql';
 
 export function Theory() {
@@ -67,7 +67,7 @@ export function FigureDataTypeDemo() {
 
 	// Set up query data.
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, `SELECT * FROM contracts;`);
+	const data = useQueryResult(db, `SELECT * FROM contracts;`)
 
 	// Find the bounds of the table.
 	const [tableRef, tableBounds, table] = useRefWithBounds(drawingData);
@@ -75,12 +75,12 @@ export function FigureDataTypeDemo() {
 	const [labelNumberRef, labelNumberBounds] = useRefWithBounds(drawingData);
 	const [labelDateRef, labelDateBounds] = useRefWithBounds(drawingData);
 
-	const c1Bounds = useTextNodeBounds(table, data && data.values[0][1] || '', drawingData);
+	const c1Bounds = useTextNodeBounds(table, String(data?.values[0]?.[1] ?? ''), drawingData)
 	const c2Bounds = useTextNodeBounds(table, data && data.columns[2] || '', drawingData);
-	const c3Bounds = useTextNodeBounds(table, data && data.values[0][3] || '', drawingData);
-	const c4Bounds = useTextNodeBounds(table, data && data.values[0][4] || '', drawingData);
+	const c3Bounds = useTextNodeBounds(table, String(data?.values[0]?.[3] ?? ''), drawingData)
+	const c4Bounds = useTextNodeBounds(table, String(data?.values[0]?.[4] ?? ''), drawingData)
 	const c5Bounds = useTextNodeBounds(table, data && data.columns[5] || '', drawingData);
-	const c6Bounds = useTextNodeBounds(table, data && data.values[0][6] || '', drawingData);
+	const c6Bounds = useTextNodeBounds(table, String(data?.values[0]?.[6] ?? ''), drawingData)
 
 	const r = 20;
 	const height = tableBounds?.height || 200;

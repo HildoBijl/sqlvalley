@@ -5,8 +5,8 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable } from '@sqlvalley/sql';
 
 export function Summary() {
@@ -34,9 +34,9 @@ function FigureJoinAndDecomposition() {
 	// Get the data.
 	const db = useTheorySampleDatabase();
 	const query1 = 'SELECT * FROM departments';
-	const data1 = useQueryResult(db?.database, query1);
-	const data2 = useQueryResult(db?.database, 'SELECT * FROM employees;');
-	const data3 = useQueryResult(db?.database, `SELECT * FROM (${query1}) d JOIN employees e ON d.manager_id = e.e_id;`);
+	const data1 = useQueryResult(db, query1)
+	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
+	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d JOIN employees e ON d.manager_id = e.e_id;`)
 
 	// Set up reference to the table.
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();

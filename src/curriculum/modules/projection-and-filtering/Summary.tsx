@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, Term } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Line, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable } from '@sqlvalley/sql';
 
 export function Summary() {
@@ -21,9 +21,9 @@ export function Summary() {
 function FigureProjectionAndFiltering() {
 	const themeColor = useThemeColor();
 	const db = useTheorySampleDatabase();
-	const dataFull = useQueryResult(db?.database, 'SELECT * FROM departments;');
-	const dataProjection = useQueryResult(db?.database, 'SELECT d_name, nr_employees FROM departments;');
-	const dataFiltering = useQueryResult(db?.database, 'SELECT * FROM departments WHERE nr_employees > 10;');
+	const dataFull = useQueryResult(db, 'SELECT * FROM departments;')
+	const dataProjection = useQueryResult(db, 'SELECT d_name, nr_employees FROM departments;')
+	const dataFiltering = useQueryResult(db, 'SELECT * FROM departments WHERE nr_employees > 10;')
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);

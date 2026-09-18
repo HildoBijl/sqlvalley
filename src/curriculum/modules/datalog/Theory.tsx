@@ -2,8 +2,8 @@ import { Fragment } from 'react'
 
 import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@sqlvalley/ui';
 
-import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databaseProvider';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
+import { type QueryResult, useQueryResult, useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider'
+
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 
 export function Theory() {
@@ -11,9 +11,9 @@ export function Theory() {
 	const q1 = 'SELECT * FROM employees';
 	const q2 = 'SELECT * FROM employees WHERE current_salary >= 200000';
 	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000';
-	const data1 = useQueryResult(db?.database, q1);
-	const data2 = useQueryResult(db?.database, q2);
-	const data3 = useQueryResult(db?.database, q3);
+	const data1 = useQueryResult(db, q1)
+	const data2 = useQueryResult(db, q2)
+	const data3 = useQueryResult(db, q3)
 
 	if (!data1 || !data2 || !data3)
 		return null

@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, List, Section, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
 
 export function Theory() {
@@ -111,7 +111,7 @@ FROM contracts
 WHERE ${addNot ? 'NOT (' : ''}${c1} = '${v1}'
   ${combiner} ${c2} = '${v2}'${addNot ? ')' : ''};`
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
 	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);
@@ -155,7 +155,7 @@ function FigureAndExplanation() {
 	const status = 'active';
 	const position = 'director of pr';
 	const examplePosition = 'CIO';
-	const data = useQueryResult(db?.database, `
+	const data = useQueryResult(db, `
 SELECT position, status
 FROM contracts
 WHERE status = '${status}'
@@ -254,7 +254,7 @@ function FigureRewrittenQuery({ query = '' }) {
 
 	// Set up query data.
 	const db = useTheorySampleDatabase();
-	const data = useQueryResult(db?.database, query);
+	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
 	const [eRef, eBounds] = useRefWithBounds(drawingData);
@@ -288,9 +288,9 @@ export function FigureMergingTables({ query1 = '', query2 = '', operator = 'UNIO
 
 	// Set up query data.
 	const db = useTheorySampleDatabase();
-	const data1 = useQueryResult(db?.database, query1);
-	const data2 = useQueryResult(db?.database, query2);
-	const data = useQueryResult(db?.database, `${query1}
+	const data1 = useQueryResult(db, query1)
+	const data2 = useQueryResult(db, query2)
+	const data = useQueryResult(db, `${query1}
 ${operator}
 ${query2}`);
 

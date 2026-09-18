@@ -5,8 +5,8 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable } from '@sqlvalley/sql';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
@@ -110,9 +110,9 @@ function FigureNaturalJoin() {
 	// Get the data.
 	const db = useTheorySampleDatabase();
 	const query1 = 'SELECT d_id, d_name, manager_id e_id, budget, nr_employees FROM departments';
-	const data1 = useQueryResult(db?.database, query1);
-	const data2 = useQueryResult(db?.database, 'SELECT * FROM employees;');
-	const data3 = useQueryResult(db?.database, `SELECT * FROM (${query1}) d NATURAL JOIN employees e;`);
+	const data1 = useQueryResult(db, query1)
+	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
+	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d NATURAL JOIN employees e;`)
 
 	// Set up reference to the table.
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
@@ -166,8 +166,8 @@ export function FigureTwoTablesAdjusted() {
 
 	// Get the data.
 	const db = useTheorySampleDatabase();
-	const data1 = useQueryResult(db?.database, adjustedDepartments);
-	const data2 = useQueryResult(db?.database, 'SELECT * FROM employees;');
+	const data1 = useQueryResult(db, adjustedDepartments)
+	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 
 	// Set up reference to the table.
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();

@@ -1,7 +1,7 @@
 import { Page, Section, Par, List, Info, Warning, Quote, Term, Em, M } from '@sqlvalley/ui';
 
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
+import { useQueryResult, useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider'
+
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 
 export function Theory() {
@@ -23,15 +23,15 @@ SELECT * FROM vendor_chain;`;
 	const q7 = `${q6} EXCEPT ${q3}`;
 	const q8 = 'SELECT DISTINCT t1.vendor, t4.buyer FROM transactions t1, transactions t2, transactions t3, transactions t4 WHERE t1.buyer = t2.vendor AND t2.buyer = t3.vendor AND t3.buyer = t4.vendor';
 	const q9 = `${q8} EXCEPT ${q6}`;
-	const data1 = useQueryResult(db?.database, q1);
-	const data2 = useQueryResult(db?.database, q2);
-	const data3 = useQueryResult(db?.database, q3);
-	const data4 = useQueryResult(db?.database, q4);
-	const data5 = useQueryResult(db?.database, q5);
-	const data6 = useQueryResult(db?.database, q6);
-	const data7 = useQueryResult(db?.database, q7);
-	const data8 = useQueryResult(db?.database, q8);
-	const data9 = useQueryResult(db?.database, q9);
+	const data1 = useQueryResult(db, q1)
+	const data2 = useQueryResult(db, q2)
+	const data3 = useQueryResult(db, q3)
+	const data4 = useQueryResult(db, q4)
+	const data5 = useQueryResult(db, q5)
+	const data6 = useQueryResult(db, q6)
+	const data7 = useQueryResult(db, q7)
+	const data8 = useQueryResult(db, q8)
+	const data9 = useQueryResult(db, q9)
 
 	if (!data1 || !data2 || !data3 || !data4 || !data5 || !data6 || !data7 || !data8 || !data9)
 		return null

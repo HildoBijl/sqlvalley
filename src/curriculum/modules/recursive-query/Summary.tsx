@@ -1,14 +1,13 @@
 import { Page, Section, Par, Quote, List, Info, Term, Em, M } from '@sqlvalley/ui';
 
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
+import { useQueryResult, useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider'
 
 export function Summary() {
 	const db = useTheorySampleDatabase();
 	const q1 = 'SELECT * FROM employees';
 	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000';
-	const data1 = useQueryResult(db?.database, q1);
-	const data3 = useQueryResult(db?.database, q3);
+	const data1 = useQueryResult(db, q1)
+	const data3 = useQueryResult(db, q3)
 
 	if (!data1 || !data3)
 		return null

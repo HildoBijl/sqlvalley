@@ -30,4 +30,4 @@ export const tableRegistry = {
 } satisfies Record<string, TableDefinition>
 
 export type TableKey = keyof typeof tableRegistry
-export const allTableKeys = Object.keys(tableRegistry) as TableKey[]
+export const tableKeys = Object.keys(tableRegistry) as TableKey[]

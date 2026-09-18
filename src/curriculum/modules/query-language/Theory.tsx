@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Link } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable } from '@sqlvalley/sql';
 
 export function Theory() {
@@ -59,8 +59,8 @@ export function FigureQueryExample() {
 
 	// Set up query data.
 	const db = useTheorySampleDatabase();
-	const data1 = useQueryResult(db?.database, `SELECT * FROM employees;`);
-	const data2 = useQueryResult(db?.database, `SELECT first_name, last_name FROM employees WHERE current_salary > 200000;`);
+	const data1 = useQueryResult(db, `SELECT * FROM employees;`)
+	const data2 = useQueryResult(db, `SELECT first_name, last_name FROM employees WHERE current_salary > 200000;`)
 
 	// Find the bounds for "d_name".
 	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);

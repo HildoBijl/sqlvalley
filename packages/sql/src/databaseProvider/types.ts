@@ -1,24 +1,22 @@
+import type { Database, QueryExecResult } from '@sqlvalley/sqljs'
+
 export interface DatabaseSource {
-	allTables: readonly string[]
-	defaultSize: string
-	buildSql: (options: { tables: string[]; size: string }) => string
-	buildCompletionSchema: (tables: string[]) => Record<string, string[]>
+	tableKeys: readonly string[]
+	datasetSizes?: readonly string[]
+	buildSql: (options: { tables: string[]; size?: string }) => string
 }
 
-export interface QueryResult {
-	columns: string[]
-	values: any[][]
+export interface DatabaseOptions {
+	key?: string
+	tables?: readonly string[]
+	size?: string
 }
 
-export interface GetDatabaseOptions {
-	// Whether the database should persist across page navigations
-	persistent?: boolean
-	metadata?: Record<string, unknown>
+export interface DatabaseHandle {
+	database: Database | undefined
+	loading: boolean
+	error: Error | undefined
+	reset: () => void
 }
 
-export interface ManagedDatabase {
-	instance: any | null
-	persistent: boolean
-	createdAt: number | null
-	metadata?: Record<string, unknown>
-}
+export type QueryResult = QueryExecResult

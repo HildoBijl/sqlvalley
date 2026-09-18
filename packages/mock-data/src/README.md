@@ -64,6 +64,7 @@ This schema can be passed to an SQL editor or another completion provider.
 
 - `buildDatasetSql({ tables, size? })` builds the SQL needed to create and populate a dataset.
 - `buildCompletionSchema(tables)` builds a table-to-column mapping.
+- `databaseSource` exposes `tableKeys`, `sizes` (the `datasetSizes` list), and `buildSql({ tables, size })` for database initialization. This adapter requires an explicit size and rejects missing or unknown sizes.
 - `allTableKeys` contains every available table key.
 - `defaultDatasetSize` is the default size used by SQL Valley.
 - `TableKey` is the union of valid table keys.

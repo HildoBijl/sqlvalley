@@ -1,54 +1,41 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import type { QueryResult } from './types'
+import type { DatabaseHandle, QueryResult } from './types'
 
-interface UseQueryReturn {
-	loading: boolean
-	error: Error | null
-	results: QueryResult[] | null
+interface QueryResultState {
+	database: DatabaseHandle['database']
+	query: string | undefined
+	results?: QueryResult[]
+	error?: Error
 }
 
-// Re-execute when the database or query changes.
-export function useQuery(database: any | null, query: string): UseQueryReturn {
-	const [executing, setExecuting] = useState<boolean>(false)
-	const [results, setResults] = useState<QueryResult[] | null>(null)
-	const [error, setError] = useState<Error | null>(null)
+// Use an existing database handle to run a query on and get its results.
+export function useQuery({ database, loading, error }: DatabaseHandle, query: string | undefined) {
+	const [queryResultState, setQueryResultState] = useState<QueryResultState>()
 
+	// Run the query whenever the database or query string changes.
 	useEffect(() => {
-		if (!database) return
-
+		if (!database || !query) return
 		try {
-			setError(null)
-			setResults(null)
-			setExecuting(true)
-			const results = database.exec(query)
-			setResults(results)
-		} catch (err) {
-			const message = ((): string => {
-				if (err instanceof Error) return err.message
-				if (typeof err === 'string') return err
-				try {
-					return (err as any)?.message ?? JSON.stringify(err)
-				} catch {
-					return 'Query execution failed'
-				}
-			})()
-			setError(new Error(message || 'Query execution failed'))
-		} finally {
-			setExecuting(false)
+			setQueryResultState({ database, query, results: database.exec(query) })
+		} catch (error) {
+			setQueryResultState({ database, query, error: error instanceof Error ? error : new Error(String(error)) })
 		}
 	}, [database, query])
 
-	const loading = !database || executing
-	return { loading, error, results }
+	// If the stored result is valid, bundle and return it.
+	const current = database && query && queryResultState?.database === database && queryResultState.query === query ? queryResultState : undefined
+	return {
+		loading: loading || Boolean(database && query && !current),
+		error: error ?? current?.error,
+		results: current?.results,
+	}
 }
 
-// Return only the query results (or null if not available)
-export function useQueryResults(...args: Parameters<typeof useQuery>): ReturnType<typeof useQuery>['results'] {
+export function useQueryResults(...args: Parameters<typeof useQuery>) {
 	return useQuery(...args).results
 }
 
-// Return only the first query result (or null if not available)
-export function useQueryResult(...args: Parameters<typeof useQuery>): QueryResult | null {
-	return useQueryResults(...args)?.[0] || null
+export function useQueryResult(...args: Parameters<typeof useQuery>): QueryResult | undefined {
+	return useQueryResults(...args)?.[0]
 }

@@ -4,8 +4,8 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em, Link, Glyph } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider';
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider';
+import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
 import { DataTable } from '@sqlvalley/sql';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
@@ -46,8 +46,8 @@ export function FigureTwoTables() {
 	const db = useTheorySampleDatabase();
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
-	const data1 = useQueryResult(db?.database, 'SELECT * FROM departments;');
-	const data2 = useQueryResult(db?.database, 'SELECT * FROM employees;');
+	const data1 = useQueryResult(db, 'SELECT * FROM departments;')
+	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
 	const x = 80;
 	const y = 108;

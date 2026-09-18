@@ -1,20 +1,20 @@
-import { type TableKey, allTableKeys, datasetSizes, defaultDatasetSize } from './tables'
-import { buildDatasetSql, buildCompletionSchema } from './buildSql'
+import { type TableKey, tableKeys, datasetSizes } from './tables'
+import { buildDatasetSql } from './buildSql'
 
 export const databaseSource = {
-	allTables: allTableKeys,
-	defaultSize: defaultDatasetSize,
-	buildSql: ({ tables, size }: { tables: string[]; size: string }) => {
+	tableKeys,
+	datasetSizes,
+	buildSql: ({ tables, size }: { tables: string[]; size?: string }) => {
+		if (size === undefined) throw new Error('A dataset size is required.')
 		const datasetSize = datasetSizes.find(datasetSize => datasetSize === size)
 		if (datasetSize === undefined) throw new Error(`Unknown dataset size "${size}".`)
 		return buildDatasetSql({ tables: resolveTableKeys(tables), size: datasetSize })
 	},
-	buildCompletionSchema: (tables: string[]) => buildCompletionSchema(resolveTableKeys(tables)),
 }
 
 function resolveTableKeys(tables: string[]): TableKey[] {
 	return tables.map(table => {
-		const key = allTableKeys.find(key => key === table)
+		const key = tableKeys.find(key => key === table)
 		if (key === undefined) throw new Error(`Unknown table "${table}".`)
 		return key
 	})

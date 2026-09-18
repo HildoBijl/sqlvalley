@@ -14,8 +14,23 @@ The application learning-store v8 to v9 migration converts existing SQL submissi
 
 ## Database provider
 
-Import `DatabaseProvider`, `DatabaseSource`, and database hooks from `@sqlvalley/sql/databaseProvider`. Supply a stable `source` object with `allTables`, `defaultSize`, `buildSql({ tables, size })`, and `buildCompletionSchema(tables)`. Table identifiers and size names are strings interpreted and validated by the source.
+Import the provider and hooks from `@sqlvalley/sql/databaseProvider`. Place `DatabaseProvider` inside a `SQLJSProvider` and supply a stable `source` with `tableKeys`, optional `sizes`, and `buildSql({ tables, size })`. The source validates table identifiers; the provider validates sizes and does not depend on mock-data.
 
-The application imports `databaseSource` from `@sqlvalley/mock-data` and passes it to `<DatabaseProvider source={databaseSource}>`. Compatibility is checked structurally; mock-data does not depend on the provider package. SQL and completion schemas are built on demand; the provider folder does not import mock-data. Other SQL components still use mock-data types, so the SQL package retains that dependency.
+```tsx
+const handle = useDatabase({ tables: ['employees'], size: 'small' })
+const { results, loading, error } = useQuery(handle, 'SELECT * FROM employees')
+```
 
-`useDatabase` uses the source defaults when tables or size are omitted. The existing `usePlaygroundDatabase` and `useTheorySampleDatabase` convenience hooks request `full` and `small` respectively; a source used with these hooks must support those size names.
+`useDatabase({ key?, tables?, size? })` returns a `DatabaseHandle` containing `database`, `loading`, `error`, and `reset()`. Missing tables loads all keys listed in `source.tableKeys`; `tables: []` creates an empty database. Loading ends on success or failure, and unavailable values are `undefined`.
+
+If the source provides `sizes`, the list must be nonempty and every request must specify one of those sizes, even for a single-entry list. Without `sizes`, requests must omit `size`, and `buildSql` receives `size: undefined`. There is no default size. These rules are enforced at runtime and validation failures appear in the handle's `error` before SQL is built. The mock-data source provides its existing `datasetSizes` list.
+
+Without a key, each hook owns a database that closes on unmount or configuration change. With a key, matching callers share a database retained until the provider unmounts. Reusing a key with different tables or size returns an error. Persistence is in memory, across navigation, not across page reloads. Replacing the source also closes its databases.
+
+`reset()` recreates the initial data from the cached SQL and updates all callers sharing that database. If SQL generation failed, reset retries it; once generation succeeds, the SQL is reused. Failed database initialization can also be retried. Do not close a managed database yourself.
+
+`useQuery(handle, query)` runs when the database or query changes and returns `{ results, loading, error }`. Pass `undefined` as the query to skip execution. `useQueryResults` and `useQueryResult` return only the results or first result.
+
+For event handlers, `useQueryExecution(handle)` provides `{ execute, clear, results, error }`; `execute(query)` returns a promise and rejects on SQL errors. SQL.js execution itself is synchronous. Query results belong to the calling component and clear when its database changes. Direct `handle.database.exec(query)` is also available once loading completes. Mutations do not automatically refresh other queries.
+
+`useTheorySampleDatabase()` creates a temporary database of size `small`; its source must support that size name. SQL editors obtain completion schemas separately from their dataset, for example through mock-data's `buildCompletionSchema`.
