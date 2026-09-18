@@ -8,8 +8,7 @@ import { getTheme, ColorModeContext } from '@sqlvalley/ui';
 import { SQLJSProvider } from '@sqlvalley/sqljs';
 import { DatabaseProvider } from '@sqlvalley/sql/databases';
 import { ErrorBoundary } from '@sqlvalley/ui';
-import { exerciseStorage } from './exerciseStorage';
-import { useSettingsStore, useStoresHydrated } from './store';
+import { exerciseStorage, useSettingsStore, useStoresHydrated } from './store'
 
 export function App() {
 	const mode = useSettingsStore((s) => s.themeMode);

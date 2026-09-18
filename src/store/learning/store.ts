@@ -1,3 +1,5 @@
+import type { ExerciseStorage } from '@sqlvalley/exercise-manager'
+
 import { createPersistedStore } from '../infrastructure'
 import { type LearningState, initialLearningState } from './state'
 import { type LearningActions, createLearningActions } from './actions'
@@ -15,3 +17,20 @@ export const useLearningStore = createPersistedStore<LearningState, LearningActi
 	getPersistedState: getPersistedLearning,
 	normalize: normalizePersistedLearning,
 })
+
+// Preserve the stored instance reference so subscribers receive stable snapshots.
+export const exerciseStorage: ExerciseStorage = {
+	getInstance: skillId => {
+		const module = useLearningStore.getState().modules[skillId]
+		if (module?.moduleType !== 'skill') return null
+		return module.exerciseHistory[module.exerciseHistory.length - 1] ?? null
+	},
+	getHistory: skillId => {
+		const module = useLearningStore.getState().modules[skillId]
+		return module?.moduleType === 'skill' ? module.exerciseHistory : []
+	},
+	subscribe: listener => useLearningStore.subscribe(listener),
+	startExercise: (skillId, exerciseInstance) => useLearningStore.getState().startNewExercise(skillId, exerciseInstance),
+	submitAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) => useLearningStore.getState().submitExerciseAction(skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter),
+	setDraftInput: (skillId, draftInput) => useLearningStore.getState().setExerciseDraftInput(skillId, draftInput),
+}
