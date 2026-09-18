@@ -16,6 +16,7 @@
     "@codemirror/view": "^6.38.6",
     "@lezer/highlight": "^1.2.3",
     "@sqlvalley/exercise-engine": "*",
+    "@sqlvalley/exercise-instances": "*",
     "@sqlvalley/exercise-manager": "*",
     "@sqlvalley/mock-data": "*",
     "@sqlvalley/sqljs": "*",

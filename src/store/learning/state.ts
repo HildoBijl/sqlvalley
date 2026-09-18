@@ -1,5 +1,5 @@
 import type { ModuleType } from '@step-wise/module-tree-definition'
-import type { ExerciseInstance } from '@sqlvalley/exercise-manager/exerciseSelection'
+import type { ExerciseInstance } from '@sqlvalley/exercise-instances'
 
 interface BaseModuleState {
 	id: string

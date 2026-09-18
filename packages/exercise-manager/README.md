@@ -5,7 +5,7 @@ Runs solo exercises using `@step-wise/exercise-definition`, with React presentat
 
 ## Definitions and registrations
 
-`ExerciseDefinition` specializes the upstream `Exercise` type: `processSoloAction` is required, group processing is omitted, and metadata includes an explicit version. Definitions contain no React components.
+`ExerciseDefinition`, imported from `@sqlvalley/exercise-instances`, specializes the upstream `Exercise` type: `processSoloAction` is required, group processing is omitted, and metadata includes an explicit version. Definitions contain no React components.
 
 `ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts and an optional `getSolutionInput` admin helper. Pass registrations to `ExerciseManager` through its `exercises` prop.
 
@@ -35,9 +35,9 @@ The manager awaits parameter generation, initial-state generation, and action pr
 
 ## Exercise instances and storage
 
-The React-free `exerciseSelection` folder defines `ExerciseInstance`, extending the upstream `SoloExerciseInstance` with `exerciseId`, `version`, `startedAt`, optional `draftInput`, and `submittedAt` on each `ExerciseEvent`. It is available through `@sqlvalley/exercise-manager/exerciseSelection`, including for application stores.
+The React-independent [`@sqlvalley/exercise-instances`](../exercise-instances/README.md) package defines `ExerciseInstance`, extending the upstream `SoloExerciseInstance` with `exerciseId`, `version`, `startedAt`, optional `draftInput`, and `submittedAt` on each `ExerciseEvent`. It is available through `@sqlvalley/exercise-instances`, including for application stores.
 
-`generateExerciseInstance(exerciseId, definition, context)` awaits parameter and initial-state generation and returns a complete instance with `mode: 'solo'` and an empty `history`. Generating an instance is separate from building its definition or pairing that definition with a renderer.
+`generateExerciseInstance(exerciseId, definition, context)` from that package awaits parameter and initial-state generation and returns a complete instance with `mode: 'solo'` and an empty `history`. Generating an instance is separate from building its definition or pairing that definition with a renderer.
 
 `ExerciseStorageProvider` receives an application-owned `ExerciseStorage` implementation. Its `startExercise(skillId, exerciseInstance)` stores the generated instance. Submissions append history events containing `action`, `state`, an optional `report`, and `submittedAt`. Upstream `getCurrentState(exerciseInstance)` returns the latest state, falling back to the stored `initialState`.
 
@@ -60,7 +60,6 @@ The learning-store v7 to v8 migration converts legacy events into history, suppl
 
 ## Package structure
 
-- `exerciseSelection/`: logical definition and instance types, instance generation, and normalization. This subpath has no React runtime dependency.
 - `exerciseContext/`: renderer registration, React context, and `useExercise`.
 - `components/`: the manager and its internal admin tools.
 - `storage.ts` and `storageContext.tsx`: application storage contract and injection.

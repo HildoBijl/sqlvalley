@@ -3,8 +3,8 @@ import { Alert, Button, Typography } from '@mui/material'
 
 import { sample } from '@step-wise/js-utils'
 import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
+import { generateExerciseInstance } from '@sqlvalley/exercise-instances'
 
-import { generateExerciseInstance } from '../exerciseSelection'
 import { type AnyExerciseContextValue, type ExerciseRegistration, ExerciseContext } from '../exerciseContext'
 import { useModuleContext } from '../moduleContext'
 import { useExerciseStorage } from '../storageContext'

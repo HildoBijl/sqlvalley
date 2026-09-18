@@ -16,7 +16,7 @@ SimpleExercise specifications retain broad data types; authors must supply seria
 
 The SimpleExercise renderer consumes `useExercise` and `useModuleContext` from `@sqlvalley/exercise-manager`. The manager accepts supplied renderers and never imports this package.
 
-Consumers must import manager APIs directly from `@sqlvalley/exercise-manager`, including `ExerciseManager`, `ExerciseStorageProvider`, `ModuleContextProvider`, and `ExerciseRegistration`. Stores import the shared instance format through `@sqlvalley/exercise-manager/exerciseSelection`.
+Consumers must import manager APIs directly from `@sqlvalley/exercise-manager`, including `ExerciseManager`, `ExerciseStorageProvider`, `ModuleContextProvider`, and `ExerciseRegistration`. Stores import the shared instance format through `@sqlvalley/exercise-instances`.
 
 
 ## Verification

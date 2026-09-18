@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react'
 
 import type { ExerciseAction, ExerciseParameters, ExerciseState } from '@step-wise/exercise-definition'
-
-import type { ExerciseDefinition, ExerciseInstance, SkillId } from '../exerciseSelection'
+import type { ExerciseDefinition, ExerciseInstance, SkillId } from '@sqlvalley/exercise-instances'
 
 // Handlers connecting the exercise to the data store, set up by the manager.
 export interface ExerciseControls<Action extends ExerciseAction> {

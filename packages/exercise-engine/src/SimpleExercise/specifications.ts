@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-manager/exerciseSelection';
+import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-instances';
 import type {
 	SimpleExerciseCheckResult,
 	SimpleExerciseInputProps,

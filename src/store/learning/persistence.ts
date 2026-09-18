@@ -1,4 +1,4 @@
-import { type ExerciseInstance, normalizeExerciseInstance } from '@sqlvalley/exercise-manager/exerciseSelection'
+import { type ExerciseInstance, normalizeExerciseInstance } from '@sqlvalley/exercise-instances'
 
 import { asRecord, isRecord } from '../infrastructure'
 import { type ConceptState, type LearningState, type ModuleState, type SkillState, createModuleState } from './state'

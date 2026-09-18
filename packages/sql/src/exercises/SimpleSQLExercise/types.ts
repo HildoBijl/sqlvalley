@@ -1,4 +1,4 @@
-import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-manager';
+import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-instances';
 import type { SimpleExerciseCheckResult, SimpleExerciseFeedbackType } from '@sqlvalley/exercise-engine';
 import type { CompareOptions } from '@sqlvalley/sql-grading';
 

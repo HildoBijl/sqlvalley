@@ -1,4 +1,4 @@
-import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState, SkillId } from './exerciseSelection'
+import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState, SkillId } from '@sqlvalley/exercise-instances'
 
 // Snapshots must retain their reference until changed, as required by useSyncExternalStore.
 export interface ExerciseStorage {
