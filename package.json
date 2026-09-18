@@ -34,7 +34,7 @@
     "@sqlvalley/sqljs": "*",
     "@sqlvalley/ui": "*",
     "@step-wise/geometry": "^0.1.0",
-    "@step-wise/module-tree-definition": "^0.2.0",
+    "@step-wise/module-tree-definition": "^0.3.0",
     "@uiw/react-codemirror": "^4.21.21",
     "@use-gesture/react": "^10.3.1",
     "cookie": "^1.0.2",

@@ -1,6 +1,4 @@
-import { type ModuleId, type ModuleTree, getModule } from '@step-wise/module-tree-definition'
-
-import { getGoalPathModuleIds } from './moduleTree'
+import { type ModuleId, type ModuleTree, getModule, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 
 // Determine if all direct prerequisites of a module are completed.
 export function areDirectPrerequisitesCompleted(
@@ -31,7 +29,7 @@ export function getGoalProgress(
 	goalId: ModuleId,
 	isModuleCompleted: (id: ModuleId) => boolean,
 ): GoalProgress {
-	const goalPathModuleIds = [...getGoalPathModuleIds(moduleTree, goalId)]
+	const goalPathModuleIds = getRequiredModuleIds(moduleTree, [goalId])
 	return {
 		completedCount: goalPathModuleIds.filter(isModuleCompleted).length,
 		totalCount: goalPathModuleIds.length,

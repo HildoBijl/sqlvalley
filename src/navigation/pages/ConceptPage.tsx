@@ -9,6 +9,9 @@ import {
   School,
 } from '@mui/icons-material';
 
+import { type ModuleId, getRequiredModuleIds } from '@step-wise/module-tree-definition'
+import { areDirectPrerequisitesCompleted, isReadyToLearn, useModuleCompletion } from '@sqlvalley/progress'
+
 import {
   useAdminMode,
   useLearningStore,
@@ -33,9 +36,6 @@ import {
   VideoTab,
 } from '@/learning/components/TabContent/ContentTab';
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
-import { useModuleCompletion } from '@sqlvalley/progress';
-import { areDirectPrerequisitesCompleted, getGoalPathModuleIds, isReadyToLearn } from '@sqlvalley/progress'
-import type { ModuleId } from '@step-wise/module-tree-definition'
 import type { TabConfig } from '@/learning/types';
 
 export default function ConceptPage() {
@@ -130,7 +130,7 @@ export default function ConceptPage() {
   );
 
   const goalPath = useMemo(
-    () => (goalNodeId ? getGoalPathModuleIds(moduleTree, goalNodeId) : new Set<ModuleId>()),
+		() => new Set(goalNodeId ? getRequiredModuleIds(moduleTree, [goalNodeId]) : []),
     [goalNodeId],
   );
 

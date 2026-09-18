@@ -1,7 +1,5 @@
 import { ensureInteger } from '@step-wise/js-utils'
-import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
-
-import { getTransitivePrerequisiteIds } from './moduleTree'
+import { type ModuleId, type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 
 // Exercises a learner must solve before a skill counts as completed.
 export const EXERCISES_REQUIRED_FOR_SKILL_COMPLETION = 3
@@ -44,9 +42,7 @@ function includeCompletedPrerequisites(
 ): Set<ModuleId> {
 	const completedModuleIds = new Set(directlyCompletedModuleIds)
 	for (const moduleId of directlyCompletedModuleIds) {
-		for (const prerequisiteId of getTransitivePrerequisiteIds(moduleTree, moduleId)) {
-			completedModuleIds.add(prerequisiteId)
-		}
+		for (const requiredModuleId of getRequiredModuleIds(moduleTree, [moduleId])) completedModuleIds.add(requiredModuleId)
 	}
 	return completedModuleIds
 }

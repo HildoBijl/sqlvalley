@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { getTransitivePrerequisiteIds } from '@sqlvalley/progress'
-import type { ModuleTree } from '@step-wise/module-tree-definition'
+import { useState } from 'react'
+
+import { type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 
 export function useHoverState(
   moduleTree: ModuleTree,
@@ -14,8 +14,9 @@ export function useHoverState(
 
   const handleHoverStart = (id: string) => {
     setLocalHoveredId(id);
-    const chain = getTransitivePrerequisiteIds(moduleTree, id);
-    setPrerequisites(chain);
+		const chain = new Set(getRequiredModuleIds(moduleTree, [id]))
+		chain.delete(id)
+		setPrerequisites(chain)
 
     setTooltip(modulePresentation[id]?.description ?? 'No description available');
   };

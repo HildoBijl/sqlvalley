@@ -1,9 +1,6 @@
-/**
- * Defines which module has access to which mock data table.
- */
+import { getRequiredModuleIds } from '@step-wise/module-tree-definition'
+import { type TableKey, allTableKeys } from '@sqlvalley/mock-data'
 
-import { type TableKey, allTableKeys } from '@sqlvalley/mock-data';
-import { getTransitivePrerequisiteIds } from '@sqlvalley/progress'
 import { type ModuleId, isModuleId, moduleTree } from '../moduleDefinition'
 
 // List the point (or points) in the Skill Tree where the respective tables are introduced.
@@ -41,7 +38,7 @@ allTableKeys.forEach(table => {
 // Get the tables required for a given module ID. Gives an empty list when no tables are found.
 export function getModuleTables(moduleId: string): TableKey[] {
 	if (!isModuleId(moduleId)) return []
-	const accessibleModuleIds = [moduleId, ...getTransitivePrerequisiteIds(moduleTree, moduleId)] as ModuleId[]
+	const accessibleModuleIds = getRequiredModuleIds(moduleTree, [moduleId]) as ModuleId[]
 	const introducedTables = accessibleModuleIds.flatMap(accessibleModuleId => moduleTableIntroduction[accessibleModuleId] ?? [])
 	return Array.from(new Set(introducedTables));
 }

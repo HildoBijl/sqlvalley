@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@step-wise/js-utils": "^0.1.1",
-    "@step-wise/module-tree-definition": "^0.2.0"
+    "@step-wise/module-tree-definition": "^0.3.0"
   },
   "peerDependencies": {
     "react": "^19.0.0"
