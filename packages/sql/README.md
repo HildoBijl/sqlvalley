@@ -12,6 +12,13 @@ SQL submissions and saved drafts use a query field containing { type: 'SQL', val
 The application learning-store v8 to v9 migration converts existing SQL submissions, string drafts, and give-up actions, preserving reports, draft contents, progress, and timestamps.
 
 
+## Module table access
+
+`getModuleTableKeys({ moduleId, moduleTree, moduleAccess, tableKeys })` returns the accessible table keys for a module and its prerequisites, without duplicates. `moduleAccess` maps each table key to its introduction module ID or a list of alternative introduction modules. `tableKeys` specifies which tables to resolve.
+
+Unknown module IDs, invalid introduction IDs, and missing access definitions throw errors. Valid modules with no accessible tables return `[]`. The `ModuleAccess` type supports application-specific table keys and module IDs; curriculum data stays in the application.
+
+
 ## Database provider
 
 Import the provider and hooks from `@sqlvalley/sql/databaseProvider`. Place `DatabaseProvider` inside a `SQLJSProvider` and supply a stable `source` with `tableKeys`, optional `sizes`, and `buildSql({ tables, size })`. The source validates table identifiers; the provider validates sizes and does not depend on mock-data.

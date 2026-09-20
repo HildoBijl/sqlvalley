@@ -9,7 +9,7 @@ import {
 	useSettingsStore,
 	useSkillTreeSettingsStore,
 } from '@/store';
-import { getModulePresentation, moduleTree } from '@/curriculum'
+import { getModulePresentation, getModuleTableKeys, isModuleId, moduleTree } from '@/curriculum'
 import {
 	defaultSkillTreeVisualization,
 	isSkillTreeVisualizationId,
@@ -17,7 +17,6 @@ import {
 	type SkillTreeVisualizationId,
 } from '@/curriculum/skillTreeVisualizations';
 import { moduleComponents } from '@/curriculum/utils/loaders';
-import { getModuleTables } from '@/curriculum/utils/moduleAccess';
 
 import { ContentHeader } from '@/learning/components/ContentHeader';
 import { ContentTabs } from '@/learning/components/ContentTabs';
@@ -48,7 +47,7 @@ export default function SkillPage() {
 	);
 
 	const hasStaticPractice = Boolean(skillId && moduleComponents[skillId]?.Practice);
-	const tables = useMemo(() => skillId ? getModuleTables(skillId) : [], [skillId]);
+	const tables = useMemo(() => skillId && isModuleId(skillId) ? getModuleTableKeys(skillId) : [], [skillId])
 	const hasTables = tables.length > 0;
 
 	const allTabs: TabConfig[] = [

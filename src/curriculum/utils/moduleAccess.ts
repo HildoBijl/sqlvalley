@@ -1,10 +1,10 @@
-import { getRequiredModuleIds } from '@step-wise/module-tree-definition'
 import { type TableKey, allTableKeys } from '@sqlvalley/mock-data'
+import { type ModuleAccess, getModuleTableKeys as resolveModuleTableKeys } from '@sqlvalley/sql'
 
-import { type ModuleId, isModuleId, moduleTree } from '../moduleDefinition'
+import { type ModuleId, moduleTree } from '../moduleDefinition'
 
-// List the point (or points) in the Skill Tree where the respective tables are introduced.
-const tableIntroduction: Record<TableKey, ModuleId | ModuleId[]> = {
+// Tables become accessible at their introduction modules and in dependent modules.
+export const moduleAccess: ModuleAccess<TableKey, ModuleId> = {
 	// Company internals.
 	departments: 'database',
 	employees: 'query-language',
@@ -19,26 +19,9 @@ const tableIntroduction: Record<TableKey, ModuleId | ModuleId[]> = {
 	accounts: 'database-keys',
 	products: 'join-and-decomposition',
 	transactions: 'projection-and-filtering',
-} as const;
+}
 
-// Invert the table introduction: which module introduces which table?
-const moduleTableIntroduction: Partial<Record<ModuleId, TableKey[]>> = {};
-allTableKeys.forEach(table => {
-	const moduleOrList = tableIntroduction[table];
-	const moduleIds = Array.isArray(moduleOrList) ? moduleOrList : [moduleOrList];
-	moduleIds.forEach(moduleId => {
-		if (!moduleTree[moduleId])
-			throw new Error(`Invalid module ID given in table introductions: module "${moduleId}" is unknown.`)
-		if (!moduleTableIntroduction[moduleId])
-			moduleTableIntroduction[moduleId] = [];
-		moduleTableIntroduction[moduleId].push(table);
-	})
-})
-
-// Get the tables required for a given module ID. Gives an empty list when no tables are found.
-export function getModuleTables(moduleId: string): TableKey[] {
-	if (!isModuleId(moduleId)) return []
-	const accessibleModuleIds = getRequiredModuleIds(moduleTree, [moduleId]) as ModuleId[]
-	const introducedTables = accessibleModuleIds.flatMap(accessibleModuleId => moduleTableIntroduction[accessibleModuleId] ?? [])
-	return Array.from(new Set(introducedTables));
+// Return accessible table keys, including prerequisite tables. Unknown modules throw.
+export function getModuleTableKeys(moduleId: string): TableKey[] {
+	return resolveModuleTableKeys({ moduleId, moduleTree, moduleAccess, tableKeys: allTableKeys })
 }
