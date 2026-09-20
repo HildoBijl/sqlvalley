@@ -1,5 +1,3 @@
+export { type ModuleProviderComponent, ModuleContextProvider, useModuleContext } from './moduleContext'
 export { type ExerciseStorage, ExerciseManager } from './exerciseManager'
-export { useExerciseManager, useCurrentExercise, useCurrentExerciseInstance } from './exerciseManagerContext'
-export type { ExerciseRegistration, ExerciseManagerContextValue, ExerciseControls, CurrentExercise } from './exerciseManagerContext'
-export { ModuleContextProvider, useModuleContext } from './moduleContext'
-export type { ModuleProviderComponent } from './moduleContext'
+export { type ExerciseRegistration, type ExerciseManagerContextValue, type ExerciseControls, type CurrentExercise, useExerciseManager, useCurrentExercise, useCurrentExerciseInstance } from './exerciseManagerContext'
