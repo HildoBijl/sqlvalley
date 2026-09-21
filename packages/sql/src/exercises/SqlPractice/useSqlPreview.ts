@@ -3,13 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { DatasetSize } from '@sqlvalley/mock-data'
 
 import { useQueryExecution } from '../../databaseProvider'
-import { useModuleDatabase } from '../../sqlModuleProvider'
+import { useUserModuleDatabase } from '../../sqlModuleProvider'
 
 const SMALL_DATASET_WARNING = 'You are using the small data set. This data set is meant to get a quick intuition of the data, but it does not support all exercises. Consider using the full data set to get the full real-life experience.'
 
 export function useSqlPreview(datasetSize: DatasetSize) {
-	const display = useModuleDatabase(datasetSize)
-	const full = useModuleDatabase('full')
+	const display = useUserModuleDatabase(datasetSize)
+	const full = useUserModuleDatabase('full')
 	const { execute, clear, results, error } = useQueryExecution(display)
 	const [datasetWarning, setDatasetWarning] = useState<string>()
 	const lastQuery = useRef('')

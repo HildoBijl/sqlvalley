@@ -4,9 +4,10 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Em, RelationName } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -59,7 +60,7 @@ export function FigureTerminology({ terminology }: { terminology?: { [key: strin
 	const themeColor = useThemeColor();
 
 	// Get data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, 'SELECT * FROM departments;')
 
 	// Set up reference to the table.

@@ -2,12 +2,13 @@ import { Fragment } from 'react'
 
 import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@sqlvalley/ui';
 
-import { type QueryResult, useQueryResult, useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider'
+import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const q1 = 'SELECT * FROM employees';
 	const q2 = 'SELECT * FROM employees WHERE current_salary >= 200000';
 	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000';

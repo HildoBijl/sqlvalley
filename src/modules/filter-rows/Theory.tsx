@@ -4,9 +4,10 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, Section, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	const now = new Date();
@@ -80,7 +81,7 @@ export function FigureFiltering({ query = '', columnName = '' }) {
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	// Set up query data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the table column name bounds.

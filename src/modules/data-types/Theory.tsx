@@ -4,9 +4,10 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable, ISQL } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	const now = new Date();
@@ -66,7 +67,7 @@ export function FigureDataTypeDemo() {
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	// Set up query data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, `SELECT * FROM contracts;`)
 
 	// Find the bounds of the table.

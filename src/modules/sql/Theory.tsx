@@ -3,9 +3,10 @@ import { Box } from '@mui/material';
 import { useRefWithValue } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -43,7 +44,7 @@ FROM employees;`}</SQLDisplay>
 }
 
 function FigureEmployeeTable() {
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, 'SELECT * FROM employees;')
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 	const [tRef, tBounds] = useRefWithBounds(drawingData);

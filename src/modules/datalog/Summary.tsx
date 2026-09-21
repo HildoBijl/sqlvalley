@@ -1,11 +1,12 @@
 import { Page, Section, Par, Term, Em, DL } from '@sqlvalley/ui';
 
-import { useQueryResult, useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DatalogFacts, DatalogOutput } from './Theory';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Summary() {
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const q1 = 'SELECT * FROM employees';
 	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000';
 	const data1 = useQueryResult(db, q1)

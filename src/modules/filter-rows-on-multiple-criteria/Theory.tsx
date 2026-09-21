@@ -4,9 +4,10 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, List, Section, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -110,7 +111,7 @@ SELECT *
 FROM contracts
 WHERE ${addNot ? 'NOT (' : ''}${c1} = '${v1}'
   ${combiner} ${c2} = '${v2}'${addNot ? ')' : ''};`
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
@@ -151,7 +152,7 @@ function FigureAndExplanation() {
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	// Set up query data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const status = 'active';
 	const position = 'director of pr';
 	const examplePosition = 'CIO';
@@ -253,7 +254,7 @@ function FigureRewrittenQuery({ query = '' }) {
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	// Set up query data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
@@ -287,7 +288,7 @@ export function FigureMergingTables({ query1 = '', query2 = '', operator = 'UNIO
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	// Set up query data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, query2)
 	const data = useQueryResult(db, `${query1}

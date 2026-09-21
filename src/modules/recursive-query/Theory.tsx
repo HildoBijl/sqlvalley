@@ -1,11 +1,12 @@
 import { Page, Section, Par, List, Info, Warning, Quote, Term, Em, M } from '@sqlvalley/ui';
 
-import { useQueryResult, useTheorySampleDatabase } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const q1 = 'SELECT * FROM transactions';
 	const q2 = 'SELECT DISTINCT vendor, buyer FROM transactions';
 	const q3 = 'SELECT DISTINCT t1.vendor, t2.buyer FROM transactions t1, transactions t2 WHERE t1.buyer = t2.vendor';

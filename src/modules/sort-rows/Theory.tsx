@@ -5,9 +5,10 @@ import { useRefWithValue, useRefWithElement } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, Section, Warning, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -49,7 +50,7 @@ function FigureSortOnSingleColumn() {
 SELECT *
 FROM departments
 ORDER BY ${sortColumn} DESC;`
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
@@ -88,7 +89,7 @@ FROM departments
 ORDER BY
   ${sortColumn1} ASC,
   ${sortColumn2} DESC;`
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
@@ -142,7 +143,7 @@ SELECT *
 FROM departments
 ORDER BY ${sortColumn} DESC
 LIMIT 3;`
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
@@ -186,7 +187,7 @@ SELECT *
 FROM departments
 ORDER BY ${sortColumn} DESC
 LIMIT 3 OFFSET ${offset};`
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
@@ -227,7 +228,7 @@ function FigureSortNullValues() {
 SELECT *
 FROM departments
 ORDER BY ${sortColumn} ASC NULLS LAST;`
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".

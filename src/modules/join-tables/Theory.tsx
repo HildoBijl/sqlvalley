@@ -4,12 +4,13 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable, ISQL } from '@sqlvalley/sql';
 
 import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
 import { adjustedManagerId, addedManagerId, adjustedDepartments, FigureTwoTablesAdjusted } from '../join-and-decomposition/Theory';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 const departmentsReplacement = `SELECT d_id, d_name, manager_id e_id, budget, nr_employees FROM departments`;
 
@@ -128,7 +129,7 @@ function FigureNaturalJoinAdjustedTables() {
 	const themeColor = useThemeColor();
 
 	// Get the data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const query1 = departmentsReplacement;
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')

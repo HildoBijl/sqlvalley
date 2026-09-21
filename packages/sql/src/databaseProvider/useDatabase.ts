@@ -42,10 +42,6 @@ export function useDatabase({ key, tables, size }: DatabaseOptions = {}): Databa
 	return useDatabaseHandles({ key, tables }, size === undefined ? undefined : [size], false).get(size)!
 }
 
-export function useTheorySampleDatabase() {
-	return useDatabase({ size: 'small' })
-}
-
 // Own databases for the selected sizes, defaulting to all source sizes.
 export function useDatabases(options: DatabasesOptions = {}): ReadonlyMap<string, DatabaseHandle> {
 	return useDatabaseHandles(options, options.sizes)

@@ -4,11 +4,12 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em, Link, Glyph } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -43,7 +44,7 @@ export function Theory() {
 }
 
 export function FigureTwoTables() {
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	const data1 = useQueryResult(db, 'SELECT * FROM departments;')

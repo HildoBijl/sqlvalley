@@ -5,12 +5,13 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
 
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 import { FigureTwoTables } from '../database/Theory';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export const adjustedManagerId = '11111111';
 export const addedManagerId = '41655533';
@@ -108,7 +109,7 @@ function FigureNaturalJoin() {
 	const themeColor = useThemeColor();
 
 	// Get the data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const query1 = 'SELECT d_id, d_name, manager_id e_id, budget, nr_employees FROM departments';
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
@@ -165,7 +166,7 @@ export function FigureTwoTablesAdjusted() {
 	const themeColor = useThemeColor();
 
 	// Get the data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data1 = useQueryResult(db, adjustedDepartments)
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 

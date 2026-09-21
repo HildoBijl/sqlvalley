@@ -4,9 +4,10 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Term } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -24,7 +25,7 @@ export function Summary() {
 
 function FigureAggregation() {
 	const themeColor = useThemeColor();
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const dataFull = useQueryResult(db, 'SELECT * FROM quarterly_performance;')
 	const dataAggregated = useQueryResult(db, 'SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance GROUP BY fiscal_year;')
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();

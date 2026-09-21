@@ -4,9 +4,10 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Term } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Line, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -38,7 +39,7 @@ export function Theory() {
 
 function FigureProjection() {
 	const themeColor = useThemeColor();
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const dataFull = useQueryResult(db, 'SELECT * FROM departments;')
 	const dataProjection = useQueryResult(db, 'SELECT d_name, nr_employees FROM departments;')
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
@@ -72,7 +73,7 @@ function FigureProjection() {
 
 function FigureFiltering() {
 	const themeColor = useThemeColor();
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const dataFull = useQueryResult(db, 'SELECT * FROM departments;')
 	const dataFiltering = useQueryResult(db, 'SELECT * FROM departments WHERE nr_employees > 10;')
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();

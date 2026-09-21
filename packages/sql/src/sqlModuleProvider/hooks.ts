@@ -7,9 +7,12 @@ export function useSqlModuleContext(): SqlModuleContext {
 	return ensureSqlModuleContext(useModuleContext())
 }
 
-// Components use user databases; grading databases are reserved for exercise logic.
-export function useModuleDatabase(size?: string) {
+export function useUserModuleDatabase(size?: string) {
 	return useSqlModuleContext().getUserDatabase(size)
+}
+
+export function useGradingModuleDatabase(size?: string) {
+	return useSqlModuleContext().getGradingDatabase(size)
 }
 
 export function useModuleTableKeys() {

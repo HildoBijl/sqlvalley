@@ -4,9 +4,10 @@ import { useRefWithValue } from '@sqlvalley/ui';
 import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Link } from '@sqlvalley/ui';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -58,7 +59,7 @@ export function FigureQueryExample() {
 	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
 
 	// Set up query data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const data1 = useQueryResult(db, `SELECT * FROM employees;`)
 	const data2 = useQueryResult(db, `SELECT first_name, last_name FROM employees WHERE current_salary > 200000;`)
 

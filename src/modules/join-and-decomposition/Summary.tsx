@@ -5,9 +5,10 @@ import { useThemeColor } from '@sqlvalley/ui';
 import { Page, Section, Par, List, Info, Term, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
-import { useTheorySampleDatabase, useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
+import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -32,7 +33,7 @@ function FigureJoinAndDecomposition() {
 	const themeColor = useThemeColor();
 
 	// Get the data.
-	const db = useTheorySampleDatabase();
+	const db = useTheoryPageDatabase();
 	const query1 = 'SELECT * FROM departments';
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')

@@ -3,6 +3,7 @@
  */
 
 export * from './loaders';
+export * from './useTheoryPageDatabase'
 export * from '../moduleTableAccess';
 export * from './queryFigures';
 export * from './raQueryFigures';
