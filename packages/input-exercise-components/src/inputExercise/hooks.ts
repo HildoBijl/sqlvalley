@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect } from 'react'
 import type { InputExerciseContextValue } from './types'
 import { InputExerciseContext } from './context'
 
+// Get the full context value.
 export function useInputExerciseContext(): InputExerciseContextValue {
 	const value = useContext(InputExerciseContext)
 	if (!value) throw new Error('useInputExerciseContext must be used within an InputExerciseProvider.')

@@ -1,11 +1,20 @@
-import { type RefObject, useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import type { ExerciseState } from '@step-wise/exercise-definition'
-import { type InputExerciseRawInput, type InputExerciseMetadata, type InputExerciseSpec, type InputExerciseSolution, type InputExerciseValueOperations, getInputDependency, resolveStaticSolution, resolveSolution } from '@step-wise/input-exercises'
+import { type InputExerciseMetadata, type InputExerciseSpec, type InputExerciseSolution, type InputExerciseValueOperations, getInputDependency, resolveStaticSolution, resolveSolution } from '@step-wise/input-exercises'
 
 // Only the definition capabilities needed to resolve a solution.
 export type SolutionDefinition = Pick<InputExerciseSpec<InputExerciseMetadata, Record<string, unknown>, InputExerciseSolution, unknown, unknown>, 'getStaticSolution' | 'getSolution'> & {
 	valueOperations: InputExerciseValueOperations
+}
+
+// The data needed to obtain the solution.
+interface SolutionOptions {
+	definition: SolutionDefinition
+	parameters: Record<string, unknown>
+	state: ExerciseState
+	context: unknown
+	enabled: boolean
 }
 
 // The result object which we use to save the solution with.
@@ -15,20 +24,8 @@ interface SolutionResult {
 	error?: Error
 }
 
-interface InputExerciseSolutionOptions {
-	definition: SolutionDefinition
-	parameters: Record<string, unknown>
-	state: ExerciseState
-	context: unknown
-	enabled: boolean
-	fields: RefObject<Map<string, string>>
-	mergeInput: (values: InputExerciseRawInput) => void
-	showControls: boolean
-	submitting: boolean
-}
-
 // Determine the solution of an exercise instance.
-export function useInputExerciseSolution({ definition, parameters, state, context, enabled, fields, mergeInput, showControls, submitting }: InputExerciseSolutionOptions) {
+export function useSolution({ definition, parameters, state, context, enabled }: SolutionOptions) {
 	const [result, setResult] = useState<SolutionResult>()
 	const available = !!definition.getSolution && enabled
 
@@ -56,20 +53,8 @@ export function useInputExerciseSolution({ definition, parameters, state, contex
 		return () => { cancelled = true }
 	}, [request, available])
 
-	// Ensure that the solution is for the current request.
+	// Ensure that the returned solution is for the current request.
 	const current = available && result?.request === request ? result : undefined
 	const solution = current?.solution
-
-	// Set up an insertSolution handler.
-	const insertSolution = useCallback(() => {
-		if (!showControls || submitting || !solution) return
-		const entries = [...fields.current.entries()]
-			.filter(([name]) => Object.prototype.hasOwnProperty.call(solution, name))
-			.map(([name, type]) => [name, definition.valueOperations.toInputValue(solution[name], type)] as const)
-		if (entries.length === 0) return
-		mergeInput(Object.fromEntries(entries))
-	}, [showControls, submitting, solution, fields, definition, mergeInput])
-
-	// All done. Return the context values.
-	return { solution, solutionLoading: available && !current, solutionError: current?.error, insertSolution: showControls && solution ? insertSolution : undefined }
+	return { solution, solutionLoading: available && !current, solutionError: current?.error }
 }
