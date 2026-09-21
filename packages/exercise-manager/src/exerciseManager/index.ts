@@ -1,2 +1,2 @@
-export { ExerciseManager } from './ExerciseManager'
-export type { ExerciseStorage } from './types'
+export * from './ExerciseManager'
+export * from './types'

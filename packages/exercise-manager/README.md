@@ -68,7 +68,7 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 - `exerciseSessionContext/`: renderer registration, React context, and access hooks.
 - `exerciseManager/`: the rendering component.
 - `exerciseManager/exerciseSession/`: `useExerciseSession` coordinates `useExerciseGeneration` (selection, generation, retries) and `useExerciseSubmission` (actions, skill updates, drafts). A shared operation guard prevents overlapping generation and submission.
-- `exerciseManager/types.ts`: storage contract and component props.
+- `exerciseManager/types.ts`: the public `ExerciseStorage` contract and `ExerciseManagerProps` component props.
 - `exerciseManager/exerciseSession/types.ts`: session options and shared operation types.
 - `moduleContext/`: subject-specific execution context, provider, and access hook.
 

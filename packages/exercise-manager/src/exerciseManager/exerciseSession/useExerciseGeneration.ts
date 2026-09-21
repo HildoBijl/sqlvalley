@@ -86,7 +86,7 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 			if (selected) void startExercise(selected, () => !cancelled)
 		}
 		return () => { cancelled = true }
-	}, [exercisesById, exercises, currentExerciseInstance?.parameters, moduleContext, moduleReady, activeOperation, selectionOptions, skillId, startExercise, storage])
+	}, [exercisesById, exercises, currentExerciseInstance?.exerciseId, currentExerciseInstance?.version, currentExerciseInstance?.parameters, moduleContext, moduleReady, activeOperation, selectionOptions, skillId, startExercise, storage])
 
 	// All done. Gather and return the session flags/handlers.
 	return { generationError, generating, startNewExercise, selectExerciseById, retryGeneration }

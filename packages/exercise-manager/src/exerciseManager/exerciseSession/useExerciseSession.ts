@@ -11,7 +11,9 @@ export function useExerciseSession(options: ExerciseSessionOptions) {
 
 	// Check the module status.
 	const moduleContext = useModuleContext()
-	const moduleReady = moduleContext == null || (moduleContext as { ready?: boolean }).ready !== false
+	const moduleStatus = moduleContext as { ready?: boolean; error?: Error } | undefined | null
+	const moduleError = moduleStatus?.error
+	const moduleReady = moduleStatus?.ready !== false && !moduleError
 
 	// Extract and verify the current exercise's registration.
 	const exercisesById = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])
@@ -29,6 +31,7 @@ export function useExerciseSession(options: ExerciseSessionOptions) {
 		registration: currentRegistration,
 		instance: currentExerciseInstance,
 		loading: !moduleReady,
+		moduleError,
 		...generation,
 		...submission,
 	}
