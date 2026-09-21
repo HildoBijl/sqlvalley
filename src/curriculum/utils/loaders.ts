@@ -1,5 +1,14 @@
-import { lazy } from 'react';
-import type { ComponentType, LazyExoticComponent } from 'react';
+import { type ComponentType, type LazyExoticComponent, lazy } from 'react'
+
+import type { ModuleProviderComponent } from '@sqlvalley/exercise-manager'
+
+const moduleProviderLoaders = import.meta.glob<ModuleProviderComponent>('../modules/*/index.ts', { import: 'ModuleProvider' })
+
+// Load module providers independently of the exercise definitions.
+export const moduleProviders = Object.fromEntries(Object.entries(moduleProviderLoaders).map(([path, load]) => {
+	const moduleId = path.split('/')[2]
+	return [moduleId, lazy(async () => ({ default: await load() }))]
+}))
 
 export type ModuleComponentMap = Record<string, LazyExoticComponent<ComponentType<any>>>;
 

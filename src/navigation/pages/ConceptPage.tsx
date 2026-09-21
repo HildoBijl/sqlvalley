@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Alert, Box, Button, Container } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Container } from '@mui/material';
 import {
 	Bolt,
 	CheckCircle,
@@ -35,6 +35,7 @@ import {
 	TheoryTab,
 	VideoTab,
 } from '@/learning/components/TabContent/ContentTab';
+import { moduleProviders } from '@/curriculum/utils/loaders'
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import type { TabConfig } from '@/learning/types';
 
@@ -174,64 +175,70 @@ export default function ConceptPage() {
 
 	const presentation = getModulePresentation(conceptMeta.id)
 	if (!presentation) throw new Error(`Missing presentation for module "${conceptMeta.id}".`)
+	const ModuleProvider = moduleProviders[conceptMeta.id]
+	if (!ModuleProvider) throw new Error(`Missing provider for module "${conceptMeta.id}".`)
 
 	return (
-		<Container maxWidth="lg" sx={{ py: 2 }}>
-			<ContentHeader
-				title={presentation.name}
-				description={presentation.description}
-				onBack={() => navigate(backToLearningPath)}
-				icon={<School color="primary" sx={{ fontSize: 32 }} />}
-				isCompleted={isCompleted}
-			/>
+		<Suspense fallback={<CircularProgress />}>
+			<ModuleProvider key={conceptMeta.id} moduleId={conceptMeta.id}>
+				<Container maxWidth="lg" sx={{ py: 2 }}>
+					<ContentHeader
+						title={presentation.name}
+						description={presentation.description}
+						onBack={() => navigate(backToLearningPath)}
+						icon={<School color="primary" sx={{ fontSize: 32 }} />}
+						isCompleted={isCompleted}
+					/>
 
-			{visibleTabs.length > 0 && (
-				<ContentTabs
-					value={currentTab}
-					tabs={visibleTabs}
-					onChange={handleTabChange}
-				>
-					{currentTab === 'theory' && <TheoryTab contentId={conceptMeta.id} />}
-					{currentTab === 'video' && <VideoTab contentId={conceptMeta.id} />}
-					{currentTab === 'summary' && summaryUnlocked && (
-						<SummaryTab contentId={conceptMeta.id} />
-					)}
-					{currentTab === 'story' && <StoryTab contentId={conceptMeta.id} />}
-				</ContentTabs>
-			)}
-
-			<Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-				<span />
-
-				<Box sx={{ display: 'flex', gap: 2 }}>
-					{!isCompleted && (
-						<Button
-							variant="contained"
-							onClick={handleComplete}
-							startIcon={<CheckCircle />}
+					{visibleTabs.length > 0 && (
+						<ContentTabs
+							value={currentTab}
+							tabs={visibleTabs}
+							onChange={handleTabChange}
 						>
-							Mark as Complete
-						</Button>
+							{currentTab === 'theory' && <TheoryTab contentId={conceptMeta.id} />}
+							{currentTab === 'video' && <VideoTab contentId={conceptMeta.id} />}
+							{currentTab === 'summary' && summaryUnlocked && (
+								<SummaryTab contentId={conceptMeta.id} />
+							)}
+							{currentTab === 'story' && <StoryTab contentId={conceptMeta.id} />}
+						</ContentTabs>
 					)}
-				</Box>
-			</Box>
 
-			<ConceptCompletionDialog
-				open={showCompletionDialog}
-				conceptName={presentation.name}
-				nextUp={nextUp}
-				onNavigateToNext={(id) => {
-					const type = moduleTree[id]?.type;
-					navigate(type === 'skill' ? `/skill/${id}` : `/concept/${id}`);
-				}}
-				onClose={() => setShowCompletionDialog(false)}
-				onViewSummary={() => {
-					setShowCompletionDialog(false);
-					selectTab('summary');
-				}}
-				onReturnToOverview={() => navigate(backToLearningPath)}
-			/>
-		</Container>
+					<Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+						<span />
+
+						<Box sx={{ display: 'flex', gap: 2 }}>
+							{!isCompleted && (
+								<Button
+									variant="contained"
+									onClick={handleComplete}
+									startIcon={<CheckCircle />}
+								>
+									Mark as Complete
+								</Button>
+							)}
+						</Box>
+					</Box>
+
+					<ConceptCompletionDialog
+						open={showCompletionDialog}
+						conceptName={presentation.name}
+						nextUp={nextUp}
+						onNavigateToNext={(id) => {
+							const type = moduleTree[id]?.type;
+							navigate(type === 'skill' ? `/skill/${id}` : `/concept/${id}`);
+						}}
+						onClose={() => setShowCompletionDialog(false)}
+						onViewSummary={() => {
+							setShowCompletionDialog(false);
+							selectTab('summary');
+						}}
+						onReturnToOverview={() => navigate(backToLearningPath)}
+					/>
+				</Container>
+			</ModuleProvider>
+		</Suspense>
 	);
 }
 

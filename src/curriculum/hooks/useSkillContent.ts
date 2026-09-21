@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { type Module, moduleTree } from '../moduleDefinition'
 import { skillExerciseLoaders } from '../utils/loaders';
 
-import type { ExerciseRegistration, ModuleProviderComponent } from '@sqlvalley/exercise-manager';
+import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
 
 type SkillExerciseLoader = (typeof skillExerciseLoaders)[keyof typeof skillExerciseLoaders];
 type SkillExerciseModule = Record<string, unknown>;
@@ -13,7 +13,6 @@ interface SkillContentState {
 	isLoading: boolean;
 	skillMeta: (Module & { database?: string }) | null;
 	exerciseDefinitions: ExerciseRegistration[] | null;
-	moduleProvider: ModuleProviderComponent | null;
 	error: string | null;
 }
 
@@ -25,7 +24,6 @@ const initialState: SkillContentState = {
 	isLoading: true,
 	skillMeta: null,
 	exerciseDefinitions: null,
-	moduleProvider: null,
 	error: null,
 };
 
@@ -38,7 +36,7 @@ export function useSkillContent(
 
 	useEffect(() => {
 		if (!skillId) {
-			setState({ isLoading: false, skillMeta: null, exerciseDefinitions: null, moduleProvider: null, error: null });
+			setState({ isLoading: false, skillMeta: null, exerciseDefinitions: null, error: null });
 			return;
 		}
 
@@ -49,7 +47,7 @@ export function useSkillContent(
 			setState((prev) => ({ ...prev, ...partial }));
 		};
 
-		updateState({ isLoading: true, exerciseDefinitions: null, moduleProvider: null, error: null });
+		updateState({ isLoading: true, exerciseDefinitions: null, error: null });
 
 		const entry =
 			Object.values(moduleTree).find((item) => item.type === 'skill' && item.id === skillId) ||
@@ -83,10 +81,7 @@ export function useSkillContent(
 				if (!build) {
 					throw new Error(`Exercise module for "${skillId}" has no default builder export.`);
 				}
-				const moduleProvider = typeof mod.ModuleProvider === 'function'
-					? (mod.ModuleProvider as ModuleProviderComponent)
-					: null;
-				updateState({ exerciseDefinitions: build(skillId), moduleProvider, error: null });
+				updateState({ exerciseDefinitions: build(skillId), error: null });
 			})
 			.catch((error) => {
 				console.error('Failed to load skill content:', error);

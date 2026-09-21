@@ -3,7 +3,6 @@ import {
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
-import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider';
 
 type Parameters = Record<string, never>;
 
@@ -64,5 +63,3 @@ WHERE perf_score < 60;
 export default function buildExercises(): ExerciseRegistration[] {
 	return EXERCISES.map((exercise) => createMonoSQLExercise(exercise));
 }
-
-export const ModuleProvider = SqlPracticeProvider;

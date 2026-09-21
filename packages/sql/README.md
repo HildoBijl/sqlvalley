@@ -29,7 +29,7 @@ Its general module-context value contains `moduleId`, `tableKeys`, `loading`, `e
 
 `SqlPracticeProvider` belongs inside the module provider and receives `datasetSize`, `setDatasetSize`, and `completionSchema` from the application. It owns live-query previews and small-dataset warnings. Previews use user databases exclusively. Grading uses the full grading database independently of the selected preview size and resets it after each grading attempt, including failures. User databases are unaffected by this reset. Query errors are reported by the exercise checker. Practice settings and query results are not part of the module context.
 
-The application currently mounts these providers around interactive practice only. Theory and data-explorer integration will move to the module environment in a later phase.
+Each application module index exports its configured `ModuleProvider`. `SkillPage` and `ConceptPage` load this independently of exercise definitions and wrap their page content in it, keyed by module ID. The practice provider remains inside the interactive practice tab. Existing theory and data-explorer database hooks can migrate to this shared module context separately.
 
 
 ## Database provider

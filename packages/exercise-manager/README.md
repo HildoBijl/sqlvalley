@@ -71,6 +71,8 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 - `exerciseManager/types.ts`: storage contract, session options, and component props.
 - `moduleContext/`: subject-specific execution context, provider, and access hook.
 
+`ModuleProviderComponent` accepts `moduleId` and `children`. Applications select the provider per module and mount it around page content independently of exercise loading.
+
 The manager renders the supplied component and provides its exercise context. Its internal `useExerciseSession` hook owns the lifecycle and actions, including fresh storage reads and guards against obsolete asynchronous results. The manager keys its content by skill ID to keep sessions isolated. The application owns its concrete storage adapter and persistence migrations.
 
 

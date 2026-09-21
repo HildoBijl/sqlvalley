@@ -1,16 +1,17 @@
-import { type ExerciseRegistration, type ModuleProviderComponent, ExerciseManager } from '@sqlvalley/exercise-manager'
+import { type ExerciseRegistration, ExerciseManager } from '@sqlvalley/exercise-manager'
 
 import { exerciseStorage, useAdminMode, useCurrentExerciseInstance } from '@/store'
+import { SqlPracticeProvider } from '@/curriculum/utils/SqlPracticeProvider'
 
 interface InteractivePracticeTabProps {
 	skillId: string
 	exercises: readonly ExerciseRegistration[]
-	moduleProvider?: ModuleProviderComponent | null
 }
 
-export function InteractivePracticeTab({ skillId, exercises, moduleProvider: ModuleProvider }: InteractivePracticeTabProps) {
+export function InteractivePracticeTab({ skillId, exercises }: InteractivePracticeTabProps) {
 	const isAdmin = useAdminMode()
 	const currentExerciseInstance = useCurrentExerciseInstance(skillId)
-	const manager = <ExerciseManager skillId={skillId} exercises={exercises} currentExerciseInstance={currentExerciseInstance} storage={exerciseStorage} showAdminControls={isAdmin} />
-	return ModuleProvider ? <ModuleProvider skillId={skillId}>{manager}</ModuleProvider> : manager
+	return <SqlPracticeProvider skillId={skillId}>
+		<ExerciseManager skillId={skillId} exercises={exercises} currentExerciseInstance={currentExerciseInstance} storage={exerciseStorage} showAdminControls={isAdmin} />
+	</SqlPracticeProvider>
 }

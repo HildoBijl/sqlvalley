@@ -16,7 +16,7 @@ import {
 	skillTreeVisualizationById,
 	type SkillTreeVisualizationId,
 } from '@/curriculum/skillTreeVisualizations';
-import { moduleComponents } from '@/curriculum/utils/loaders';
+import { moduleComponents, moduleProviders } from '@/curriculum/utils/loaders'
 
 import { ContentHeader } from '@/learning/components/ContentHeader';
 import { ContentTabs } from '@/learning/components/ContentTabs';
@@ -79,7 +79,6 @@ export default function SkillPage() {
 		isLoading,
 		skillMeta,
 		exerciseDefinitions,
-		moduleProvider: ModuleProvider,
 		error: contentError,
 	} = useSkillContent(skillId, {
 		loadExercises: !hasStaticPractice,
@@ -161,86 +160,90 @@ export default function SkillPage() {
 	const showStoryButton = visibleTabs.some((tab) => tab.key === 'story');
 	const presentation = getModulePresentation(skillMeta.id)
 	if (!presentation) throw new Error(`Missing presentation for module "${skillMeta.id}".`)
+	const ModuleProvider = moduleProviders[skillMeta.id]
+	if (!ModuleProvider) throw new Error(`Missing provider for module "${skillMeta.id}".`)
 
 	return (
-		<Container maxWidth="lg" sx={{ py: 3 }}>
-			<ContentHeader
-				title={presentation.name}
-				description={presentation.description}
-				onBack={() => navigate(backToLearningPath)}
-				icon={<EditNote color="primary" sx={{ fontSize: 32 }} />}
-				isCompleted={isSkillMastered}
-				progress={progressInfo}
-			/>
+		<Suspense fallback={<CircularProgress />}>
+			<ModuleProvider key={skillMeta.id} moduleId={skillMeta.id}>
+				<Container maxWidth="lg" sx={{ py: 3 }}>
+					<ContentHeader
+						title={presentation.name}
+						description={presentation.description}
+						onBack={() => navigate(backToLearningPath)}
+						icon={<EditNote color="primary" sx={{ fontSize: 32 }} />}
+						isCompleted={isSkillMastered}
+						progress={progressInfo}
+					/>
 
-			{contentError && (
-				<Alert severity="warning" sx={{ mb: 2 }}>
-					{contentError}
-				</Alert>
-			)}
-
-			{visibleTabs.length > 0 && (
-				<ContentTabs value={currentTab} tabs={visibleTabs} onChange={handleTabChange}>
-					{currentTab === 'practice' && hasStaticPractice && (
-						<StaticPracticeTab
-							moduleId={skillMeta.id}
-							onComplete={handleStaticComplete}
-							isCompleted={isSkillMastered}
-						/>
+					{contentError && (
+						<Alert severity="warning" sx={{ mb: 2 }}>
+							{contentError}
+						</Alert>
 					)}
 
-					{currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
-						<InteractivePracticeTab
-							key={skillMeta.id}
-							skillId={skillMeta.id}
-							exercises={exerciseDefinitions ?? []}
-							moduleProvider={ModuleProvider}
-						/>
+					{visibleTabs.length > 0 && (
+						<ContentTabs value={currentTab} tabs={visibleTabs} onChange={handleTabChange}>
+							{currentTab === 'practice' && hasStaticPractice && (
+								<StaticPracticeTab
+									moduleId={skillMeta.id}
+									onComplete={handleStaticComplete}
+									isCompleted={isSkillMastered}
+								/>
+							)}
+
+							{currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
+								<InteractivePracticeTab
+									skillId={skillMeta.id}
+									exercises={exerciseDefinitions ?? []}
+								/>
+							)}
+
+							{currentTab === 'theory' && <TheoryTab contentId={skillMeta.id} />}
+							{currentTab === 'video' && <VideoTab contentId={skillMeta.id} />}
+							{currentTab === 'summary' && summaryUnlocked && <SummaryTab contentId={skillMeta.id} />}
+							{currentTab === 'story' && <StoryTab contentId={skillMeta.id} />}
+							{currentTab === 'data' && hasTables && <DataExplorerTab tables={tables} />}
+						</ContentTabs>
 					)}
 
-					{currentTab === 'theory' && <TheoryTab contentId={skillMeta.id} />}
-					{currentTab === 'video' && <VideoTab contentId={skillMeta.id} />}
-					{currentTab === 'summary' && summaryUnlocked && <SummaryTab contentId={skillMeta.id} />}
-					{currentTab === 'story' && <StoryTab contentId={skillMeta.id} />}
-					{currentTab === 'data' && hasTables && <DataExplorerTab tables={tables} />}
-				</ContentTabs>
-			)}
+					{currentTab === 'practice' && hasStaticPractice && !isSkillMastered && (
+						<Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+							<span />
+							<Box sx={{ display: 'flex', gap: 2 }}>
+								<Button
+									variant="contained"
+									onClick={handleStaticComplete}
+									startIcon={<CheckCircle />}
+								>
+									I have mastered these exercises
+								</Button>
+							</Box>
+						</Box>
+					)}
 
-			{currentTab === 'practice' && hasStaticPractice && !isSkillMastered && (
-				<Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-					<span />
-					<Box sx={{ display: 'flex', gap: 2 }}>
-						<Button
-							variant="contained"
-							onClick={handleStaticComplete}
-							startIcon={<CheckCircle />}
-						>
-							I have mastered these exercises
-						</Button>
-					</Box>
-				</Box>
-			)}
-
-			<SkillCompletionDialog
-				open={showCompletionDialog}
-				onClose={() => setShowCompletionDialog(false)}
-				skillName={presentation.name}
-				onViewStory={
-					showStoryButton
-						? () => {
-							setShowCompletionDialog(false);
-							selectTab('story');
+					<SkillCompletionDialog
+						open={showCompletionDialog}
+						onClose={() => setShowCompletionDialog(false)}
+						skillName={presentation.name}
+						onViewStory={
+							showStoryButton
+								? () => {
+									setShowCompletionDialog(false);
+									selectTab('story');
+								}
+								: undefined
 						}
-						: undefined
-				}
-				onViewSummary={() => {
-					setShowCompletionDialog(false);
-					selectTab('summary');
-				}}
-				onContinueLearning={() => navigate(backToLearningPath)}
-				showStoryButton={showStoryButton}
-			/>
-		</Container>
+						onViewSummary={() => {
+							setShowCompletionDialog(false);
+							selectTab('summary');
+						}}
+						onContinueLearning={() => navigate(backToLearningPath)}
+						showStoryButton={showStoryButton}
+					/>
+				</Container>
+			</ModuleProvider>
+		</Suspense>
 	);
 }
 
