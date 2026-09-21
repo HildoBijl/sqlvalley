@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material'
 
 import type { MonoExerciseState } from '@step-wise/input-exercises'
-import type { MonoExerciseInputProps, MonoExerciseOutputProps } from '@sqlvalley/input-exercise-components'
+import { type MonoExerciseInputProps, type MonoExerciseOutputProps, useInputField } from '@sqlvalley/input-exercise-components'
 
 import { useSqlPracticeContext } from '../SqlPractice'
 import type { MonoSQLCheckResult } from './types'
@@ -11,17 +11,16 @@ import { ExerciseResults } from './components/ExerciseResults'
 import { ExerciseSolution } from './components/ExerciseSolution'
 
 export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
-	value,
 	disabled,
-	onChange,
 	onSubmit,
 }: MonoExerciseInputProps<Parameters, string>) {
 	const runtime = useSqlPracticeContext()
+	const { value, setValue } = useInputField('query', 'SQL')
 	return (
 		<>
 			<ExerciseEditor
-				query={value}
-				onQueryChange={onChange}
+				query={typeof value?.value === 'string' ? value.value : ''}
+				onQueryChange={setValue}
 				onExecute={onSubmit}
 				onLiveExecute={runtime.executeLiveQuery}
 				readOnly={disabled}

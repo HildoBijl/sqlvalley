@@ -11,7 +11,8 @@
   "dependencies": {
     "@sqlvalley/exercise-manager": "*",
     "@step-wise/exercise-definition": "^0.2.0",
-    "@step-wise/input-exercises": "^0.2.0"
+    "@step-wise/input-exercises": "^0.2.0",
+    "@step-wise/react-utils": "^0.1.0"
   },
   "peerDependencies": {
     "@mui/icons-material": "^6.4.7",

@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import type { InputExerciseRawInput, InputExerciseSolution } from '@step-wise/input-exercises'
+import type { InputExerciseRawInput } from '@step-wise/input-exercises'
 
 import type { MonoExerciseInputProps, MonoExerciseOutputProps, MonoExerciseProblemProps, MonoExerciseSolutionProps } from './types'
 
@@ -10,7 +10,6 @@ export interface MonoExerciseRenderSpec<
 	CheckResult = unknown,
 > {
 	initialInput: Input
-	solutionToRawInput?: (solution: InputExerciseSolution) => InputExerciseRawInput
 	toRawInput: (input: Input) => InputExerciseRawInput
 	fromRawInput: (input: InputExerciseRawInput) => Input
 	isInputEmpty?: (input: Input) => boolean

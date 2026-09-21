@@ -28,7 +28,7 @@ export function MonoExercise<
 	Input,
 	CheckResult,
 >({ spec }: MonoExerciseProps<Parameters, Input, CheckResult>) {
-	return <InputExerciseProvider toRawInput={spec.solutionToRawInput}>
+	return <InputExerciseProvider>
 		<MonoExerciseContent spec={spec} />
 	</InputExerciseProvider>
 }
@@ -42,7 +42,7 @@ function MonoExerciseContent<Parameters extends Record<string, unknown>, Input, 
 	const { history } = exerciseInstance
 	const state = getCurrentState(exerciseInstance)
 
-	const [feedbackCleared, setFeedbackCleared] = useState(false)
+	const [feedbackInput, setFeedbackInput] = useState(rawInput)
 	const [giveUpOpen, setGiveUpOpen] = useState(false)
 
 	const input = rawInput === undefined ? spec.initialInput : spec.fromRawInput(rawInput)
@@ -51,21 +51,20 @@ function MonoExerciseContent<Parameters extends Record<string, unknown>, Input, 
 	const report = latestEvent?.action.type === 'input'
 		? (latestEvent.report as MonoExerciseReport | undefined)
 		: undefined
-	const feedback = !feedbackCleared && report ? report : null
+	const feedback = feedbackInput === rawInput && report ? report : null
 	const lastResult = (report?.result ?? null) as CheckResult | null
 
 	const handleInputChange = useCallback(
 		(value: Input) => {
 			setInput(spec.toRawInput(value))
-			setFeedbackCleared(true)
 		},
 		[setInput, spec],
 	)
 
 	const handleSubmit = useCallback(() => {
-		setFeedbackCleared(false)
+		setFeedbackInput(rawInput)
 		void controls.submitAction({ type: 'input', input: spec.toRawInput(input) })
-	}, [controls, input, spec])
+	}, [controls, input, rawInput, spec])
 
 	const handleGiveUp = useCallback(() => {
 		setGiveUpOpen(false)
