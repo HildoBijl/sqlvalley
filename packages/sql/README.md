@@ -7,6 +7,8 @@ SQL module context, editors, results, and solo mono exercise integration.
 
 The specification version is optional; Step-Wise defaults it to `1`. Pass a MonoSQLExerciseSpec to buildMonoSQLExercise to build a logical solo definition using @step-wise/input-exercises. Pass the specification to createMonoSQLExercise to pair that definition with the MonoExercise renderer and return an ExerciseRegistration for the exercise manager.
 
+`createMonoSQLExercise` supplies SQL content for the generic `Problem`, `InputArea`, `InputVisualization`, and `Solution` slots. MonoExercise owns shared section styling and solution visibility. The SQL solution view reads the resolved solution from `useSolution()`, so display and insertion use the same value.
+
 SQL specifications accept optional `skill` and `setup` metadata, forwarded to the upstream reducer for skill updates. Module exercise builders supply their skill ID.
 
 `buildMonoSQLExercise` preserves the complete upstream input-exercise definition, including solution callbacks and `valueOperations`. These remain available on the definition paired with a renderer by `createMonoSQLExercise`.

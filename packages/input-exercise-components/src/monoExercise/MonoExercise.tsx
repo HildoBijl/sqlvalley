@@ -11,6 +11,7 @@ import type { MonoExerciseReport } from './types'
 import { isMonoExerciseHistory } from './validation'
 import { MonoExerciseControlsContext } from './controlsContext'
 import { ExerciseControls } from './ExerciseControls'
+import { MonoExerciseSection } from './MonoExerciseSection'
 import { GiveUpDialog } from './GiveUpDialog'
 import type { MonoExerciseRenderSpec } from './specifications'
 
@@ -80,13 +81,14 @@ function MonoExerciseContent<Parameters extends Record<string, unknown>, Input, 
 	const canSubmit = !complete && !submitting && !(spec.isInputEmpty?.(input) ?? false) &&
 		(spec.canSubmit?.(availabilityArgs) ?? true)
 	const canGiveUp = !complete && !submitting && (spec.canGiveUp?.(availabilityArgs) ?? true)
-	const { Prompt, Problem, Input: InputComponent, Solution, Payoff, Output } = spec
+	const { Problem, InputArea, Solution, InputVisualization } = spec
 
 	return (
 		<Box>
-			{Prompt ? <Prompt parameters={params} /> : null}
-			<Problem parameters={params} />
-			<InputComponent
+			<MonoExerciseSection title={spec.problemTitle ?? 'Problem'}>
+				<Problem parameters={params} />
+			</MonoExerciseSection>
+			<InputArea
 				parameters={params}
 				value={input}
 				disabled={complete || submitting}
@@ -107,11 +109,12 @@ function MonoExerciseContent<Parameters extends Record<string, unknown>, Input, 
 			>
 				<ExerciseControls />
 			</MonoExerciseControlsContext.Provider>
-			{Output ? (
-				<Output parameters={params} input={input} result={lastResult} state={storedState} />
+			{InputVisualization ? (
+				<InputVisualization parameters={params} input={input} result={lastResult} state={storedState} />
 			) : null}
-			{complete ? <Solution parameters={params} state={storedState} /> : null}
-			{solved && lastResult && Payoff ? <Payoff parameters={params} result={lastResult} /> : null}
+			{complete ? <MonoExerciseSection title="Solution" collapsible>
+				<Solution parameters={params} state={storedState} />
+			</MonoExerciseSection> : null}
 			<GiveUpDialog open={giveUpOpen} onConfirm={handleGiveUp} onCancel={() => setGiveUpOpen(false)} />
 		</Box>
 	)

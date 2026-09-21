@@ -1,7 +1,6 @@
 import { Alert } from '@mui/material'
 
-import type { MonoExerciseState } from '@step-wise/input-exercises'
-import { type MonoExerciseInputProps, type MonoExerciseOutputProps, useInputField } from '@sqlvalley/input-exercise-components'
+import { type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputField, useSolution } from '@sqlvalley/input-exercise-components'
 
 import { useSqlPracticeContext } from '../SqlPractice'
 import type { MonoSQLCheckResult } from './types'
@@ -10,10 +9,10 @@ import { ExerciseEditor } from './components/ExerciseEditor'
 import { ExerciseResults } from './components/ExerciseResults'
 import { ExerciseSolution } from './components/ExerciseSolution'
 
-export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
+export function SQLExerciseInputArea<Parameters extends Record<string, unknown>>({
 	disabled,
 	onSubmit,
-}: MonoExerciseInputProps<Parameters, string>) {
+}: MonoExerciseInputAreaProps<Parameters, string>) {
 	const runtime = useSqlPracticeContext()
 	const { value, setValue } = useInputField('query', 'SQL')
 	return (
@@ -35,9 +34,9 @@ export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
 	)
 }
 
-export function SQLExerciseOutput<Parameters extends Record<string, unknown>>({
+export function SQLExerciseInputVisualization<Parameters extends Record<string, unknown>>({
 	state,
-}: MonoExerciseOutputProps<Parameters, string, MonoSQLCheckResult>) {
+}: MonoExerciseInputVisualizationProps<Parameters, string, MonoSQLCheckResult>) {
 	const runtime = useSqlPracticeContext()
 	const complete = state.done === true
 	return (
@@ -54,14 +53,12 @@ export function SQLExerciseOutput<Parameters extends Record<string, unknown>>({
 }
 
 export function createSQLProblem<Parameters extends Record<string, unknown>>(
-	title: string,
 	getProblem: (parameters: Parameters) => string,
 ) {
 	return function SQLExerciseProblem({ parameters }: { parameters: Parameters }) {
 		const runtime = useSqlPracticeContext()
 		return (
 			<ExerciseDescription
-				title={title}
 				description={getProblem(parameters)}
 				tableNames={runtime.tableNames}
 			/>
@@ -69,15 +66,8 @@ export function createSQLProblem<Parameters extends Record<string, unknown>>(
 	}
 }
 
-export function createSQLSolution<Parameters extends Record<string, unknown>>(
-	getSolution: (parameters: Parameters) => string,
-) {
-	return function SQLExerciseSolution({
-		parameters,
-	}: {
-		parameters: Parameters
-		state: MonoExerciseState
-	}) {
-		return <ExerciseSolution solution={{ query: getSolution(parameters) }} />
-	}
+export function SQLExerciseSolution() {
+	const solution = useSolution()
+	if (!solution || typeof solution.query !== 'string') throw new Error('A SQL solution must contain a query string.')
+	return <ExerciseSolution solution={{ query: solution.query }} />
 }

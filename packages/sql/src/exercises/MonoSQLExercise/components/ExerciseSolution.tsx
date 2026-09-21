@@ -1,12 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
-import { Box, Button, Collapse, Divider, Typography } from '@mui/material'
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import { Box, Typography } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
 import { sql } from '@codemirror/lang-sql'
 import { EditorView } from '@codemirror/view'
 
-import { ExerciseSection } from '@sqlvalley/ui'
 
 interface PracticeSolution {
 	query: string
@@ -19,7 +17,6 @@ interface ExerciseSolutionProps {
 }
 
 export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProps) {
-	const [expanded, setExpanded] = useState(true)
 
 	const normalizedSolution = solution && solution.query ? solution : null
 
@@ -76,11 +73,6 @@ export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProp
 		[],
 	)
 
-	useEffect(() => {
-		if (normalizedSolution?.query) {
-			setExpanded(true)
-		}
-	}, [normalizedSolution?.query])
 
 	const explanation =
 		normalizedSolution?.explanation ??
@@ -90,41 +82,8 @@ export function ExerciseSolution({ solution, show = true }: ExerciseSolutionProp
 		return null
 	}
 
-	return (
-		<ExerciseSection
-			title="Solution"
-			showDivider={false}
-			contentSx={{ p: 0 }}
-			actions={
-				<Button
-					size="small"
-					color="primary"
-					variant="text"
-					onClick={() => setExpanded(prev => !prev)}
-					endIcon={expanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
-					sx={{ textTransform: 'none', fontWeight: 500, px: 1 }}
-				>
-					{expanded ? 'Hide' : 'Show'}
-				</Button>
-			}
-		>
-			<Collapse in={expanded} unmountOnExit>
-				<Divider sx={{ mb: 2 }} />
-				<Box sx={{ px: 2.5, pb: 2.5, display: 'flex', flexDirection: 'column', gap: 2 }}>
-					<Typography variant="body2" color="text.secondary">
-						{explanation}
-					</Typography>
-					<Box>
-						<CodeMirror
-							value={normalizedSolution.query}
-							editable={false}
-							height="auto"
-							extensions={extensions}
-							basicSetup={basicSetup}
-						/>
-					</Box>
-				</Box>
-			</Collapse>
-		</ExerciseSection>
-	)
+	return <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+		<Typography variant="body2" color="text.secondary">{explanation}</Typography>
+		<CodeMirror value={normalizedSolution.query} editable={false} height="auto" extensions={extensions} basicSetup={basicSetup} />
+	</Box>
 }

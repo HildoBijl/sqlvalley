@@ -12,7 +12,7 @@ export interface MonoExerciseProblemProps<Parameters extends Record<string, unkn
 	parameters: Parameters
 }
 
-export interface MonoExerciseInputProps<Parameters extends Record<string, unknown>, Input> {
+export interface MonoExerciseInputAreaProps<Parameters extends Record<string, unknown>, Input> {
 	parameters: Parameters
 	value: Input
 	disabled: boolean
@@ -25,7 +25,7 @@ export interface MonoExerciseSolutionProps<Parameters extends Record<string, unk
 	state: MonoExerciseState
 }
 
-export interface MonoExerciseOutputProps<
+export interface MonoExerciseInputVisualizationProps<
 	Parameters extends Record<string, unknown>,
 	Input,
 	CheckResult,

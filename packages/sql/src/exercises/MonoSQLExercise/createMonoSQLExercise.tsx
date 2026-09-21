@@ -7,11 +7,12 @@ import { ensureSqlModuleContext } from '../../sqlModuleProvider'
 import type { MonoSQLExerciseSpec } from './types'
 import { fromRawInput, resolveValue, toRawInput } from './input'
 import { buildMonoSQLExercise } from './buildMonoSQLExercise'
-import { createSQLProblem, createSQLSolution, SQLExerciseInput, SQLExerciseOutput } from './views'
+import { createSQLProblem, SQLExerciseSolution, SQLExerciseInputArea, SQLExerciseInputVisualization } from './views'
 
 export function createMonoSQLExercise<Parameters extends Record<string, unknown>>(spec: MonoSQLExerciseSpec<Parameters>): ExerciseRegistration {
 	const definition = buildMonoSQLExercise(spec)
 	const renderSpec = {
+		problemTitle: spec.title ?? 'Exercise',
 		initialInput: '',
 		toRawInput,
 		fromRawInput,
@@ -24,10 +25,10 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 			const { loading, error } = ensureSqlModuleContext(moduleContext)
 			return !loading && !error
 		},
-		Problem: createSQLProblem(spec.title ?? 'Exercise', (parameters: Parameters) => resolveValue(spec.problem, parameters)),
-		Input: SQLExerciseInput,
-		Solution: createSQLSolution((parameters: Parameters) => resolveValue(spec.solution, parameters)),
-		Output: SQLExerciseOutput,
+		Problem: createSQLProblem((parameters: Parameters) => resolveValue(spec.problem, parameters)),
+		InputArea: SQLExerciseInputArea,
+		Solution: SQLExerciseSolution,
+		InputVisualization: SQLExerciseInputVisualization,
 	}
 	return {
 		exerciseId: spec.exerciseId,
