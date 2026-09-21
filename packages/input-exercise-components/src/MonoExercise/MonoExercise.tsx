@@ -28,7 +28,7 @@ export function MonoExercise<
 	Input,
 	CheckResult,
 >({ spec }: MonoExerciseProps<Parameters, Input, CheckResult>) {
-	const { pending, controls } = useExerciseSessionContext()
+	const { submitting, controls } = useExerciseSessionContext()
 	const exerciseInstance = useCurrentExerciseInstance()
 	if (!isMonoExerciseHistory(exerciseInstance)) throw new Error('MonoExercise requires mono state and input actions.')
 	const moduleContext = useModuleContext()
@@ -78,9 +78,9 @@ export function MonoExercise<
 	const givenUp = storedState.givenUp === true
 	const complete = solved || givenUp
 	const availabilityArgs = { parameters: params, input, moduleContext }
-	const canSubmit = !complete && !pending && !(spec.isInputEmpty?.(input) ?? false) &&
+	const canSubmit = !complete && !submitting && !(spec.isInputEmpty?.(input) ?? false) &&
 		(spec.canSubmit?.(availabilityArgs) ?? true)
-	const canGiveUp = !complete && !pending && (spec.canGiveUp?.(availabilityArgs) ?? true)
+	const canGiveUp = !complete && !submitting && (spec.canGiveUp?.(availabilityArgs) ?? true)
 	const { Prompt, Problem, Input: InputComponent, Solution, Payoff, Output } = spec
 
 	return (
@@ -90,7 +90,7 @@ export function MonoExercise<
 			<InputComponent
 				parameters={params}
 				value={input}
-				disabled={complete || pending}
+				disabled={complete || submitting}
 				onChange={handleInputChange}
 				onSubmit={handleSubmit}
 			/>

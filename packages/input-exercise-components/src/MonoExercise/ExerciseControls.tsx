@@ -7,7 +7,7 @@ import { ExerciseAdminTools } from '../ExerciseAdminTools'
 import { useMonoExerciseControls } from './controlsContext'
 
 export function ExerciseControls() {
-	const { showAdminControls } = useExerciseSessionContext()
+	const { admin } = useExerciseSessionContext()
 	const { solved, givenUp, canSubmit, canGiveUp, onSubmit, onGiveUp, onNext } =
 		useMonoExerciseControls()
 
@@ -24,7 +24,7 @@ export function ExerciseControls() {
 			}}
 		>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-				{showAdminControls && <ExerciseAdminTools />}
+				{admin.showControls && <ExerciseAdminTools />}
 			</Box>
 			<Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
 				{!solved ? (

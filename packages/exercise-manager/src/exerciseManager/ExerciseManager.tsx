@@ -12,22 +12,25 @@ export function ExerciseManager(props: ExerciseManagerProps) {
 function ExerciseManagerContent({ showAdminControls = false, ...options }: ExerciseManagerProps) {
 	const { skillId, exercises } = options
 	const {
-		registration: active, instance, busy, error, retryGeneration,
+		registration: active, instance, loading, submitting, error, retryGeneration,
 		submitAction, setDraftInput, startNewExercise, selectExerciseById,
 	} = useExerciseSession(options)
 
 	if (exercises.length === 0) return <Alert severity="info">No exercises are available yet.</Alert>
-	if (!active || !instance) {
+	if (loading || !active || !instance) {
 		if (error) return <Alert severity="error" action={<Button onClick={retryGeneration}>Try again</Button>}>{error}</Alert>
 		return <Typography color="text.secondary">Generating your next exercise...</Typography>
 	}
 
 	const value: ExerciseSessionContextValue = {
 		currentExercise: { definition: active.definition, instance },
-		showAdminControls,
-		exerciseIds: exercises.map(exercise => exercise.exerciseId),
-		pending: busy,
-		controls: { submitAction, setDraftInput, startNewExercise, selectExerciseById },
+		admin: {
+			showControls: showAdminControls,
+			exerciseIds: exercises.map(exercise => exercise.exerciseId),
+			selectExerciseById,
+		},
+		submitting,
+		controls: { submitAction, setDraftInput, startNewExercise },
 		skillId,
 	}
 	const { Component } = active

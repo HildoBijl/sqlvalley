@@ -9,11 +9,11 @@ export function useShowSolution<Parameters extends Record<string, unknown>, Inpu
 	spec: Pick<MonoExerciseRenderSpec<Parameters, Input>, 'getSolutionInput' | 'toRawInput'>,
 	parameters: Parameters,
 ): (() => void) | undefined {
-	const { pending, controls: { setDraftInput } } = useExerciseSessionContext()
+	const { submitting, controls: { setDraftInput } } = useExerciseSessionContext()
 	const { getSolutionInput, toRawInput } = spec
 	const showSolution = useCallback(() => {
-		if (pending || !getSolutionInput) return
+		if (submitting || !getSolutionInput) return
 		setDraftInput(toRawInput(getSolutionInput(parameters)))
-	}, [pending, getSolutionInput, toRawInput, parameters, setDraftInput])
+	}, [submitting, getSolutionInput, toRawInput, parameters, setDraftInput])
 	return getSolutionInput ? showSolution : undefined
 }

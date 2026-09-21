@@ -9,6 +9,6 @@ MonoExercise accepts a MonoExerciseRenderSpec with native editor input, conversi
 
 The package exports rendering specifications, component props, and feedback/report types. It does not build definitions or generate instances.
 
-The exercise controls read `showAdminControls` from the exercise context. When enabled, this package renders the exercise selector and Show Solution button using exercise selection from the manager context and solution handling from the mono renderer. Tools are disabled while an operation is pending; Show Solution is also disabled when the render specification has no `getSolutionInput` callback. Showing a solution fills the draft without submitting an answer.
+The exercise controls read `admin.showControls` from the exercise context. When enabled, this package renders the exercise selector and Show Solution button using `admin.exerciseIds` and `admin.selectExerciseById` from the session context and solution handling from the mono renderer. Tools are disabled while `submitting` is true; Show Solution is also disabled when the render specification has no `getSolutionInput` callback. Showing a solution fills the draft without submitting an answer.
 
 MonoExercise validates the general instance history and state before using mono-specific helpers. The manager hooks do not assert renderer-specific types.

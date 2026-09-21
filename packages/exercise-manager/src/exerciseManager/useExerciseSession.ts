@@ -15,11 +15,11 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 	const byId = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])
 	const matched = instance ? byId.get(instance.exerciseId) : undefined
 	const active = (matched?.definition.metadata.version ?? 1) === instance?.version ? matched : undefined
-	const [pending, setPending] = useState(false)
+	const [submitting, setSubmitting] = useState(false)
 	const [generating, setGenerating] = useState(false)
 	const [error, setError] = useState<string>()
 	const [initializationAttempt, setInitializationAttempt] = useState(0)
-	const pendingRef = useRef(false)
+	const submittingRef = useRef(false)
 	const generation = useRef(0)
 	const mounted = useRef(false)
 	const moduleReady = moduleContext == null || (moduleContext as { ready?: boolean }).ready !== false
@@ -37,6 +37,7 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 		setGenerating(true)
 		setError(undefined)
 		try {
+			if (typeof registration.definition.processSoloAction !== 'function') throw new Error(`Exercise "${registration.exerciseId}" does not support solo actions.`)
 			const exerciseInstance = await generateExerciseInstance(registration.exerciseId, registration.definition, moduleContext)
 			if (!mounted.current || request !== generation.current || !isCurrent()) return
 			storage.startExercise(skillId, exerciseInstance)
@@ -61,24 +62,25 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 	}, [byId, exercises, initializationAttempt, instance?.parameters, moduleContext, moduleReady, selectionOptions, skillId, startExercise, storage])
 
 	const startNewExercise = useCallback(() => {
-		if (!moduleReady || pendingRef.current || generating) return
+		if (!moduleReady || submittingRef.current || generating) return
 		const selected = selectExercise(exercises, storage.getHistory(skillId), selectionOptions)
 		if (selected) void startExercise(selected)
 	}, [exercises, generating, moduleReady, selectionOptions, skillId, startExercise, storage])
 
 	const selectExerciseById = useCallback((exerciseId: string) => {
-		if (!moduleReady || pendingRef.current || generating) return
+		if (!moduleReady || submittingRef.current || generating) return
 		const registration = byId.get(exerciseId)
 		if (registration) void startExercise(registration)
 	}, [byId, generating, moduleReady, startExercise])
 
 	const submitAction = useCallback(async (action: ExerciseAction) => {
 		const current = storage.getInstance(skillId)
-		if (!active || !current || pendingRef.current || generating || !moduleReady) return
-		pendingRef.current = true
-		setPending(true)
+		if (!active || !current || submittingRef.current || generating || !moduleReady) return
+		submittingRef.current = true
+		setSubmitting(true)
 		setError(undefined)
 		try {
+			if (typeof active.definition.processSoloAction !== 'function') throw new Error(`Exercise "${active.exerciseId}" does not support solo actions.`)
 			const solvedSkillIds: string[] = []
 			const previousState = getCurrentState(current)
 			const { state, report } = await active.definition.processSoloAction({
@@ -97,8 +99,8 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 		} catch (cause) {
 			if (mounted.current) setError(cause instanceof Error ? cause.message : 'Unable to submit your answer.')
 		} finally {
-			pendingRef.current = false
-			if (mounted.current) setPending(false)
+			submittingRef.current = false
+			if (mounted.current) setSubmitting(false)
 		}
 	}, [active, generating, moduleContext, moduleReady, skillId, storage])
 
@@ -112,9 +114,9 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 	return {
 		registration: active,
 		instance,
-		pending,
+		submitting,
 		generating,
-		busy: pending || generating || !moduleReady,
+		loading: generating || !moduleReady,
 		error,
 		retryGeneration,
 		submitAction,
