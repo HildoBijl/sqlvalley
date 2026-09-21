@@ -9,7 +9,7 @@ Generic exercise types use the Step-Wise order: `Action, State, Parameters`. The
 
 `ExerciseRegistration['definition']` selects the upstream `Exercise` fields the manager needs and requires `processSoloAction`. Group processing is omitted from this contract. Metadata version is optional and defaults to `1` when generating or matching saved instances. Definitions contain no React components.
 
-`ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts and an optional `getSolutionInput` admin helper. Pass registrations to `ExerciseManager` through its `exercises` prop. The admin solution helper returns `InputExerciseRawInput`, matching the instance draft and `ExerciseControls.setDraftInput`. Passing `undefined` clears a draft.
+`ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts. Pass registrations to `ExerciseManager` through its `exercises` prop. `ExerciseControls.setDraftInput` accepts structured raw input; solution handling belongs to the input renderer. Passing `undefined` clears a draft.
 
 ```tsx
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
@@ -30,7 +30,7 @@ const exercise: ExerciseRegistration = {
 }
 ```
 
-`ExampleExercise` is an application-provided component that reads `useExerciseManager()`. `ExerciseManagerContext` contains `currentExercise: { definition, instance }`, `skillId`, transient `pending` status, and controls. It also exposes `showAdminControls` and the available `exerciseIds`. Controls include exercise selection and an optional solution callback; renderers decide how to display the admin tools. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
+`ExampleExercise` is an application-provided component that reads `useExerciseManager()`. `ExerciseManagerContext` contains `currentExercise: { definition, instance }`, `skillId`, transient `pending` status, and controls. It also exposes `showAdminControls` and the available `exerciseIds`. Controls include exercise selection and draft updates; renderers decide how to display the admin tools. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
 
 Import `useCurrentExercise()` to read the definition and instance together, or `useCurrentExerciseInstance()` to read only the instance. These hooks are exported from `@sqlvalley/exercise-manager` and require an enclosing manager. They read context; they do not subscribe to the application store.
 

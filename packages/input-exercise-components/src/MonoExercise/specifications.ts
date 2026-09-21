@@ -10,6 +10,7 @@ export interface MonoExerciseRenderSpec<
 	CheckResult = unknown,
 > {
 	initialInput: Input
+	getSolutionInput?: (parameters: Parameters) => Input
 	toRawInput: (input: Input) => InputExerciseRawInput
 	fromRawInput: (input: InputExerciseRawInput) => Input
 	isInputEmpty?: (input: Input) => boolean

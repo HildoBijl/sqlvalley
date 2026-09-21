@@ -13,7 +13,7 @@ function ExerciseManagerContent({ showAdminControls = false, ...options }: Exerc
 	const { skillId, exercises } = options
 	const {
 		registration: active, instance, busy, error, retryGeneration,
-		submitAction, setDraftInput, startNewExercise, selectExerciseById, showSolution,
+		submitAction, setDraftInput, startNewExercise, selectExerciseById,
 	} = useExerciseSession(options)
 
 	if (exercises.length === 0) return <Alert severity="info">No exercises are available yet.</Alert>
@@ -27,7 +27,7 @@ function ExerciseManagerContent({ showAdminControls = false, ...options }: Exerc
 		showAdminControls,
 		exerciseIds: exercises.map(exercise => exercise.exerciseId),
 		pending: busy,
-		controls: { submitAction, setDraftInput, startNewExercise, selectExerciseById, showSolution: active.getSolutionInput ? showSolution : undefined },
+		controls: { submitAction, setDraftInput, startNewExercise, selectExerciseById },
 		skillId,
 	}
 	const { Component } = active

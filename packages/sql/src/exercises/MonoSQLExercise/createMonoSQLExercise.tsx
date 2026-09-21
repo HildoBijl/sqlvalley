@@ -13,6 +13,7 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 	const definition = buildMonoSQLExercise(spec)
 	const renderSpec = {
 		initialInput: '',
+		getSolutionInput: (parameters: Parameters) => resolveValue(spec.solution, parameters).trim(),
 		toRawInput,
 		fromRawInput,
 		isInputEmpty: (input: string) => !input.trim(),
@@ -33,7 +34,6 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 			},
 		},
 		isSolved: state => state.solved === true,
-		getSolutionInput: parameters => toRawInput(resolveValue(spec.solution, parameters as Parameters).trim()),
 		Component: () => <MonoExercise spec={renderSpec} />,
 	}
 }

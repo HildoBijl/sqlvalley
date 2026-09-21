@@ -9,6 +9,7 @@ export interface MonoExerciseControlsValue {
 	onSubmit: () => void
 	onGiveUp: () => void
 	onNext: () => void
+	showSolution?: () => void
 }
 
 export const MonoExerciseControlsContext = createContext<MonoExerciseControlsValue | null>(null)

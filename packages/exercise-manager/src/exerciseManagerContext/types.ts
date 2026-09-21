@@ -17,7 +17,6 @@ export interface ExerciseControls<Action extends ExerciseAction> {
 	setDraftInput: (draftInput: InputExerciseRawInput | undefined) => void
 	startNewExercise: () => void
 	selectExerciseById: (exerciseId: ExerciseId) => void
-	showSolution?: () => void
 }
 
 // The full contents of the ExerciseManagerContext.

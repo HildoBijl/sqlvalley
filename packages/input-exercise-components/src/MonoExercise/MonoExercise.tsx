@@ -9,6 +9,7 @@ import { useCurrentExerciseInstance, useExerciseManager, useModuleContext } from
 import type { MonoExerciseReport } from './types'
 import { isMonoExerciseHistory } from './validation'
 import { MonoExerciseControlsContext } from './controlsContext'
+import { useShowSolution } from './useShowSolution'
 import { ExerciseControls } from './ExerciseControls'
 import { GiveUpDialog } from './GiveUpDialog'
 import type { MonoExerciseRenderSpec } from './specifications'
@@ -71,6 +72,7 @@ export function MonoExercise<
 	}, [controls])
 
 	const params = exerciseInstance.parameters as Parameters
+	const showSolution = useShowSolution(spec, params)
 	const storedState = state
 	const solved = storedState.solved === true
 	const givenUp = storedState.givenUp === true
@@ -99,6 +101,7 @@ export function MonoExercise<
 					givenUp,
 					canSubmit,
 					canGiveUp,
+					showSolution,
 					onSubmit: handleSubmit,
 					onGiveUp: () => setGiveUpOpen(true),
 					onNext: controls.startNewExercise,

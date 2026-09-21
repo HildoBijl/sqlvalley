@@ -71,10 +71,6 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 		if (registration) void startExercise(registration)
 	}, [byId, generating, moduleReady, startExercise])
 
-	const showSolution = useCallback(() => {
-		if (active?.getSolutionInput && instance) storage.setDraftInput(skillId, active.getSolutionInput(instance.parameters))
-	}, [active, instance, skillId, storage])
-
 	const submitAction = useCallback(async (action: ExerciseAction) => {
 		const current = storage.getInstance(skillId)
 		if (!active || !current || pendingRef.current || generating || !moduleReady) return
@@ -119,6 +115,5 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 		setDraftInput,
 		startNewExercise,
 		selectExerciseById,
-		showSolution,
 	}
 }

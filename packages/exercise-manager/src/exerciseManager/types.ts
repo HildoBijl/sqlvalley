@@ -21,10 +21,10 @@ export interface ExerciseStorage {
 }
 
 export interface ExerciseSessionOptions {
-	storage: ExerciseStorage
-	currentExerciseInstance: ExerciseInstance | undefined
 	skillId: string
 	exercises: readonly ExerciseRegistration[]
+	currentExerciseInstance: ExerciseInstance | undefined
+	storage: ExerciseStorage
 	selectionOptions?: ExerciseSelectionOptions
 }
 

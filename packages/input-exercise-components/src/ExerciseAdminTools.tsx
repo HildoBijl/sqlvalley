@@ -1,7 +1,8 @@
-import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { Lightbulb } from '@mui/icons-material'
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 import { useCurrentExerciseInstance, useExerciseManager } from '@sqlvalley/exercise-manager'
+
+import { ShowSolutionButton } from './MonoExercise/ShowSolutionButton'
 
 export function ExerciseAdminTools() {
 	const { exerciseIds, pending, controls } = useExerciseManager()
@@ -28,15 +29,7 @@ export function ExerciseAdminTools() {
 					))}
 				</Select>
 			</FormControl>
-			<Button
-				size="small"
-				variant="outlined"
-				startIcon={<Lightbulb />}
-				disabled={pending || !controls.showSolution}
-				onClick={controls.showSolution}
-			>
-				Show Solution
-			</Button>
+			<ShowSolutionButton />
 		</Box>
 	)
 }
