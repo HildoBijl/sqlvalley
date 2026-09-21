@@ -21,7 +21,7 @@ interface SqlModuleProviderProps {
 
 export function SqlModuleProvider({ moduleId, moduleTree, moduleAccess, children }: SqlModuleProviderProps) {
 	const { source } = useDatabaseContext()
-	const tableKeys = useMemo(() => getModuleTableKeys({ moduleId, moduleTree, moduleAccess, tableKeys: source.tableKeys }), [moduleId, moduleTree, moduleAccess, source.tableKeys])
+	const tableKeys = useMemo(() => getModuleTableKeys({ moduleId, moduleTree, moduleAccess }), [moduleId, moduleTree, moduleAccess])
 	const InternalSqlModuleProvider = source.datasetSizes === undefined ? SingleDatabaseProvider : MultipleDatabaseProvider
 	return <InternalSqlModuleProvider moduleId={moduleId} tableKeys={tableKeys}>{children}</InternalSqlModuleProvider>
 }

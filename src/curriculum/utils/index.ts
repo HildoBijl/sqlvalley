@@ -3,7 +3,7 @@
  */
 
 export * from './loaders';
-export * from './moduleAccess';
+export * from '../moduleTableAccess';
 export * from './queryFigures';
 export * from './raQueryFigures';
 export * from './dlQueryFigures';

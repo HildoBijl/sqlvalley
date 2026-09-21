@@ -14,9 +14,9 @@ The application learning-store v8 to v9 migration converts existing SQL submissi
 
 ## Module table access
 
-`getModuleTableKeys({ moduleId, moduleTree, moduleAccess, tableKeys })` returns the accessible table keys for a module and its prerequisites, without duplicates. `moduleAccess` maps each table key to its introduction module ID or a list of alternative introduction modules. `tableKeys` specifies which tables to resolve.
+Call `buildModuleAccess({ moduleTree, tableIntroductions, tableKeys })` once when defining application configuration. `tableIntroductions` maps each table key to its introduction module ID or a list of alternative introduction modules. The function validates these definitions and returns a `ModuleAccess` map from module IDs to introduced table keys.
 
-Unknown module IDs, invalid introduction IDs, and missing access definitions throw errors. Valid modules with no accessible tables return `[]`. The `ModuleAccess` type supports application-specific table keys and module IDs; curriculum data stays in the application.
+`getModuleTableKeys({ moduleId, moduleTree, moduleAccess })` trusts the prepared mapping and returns accessible table keys for a module and its prerequisites, without duplicates. Unknown module IDs throw errors; invalid introduction IDs and missing access definitions throw when building the mapping. Valid modules with no accessible tables return `[]`. `TableIntroductions` supports application-specific table keys and module IDs; curriculum data stays in the application.
 
 
 ## SQL module environment

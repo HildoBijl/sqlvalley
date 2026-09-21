@@ -5,7 +5,7 @@ import { SqlModuleProvider, SqlPracticeProvider as SqlPracticeEnvironment } from
 
 import { useSettingsStore } from '@/store'
 import { moduleTree } from '../moduleDefinition'
-import { getModuleTableKeys, moduleAccess } from './moduleAccess'
+import { getModuleTableKeys, moduleAccess } from '../moduleTableAccess'
 
 // Supply curriculum configuration and application preferences to SQL practice.
 export function SqlPracticeProvider({ skillId, children }: { skillId: string; children: ReactNode }) {
