@@ -1,4 +1,4 @@
-import { Curve, Drawing } from '@sqlvalley/ui';
+import { Curve, Drawing } from '@sqlvalley/drawing'
 import { isReadyToLearn } from '@sqlvalley/progress'
 import type { Vector } from '@step-wise/geometry';
 import type { ModuleTree } from '@step-wise/module-tree-definition'

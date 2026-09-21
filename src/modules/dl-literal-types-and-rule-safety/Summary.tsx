@@ -1,5 +1,5 @@
-import { Page, Section, Par, Term, Em, IDL } from '@sqlvalley/ui';
 
+import { Page, Section, Par, Term, Em, IDL } from '@/ui'
 import { FigureExampleDLQuery } from '@/curriculum/utils';
 
 export function Summary() {

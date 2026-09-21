@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 
-import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@sqlvalley/ui';
 
 import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
+import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@/ui'
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 

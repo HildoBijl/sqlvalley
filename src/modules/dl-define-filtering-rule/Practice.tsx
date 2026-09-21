@@ -1,4 +1,4 @@
-import { Page, Section, Info, Par, Term, Em, DL, IDL } from '@sqlvalley/ui';
+import { Page, Section, Info, Par, Term, Em, DL, IDL } from '@/ui'
 import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
 
 import { SQLValleySchema } from '@/curriculum/utils';

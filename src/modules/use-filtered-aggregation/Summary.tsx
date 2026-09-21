@@ -1,6 +1,6 @@
-import { Page, Section, Par, List, Warning, Info, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 
+import { Page, Section, Par, List, Warning, Info, Em } from '@/ui'
 import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
 
 export function Summary() {

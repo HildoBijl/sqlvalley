@@ -1,12 +1,11 @@
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 
-import { useRefWithValue } from '@sqlvalley/ui';
-import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@sqlvalley/ui';
-import { type DrawingData, Drawing, Element, useRefWithBounds } from '@sqlvalley/ui';
+import { type DrawingData, useRefWithValue, Drawing, Element, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql';
 
+import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@/ui'
 import { FigureExampleRAQuery, useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {

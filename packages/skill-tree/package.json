@@ -9,8 +9,8 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@sqlvalley/drawing": "*",
     "@sqlvalley/progress": "*",
-    "@sqlvalley/ui": "*",
     "@step-wise/geometry": "^0.1.0",
     "@step-wise/module-tree-definition": "^0.3.0",
     "@step-wise/react-utils": "^0.1.0",

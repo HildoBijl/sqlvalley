@@ -1,4 +1,5 @@
-import { Page, Section, Par, List, Warning, Em, Term, DL, IDL } from '@sqlvalley/ui';
+
+import { Page, Section, Par, List, Warning, Em, Term, DL, IDL } from '@/ui'
 
 export function Theory() {
 	return <Page>

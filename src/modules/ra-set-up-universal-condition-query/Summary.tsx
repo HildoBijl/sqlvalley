@@ -2,8 +2,8 @@ import { Fragment } from 'react';
 
 import { Box } from '@mui/material';
 
-import { Page, Section, Par, Info, List, Term, Em, M } from '@sqlvalley/ui';
 
+import { Page, Section, Par, Info, List, Term, Em, M } from '@/ui'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 import { ChecklistTable } from './Theory';
 

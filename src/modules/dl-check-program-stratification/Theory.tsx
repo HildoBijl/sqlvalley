@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Info, Em, IDL, Link } from '@sqlvalley/ui';
 
+import { Page, Section, Par, List, Info, Em, IDL, Link } from '@/ui'
 import { SampleNonStratifiedProgram, DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory';
 
 export function Theory() {

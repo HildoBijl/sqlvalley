@@ -1,13 +1,11 @@
 import { Box } from '@mui/material';
 
-import { useRefWithValue } from '@sqlvalley/ui';
-import { useThemeColor } from '@sqlvalley/ui';
-import { Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@sqlvalley/ui';
-import { type DrawingData, Drawing, Element, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
+import { type DrawingData, useRefWithValue, Drawing, Element, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable, ISQL } from '@sqlvalley/sql';
 
+import { useThemeColor, Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@/ui'
 import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
 import { adjustedManagerId, addedManagerId, adjustedDepartments, FigureTwoTablesAdjusted } from '../join-and-decomposition/Theory';
 import { useTheoryPageDatabase } from '@/curriculum/utils'

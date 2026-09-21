@@ -1,5 +1,6 @@
-import { Page, Par, List, Section, Info, Warning, Term, Em, M, BM, RA, IRA } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
+
+import { Page, Par, List, Section, Info, Warning, Term, Em, M, BM, RA, IRA } from '@/ui'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 export function Theory() {

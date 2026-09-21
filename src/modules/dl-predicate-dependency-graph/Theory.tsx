@@ -1,11 +1,10 @@
 import { type ReactNode } from 'react'
 
-import { useRefWithValue } from '@sqlvalley/ui';
-import { useThemeColor } from '@sqlvalley/ui';
-import { Page, Section, Par, List, Info, Warning, Term, Em, DL, IDL } from '@sqlvalley/ui';
-import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
 
+import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em, DL, IDL } from '@/ui'
 import { SQLValleySchema } from '@/curriculum/utils';
+
+import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
 
 function DPGDL({ children }: { children: ReactNode }) {
 	return <DL style={{ padding: '10px 20px' }}>{children}</DL>

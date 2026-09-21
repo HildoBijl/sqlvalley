@@ -1,14 +1,12 @@
 import { Box } from '@mui/material';
 
-import { useRefWithValue } from '@sqlvalley/ui';
-import { useThemeColor } from '@sqlvalley/ui';
-import { Page, Section, Par, List, Warning, Info, Term, Em } from '@sqlvalley/ui';
+import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/drawing'
 import { ISQL } from '@sqlvalley/sql';
-import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/ui';
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
 
+import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 import { FigureTwoTables } from '../database/Theory';
 import { useTheoryPageDatabase } from '@/curriculum/utils'

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import { Page, Section, Par, List, Info, Term, Em, M, RA, Link } from '@sqlvalley/ui';
+import { Page, Section, Par, List, Info, Term, Em, M, RA, Link } from '@/ui'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 export function Theory() {

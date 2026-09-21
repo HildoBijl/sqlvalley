@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Info, Term, Em } from '@sqlvalley/ui';
 
+import { Page, Section, Par, List, Info, Term, Em } from '@/ui'
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 
 export function Theory() {

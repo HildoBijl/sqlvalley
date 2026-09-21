@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Em } from '@sqlvalley/ui';
 
+import { Page, Section, Par, List, Em } from '@/ui'
 import { DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory';
 
 export function Summary() {

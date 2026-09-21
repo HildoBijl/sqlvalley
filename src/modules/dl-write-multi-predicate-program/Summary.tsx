@@ -1,4 +1,4 @@
-import { Page, Section, Par, Warning, List, Term, Em } from '@sqlvalley/ui';
+import { Page, Section, Par, Warning, List, Term, Em } from '@/ui'
 import { FigureExampleDLQuery } from '@/curriculum/utils';
 
 export function Summary() {

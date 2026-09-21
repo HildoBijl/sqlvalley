@@ -2,7 +2,8 @@ import { type ReactNode, useState } from 'react';
 import { Paper, Box, Button, Collapse, Divider, Typography } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-import { ExerciseSection } from '@sqlvalley/ui';
+import { ExerciseSection } from '@/ui'
+
 
 interface Exercise {
 	problem: ReactNode,

@@ -1,6 +1,6 @@
-import { Page, Section, Par, Info, Term, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 
+import { Page, Section, Par, Info, Term, Em } from '@/ui'
 import { FigureRenameColumns } from './Theory';
 
 export function Summary() {

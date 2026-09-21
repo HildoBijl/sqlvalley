@@ -1,6 +1,6 @@
-import { Page, Section, Par, List, Warning, Term, Em } from '@sqlvalley/ui';
 import { ISQL } from '@sqlvalley/sql';
 
+import { Page, Section, Par, List, Warning, Term, Em } from '@/ui'
 import { FigureFiltering } from './Theory';
 
 export function Summary() {

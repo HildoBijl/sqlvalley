@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Term } from '@sqlvalley/ui';
 
+import { Page, Section, Par, List, Term } from '@/ui'
 import { CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory';
 
 export function Summary() {

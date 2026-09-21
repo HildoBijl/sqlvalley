@@ -6,8 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { databaseSource } from '@sqlvalley/mock-data'
 import { SQLJSProvider } from '@sqlvalley/sqljs'
 import { DatabaseProvider } from '@sqlvalley/sql/databaseProvider'
-import { getTheme, ColorModeContext, ErrorBoundary } from '@sqlvalley/ui'
 
+import { getTheme, ColorModeContext, ErrorBoundary } from '@/ui'
 import { router } from '@/navigation'
 import { useSettingsStore, useStoresHydrated } from './store'
 

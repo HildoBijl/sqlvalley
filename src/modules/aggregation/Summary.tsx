@@ -1,12 +1,11 @@
 import { Box } from '@mui/material';
 
-import { useRefWithValue } from '@sqlvalley/ui';
-import { useThemeColor } from '@sqlvalley/ui';
-import { Page, Section, Par, List, Term } from '@sqlvalley/ui';
-import { type DrawingData, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/ui';
+import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
+
+import { useThemeColor, Page, Section, Par, List, Term } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Summary() {

@@ -1,4 +1,4 @@
-import { Page, Section, Par, Term, IRA, RelationName } from '@sqlvalley/ui';
+import { Page, Section, Par, Term, IRA, RelationName } from '@/ui'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 export function Summary() {

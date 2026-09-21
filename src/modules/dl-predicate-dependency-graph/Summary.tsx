@@ -1,5 +1,5 @@
-import { Page, Section, Par, Info, Term, Em, IDL, DL } from '@sqlvalley/ui';
 
+import { Page, Section, Par, Info, Term, Em, IDL, DL } from '@/ui'
 import { SampleDatalogScriptForDependencyGraph, CleanedFirstDependencyGraph, CleanedSecondDependencyGraph } from './Theory';
 
 export function Summary() {

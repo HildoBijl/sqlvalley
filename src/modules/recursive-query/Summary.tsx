@@ -1,6 +1,7 @@
-import { Page, Section, Par, Quote, List, Info, Term, Em, M } from '@sqlvalley/ui';
 
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
+
+import { Page, Section, Par, Quote, List, Info, Term, Em, M } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Summary() {

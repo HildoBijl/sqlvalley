@@ -1,5 +1,5 @@
-import { Page, Section, Par, Term } from '@sqlvalley/ui';
 
+import { Page, Section, Par, Term } from '@/ui'
 import { FigureQueryExample } from './Theory';
 
 export function Summary() {

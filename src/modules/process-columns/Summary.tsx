@@ -1,8 +1,7 @@
-import { useThemeColor } from '@sqlvalley/ui';
-import { Page, Section, Par, Info } from '@sqlvalley/ui';
-import { Drawing, Element } from '@sqlvalley/ui';
+import { Drawing, Element } from '@sqlvalley/drawing'
 import { ISQL } from '@sqlvalley/sql';
 
+import { useThemeColor, Page, Section, Par, Info } from '@/ui'
 import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
 
 export function Summary() {

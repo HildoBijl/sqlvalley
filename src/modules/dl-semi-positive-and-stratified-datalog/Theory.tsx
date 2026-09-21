@@ -1,10 +1,10 @@
 import { type ReactNode } from 'react';
 import { useTheme } from '@mui/material/';
 
-import { useRefWithValue } from '@sqlvalley/ui';
-import { useThemeColor } from '@sqlvalley/ui';
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, DL, IDL } from '@sqlvalley/ui';
-import { type DrawingData, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@sqlvalley/ui';
+import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@sqlvalley/drawing'
+
+import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em, M, DL, IDL } from '@/ui'
+
 
 function DPGDL({ children }: { children: ReactNode }) {
 	return <DL style={{ padding: '10px 20px' }}>{children}</DL>

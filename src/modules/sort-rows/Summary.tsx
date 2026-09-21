@@ -1,14 +1,13 @@
 import { Box } from '@mui/material';
 
+import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { Vector } from '@step-wise/geometry';
-import { useRefWithValue } from '@sqlvalley/ui';
-import { useThemeColor } from '@sqlvalley/ui';
-import { type DrawingData, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/ui';
-import { Page, Section, Par } from '@sqlvalley/ui';
 import { SQLDisplay } from '@sqlvalley/sql';
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
+
+import { useThemeColor, Page, Section, Par } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Summary() {

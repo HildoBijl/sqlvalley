@@ -1,5 +1,5 @@
-import { Page, Section, Par, List, Term, Em } from '@sqlvalley/ui';
 
+import { Page, Section, Par, List, Term, Em } from '@/ui'
 import { DatalogTypeVennDiagram } from './Theory';
 
 export function Summary() {

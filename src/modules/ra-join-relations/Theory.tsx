@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, RA, IRA, RelationName, Link } from '@sqlvalley/ui';
+import { Page, Section, Par, List, Info, Warning, Term, Em, M, RA, IRA, RelationName, Link } from '@/ui'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 import { FigureTwoTables } from '../database/Theory';

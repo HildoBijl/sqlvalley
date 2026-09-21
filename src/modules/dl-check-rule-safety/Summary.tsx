@@ -1,4 +1,5 @@
-import { Page, Section, Par, Info, List, Em } from '@sqlvalley/ui';
+
+import { Page, Section, Par, Info, List, Em } from '@/ui'
 
 export function Summary() {
 	return <Page>
