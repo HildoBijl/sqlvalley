@@ -1,4 +1,4 @@
-import type { InputExerciseAction, MonoExerciseState } from '@step-wise/input-exercises'
+import type { InputExerciseAction, InputExerciseSolution, MonoExerciseState } from '@step-wise/input-exercises'
 
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 import { MonoExercise } from '@sqlvalley/input-exercise-components'
@@ -13,7 +13,10 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 	const definition = buildMonoSQLExercise(spec)
 	const renderSpec = {
 		initialInput: '',
-		getSolutionInput: (parameters: Parameters) => resolveValue(spec.solution, parameters).trim(),
+		solutionToRawInput: (solution: InputExerciseSolution) => {
+			if (typeof solution.query !== 'string') throw new Error('A SQL solution must contain a query string.')
+			return toRawInput(solution.query.trim())
+		},
 		toRawInput,
 		fromRawInput,
 		isInputEmpty: (input: string) => !input.trim(),

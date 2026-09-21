@@ -2,7 +2,7 @@ import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 import { useCurrentExerciseInstance, useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
-import { ShowSolutionButton } from './MonoExercise/ShowSolutionButton'
+import { ShowSolutionButton } from './monoExercise/ShowSolutionButton'
 
 export function ExerciseAdminTools() {
 	const { admin, submitting } = useExerciseSessionContext()

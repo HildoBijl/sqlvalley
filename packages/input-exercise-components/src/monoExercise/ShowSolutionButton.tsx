@@ -3,12 +3,12 @@ import { Lightbulb } from '@mui/icons-material'
 
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
-import { useMonoExerciseControls } from './controlsContext'
+import { useInputExerciseContext } from '../inputExercise'
 
 export function ShowSolutionButton() {
 	const { submitting } = useExerciseSessionContext()
-	const { showSolution } = useMonoExerciseControls()
-	return <Button size="small" variant="outlined" startIcon={<Lightbulb />} disabled={submitting || !showSolution} onClick={showSolution}>
+	const { insertSolution } = useInputExerciseContext()
+	return <Button size="small" variant="outlined" startIcon={<Lightbulb />} disabled={submitting || !insertSolution} onClick={insertSolution}>
 		Show Solution
 	</Button>
 }

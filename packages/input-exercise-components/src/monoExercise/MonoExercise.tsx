@@ -1,15 +1,15 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Alert, Box } from '@mui/material'
 
-import { getLastRawInput } from '@step-wise/input-exercises'
 import { getCurrentState } from '@step-wise/exercise-definition'
 
 import { useCurrentExerciseInstance, useExerciseSessionContext, useModuleContext } from '@sqlvalley/exercise-manager'
 
+import { InputExerciseProvider, useInputExerciseContext } from '../inputExercise'
+
 import type { MonoExerciseReport } from './types'
 import { isMonoExerciseHistory } from './validation'
 import { MonoExerciseControlsContext } from './controlsContext'
-import { useShowSolution } from './useShowSolution'
 import { ExerciseControls } from './ExerciseControls'
 import { GiveUpDialog } from './GiveUpDialog'
 import type { MonoExerciseRenderSpec } from './specifications'
@@ -28,23 +28,24 @@ export function MonoExercise<
 	Input,
 	CheckResult,
 >({ spec }: MonoExerciseProps<Parameters, Input, CheckResult>) {
+	return <InputExerciseProvider toRawInput={spec.solutionToRawInput}>
+		<MonoExerciseContent spec={spec} />
+	</InputExerciseProvider>
+}
+
+function MonoExerciseContent<Parameters extends Record<string, unknown>, Input, CheckResult>({ spec }: MonoExerciseProps<Parameters, Input, CheckResult>) {
+	const { input: rawInput, setInput } = useInputExerciseContext()
 	const { submitting, controls } = useExerciseSessionContext()
 	const exerciseInstance = useCurrentExerciseInstance()
 	if (!isMonoExerciseHistory(exerciseInstance)) throw new Error('MonoExercise requires mono state and input actions.')
 	const moduleContext = useModuleContext()
-	const { history, draftInput } = exerciseInstance
+	const { history } = exerciseInstance
 	const state = getCurrentState(exerciseInstance)
 
 	const [feedbackCleared, setFeedbackCleared] = useState(false)
 	const [giveUpOpen, setGiveUpOpen] = useState(false)
 
-	const lastSubmittedInput = useMemo(() => {
-		const rawInput = getLastRawInput(exerciseInstance)
-		return rawInput ? spec.fromRawInput(rawInput) : undefined
-	}, [exerciseInstance, spec])
-	const input = draftInput !== undefined
-		? spec.fromRawInput(draftInput)
-		: lastSubmittedInput ?? spec.initialInput
+	const input = rawInput === undefined ? spec.initialInput : spec.fromRawInput(rawInput)
 
 	const latestEvent = history[history.length - 1]
 	const report = latestEvent?.action.type === 'input'
@@ -55,10 +56,10 @@ export function MonoExercise<
 
 	const handleInputChange = useCallback(
 		(value: Input) => {
-			controls.setDraftInput(spec.toRawInput(value))
+			setInput(spec.toRawInput(value))
 			setFeedbackCleared(true)
 		},
-		[controls, spec],
+		[setInput, spec],
 	)
 
 	const handleSubmit = useCallback(() => {
@@ -72,7 +73,6 @@ export function MonoExercise<
 	}, [controls])
 
 	const params = exerciseInstance.parameters as Parameters
-	const showSolution = useShowSolution(spec, params)
 	const storedState = state
 	const solved = storedState.solved === true
 	const givenUp = storedState.givenUp === true
@@ -101,7 +101,6 @@ export function MonoExercise<
 					givenUp,
 					canSubmit,
 					canGiveUp,
-					showSolution,
 					onSubmit: handleSubmit,
 					onGiveUp: () => setGiveUpOpen(true),
 					onNext: controls.startNewExercise,
