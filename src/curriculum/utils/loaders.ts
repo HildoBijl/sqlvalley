@@ -2,11 +2,11 @@ import { type ComponentType, type LazyExoticComponent, lazy } from 'react'
 
 import type { ModuleProviderComponent } from '@sqlvalley/exercise-manager'
 
-const moduleProviderLoaders = import.meta.glob<ModuleProviderComponent>('../modules/*/index.ts', { import: 'ModuleProvider' })
+const moduleProviderLoaders = import.meta.glob<ModuleProviderComponent>('../../modules/*/index.ts', { import: 'ModuleProvider' })
 
 // Load module providers independently of the exercise definitions.
 export const moduleProviders = Object.fromEntries(Object.entries(moduleProviderLoaders).map(([path, load]) => {
-	const moduleId = path.split('/')[2]
+	const moduleId = path.split('/').slice(-2)[0]
 	return [moduleId, lazy(async () => ({ default: await load() }))]
 }))
 
@@ -18,7 +18,7 @@ type ComponentModule = {
 	default?: ComponentType<any>;
 } & Record<string, ComponentType<any> | undefined>;
 
-const moduleComponentModules = import.meta.glob('../modules/*/*.tsx') as Record<
+const moduleComponentModules = import.meta.glob('../../modules/*/*.tsx') as Record<
 	string,
 	() => Promise<Record<string, unknown>>
 >;
@@ -41,7 +41,7 @@ function createLazyComponent(
 export const moduleComponents: Record<string, ModuleComponentMap> = Object.entries(
 	moduleComponentModules,
 ).reduce<Record<string, ModuleComponentMap>>((acc, [path, loader]) => {
-	const match = path.match(/\.\.\/modules\/([^/]+)\/([^/]+)\.tsx$/);
+	const match = path.match(/\.\.\/\.\.\/modules\/([^/]+)\/([^/]+)\.tsx$/);
 	if (!match) {
 		return acc;
 	}
@@ -57,13 +57,13 @@ export const moduleComponents: Record<string, ModuleComponentMap> = Object.entri
 	return acc;
 }, {});
 
-const skillExerciseModules = import.meta.glob('../modules/*/exercise.tsx');
+const skillExerciseModules = import.meta.glob('../../modules/*/exercise.tsx');
 
 type SkillExerciseLoader = () => Promise<unknown>;
 
 export const skillExerciseLoaders = Object.fromEntries(
 	Object.entries(skillExerciseModules).reduce<[string, SkillExerciseLoader][]>((entries, [path, loader]) => {
-		const match = path.match(/\.\.\/modules\/([^/]+)\/exercise\.tsx$/);
+		const match = path.match(/\.\.\/\.\.\/modules\/([^/]+)\/exercise\.tsx$/);
 		if (match) {
 			entries.push([match[1], loader as SkillExerciseLoader]);
 		}

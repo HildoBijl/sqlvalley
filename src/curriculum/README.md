@@ -1,5 +1,5 @@
-# Curriculum - Educational contents
+# Curriculum - Configuration and tools
 
-This folder contains all educational contents for the SQL Valley web app. All the module Theory pages, Summaries and Exercise components are defined here.
+This folder contains the module tree, curriculum configuration, and tools that apply them. Dynamically loaded module content lives in `src/modules`.
 
 This part of the ReadMe is still under development. Check back later.

@@ -36,8 +36,9 @@ Next, we have a wide range of reusable utility functions and components, suitabl
 
 Given the above general-purpose utilities, we now zoom in on the educational matters.
 
-- **[learning/](./learning/)** contains the *engine* and UI for delivering educational content (tabs, exercises, grading, feedback). It does _not_ include actual content.
-- **[curriculum/](./curriculum/)** contains the *content itself*: modules with theory pages, summaries and exercises built using the learning tools.
+- **[learning/](./learning/)** is for educational tools and UI that are independent of the module tree and specific content.
+- **[curriculum/](./curriculum/)** contains the module tree, curriculum configuration, and tools that apply them, such as the configured SQL module provider and dynamic module loaders.
+- **[modules/](./modules/)** contains dynamically loaded content per module: theory, summaries, stories, practice, exercises, and provider exports.
 
 
 ## Page composition and rendering
