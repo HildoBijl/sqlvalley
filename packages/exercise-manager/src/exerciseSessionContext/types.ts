@@ -18,7 +18,7 @@ export interface ExerciseSessionContextValue {
 export interface ExerciseRegistration {
 	exerciseId: ExerciseId
 	definition: AnyExercise
-	Component: ComponentType
+	Component: ComponentType<ExerciseSessionContextValue>
 }
 
 // The current exercise has a specific definition and an instantiation.

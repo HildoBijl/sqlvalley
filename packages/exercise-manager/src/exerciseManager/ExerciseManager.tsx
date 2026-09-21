@@ -35,6 +35,6 @@ export function ExerciseManager({ showAdminControls = false, ...options }: Exerc
 	// Render the exercise Component, wrapped in the context provider.
 	const { Component } = registration
 	return <ExerciseSessionContext.Provider key={instance.startedAt} value={value}>
-		<Component />
+		<Component {...value} />
 	</ExerciseSessionContext.Provider>
 }
