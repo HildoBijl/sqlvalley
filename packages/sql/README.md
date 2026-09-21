@@ -19,9 +19,24 @@ The application learning-store v8 to v9 migration converts existing SQL submissi
 Unknown module IDs, invalid introduction IDs, and missing access definitions throw errors. Valid modules with no accessible tables return `[]`. The `ModuleAccess` type supports application-specific table keys and module IDs; curriculum data stays in the application.
 
 
+## SQL module environment
+
+The provider, context types, and hooks live in `src/sqlModuleProvider/` and are exported from `@sqlvalley/sql`.
+
+`SqlModuleProvider` receives `moduleId`, `moduleTree`, and `moduleAccess` below a `DatabaseProvider`. It resolves accessible tables and acquires separate user and grading databases for each source dataset size, or one of each when the source has no selectable sizes. Cache keys identify the module and purpose, so returning to a module reuses its databases and preserves user changes. Databases remain in memory until the app-level `DatabaseProvider` unmounts or its source changes; they do not survive a page reload. The module page keys the provider subtree by module ID to reset local UI state on navigation.
+
+Its general module-context value contains `moduleId`, `tableKeys`, `loading`, `error`, `ready`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useSqlModuleContext()` to display loading and error states. Exercise generation waits for readiness. React components use `useModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. Both return a `DatabaseHandle`. Omit the size only for sources without selectable sizes. Frontend components should never retrieve grading databases.
+
+`SqlPracticeProvider` belongs inside the module provider and receives `datasetSize`, `setDatasetSize`, and `completionSchema` from the application. It owns live-query previews and small-dataset warnings. Previews use user databases exclusively. Grading uses the full grading database independently of the selected preview size and resets it after each grading attempt, including failures. User databases are unaffected by this reset. Query errors are reported by the exercise checker. Practice settings and query results are not part of the module context.
+
+The application currently mounts these providers around interactive practice only. Theory and data-explorer integration will move to the module environment in a later phase.
+
+
 ## Database provider
 
-Import the provider and hooks from `@sqlvalley/sql/databaseProvider`. Place `DatabaseProvider` inside a `SQLJSProvider` and supply a stable `source` with `tableKeys`, optional `sizes`, and `buildSql({ tables, size })`. The source validates table identifiers; the provider validates sizes and does not depend on mock-data.
+`DatabaseContext` and `useDatabaseContext()` are exported through the database-provider barrel. The hook requires an enclosing `DatabaseProvider` and exposes its source, cache, and initialization error.
+
+Import the provider and hooks from `@sqlvalley/sql/databaseProvider`. Place `DatabaseProvider` inside a `SQLJSProvider` and supply a stable `source` with `tableKeys`, optional `datasetSizes`, and `buildSql({ tables, size })`. The source validates table identifiers; the provider validates sizes and does not depend on mock-data.
 
 ```tsx
 const handle = useDatabase({ tables: ['employees'], size: 'small' })
@@ -30,7 +45,9 @@ const { results, loading, error } = useQuery(handle, 'SELECT * FROM employees')
 
 `useDatabase({ key?, tables?, size? })` returns a `DatabaseHandle` containing `database`, `loading`, `error`, and `reset()`. Missing tables loads all keys listed in `source.tableKeys`; `tables: []` creates an empty database. Loading ends on success or failure, and unavailable values are `undefined`.
 
-If the source provides `sizes`, the list must be nonempty and every request must specify one of those sizes, even for a single-entry list. Without `sizes`, requests must omit `size`, and `buildSql` receives `size: undefined`. There is no default size. These rules are enforced at runtime and validation failures appear in the handle's `error` before SQL is built. The mock-data source provides its existing `datasetSizes` list.
+`useDatabases({ key?, tables?, sizes? })` returns a read-only map of size names to `DatabaseHandle`. Omit `sizes` to select all source dataset sizes, or supply a nonempty subset such as `sizes: ['small']`. Unknown sizes produce errors on their handles. The hook throws if the source has no selectable sizes or declares an empty size list; use `useDatabase()` for a source without selectable sizes. Without a key, these databases close on unmount or configuration changes. With a key, callers share retained databases by group key and size, including overlapping subsets. Group keys have a separate namespace from `useDatabase` keys, so the same string can safely identify both. Conflicting table selections return errors on the affected handles. `SqlModuleProvider` uses separate persistent keys for user and grading databases per module and shares its handles through module context.
+
+If the source provides `datasetSizes`, the list must be nonempty and every request must specify one of those sizes, even for a single-entry list. Without `datasetSizes`, requests must omit `size`, and `buildSql` receives `size: undefined`. There is no default size. These rules are enforced at runtime and validation failures appear in the handle's `error` before SQL is built. The mock-data source provides its existing `datasetSizes` list.
 
 Without a key, each hook owns a database that closes on unmount or configuration change. With a key, matching callers share a database retained until the provider unmounts. Reusing a key with different tables or size returns an error. Persistence is in memory, across navigation, not across page reloads. Replacing the source also closes its databases.
 

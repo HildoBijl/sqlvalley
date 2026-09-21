@@ -191,6 +191,7 @@ export default function SkillPage() {
 
 					{currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
 						<InteractivePracticeTab
+							key={skillMeta.id}
 							skillId={skillMeta.id}
 							exercises={exerciseDefinitions ?? []}
 							moduleProvider={ModuleProvider}

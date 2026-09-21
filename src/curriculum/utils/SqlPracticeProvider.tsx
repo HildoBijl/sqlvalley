@@ -1,23 +1,21 @@
-import { type ReactNode, useMemo } from 'react';
+import { type ReactNode, useMemo } from 'react'
 
-import { SqlModuleProvider } from '@sqlvalley/sql';
-import { useSettingsStore } from '@/store';
-import { getModuleTableKeys } from './moduleAccess'
+import { buildCompletionSchema } from '@sqlvalley/mock-data'
+import { SqlModuleProvider, SqlPracticeProvider as SqlPracticeEnvironment } from '@sqlvalley/sql'
 
-/** The module provider SQL skills prescribe: the SQL environment for their tables. */
+import { useSettingsStore } from '@/store'
+import { moduleTree } from '../moduleDefinition'
+import { getModuleTableKeys, moduleAccess } from './moduleAccess'
+
+// Supply curriculum configuration and application preferences to SQL practice.
 export function SqlPracticeProvider({ skillId, children }: { skillId: string; children: ReactNode }) {
-	const datasetSize = useSettingsStore((state) => state.practiceDatasetSize);
-	const setDatasetSize = useSettingsStore((state) => state.setPracticeDatasetSize);
-	const tables = useMemo(() => getModuleTableKeys(skillId), [skillId])
+	const datasetSize = useSettingsStore(state => state.practiceDatasetSize)
+	const setDatasetSize = useSettingsStore(state => state.setPracticeDatasetSize)
+	const completionSchema = useMemo(() => buildCompletionSchema(getModuleTableKeys(skillId)), [skillId])
 
-	return (
-		<SqlModuleProvider
-			key={skillId}
-			tables={tables}
-			datasetSize={datasetSize}
-			setDatasetSize={setDatasetSize}
-		>
+	return <SqlModuleProvider moduleId={skillId} moduleTree={moduleTree} moduleAccess={moduleAccess}>
+		<SqlPracticeEnvironment datasetSize={datasetSize} setDatasetSize={setDatasetSize} completionSchema={completionSchema}>
 			{children}
-		</SqlModuleProvider>
-	);
+		</SqlPracticeEnvironment>
+	</SqlModuleProvider>
 }

@@ -1,4 +1,5 @@
 export * from './types'
+export * from './context'
 export * from './DatabaseProvider'
 export * from './useDatabase'
 export * from './useQuery'

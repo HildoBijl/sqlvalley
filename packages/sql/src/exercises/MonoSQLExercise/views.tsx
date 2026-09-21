@@ -3,7 +3,7 @@ import { Alert } from '@mui/material'
 import type { MonoExerciseState } from '@step-wise/input-exercises'
 import type { MonoExerciseInputProps, MonoExerciseOutputProps } from '@sqlvalley/input-exercise-components'
 
-import { useSqlModuleContext } from '../SqlModule'
+import { useSqlPracticeContext } from '../SqlPractice'
 import type { MonoSQLCheckResult } from './types'
 import { ExerciseDescription } from './components/ExerciseDescription'
 import { ExerciseEditor } from './components/ExerciseEditor'
@@ -16,7 +16,7 @@ export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
 	onChange,
 	onSubmit,
 }: MonoExerciseInputProps<Parameters, string>) {
-	const runtime = useSqlModuleContext()
+	const runtime = useSqlPracticeContext()
 	return (
 		<>
 			<ExerciseEditor
@@ -39,7 +39,7 @@ export function SQLExerciseInput<Parameters extends Record<string, unknown>>({
 export function SQLExerciseOutput<Parameters extends Record<string, unknown>>({
 	state,
 }: MonoExerciseOutputProps<Parameters, string, MonoSQLCheckResult>) {
-	const runtime = useSqlModuleContext()
+	const runtime = useSqlPracticeContext()
 	const complete = state.done === true
 	return (
 		<ExerciseResults
@@ -59,7 +59,7 @@ export function createSQLProblem<Parameters extends Record<string, unknown>>(
 	getProblem: (parameters: Parameters) => string,
 ) {
 	return function SQLExerciseProblem({ parameters }: { parameters: Parameters }) {
-		const runtime = useSqlModuleContext()
+		const runtime = useSqlPracticeContext()
 		return (
 			<ExerciseDescription
 				title={title}

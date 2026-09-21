@@ -10,7 +10,7 @@ interface Entry {
 	listeners: Set<(snapshot: DatabaseSnapshot) => void>
 }
 
-// Unique ways of identifying a database cache entry.
+// Unique ways of identifying a database cache entry. For groups (obtaining multiple sizes at a same time) we use an object key. For all other cases, we use a string key.
 export type DatabaseCacheKey = string | { group: string; size: string | undefined }
 
 // A connection object returned upon creating a database with controlling handles.
@@ -30,9 +30,8 @@ export class DatabaseCache {
 
 	// Get a database object, either existing or new, given the provided options.
 	acquire(key: DatabaseCacheKey | undefined, signature: string, listener: (snapshot: DatabaseSnapshot) => void): DatabaseCacheConnection {
+		// Check that an appropriate dataset size is provided in the signature (unless none is needed).
 		const { size } = JSON.parse(signature) as { size?: string }
-
-		// Check that a dataset size is provided if one is needed.
 		const { datasetSizes } = this.source
 		if (datasetSizes !== undefined) {
 			if (datasetSizes.length === 0) throw new Error('Database source sizes must not be empty. Omit sizes for a source without size variants.')
@@ -43,15 +42,15 @@ export class DatabaseCache {
 		}
 
 		// If no cache entry is present, make one.
-		const entries = typeof key === 'object' ? this.getGroup(key.group) : this.keyedEntries
+		const entriesMap = typeof key === 'object' ? this.getGroup(key.group) : this.keyedEntries
 		const entryKey = typeof key === 'object' ? key.size : key
-		let entry = key === undefined ? undefined : entries.get(entryKey)
+		let entry = key === undefined ? undefined : entriesMap.get(entryKey)
 		if (entry && entry.signature !== signature) throw new Error(`Database key ${JSON.stringify(key)} is already in use with different tables or size.`)
 		if (!entry) {
 			entry = { signature, snapshot: { database: undefined, error: undefined }, listeners: new Set() }
 			entry.snapshot = this.createSnapshot(entry)
 			if (key === undefined) this.unkeyedEntries.add(entry)
-			else entries.set(entryKey, entry)
+			else entriesMap.set(entryKey, entry)
 		}
 		const acquired = entry
 
@@ -63,7 +62,7 @@ export class DatabaseCache {
 		return {
 			// Reset the database by removing and rebuilding one.
 			reset: (): void => {
-				const active = key === undefined ? this.unkeyedEntries.has(acquired) : entries.get(entryKey) === acquired
+				const active = key === undefined ? this.unkeyedEntries.has(acquired) : entriesMap.get(entryKey) === acquired
 				if (!active) return
 				acquired.snapshot.database?.close()
 				acquired.snapshot = this.createSnapshot(acquired)

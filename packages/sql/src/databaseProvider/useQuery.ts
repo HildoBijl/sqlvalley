@@ -23,7 +23,7 @@ export function useQuery({ database, loading, error }: DatabaseHandle, query: st
 		}
 	}, [database, query])
 
-	// If the stored result is valid, bundle and return it.
+	// Return whatever is stored, either the query result or the error.
 	const current = database && query && queryResultState?.database === database && queryResultState.query === query ? queryResultState : undefined
 	return {
 		loading: loading || Boolean(database && query && !current),
