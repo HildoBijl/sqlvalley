@@ -8,14 +8,7 @@ export interface ExerciseStorage {
 	getCurrentInstance(skillId: SkillId): ExerciseInstance | undefined
 	getExerciseHistory(skillId: SkillId): readonly ExerciseInstance[]
 	startExercise(skillId: SkillId, exerciseInstance: ExerciseInstance): void
-	submitAction(
-		skillId: SkillId,
-		action: ExerciseAction,
-		state: ExerciseState,
-		report: ExerciseReport | undefined,
-		exerciseDone: boolean,
-		solvedSkillIds: readonly string[],
-	): void
+	submitAction(skillId: SkillId, action: ExerciseAction, state: ExerciseState, report: ExerciseReport | undefined, solvedSkillIds: readonly string[]): void
 	setDraftInput(skillId: SkillId, draftInput: ExerciseInstance['draftInput']): void
 }
 

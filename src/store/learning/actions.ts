@@ -9,7 +9,7 @@ export interface LearningActions {
 	completeConcept: (conceptId: string) => void
 	completeSkill: (skillId: string) => void
 	startNewExercise: (skillId: string, exerciseInstance: ExerciseInstance) => void
-	submitExerciseAction: (skillId: string, action: ExerciseAction, resultingState: ExerciseState, report: ExerciseReport | undefined, exerciseDone: boolean, solvedSkillIds: readonly string[]) => void
+	submitExerciseAction: (skillId: string, action: ExerciseAction, resultingState: ExerciseState, report: ExerciseReport | undefined, solvedSkillIds: readonly string[]) => void
 	setExerciseDraftInput: (skillId: string, draftInput: ExerciseInstance['draftInput']) => void
 }
 
@@ -63,7 +63,7 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 			}
 		}),
 
-		submitExerciseAction: (skillId, action, resultingState, report, exerciseDone, solvedSkillIds) => set(state => {
+		submitExerciseAction: (skillId, action, resultingState, report, solvedSkillIds) => set(state => {
 			const skillModule = getSkillModuleForUpdate(skillId, state)
 			if (skillModule.exerciseHistory.length === 0) throw new Error(`Cannot submit exercise action for "${skillId}" without an active exercise.`)
 
@@ -80,7 +80,6 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 						report,
 					},
 				],
-				draftInput: exerciseDone ? undefined : currentExercise.draftInput,
 			}
 
 			const exerciseHistory = [...skillModule.exerciseHistory.slice(0, -1), updatedExercise]

@@ -31,7 +31,7 @@ Implement the exported `ExerciseStorage` interface to connect your store:
 - `getCurrentInstance(skillId)` returns the current instance or `undefined`.
 - `getExerciseHistory(skillId)` returns instances oldest first, including the current one.
 - `startExercise(skillId, instance)` stores a generated instance.
-- `submitAction(skillId, action, state, report, exerciseDone, solvedSkillIds)` saves an action's outcome and applies the collected skill updates.
+- `submitAction(skillId, action, state, report, solvedSkillIds)` saves an action's outcome and applies the collected skill updates.
 - `setDraftInput(skillId, input)` saves structured draft input; `undefined` clears it.
 
 The manager restores compatible instances and generates replacements when needed. It displays loading and error messages. Optional `selectionOptions={{ dontRepeatBefore: 3, minimumChoices: 2 }}` controls repeat avoidance; these are the defaults. Set `showAdminControls` to enable admin UI in renderers that support it.

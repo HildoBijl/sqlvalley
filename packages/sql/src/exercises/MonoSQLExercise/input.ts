@@ -7,7 +7,7 @@ export const sqlValueTypes = {
 				typeof value === 'object' && value !== null && 'type' in value && value.type === 'SQL' && 'value' in value && typeof value.value === 'string',
 			isDomainValue: (value: unknown): value is string => typeof value === 'string',
 			interpret: (input: { type: 'SQL'; value: string }) => input.value,
-			toInputValue: (value: string) => ({ type: 'SQL', value }),
+			toInputValue: (value: string) => ({ type: 'SQL', value: value.trim() }),
 		},
 	},
 }

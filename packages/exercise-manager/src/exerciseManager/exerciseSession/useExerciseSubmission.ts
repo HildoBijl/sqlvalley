@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { useIsMountedRef } from '@step-wise/react-utils'
 import { ensureSetup } from '@step-wise/skill-setup'
-import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
+import { type ExerciseAction, getCurrentState } from '@step-wise/exercise-definition'
 import type { ExerciseInstance } from '@sqlvalley/exercise-instances'
 
 import type { ExerciseRegistration } from '../../exerciseSessionContext'
@@ -58,7 +58,7 @@ export function useExerciseSubmission({ skillId, storage, currentExerciseInstanc
 			// Run a final check: is the exercise still mounted? If so, store the outcome of the action.
 			const latestInstance = storage.getCurrentInstance(skillId)
 			if (!mounted.current || latestInstance?.parameters !== instance.parameters || latestInstance.history.length !== instance.history.length) return
-			storage.submitAction(skillId, action, state, report, isStateDone(state), solvedSkillIds)
+			storage.submitAction(skillId, action, state, report, solvedSkillIds)
 
 		} catch (cause) {
 			// On an error, register it.
