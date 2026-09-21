@@ -1,13 +1,11 @@
 import type { ModuleId } from '@step-wise/module-tree-definition'
+import type { ModuleContextStatus } from '@sqlvalley/exercise-manager'
 
 import type { DatabaseHandle } from '../databaseProvider'
 
-export interface SqlModuleContext {
+export interface SqlModuleContext extends ModuleContextStatus {
 	moduleId: ModuleId
 	tableKeys: readonly string[]
-	loading: boolean
-	error: Error | undefined
-	ready: boolean
 	getUserDatabase: (size?: string) => DatabaseHandle
 	getGradingDatabase: (size?: string) => DatabaseHandle
 }

@@ -6,14 +6,14 @@ import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/ex
 import type { ExerciseInstance } from '@sqlvalley/exercise-instances'
 
 import type { ExerciseRegistration } from '../../exerciseSessionContext'
-import type { ExerciseSessionOptions, SessionOperations } from './types'
+import type { ExerciseSessionOptions, ExerciseSessionDependencies } from './types'
 
 interface SubmissionError {
 	message: string
 	instance: ExerciseInstance
 }
 
-interface SubmissionOptions extends Pick<ExerciseSessionOptions, 'skillId' | 'storage' | 'currentExerciseInstance'>, SessionOperations {
+interface SubmissionOptions extends Pick<ExerciseSessionOptions, 'skillId' | 'storage' | 'currentExerciseInstance'>, ExerciseSessionDependencies {
 	registration: ExerciseRegistration | undefined
 }
 
@@ -22,7 +22,7 @@ export function useExerciseSubmission({ skillId, storage, currentExerciseInstanc
 
 	// Handler: Set the draft input for the exercise in the data store.
 	const setDraftInput = useCallback((draftInput: ExerciseInstance['draftInput']) => {
-		if (storage.getInstance(skillId)) storage.setDraftInput(skillId, draftInput)
+		if (storage.getCurrentInstance(skillId)) storage.setDraftInput(skillId, draftInput)
 	}, [skillId, storage])
 
 	// Handler: Submit an action to the current exercise.
@@ -30,7 +30,7 @@ export function useExerciseSubmission({ skillId, storage, currentExerciseInstanc
 	const [error, setSubmissionError] = useState<SubmissionError>()
 	const submitAction = useCallback(async (action: ExerciseAction) => {
 		// Ensure that we only do stuff when everything is ready, there's no ongoing operation, and the exercise is the one we expect.
-		const instance = storage.getInstance(skillId)
+		const instance = storage.getCurrentInstance(skillId)
 		if (!moduleReady || !registration || !instance || activeOperation.current !== undefined) return
 		if (instance.exerciseId !== registration.exerciseId || instance.version !== (registration.definition.metadata.version ?? 1) || instance.startedAt !== currentExerciseInstance?.startedAt || instance.parameters !== currentExerciseInstance?.parameters) return
 		activeOperation.current = 'submission'
@@ -56,7 +56,7 @@ export function useExerciseSubmission({ skillId, storage, currentExerciseInstanc
 			})
 
 			// Run a final check: is the exercise still mounted? If so, store the outcome of the action.
-			const latestInstance = storage.getInstance(skillId)
+			const latestInstance = storage.getCurrentInstance(skillId)
 			if (!mounted.current || latestInstance?.parameters !== instance.parameters || latestInstance.history.length !== instance.history.length) return
 			storage.submitAction(skillId, action, state, report, isStateDone(state), solvedSkillIds)
 

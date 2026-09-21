@@ -4,14 +4,14 @@ import { useIsMountedRef } from '@step-wise/react-utils'
 import { generateExerciseInstance, selectExercise } from '@sqlvalley/exercise-instances'
 
 import type { ExerciseRegistration } from '../../exerciseSessionContext'
-import type { ExerciseSessionOptions, SessionOperations } from './types'
+import type { ExerciseSessionOptions, ExerciseSessionDependencies } from './types'
 
 interface GenerationError {
 	message: string
 	registration: ExerciseRegistration
 }
 
-interface GenerationOptions extends ExerciseSessionOptions, SessionOperations {
+interface GenerationOptions extends ExerciseSessionOptions, ExerciseSessionDependencies {
 	exercisesById: ReadonlyMap<string, ExerciseRegistration>
 }
 
@@ -58,7 +58,7 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 	// Handler: start a new exercise. Randomly select one and then generate/store it.
 	const startNewExercise = useCallback(() => {
 		if (!moduleReady || activeOperation.current !== undefined) return
-		const selected = selectExercise(exercises, storage.getHistory(skillId), selectionOptions)
+		const selected = selectExercise(exercises, storage.getExerciseHistory(skillId), selectionOptions)
 		if (selected) void startExercise(selected)
 	}, [exercises, moduleReady, activeOperation, selectionOptions, skillId, startExercise, storage])
 
@@ -78,11 +78,11 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 	// Effect: When there is no exercise instance, or its registration is missing, then generate a new random exercise. If the exercise is outdated (wrong version) then regenerate the same exercise with the newest version.
 	useEffect(() => {
 		if (!moduleReady || exercises.length === 0) return
-		const instance = storage.getInstance(skillId)
+		const instance = storage.getCurrentInstance(skillId)
 		const registration = instance ? exercisesById.get(instance.exerciseId) : undefined
 		let cancelled = false
 		if (!instance || !registration || (registration.definition.metadata.version ?? 1) !== instance.version) {
-			const selected = registration ?? selectExercise(exercises, storage.getHistory(skillId), selectionOptions)
+			const selected = registration ?? selectExercise(exercises, storage.getExerciseHistory(skillId), selectionOptions)
 			if (selected) void startExercise(selected, () => !cancelled)
 		}
 		return () => { cancelled = true }

@@ -11,14 +11,14 @@ export function useExerciseSession(options: ExerciseSessionOptions) {
 
 	// Check the module status.
 	const moduleContext = useModuleContext()
-	const moduleStatus = moduleContext as { ready?: boolean; error?: Error } | undefined | null
-	const moduleError = moduleStatus?.error
-	const moduleReady = moduleStatus?.ready !== false && !moduleError
+	const moduleError = moduleContext?.error
+	const loading = moduleContext?.loading ?? false
+	const moduleReady = !loading && !moduleError
 
 	// Extract and verify the current exercise's registration.
 	const exercisesById = useMemo(() => new Map(exercises.map(exercise => [exercise.exerciseId, exercise])), [exercises])
-	const mostRecentRegistration = currentExerciseInstance ? exercisesById.get(currentExerciseInstance.exerciseId) : undefined
-	const currentRegistration = (mostRecentRegistration?.definition.metadata.version ?? 1) === currentExerciseInstance?.version ? mostRecentRegistration : undefined
+	const matchingRegistration = currentExerciseInstance ? exercisesById.get(currentExerciseInstance.exerciseId) : undefined
+	const currentRegistration = (matchingRegistration?.definition.metadata.version ?? 1) === currentExerciseInstance?.version ? matchingRegistration : undefined
 
 	// Set up the session for the various domains. Give them an activeOperation flag to share, so they can check if anyone is doing anything.
 	const activeOperation = useRef<'generation' | 'submission' | undefined>(undefined)
@@ -30,7 +30,7 @@ export function useExerciseSession(options: ExerciseSessionOptions) {
 	return {
 		registration: currentRegistration,
 		instance: currentExerciseInstance,
-		loading: !moduleReady,
+		loading,
 		moduleError,
 		...generation,
 		...submission,

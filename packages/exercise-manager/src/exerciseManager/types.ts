@@ -5,8 +5,8 @@ import type { ExerciseSessionOptions } from './exerciseSession/types'
 
 // The connections to the data store of the app.
 export interface ExerciseStorage {
-	getInstance(skillId: SkillId): ExerciseInstance | undefined
-	getHistory(skillId: SkillId): readonly ExerciseInstance[]
+	getCurrentInstance(skillId: SkillId): ExerciseInstance | undefined
+	getExerciseHistory(skillId: SkillId): readonly ExerciseInstance[]
 	startExercise(skillId: SkillId, exerciseInstance: ExerciseInstance): void
 	submitAction(
 		skillId: SkillId,

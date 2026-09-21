@@ -66,7 +66,6 @@ function ModuleDatabaseProvider({ moduleId, tableKeys, userDatabases, gradingDat
 		tableKeys,
 		loading: [...userDatabases.values(), ...gradingDatabases.values()].some(handle => handle.loading),
 		error: [...userDatabases.values(), ...gradingDatabases.values()].find(handle => handle.error)?.error,
-		ready: [...userDatabases.values(), ...gradingDatabases.values()].every(handle => !!handle.database && !handle.loading && !handle.error),
 		getUserDatabase: size => {
 			const handle = userDatabases.get(size)
 			if (!handle) throw new Error(`No user database is available for size "${size}".`)

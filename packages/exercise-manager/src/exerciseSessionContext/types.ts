@@ -11,7 +11,7 @@ export interface ExerciseSessionContextValue {
 	currentExercise: CurrentExercise
 	controls: ExerciseControls<ExerciseAction>
 	submitting: boolean
-	admin: ExerciseAdmin
+	admin: ExerciseAdminControls
 }
 
 // An exercise in the frontend consists of its definition and its rendering component.
@@ -35,7 +35,7 @@ export interface ExerciseControls<Action extends ExerciseAction> {
 }
 
 // Admin visibility and exercise selection.
-export interface ExerciseAdmin {
+export interface ExerciseAdminControls {
 	showControls: boolean
 	exerciseIds: readonly ExerciseId[]
 	selectExerciseById: (exerciseId: ExerciseId) => void

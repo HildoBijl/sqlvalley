@@ -1,3 +1,5 @@
 import { createContext } from 'react'
 
-export const ModuleContext = createContext<unknown>(undefined)
+import type { ModuleContextStatus } from './types'
+
+export const ModuleContext = createContext<ModuleContextStatus | undefined>(undefined)

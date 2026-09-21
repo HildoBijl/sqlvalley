@@ -20,12 +20,12 @@ export const useLearningStore = createPersistedStore<LearningState, LearningActi
 
 // Read the latest state when the manager performs an operation.
 export const exerciseStorage: ExerciseStorage = {
-	getInstance: skillId => {
+	getCurrentInstance: skillId => {
 		const module = useLearningStore.getState().modules[skillId]
 		if (module?.moduleType !== 'skill') return undefined
 		return module.exerciseHistory[module.exerciseHistory.length - 1]
 	},
-	getHistory: skillId => {
+	getExerciseHistory: skillId => {
 		const module = useLearningStore.getState().modules[skillId]
 		return module?.moduleType === 'skill' ? module.exerciseHistory : []
 	},

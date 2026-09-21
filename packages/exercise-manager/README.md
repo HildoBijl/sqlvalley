@@ -74,12 +74,14 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 
 `ModuleProviderComponent` accepts `moduleId` and `children`. Applications select the provider per module and mount it around page content independently of exercise loading.
 
+`ModuleContextProvider` requires a value extending the exported `ModuleContextStatus`: `loading: boolean` is required, and `error?: Error` is optional. Providers without asynchronous resources use `loading: false`. Loading ends when resources are usable or preparation has failed; a failure is reported through `error`. Subject-specific contexts extend this contract with their own resources. `useModuleContext()` returns `ModuleContextStatus | undefined`; consumers narrow subject-specific fields themselves. Without a provider, the manager can run exercises that need no module resources. With a provider, it waits for readiness and displays module errors before rendering an exercise.
+
 The manager renders the supplied component and provides its exercise context. Its internal `useExerciseSession` hook owns the lifecycle and actions, including fresh storage reads and guards against obsolete asynchronous results. Callers must remount it when `skillId` changes: set `key={skillId}` on `ExerciseManager` or on a surrounding component, such as the module provider. The manager retains its exercise-instance key to reset renderer state when a new exercise starts within the same skill. The application owns its concrete storage adapter and persistence migrations.
 
 
 ## Exercise selection
 
-Automatic selection calls `selectExercise` from `@sqlvalley/exercise-instances` with the skill's history from `ExerciseStorage.getHistory` (oldest first, including the current instance). Pass `selectionOptions={{ dontRepeatBefore: 3, minimumChoices: 2 }}` to `ExerciseManager` to override the defaults in code.
+Automatic selection calls `selectExercise` from `@sqlvalley/exercise-instances` with the skill's history from `ExerciseStorage.getExerciseHistory` (oldest first, including the current instance). Pass `selectionOptions={{ dontRepeatBefore: 3, minimumChoices: 2 }}` to `ExerciseManager` to override the defaults in code.
 
 Compatible saved instances are restored directly. Replacing an outdated version preserves the selected exercise ID, and explicit admin selections bypass repeat avoidance. History is read from the store when choosing, so the learning store needs no new persisted fields or migration.
 
