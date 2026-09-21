@@ -1,6 +1,7 @@
+import type { ComponentType } from 'react'
 import { Alert } from '@mui/material'
 
-import { type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputField, useSolution } from '@sqlvalley/input-exercise-components'
+import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputField, useSolution } from '@sqlvalley/input-exercise-components'
 
 import { useSqlPracticeContext } from '../SqlPractice'
 import type { MonoSQLCheckResult } from './types'
@@ -53,13 +54,13 @@ export function SQLExerciseInputVisualization<Parameters extends Record<string, 
 }
 
 export function createSQLProblem<Parameters extends Record<string, unknown>>(
-	getProblem: (parameters: Parameters) => string,
+	Problem: ComponentType<MonoExerciseProblemProps<Parameters>>,
 ) {
 	return function SQLExerciseProblem({ parameters }: { parameters: Parameters }) {
 		const runtime = useSqlPracticeContext()
 		return (
 			<ExerciseDescription
-				description={getProblem(parameters)}
+				description={<Problem parameters={parameters} />}
 				tableNames={runtime.tableNames}
 			/>
 		)

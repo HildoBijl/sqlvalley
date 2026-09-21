@@ -5,9 +5,9 @@ import { MonoExercise } from '@sqlvalley/input-exercise-components'
 
 import { ensureSqlModuleContext } from '../../sqlModuleProvider'
 import type { MonoSQLExerciseSpec } from './types'
-import { fromRawInput, resolveValue, toRawInput } from './input'
+import { fromRawInput, toRawInput } from './input'
 import { buildMonoSQLExercise } from './buildMonoSQLExercise'
-import { createSQLProblem, SQLExerciseSolution, SQLExerciseInputArea, SQLExerciseInputVisualization } from './views'
+import { createSQLProblem, SQLExerciseInputArea, SQLExerciseInputVisualization } from './views'
 
 export function createMonoSQLExercise<Parameters extends Record<string, unknown>>(spec: MonoSQLExerciseSpec<Parameters>): ExerciseRegistration {
 	const definition = buildMonoSQLExercise(spec)
@@ -25,9 +25,9 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 			const { loading, error } = ensureSqlModuleContext(moduleContext)
 			return !loading && !error
 		},
-		Problem: createSQLProblem((parameters: Parameters) => resolveValue(spec.problem, parameters)),
+		Problem: createSQLProblem(spec.Problem),
 		InputArea: SQLExerciseInputArea,
-		Solution: SQLExerciseSolution,
+		Solution: spec.Solution,
 		InputVisualization: SQLExerciseInputVisualization,
 	}
 	return {

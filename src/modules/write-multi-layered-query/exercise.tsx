@@ -1,5 +1,6 @@
 import {
 	createMonoSQLExercise,
+	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,7 +12,8 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 		exerciseId: 'multilayered-mock-dept-expense',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Retrieve the id, budget and total amount spent of all the departments whose total recorded expenses never exceeded their allocated budget.',
+		Problem: () => <>{'Retrieve the id, budget and total amount spent of all the departments whose total recorded expenses never exceeded their allocated budget.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 WITH dept_expenses AS (
 	SELECT d_id, SUM(amount) AS total_spent
@@ -32,7 +34,8 @@ WHERE e.total_spent <= b.budget
 		exerciseId: 'multilayered-mock-buyer-vendor',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Identify the username, amount spent and amount earned, for all users whose total revenue as vendor exceeds their total spending as buyer.',
+		Problem: () => <>{'Identify the username, amount spent and amount earned, for all users whose total revenue as vendor exceeds their total spending as buyer.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
   WITH vendor_totals AS (
     SELECT vendor AS username, SUM(price) AS earned
@@ -77,7 +80,8 @@ WHERE e.total_spent <= b.budget
 		exerciseId: 'multilayered-wrong-employee-counts',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'The employee count in the departments table seems to be inflated. Create an overview containing the department name, the number of employees as mentioned in the departments table, the total number of employees allocated to the department, the total number of employees that are ONLY allocated to this department, and the first and last name of the department manager. Only show those rows for departments where the difference between the estimated number of employees and the number of employees only allocated to this department is larger than 3.',
+		Problem: () => <>{'The employee count in the departments table seems to be inflated. Create an overview containing the department name, the number of employees as mentioned in the departments table, the total number of employees allocated to the department, the total number of employees that are ONLY allocated to this department, and the first and last name of the department manager. Only show those rows for departments where the difference between the estimated number of employees and the number of employees only allocated to this department is larger than 3.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 WITH emp_alloc_count AS (
 	SELECT e_id, COUNT(d_id) AS alloc_count

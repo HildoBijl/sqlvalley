@@ -4,12 +4,12 @@ import { validateSqlInput } from '@sqlvalley/sql-grading'
 
 import type { DatabaseHandle } from '../../databaseProvider'
 import { ensureSqlModuleContext } from '../../sqlModuleProvider'
-import type { MonoSQLExerciseSpec } from './types'
+import type { MonoSQLExerciseDefinitionSpec } from './types'
 import { fromRawInput, resolveValue, sqlValueTypes } from './input'
 import { gradeSqlQuery } from './gradeSqlQuery'
 
 // Builds the logical definition; rendering is paired separately by createMonoSQLExercise.
-export function buildMonoSQLExercise<Parameters extends Record<string, unknown>>(spec: MonoSQLExerciseSpec<Parameters>) {
+export function buildMonoSQLExercise<Parameters extends Record<string, unknown>>(spec: MonoSQLExerciseDefinitionSpec<Parameters>) {
 	return buildMonoExercise<Parameters, { query: string }, unknown, unknown>({
 		metadata: { version: spec.version, skill: spec.skill, setup: spec.setup },
 		valueTypes: sqlValueTypes,

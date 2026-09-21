@@ -1,5 +1,6 @@
 import {
 	createMonoSQLExercise,
+	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,7 +12,8 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 		exerciseId: 'join-managers-hire-date',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Retrieve the department names and manager names (first and last) of all departments whose manager was hired before 2018.',
+		Problem: () => <>{'Retrieve the department names and manager names (first and last) of all departments whose manager was hired before 2018.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT d_name, first_name, last_name
 FROM departments AS d
@@ -24,7 +26,8 @@ WHERE e.hire_date < '2018-01-01';
 		exerciseId: 'join-employee-positions',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'For all employees, make a list of the positions they have had. Give the first name, the last name and the position. A person may have multiple entries in case of multiple positions, but there should be no duplicates. Also include employees who never had a position.',
+		Problem: () => <>{'For all employees, make a list of the positions they have had. Give the first name, the last name and the position. A person may have multiple entries in case of multiple positions, but there should be no duplicates. Also include employees who never had a position.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT DISTINCT first_name, last_name, position
 FROM employees
@@ -35,7 +38,8 @@ NATURAL LEFT JOIN contracts;
 		exerciseId: 'join-employee-leave',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Create an overview of all sick leaves. More specific: find the names (first and last) of all employees who have been on sick leave. Also include the starting date and ending date of the respective contract in which they had sick leave. (In case of multiple contracts with sick leave, include multiple rows.)',
+		Problem: () => <>{'Create an overview of all sick leaves. More specific: find the names (first and last) of all employees who have been on sick leave. Also include the starting date and ending date of the respective contract in which they had sick leave. (In case of multiple contracts with sick leave, include multiple rows.)'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT first_name, last_name, start_date, end_date
 FROM employees

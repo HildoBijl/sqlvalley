@@ -1,5 +1,6 @@
 import {
 	createMonoSQLExercise,
+	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,7 +12,8 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 		exerciseId: 'lookup-manager-city',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Find the names of the departments whose manager lives in Palo Alto.',
+		Problem: () => <>{'Find the names of the departments whose manager lives in Palo Alto.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT d_name
 FROM departments
@@ -26,7 +28,8 @@ WHERE manager_id IN (
 		exerciseId: 'lookup-employee-position',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Find the first and last name of all employees that have ever worked as a warehouse associate.',
+		Problem: () => <>{'Find the first and last name of all employees that have ever worked as a warehouse associate.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT first_name, last_name
 FROM employees
@@ -41,7 +44,8 @@ WHERE e_id IN (
 		exerciseId: 'lookup-manager-sick',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Find the names of the departments whose manager has at some point been on sick leave.',
+		Problem: () => <>{'Find the names of the departments whose manager has at some point been on sick leave.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT d_name
 FROM departments

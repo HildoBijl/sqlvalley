@@ -5,9 +5,23 @@ SQL module context, editors, results, and solo mono exercise integration.
 
 ## Exercise authoring
 
-The specification version is optional; Step-Wise defaults it to `1`. Pass a MonoSQLExerciseSpec to buildMonoSQLExercise to build a logical solo definition using @step-wise/input-exercises. Pass the specification to createMonoSQLExercise to pair that definition with the MonoExercise renderer and return an ExerciseRegistration for the exercise manager.
+The specification version is optional; Step-Wise defaults it to `1`. Pass a `MonoSQLExerciseDefinitionSpec` to `buildMonoSQLExercise` to build a logical solo definition using @step-wise/input-exercises. Add `Problem` and `Solution` components to form a `MonoSQLExerciseSpec`, then pass it to `createMonoSQLExercise` to pair that definition with the MonoExercise renderer and return an ExerciseRegistration for the exercise manager.
 
 `createMonoSQLExercise` supplies SQL content for the generic `Problem`, `InputArea`, `InputVisualization`, and `Solution` slots. MonoExercise owns shared section styling and solution visibility. The SQL solution view reads the resolved solution from `useSolution()`, so display and insertion use the same value.
+
+Exercise authors supply content components; the adapter supplies the SQL editor, preview, and available-table information. Use the exported `SQLExerciseSolution` for the standard query display, or supply a custom Solution component reading `useSolution()` from `@sqlvalley/input-exercise-components`. The lowercase `solution` remains the grading query (or a parameter-dependent function); uppercase `Solution` is its presentation.
+
+```tsx
+import { type MonoSQLExerciseSpec, SQLExerciseSolution } from '@sqlvalley/sql'
+
+const exercise: MonoSQLExerciseSpec<Record<string, never>> = {
+	exerciseId: 'employee-names',
+	generateParameters: () => ({}),
+	Problem: () => <p>List every employee's first name.</p>,
+	Solution: SQLExerciseSolution,
+	solution: 'SELECT first_name FROM employees',
+}
+```
 
 SQL specifications accept optional `skill` and `setup` metadata, forwarded to the upstream reducer for skill updates. Module exercise builders supply their skill ID.
 

@@ -1,5 +1,6 @@
 import {
 	createMonoSQLExercise,
+	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -40,7 +41,8 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 		exerciseId: 'filtered-aggregation-perf-range',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Create an overview of all employees (their IDs) and their lowest and highest performance score ever obtained since January 1st, 2020 (going by contract end date). Limit the output to fluctuating employees: those where the difference between the lowest and highest score in this time period exceeds 40.',
+		Problem: () => <>{'Create an overview of all employees (their IDs) and their lowest and highest performance score ever obtained since January 1st, 2020 (going by contract end date). Limit the output to fluctuating employees: those where the difference between the lowest and highest score in this time period exceeds 40.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT 
   e_id,
@@ -56,7 +58,8 @@ HAVING MAX(perf_score) - MIN(perf_score) > 40;
 		exerciseId: 'filtered-aggregation-rejected-tx',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Create an overview of all vendors (their usernames), their total number of transactions with price larger than ten million, and the number of these that were rejected. Limit the output to those vendors with more than three such rejected large transactions.',
+		Problem: () => <>{'Create an overview of all vendors (their usernames), their total number of transactions with price larger than ten million, and the number of these that were rejected. Limit the output to those vendors with more than three such rejected large transactions.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT 
   vendor,
@@ -72,7 +75,8 @@ HAVING SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) > 3;
 		exerciseId: 'filtered-aggregation-product-revenue',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Create an overview of all products (their IDs), the number of incomplete transactions, and the total revenue from those incomplete transactions. Limit the output to those products whose average transaction value at these incomplete transactions is less than one million.',
+		Problem: () => <>{'Create an overview of all products (their IDs), the number of incomplete transactions, and the total revenue from those incomplete transactions. Limit the output to those products whose average transaction value at these incomplete transactions is less than one million.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT 
     prod_id,

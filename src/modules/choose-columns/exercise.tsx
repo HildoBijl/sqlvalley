@@ -1,5 +1,6 @@
 import {
 	createMonoSQLExercise,
+	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,7 +12,8 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 		exerciseId: 'choose-columns-contacts',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'List the first name, last name, email, and phone number of all employees. Ensure that the phone number is called "number" as column name.',
+		Problem: () => <>{'List the first name, last name, email, and phone number of all employees. Ensure that the phone number is called "number" as column name.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT
   first_name,
@@ -29,7 +31,8 @@ FROM employees;
 		exerciseId: 'choose-columns-department-budgets',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Retrieve the department ID, department name and budget of all departments. Ensure that the budget is called "available_money" as column name.',
+		Problem: () => <>{'Retrieve the department ID, department name and budget of all departments. Ensure that the budget is called "available_money" as column name.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT
   d_id,
@@ -46,7 +49,8 @@ FROM departments;
 		exerciseId: 'choose-columns-cities',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Find the list of all cities in which the employees of the company live, without duplicates.',
+		Problem: () => <>{'Find the list of all cities in which the employees of the company live, without duplicates.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT DISTINCT city
 FROM employees;

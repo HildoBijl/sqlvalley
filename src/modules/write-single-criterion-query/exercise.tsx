@@ -1,5 +1,6 @@
 import {
 	createMonoSQLExercise,
+	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -29,7 +30,8 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 		exerciseId: 'unknown-budget',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Find the ID and name of all the departments whose budget is not known.',
+		Problem: () => <>{'Find the ID and name of all the departments whose budget is not known.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT d_id, d_name
 FROM departments
@@ -40,7 +42,8 @@ WHERE budget IS NULL;
 		exerciseId: 'large-earners',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Find the first and last names of all the employees who currently earn more than 150,000. Ensure there are no duplicates.',
+		Problem: () => <>{'Find the first and last names of all the employees who currently earn more than 150,000. Ensure there are no duplicates.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT DISTINCT first_name, last_name
 FROM employees
@@ -51,7 +54,8 @@ WHERE current_salary > 150000;
 		exerciseId: 'tough-positions',
 		version: 1,
 		generateParameters: () => ({}),
-		problem: 'Find all the job positions where at some point someone performed less than a performance score of 60. Ensure there are no duplicates.',
+		Problem: () => <>{'Find all the job positions where at some point someone performed less than a performance score of 60. Ensure there are no duplicates.'}</>,
+		Solution: SQLExerciseSolution,
 		solution: `
 SELECT DISTINCT position
 FROM contracts
