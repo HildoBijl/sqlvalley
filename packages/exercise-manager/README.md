@@ -9,7 +9,7 @@ Generic exercise types use the Step-Wise order: `Action, State, Parameters`. The
 
 `ExerciseRegistration['definition']` selects the upstream `Exercise` fields the manager needs and requires `processSoloAction`. Group processing is omitted from this contract. Metadata version is optional and defaults to `1` when generating or matching saved instances. Definitions contain no React components.
 
-`ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. It also supplies the application's `isSolved` predicate for completion counts. Pass registrations to `ExerciseManager` through its `exercises` prop. `ExerciseControls.setDraftInput` accepts structured raw input; solution handling belongs to the input renderer. Passing `undefined` clears a draft.
+`ExerciseRegistration` pairs an `exerciseId` and logical `definition` with a props-free `Component`. Pass registrations to `ExerciseManager` through its `exercises` prop. `ExerciseControls.setDraftInput` accepts structured raw input; solution handling belongs to the input renderer. Passing `undefined` clears a draft.
 
 ```tsx
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
@@ -25,16 +25,15 @@ const exercise: ExerciseRegistration = {
 			return { state: { attempts: Number(state.attempts) + 1, solved, done: solved } }
 		},
 	},
-	isSolved: state => state.solved === true,
 	Component: ExampleExercise,
 }
 ```
 
-`ExampleExercise` is an application-provided component that reads `useExerciseManager()`. `ExerciseManagerContext` contains `currentExercise: { definition, instance }`, `skillId`, transient `pending` status, and controls. It also exposes `showAdminControls` and the available `exerciseIds`. Controls include exercise selection and draft updates; renderers decide how to display the admin tools. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
+`ExampleExercise` is an application-provided component that reads `useExerciseSessionContext()`. `ExerciseSessionContext` contains `currentExercise: { definition, instance }`, `skillId`, transient `pending` status, and controls. It also exposes `showAdminControls` and the available `exerciseIds`. Controls include exercise selection and draft updates; renderers decide how to display the admin tools. Actions must have a string `type`; parameters, state, and reports follow the upstream plain-data contract. The execution context is transient and comes from `ModuleContextProvider`.
 
 Import `useCurrentExercise()` to read the definition and instance together, or `useCurrentExerciseInstance()` to read only the instance. These hooks are exported from `@sqlvalley/exercise-manager` and require an enclosing manager. They read context; they do not subscribe to the application store.
 
-The manager awaits parameter generation, initial-state generation, and action processing. It uses `state.done === true` for completion and the registration's `isSolved` predicate to increment solved counts only on the transition to solved. Errors are shown in the exercise UI. Results from obsolete generation requests or submissions to a replaced instance are ignored.
+The manager awaits parameter generation, initial-state generation, and action processing. It uses `isStateDone` for completion. Reducer `updateSkills` callbacks are normalized with `ensureSetup`; only correct pure-skill outcomes are collected. Their skill IDs are committed alongside the action after the reducer succeeds and the submission is confirmed current. Combined setups and incorrect outcomes do not increment counters. Reducers are responsible for reporting each successful outcome once. Errors are shown in the exercise UI. Results from obsolete generation requests or submissions to a replaced instance are ignored.
 
 
 ## Exercise instances and storage
@@ -66,7 +65,7 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 
 ## Package structure
 
-- `exerciseManagerContext/`: renderer registration, React context, and access hooks.
+- `exerciseSessionContext/`: renderer registration, React context, and access hooks.
 - `exerciseManager/`: the rendering component and its internal `useExerciseSession` hook for lifecycle, actions, and status.
 - `exerciseManager/types.ts`: storage contract, session options, and component props.
 - `moduleContext/`: subject-specific execution context, provider, and access hook.

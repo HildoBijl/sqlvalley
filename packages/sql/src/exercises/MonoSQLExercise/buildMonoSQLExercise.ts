@@ -11,7 +11,7 @@ import { gradeSqlQuery } from './gradeSqlQuery'
 // Builds the logical definition; rendering is paired separately by createMonoSQLExercise.
 export function buildMonoSQLExercise<Parameters extends Record<string, unknown>>(spec: MonoSQLExerciseSpec<Parameters>) {
 	const exercise = buildMonoExercise<Parameters, { query: string }, unknown, unknown>({
-		metadata: { version: spec.version },
+		metadata: { version: spec.version, skill: spec.skill, setup: spec.setup },
 		valueTypes: sqlValueTypes,
 		generateParameters: ({ context }) => spec.generateParameters(context),
 		getSolution: ({ parameters }) => ({ query: resolveValue(spec.solution, parameters) }),

@@ -9,7 +9,7 @@ export interface LearningActions {
 	completeConcept: (conceptId: string) => void
 	completeSkill: (skillId: string) => void
 	startNewExercise: (skillId: string, exerciseInstance: ExerciseInstance) => void
-	submitExerciseAction: (skillId: string, action: ExerciseAction, resultingState: ExerciseState, report: ExerciseReport | undefined, exerciseDone: boolean, increaseSolvedCounter: boolean) => void
+	submitExerciseAction: (skillId: string, action: ExerciseAction, resultingState: ExerciseState, report: ExerciseReport | undefined, exerciseDone: boolean, solvedSkillIds: readonly string[]) => void
 	setExerciseDraftInput: (skillId: string, draftInput: ExerciseInstance['draftInput']) => void
 }
 
@@ -63,7 +63,7 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 			}
 		}),
 
-		submitExerciseAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) => set(state => {
+		submitExerciseAction: (skillId, action, resultingState, report, exerciseDone, solvedSkillIds) => set(state => {
 			const skillModule = getSkillModuleForUpdate(skillId, state)
 			if (skillModule.exerciseHistory.length === 0) throw new Error(`Cannot submit exercise action for "${skillId}" without an active exercise.`)
 
@@ -84,17 +84,15 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 			}
 
 			const exerciseHistory = [...skillModule.exerciseHistory.slice(0, -1), updatedExercise]
-			return {
-				modules: {
-					...state.modules,
-					[skillId]: {
-						...skillModule,
-						lastAccessed: Date.now(),
-						solvedExerciseCount: increaseSolvedCounter ? skillModule.solvedExerciseCount + 1 : skillModule.solvedExerciseCount,
-						exerciseHistory,
-					},
-				},
+			const modules = {
+				...state.modules,
+				[skillId]: { ...skillModule, lastAccessed: Date.now(), exerciseHistory },
 			}
+			for (const solvedSkillId of solvedSkillIds) {
+				const module = getSkillModuleForUpdate(solvedSkillId, { ...state, modules })
+				modules[solvedSkillId] = { ...module, solvedExerciseCount: module.solvedExerciseCount + 1 }
+			}
+			return { modules }
 		}),
 
 		setExerciseDraftInput: (skillId, draftInput) => set(state => {

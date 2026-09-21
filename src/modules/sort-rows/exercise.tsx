@@ -43,6 +43,6 @@ ORDER BY end_date DESC NULLS FIRST;
 	},
 ];
 
-export default function buildExercises(): ExerciseRegistration[] {
-	return EXERCISES.map((exercise) => createMonoSQLExercise(exercise));
+export default function buildExercises(skillId: string): ExerciseRegistration[] {
+	return EXERCISES.map((exercise) => createMonoSQLExercise({ ...exercise, skill: skillId }));
 }

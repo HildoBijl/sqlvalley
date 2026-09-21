@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { ensureSetup } from '@step-wise/skill-setup'
 import { type ExerciseAction, getCurrentState, isStateDone } from '@step-wise/exercise-definition'
 import { type ExerciseInstance, generateExerciseInstance, selectExercise } from '@sqlvalley/exercise-instances'
 
-import type { ExerciseRegistration } from '../exerciseManagerContext'
+import type { ExerciseRegistration } from '../exerciseSessionContext'
 import { useModuleContext } from '../moduleContext'
 
 import type { ExerciseSessionOptions } from './types'
@@ -78,16 +79,21 @@ export function useExerciseSession({ skillId, exercises, currentExerciseInstance
 		setPending(true)
 		setError(undefined)
 		try {
+			const solvedSkillIds: string[] = []
 			const previousState = getCurrentState(current)
 			const { state, report } = await active.definition.processSoloAction({
 				parameters: current.parameters,
 				state: previousState,
 				action,
 				context: moduleContext,
+				updateSkills: (setupLike, correct) => {
+					const setup = ensureSetup(setupLike)
+					if (correct && setup.type === 'Skill') solvedSkillIds.push(...setup.getSkillList())
+				},
 			})
 			const latest = storage.getInstance(skillId)
 			if (!mounted.current || latest?.parameters !== current.parameters || latest.history.length !== current.history.length) return
-			storage.submitAction(skillId, action, state, report, isStateDone(state), active.isSolved(state) && !active.isSolved(previousState))
+			storage.submitAction(skillId, action, state, report, isStateDone(state), solvedSkillIds)
 		} catch (cause) {
 			if (mounted.current) setError(cause instanceof Error ? cause.message : 'Unable to submit your answer.')
 		} finally {

@@ -1,6 +1,6 @@
 import { Alert, Button, Typography } from '@mui/material'
 
-import { type ExerciseManagerContextValue, ExerciseManagerContext } from '../exerciseManagerContext'
+import { type ExerciseSessionContextValue, ExerciseSessionContext } from '../exerciseSessionContext'
 import type { ExerciseManagerProps } from './types'
 import { useExerciseSession } from './useExerciseSession'
 
@@ -22,7 +22,7 @@ function ExerciseManagerContent({ showAdminControls = false, ...options }: Exerc
 		return <Typography color="text.secondary">Generating your next exercise...</Typography>
 	}
 
-	const value: ExerciseManagerContextValue = {
+	const value: ExerciseSessionContextValue = {
 		currentExercise: { definition: active.definition, instance },
 		showAdminControls,
 		exerciseIds: exercises.map(exercise => exercise.exerciseId),
@@ -33,8 +33,8 @@ function ExerciseManagerContent({ showAdminControls = false, ...options }: Exerc
 	const { Component } = active
 	return <>
 		{error && <Alert severity="error">{error}</Alert>}
-		<ExerciseManagerContext.Provider key={instance.startedAt} value={value}>
+		<ExerciseSessionContext.Provider key={instance.startedAt} value={value}>
 			<Component />
-		</ExerciseManagerContext.Provider>
+		</ExerciseSessionContext.Provider>
 	</>
 }

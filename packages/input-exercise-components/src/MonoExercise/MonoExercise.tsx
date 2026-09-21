@@ -4,7 +4,7 @@ import { Alert, Box } from '@mui/material'
 import { getLastRawInput } from '@step-wise/input-exercises'
 import { getCurrentState } from '@step-wise/exercise-definition'
 
-import { useCurrentExerciseInstance, useExerciseManager, useModuleContext } from '@sqlvalley/exercise-manager'
+import { useCurrentExerciseInstance, useExerciseSessionContext, useModuleContext } from '@sqlvalley/exercise-manager'
 
 import type { MonoExerciseReport } from './types'
 import { isMonoExerciseHistory } from './validation'
@@ -28,7 +28,7 @@ export function MonoExercise<
 	Input,
 	CheckResult,
 >({ spec }: MonoExerciseProps<Parameters, Input, CheckResult>) {
-	const { pending, controls } = useExerciseManager()
+	const { pending, controls } = useExerciseSessionContext()
 	const exerciseInstance = useCurrentExerciseInstance()
 	if (!isMonoExerciseHistory(exerciseInstance)) throw new Error('MonoExercise requires mono state and input actions.')
 	const moduleContext = useModuleContext()

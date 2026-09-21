@@ -53,6 +53,6 @@ WHERE start_date > '2023-12-31';
 	},
 ];
 
-export default function buildExercises(): ExerciseRegistration[] {
-	return EXERCISES.map((exercise) => createMonoSQLExercise(exercise));
+export default function buildExercises(skillId: string): ExerciseRegistration[] {
+	return EXERCISES.map((exercise) => createMonoSQLExercise({ ...exercise, skill: skillId }));
 }

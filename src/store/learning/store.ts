@@ -30,6 +30,6 @@ export const exerciseStorage: ExerciseStorage = {
 		return module?.moduleType === 'skill' ? module.exerciseHistory : []
 	},
 	startExercise: (skillId, exerciseInstance) => useLearningStore.getState().startNewExercise(skillId, exerciseInstance),
-	submitAction: (skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter) => useLearningStore.getState().submitExerciseAction(skillId, action, resultingState, report, exerciseDone, increaseSolvedCounter),
+	submitAction: (skillId, action, resultingState, report, exerciseDone, solvedSkillIds) => useLearningStore.getState().submitExerciseAction(skillId, action, resultingState, report, exerciseDone, solvedSkillIds),
 	setDraftInput: (skillId, draftInput) => useLearningStore.getState().setExerciseDraftInput(skillId, draftInput),
 }

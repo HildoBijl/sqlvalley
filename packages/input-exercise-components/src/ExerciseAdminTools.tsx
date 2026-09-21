@@ -1,11 +1,11 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
-import { useCurrentExerciseInstance, useExerciseManager } from '@sqlvalley/exercise-manager'
+import { useCurrentExerciseInstance, useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 import { ShowSolutionButton } from './MonoExercise/ShowSolutionButton'
 
 export function ExerciseAdminTools() {
-	const { exerciseIds, pending, controls } = useExerciseManager()
+	const { exerciseIds, pending, controls } = useExerciseSessionContext()
 	const exerciseInstance = useCurrentExerciseInstance()
 	return (
 		<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>

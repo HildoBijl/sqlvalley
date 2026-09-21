@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { useExerciseManager } from '@sqlvalley/exercise-manager'
+import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 import type { MonoExerciseRenderSpec } from './specifications'
 
@@ -9,7 +9,7 @@ export function useShowSolution<Parameters extends Record<string, unknown>, Inpu
 	spec: Pick<MonoExerciseRenderSpec<Parameters, Input>, 'getSolutionInput' | 'toRawInput'>,
 	parameters: Parameters,
 ): (() => void) | undefined {
-	const { pending, controls: { setDraftInput } } = useExerciseManager()
+	const { pending, controls: { setDraftInput } } = useExerciseSessionContext()
 	const { getSolutionInput, toRawInput } = spec
 	const showSolution = useCallback(() => {
 		if (pending || !getSolutionInput) return

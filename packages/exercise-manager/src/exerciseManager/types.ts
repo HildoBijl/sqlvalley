@@ -1,12 +1,11 @@
 import type { SkillId } from '@step-wise/module-tree-definition'
 import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseSelectionOptions, ExerciseState } from '@sqlvalley/exercise-instances'
 
-import type { ExerciseRegistration } from '../exerciseManagerContext'
+import type { ExerciseRegistration } from '../exerciseSessionContext'
 
-// Imperative reads keep asynchronous operations working with the latest stored data.
+// The connections to the data store of the app.
 export interface ExerciseStorage {
 	getInstance(skillId: SkillId): ExerciseInstance | undefined
-	// Oldest first, including the current instance.
 	getHistory(skillId: SkillId): readonly ExerciseInstance[]
 	startExercise(skillId: SkillId, exerciseInstance: ExerciseInstance): void
 	submitAction(
@@ -15,7 +14,7 @@ export interface ExerciseStorage {
 		state: ExerciseState,
 		report: ExerciseReport | undefined,
 		exerciseDone: boolean,
-		increaseSolvedCounter: boolean,
+		solvedSkillIds: readonly string[],
 	): void
 	setDraftInput(skillId: SkillId, draftInput: ExerciseInstance['draftInput']): void
 }

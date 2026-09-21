@@ -1,13 +1,13 @@
 import { Box, Button } from '@mui/material'
 import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material'
 
-import { useExerciseManager } from '@sqlvalley/exercise-manager'
+import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 import { ExerciseAdminTools } from '../ExerciseAdminTools'
 import { useMonoExerciseControls } from './controlsContext'
 
 export function ExerciseControls() {
-	const { showAdminControls } = useExerciseManager()
+	const { showAdminControls } = useExerciseSessionContext()
 	const { solved, givenUp, canSubmit, canGiveUp, onSubmit, onGiveUp, onNext } =
 		useMonoExerciseControls()
 

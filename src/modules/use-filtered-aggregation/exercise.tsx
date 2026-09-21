@@ -86,6 +86,6 @@ HAVING AVG(price) < 1000000;
 	},
 ];
 
-export default function buildExercises(): ExerciseRegistration[] {
-	return EXERCISES.map((exercise) => createMonoSQLExercise(exercise));
+export default function buildExercises(skillId: string): ExerciseRegistration[] {
+	return EXERCISES.map((exercise) => createMonoSQLExercise({ ...exercise, skill: skillId }));
 }

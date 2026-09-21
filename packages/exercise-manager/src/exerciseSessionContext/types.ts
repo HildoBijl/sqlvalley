@@ -1,9 +1,23 @@
+import type { ComponentType } from 'react'
+
 import type { SkillId } from '@step-wise/module-tree-definition'
-import type { ExerciseAction } from '@step-wise/exercise-definition'
+import type { Exercise, ExerciseAction, ExerciseMetadata, ExerciseParameters, ExerciseState, SoloExerciseReport } from '@step-wise/exercise-definition'
 import type { InputExerciseRawInput } from '@step-wise/input-exercises'
 import type { ExerciseId, ExerciseInstance } from '@sqlvalley/exercise-instances'
 
-import type { ExerciseRegistration } from './definition'
+// Presentation and application identity stay outside the logical exercise definition.
+export interface ExerciseRegistration<
+	Action extends ExerciseAction = ExerciseAction,
+	State extends ExerciseState = ExerciseState,
+	Parameters extends ExerciseParameters = ExerciseParameters,
+> {
+	exerciseId: ExerciseId
+	definition: Required<Pick<
+		Exercise<ExerciseMetadata, Action, State, Parameters, SoloExerciseReport, never, unknown>,
+		'metadata' | 'generateParameters' | 'getInitialState' | 'processSoloAction'
+	>>
+	Component: ComponentType
+}
 
 // The data about the current exercise.
 export interface CurrentExercise {
@@ -19,8 +33,8 @@ export interface ExerciseControls<Action extends ExerciseAction> {
 	selectExerciseById: (exerciseId: ExerciseId) => void
 }
 
-// The full contents of the ExerciseManagerContext.
-export interface ExerciseManagerContextValue {
+// The full contents of the ExerciseSessionContext.
+export interface ExerciseSessionContextValue {
 	currentExercise: CurrentExercise
 	showAdminControls: boolean
 	exerciseIds: readonly ExerciseId[]

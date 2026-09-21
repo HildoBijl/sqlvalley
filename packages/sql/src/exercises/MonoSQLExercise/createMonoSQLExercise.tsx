@@ -33,7 +33,6 @@ export function createMonoSQLExercise<Parameters extends Record<string, unknown>
 				return definition.processSoloAction({ ...data, action: data.action as InputExerciseAction, state: data.state as MonoExerciseState })
 			},
 		},
-		isSolved: state => state.solved === true,
 		Component: () => <MonoExercise spec={renderSpec} />,
 	}
 }
