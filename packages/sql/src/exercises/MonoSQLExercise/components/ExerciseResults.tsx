@@ -1,13 +1,12 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 
-import { Box, Button, Collapse, Divider, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { Alert, Box, Button, Collapse, Divider, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
-import { Warning } from '@sqlvalley/ui'
-import { DataTable } from '../../../components'
-import { ExerciseSection } from '@sqlvalley/ui'
 import type { DatasetSize } from '@sqlvalley/mock-data'
 import type { SqlQueryResult } from '@sqlvalley/sql-grading'
+
+import { DataTable } from '../../../components'
 
 interface ExerciseResultsProps {
 	queryResult: ReadonlyArray<SqlQueryResult> | undefined
@@ -66,23 +65,21 @@ export function ExerciseResults({
 			<DataTable data={firstResult} />
 		) : (
 			<ResultsPlaceholder message={emptyMessage}>
-				{showWarning ? <Warning>{datasetWarning}</Warning> : null}
+				{showWarning ? <Alert severity="warning">{datasetWarning}</Alert> : null}
 			</ResultsPlaceholder>
 		)
 	} else {
 		content = (
 			<ResultsPlaceholder message={hasExecuted ? emptyMessage : 'Execute your query to preview results.'}>
-				{showWarning ? <Warning>{datasetWarning}</Warning> : null}
+				{showWarning ? <Alert severity="warning">{datasetWarning}</Alert> : null}
 			</ResultsPlaceholder>
 		)
 	}
 
 	return (
-		<ExerciseSection
-			title="Query Results"
-			showDivider={false}
-			contentSx={{ p: 0 }}
-			actions={
+		<Paper variant="outlined" sx={{ my: 3, borderRadius: 2 }}>
+			<Box sx={{ px: 2.5, py: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, flexWrap: 'wrap' }}>
+				<Typography variant="subtitle1" sx={{ fontWeight: 600 }}>Query Results</Typography>
 				<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
 					<ToggleButtonGroup
 						size="small"
@@ -115,12 +112,11 @@ export function ExerciseResults({
 						{expanded ? 'Hide' : 'Show'}
 					</Button>
 				</Box>
-			}
-		>
+			</Box>
 			<Collapse in={expanded} unmountOnExit>
 				<Divider sx={{ mb: 2 }} />
 				<Box sx={{ px: 2.5, pb: 2.5 }}>{content}</Box>
 			</Collapse>
-		</ExerciseSection>
+		</Paper>
 	)
 }

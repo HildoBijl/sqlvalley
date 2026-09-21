@@ -1,6 +1,6 @@
-import { Box, LinearProgress, Typography } from '@mui/material';
+import { Box, LinearProgress, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Link } from '@sqlvalley/ui';
+
 import { treeColors } from '../../utils/graphics/treeColors';
 
 interface PlanningProgressIndicatorProps {
@@ -52,7 +52,7 @@ export function PlanningProgressIndicator({
 					>
 						Next Step:{' '}
 						{nextStepHref ? (
-							<Link to={nextStepHref} style={{ color: 'red', fontWeight: 700 }}>
+							<Link href={nextStepHref} underline="none" sx={{ color: 'red', fontWeight: 700 }}>
 								{nextStepName}
 							</Link>
 						) : (
