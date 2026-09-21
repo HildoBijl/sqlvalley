@@ -33,7 +33,7 @@ const exercise: ExerciseRegistration = {
 
 Import `useCurrentExercise()` to read the definition and instance together, or `useCurrentExerciseInstance()` to read only the instance. These hooks are exported from `@sqlvalley/exercise-manager` and require an enclosing manager. They read context; they do not subscribe to the application store.
 
-The manager awaits parameter generation, initial-state generation, and action processing. It uses `isStateDone` for completion. Reducer `updateSkills` callbacks are normalized with `ensureSetup`; only correct pure-skill outcomes are collected. Their skill IDs are committed alongside the action after the reducer succeeds and the submission is confirmed current. Combined setups and incorrect outcomes do not increment counters. Reducers are responsible for reporting each successful outcome once. Errors are shown in the exercise UI. Results from obsolete generation requests or submissions to a replaced instance are ignored.
+The manager awaits parameter generation, initial-state generation, and action processing. It uses `isStateDone` for completion. Reducer `updateSkills` callbacks are normalized with `ensureSetup`; only correct pure-skill outcomes are collected. Their skill IDs are committed alongside the action after the reducer succeeds and the submission is confirmed current. Combined setups and incorrect outcomes do not increment counters. Reducers are responsible for reporting each successful outcome once. Generation and submission hooks own separate error states. Submission errors are scoped to the affected exercise instance and cleared when another submission starts or dismissed explicitly. Errors replace the exercise UI. Generation errors offer a retry of the same exercise registration; submission errors offer a return to the saved exercise and draft without generating another instance. Results from obsolete generation requests or submissions to a replaced instance are ignored.
 
 
 ## Exercise instances and storage
@@ -66,13 +66,15 @@ Solo input rendering now lives in [`@sqlvalley/input-exercise-components`](../in
 ## Package structure
 
 - `exerciseSessionContext/`: renderer registration, React context, and access hooks.
-- `exerciseManager/`: the rendering component and its internal `useExerciseSession` hook for lifecycle, actions, and status.
-- `exerciseManager/types.ts`: storage contract, session options, and component props.
+- `exerciseManager/`: the rendering component.
+- `exerciseManager/exerciseSession/`: `useExerciseSession` coordinates `useExerciseGeneration` (selection, generation, retries) and `useExerciseSubmission` (actions, skill updates, drafts). A shared operation guard prevents overlapping generation and submission.
+- `exerciseManager/types.ts`: storage contract and component props.
+- `exerciseManager/exerciseSession/types.ts`: session options and shared operation types.
 - `moduleContext/`: subject-specific execution context, provider, and access hook.
 
 `ModuleProviderComponent` accepts `moduleId` and `children`. Applications select the provider per module and mount it around page content independently of exercise loading.
 
-The manager renders the supplied component and provides its exercise context. Its internal `useExerciseSession` hook owns the lifecycle and actions, including fresh storage reads and guards against obsolete asynchronous results. The manager keys its content by skill ID to keep sessions isolated. The application owns its concrete storage adapter and persistence migrations.
+The manager renders the supplied component and provides its exercise context. Its internal `useExerciseSession` hook owns the lifecycle and actions, including fresh storage reads and guards against obsolete asynchronous results. Callers must remount it when `skillId` changes: set `key={skillId}` on `ExerciseManager` or on a surrounding component, such as the module provider. The manager retains its exercise-instance key to reset renderer state when a new exercise starts within the same skill. The application owns its concrete storage adapter and persistence migrations.
 
 
 ## Exercise selection

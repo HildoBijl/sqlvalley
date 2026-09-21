@@ -2,42 +2,37 @@ import { Alert, Button, Typography } from '@mui/material'
 
 import { type ExerciseSessionContextValue, ExerciseSessionContext } from '../exerciseSessionContext'
 import type { ExerciseManagerProps } from './types'
-import { useExerciseSession } from './useExerciseSession'
+import { useExerciseSession } from './exerciseSession'
 
-// Keep asynchronous work and local rendering state scoped to one skill.
-export function ExerciseManager(props: ExerciseManagerProps) {
-	return <ExerciseManagerContent key={props.skillId} {...props} />
-}
-
-function ExerciseManagerContent({ showAdminControls = false, ...options }: ExerciseManagerProps) {
+// Callers must key this component or an ancestor by skill ID to isolate sessions.
+export function ExerciseManager({ showAdminControls = false, ...options }: ExerciseManagerProps) {
+	// Set up the exercise session, creating the flags and control functions relevant to the exercise.
 	const { skillId, exercises } = options
-	const {
-		registration: active, instance, loading, submitting, error, retryGeneration,
-		submitAction, setDraftInput, startNewExercise, selectExerciseById,
-	} = useExerciseSession(options)
+	const { registration, instance, loading, generating, submitting, generationError, submissionError, retryGeneration, dismissSubmissionError, submitAction, setDraftInput, startNewExercise, selectExerciseById } = useExerciseSession(options)
 
-	if (exercises.length === 0) return <Alert severity="info">No exercises are available yet.</Alert>
-	if (loading || !active || !instance) {
-		if (error) return <Alert severity="error" action={<Button onClick={retryGeneration}>Try again</Button>}>{error}</Alert>
-		return <Typography color="text.secondary">Generating your next exercise...</Typography>
-	}
+	// Check situations in which we cannot display the exercise.
+	if (generationError) return <Alert severity="error" action={<Button onClick={retryGeneration}>Try again</Button>}>{generationError.message}</Alert>
+	if (submissionError) return <Alert severity="error" action={<Button onClick={dismissSubmissionError}>Return to exercise</Button>}>{submissionError.message}</Alert>
+	if (exercises.length === 0) return <Alert severity="info">This skill does not have any exercises yet.</Alert>
+	if (loading) return <Typography color="text.secondary">Loading the module...</Typography>
+	if (generating || !registration || !instance) return <Typography color="text.secondary">Generating your next exercise...</Typography>
 
+	// Set up the value for the ExerciseSessionContext.
 	const value: ExerciseSessionContextValue = {
-		currentExercise: { definition: active.definition, instance },
+		skillId,
+		currentExercise: { definition: registration.definition, instance },
+		controls: { submitAction, setDraftInput, startNewExercise },
+		submitting,
 		admin: {
 			showControls: showAdminControls,
 			exerciseIds: exercises.map(exercise => exercise.exerciseId),
 			selectExerciseById,
 		},
-		submitting,
-		controls: { submitAction, setDraftInput, startNewExercise },
-		skillId,
 	}
-	const { Component } = active
-	return <>
-		{error && <Alert severity="error">{error}</Alert>}
-		<ExerciseSessionContext.Provider key={instance.startedAt} value={value}>
-			<Component />
-		</ExerciseSessionContext.Provider>
-	</>
+
+	// Render the exercise Component, wrapped in the context provider.
+	const { Component } = registration
+	return <ExerciseSessionContext.Provider key={instance.startedAt} value={value}>
+		<Component />
+	</ExerciseSessionContext.Provider>
 }
