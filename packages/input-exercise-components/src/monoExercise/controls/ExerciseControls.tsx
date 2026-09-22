@@ -5,9 +5,9 @@ import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material'
 import { getCurrentState } from '@step-wise/exercise-definition'
 import { useExerciseSessionContext, useModuleContext } from '@sqlvalley/exercise-manager'
 
-import { ExerciseAdminTools } from '../ExerciseAdminTools'
-import { useInputExerciseContext } from '../inputExercise'
-import type { MonoExerciseRenderSpec } from './specifications'
+import { ExerciseAdminTools } from '../../ExerciseAdminTools'
+import { useInputExerciseContext } from '../../inputExercise'
+import type { MonoExerciseRenderSpec } from '../specifications'
 import { GiveUpDialog } from './GiveUpDialog'
 
 interface ExerciseControlsProps<Parameters extends Record<string, unknown>, Input, CheckResult> {

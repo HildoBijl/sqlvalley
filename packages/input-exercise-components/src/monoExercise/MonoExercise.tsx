@@ -9,7 +9,7 @@ import { InputExerciseProvider, useInputExerciseContext } from '../inputExercise
 
 import type { MonoExerciseReport } from './types'
 import { isMonoExerciseHistory } from './validation'
-import { ExerciseControls } from './ExerciseControls'
+import { ExerciseControls } from './controls'
 import { MonoExerciseSection } from './MonoExerciseSection'
 import type { MonoExerciseRenderSpec } from './specifications'
 
