@@ -4,15 +4,9 @@ import { isExerciseDone } from '@step-wise/exercise-definition'
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 import { ExerciseAdminTools, NextExerciseButton, GiveUpButton, SubmitAnswerButton } from '../../inputExercise'
-import { useInputExerciseAvailability } from '../../inputExercise/useInputExerciseAvailability'
 
-interface ExerciseControlsProps {
-	onSubmit: () => void
-}
-
-export function ExerciseControls({ onSubmit }: ExerciseControlsProps) {
+export function ExerciseControls() {
 	const { currentExercise: { instance } } = useExerciseSessionContext()
-	const { canSubmit, canGiveUp } = useInputExerciseAvailability()
 	const complete = isExerciseDone(instance)
 
 	return <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1, flexWrap: 'wrap', mt: 2, mb: 3 }}>
@@ -21,8 +15,8 @@ export function ExerciseControls({ onSubmit }: ExerciseControlsProps) {
 		</Box>
 		<Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
 			{complete ? <NextExerciseButton /> : <>
-				<GiveUpButton disabled={!canGiveUp} />
-				<SubmitAnswerButton disabled={!canSubmit} onSubmit={onSubmit} />
+				<GiveUpButton />
+				<SubmitAnswerButton />
 			</>}
 		</Box>
 	</Box>

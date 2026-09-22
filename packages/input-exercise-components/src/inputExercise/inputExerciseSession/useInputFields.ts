@@ -1,6 +1,8 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useState } from 'react'
 
 import type { InputExerciseRawInput, InputExerciseValueOperations } from '@step-wise/input-exercises'
+
+import type { InputFieldOptions } from './fieldTypes'
 
 interface InputFieldsOptions {
 	valueOperations: InputExerciseValueOperations
@@ -8,19 +10,28 @@ interface InputFieldsOptions {
 }
 
 export function useInputFields({ valueOperations, mergeInput }: InputFieldsOptions) {
-	const fields = useRef(new Map<string, string>())
+	const [fields, setFields] = useState(() => new Map<string, InputFieldOptions>())
 
-	// Function that registers fields and their types.
-	const registerField = useCallback((name: string, type: string) => {
-		if (fields.current.has(name)) throw new Error(`Input field "${name}" is already registered.`)
-		fields.current.set(name, type)
-		return () => { fields.current.delete(name) }
+	// Set up a registerField handler that can be applied in an effect to register/deregister a field.
+	const registerField = useCallback((name: string, options: InputFieldOptions) => {
+		setFields(current => {
+			if (current.has(name)) throw new Error(`Input field "${name}" is already registered.`)
+			return new Map(current).set(name, options)
+		})
+		return () => setFields(current => {
+			if (current.get(name) !== options) return current
+			const next = new Map(current)
+			next.delete(name)
+			return next
+		})
 	}, [])
 
-	// Function that allows the setting of one field value.
-	const setFieldValue = useCallback((name: string, type: string, value: unknown) => {
-		mergeInput({ [name]: valueOperations.toInputValue(value, type) })
-	}, [valueOperations, mergeInput])
+	// Add a setter handler to adjust field values.
+	const setFieldValue = useCallback((name: string, value: unknown) => {
+		const field = fields.get(name)
+		if (!field) throw new Error(`Input field "${name}" is not registered.`)
+		mergeInput({ [name]: valueOperations.toInputValue(value, field.type) })
+	}, [fields, valueOperations, mergeInput])
 
 	// All done.
 	return { fields, registerField, setFieldValue }

@@ -1,33 +1,35 @@
 import type { ComponentType } from 'react'
 import { Alert } from '@mui/material'
 
-import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputField, useSolution } from '@sqlvalley/input-exercise-components'
+import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputExerciseContext, useInputField, useSolution } from '@sqlvalley/input-exercise-components'
 
 import { useSqlPracticeContext } from '../SqlPractice'
 import { ExerciseDescription } from './components/ExerciseDescription'
 import { ExerciseEditor } from './components/ExerciseEditor'
 import { ExerciseResults } from './components/ExerciseResults'
 import { ExerciseSolution } from './components/ExerciseSolution'
+import { type SqlQueryValidationReport, useSqlQueryValidation } from './useSqlQueryValidation'
 
 export function SQLExerciseInputArea({
 	disabled,
 	onSubmit,
 }: MonoExerciseInputAreaProps) {
 	const runtime = useSqlPracticeContext()
-	const { value, setValue } = useInputField('query', 'SQL')
+	const validationOptions = useSqlQueryValidation()
+	const { value, setValue, validation } = useInputField('query', { type: 'SQL', ...validationOptions })
 	return (
 		<>
 			<ExerciseEditor
 				query={typeof value?.value === 'string' ? value.value : ''}
 				onQueryChange={setValue}
 				onExecute={onSubmit}
-				onLiveExecute={runtime.executeLiveQuery}
 				readOnly={disabled}
+				invalid={validation.status === 'invalid'}
 				completionSchema={runtime.completionSchema}
 			/>
-			{runtime.queryError ? (
+			{validation.status === 'invalid' && validation.feedback ? (
 				<Alert severity="warning" sx={{ mt: 1.5 }}>
-					{runtime.queryError.message || 'Query execution failed.'}
+					{validation.feedback}
 				</Alert>
 			) : null}
 		</>
@@ -38,16 +40,19 @@ export function SQLExerciseInputVisualization({
 	state,
 }: MonoExerciseInputVisualizationProps) {
 	const runtime = useSqlPracticeContext()
+	const { getFieldValidation } = useInputExerciseContext()
+	const validation = getFieldValidation('query')
+	const preview = validation.status === 'valid' ? validation.report as SqlQueryValidationReport | undefined : undefined
 	const complete = state.done === true
 	return (
 		<ExerciseResults
-			queryResult={runtime.queryResult}
-			queryError={runtime.queryError}
-			hasExecuted={runtime.hasExecutedQuery}
+			queryResult={preview?.results}
+			queryError={undefined}
+			hasExecuted={!!preview}
 			isComplete={complete}
 			datasetSize={runtime.datasetSize}
 			onDatasetSizeChange={runtime.setDatasetSize}
-			datasetWarning={runtime.datasetWarning}
+			datasetWarning={preview?.datasetWarning}
 		/>
 	)
 }

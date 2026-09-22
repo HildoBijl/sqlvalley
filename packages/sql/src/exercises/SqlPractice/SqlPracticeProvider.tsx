@@ -3,7 +3,6 @@ import { type ReactNode, useMemo } from 'react'
 import type { DatasetSize } from '@sqlvalley/mock-data'
 
 import { SqlPracticeContext } from './context'
-import { useSqlPreview } from './useSqlPreview'
 
 interface SqlPracticeProviderProps {
 	datasetSize: DatasetSize
@@ -12,11 +11,10 @@ interface SqlPracticeProviderProps {
 	children: ReactNode
 }
 
-// UI preferences and preview results are separate from the module's execution context.
+// Practice configuration is separate from the module's execution context.
 export function SqlPracticeProvider({ datasetSize, setDatasetSize, completionSchema, children }: SqlPracticeProviderProps) {
-	const preview = useSqlPreview(datasetSize)
 	const tableNames = useMemo(() => Object.keys(completionSchema).sort(), [completionSchema])
-	return <SqlPracticeContext.Provider value={{ ...preview, datasetSize, setDatasetSize, completionSchema, tableNames }}>
+	return <SqlPracticeContext.Provider value={{ datasetSize, setDatasetSize, completionSchema, tableNames }}>
 		{children}
 	</SqlPracticeContext.Provider>
 }

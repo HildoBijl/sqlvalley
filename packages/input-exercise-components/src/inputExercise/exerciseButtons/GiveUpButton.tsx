@@ -4,9 +4,8 @@ import { Flag } from '@mui/icons-material'
 
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
+import { useInputExerciseContext } from '../hooks'
 import { GiveUpDialog } from './GiveUpDialog'
-
-import { useInputExerciseAvailability } from '../useInputExerciseAvailability'
 
 export interface GiveUpButtonProps {
 	disabled?: boolean
@@ -15,7 +14,7 @@ export interface GiveUpButtonProps {
 export function GiveUpButton({ disabled = false }: GiveUpButtonProps) {
 	const { controls } = useExerciseSessionContext()
 	const [open, setOpen] = useState(false)
-	const { canGiveUp } = useInputExerciseAvailability()
+	const { canGiveUp } = useInputExerciseContext()
 	const unavailable = disabled || !canGiveUp
 
 	const handleGiveUp = () => {

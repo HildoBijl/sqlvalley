@@ -1,4 +1,6 @@
 export * from './types'
+export type { InputFieldOptions, FieldValidationResult } from './inputExerciseSession/fieldTypes'
+export type { FieldValidationState } from './inputExerciseSession/useInputValidation'
 export * from './InputExerciseProvider'
 export * from './hooks'
 export * from './adminComponents'

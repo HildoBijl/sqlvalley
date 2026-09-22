@@ -5,7 +5,7 @@ React presentation for solo input exercises. Exercise definitions and reducers c
 
 ## Public API
 
-`MonoExercise` accepts `MonoExerciseProps` containing `Problem`, `InputArea`, `Solution`, and optional `InputVisualization` components. It wraps these in `InputExerciseProvider`. Fields use `useInputField(name, type)` to read and update structured draft input; missing string values display as empty strings. Submission sends that structured input directly. Value conversion belongs to the fields and the definition's `valueOperations`. Feedback is restored from stored reports.
+`MonoExercise` accepts `MonoExerciseProps` containing `Problem`, `InputArea`, `Solution`, and optional `InputVisualization` components. It wraps these in `InputExerciseProvider`. Fields use `useInputField(name, { type, validate })` to read and update structured draft input; missing string values display as empty strings. Submission sends that structured input directly. Value conversion belongs to the fields and the definition's `valueOperations`. Feedback is restored from stored reports.
 
 MonoExercise renders the Problem section, input area, feedback and buttons, input visualization, and finally the Solution section after completion. It owns shared section headings, spacing, rounded backgrounds, and solution collapse controls. The problem section uses the standard heading "Exercise". Supplied components contain subject-specific content, not section wrappers. Story slots are deferred until story mode is implemented.
 
@@ -47,16 +47,21 @@ MonoExercise uses this provider internally; custom renderers can also wrap their
 
 Use `useInput()` to read only the current draft input, or `useSolution()` to read only the resolved solution. Both require an `InputExerciseProvider` and may return `undefined` when that value is absent.
 
-`useInputField(name, type)` returns `{ value, setValue }`. `value` is the raw input value (or `undefined`); `setValue` accepts a domain value and converts it through the definition's value operations. Field registration stores metadata only, not another copy of the input.
+`useInputField(name, options)` returns `{ value, setValue, validation }`. The options object requires `type` and may specify `normalizeInput` and `validate`. `value` is the raw input value (or `undefined`); `setValue` accepts a domain value and converts it through the definition's value operations. Each mounted field has one registration containing its type and frontend-only validation functions, not another copy of the input. The validation hook reads that registry, and solution insertion and field updates use the same registered type.
+
+`options.normalizeInput` defaults to leaving the value unchanged. It should return a stable, JSON-serializable value so equivalent drafts have the same validation key. `options.validate` receives `{ rawInput, normalizedInput, context, signal }` and may return a result or a promise; `signal` is aborted when that live validation becomes obsolete. A validator should return `{ valid: false }` for empty input when it must be rejected without feedback. Without a validator, any value is valid. Invalid results can contain React feedback; valid results can contain any transient report for visualizations. Validation results are tied to the normalized value and module context, and obsolete asynchronous results are ignored. `useInputExerciseContext()` exposes `getFieldValidation(name)`, `allInputsValid`, `validationPending`, `canGiveUp`, and `isSubmitButtonEnabled`.
 
 ```tsx
-const { value, setValue } = useInputField('query', 'SQL')
+const { value, setValue } = useInputField('query', {
+	type: 'SQL',
+	validate: ({ normalizedInput }) => ({ valid: typeof normalizedInput === 'string' && normalizedInput.trim().length > 0 }),
+})
 return <textarea value={typeof value?.value === 'string' ? value.value : ''} onChange={event => setValue(event.target.value)} />
 ```
 
-The shared `NextExerciseButton`, `GiveUpButton`, and `SubmitAnswerButton` components accept a `disabled` prop and also disable themselves during submission. `GiveUpButton` confirms before submitting a give-up action; `NextExerciseButton` starts a new exercise. `SubmitAnswerButton` takes an `onSubmit` callback so renderers can coordinate submission with feedback. The renderer decides when each button is shown.
+The shared `NextExerciseButton`, `GiveUpButton`, and `SubmitAnswerButton` components accept a `disabled` prop and also disable themselves during submission. `GiveUpButton` confirms before submitting a give-up action; `NextExerciseButton` starts a new exercise. `SubmitAnswerButton` calls the input provider's `submitInput()` directly. Other input controls, such as an editor's execute shortcut, can use the same callback from `useInputExerciseContext()`. The renderer decides when each button is shown.
 
-Shared input validation currently blocks empty or whitespace-only input. Submission and giving up also require module resources to be available and no submission in progress. MonoExercise additionally prevents submission after completion. Field-specific validation can extend this later.
+Submission and giving up require module resources and no submission in progress. `submitInput()` prevents submission after completion and synchronously checks that the displayed draft still has current, valid results for every registered field. It does not run validation again or wait for pending results. The provider calculates button availability once for all consumers: `isSubmitButtonEnabled` briefly retains its previously valid appearance during pending validation to avoid flicker, but a click during that interval does nothing until validation succeeds. Submission feedback is shown only while the current normalized draft matches the input action that produced it, including for restored exercise history.
 
 `InputVisualization` receives the latest input action's full `report` as `InputExerciseReport | undefined` from `@step-wise/input-exercises`. Consumers narrow any exercise-specific report fields themselves; there is no grading-result generic.
 
