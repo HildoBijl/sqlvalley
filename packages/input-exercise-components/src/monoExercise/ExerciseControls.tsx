@@ -1,15 +1,39 @@
+import { useState } from 'react'
 import { Box, Button } from '@mui/material'
 import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material'
 
-import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
+import { getCurrentState } from '@step-wise/exercise-definition'
+import { useExerciseSessionContext, useModuleContext } from '@sqlvalley/exercise-manager'
 
 import { ExerciseAdminTools } from '../ExerciseAdminTools'
-import { useMonoExerciseControls } from './controlsContext'
+import { useInputExerciseContext } from '../inputExercise'
+import type { MonoExerciseRenderSpec } from './specifications'
+import { GiveUpDialog } from './GiveUpDialog'
 
-export function ExerciseControls() {
-	const { admin } = useExerciseSessionContext()
-	const { solved, givenUp, canSubmit, canGiveUp, onSubmit, onGiveUp, onNext } =
-		useMonoExerciseControls()
+interface ExerciseControlsProps<Parameters extends Record<string, unknown>, Input, CheckResult> {
+	spec: MonoExerciseRenderSpec<Parameters, Input, CheckResult>
+	onSubmit: () => void
+}
+
+export function ExerciseControls<Parameters extends Record<string, unknown>, Input, CheckResult>({ spec, onSubmit }: ExerciseControlsProps<Parameters, Input, CheckResult>) {
+	const { admin, submitting, controls, currentExercise: { instance } } = useExerciseSessionContext()
+	const { input: rawInput } = useInputExerciseContext()
+	const moduleContext = useModuleContext()
+	const state = getCurrentState(instance)
+	const solved = state.solved === true
+	const givenUp = state.givenUp === true
+	const complete = solved || givenUp
+	const input = rawInput === undefined ? spec.initialInput : spec.fromRawInput(rawInput)
+	const availabilityArgs = { parameters: instance.parameters as Parameters, input, moduleContext }
+	const canSubmit = !complete && !submitting && !(spec.isInputEmpty?.(input) ?? false) &&
+		(spec.canSubmit?.(availabilityArgs) ?? true)
+	const canGiveUp = !complete && !submitting && (spec.canGiveUp?.(availabilityArgs) ?? true)
+	const [giveUpOpen, setGiveUpOpen] = useState(false)
+
+	const handleGiveUp = () => {
+		setGiveUpOpen(false)
+		void controls.submitAction({ type: 'giveUp' })
+	}
 
 	return (
 		<Box
@@ -33,7 +57,7 @@ export function ExerciseControls() {
 							variant="contained"
 							size="medium"
 							startIcon={<ArrowForward />}
-							onClick={onNext}
+							onClick={controls.startNewExercise}
 							title="Move to the next exercise"
 						>
 							Next Exercise
@@ -45,7 +69,7 @@ export function ExerciseControls() {
 								size="medium"
 								startIcon={<Flag />}
 								color="warning"
-								onClick={onGiveUp}
+								onClick={() => setGiveUpOpen(true)}
 								disabled={!canGiveUp}
 							>
 								Give Up
@@ -66,13 +90,14 @@ export function ExerciseControls() {
 						variant="contained"
 						size="medium"
 						startIcon={<ArrowForward />}
-						onClick={onNext}
+						onClick={controls.startNewExercise}
 						title="Proceed to the next exercise"
 					>
 						Next Exercise
 					</Button>
 				)}
 			</Box>
+			<GiveUpDialog open={giveUpOpen} onConfirm={handleGiveUp} onCancel={() => setGiveUpOpen(false)} />
 		</Box>
 	)
 }
