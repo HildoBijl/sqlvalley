@@ -5,8 +5,7 @@ import { ArrowForward, CheckCircle, Flag } from '@mui/icons-material'
 import { getCurrentState } from '@step-wise/exercise-definition'
 import { useExerciseSessionContext, useModuleContext } from '@sqlvalley/exercise-manager'
 
-import { ExerciseAdminTools } from '../../ExerciseAdminTools'
-import { useInputExerciseContext } from '../../inputExercise'
+import { ExerciseAdminTools, useInputExerciseContext } from '../../inputExercise'
 import type { MonoExerciseRenderSpec } from '../specifications'
 import { GiveUpDialog } from './GiveUpDialog'
 
@@ -16,7 +15,7 @@ interface ExerciseControlsProps<Parameters extends Record<string, unknown>, Inpu
 }
 
 export function ExerciseControls<Parameters extends Record<string, unknown>, Input, CheckResult>({ spec, onSubmit }: ExerciseControlsProps<Parameters, Input, CheckResult>) {
-	const { admin, submitting, controls, currentExercise: { instance } } = useExerciseSessionContext()
+	const { submitting, controls, currentExercise: { instance } } = useExerciseSessionContext()
 	const { input: rawInput } = useInputExerciseContext()
 	const moduleContext = useModuleContext()
 	const state = getCurrentState(instance)
@@ -48,7 +47,7 @@ export function ExerciseControls<Parameters extends Record<string, unknown>, Inp
 			}}
 		>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-				{admin.showControls && <ExerciseAdminTools />}
+				<ExerciseAdminTools />
 			</Box>
 			<Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
 				{!solved ? (

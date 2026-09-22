@@ -3,7 +3,7 @@ import { Lightbulb } from '@mui/icons-material'
 
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
-import { useInputExerciseContext } from './hooks'
+import { useInputExerciseContext } from '../hooks'
 
 export function ShowSolutionButton() {
 	const { submitting } = useExerciseSessionContext()
