@@ -36,6 +36,14 @@ Follow the style of the surrounding code and move changed code toward these conv
 - Do not add semicolons unless the syntax requires one.
 - Prefer single quotes for strings where the language permits them.
 - Prefer compact code when it remains immediately readable. Avoid vertical expansion when a statement naturally fits on one line, but do not compress complex logic merely to reduce line count.
+- Return JSX directly without wrapping parentheses. Put the opening element or fragment on the same line as `return`, including for multiline JSX.
+
+```tsx
+return <Component>
+	{children}
+</Component>
+```
+
 - Write a simple `if` statement containing one short operation on one line without braces.
 
 ```ts

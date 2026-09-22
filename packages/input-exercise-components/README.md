@@ -52,3 +52,5 @@ Use `useInput()` to read only the current draft input, or `useSolution()` to rea
 const { value, setValue } = useInputField('query', 'SQL')
 return <textarea value={typeof value?.value === 'string' ? value.value : ''} onChange={event => setValue(event.target.value)} />
 ```
+
+The shared `NextExerciseButton`, `GiveUpButton`, and `SubmitAnswerButton` components accept a `disabled` prop and also disable themselves during submission. `GiveUpButton` confirms before submitting a give-up action; `NextExerciseButton` starts a new exercise. `SubmitAnswerButton` takes an `onSubmit` callback so renderers can coordinate submission with feedback. The renderer decides when each button is shown.
