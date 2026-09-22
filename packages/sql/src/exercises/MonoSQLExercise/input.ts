@@ -12,7 +12,6 @@ export const sqlValueTypes = {
 	},
 }
 
-export const toRawInput = (query: string): InputExerciseRawInput => ({ query: { type: 'SQL', value: query } })
 export const fromRawInput = (input: InputExerciseRawInput): string => {
 	const query = input.query
 	if (query?.type !== 'SQL' || typeof query.value !== 'string') throw new Error('Invalid SQL input.')

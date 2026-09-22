@@ -6,14 +6,17 @@ import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 import { GiveUpDialog } from './GiveUpDialog'
 
+import { useInputExerciseAvailability } from '../useInputExerciseAvailability'
+
 export interface GiveUpButtonProps {
 	disabled?: boolean
 }
 
 export function GiveUpButton({ disabled = false }: GiveUpButtonProps) {
-	const { submitting, controls } = useExerciseSessionContext()
+	const { controls } = useExerciseSessionContext()
 	const [open, setOpen] = useState(false)
-	const unavailable = disabled || submitting
+	const { canGiveUp } = useInputExerciseAvailability()
+	const unavailable = disabled || !canGiveUp
 
 	const handleGiveUp = () => {
 		if (unavailable) return

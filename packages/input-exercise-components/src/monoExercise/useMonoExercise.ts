@@ -1,52 +1,43 @@
 import { useCallback, useState } from 'react'
 
-import { getCurrentState } from '@step-wise/exercise-definition'
-import { useCurrentExerciseInstance, useExerciseSessionContext } from '@sqlvalley/exercise-manager'
+import { getCurrentState, isStateDone } from '@step-wise/exercise-definition'
+import { type InputExerciseReport, type MonoExerciseState, isMonoExercise } from '@step-wise/input-exercises'
+import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 import { useInputExerciseContext } from '../inputExercise'
+import { useInputExerciseAvailability } from '../inputExercise/useInputExerciseAvailability'
 import type { MonoExerciseReport } from './types'
-import type { MonoExerciseRenderSpec } from './specifications'
-import { isMonoExerciseHistory } from './validation'
 
-interface MonoExerciseOptions<Parameters extends Record<string, unknown>, Input, CheckResult> {
-	spec: MonoExerciseRenderSpec<Parameters, Input, CheckResult>
-}
+export function useMonoExercise() {
+	// Extract and verify data from contexts.
+	const { submitting, controls, currentExercise: { definition, instance: exerciseInstance } } = useExerciseSessionContext()
+	const { input: rawInput } = useInputExerciseContext()
+	if (!isMonoExercise(definition)) throw new Error('MonoExercise requires a mono-exercise definition.')
 
-// Restores feedback from the stored report without regrading on reload.
-export function useMonoExercise<Parameters extends Record<string, unknown>, Input, CheckResult>({ spec }: MonoExerciseOptions<Parameters, Input, CheckResult>) {
-	const { input: rawInput, setInput } = useInputExerciseContext()
-	const { submitting, controls } = useExerciseSessionContext()
-	const exerciseInstance = useCurrentExerciseInstance()
-	if (!isMonoExerciseHistory(exerciseInstance)) throw new Error('MonoExercise requires mono state and input actions.')
+	// Extract exercise status.
+	const parameters = exerciseInstance.parameters
 	const { history } = exerciseInstance
-	const state = getCurrentState(exerciseInstance)
+	const state = getCurrentState(exerciseInstance) as MonoExerciseState
 
+	// Determine feedback to show.
 	const [feedbackInput, setFeedbackInput] = useState(rawInput)
-
-	const input = rawInput === undefined ? spec.initialInput : spec.fromRawInput(rawInput)
-
 	const latestEvent = history[history.length - 1]
-	const report = latestEvent?.action.type === 'input'
-		? (latestEvent.report as MonoExerciseReport | undefined)
+	const report: InputExerciseReport | undefined = latestEvent?.action.type === 'input' ? latestEvent.report : undefined
+	const feedbackType = report?.type
+	const feedback: Pick<MonoExerciseReport, 'message' | 'type'> | undefined = feedbackInput === rawInput && typeof report?.message === 'string' &&
+		(feedbackType === 'success' || feedbackType === 'info' || feedbackType === 'warning' || feedbackType === 'error')
+		? { message: report.message, type: feedbackType }
 		: undefined
-	const feedback = feedbackInput === rawInput && report ? report : null
-	const lastResult = (report?.result ?? null) as CheckResult | null
 
-	const handleInputChange = useCallback(
-		(value: Input) => {
-			setInput(spec.toRawInput(value))
-		},
-		[setInput, spec],
-	)
-
+	// Set up a submission handler that takes into account validation status.
+	const { canSubmit } = useInputExerciseAvailability()
+	const complete = isStateDone(state)
 	const handleSubmit = useCallback(() => {
+		if (complete || !canSubmit || !rawInput) return
 		setFeedbackInput(rawInput)
-		void controls.submitAction({ type: 'input', input: spec.toRawInput(input) })
-	}, [controls, input, rawInput, spec])
+		void controls.submitAction({ type: 'input', input: rawInput })
+	}, [controls, rawInput, complete, canSubmit])
 
-	const parameters = exerciseInstance.parameters as Parameters
-	const solved = state.solved === true
-	const givenUp = state.givenUp === true
-	const complete = solved || givenUp
-	return { parameters, state, input, feedback, lastResult, complete, submitting, handleInputChange, handleSubmit }
+	// Assemble all the data needed by the MonoExercise component.
+	return { parameters, state, input: rawInput, feedback, report, complete, submitting, handleSubmit }
 }

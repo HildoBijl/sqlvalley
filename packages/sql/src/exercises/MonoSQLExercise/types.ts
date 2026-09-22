@@ -17,9 +17,8 @@ export interface MonoSQLExerciseDefinitionSpec<Parameters extends Record<string,
 }
 
 export interface MonoSQLExerciseSpec<Parameters extends Record<string, unknown>> extends MonoSQLExerciseDefinitionSpec<Parameters> {
-	Problem: ComponentType<MonoExerciseProblemProps<Parameters>>
-	Solution: ComponentType<MonoExerciseSolutionProps<Parameters>>
-	title?: string
+	Problem: ComponentType<MonoExerciseProblemProps>
+	Solution: ComponentType<MonoExerciseSolutionProps>
 }
 
 export interface MonoSQLCheckResult {

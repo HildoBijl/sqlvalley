@@ -4,16 +4,15 @@ import { Alert } from '@mui/material'
 import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputField, useSolution } from '@sqlvalley/input-exercise-components'
 
 import { useSqlPracticeContext } from '../SqlPractice'
-import type { MonoSQLCheckResult } from './types'
 import { ExerciseDescription } from './components/ExerciseDescription'
 import { ExerciseEditor } from './components/ExerciseEditor'
 import { ExerciseResults } from './components/ExerciseResults'
 import { ExerciseSolution } from './components/ExerciseSolution'
 
-export function SQLExerciseInputArea<Parameters extends Record<string, unknown>>({
+export function SQLExerciseInputArea({
 	disabled,
 	onSubmit,
-}: MonoExerciseInputAreaProps<Parameters, string>) {
+}: MonoExerciseInputAreaProps) {
 	const runtime = useSqlPracticeContext()
 	const { value, setValue } = useInputField('query', 'SQL')
 	return (
@@ -35,9 +34,9 @@ export function SQLExerciseInputArea<Parameters extends Record<string, unknown>>
 	)
 }
 
-export function SQLExerciseInputVisualization<Parameters extends Record<string, unknown>>({
+export function SQLExerciseInputVisualization({
 	state,
-}: MonoExerciseInputVisualizationProps<Parameters, string, MonoSQLCheckResult>) {
+}: MonoExerciseInputVisualizationProps) {
 	const runtime = useSqlPracticeContext()
 	const complete = state.done === true
 	return (
@@ -53,10 +52,10 @@ export function SQLExerciseInputVisualization<Parameters extends Record<string, 
 	)
 }
 
-export function createSQLProblem<Parameters extends Record<string, unknown>>(
-	Problem: ComponentType<MonoExerciseProblemProps<Parameters>>,
+export function createSQLProblem(
+	Problem: ComponentType<MonoExerciseProblemProps>,
 ) {
-	return function SQLExerciseProblem({ parameters }: { parameters: Parameters }) {
+	return function SQLExerciseProblem({ parameters }: MonoExerciseProblemProps) {
 		const runtime = useSqlPracticeContext()
 		return (
 			<ExerciseDescription

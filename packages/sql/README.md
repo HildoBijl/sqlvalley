@@ -9,6 +9,8 @@ The specification version is optional; Step-Wise defaults it to `1`. Pass a `Mon
 
 `createMonoSQLExercise` supplies SQL content for the generic `Problem`, `InputArea`, `InputVisualization`, and `Solution` slots. MonoExercise owns shared section styling and solution visibility. The SQL solution view reads the resolved solution from `useSolution()`, so display and insertion use the same value.
 
+Definition specifications retain their parameter generic for generation and solution logic. Component props use the base `ExerciseParameters` type, with exercise-specific narrowing inside the component.
+
 Exercise authors supply content components; the adapter supplies the SQL editor, preview, and available-table information. Use the exported `SQLExerciseSolution` for the standard query display, or supply a custom Solution component reading `useSolution()` from `@sqlvalley/input-exercise-components`. The lowercase `solution` remains the grading query (or a parameter-dependent function); uppercase `Solution` is its presentation.
 
 ```tsx
@@ -27,7 +29,7 @@ SQL specifications accept optional `skill` and `setup` metadata, forwarded to th
 
 `buildMonoSQLExercise` preserves the complete upstream input-exercise definition, including solution callbacks and `valueOperations`. These remain available on the definition paired with a renderer by `createMonoSQLExercise`.
 
-SQL submissions and saved drafts use a query field containing { type: 'SQL', value: query }. Editor values remain strings and are converted at the renderer boundary. SQL validation and grading produce persisted feedback reports. The upstream reducer owns attempted, solved, givenUp, and done state transitions.
+SQL submissions and saved drafts use a query field containing { type: 'SQL', value: query }. Editor values remain strings; registered input fields handle conversion through value operations. MonoExercise submits the structured draft directly. SQL validation and grading produce persisted feedback reports. The upstream reducer owns attempted, solved, givenUp, and done state transitions.
 
 The application learning-store v8 to v9 migration converts existing SQL submissions, string drafts, and give-up actions, preserving reports, draft contents, progress, and timestamps.
 

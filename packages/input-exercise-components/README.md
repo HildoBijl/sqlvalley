@@ -5,27 +5,28 @@ React presentation for solo input exercises. Exercise definitions and reducers c
 
 ## Public API
 
-MonoExercise accepts a MonoExerciseRenderSpec with native editor input, conversions to and from upstream raw input, and the `Problem`, `InputArea`, `Solution`, and optional `InputVisualization` components. Drafts and submitted answers use the same structured input fields, supporting multiple fields per exercise. The renderer converts drafts back to native editor input when restoring them. MonoExercise wraps its contents in `InputExerciseProvider`. Input components register their field names and types through `useInputField(name, type)`; solution insertion uses the definition's `valueOperations.toInputValue`. Missing drafts display `initialInput`; previously submitted input is not restored as a draft. The shared instance and context use `InputExerciseRawInput` for drafts, so both restoring and setting drafts are checked against the upstream input format. Feedback is restored from stored reports; solved and given-up states use the upstream MonoExerciseState.
+`MonoExercise` accepts `MonoExerciseProps` containing `Problem`, `InputArea`, `Solution`, and optional `InputVisualization` components. It wraps these in `InputExerciseProvider`. Fields use `useInputField(name, type)` to read and update structured draft input; missing string values display as empty strings. Submission sends that structured input directly. Value conversion belongs to the fields and the definition's `valueOperations`. Feedback is restored from stored reports.
 
-MonoExercise renders the Problem section, input area, feedback and buttons, input visualization, and finally the Solution section after completion. It owns shared section headings, spacing, rounded backgrounds, and solution collapse controls. `problemTitle` optionally overrides the Problem heading. Supplied components contain subject-specific content, not section wrappers. Story slots are deferred until story mode is implemented.
+MonoExercise renders the Problem section, input area, feedback and buttons, input visualization, and finally the Solution section after completion. It owns shared section headings, spacing, rounded backgrounds, and solution collapse controls. The problem section uses the standard heading "Exercise". Supplied components contain subject-specific content, not section wrappers. Story slots are deferred until story mode is implemented.
 
 ```tsx
-const spec = {
-	// Input configuration and conversions go here.
+const componentProps = {
 	Problem: ProblemContent,
 	InputArea: InputEditor,
 	InputVisualization: InputPreview,
 	Solution: SolutionContent,
 }
+
+<MonoExercise {...componentProps} />
 ```
 
 Solution components read the definition's resolved solution through `useSolution()`, sharing it with admin solution insertion. Input areas remain visible but disabled during submission and after completion.
 
-The package exports rendering specifications, component props, and feedback/report types. It does not build definitions or generate instances.
+The package exports component props and feedback/report types. It does not build definitions or generate instances.
 
 `ExerciseAdminTools` reads `admin.showControls` from the exercise context and renders nothing when disabled. It combines the exercise manager?s `ExerciseSelection` with `ShowSolutionButton`. When enabled, this package renders the exercise selector and Show Solution button using `admin.exerciseIds` and `admin.selectExerciseById` from the session context and solution handling from the input provider. Tools are disabled while `submitting` is true; Show Solution is also disabled when no solution is available. Showing a solution fills the draft without submitting an answer.
 
-MonoExercise validates the general instance history and state before using mono-specific helpers. The manager hooks do not assert renderer-specific types.
+MonoExercise checks that the definition is a mono exercise using the upstream `isMonoExercise` guard. It assumes the paired instance state was produced by that definition rather than revalidating its entire history.
 
 
 ## Shared input provider
@@ -54,3 +55,9 @@ return <textarea value={typeof value?.value === 'string' ? value.value : ''} onC
 ```
 
 The shared `NextExerciseButton`, `GiveUpButton`, and `SubmitAnswerButton` components accept a `disabled` prop and also disable themselves during submission. `GiveUpButton` confirms before submitting a give-up action; `NextExerciseButton` starts a new exercise. `SubmitAnswerButton` takes an `onSubmit` callback so renderers can coordinate submission with feedback. The renderer decides when each button is shown.
+
+Shared input validation currently blocks empty or whitespace-only input. Submission and giving up also require module resources to be available and no submission in progress. MonoExercise additionally prevents submission after completion. Field-specific validation can extend this later.
+
+`InputVisualization` receives the latest input action's full `report` as `InputExerciseReport | undefined` from `@step-wise/input-exercises`. Consumers narrow any exercise-specific report fields themselves; there is no grading-result generic.
+
+Component slots receive `parameters` as the upstream `ExerciseParameters` type. The rendering API has no parameter generic; components narrow exercise-specific fields where needed.
