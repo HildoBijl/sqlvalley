@@ -49,7 +49,7 @@ The provider, context types, and hooks live in `src/sqlModuleProvider/` and are 
 
 Its general module-context value contains `moduleId`, `tableKeys`, `loading`, `error`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useSqlModuleContext()` to display loading and error states. Exercise generation waits until loading finishes without an error. React components use `useUserModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. Both return a `DatabaseHandle`. Omit the size only for sources without selectable sizes. Read-only theory components may use `useGradingModuleDatabase('small')`; interactive previews and editors must use user databases.
 
-`SqlPracticeProvider` belongs inside the module provider and receives `datasetSize`, `setDatasetSize`, and `completionSchema` from the application. It supplies practice configuration, while the SQL query field owns live validation and preview results. Previews use the selected user database exclusively, with an additional full-dataset check only when the small result is empty and a warning may be useful. Grading uses the full grading database independently of the selected preview size and resets it after each grading attempt, including failures. User databases are unaffected by this reset. Practice settings and query results are not part of the module context.
+`SqlPracticeProvider` belongs inside the module provider and receives `datasetSize` and `setDatasetSize` from the application. It supplies practice configuration, while the SQL query field owns live validation and preview results. Previews use the selected user database exclusively, with an additional full-dataset check only when the small result is empty and a warning may be useful. Grading uses the full grading database independently of the selected preview size and resets it after each grading attempt, including failures. User databases are unaffected by this reset. Practice settings and query results are not part of the module context.
 
 Each application module index exports its configured `ModuleProvider`. `SkillPage` and `ConceptPage` load this independently of exercise definitions and wrap their page content in it, keyed by module ID. The practice provider remains inside the interactive practice tab. Theory and summary examples use the curriculum hook `useTheoryPageDatabase()`, which selects the small grading database. Data-explorer integration can migrate separately.
 
@@ -80,3 +80,16 @@ Without a key, each hook owns a database that closes on unmount or configuration
 For event handlers, `useQueryExecution(handle)` provides `{ execute, clear, results, error }`; `execute(query)` returns a promise and rejects on SQL errors. SQL.js execution itself is synchronous. Query results belong to the calling component and clear when its database changes. Direct `handle.database.exec(query)` is also available once loading completes. Mutations do not automatically refresh other queries.
 
 SQL editors obtain completion schemas separately from their dataset, for example through mock-data's `buildCompletionSchema`.
+
+
+## Registered SQL input
+
+`SqlInput` wraps `SQLEditor` and registers a named SQL field with `InputExerciseProvider`. It requires the SQL module and practice providers, supplies autocomplete and validation feedback, and leaves query-result layout to the exercise. Distinct names allow multiple independent SQL fields.
+
+```tsx
+<SqlInput name="query" disabled={disabled} onSubmit={onSubmit} />
+```
+
+`useSqlQueryValidation` returns a validation function bound to the selected user database. `SqlInput` registers `normalizeSqlQuery` separately. Dataset changes rerun validation; obsolete runs are cancelled before executing SQL. Validation reports contain the normalized query and its preview results. The visualization checks empty small-dataset results against the full user database and displays a warning when that same query returns rows there. Comparison failures do not affect validation.
+
+`useModuleCompletionSchema()` calls the database source's optional `buildCompletionSchema(tableKeys)` function with the module's table keys and memoizes the result. The mock-data source supplies its existing schema builder. No database loading or queries are required, and dataset size does not affect the schema. Sources without this function provide no table/column suggestions; SQL keyword completion remains available.

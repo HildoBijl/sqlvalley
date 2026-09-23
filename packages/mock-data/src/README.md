@@ -160,3 +160,5 @@ parseCsv -> tables -> buildSql -> public package API
 - [`parseCsv/`](./parseCsv/) parses CSV input and converts cell values.
 - [`tables/`](./tables/) defines and registers the available datasets without parsing their CSV data.
 - [`buildSql/`](./buildSql/) parses requested datasets and generates SQL and completion metadata. Generated table SQL is cached by table definition and dataset size.
+
+The exported `databaseSource` also supplies `buildCompletionSchema(tables)`, validating table keys and delegating to the existing metadata builder. Completion schemas do not require a loaded database or a dataset size.

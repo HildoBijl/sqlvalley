@@ -4,6 +4,7 @@ import type { Database, QueryExecResult } from '@sqlvalley/sqljs'
 export interface DatabaseSource {
 	tableKeys: readonly string[]
 	datasetSizes?: readonly string[]
+	buildCompletionSchema?: (tables: readonly string[]) => Record<string, string[]>
 	buildSql: (options: { tables: string[]; size?: string }) => string
 }
 

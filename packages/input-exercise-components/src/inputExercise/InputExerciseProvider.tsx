@@ -7,7 +7,7 @@ import { useInputExercise } from './inputExerciseSession'
 export function InputExerciseProvider({ children }: InputExerciseProviderProps) {
 	const { contextValue, loading, error } = useInputExercise()
 
-	if (loading) return <Typography color="text.secondary">Loading the solution...</Typography>
+	if (loading) return <Typography color="text.secondary">Rendering the exercises...</Typography>
 	if (error) return <Alert severity="error">{error.message}</Alert>
 
 	return <InputExerciseContext.Provider value={contextValue}>

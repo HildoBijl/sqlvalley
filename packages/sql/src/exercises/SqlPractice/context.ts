@@ -3,8 +3,6 @@ import { createContext, useContext } from 'react'
 import type { DatasetSize } from '@sqlvalley/mock-data'
 
 export interface SqlPracticeContextValue {
-	completionSchema: Record<string, string[]>
-	tableNames: string[]
 	datasetSize: DatasetSize
 	setDatasetSize: (size: DatasetSize) => void
 }

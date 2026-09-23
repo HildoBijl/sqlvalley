@@ -1,39 +1,20 @@
 import type { ComponentType } from 'react'
-import { Alert } from '@mui/material'
 
-import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputExerciseContext, useInputField, useSolution } from '@sqlvalley/input-exercise-components'
+import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputExerciseContext, useSolution } from '@sqlvalley/input-exercise-components'
 
+import { useModuleCompletionSchema } from '../../sqlModuleProvider'
+import { type SqlQueryValidationReport, SqlInput } from '../../sqlInput'
 import { useSqlPracticeContext } from '../SqlPractice'
+import { useSmallDatasetWarning } from './useSmallDatasetWarning'
 import { ExerciseDescription } from './components/ExerciseDescription'
-import { ExerciseEditor } from './components/ExerciseEditor'
 import { ExerciseResults } from './components/ExerciseResults'
 import { ExerciseSolution } from './components/ExerciseSolution'
-import { type SqlQueryValidationReport, useSqlQueryValidation } from './useSqlQueryValidation'
 
 export function SQLExerciseInputArea({
 	disabled,
 	onSubmit,
 }: MonoExerciseInputAreaProps) {
-	const runtime = useSqlPracticeContext()
-	const validationOptions = useSqlQueryValidation()
-	const { value, setValue, validation } = useInputField('query', { type: 'SQL', ...validationOptions })
-	return (
-		<>
-			<ExerciseEditor
-				query={typeof value?.value === 'string' ? value.value : ''}
-				onQueryChange={setValue}
-				onExecute={onSubmit}
-				readOnly={disabled}
-				invalid={validation.status === 'invalid'}
-				completionSchema={runtime.completionSchema}
-			/>
-			{validation.status === 'invalid' && validation.feedback ? (
-				<Alert severity="warning" sx={{ mt: 1.5 }}>
-					{validation.feedback}
-				</Alert>
-			) : null}
-		</>
-	)
+	return <SqlInput name="query" disabled={disabled} onSubmit={onSubmit} />
 }
 
 export function SQLExerciseInputVisualization({
@@ -43,31 +24,28 @@ export function SQLExerciseInputVisualization({
 	const { getFieldValidation } = useInputExerciseContext()
 	const validation = getFieldValidation('query')
 	const preview = validation.status === 'valid' ? validation.report as SqlQueryValidationReport | undefined : undefined
+	const datasetWarning = useSmallDatasetWarning(preview)
 	const complete = state.done === true
-	return (
-		<ExerciseResults
-			queryResult={preview?.results}
-			queryError={undefined}
-			hasExecuted={!!preview}
-			isComplete={complete}
-			datasetSize={runtime.datasetSize}
-			onDatasetSizeChange={runtime.setDatasetSize}
-			datasetWarning={preview?.datasetWarning}
-		/>
-	)
+	return <ExerciseResults
+		queryResult={preview?.results}
+		queryError={undefined}
+		hasExecuted={!!preview}
+		isComplete={complete}
+		datasetSize={runtime.datasetSize}
+		onDatasetSizeChange={runtime.setDatasetSize}
+		datasetWarning={datasetWarning}
+	/>
 }
 
 export function createSQLProblem(
 	Problem: ComponentType<MonoExerciseProblemProps>,
 ) {
 	return function SQLExerciseProblem({ parameters }: MonoExerciseProblemProps) {
-		const runtime = useSqlPracticeContext()
-		return (
-			<ExerciseDescription
-				description={<Problem parameters={parameters} />}
-				tableNames={runtime.tableNames}
-			/>
-		)
+		const schema = useModuleCompletionSchema()
+		return <ExerciseDescription
+			description={<Problem parameters={parameters} />}
+			tableNames={Object.keys(schema).sort()}
+		/>
 	}
 }
 

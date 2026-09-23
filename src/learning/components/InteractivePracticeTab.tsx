@@ -11,7 +11,7 @@ interface InteractivePracticeTabProps {
 export function InteractivePracticeTab({ skillId, exercises }: InteractivePracticeTabProps) {
 	const isAdmin = useAdminMode()
 	const currentExerciseInstance = useCurrentExerciseInstance(skillId)
-	return <SqlPracticeProvider skillId={skillId}>
+	return <SqlPracticeProvider>
 		<ExerciseManager skillId={skillId} exercises={exercises} currentExerciseInstance={currentExerciseInstance} storage={exerciseStorage} showAdminControls={isAdmin} />
 	</SqlPracticeProvider>
 }

@@ -1,18 +1,15 @@
-import { type ReactNode, useMemo } from 'react'
+import { type ReactNode } from 'react'
 
-import { buildCompletionSchema } from '@sqlvalley/mock-data'
 import { SqlPracticeProvider as SqlPracticeEnvironment } from '@sqlvalley/sql'
 
 import { useSettingsStore } from '@/store'
-import { getModuleTableKeys } from '../moduleTableAccess'
 
 // Supply curriculum configuration and application preferences to SQL practice.
-export function SqlPracticeProvider({ skillId, children }: { skillId: string; children: ReactNode }) {
+export function SqlPracticeProvider({ children }: { children: ReactNode }) {
 	const datasetSize = useSettingsStore(state => state.practiceDatasetSize)
 	const setDatasetSize = useSettingsStore(state => state.setPracticeDatasetSize)
-	const completionSchema = useMemo(() => buildCompletionSchema(getModuleTableKeys(skillId)), [skillId])
 
-	return <SqlPracticeEnvironment datasetSize={datasetSize} setDatasetSize={setDatasetSize} completionSchema={completionSchema}>
+	return <SqlPracticeEnvironment datasetSize={datasetSize} setDatasetSize={setDatasetSize}>
 		{children}
 	</SqlPracticeEnvironment>
 }
