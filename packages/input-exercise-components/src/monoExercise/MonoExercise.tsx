@@ -1,9 +1,12 @@
 import type { ComponentType } from 'react'
 import { Box } from '@mui/material'
 
+import { getCurrentState, isStateDone } from '@step-wise/exercise-definition'
+import { type MonoExerciseState, isMonoExercise } from '@step-wise/input-exercises'
+import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
+
 import { InputExerciseProvider, useInputExerciseContext } from '../inputExercise'
 
-import { useMonoExercise } from './useMonoExercise'
 import { ExerciseControls, MonoExerciseSection } from './components'
 import type { MonoExerciseInputAreaProps, MonoExerciseInputVisualizationProps, MonoExerciseProblemProps, MonoExerciseSolutionProps } from './types'
 
@@ -21,9 +24,17 @@ export function MonoExercise(props: MonoExerciseProps) {
 }
 
 function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization }: MonoExerciseProps) {
-	const { parameters, state, input, complete, submitting } = useMonoExercise()
-	const { submitInput } = useInputExerciseContext()
+	// Extract and verify data from contexts.
+	const { currentExercise: { definition, instance: exerciseInstance }, submitting } = useExerciseSessionContext()
+	if (!isMonoExercise(definition)) throw new Error('MonoExercise requires a mono-exercise definition.')
+	const { input, submitInput } = useInputExerciseContext()
 
+	// Extract exercise status.
+	const parameters = exerciseInstance.parameters
+	const state = getCurrentState(exerciseInstance) as MonoExerciseState
+	const complete = isStateDone(state)
+
+	// Render the exercise.
 	return <Box>
 		<MonoExerciseSection title="Exercise">
 			<Problem parameters={parameters} />
