@@ -67,11 +67,11 @@ For example:
 import { useSQLJSError, useSQLJSReady } from '@sqlvalley/sqljs'
 
 export function SQLJSStatus() {
-  const isReady = useSQLJSReady()
+  const ready = useSQLJSReady()
   const error = useSQLJSError()
 
   if (error) return <p>SQL.js could not be loaded: {error.message}</p>
-  if (!isReady) return <p>Loading SQL.js…</p>
+  if (!ready) return <p>Loading SQL.js…</p>
   return <p>SQL.js is ready.</p>
 }
 ```

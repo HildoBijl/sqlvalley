@@ -4,13 +4,13 @@ import type { SqlJsStatic } from 'sql.js'
 export interface SQLJSContextValue {
 	SQLJS: SqlJsStatic | null
 	error: Error | null
-	isLoading: boolean
-	isReady: boolean
+	loading: boolean
+	ready: boolean
 }
 
 export const SQLJSContext = createContext<SQLJSContextValue>({
 	SQLJS: null,
 	error: null,
-	isLoading: true,
-	isReady: false,
+	loading: true,
+	ready: false,
 })

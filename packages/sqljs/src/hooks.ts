@@ -10,11 +10,11 @@ export function useSQLJS() {
 }
 
 export function useSQLJSLoading() {
-	return useSQLJSContext().isLoading
+	return useSQLJSContext().loading
 }
 
 export function useSQLJSReady() {
-	return useSQLJSContext().isReady
+	return useSQLJSContext().ready
 }
 
 export function useSQLJSError() {
