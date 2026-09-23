@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react'
 import {
 	Box,
 	Typography,
@@ -95,6 +95,12 @@ export default function PlaygroundPage() {
 			console.debug('Live query execution failed:', error);
 		}
 	}, [isReady, executeQuery, clearQueryState]);
+
+	// Preview the current query after typing pauses, including when the database changes.
+	useEffect(() => {
+		const timeout = window.setTimeout(() => handleLiveExecute(query), 150)
+		return () => window.clearTimeout(timeout)
+	}, [query, handleLiveExecute])
 
 	// Handle actual execution (with history and messages)
 	const handleExecute = () => {
@@ -266,10 +272,9 @@ export default function PlaygroundPage() {
 					onChange={setQuery}
 					height="300px"
 					onExecute={handleExecute}
-					onLiveExecute={handleLiveExecute}
-					enableLiveExecution={true}
-					liveExecutionDelay={150}
-					showResults={false}
+
+
+
 					completionSchema={completionSchema}
 				/>
 			</Paper>
