@@ -63,7 +63,7 @@ The context provides:
 - `controls`: `submitAction(action)`, `setDraftInput(input)`, and `startNewExercise()`.
 - `admin`: `showControls`, `exerciseIds`, and `selectExerciseById(id)`.
 
-Use `useCurrentExercise()` or `useCurrentExerciseInstance()` when only that data is needed. Exercise-specific types should be checked and narrowed by the renderer. The manager provides the controls; the exercise component decides how to display them. The exported `ExerciseSelection` component renders the exercise selector within an exercise session and disables it during submission. Render it when `admin.showControls` is enabled.
+Use `useCurrentExercise()`, `useCurrentExerciseInstance()`, or `useExerciseDefinition()` when only that data is needed. `useLastInputEvent()` memoizes the latest input event (including its report), skipping other action types, and returns `undefined` before any input submission. Exercise-specific types should be checked and narrowed by the renderer. The manager provides the controls; the exercise component decides how to display them. The exported `ExerciseSelection` component renders the exercise selector within an exercise session and disables it during submission. Render it when `admin.showControls` is enabled.
 
 
 ## Supply module context

@@ -3,7 +3,7 @@
  */
 
 // Types
-export type { ComparisonResult, CompareOptions } from './types';
+export type { ComparisonReport, ComparisonResult, CompareOptions } from './types';
 export { DEFAULT_OPTIONS } from './types';
 
 // Main grading function
@@ -14,3 +14,5 @@ export { formatQuotedList, formatList } from './formatting';
 export { parseSchemaRows } from './schemaHelpers';
 export * from './exerciseTypes';
 export * from './validation';
+
+export * from './comparisonFeedback'

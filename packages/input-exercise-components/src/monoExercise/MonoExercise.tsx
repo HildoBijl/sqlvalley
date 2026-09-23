@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react'
-import { Alert, Box } from '@mui/material'
+import { Box } from '@mui/material'
 
 import { InputExerciseProvider, useInputExerciseContext } from '../inputExercise'
 
@@ -21,7 +21,7 @@ export function MonoExercise(props: MonoExerciseProps) {
 }
 
 function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization }: MonoExerciseProps) {
-	const { parameters, state, input, feedback, report, complete, submitting } = useMonoExercise()
+	const { parameters, state, input, complete, submitting } = useMonoExercise()
 	const { submitInput } = useInputExerciseContext()
 
 	return <Box>
@@ -29,9 +29,8 @@ function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization 
 			<Problem parameters={parameters} />
 		</MonoExerciseSection>
 		<InputArea parameters={parameters} disabled={complete || submitting} onSubmit={submitInput} />
-		{feedback ? <Alert severity={feedback.type} sx={{ mt: 1.5 }}>{feedback.message}</Alert> : null}
 		<ExerciseControls />
-		{InputVisualization ? <InputVisualization parameters={parameters} input={input} report={report} state={state} /> : null}
+		{InputVisualization ? <InputVisualization parameters={parameters} input={input} state={state} /> : null}
 		{complete ? <MonoExerciseSection title="Solution" collapsible>
 			<Solution parameters={parameters} state={state} />
 		</MonoExerciseSection> : null}

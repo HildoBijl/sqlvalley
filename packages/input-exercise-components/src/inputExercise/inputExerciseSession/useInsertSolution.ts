@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import type { PlainDataObject } from '@step-wise/js-utils'
 import type { InputExerciseSolution, InputExerciseValueOperations } from '@step-wise/input-exercises'
 
-import type { InputFieldOptions } from './fieldTypes'
+import type { InputFieldOptions } from '../fieldTypes'
 
 // The data needed to build the insertSolution function.
 interface InsertSolutionOptions {

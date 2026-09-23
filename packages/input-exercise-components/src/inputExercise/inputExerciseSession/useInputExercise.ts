@@ -41,7 +41,7 @@ export function useInputExercise() {
 	const contextValue: InputExerciseContextValue = {
 		// Input system.
 		input, setInput,
-		registerField, setFieldValue,
+		fields, registerField, setFieldValue,
 		normalizeInput, hydrateInput,
 
 		// Validation.

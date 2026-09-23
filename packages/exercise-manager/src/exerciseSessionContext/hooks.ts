@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 
 import type { ExerciseSessionContextValue } from './types'
 import { ExerciseSessionContext } from './context'
@@ -15,7 +15,18 @@ export function useCurrentExercise() {
 	return useExerciseSessionContext().currentExercise
 }
 
+// Get the current exercise definition; consumers narrow its exercise-specific features.
+export function useExerciseDefinition() {
+	return useCurrentExercise().definition
+}
+
 // Specifically get the exercise's instance out of the context.
 export function useCurrentExerciseInstance() {
 	return useCurrentExercise().instance
+}
+
+// Get the latest input event together with its report, skipping other action types.
+export function useLastInputEvent() {
+	const { history } = useCurrentExerciseInstance()
+	return useMemo(() => [...history].reverse().find(event => event.action.type === 'input'), [history])
 }

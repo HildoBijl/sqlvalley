@@ -74,5 +74,6 @@ export function compareQueryResults(
 	return {
 		match: true,
 		feedback: SUCCESS_MESSAGE,
+		report: { reason: 'correct' },
 	};
 }

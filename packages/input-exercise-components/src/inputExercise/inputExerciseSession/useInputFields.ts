@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 import type { PlainDataObject, PlainDataValue } from '@step-wise/js-utils'
 
-import type { InputFieldOptions } from './fieldTypes'
+import type { InputFieldOptions } from '../fieldTypes'
 
 interface InputFieldsOptions {
 	mergeInput: (values: PlainDataObject) => void

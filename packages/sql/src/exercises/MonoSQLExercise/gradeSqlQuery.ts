@@ -1,7 +1,7 @@
 import type { Database } from '@sqlvalley/sqljs'
-import { type CompareOptions, type SqlExecutionResult, type SqlQueryResult, validateSqlExecution, verifySqlExecution } from '@sqlvalley/sql-grading'
+import { type CompareOptions, compareQueryResults, DEFAULT_SQL_COMPARISON_OPTIONS } from '@sqlvalley/sql-grading'
 
-import type { MonoSQLCheckResult } from './types'
+import type { SqlSubmissionReport } from '../../sqlInput'
 
 interface GradeSqlQueryOptions {
 	query: string
@@ -11,15 +11,19 @@ interface GradeSqlQueryOptions {
 }
 
 // Grade against the full dataset independently of the learner's preview size.
-export function gradeSqlQuery({ query, solution, database, comparisonOptions }: GradeSqlQueryOptions): MonoSQLCheckResult {
-	let execution: SqlExecutionResult<SqlQueryResult[]>
+export function gradeSqlQuery({ query, solution, database, comparisonOptions }: GradeSqlQueryOptions): SqlSubmissionReport {
+	let output
 	try {
-		execution = { success: true, output: database.exec(query) }
-	} catch (error) {
-		execution = { success: false, error: error instanceof Error ? error : new Error(String(error)) }
+		output = database.exec(query)
+	} catch {
+		return { correct: false, result: { reason: 'execution-error' } }
 	}
-	const validation = validateSqlExecution(execution)
-	if (!validation.ok) return { correct: false, feedback: validation.message, feedbackType: 'warning' }
-	const verification = verifySqlExecution({ output: execution.output, solution, database, comparisonOptions })
-	return { correct: verification.correct, feedback: verification.message, feedbackType: verification.correct ? 'success' : 'error' }
+	if (!output[0]) return { correct: false, result: { reason: 'empty-result' } }
+	try {
+		const expected = database.exec(solution)[0]
+		const comparison = compareQueryResults(output[0], expected, { ...DEFAULT_SQL_COMPARISON_OPTIONS, ...comparisonOptions })
+		return { correct: comparison.match, result: comparison.report }
+	} catch {
+		return { correct: false, result: { reason: 'grading-error' } }
+	}
 }

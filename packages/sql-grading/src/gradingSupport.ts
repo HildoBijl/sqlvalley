@@ -57,12 +57,13 @@ export function validateInputs(
 	expected: SqlQueryResult | undefined,
 ): ComparisonResult | null {
 	if (!actual && !expected) {
-		return { match: true, feedback: SUCCESS_MESSAGE };
+		return { match: true, feedback: SUCCESS_MESSAGE, report: { reason: 'correct' } };
 	}
 	if (!expected || !actual) {
 		return {
 			match: false,
 			feedback: EMPTY_RESULT_MESSAGE,
+			report: { reason: 'empty-result' },
 		};
 	}
 	return null;
@@ -116,6 +117,7 @@ function compareColumnsWithNames(ctx: GradingContext): ColumnComparisonResult {
 			error: {
 				match: false,
 				feedback: feedbackMessage ?? TOO_MANY_COLUMNS_MESSAGE,
+				report: { reason: 'column-names', missing: missingOriginal, extra: extraOriginal },
 			},
 			columnMapping: identityMapping,
 		};
@@ -126,6 +128,7 @@ function compareColumnsWithNames(ctx: GradingContext): ColumnComparisonResult {
 		return {
 			error: {
 				match: false,
+				report: { reason: 'column-count', actual: ctx.actualColumnCount, expected: ctx.expectedColumnCount },
 				feedback:
 					ctx.actualColumnCount > ctx.expectedColumnCount
 						? TOO_MANY_COLUMNS_MESSAGE
@@ -148,6 +151,7 @@ function compareColumnsWithNames(ctx: GradingContext): ColumnComparisonResult {
 				error: {
 					match: false,
 					feedback: COLUMN_ORDER_MESSAGE,
+					report: { reason: 'column-order' },
 				},
 				columnMapping: identityMapping,
 			};
@@ -169,6 +173,7 @@ function compareColumnsByContent(ctx: GradingContext): ColumnComparisonResult {
 		return {
 			error: {
 				match: false,
+				report: { reason: 'column-count', actual: ctx.actualColumnCount, expected: ctx.expectedColumnCount },
 				feedback:
 					ctx.actualColumnCount > ctx.expectedColumnCount
 						? TOO_MANY_COLUMNS_MESSAGE
@@ -209,6 +214,7 @@ function compareColumnsByContent(ctx: GradingContext): ColumnComparisonResult {
 			return {
 				error: {
 					match: false,
+					report: { reason: 'column-values', columns: unmatchedActualColumnNames },
 					feedback: INCORRECT_VALUES_IN_COLUMNS_MESSAGE(
 						unmatchedActualColumnNames.length
 							? formatQuotedList(unmatchedActualColumnNames)
@@ -229,6 +235,7 @@ function compareColumnsByContent(ctx: GradingContext): ColumnComparisonResult {
 				error: {
 					match: false,
 					feedback: INCORRECT_VALUES_IN_COLUMN_MESSAGE(actual.columns[index]),
+					report: { reason: 'column-values', columns: [actual.columns[index]] },
 				},
 				columnMapping: identityMapping,
 			};
@@ -247,6 +254,7 @@ export function compareRowCount(ctx: GradingContext): ComparisonResult | null {
 			match: false,
 			feedback:
 				ctx.actualRowCount > ctx.expectedRowCount ? TOO_MANY_ROWS_MESSAGE : TOO_FEW_ROWS_MESSAGE,
+			report: { reason: 'row-count', actual: ctx.actualRowCount, expected: ctx.expectedRowCount },
 		};
 	}
 	return null;
@@ -293,6 +301,7 @@ export function compareRows(
 		return {
 			match: false,
 			feedback: ROW_VALUE_MISMATCH_FEEDBACK(formatSampleDifferences(differences, !ignoreRowOrder)),
+			report: { reason: 'row-values', differences, ordered: !ignoreRowOrder },
 		};
 	}
 

@@ -22,20 +22,13 @@ export function buildMonoSQLExercise<Parameters extends Record<string, unknown>>
 				if (!solution) throw new Error('Missing SQL exercise solution.')
 				const input = fromRawInput(rawInput)
 				const validation = validateSqlInput(input)
-				if (!validation.ok) return { correct: false, report: { message: validation.message ?? 'Please double-check your input before submitting.', type: 'warning' } }
+				if (!validation.ok) return { correct: false, report: { query: { correct: false, result: { reason: 'invalid-query' } } } }
 				handle = ensureSqlModuleContext(context).getGradingDatabase('full')
 				if (!handle.database) throw handle.error ?? new Error('Database is not ready for verification.')
 				const result = gradeSqlQuery({ query: input, solution: solution.query, database: handle.database, comparisonOptions: spec.comparisonOptions })
-				return {
-					correct: result.correct,
-					report: {
-						message: result.feedback ?? (result.correct ? 'Correct!' : 'Not quite right. Try again.'),
-						type: result.feedbackType,
-						result: { correct: result.correct, feedbackType: result.feedbackType, ...(result.feedback !== undefined ? { feedback: result.feedback } : {}) },
-					},
-				}
-			} catch (error) {
-				return { correct: false, report: { message: error instanceof Error ? error.message : 'Unable to check your answer. Please try again.', type: 'error' } }
+				return { correct: result.correct, report: { query: result } }
+			} catch {
+				return { correct: false, report: { query: { correct: false, result: { reason: 'grading-error' } } } }
 			} finally {
 				// Restore the grading data after both successful and failed checks.
 				handle?.reset()

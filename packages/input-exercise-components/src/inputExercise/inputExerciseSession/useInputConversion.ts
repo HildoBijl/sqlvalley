@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import type { PlainDataObject } from '@step-wise/js-utils'
 import type { InputExerciseRawInput } from '@step-wise/input-exercises'
 
-import type { InputFieldOptions } from './fieldTypes'
+import type { InputFieldOptions } from '../fieldTypes'
 
 interface InputConversionOptions {
 	fields: ReadonlyMap<string, InputFieldOptions>

@@ -1,16 +1,10 @@
-import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import type { PlainDataObject } from '@step-wise/js-utils'
 import { useLatestRef } from '@step-wise/react-utils'
 import type { InputExerciseRawInput } from '@step-wise/input-exercises'
 
-import type { InputFieldOptions } from './fieldTypes'
-
-export interface FieldValidationState {
-	status: 'pending' | 'valid' | 'invalid'
-	feedback?: ReactNode
-	report?: unknown
-}
+import type { InputFieldOptions, FieldValidationState } from '../fieldTypes'
 
 interface ValidationEntry extends FieldValidationState {
 	key: string

@@ -4,7 +4,7 @@ import type { ExerciseMetadata } from '@step-wise/exercise-definition'
 
 import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-instances'
 import type { CompareOptions } from '@sqlvalley/sql-grading'
-import type { MonoExerciseFeedbackType, MonoExerciseProblemProps, MonoExerciseSolutionProps } from '@sqlvalley/input-exercise-components'
+import type { MonoExerciseProblemProps, MonoExerciseSolutionProps } from '@sqlvalley/input-exercise-components'
 
 export interface MonoSQLExerciseDefinitionSpec<Parameters extends Record<string, unknown>> {
 	exerciseId: ExerciseId
@@ -19,10 +19,4 @@ export interface MonoSQLExerciseDefinitionSpec<Parameters extends Record<string,
 export interface MonoSQLExerciseSpec<Parameters extends Record<string, unknown>> extends MonoSQLExerciseDefinitionSpec<Parameters> {
 	Problem: ComponentType<MonoExerciseProblemProps>
 	Solution: ComponentType<MonoExerciseSolutionProps>
-}
-
-export interface MonoSQLCheckResult {
-	correct: boolean
-	feedback?: string
-	feedbackType: MonoExerciseFeedbackType
 }
