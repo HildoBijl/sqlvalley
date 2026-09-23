@@ -1,15 +1,14 @@
 import { useCallback, useState } from 'react'
 
-import type { InputExerciseRawInput, InputExerciseValueOperations } from '@step-wise/input-exercises'
+import type { PlainDataObject, PlainDataValue } from '@step-wise/js-utils'
 
 import type { InputFieldOptions } from './fieldTypes'
 
 interface InputFieldsOptions {
-	valueOperations: InputExerciseValueOperations
-	mergeInput: (values: InputExerciseRawInput) => void
+	mergeInput: (values: PlainDataObject) => void
 }
 
-export function useInputFields({ valueOperations, mergeInput }: InputFieldsOptions) {
+export function useInputFields({ mergeInput }: InputFieldsOptions) {
 	const [fields, setFields] = useState(() => new Map<string, InputFieldOptions>())
 
 	// Set up a registerField handler that can be applied in an effect to register/deregister a field.
@@ -27,11 +26,11 @@ export function useInputFields({ valueOperations, mergeInput }: InputFieldsOptio
 	}, [])
 
 	// Add a setter handler to adjust field values.
-	const setFieldValue = useCallback((name: string, value: unknown) => {
+	const setFieldValue = useCallback((name: string, value: PlainDataValue) => {
 		const field = fields.get(name)
 		if (!field) throw new Error(`Input field "${name}" is not registered.`)
-		mergeInput({ [name]: valueOperations.toInputValue(value, field.type) })
-	}, [fields, valueOperations, mergeInput])
+		mergeInput({ [name]: value })
+	}, [fields, mergeInput])
 
 	// All done.
 	return { fields, registerField, setFieldValue }

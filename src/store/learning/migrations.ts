@@ -1,7 +1,7 @@
 import { asRecord, runMigrations } from '../infrastructure'
 import type { PersistedLearning } from './persistence'
 
-export const LEARNING_STORAGE_VERSION = 9
+export const LEARNING_STORAGE_VERSION = 10
 
 // Migrations: index i transforms payload from version i to i+1.
 const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
@@ -204,6 +204,25 @@ const MIGRATIONS: Array<(state: PersistedLearning) => PersistedLearning> = [
 					? { draftInput: { query: { type: 'SQL', value: instance.draftInput } } }
 					: {}
 				return { ...instance, ...draft, history }
+			})
+			return [moduleId, { ...module, exerciseHistory }]
+		}))
+		return { ...state, modules: migratedModules as PersistedLearning['modules'] }
+	},
+
+	// v9 -> v10: turn draft inputs back to InputState format. (Keep input actions in InputValue format.)
+	state => {
+		const modules = asRecord(asRecord(state).modules)
+		const migratedModules = Object.fromEntries(Object.entries(modules).map(([moduleId, moduleValue]) => {
+			const module = asRecord(moduleValue)
+			if (!Array.isArray(module.exerciseHistory)) return [moduleId, module]
+			const exerciseHistory = module.exerciseHistory.map(value => {
+				const instance = asRecord(value)
+				const draft = asRecord(instance.draftInput)
+				const query = asRecord(draft.query)
+				return query.type === 'SQL' && typeof query.value === 'string'
+					? { ...instance, draftInput: { ...draft, query: query.value } }
+					: instance
 			})
 			return [moduleId, { ...module, exerciseHistory }]
 		}))

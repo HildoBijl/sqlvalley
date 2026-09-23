@@ -1,5 +1,6 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
+import type { PlainDataObject } from '@step-wise/js-utils'
 import { useLatestRef } from '@step-wise/react-utils'
 import type { InputExerciseRawInput } from '@step-wise/input-exercises'
 
@@ -24,20 +25,25 @@ interface ActiveValidation {
 	controller: AbortController
 }
 
-export function useInputValidation(input: InputExerciseRawInput | undefined, context: unknown, fields: ReadonlyMap<string, InputFieldOptions>) {
+interface InputValidationOptions {
+	input: PlainDataObject | undefined
+	context: unknown
+	fields: ReadonlyMap<string, InputFieldOptions>
+	normalizeInput: (input: PlainDataObject | undefined) => InputExerciseRawInput
+}
+
+export function useInputValidation({ input, context, fields, normalizeInput }: InputValidationOptions) {
 	// Set up memory space to store validation results.
 	const [entries, setEntries] = useState<Record<string, ValidationEntry>>({})
 	const entriesRef = useLatestRef(entries)
 	const latestInputRef = useLatestRef(input)
 	
-	// Determine the normalized input.
-	const getNormalizedInput = useCallback((draft: InputExerciseRawInput | undefined) => Object.fromEntries([...fields.entries()].map(([name, field]) => [name, field.normalizeInput ? field.normalizeInput(draft?.[name]) : draft?.[name]])), [fields])
-	const normalizedInput = getNormalizedInput(input)
+	const normalizedInput = normalizeInput(input)
 	const normalizedInputRef = useLatestRef(normalizedInput)
 	
 	// Turn the normalized input into an input key, which is used to check if validation needs to be done anew.
 	const inputKey = JSON.stringify(normalizedInput)
-	const getInputKey = useCallback((draft: InputExerciseRawInput | undefined) => JSON.stringify(getNormalizedInput(draft)), [getNormalizedInput])
+	const getInputKey = useCallback((draft: PlainDataObject | undefined) => JSON.stringify(normalizeInput(draft)), [normalizeInput])
 	
 	// Whenever an input field (or context) changes, run a new validation.
 	const activeValidations = useRef(new Map<string, ActiveValidation>())
@@ -113,7 +119,7 @@ export function useInputValidation(input: InputExerciseRawInput | undefined, con
 
 	// Handler: check if the given draft input still matches the input for which validation was done, and whether it was valid. It's the final check before submission.
 	const currentInputKeyRef = useLatestRef(inputKey)
-	const canSubmitCurrentInput = useCallback((draft: InputExerciseRawInput) => {
+	const canSubmitCurrentInput = useCallback((draft: PlainDataObject) => {
 		if (draft !== latestInputRef.current || getInputKey(draft) !== currentInputKeyRef.current) return false
 		return [...fields].every(([name, field]) => {
 			const entry = entriesRef.current[name]

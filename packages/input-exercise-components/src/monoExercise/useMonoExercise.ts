@@ -1,3 +1,4 @@
+import { deepEqual } from '@step-wise/js-utils'
 import { getCurrentState, isStateDone } from '@step-wise/exercise-definition'
 import { type InputExerciseRawInput, type InputExerciseReport, type MonoExerciseState, isMonoExercise } from '@step-wise/input-exercises'
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
@@ -8,7 +9,7 @@ import type { MonoExerciseReport } from './types'
 export function useMonoExercise() {
 	// Extract and verify data from contexts.
 	const { submitting, currentExercise: { definition, instance: exerciseInstance } } = useExerciseSessionContext()
-	const { input: rawInput, getInputKey } = useInputExerciseContext()
+	const { input: rawInput, normalizeInput } = useInputExerciseContext()
 	if (!isMonoExercise(definition)) throw new Error('MonoExercise requires a mono-exercise definition.')
 
 	// Extract exercise status.
@@ -19,7 +20,7 @@ export function useMonoExercise() {
 	// Determine feedback to show.
 	const latestEvent = history[history.length - 1]
 	const submittedInput = latestEvent?.action.type === 'input' && latestEvent.action.input && typeof latestEvent.action.input === 'object' && !Array.isArray(latestEvent.action.input) ? latestEvent.action.input as InputExerciseRawInput : undefined
-	const inputMatchesSubmission = submittedInput !== undefined && getInputKey(submittedInput) === getInputKey(rawInput)
+	const inputMatchesSubmission = submittedInput !== undefined && deepEqual(submittedInput, normalizeInput(rawInput))
 	const report: InputExerciseReport | undefined = inputMatchesSubmission ? latestEvent.report : undefined
 	const feedbackType = report?.type
 	const feedback: Pick<MonoExerciseReport, 'message' | 'type'> | undefined = typeof report?.message === 'string' &&

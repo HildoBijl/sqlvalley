@@ -5,6 +5,7 @@ import { useExerciseSessionContext, useModuleContext } from '@sqlvalley/exercise
 import type { InputExerciseContextValue } from '../types'
 import { useExerciseInput } from './useExerciseInput'
 import { useInputFields } from './useInputFields'
+import { useInputConversion } from './useInputConversion'
 import { useInputExerciseButtonAvailability as useButtonAvailability } from './useButtonAvailability'
 import { type SolutionDefinition, useSolution } from './useSolution'
 import { useInsertSolution } from './useInsertSolution'
@@ -17,14 +18,15 @@ export function useInputExercise() {
 	const moduleContext = useModuleContext()
 	if (!isInputExercise(definition)) throw new Error('InputExerciseProvider requires an input-exercise definition.')
 
-	// Set up input setters and field registration.
+	// Set up input setters, field registration, and value conversion.
 	const { input, setInput, mergeInput } = useExerciseInput({ input: instance.draftInput, setDraftInput: controls.setDraftInput })
-	const { fields, registerField, setFieldValue } = useInputFields({ valueOperations: definition.valueOperations, mergeInput })
+	const { fields, registerField, setFieldValue } = useInputFields({ mergeInput })
+	const { normalizeInput, hydrateInput } = useInputConversion({ fields })
 
 	// Set up input field validation, determine its effect on buttons and build a submit function from it.
-	const { getFieldValidation, allInputsValid, validationPending, canSubmitCurrentInput, getInputKey } = useInputValidation(input, moduleContext, fields)
+	const { getFieldValidation, allInputsValid, validationPending, canSubmitCurrentInput, getInputKey } = useInputValidation({ input, context: moduleContext, fields, normalizeInput })
 	const { canGiveUp, isSubmitButtonEnabled } = useButtonAvailability({ allInputsValid, validationPending, submitting, moduleContext })
-	const submitInput = useSubmitInput({ input, isSubmitButtonEnabled, canSubmitCurrentInput })
+	const submitInput = useSubmitInput({ input, normalizeInput, isSubmitButtonEnabled, canSubmitCurrentInput })
 
 	// Determine the solution for the exercise and allow its insertion.
 	const state = getCurrentState(instance)
@@ -40,6 +42,7 @@ export function useInputExercise() {
 		// Input system.
 		input, setInput,
 		registerField, setFieldValue,
+		normalizeInput, hydrateInput,
 
 		// Validation.
 		allInputsValid, validationPending, getInputKey, getFieldValidation,

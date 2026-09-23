@@ -1,3 +1,4 @@
+import { isPlainDataObject } from '@step-wise/js-utils'
 import type { ModuleType } from '@step-wise/module-tree-definition'
 import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } from '@sqlvalley/exercise-instances'
 
@@ -54,6 +55,7 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 		}),
 
 		startNewExercise: (skillId, exerciseInstance) => set(state => {
+			if (exerciseInstance.draftInput !== undefined && !isPlainDataObject(exerciseInstance.draftInput)) throw new Error('Draft input must be a plain data object or undefined.')
 			const skillModule = getSkillModuleForUpdate(skillId, state)
 			return {
 				modules: {
@@ -95,6 +97,7 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 		}),
 
 		setExerciseDraftInput: (skillId, draftInput) => set(state => {
+			if (draftInput !== undefined && !isPlainDataObject(draftInput)) throw new Error('Draft input must be a plain data object or undefined.')
 			const skillModule = getSkillModuleForUpdate(skillId, state)
 			if (skillModule.exerciseHistory.length === 0) throw new Error(`Cannot set draft input for "${skillId}" without an active exercise.`)
 

@@ -1,6 +1,5 @@
-import { isPlainDataObject, isPlainDataValue, isPlainObject } from '@step-wise/js-utils'
+import { isPlainDataObject, isPlainObject } from '@step-wise/js-utils'
 import { isExerciseAction } from '@step-wise/exercise-definition'
-import type { InputExerciseRawInput } from '@step-wise/input-exercises'
 
 import type { ExerciseEvent, ExerciseInstance } from './types'
 
@@ -20,7 +19,7 @@ export function normalizeExerciseInstance(value: unknown): ExerciseInstance | nu
 		initialState: { ...value.initialState },
 		startedAt: value.startedAt,
 		history,
-		...(isDraftInput(value.draftInput) ? { draftInput: value.draftInput } : {}),
+		...(isPlainDataObject(value.draftInput) ? { draftInput: value.draftInput } : {}),
 	}
 }
 
@@ -33,10 +32,4 @@ function normalizeExerciseEvent(value: unknown): ExerciseEvent | null {
 		state: { ...value.state },
 		...(isPlainDataObject(value.report) ? { report: value.report } : {}),
 	}
-}
-
-// Validate the shared field envelope; exercise-specific adapters interpret its values.
-function isDraftInput(value: unknown): value is InputExerciseRawInput {
-	return isPlainDataObject(value) && Object.values(value).every(field =>
-		isPlainDataObject(field) && typeof field.type === 'string' && isPlainDataValue(field.value))
 }

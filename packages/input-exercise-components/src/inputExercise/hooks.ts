@@ -1,5 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react'
 
+import type { PlainDataValue } from '@step-wise/js-utils'
+
 import type { InputExerciseContextValue } from './types'
 import type { InputFieldOptions } from './inputExerciseSession/fieldTypes'
 import { InputExerciseContext } from './context'
@@ -19,8 +21,8 @@ export function useSolution(): InputExerciseContextValue['solution'] {
 // Register field metadata while mounted; values stay in draft storage.
 export function useInputField(name: string, options: InputFieldOptions) {
 	const { input, registerField, setFieldValue, getFieldValidation } = useInputExerciseContext()
-	const { type, normalizeInput, validate } = options
-	useEffect(() => registerField(name, { type, normalizeInput, validate }), [registerField, name, type, normalizeInput, validate])
-	const setValue = useCallback((value: unknown) => setFieldValue(name, value), [setFieldValue, name])
+	const { type, normalizeInput, hydrateInput, validate } = options
+	useEffect(() => registerField(name, { type, normalizeInput, hydrateInput, validate }), [registerField, name, type, normalizeInput, hydrateInput, validate])
+	const setValue = useCallback((value: PlainDataValue) => setFieldValue(name, value), [setFieldValue, name])
 	return { value: input?.[name], setValue, validation: getFieldValidation(name) }
 }

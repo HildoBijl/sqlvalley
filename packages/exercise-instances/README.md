@@ -2,7 +2,7 @@
 
 Types and utilities for selecting, generating, and restoring SQL Valley's solo input exercises. Built on `@step-wise/exercise-definition` and `@step-wise/input-exercises`.
 
-An exercise definition describes how an exercise works. An **exercise instance** represents one generated exercise for a learner: its parameters, starting state, submitted answers, and optional unfinished input (the draft). It also records the exercise ID, version, and timestamps.
+An exercise definition describes how an exercise works. An **exercise instance** represents one generated exercise for a learner: its parameters, starting state, submitted answers, and optional unfinished input (the draft). Draft fields contain serializable editor states; submitted action fields contain typed input values. It also records the exercise ID, version, and timestamps.
 
 
 ## Main functions

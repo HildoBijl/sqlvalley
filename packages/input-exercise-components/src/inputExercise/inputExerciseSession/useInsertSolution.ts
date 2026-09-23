@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
-import type { InputExerciseRawInput, InputExerciseSolution, InputExerciseValueOperations } from '@step-wise/input-exercises'
+import type { PlainDataObject } from '@step-wise/js-utils'
+import type { InputExerciseSolution, InputExerciseValueOperations } from '@step-wise/input-exercises'
 
 import type { InputFieldOptions } from './fieldTypes'
 
@@ -9,7 +10,7 @@ interface InsertSolutionOptions {
 	solution: InputExerciseSolution | undefined
 	valueOperations: InputExerciseValueOperations
 	fields: ReadonlyMap<string, InputFieldOptions>
-	mergeInput: (values: InputExerciseRawInput) => void
+	mergeInput: (values: PlainDataObject) => void
 	showControls: boolean
 	submitting: boolean
 }
@@ -20,7 +21,7 @@ export function useInsertSolution({ solution, valueOperations, fields, mergeInpu
 		if (!showControls || submitting || !solution) return
 		const entries = [...fields.entries()]
 			.filter(([name]) => Object.prototype.hasOwnProperty.call(solution, name))
-			.map(([name, field]) => [name, valueOperations.toInputValue(solution[name], field.type)] as const)
+			.map(([name, field]) => [name, field.hydrateInput(valueOperations.toInputValue(solution[name], field.type))] as const)
 		if (entries.length === 0) return
 		mergeInput(Object.fromEntries(entries))
 	}, [showControls, submitting, solution, fields, valueOperations, mergeInput])

@@ -29,7 +29,7 @@ SQL specifications accept optional `skill` and `setup` metadata, forwarded to th
 
 `buildMonoSQLExercise` preserves the complete upstream input-exercise definition, including solution callbacks and `valueOperations`. These remain available on the definition paired with a renderer by `createMonoSQLExercise`.
 
-SQL submissions and saved drafts use a query field containing { type: 'SQL', value: query }. Editor values remain strings; registered input fields handle conversion through value operations. MonoExercise submits the structured draft directly. Frontend validation trims outer whitespace, runs the query on the selected user database, shows errors below the editor, and supplies transient results to the visualization. Submission grading independently uses the full grading database and produces a persisted plain-data report. The upstream reducer owns attempted, solved, givenUp, and done state transitions.
+SQL submissions use a query field containing { type: 'SQL', value: query }; drafts store the editor string under `query`. Editor values remain strings; registered input fields handle conversion through value operations. Submission normalizes the draft into typed input values. Frontend validation trims outer whitespace, runs the query on the selected user database, shows errors below the editor, and supplies transient results to the visualization. Submission grading independently uses the full grading database and produces a persisted plain-data report. The upstream reducer owns attempted, solved, givenUp, and done state transitions.
 
 The application learning-store v8 to v9 migration converts existing SQL submissions, string drafts, and give-up actions, preserving reports, draft contents, progress, and timestamps.
 
@@ -90,7 +90,7 @@ SQL editors obtain completion schemas separately from their dataset, for example
 <SqlInput name="query" disabled={disabled} onSubmit={onSubmit} />
 ```
 
-`useSqlQueryValidation` returns a validation function bound to the selected user database. `SqlInput` registers `normalizeSqlQuery` separately. Dataset changes rerun validation; obsolete runs are cancelled before executing SQL. Validation reports contain the normalized query and its preview results. The visualization checks empty small-dataset results against the full user database and displays a warning when that same query returns rows there. Comparison failures do not affect validation.
+`useSqlQueryValidation` returns a validation function bound to the selected user database. `SqlInput` registers `normalizeInput` and `hydrateInput`: drafts retain untrimmed editor strings, while validation and submission use trimmed typed input values. Solution insertion hydrates typed values back into editor strings. Dataset changes rerun validation; obsolete runs are cancelled before executing SQL. Validation reports contain the normalized query and its preview results. The visualization checks empty small-dataset results against the full user database and displays a warning when that same query returns rows there. Comparison failures do not affect validation.
 
 `useModuleCompletionSchema()` calls the database source's optional `buildCompletionSchema(tableKeys)` function with the module's table keys and memoizes the result. The mock-data source supplies its existing schema builder. No database loading or queries are required, and dataset size does not affect the schema. Sources without this function provide no table/column suggestions; SQL keyword completion remains available.
 
@@ -112,3 +112,5 @@ Without those props, selection is local state initialized from `defaultDatasetSi
 ```
 
 `useDatasetSize()` returns `[datasetSize, setDatasetSize]`, following the `useState` convention. Within a SQL module, `useCurrentUserModuleDatabase()` retrieves the corresponding shared user database. Elsewhere, pass the size to `useDatabase`; use a different persistent key per size when retaining multiple datasets.
+
+The SQL value helpers `isSqlInputValue`, `isSqlDomainValue`, `interpretSqlInputValue`, and `toSqlInputValue` are exported individually and bundled in `sqlValueTypes` for exercise definitions. `sqlType` defines the SQL discriminator; `SqlType` is derived from it and used by `SqlInputValue`.

@@ -1,5 +1,6 @@
+import type { PlainDataObject } from '@step-wise/js-utils'
 import type { ExerciseParameters } from '@step-wise/exercise-definition'
-import type { InputExerciseRawInput, InputExerciseReport, MonoExerciseState } from '@step-wise/input-exercises'
+import type { InputExerciseReport, MonoExerciseState } from '@step-wise/input-exercises'
 
 export interface MonoExerciseProblemProps {
 	parameters: ExerciseParameters
@@ -14,7 +15,7 @@ export interface MonoExerciseInputAreaProps {
 export interface MonoExerciseInputVisualizationProps {
 	parameters: ExerciseParameters
 	state: MonoExerciseState
-	input: InputExerciseRawInput | undefined
+	input: PlainDataObject | undefined
 	report: InputExerciseReport | undefined
 }
 

@@ -1,5 +1,6 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
+import type { PlainDataObject, PlainDataValue } from '@step-wise/js-utils'
 import type { InputExerciseRawInput, InputExerciseSolution } from '@step-wise/input-exercises'
 
 import type { InputFieldOptions } from './inputExerciseSession/fieldTypes'
@@ -11,12 +12,12 @@ export interface InputExerciseProviderProps {
 
 export interface InputExerciseContextValue {
 	// Full input object
-	input: InputExerciseRawInput | undefined
-	setInput: Dispatch<SetStateAction<InputExerciseRawInput | undefined>>
+	input: PlainDataObject | undefined
+	setInput: Dispatch<SetStateAction<PlainDataObject | undefined>>
 
 	// Field registration
 	registerField: (name: string, options: InputFieldOptions) => () => void
-	setFieldValue: (name: string, value: unknown) => void
+	setFieldValue: (name: string, value: PlainDataValue) => void
 
 	// Input validation
 	getFieldValidation: (name: string) => FieldValidationState
@@ -25,7 +26,9 @@ export interface InputExerciseContextValue {
 	canGiveUp: boolean
 	isSubmitButtonEnabled: boolean
 	submitInput: () => Promise<void>
-	getInputKey: (input: InputExerciseRawInput | undefined) => string
+	normalizeInput: (input: PlainDataObject | undefined) => InputExerciseRawInput
+	hydrateInput: (input: InputExerciseRawInput) => PlainDataObject
+	getInputKey: (input: PlainDataObject | undefined) => string
 
 	// Solution generation/insertion
 	solution: InputExerciseSolution | undefined

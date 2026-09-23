@@ -4,8 +4,9 @@ import { validateSqlInput } from '@sqlvalley/sql-grading'
 
 import type { DatabaseHandle } from '../../databaseProvider'
 import { ensureSqlModuleContext } from '../../sqlModuleProvider'
+import { sqlValueTypes } from '../../sqlInput'
 import type { MonoSQLExerciseDefinitionSpec } from './types'
-import { fromRawInput, resolveValue, sqlValueTypes } from './input'
+import { fromRawInput, resolveValue } from './input'
 import { gradeSqlQuery } from './gradeSqlQuery'
 
 // Builds the logical definition; rendering is paired separately by createMonoSQLExercise.

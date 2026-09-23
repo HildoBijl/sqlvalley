@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@sqlvalley/exercise-manager": "*",
+    "@step-wise/js-utils": "^0.1.0",
     "@step-wise/exercise-definition": "^0.2.0",
     "@step-wise/input-exercises": "^0.2.0",
+    "@step-wise/input-interpretation": "^0.1.0",
     "@step-wise/react-utils": "^0.1.0"
   },
   "peerDependencies": {

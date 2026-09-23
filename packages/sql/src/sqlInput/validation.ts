@@ -6,20 +6,23 @@ import { formatSqlErrorMessage, validateSqlInput } from '@sqlvalley/sql-grading'
 import type { QueryResult } from '../databaseProvider'
 import { useCurrentUserModuleDatabase } from '../sqlModuleProvider'
 
+import { isSqlInputValue, interpretSqlInputValue } from './valueTypes'
+
 export interface SqlQueryValidationReport {
 	results: QueryResult[]
 	query: string
 }
 
 interface SqlQueryValidationOptions {
-	normalizedInput: unknown
+	inputValue: unknown
 	database: Database | undefined
 	signal: AbortSignal
 }
 
-export async function validateSqlQuery({ normalizedInput: query, database, signal }: SqlQueryValidationOptions) {
+export async function validateSqlQuery({ inputValue, database, signal }: SqlQueryValidationOptions) {
 	// Check if it's something we can run.
-	if (typeof query !== 'string') return { valid: false as const }
+	if (!isSqlInputValue(inputValue) || !inputValue.value) return { valid: false as const }
+	const query = interpretSqlInputValue(inputValue)
 	const syntax = validateSqlInput(query)
 	if (!syntax.ok) return { valid: false as const, feedback: syntax.message }
 
@@ -38,8 +41,6 @@ export async function validateSqlQuery({ normalizedInput: query, database, signa
 }
 
 export function useSqlQueryValidation() {
-	const selected = useCurrentUserModuleDatabase()
-	return useCallback(({ normalizedInput, signal }: { normalizedInput: unknown; signal: AbortSignal }) =>
-		validateSqlQuery({ normalizedInput, signal, database: selected.database }),
-	[selected.database])
+	const databaseHandle = useCurrentUserModuleDatabase()
+	return useCallback(({ normalizedInput, signal }: { normalizedInput: unknown; signal: AbortSignal }) => validateSqlQuery({ inputValue: normalizedInput, signal, database: databaseHandle.database }), [databaseHandle.database])
 }

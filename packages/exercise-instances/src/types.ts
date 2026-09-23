@@ -1,5 +1,5 @@
 import type { ExerciseAction, ExerciseParameters, ExerciseState, SoloExerciseHistoryEvent, SoloExerciseInstance } from '@step-wise/exercise-definition'
-import type { InputExerciseRawInput } from '@step-wise/input-exercises'
+import type { PlainDataObject } from '@step-wise/js-utils'
 
 export type ExerciseId = string
 export type ExerciseVersion = number
@@ -19,5 +19,5 @@ export type ExerciseInstance<
 	version: ExerciseVersion
 	startedAt: number
 	history: readonly ExerciseEvent<Action, State>[]
-	draftInput?: InputExerciseRawInput
+	draftInput?: PlainDataObject
 }

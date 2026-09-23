@@ -2,7 +2,6 @@ import type { ComponentType } from 'react'
 
 import type { SkillId } from '@step-wise/module-tree-definition'
 import type { AnyExercise, ExerciseAction } from '@step-wise/exercise-definition'
-import type { InputExerciseRawInput } from '@step-wise/input-exercises'
 import type { ExerciseId, ExerciseInstance } from '@sqlvalley/exercise-instances'
 
 // The data made available to the exercise consists of the following items.
@@ -30,7 +29,7 @@ export interface CurrentExercise {
 // Handlers connecting the exercise to the data store, set up by the manager.
 export interface ExerciseControls<Action extends ExerciseAction> {
 	startNewExercise: () => void
-	setDraftInput: (draftInput: InputExerciseRawInput | undefined) => void
+	setDraftInput: (draftInput: ExerciseInstance['draftInput']) => void
 	submitAction: (action: Action) => Promise<void>
 }
 
