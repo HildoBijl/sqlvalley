@@ -3,7 +3,6 @@ import { type ReactNode, useEffect, useState } from 'react'
 import { Alert, Box, Button, Collapse, Divider, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
-import type { DatasetSize } from '@sqlvalley/mock-data'
 import type { SqlQueryResult } from '@sqlvalley/sql-grading'
 
 import { DataTable } from '../../../components'
@@ -13,8 +12,8 @@ interface ExerciseResultsProps {
 	queryError: Error | undefined
 	hasExecuted: boolean
 	isComplete: boolean
-	datasetSize: DatasetSize
-	onDatasetSizeChange: (size: DatasetSize) => void
+	datasetSize: string | undefined
+	onDatasetSizeChange: (size: string | undefined) => void
 	datasetWarning?: string | null
 }
 
@@ -87,7 +86,7 @@ export function ExerciseResults({
 						value={datasetSize}
 						onChange={(_event, nextValue) => {
 							if (!nextValue) return
-							onDatasetSizeChange(nextValue as DatasetSize)
+							onDatasetSizeChange(nextValue)
 						}}
 						sx={{
 							flexWrap: 'wrap',

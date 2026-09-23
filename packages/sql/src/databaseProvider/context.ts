@@ -4,6 +4,8 @@ import type { DatabaseSource } from './types'
 import type { DatabaseCache } from './databaseCache'
 
 interface DatabaseContextValue {
+	datasetSize: string | undefined
+	setDatasetSize: (size: string | undefined) => void
 	source: DatabaseSource
 	cache: DatabaseCache | undefined
 	error: Error | undefined

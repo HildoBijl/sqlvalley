@@ -1,5 +1,7 @@
 import { useModuleContext } from '@sqlvalley/exercise-manager'
 
+import { useDatasetSize } from '../databaseProvider'
+
 import type { SqlModuleContext } from './types'
 import { ensureSqlModuleContext } from './context'
 
@@ -17,4 +19,9 @@ export function useGradingModuleDatabase(size?: string) {
 
 export function useModuleTableKeys() {
 	return useSqlModuleContext().tableKeys
+}
+
+export function useCurrentUserModuleDatabase() {
+	const [datasetSize] = useDatasetSize()
+	return useUserModuleDatabase(datasetSize)
 }

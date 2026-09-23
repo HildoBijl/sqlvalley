@@ -4,7 +4,7 @@ import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type Mo
 
 import { useModuleCompletionSchema } from '../../sqlModuleProvider'
 import { type SqlQueryValidationReport, SqlInput } from '../../sqlInput'
-import { useSqlPracticeContext } from '../SqlPractice'
+import { useDatasetSize } from '../../databaseProvider'
 import { useSmallDatasetWarning } from './useSmallDatasetWarning'
 import { ExerciseDescription } from './components/ExerciseDescription'
 import { ExerciseResults } from './components/ExerciseResults'
@@ -20,7 +20,7 @@ export function SQLExerciseInputArea({
 export function SQLExerciseInputVisualization({
 	state,
 }: MonoExerciseInputVisualizationProps) {
-	const runtime = useSqlPracticeContext()
+	const [datasetSize, setDatasetSize] = useDatasetSize()
 	const { getFieldValidation } = useInputExerciseContext()
 	const validation = getFieldValidation('query')
 	const preview = validation.status === 'valid' ? validation.report as SqlQueryValidationReport | undefined : undefined
@@ -31,8 +31,8 @@ export function SQLExerciseInputVisualization({
 		queryError={undefined}
 		hasExecuted={!!preview}
 		isComplete={complete}
-		datasetSize={runtime.datasetSize}
-		onDatasetSizeChange={runtime.setDatasetSize}
+		datasetSize={datasetSize}
+		onDatasetSizeChange={setDatasetSize}
 		datasetWarning={datasetWarning}
 	/>
 }

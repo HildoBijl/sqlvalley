@@ -49,7 +49,7 @@ The provider, context types, and hooks live in `src/sqlModuleProvider/` and are 
 
 Its general module-context value contains `moduleId`, `tableKeys`, `loading`, `error`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useSqlModuleContext()` to display loading and error states. Exercise generation waits until loading finishes without an error. React components use `useUserModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. Both return a `DatabaseHandle`. Omit the size only for sources without selectable sizes. Read-only theory components may use `useGradingModuleDatabase('small')`; interactive previews and editors must use user databases.
 
-`SqlPracticeProvider` belongs inside the module provider and receives `datasetSize` and `setDatasetSize` from the application. It supplies practice configuration, while the SQL query field owns live validation and preview results. Previews use the selected user database exclusively, with an additional full-dataset check only when the small result is empty and a warning may be useful. Grading uses the full grading database independently of the selected preview size and resets it after each grading attempt, including failures. User databases are unaffected by this reset. Practice settings and query results are not part of the module context.
+Dataset selection is provided by `DatabaseProvider` through `useDatasetSize()`. The application supplies its persisted preference; SQL inputs and visualizations remain independent of the store. Grading continues to use the full grading database regardless of this selection.
 
 Each application module index exports its configured `ModuleProvider`. `SkillPage` and `ConceptPage` load this independently of exercise definitions and wrap their page content in it, keyed by module ID. The practice provider remains inside the interactive practice tab. Theory and summary examples use the curriculum hook `useTheoryPageDatabase()`, which selects the small grading database. Data-explorer integration can migrate separately.
 
@@ -84,7 +84,7 @@ SQL editors obtain completion schemas separately from their dataset, for example
 
 ## Registered SQL input
 
-`SqlInput` wraps `SQLEditor` and registers a named SQL field with `InputExerciseProvider`. It requires the SQL module and practice providers, supplies autocomplete and validation feedback, and leaves query-result layout to the exercise. Distinct names allow multiple independent SQL fields.
+`SqlInput` wraps `SQLEditor` and registers a named SQL field with `InputExerciseProvider`. It requires the SQL module and database providers, supplies autocomplete and validation feedback, and leaves query-result layout to the exercise. Distinct names allow multiple independent SQL fields.
 
 ```tsx
 <SqlInput name="query" disabled={disabled} onSubmit={onSubmit} />
@@ -93,3 +93,22 @@ SQL editors obtain completion schemas separately from their dataset, for example
 `useSqlQueryValidation` returns a validation function bound to the selected user database. `SqlInput` registers `normalizeSqlQuery` separately. Dataset changes rerun validation; obsolete runs are cancelled before executing SQL. Validation reports contain the normalized query and its preview results. The visualization checks empty small-dataset results against the full user database and displays a warning when that same query returns rows there. Comparison failures do not affect validation.
 
 `useModuleCompletionSchema()` calls the database source's optional `buildCompletionSchema(tableKeys)` function with the module's table keys and memoizes the result. The mock-data source supplies its existing schema builder. No database loading or queries are required, and dataset size does not affect the schema. Sources without this function provide no table/column suggestions; SQL keyword completion remains available.
+
+
+## Dataset selection
+
+`DatabaseProvider` accepts `datasetSize` and `setDatasetSize` for controlled selection. The provider infers the size and setter types from `source.datasetSizes`, so a setter accepting only those sizes can be passed directly. Keep the source's literal size types (for example, using `as const`) to retain this inference. Changes are still validated at runtime. The setter determines controlled mode; callers must supply a valid size for sources with configured sizes, handling any loading/default value themselves.
+
+Without those props, selection is local state initialized from `defaultDatasetSize` or the first source size. `defaultDatasetSize` is only supported in uncontrolled mode and is only read on mount. Sources without selectable sizes use `undefined`. Invalid selections throw; changing selection does not clear cached databases.
+
+```tsx
+<DatabaseProvider source={source} datasetSize={size} setDatasetSize={setSize}>
+	{children}
+</DatabaseProvider>
+
+<DatabaseProvider source={source} defaultDatasetSize="small">
+	{children}
+</DatabaseProvider>
+```
+
+`useDatasetSize()` returns `[datasetSize, setDatasetSize]`, following the `useState` convention. Within a SQL module, `useCurrentUserModuleDatabase()` retrieves the corresponding shared user database. Elsewhere, pass the size to `useDatabase`; use a different persistent key per size when retaining multiple datasets.

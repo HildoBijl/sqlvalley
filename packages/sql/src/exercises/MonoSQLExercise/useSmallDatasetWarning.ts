@@ -4,7 +4,7 @@ import type { Database } from '@sqlvalley/sqljs'
 
 import type { SqlQueryValidationReport } from '../../sqlInput'
 import { useUserModuleDatabase } from '../../sqlModuleProvider'
-import { useSqlPracticeContext } from '../SqlPractice'
+import { useDatasetSize } from '../../databaseProvider'
 
 const SMALL_DATASET_WARNING = 'You are using the small data set. This data set is meant to get a quick intuition of the data, but it does not support all exercises. Consider using the full data set to get the full real-life experience.'
 
@@ -15,7 +15,7 @@ interface ComparisonResult {
 }
 
 export function useSmallDatasetWarning(preview: SqlQueryValidationReport | undefined): string | undefined {
-	const { datasetSize } = useSqlPracticeContext()
+	const [datasetSize] = useDatasetSize()
 	const { database } = useUserModuleDatabase('full')
 	const [comparison, setComparison] = useState<ComparisonResult>()
 	const shouldCompare = datasetSize === 'small' && !!preview && !preview.results.some(result => result.values.length > 0)

@@ -21,7 +21,7 @@ import {
 
 import { allTableKeys, buildCompletionSchema } from '@sqlvalley/mock-data'
 import { SQLEditor, DataTable } from '@sqlvalley/sql'
-import { useDatabase, useQueryExecution } from '@sqlvalley/sql/databaseProvider'
+import { useDatabase, useDatasetSize, useQueryExecution } from '@sqlvalley/sql/databaseProvider'
 
 const completionSchema = buildCompletionSchema(allTableKeys)
 const tableNames = Object.keys(completionSchema).sort()
@@ -45,7 +45,8 @@ export default function PlaygroundPage() {
 	const [savedQueries, setSavedQueries] = useState<SavedQuery[]>([]);
 	const [history, setHistory] = useState<QueryHistory[]>([]);
 
-	const handle = useDatabase({ key: 'playground', size: 'full' })
+	const [datasetSize] = useDatasetSize()
+	const handle = useDatabase({ key: `playground:${datasetSize}`, size: datasetSize })
 	const { execute: executeQuery, results: queryResult, error: queryError, clear: clearQueryState } = useQueryExecution(handle)
 	const isReady = Boolean(handle.database)
 	const resetDatabase = handle.reset

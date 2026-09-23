@@ -12,22 +12,22 @@ import { router } from '@/navigation'
 import { useSettingsStore, useStoresHydrated } from './store'
 
 export function App() {
-	const mode = useSettingsStore((s) => s.themeMode);
-	const setThemeMode = useSettingsStore((s) => s.setThemeMode);
-	const isStoreReady = useStoresHydrated();
+	// Set up theming/coloring.
+	const mode = useSettingsStore((s) => s.themeMode)
+	const muiTheme = useMemo(() => getTheme(mode), [mode])
+	useEffect(() => { document.documentElement.setAttribute('data-theme', mode) }, [mode])
+	const setThemeMode = useSettingsStore((s) => s.setThemeMode)
+	const toggleColorMode = () => setThemeMode(mode === 'light' ? 'dark' : 'light')
 
-	const muiTheme = useMemo(() => getTheme(mode), [mode]);
+	// Load in the dataset size for the DatabaseProvider.
+	const datasetSize = useSettingsStore(state => state.practiceDatasetSize)
+	const setDatasetSize = useSettingsStore(state => state.setPracticeDatasetSize)
 
-	useEffect(() => {
-		document.documentElement.setAttribute('data-theme', mode);
-	}, [mode]);
+	// If the data store is not ready, don't render yet. It would be wrong and may cause flickering.
+	const isStoreReady = useStoresHydrated()
+	if (!isStoreReady) return null
 
-	const toggleColorMode = () => setThemeMode(mode === 'light' ? 'dark' : 'light');
-
-	if (!isStoreReady) {
-		return null;
-	}
-
+	// Render the site. If the store is not ready yet, then wait for it first.
 	return (
 		<StrictMode>
 			<ErrorBoundary>
@@ -35,7 +35,7 @@ export function App() {
 					<ThemeProvider theme={muiTheme}>
 						<CssBaseline />
 						<SQLJSProvider>
-							<DatabaseProvider source={databaseSource}>
+							<DatabaseProvider source={databaseSource} datasetSize={datasetSize} setDatasetSize={setDatasetSize}>
 								<RouterProvider router={router} />
 							</DatabaseProvider>
 						</SQLJSProvider>
@@ -43,5 +43,5 @@ export function App() {
 				</ColorModeContext.Provider>
 			</ErrorBoundary>
 		</StrictMode>
-	);
+	)
 }
