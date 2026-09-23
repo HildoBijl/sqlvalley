@@ -7,9 +7,9 @@ import { databaseSource } from '@sqlvalley/mock-data'
 import { SQLJSProvider } from '@sqlvalley/sqljs'
 import { DatabaseProvider } from '@sqlvalley/sql/databaseProvider'
 
+import { useSettingsStore, useStoresHydrated } from '@/store'
 import { getTheme, ColorModeContext, ErrorBoundary } from '@/ui'
 import { router } from '@/navigation'
-import { useSettingsStore, useStoresHydrated } from './store'
 
 export function App() {
 	// Set up theming/coloring.
