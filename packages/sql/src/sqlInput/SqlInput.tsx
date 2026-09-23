@@ -6,7 +6,7 @@ import { SQLEditor } from '../components'
 import { useModuleCompletionSchema } from '../sqlModuleProvider'
 
 import { normalizeSqlQuery } from './normalization'
-import { useSqlQueryValidation } from './useSqlQueryValidation'
+import { useSqlQueryValidation } from './validation'
 
 export interface SqlInputProps {
 	name: string
@@ -16,11 +16,13 @@ export interface SqlInputProps {
 }
 
 export function SqlInput({ name, disabled = false, onSubmit, height = '125px' }: SqlInputProps) {
-	const completionSchema = useModuleCompletionSchema()
+	// Register the input field to the InputExercise.
 	const validate = useSqlQueryValidation()
 	const { value, setValue, validation } = useInputField(name, { type: 'SQL', normalizeInput: normalizeSqlQuery, validate })
-	const invalid = validation.status === 'invalid'
 
+	// Render the editor field.
+	const completionSchema = useModuleCompletionSchema()
+	const invalid = validation.status === 'invalid'
 	return <>
 		<Box aria-invalid={invalid || undefined} sx={invalid ? { outline: '1px solid', outlineColor: 'error.main', borderRadius: 1 } : undefined}>
 			<SQLEditor value={typeof value?.value === 'string' ? value.value : ''} onChange={setValue} height={height} readOnly={disabled} onExecute={disabled ? undefined : onSubmit} completionSchema={completionSchema} />
