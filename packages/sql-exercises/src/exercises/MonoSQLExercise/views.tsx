@@ -1,10 +1,10 @@
 import type { ComponentType } from 'react'
 
+import { useDatasetSize } from '@sqlvalley/sql'
 import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputExerciseContext, useSolution } from '@sqlvalley/input-exercise-components'
 
 import { useModuleCompletionSchema } from '../../sqlModuleProvider'
 import { type SqlQueryValidationReport, SqlInput } from '../../sqlInput'
-import { useDatasetSize } from '../../databaseProvider'
 import { useSmallDatasetWarning } from './useSmallDatasetWarning'
 import { ExerciseDescription } from './components/ExerciseDescription'
 import { ExerciseResults } from './components/ExerciseResults'

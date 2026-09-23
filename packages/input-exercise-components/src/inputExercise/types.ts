@@ -3,8 +3,7 @@ import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import type { PlainDataObject, PlainDataValue } from '@step-wise/js-utils'
 import type { InputExerciseRawInput, InputExerciseSolution } from '@step-wise/input-exercises'
 
-import type { InputFieldOptions } from './fieldTypes'
-import type { FieldValidationState } from './inputExerciseSession/useInputValidation'
+import type { InputFieldOptions, FieldValidationState } from './fieldTypes'
 
 export interface InputExerciseProviderProps {
 	children: ReactNode

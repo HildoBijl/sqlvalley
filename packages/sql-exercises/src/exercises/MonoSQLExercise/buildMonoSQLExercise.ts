@@ -1,8 +1,7 @@
 import { buildMonoExercise } from '@step-wise/input-exercises'
-
+import type { DatabaseHandle } from '@sqlvalley/sql'
 import { validateSqlInput } from '@sqlvalley/sql-grading'
 
-import type { DatabaseHandle } from '../../databaseProvider'
 import { ensureSqlModuleContext } from '../../sqlModuleProvider'
 import { sqlValueTypes } from '../../sqlInput'
 import type { MonoSQLExerciseDefinitionSpec } from './types'

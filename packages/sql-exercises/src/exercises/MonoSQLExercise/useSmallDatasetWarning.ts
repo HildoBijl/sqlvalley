@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
+import { useDatasetSize } from '@sqlvalley/sql'
 import type { Database } from '@sqlvalley/sqljs'
 
 import type { SqlQueryValidationReport } from '../../sqlInput'
 import { useUserModuleDatabase } from '../../sqlModuleProvider'
-import { useDatasetSize } from '../../databaseProvider'
 
 const SMALL_DATASET_WARNING = 'You are using the small data set. This data set is meant to get a quick intuition of the data, but it does not support all exercises. Consider using the full data set to get the full real-life experience.'
 

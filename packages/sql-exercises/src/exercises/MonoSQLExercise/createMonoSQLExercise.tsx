@@ -1,5 +1,4 @@
 import type { InputExerciseAction, MonoExerciseState } from '@step-wise/input-exercises'
-
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 import { MonoExercise } from '@sqlvalley/input-exercise-components'
 

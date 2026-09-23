@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { SqlModuleProvider as SqlModuleEnvironment } from '@sqlvalley/sql'
+import { SqlModuleProvider as SqlModuleEnvironment } from '@sqlvalley/sql-exercises'
 
 import { moduleTree } from '../moduleDefinition'
 import { moduleAccess } from '../moduleTableAccess'

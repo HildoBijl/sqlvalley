@@ -1,5 +1,5 @@
 import { type TableKey, allTableKeys } from '@sqlvalley/mock-data'
-import { type TableIntroductions, buildModuleAccess, getModuleTableKeys as resolveModuleTableKeys } from '@sqlvalley/sql'
+import { type TableIntroductions, buildModuleAccess, getModuleTableKeys as resolveModuleTableKeys } from '@sqlvalley/sql-exercises'
 
 import { type ModuleId, moduleTree } from './moduleDefinition'
 

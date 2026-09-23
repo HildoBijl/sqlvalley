@@ -1,10 +1,8 @@
 import { useMemo } from 'react'
-
 import { Box, Typography } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
 import { sql } from '@codemirror/lang-sql'
 import { EditorView } from '@codemirror/view'
-
 
 interface PracticeSolution {
 	query: string

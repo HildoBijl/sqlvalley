@@ -1,7 +1,6 @@
 import type { ComponentType } from 'react'
 
 import type { ExerciseMetadata } from '@step-wise/exercise-definition'
-
 import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-instances'
 import type { CompareOptions } from '@sqlvalley/sql-grading'
 import type { MonoExerciseProblemProps, MonoExerciseSolutionProps } from '@sqlvalley/input-exercise-components'

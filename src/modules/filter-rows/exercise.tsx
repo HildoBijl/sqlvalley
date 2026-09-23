@@ -2,7 +2,7 @@ import {
 	createMonoSQLExercise,
 	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
-} from '@sqlvalley/sql';
+} from '@sqlvalley/sql-exercises';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
 
 type Parameters = Record<string, never>;

@@ -1,11 +1,10 @@
 import { useCallback } from 'react'
 
+import type { QueryResult } from '@sqlvalley/sql'
 import type { Database } from '@sqlvalley/sqljs'
 import { formatSqlErrorMessage, validateSqlInput } from '@sqlvalley/sql-grading'
 
-import type { QueryResult } from '../databaseProvider'
 import { useCurrentUserModuleDatabase } from '../sqlModuleProvider'
-
 import { isSqlInputValue, interpretSqlInputValue } from './valueTypes'
 
 export interface SqlQueryValidationReport {

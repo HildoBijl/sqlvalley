@@ -32,6 +32,7 @@
     "@sqlvalley/progress": "*",
     "@sqlvalley/skill-tree": "*",
     "@sqlvalley/sql": "*",
+    "@sqlvalley/sql-exercises": "*",
     "@sqlvalley/sql-grading": "*",
     "@sqlvalley/sqljs": "*",
     "@step-wise/geometry": "^0.1.0",

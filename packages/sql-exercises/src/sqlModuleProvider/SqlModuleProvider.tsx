@@ -1,11 +1,10 @@
 import { type ReactNode, useMemo } from 'react'
 
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
+import { type DatabaseHandle, useDatabaseContext, useDatabase, useDatabases } from '@sqlvalley/sql'
 import { ModuleContextProvider } from '@sqlvalley/exercise-manager'
 
-import { type DatabaseHandle, useDatabaseContext, useDatabase, useDatabases } from '../databaseProvider'
 import { type ModuleAccess, getModuleTableKeys } from '../moduleAccess'
-
 import type { SqlModuleContext } from './types'
 
 /*

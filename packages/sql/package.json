@@ -15,20 +15,12 @@
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.38.6",
     "@lezer/highlight": "^1.2.3",
-    "@sqlvalley/exercise-instances": "*",
-    "@sqlvalley/exercise-manager": "*",
-    "@sqlvalley/mock-data": "*",
-    "@sqlvalley/sql-grading": "*",
     "@sqlvalley/sqljs": "*",
-    "@step-wise/input-exercises": "^0.2.0",
     "@step-wise/js-utils": "^0.1.1",
-    "@step-wise/module-tree-definition": "^0.3.0",
     "@step-wise/react-utils": "^0.1.0",
-    "@uiw/react-codemirror": "^4.25.3",
-    "@sqlvalley/input-exercise-components": "*"
+    "@uiw/react-codemirror": "^4.25.3"
   },
   "peerDependencies": {
-    "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
     "react": "^19.0.0"
   }

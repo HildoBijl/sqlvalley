@@ -1,6 +1,5 @@
+import { useDatasetSize } from '@sqlvalley/sql'
 import { useModuleContext } from '@sqlvalley/exercise-manager'
-
-import { useDatasetSize } from '../databaseProvider'
 
 import type { SqlModuleContext } from './types'
 import { ensureSqlModuleContext } from './context'

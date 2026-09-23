@@ -1,11 +1,9 @@
 import { type ReactNode, useEffect, useState } from 'react'
-
 import { Alert, Box, Button, Collapse, Divider, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
+import { DataTable } from '@sqlvalley/sql'
 import type { SqlQueryResult } from '@sqlvalley/sql-grading'
-
-import { DataTable } from '../../../components'
 
 interface ExerciseResultsProps {
 	queryResult: ReadonlyArray<SqlQueryResult> | undefined

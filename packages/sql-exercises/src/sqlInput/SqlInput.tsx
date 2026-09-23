@@ -1,10 +1,9 @@
 import { Alert, Box } from '@mui/material'
 
+import { SQLEditor } from '@sqlvalley/sql'
 import { useInputField } from '@sqlvalley/input-exercise-components'
 
-import { SQLEditor } from '../components'
 import { useModuleCompletionSchema } from '../sqlModuleProvider'
-
 import { sqlType, normalizeInput, hydrateInput } from './valueTypes'
 import { useSqlQueryValidation } from './validation'
 import { getSqlFeedback } from './feedback'
