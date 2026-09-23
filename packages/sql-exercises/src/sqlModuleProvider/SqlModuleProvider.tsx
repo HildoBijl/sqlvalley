@@ -5,6 +5,7 @@ import { type DatabaseHandle, useDatabaseContext, useDatabase, useDatabases } fr
 import { ModuleContextProvider } from '@sqlvalley/exercise-manager'
 
 import { type ModuleAccess, getModuleTableKeys } from '../moduleAccess'
+
 import type { SqlModuleContext } from './types'
 
 /*
