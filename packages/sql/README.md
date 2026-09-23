@@ -77,7 +77,7 @@ Without a key, each hook owns a database that closes on unmount or configuration
 
 `useQuery(handle, query)` runs when the database or query changes and returns `{ results, loading, error }`. Pass `undefined` as the query to skip execution. `useQueryResults` and `useQueryResult` return only the results or first result.
 
-For event handlers, `useQueryExecution(handle)` provides `{ execute, clear, results, error }`; `execute(query)` returns a promise and rejects on SQL errors. SQL.js execution itself is synchronous. Query results belong to the calling component and clear when its database changes. Direct `handle.database.exec(query)` is also available once loading completes. Mutations do not automatically refresh other queries.
+For event handlers, call `handle.database.exec(query)` once the database is available. Execution is synchronous; keep results and errors in component state and discard them when the database changes. Mutations do not automatically refresh other queries.
 
 SQL editors obtain completion schemas separately from their dataset, for example through mock-data's `buildCompletionSchema`.
 

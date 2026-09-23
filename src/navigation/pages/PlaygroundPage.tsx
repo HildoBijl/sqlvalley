@@ -21,10 +21,16 @@ import {
 
 import { allTableKeys, buildCompletionSchema } from '@sqlvalley/mock-data'
 import { SQLEditor, DataTable } from '@sqlvalley/sql'
-import { useDatabase, useDatasetSize, useQueryExecution } from '@sqlvalley/sql/databaseProvider'
+import { type DatabaseHandle, type QueryResult, useDatabase, useDatasetSize } from '@sqlvalley/sql/databaseProvider'
 
 const completionSchema = buildCompletionSchema(allTableKeys)
 const tableNames = Object.keys(completionSchema).sort()
+
+interface QueryExecutionState {
+	database: DatabaseHandle['database']
+	results?: QueryResult[]
+	error?: Error
+}
 
 interface QueryHistory {
 	query: string;
@@ -47,12 +53,31 @@ export default function PlaygroundPage() {
 
 	const [datasetSize] = useDatasetSize()
 	const handle = useDatabase({ key: `playground:${datasetSize}`, size: datasetSize })
-	const { execute: executeQuery, results: queryResult, error: queryError, clear: clearQueryState } = useQueryExecution(handle)
+	const { database, error } = handle
+	const [queryState, setQueryState] = useState<QueryExecutionState>()
+	const clearQueryState = useCallback(() => setQueryState(undefined), [])
+	const executeQuery = useCallback((query: string) => {
+		try {
+			if (!database) throw error ?? new Error('Database is not ready.')
+			const results = database.exec(query)
+			setQueryState({ database, results })
+			return results
+		} catch (error) {
+			const queryError = error instanceof Error ? error : new Error(String(error))
+			setQueryState({ database, error: queryError })
+			throw queryError
+		}
+	}, [database, error])
+
+	// Results belong to the database that ran the query, so hide them after a reset or size change.
+	const currentQueryState = queryState?.database === database ? queryState : undefined
+	const queryResult = currentQueryState?.results
+	const queryError = error ?? currentQueryState?.error
 	const isReady = Boolean(handle.database)
 	const resetDatabase = handle.reset
 
 	// Handle live query execution (for preview results)
-	const handleLiveExecute = useCallback(async (liveQuery: string) => {
+	const handleLiveExecute = useCallback((liveQuery: string) => {
 		if (!isReady) return;
 
 		const trimmedQuery = liveQuery.trim();
@@ -62,9 +87,9 @@ export default function PlaygroundPage() {
 		}
 
 		try {
-			await executeQuery(liveQuery);
+			executeQuery(liveQuery)
 			// Live execution just updates the query results without adding to history or showing messages
-		} catch (error: any) {
+		} catch (error) {
 			// Let the error be shown in the UI - the executeQuery already sets queryError state
 			// No need to handle it here since the error will be displayed in the Results section
 			console.debug('Live query execution failed:', error);
@@ -72,9 +97,9 @@ export default function PlaygroundPage() {
 	}, [isReady, executeQuery, clearQueryState]);
 
 	// Handle actual execution (with history and messages)
-	const handleExecute = async () => {
+	const handleExecute = () => {
 		try {
-			const result = await executeQuery(query);
+			const result = executeQuery(query)
 
 			// Add to history
 			const newHistoryEntry: QueryHistory = {
