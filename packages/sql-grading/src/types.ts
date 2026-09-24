@@ -1,30 +1,38 @@
-/**
- * Types and interfaces for query result grading.
+/*
+ * Query shape.
+ */
+
+export interface SqlQueryResult {
+	columns: readonly string[]
+	values: readonly (readonly unknown[])[]
+}
+
+/*
+ * Comparison options.
+ */
+
+export interface ComparisonOptions {
+	requireEqualColumnOrder?: boolean
+	requireEqualColumnNames?: boolean
+	requireEqualRowOrder?: boolean
+	caseSensitiveColumnNames?: boolean
+	caseSensitiveValues?: boolean
+}
+
+/*
+ * Comparison output.
  */
 
 export interface ComparisonResult {
-	match: boolean;
-	feedback: string;
-	report: ComparisonReport;
+	correct: boolean
+	report: ComparisonReport
 }
-
-export interface CompareOptions {
-	requireEqualColumnOrder?: boolean;
-	requireEqualColumnNames?: boolean;
-	ignoreRowOrder?: boolean;
-	caseSensitive?: boolean;
-}
-
-export const DEFAULT_OPTIONS: Required<CompareOptions> = {
-	requireEqualColumnOrder: false,
-	requireEqualColumnNames: false,
-	ignoreRowOrder: true,
-	caseSensitive: false,
-};
 
 export type ComparisonReport =
-	| { reason: 'correct' | 'empty-result' | 'column-order' }
-	| { reason: 'column-count' | 'row-count'; actual: number; expected: number }
+	| { reason: 'correct' | 'empty-result' | 'empty-expected-result' | 'column-order' }
+	| { reason: 'column-count'; input: number; expected: number; missing: string[]; extra: string[] }
+	| { reason: 'row-count'; input: number; expected: number }
 	| { reason: 'column-names'; missing: string[]; extra: string[] }
-	| { reason: 'column-values'; columns: string[] }
-	| { reason: 'row-values'; differences: { index: number; row: string }[]; ordered: boolean }
+	| { reason: 'ordered-column-values' | 'unmatched-column-values'; columns: string[] }
+	| { reason: 'surplus-column-match'; columns: string[]; matchingExpectedColumnCount: number }
+	| { reason: 'row-values'; differenceCount: number; differences: { index: number; row: string[] }[]; ordered: boolean }
