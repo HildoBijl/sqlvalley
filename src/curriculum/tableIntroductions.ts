@@ -1,5 +1,5 @@
 import { type TableKey, allTableKeys } from '@sqlvalley/mock-data'
-import { type TableIntroductions, buildModuleAccess, getModuleTableKeys as resolveModuleTableKeys } from '@sqlvalley/sql-exercises'
+import { type TableIntroductions, buildTablesIntroducedByModule, getAvailableTableKeys as resolveAvailableTableKeys } from '@sqlvalley/sql-exercises'
 
 import { type ModuleId, moduleTree } from './moduleDefinition'
 
@@ -22,9 +22,9 @@ const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {
 }
 
 // Invert the table introductions to find which module introduces which tables.
-export const moduleAccess = buildModuleAccess({ moduleTree, tableIntroductions, tableKeys: allTableKeys })
+export const tablesIntroducedByModule = buildTablesIntroducedByModule({ moduleTree, tableIntroductions, tableKeys: allTableKeys })
 
 // Determine which module may access which tables.
-export function getModuleTableKeys(moduleId: string): TableKey[] {
-	return resolveModuleTableKeys({ moduleId, moduleTree, moduleAccess })
+export function getAvailableTableKeys(moduleId: string): TableKey[] {
+	return resolveAvailableTableKeys({ moduleId, moduleTree, tablesIntroducedByModule })
 }

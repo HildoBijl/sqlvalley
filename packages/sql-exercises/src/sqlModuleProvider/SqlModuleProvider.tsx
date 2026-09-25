@@ -4,7 +4,7 @@ import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 import { type DatabaseHandle, useDatabaseContext, useDatabase, useDatabases } from '@sqlvalley/sql'
 import { type ExerciseResources, ModuleContextProvider } from '@sqlvalley/exercise-manager'
 
-import { type ModuleAccess, getModuleTableKeys } from '../moduleAccess'
+import { type TablesIntroducedByModule, getAvailableTableKeys } from '../tableIntroductions'
 
 import type { SqlModuleContext } from './types'
 
@@ -15,13 +15,13 @@ import type { SqlModuleContext } from './types'
 interface SqlModuleProviderProps {
 	moduleId: ModuleId
 	moduleTree: ModuleTree
-	moduleAccess: ModuleAccess
+	tablesIntroducedByModule: TablesIntroducedByModule
 	children: ReactNode
 }
 
-export function SqlModuleProvider({ moduleId, moduleTree, moduleAccess, children }: SqlModuleProviderProps) {
+export function SqlModuleProvider({ moduleId, moduleTree, tablesIntroducedByModule, children }: SqlModuleProviderProps) {
 	const { source } = useDatabaseContext()
-	const tableKeys = useMemo(() => getModuleTableKeys({ moduleId, moduleTree, moduleAccess }), [moduleId, moduleTree, moduleAccess])
+	const tableKeys = useMemo(() => getAvailableTableKeys({ moduleId, moduleTree, tablesIntroducedByModule }), [moduleId, moduleTree, tablesIntroducedByModule])
 	const InternalSqlModuleProvider = source.datasetSizes === undefined ? SingleDatabaseProvider : MultipleDatabaseProvider
 	return <InternalSqlModuleProvider moduleId={moduleId} tableKeys={tableKeys}>{children}</InternalSqlModuleProvider>
 }

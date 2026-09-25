@@ -4,7 +4,7 @@
 
 export * from './loaders';
 export * from './useTheoryPageDatabase'
-export * from '../moduleTableAccess';
+export * from '../tableIntroductions';
 export * from './queryFigures';
 export * from './raQueryFigures';
 export * from './dlQueryFigures';

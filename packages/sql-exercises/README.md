@@ -34,18 +34,18 @@ SQL submissions use a query field containing { type: 'SQL', value: query }; draf
 The application learning-store v8 to v9 migration converts existing SQL submissions, string drafts, and give-up actions, preserving reports, draft contents, progress, and timestamps.
 
 
-## Module table access
+## Table introductions
 
-Call `buildModuleAccess({ moduleTree, tableIntroductions, tableKeys })` once when defining application configuration. `tableIntroductions` maps each table key to its introduction module ID or a list of alternative introduction modules. The function validates these definitions and returns a `ModuleAccess` map from module IDs to introduced table keys.
+Call `buildTablesIntroducedByModule({ moduleTree, tableIntroductions, tableKeys })` once when defining application configuration. `tableIntroductions` maps each table key to its introduction module ID or a list of alternative introduction modules. The function validates these definitions and returns a `TablesIntroducedByModule` map from module IDs to introduced table keys.
 
-`getModuleTableKeys({ moduleId, moduleTree, moduleAccess })` trusts the prepared mapping and returns accessible table keys for a module and its prerequisites, without duplicates. Unknown module IDs throw errors; invalid introduction IDs and missing access definitions throw when building the mapping. Valid modules with no accessible tables return `[]`. `TableIntroductions` supports application-specific table keys and module IDs; curriculum data stays in the application.
+`getAvailableTableKeys({ moduleId, moduleTree, tablesIntroducedByModule })` trusts the prepared mapping and returns accessible table keys for a module and its prerequisites, without duplicates. Unknown module IDs throw errors; invalid introduction IDs, unknown table keys, and missing introduction definitions throw when building the mapping. An empty introduction list is valid and keeps that table unavailable in all modules. Valid modules with no accessible tables return `[]`. `TableIntroductions` supports application-specific table keys and module IDs; curriculum data stays in the application.
 
 
 ## SQL module environment
 
 The provider, context types, and hooks live in `src/sqlModuleProvider/` and are exported from `@sqlvalley/sql-exercises`.
 
-`SqlModuleProvider` receives `moduleId`, `moduleTree`, and `moduleAccess` below a `DatabaseProvider`. It resolves accessible tables and acquires separate user and grading databases for each source dataset size, or one of each when the source has no selectable sizes. Cache keys identify the module and purpose, so returning to a module reuses its databases and preserves user changes. Databases remain in memory until the app-level `DatabaseProvider` unmounts or its source changes; they do not survive a page reload. The module page keys the provider subtree by module ID to reset local UI state on navigation.
+`SqlModuleProvider` receives `moduleId`, `moduleTree`, and `tablesIntroducedByModule` below a `DatabaseProvider`. It resolves accessible tables and acquires separate user and grading databases for each source dataset size, or one of each when the source has no selectable sizes. Cache keys identify the module and purpose, so returning to a module reuses its databases and preserves user changes. Databases remain in memory until the app-level `DatabaseProvider` unmounts or its source changes; they do not survive a page reload. The module page keys the provider subtree by module ID to reset local UI state on navigation.
 
 Its module provider exposes `{ loading, error?, context }`. The inner `SqlModuleContext` contains `moduleId`, `tableKeys`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useModuleContext()` to display loading and error states. Exercise generation waits until loading finishes without an error. React components use `useUserModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. Both return a `DatabaseHandle`. Omit the size only for sources without selectable sizes. Read-only theory components may use `useGradingModuleDatabase('small')`; interactive previews and editors must use user databases.
 

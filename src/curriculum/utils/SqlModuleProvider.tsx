@@ -3,10 +3,10 @@ import type { ReactNode } from 'react'
 import { SqlModuleProvider as SqlModuleEnvironment } from '@sqlvalley/sql-exercises'
 
 import { moduleTree } from '../moduleDefinition'
-import { moduleAccess } from '../moduleTableAccess'
+import { tablesIntroducedByModule } from '../tableIntroductions'
 
 export function SqlModuleProvider({ moduleId, children }: { moduleId: string; children: ReactNode }) {
-	return <SqlModuleEnvironment moduleId={moduleId} moduleTree={moduleTree} moduleAccess={moduleAccess}>
+	return <SqlModuleEnvironment moduleId={moduleId} moduleTree={moduleTree} tablesIntroducedByModule={tablesIntroducedByModule}>
 		{children}
 	</SqlModuleEnvironment>
 }
