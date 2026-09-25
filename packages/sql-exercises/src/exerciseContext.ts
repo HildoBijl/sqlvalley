@@ -11,7 +11,7 @@ export function useSqlExerciseContext() {
 
 export function useCurrentUserExerciseDatabase() {
 	const [size] = useDatasetSize()
-	return useSqlExerciseContext().getUserDatabase(size)
+	return useSqlExerciseContext().getUserDatabaseHandle(size)
 }
 
 export function useExerciseCompletionSchema(): Record<string, string[]> {

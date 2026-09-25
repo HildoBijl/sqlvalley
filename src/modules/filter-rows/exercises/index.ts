@@ -6,7 +6,8 @@ import filterRowsLtAmount from './filterRowsLtAmount'
 import filterRowsEqualDate from './filterRowsEqualDate'
 import filterRowsStringLike from './filterRowsStringLike'
 import filterRowsGtDate from './filterRowsGtDate'
+import filterRowsByPosition from './filterRowsByPosition'
 
 export default function buildExercises(skillId: string): ExerciseRegistration[] {
-	return buildModuleExercises([filterRowsLtAmount, filterRowsEqualDate, filterRowsStringLike, filterRowsGtDate], skillId)
+	return buildModuleExercises([filterRowsLtAmount, filterRowsEqualDate, filterRowsStringLike, filterRowsGtDate, filterRowsByPosition], skillId)
 }

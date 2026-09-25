@@ -117,7 +117,7 @@ function useShowSmallDatasetWarning(validationReport: SqlQueryValidationReport |
 	const shouldCompare = datasetSize === sqlDatasetSizes.small && !!validationReport && !(validationReport.results[0]?.values.length)
 
 	// When we should do a check, run the query.
-	const { database } = useSqlExerciseContext().getUserDatabase(sqlDatasetSizes.full)
+	const database = useSqlExerciseContext().getUserDatabase(sqlDatasetSizes.full)
 	useEffect(() => {
 		if (!shouldCompare || !validationReport || !database) return
 

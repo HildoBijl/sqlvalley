@@ -28,7 +28,7 @@ export default {
 
 Each module's `exercises/index.ts` gathers these specs in selection order and passes them with its skill ID to the application's `buildModuleExercises` utility. It preserves explicit skills, supplies the module skill otherwise, and calls `buildSQLMonoExercise` without modifying the imported specs. Metadata is set before constructing reducers.
 
-Definition specifications accept upstream `metadata` (including `version`, `skill`, and `setup`) and optional `comparisonOptions`. Metadata defaults to `{}`. Omitting `generateParameters` uses the upstream empty-object default; when provided it receives the standard object argument, including `context`.
+Definition specifications accept upstream `metadata` (including `version`, `skill`, and `setup`) and optional `comparisonOptions`. Metadata defaults to `{}`. Omitting `generateParameters` uses the upstream empty-object default; when provided it receives the standard object argument, including a typed `SqlModuleContext`. Its database getters return ready SQL.js databases directly; the provider checks database availability, and the definition builder validates the context. React-facing module hooks still return database handles.
 
 Use either a static `solution` query string or a standard `getSolution` callback, never both:
 
@@ -41,7 +41,7 @@ definition: {
 }
 ```
 
-The static shorthand becomes `getSolution: () => ({ query: solution })`. Callback arguments and asynchronous solution support follow `@step-wise/input-exercises`. Parameter types remain generic for generation and solution logic; rendering props use the base exercise-parameter type.
+The static shorthand becomes `getSolution: () => ({ query: solution })`. Callback arguments and asynchronous solution support follow `@step-wise/input-exercises`. Parameter types are shared by generation, solution callbacks, and component props. Use `defineSQLMonoExercise({...})` with inline callbacks to infer them directly from `generateParameters`, including async generators. The helper returns the spec without building it. Explicit `SQLMonoExerciseSpec<Parameters>` remains available for separately declared functions.
 
 `buildSQLMonoExerciseDefinition` and `buildSQLMonoExerciseComponent` are also available independently, with `SQLMonoExerciseDefinitionSpec` and `SQLMonoExerciseComponentSpec`. `SQLMonoExerciseSpec` combines those specs with the ID. Definitions preserve the upstream reducer and `valueOperations`. The builders live in `construction/`, alongside the private SQL grading helper.
 
@@ -65,7 +65,7 @@ The provider, context types, and hooks live in `src/sqlModuleProvider/` and are 
 
 `SqlModuleProvider` receives `moduleId`, `moduleTree`, and `tablesIntroducedByModule` below a `DatabaseProvider`. It resolves accessible tables and acquires separate user and grading databases for each source dataset size, and requires the source to include both `small` and `full`. These names are centralized in the exported `sqlDatasetSizes` constant; incompatible sources are rejected by the provider. Cache keys identify the module and purpose, so returning to a module reuses its databases and preserves user changes. Databases remain in memory until the app-level `DatabaseProvider` unmounts or its source changes; they do not survive a page reload. The module page keys the provider subtree by module ID to reset local UI state on navigation.
 
-Its module provider exposes `{ loading, error?, context }`. The inner `SqlModuleContext` contains `moduleId`, `tableKeys`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useModuleContext()` to display loading and error states. Exercise generation waits until loading finishes without an error. React components use `useUserModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. Both return a `DatabaseHandle`. Read-only theory components may use `useGradingModuleDatabase('small')`; interactive previews and editors must use user databases.
+Its module provider exposes `{ loading, error?, context }`. The inner `SqlModuleContext` contains `moduleId`, `tableKeys`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useModuleContext()` to display loading and error states. Exercise generation waits until loading finishes without an error. React components use `useUserModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. The context getters return ready SQL.js `Database` objects and throw if called before initialization succeeds. The explicit `getUserDatabaseHandle(size)` and `getGradingDatabaseHandle(size)` methods expose loading, errors, and reset controls; React-facing database hooks continue to return these handles. Read-only theory components may use `useGradingModuleDatabase('small')`; interactive previews and editors must use user databases.
 
 Dataset selection is provided by `DatabaseProvider` through `useDatasetSize()`. The application supplies its persisted preference; SQL inputs and visualizations remain independent of the store. Grading continues to use the full grading database regardless of this selection.
 
@@ -100,3 +100,20 @@ The SQL value helpers `isSqlInputValue`, `isSqlDomainValue`, `interpretSqlInputV
 SQL exercise components read resources from the manager through `useExerciseContext()`. The module-page hooks continue to read `useModuleContext()` for use outside exercises. Pass the SQL module context to `ExerciseManager resources={resources}` so generation, grading, previews, and feedback share the same resources.
 
 The exported `useSqlExerciseContext`, `useCurrentUserExerciseDatabase`, and `useExerciseCompletionSchema` hooks support custom components inside an exercise session. Use the corresponding module hooks outside exercise sessions.
+
+An inline parameterized exercise needs no separate parameter type:
+
+```tsx
+export default defineSQLMonoExercise({
+	exerciseId: 'employee-by-id',
+	definition: {
+		generateParameters: () => ({ employeeId: 1 }),
+		getSolution: ({ parameters }) => ({
+			query: `SELECT * FROM employees WHERE e_id = ${parameters.employeeId}`,
+		}),
+	},
+	component: {
+		Problem: ({ parameters }) => <p>Find employee {parameters.employeeId}.</p>,
+	},
+})
+```

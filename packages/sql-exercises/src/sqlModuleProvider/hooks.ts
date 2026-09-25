@@ -10,11 +10,11 @@ export function useSqlModuleContext(): SqlModuleContext {
 }
 
 export function useUserModuleDatabase(size?: string) {
-	return useSqlModuleContext().getUserDatabase(size)
+	return useSqlModuleContext().getUserDatabaseHandle(size)
 }
 
 export function useGradingModuleDatabase(size?: string) {
-	return useSqlModuleContext().getGradingDatabase(size)
+	return useSqlModuleContext().getGradingDatabaseHandle(size)
 }
 
 export function useModuleTableKeys() {

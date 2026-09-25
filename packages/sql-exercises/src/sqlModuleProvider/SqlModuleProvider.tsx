@@ -1,6 +1,7 @@
 import { type ReactNode, useMemo } from 'react'
 
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
+import type { Database } from '@sqlvalley/sqljs'
 import { type DatabaseHandle, useDatabaseContext, useDatabases } from '@sqlvalley/sql'
 import { type ExerciseResources, ModuleContextProvider } from '@sqlvalley/exercise-manager'
 
@@ -54,20 +55,26 @@ interface ModuleDatabaseProviderProps extends DatabaseProviderProps {
 
 function ModuleDatabaseProvider({ moduleId, tableKeys, userDatabases, gradingDatabases, children }: ModuleDatabaseProviderProps) {
 	// Set up the ModuleContext value.
-	const context = useMemo<SqlModuleContext>(() => ({
-		moduleId,
-		tableKeys,
-		getUserDatabase: size => {
+	const context = useMemo<SqlModuleContext>(() => {
+		const getUserDatabaseHandle = (size?: string): DatabaseHandle => {
 			const handle = userDatabases.get(size)
 			if (!handle) throw new Error(`No user database is available for size "${size}".`)
 			return handle
-		},
-		getGradingDatabase: size => {
+		}
+		const getGradingDatabaseHandle = (size?: string): DatabaseHandle => {
 			const handle = gradingDatabases.get(size)
 			if (!handle) throw new Error(`No grading database is available for size "${size}".`)
 			return handle
-		},
-	}), [moduleId, tableKeys, userDatabases, gradingDatabases])
+		}
+		return {
+			moduleId,
+			tableKeys,
+			getUserDatabase: size => getReadyDatabase(getUserDatabaseHandle(size)),
+			getGradingDatabase: size => getReadyDatabase(getGradingDatabaseHandle(size)),
+			getUserDatabaseHandle,
+			getGradingDatabaseHandle,
+		}
+	}, [moduleId, tableKeys, userDatabases, gradingDatabases])
 
 	const resources = useMemo<ExerciseResources<SqlModuleContext>>(() => {
 		const handles = [...userDatabases.values(), ...gradingDatabases.values()]
@@ -82,4 +89,10 @@ function ModuleDatabaseProvider({ moduleId, tableKeys, userDatabases, gradingDat
 	return <ModuleContextProvider value={resources}>
 		{children}
 	</ModuleContextProvider>
+}
+
+function getReadyDatabase(handle: DatabaseHandle): Database {
+	if (handle.error) throw handle.error
+	if (handle.loading || !handle.database) throw new Error('The SQL module database is not ready.')
+	return handle.database
 }
