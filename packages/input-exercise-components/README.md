@@ -26,7 +26,7 @@ Solution components read the definition's resolved solution through `useSolution
 
 The package exports component props and field feedback types. It does not build definitions or generate instances.
 
-`ExerciseAdminTools` reads `admin.showControls` from the exercise context and renders nothing when disabled. It combines the exercise manager?s `ExerciseSelection` with `ShowSolutionButton`. When enabled, this package renders the exercise selector and Show Solution button using `admin.exerciseIds` and `admin.selectExerciseById` from the session context and solution handling from the input provider. Tools are disabled while `submitting` is true; Show Solution is also disabled when no solution is available. Showing a solution fills the draft without submitting an answer.
+`ExerciseAdminTools` reads `admin.showControls` from the exercise context and renders nothing when disabled. It combines the exercise manager?s `ExerciseSelection` and `RegenerateExerciseButton` with `ShowSolutionButton`. When enabled, this package renders the exercise selector and Show Solution button using `admin.exerciseIds` and `admin.selectExerciseById` from the session context and solution handling from the input provider. Tools are disabled while `submitting` is true; Show Solution is also disabled when no solution is available. Showing a solution fills the draft without submitting an answer. Regenerate starts a fresh instance of the same exercise, including new parameters and an empty draft.
 
 MonoExercise checks that the definition is a mono exercise using the upstream `isMonoExercise` guard. It assumes the paired instance state was produced by that definition rather than revalidating its entire history.
 

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 
-import { useExerciseSessionContext, ExerciseSelection } from '@sqlvalley/exercise-manager'
+import { useExerciseSessionContext, ExerciseSelection, RegenerateExerciseButton } from '@sqlvalley/exercise-manager'
 
 import { ShowSolutionButton } from './ShowSolutionButton'
 
@@ -10,5 +10,6 @@ export function ExerciseAdminTools() {
 	return <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
 		<ExerciseSelection />
 		<ShowSolutionButton />
+		<RegenerateExerciseButton />
 	</Box>
 }
