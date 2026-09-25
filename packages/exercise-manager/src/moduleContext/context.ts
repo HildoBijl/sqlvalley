@@ -1,5 +1,5 @@
 import { createContext } from 'react'
 
-import type { ModuleContextStatus } from './types'
+import type { ExerciseResources } from '../exerciseSessionContext'
 
-export const ModuleContext = createContext<ModuleContextStatus | undefined>(undefined)
+export const ModuleContext = createContext<ExerciseResources | undefined>(undefined)

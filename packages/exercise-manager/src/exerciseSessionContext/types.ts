@@ -7,6 +7,7 @@ import type { ExerciseId, ExerciseInstance } from '@sqlvalley/exercise-instances
 // The data made available to the exercise consists of the following items.
 export interface ExerciseSessionContextValue {
 	skillId: SkillId
+	context: unknown
 	currentExercise: CurrentExercise
 	controls: ExerciseControls<ExerciseAction>
 	submitting: boolean
@@ -39,3 +40,9 @@ export interface ExerciseAdminControls {
 	exerciseIds: readonly ExerciseId[]
 	selectExerciseById: (exerciseId: ExerciseId) => void
 }
+
+// Loading status is separate from the context consumed by exercise code.
+export type ExerciseResources<Context = unknown> =
+	| { loading: true; error?: Error; context?: Context }
+	| { loading: false; error: Error; context?: Context }
+	| { loading: false; error?: undefined; context: Context }

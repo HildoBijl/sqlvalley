@@ -25,6 +25,11 @@ export function useCurrentExerciseInstance() {
 	return useCurrentExercise().instance
 }
 
+// Get the resources supplied to both the exercise definition and its components.
+export function useExerciseContext() {
+	return useExerciseSessionContext().context
+}
+
 // Get the latest input event together with its report, skipping other action types.
 export function useLastInputEvent() {
 	const { history } = useCurrentExerciseInstance()

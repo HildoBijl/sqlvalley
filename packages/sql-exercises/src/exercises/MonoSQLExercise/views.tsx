@@ -3,7 +3,7 @@ import type { ComponentType } from 'react'
 import { useDatasetSize } from '@sqlvalley/sql'
 import { type MonoExerciseProblemProps, type MonoExerciseInputAreaProps, type MonoExerciseInputVisualizationProps, useInputExerciseContext, useSolution } from '@sqlvalley/input-exercise-components'
 
-import { useModuleCompletionSchema } from '../../sqlModuleProvider'
+import { useExerciseCompletionSchema } from '../../exerciseContext'
 import { type SqlQueryValidationReport, SqlInput } from '../../sqlInput'
 import { useSmallDatasetWarning } from './useSmallDatasetWarning'
 import { ExerciseDescription } from './components/ExerciseDescription'
@@ -41,7 +41,7 @@ export function createSQLProblem(
 	Problem: ComponentType<MonoExerciseProblemProps>,
 ) {
 	return function SQLExerciseProblem({ parameters }: MonoExerciseProblemProps) {
-		const schema = useModuleCompletionSchema()
+		const schema = useExerciseCompletionSchema()
 		return <ExerciseDescription
 			description={<Problem parameters={parameters} />}
 			tableNames={Object.keys(schema).sort()}

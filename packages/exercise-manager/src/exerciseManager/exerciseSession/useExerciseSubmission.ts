@@ -17,7 +17,7 @@ interface SubmissionOptions extends Pick<ExerciseSessionOptions, 'skillId' | 'st
 	registration: ExerciseRegistration | undefined
 }
 
-export function useExerciseSubmission({ skillId, storage, currentExerciseInstance, registration, moduleContext, moduleReady, activeOperation }: SubmissionOptions) {
+export function useExerciseSubmission({ skillId, storage, currentExerciseInstance, registration, context, contextReady, activeOperation }: SubmissionOptions) {
 	const mounted = useIsMountedRef()
 
 	// Handler: Set the draft input for the exercise in the data store.
@@ -31,7 +31,7 @@ export function useExerciseSubmission({ skillId, storage, currentExerciseInstanc
 	const submitAction = useCallback(async (action: ExerciseAction) => {
 		// Ensure that we only do stuff when everything is ready, there's no ongoing operation, and the exercise is the one we expect.
 		const instance = storage.getCurrentInstance(skillId)
-		if (!moduleReady || !registration || !instance || activeOperation.current !== undefined) return
+		if (!contextReady || !registration || !instance || activeOperation.current !== undefined) return
 		if (instance.exerciseId !== registration.exerciseId || instance.version !== (registration.definition.metadata.version ?? 1) || instance.startedAt !== currentExerciseInstance?.startedAt || instance.parameters !== currentExerciseInstance?.parameters) return
 		activeOperation.current = 'submission'
 		setSubmitting(true)
@@ -48,7 +48,7 @@ export function useExerciseSubmission({ skillId, storage, currentExerciseInstanc
 				parameters: instance.parameters,
 				state: previousState,
 				action,
-				context: moduleContext,
+				context,
 				updateSkills: (setupLike, correct) => {
 					const setup = ensureSetup(setupLike)
 					if (correct && setup.type === 'Skill') solvedSkillIds.push(...setup.getSkillList())
@@ -67,7 +67,7 @@ export function useExerciseSubmission({ skillId, storage, currentExerciseInstanc
 			activeOperation.current = undefined
 			if (mounted.current) setSubmitting(false)
 		}
-	}, [registration, currentExerciseInstance, moduleContext, moduleReady, mounted, activeOperation, skillId, storage])
+	}, [registration, currentExerciseInstance, context, contextReady, mounted, activeOperation, skillId, storage])
 
 	// Handler: remove a registered error to display the exercise once more.
 	const dismissSubmissionError = useCallback(() => setSubmissionError(undefined), [])

@@ -15,23 +15,16 @@ interface GenerationOptions extends ExerciseSessionOptions, ExerciseSessionDepen
 	exercisesById: ReadonlyMap<string, ExerciseRegistration>
 }
 
-export function useExerciseGeneration({ skillId, exercises, currentExerciseInstance, storage, selectionOptions, exercisesById, moduleContext, moduleReady, activeOperation }: GenerationOptions) {
+export function useExerciseGeneration({ skillId, exercises, currentExerciseInstance, storage, selectionOptions, exercisesById, context, contextReady, activeOperation }: GenerationOptions) {
 	const [generationError, setGenerationError] = useState<GenerationError>()
 	const [generating, setGenerating] = useState(false)
 	const generationRequestId = useRef(0)
 	const mounted = useIsMountedRef()
 
-	useEffect(() => {
-		return () => {
-			generationRequestId.current = generationRequestId.current + 1
-			if (activeOperation.current === 'generation') activeOperation.current = undefined
-		}
-	}, [storage, activeOperation])
-
-	// Handler: generate and save an exercise instance from a given exercise registration.
+	// Handler: For a given exercise, generate an instance and store it.
 	const startExercise = useCallback(async (exerciseRegistration: ExerciseRegistration, isStillRequested: () => boolean = () => true) => {
 		// Make sure everything is ready and no actions are ongoing.
-		if (!moduleReady || activeOperation.current === 'submission') return
+		if (!contextReady || activeOperation.current === 'submission') return
 		activeOperation.current = 'generation'
 
 		// Use the exercise registration/definition to generate the exercise.
@@ -40,7 +33,7 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 		setGenerationError(undefined)
 		try {
 			if (typeof exerciseRegistration.definition.processSoloAction !== 'function') throw new Error(`Exercise "${exerciseRegistration.exerciseId}" does not support solo actions.`)
-			const exerciseInstance = await generateExerciseInstance(exerciseRegistration.exerciseId, exerciseRegistration.definition, moduleContext)
+			const exerciseInstance = await generateExerciseInstance(exerciseRegistration.exerciseId, exerciseRegistration.definition, context)
 
 			// When the exercise is generated, verify that it's still relevant/needed. If so, store it.
 			if (!mounted.current || requestId !== generationRequestId.current || !isStillRequested()) return
@@ -53,31 +46,31 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 				setGenerating(false)
 			}
 		}
-	}, [moduleContext, moduleReady, mounted, activeOperation, skillId, storage])
+	}, [context, contextReady, mounted, activeOperation, skillId, storage])
 
-	// Handler: start a new exercise. Randomly select one and then generate/store it.
+	// Handler: Randomly select and subsequently start an exercise.
 	const startNewExercise = useCallback(() => {
-		if (!moduleReady || activeOperation.current !== undefined) return
+		if (!contextReady || activeOperation.current !== undefined) return
 		const selected = selectExercise(exercises, storage.getExerciseHistory(skillId), selectionOptions)
 		if (selected) void startExercise(selected)
-	}, [exercises, moduleReady, activeOperation, selectionOptions, skillId, startExercise, storage])
+	}, [exercises, contextReady, activeOperation, selectionOptions, skillId, startExercise, storage])
 
-	// Handler: start a new exercise, but instead of randomly selecting it, pick the given exercise ID.
+	// Handler: For a given exercise ID, generate and start that exercise.
 	const selectExerciseById = useCallback((exerciseId: string) => {
-		if (!moduleReady || activeOperation.current !== undefined) return
+		if (!contextReady || activeOperation.current !== undefined) return
 		const registration = exercisesById.get(exerciseId)
 		if (registration) void startExercise(registration)
-	}, [exercisesById, moduleReady, activeOperation, startExercise])
+	}, [exercisesById, contextReady, activeOperation, startExercise])
 
 	// Handler: Upon a generation error, retry generating the same exercise.
 	const retryGeneration = useCallback(() => {
-		if (!generationError || !moduleReady || activeOperation.current !== undefined) return
+		if (!generationError || !contextReady || activeOperation.current !== undefined) return
 		void startExercise(generationError.registration)
-	}, [generationError, moduleReady, activeOperation, startExercise])
+	}, [generationError, contextReady, activeOperation, startExercise])
 
 	// Effect: When there is no exercise instance, or its registration is missing, then generate a new random exercise. If the exercise is outdated (wrong version) then regenerate the same exercise with the newest version.
 	useEffect(() => {
-		if (!moduleReady || exercises.length === 0) return
+		if (!contextReady || exercises.length === 0) return
 		const instance = storage.getCurrentInstance(skillId)
 		const registration = instance ? exercisesById.get(instance.exerciseId) : undefined
 		let cancelled = false
@@ -86,7 +79,15 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 			if (selected) void startExercise(selected, () => !cancelled)
 		}
 		return () => { cancelled = true }
-	}, [exercisesById, exercises, currentExerciseInstance?.exerciseId, currentExerciseInstance?.version, currentExerciseInstance?.parameters, moduleContext, moduleReady, activeOperation, selectionOptions, skillId, startExercise, storage])
+	}, [exercisesById, exercises, currentExerciseInstance?.exerciseId, currentExerciseInstance?.version, currentExerciseInstance?.parameters, context, contextReady, activeOperation, selectionOptions, skillId, startExercise, storage])
+
+	// Effect: On a dismount, invalidate any ongoing generation action.
+	useEffect(() => {
+		return () => {
+			generationRequestId.current = generationRequestId.current + 1
+			if (activeOperation.current === 'generation') activeOperation.current = undefined
+		}
+	}, [storage, activeOperation])
 
 	// All done. Gather and return the session flags/handlers.
 	return { generationError, generating, startNewExercise, selectExerciseById, retryGeneration }

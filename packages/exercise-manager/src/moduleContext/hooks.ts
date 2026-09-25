@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 
 import { ModuleContext } from './context'
-import type { ModuleContextStatus } from './types'
+import type { ExerciseResources } from '../exerciseSessionContext'
 
-export function useModuleContext(): ModuleContextStatus | undefined {
+export function useModuleContext(): ExerciseResources | undefined {
 	return useContext(ModuleContext)
 }

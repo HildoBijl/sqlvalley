@@ -58,6 +58,7 @@ function ExampleExercise() {
 The context provides:
 
 - `skillId` for reference (usually unused).
+- `context`: the inner resource context, also available through `useExerciseContext()`.
 - `currentExercise: { definition, instance }` to access exercise parameters and state.
 - `submitting`, for disabling controls while an action is processed.
 - `controls`: `submitAction(action)`, `setDraftInput(input)`, and `startNewExercise()`.
@@ -66,24 +67,32 @@ The context provides:
 Use `useCurrentExercise()`, `useCurrentExerciseInstance()`, or `useExerciseDefinition()` when only that data is needed. `useLastInputEvent()` memoizes the latest input event (including its report), skipping other action types, and returns `undefined` before any input submission. Exercise-specific types should be checked and narrowed by the renderer. The manager provides the controls; the exercise component decides how to display them. The exported `ExerciseSelection` component renders the exercise selector within an exercise session and disables it during submission. Render it when `admin.showControls` is enabled.
 
 
-## Supply module context
+## Supply exercise context
 
-Optionally wrap the manager in `ModuleContextProvider` to supply shared resources, such as databases, to exercises:
+Pass an optional `resources` prop with `{ loading, error?, context }`. The exported `ExerciseResources<Context>` union allows context to be absent while loading or after failure, and requires it on success. The manager waits while resources load and displays initialization errors. Omit `resources` for exercises without shared resources.
+
+Only the inner `resources.context` reaches `generateParameters`, `getInitialState`, and `processSoloAction` as their `context` argument. Exercise components read it through `useExerciseContext()` and narrow it to their resource-specific type.
 
 ```tsx
-import { ModuleContextProvider } from '@sqlvalley/exercise-manager'
-
-<ModuleContextProvider value={{ loading, error, database }}>
-	<ExerciseManager
-		key={skillId}
-		skillId={skillId}
-		exercises={exercises}
-		storage={exerciseStorage}
-		currentExerciseInstance={currentExerciseInstance}
-	/>
-</ModuleContextProvider>
+<ExerciseManager
+	key={skillId}
+	skillId={skillId}
+	exercises={exercises}
+	storage={exerciseStorage}
+	currentExerciseInstance={currentExerciseInstance}
+	resources={{ loading: false, context: { database } }}
+/>
 ```
 
-The value must extend `ModuleContextStatus`: `loading: boolean` is required and `error?: Error` is optional. Set `loading: false` once resources are usable or loading has failed, reporting failures through `error`. The manager waits while loading and displays module errors.
+`ModuleContextProvider` remains useful for sharing resources across a module page, including theory components. The application explicitly connects it to the manager:
 
-The full value is passed as `context` to the definition's `generateParameters`, `getInitialState`, and `processSoloAction` functions. React components can read it through `useModuleContext()` and narrow it to their subject-specific type. Without a provider, the context is `undefined` and exercises can run without module resources.
+```tsx
+import { ExerciseManager, useModuleContext } from '@sqlvalley/exercise-manager'
+
+function Practice() {
+	const resources = useModuleContext()
+	return <ExerciseManager {...exerciseManagerProps} resources={resources} />
+}
+```
+
+Render this component inside `<ModuleContextProvider value={resources}>`. The module provider shares the complete wrapper; `useExerciseContext()` returns only its inner context. The manager does not read module context automatically; callers can obtain its context from any source.

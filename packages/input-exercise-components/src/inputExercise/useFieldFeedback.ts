@@ -3,13 +3,13 @@ import { useContext, useMemo } from 'react'
 import { deepEqual, isPlainDataObject } from '@step-wise/js-utils'
 import { useStableValue } from '@step-wise/react-utils'
 import { isInputExercise } from '@step-wise/input-exercises'
-import { useExerciseDefinition, useLastInputEvent, useModuleContext } from '@sqlvalley/exercise-manager'
+import { useExerciseDefinition, useLastInputEvent, useExerciseContext } from '@sqlvalley/exercise-manager'
 
 import type { InputFeedback } from './fieldTypes'
 import { InputExerciseContext } from './context'
 
 export function useFieldFeedback(name: string): InputFeedback | undefined {
-	const moduleContext = useModuleContext()
+	const exerciseContext = useExerciseContext()
 
 	// Load in the current input for this field as well as its expected value.
 	const context = useContext(InputExerciseContext)
@@ -40,8 +40,8 @@ export function useFieldFeedback(name: string): InputFeedback | undefined {
 	const feedback = useMemo(() => {
 		if (invalid || !getFeedback || !hasSubmittedInput || inputValue === undefined || !deepEqual(inputValue, submittedInputValue)) return
 		const domainValue = valueOperations.interpretInput({ [name]: inputValue })[name]
-		return getFeedback({ report, input: domainValue, expected, rawInput: inputValue, context: moduleContext })
-	}, [invalid, getFeedback, hasSubmittedInput, inputValue, submittedInputValue, report, expected, valueOperations, name, moduleContext])
+		return getFeedback({ report, input: domainValue, expected, rawInput: inputValue, context: exerciseContext })
+	}, [invalid, getFeedback, hasSubmittedInput, inputValue, submittedInputValue, report, expected, valueOperations, name, exerciseContext])
 
 	// Return feedback. Prioritize validation feedback.
 	if (invalid) return validation.feedback == null ? undefined : { type: 'warning', message: validation.feedback }

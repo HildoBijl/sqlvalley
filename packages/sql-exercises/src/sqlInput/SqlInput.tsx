@@ -3,7 +3,7 @@ import { Alert, Box } from '@mui/material'
 import { SQLEditor } from '@sqlvalley/sql'
 import { useInputField } from '@sqlvalley/input-exercise-components'
 
-import { useModuleCompletionSchema } from '../sqlModuleProvider'
+import { useExerciseCompletionSchema } from '../exerciseContext'
 import { sqlType, normalizeInput, hydrateInput } from './valueTypes'
 import { useSqlQueryValidation } from './validation'
 import { getSqlFeedback } from './feedback'
@@ -21,7 +21,7 @@ export function SqlInput({ name, disabled = false, onSubmit, height = '125px' }:
 	const { value, setValue, validation, feedback } = useInputField(name, { type: sqlType, normalizeInput, hydrateInput, validate, getFeedback: getSqlFeedback })
 
 	// Render the editor field.
-	const completionSchema = useModuleCompletionSchema()
+	const completionSchema = useExerciseCompletionSchema()
 	const invalid = validation.status === 'invalid'
 	return <>
 		<Box aria-invalid={invalid || undefined} sx={invalid ? { outline: '1px solid', outlineColor: 'error.main', borderRadius: 1 } : undefined}>

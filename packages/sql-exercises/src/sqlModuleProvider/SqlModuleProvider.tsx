@@ -2,7 +2,7 @@ import { type ReactNode, useMemo } from 'react'
 
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 import { type DatabaseHandle, useDatabaseContext, useDatabase, useDatabases } from '@sqlvalley/sql'
-import { ModuleContextProvider } from '@sqlvalley/exercise-manager'
+import { type ExerciseResources, ModuleContextProvider } from '@sqlvalley/exercise-manager'
 
 import { type ModuleAccess, getModuleTableKeys } from '../moduleAccess'
 
@@ -61,11 +61,9 @@ interface ModuleDatabaseProviderProps extends DatabaseProviderProps {
 
 function ModuleDatabaseProvider({ moduleId, tableKeys, userDatabases, gradingDatabases, children }: ModuleDatabaseProviderProps) {
 	// Set up the ModuleContext value.
-	const value = useMemo<SqlModuleContext>(() => ({
+	const context = useMemo<SqlModuleContext>(() => ({
 		moduleId,
 		tableKeys,
-		loading: [...userDatabases.values(), ...gradingDatabases.values()].some(handle => handle.loading),
-		error: [...userDatabases.values(), ...gradingDatabases.values()].find(handle => handle.error)?.error,
 		getUserDatabase: size => {
 			const handle = userDatabases.get(size)
 			if (!handle) throw new Error(`No user database is available for size "${size}".`)
@@ -78,8 +76,17 @@ function ModuleDatabaseProvider({ moduleId, tableKeys, userDatabases, gradingDat
 		},
 	}), [moduleId, tableKeys, userDatabases, gradingDatabases])
 
+	const resources = useMemo<ExerciseResources<SqlModuleContext>>(() => {
+		const handles = [...userDatabases.values(), ...gradingDatabases.values()]
+		const loading = handles.some(handle => handle.loading)
+		const error = handles.find(handle => handle.error)?.error
+		if (loading) return { loading: true, error, context }
+		if (error) return { loading: false, error, context }
+		return { loading: false, context }
+	}, [context, userDatabases, gradingDatabases])
+
 	// Wrap the contents with a ModuleContextProvider with the respective value.
-	return <ModuleContextProvider value={value}>
+	return <ModuleContextProvider value={resources}>
 		{children}
 	</ModuleContextProvider>
 }

@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
-import type { ModuleContextStatus } from '@sqlvalley/exercise-manager'
-
 interface ButtonAvailabilityOptions {
 	allInputsValid: boolean
 	validationPending: boolean
 	submitting: boolean
-	moduleContext: ModuleContextStatus | undefined
 }
 
-export function useInputExerciseButtonAvailability({ allInputsValid, validationPending, submitting, moduleContext }: ButtonAvailabilityOptions) {
+export function useInputExerciseButtonAvailability({ allInputsValid, validationPending, submitting }: ButtonAvailabilityOptions) {
 	// When validation is pending, remember whether it was valid before.
 	const wasValid = useRef(false)
 	if (!validationPending) wasValid.current = allInputsValid
@@ -23,7 +20,7 @@ export function useInputExerciseButtonAvailability({ allInputsValid, validationP
 	}, [validationPending])
 
 	// Determine whether the buttons can be shown. Prevent the submit button from briefly flashing off during a short validation. If validation takes too long, then do deactivate it until validation results come in.
-	const canGiveUp = !submitting && !moduleContext?.loading && !moduleContext?.error
+	const canGiveUp = !submitting
 	const isSubmitButtonEnabled = canGiveUp && (allInputsValid || (validationPending && wasValid.current && !pendingTooLong))
 	return { canGiveUp, isSubmitButtonEnabled }
 }

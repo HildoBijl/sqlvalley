@@ -20,6 +20,8 @@ const componentProps = {
 <MonoExercise {...componentProps} />
 ```
 
+Exercise resources for solutions, validation, and feedback come from `useExerciseContext()`, matching `resources.context` supplied to `ExerciseManager`. The manager handles resource loading and errors before rendering the exercise.
+
 Solution components read the definition's resolved solution through `useSolution()`, sharing it with admin solution insertion. Input areas remain visible but disabled during submission and after completion.
 
 The package exports component props and field feedback types. It does not build definitions or generate instances.

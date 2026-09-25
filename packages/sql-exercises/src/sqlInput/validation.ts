@@ -4,7 +4,7 @@ import type { QueryResult } from '@sqlvalley/sql'
 import type { Database } from '@sqlvalley/sqljs'
 import { formatSqlErrorMessage, validateSqlInput } from '@sqlvalley/sql-grading'
 
-import { useCurrentUserModuleDatabase } from '../sqlModuleProvider'
+import { useCurrentUserExerciseDatabase } from '../exerciseContext'
 import { isSqlInputValue, interpretSqlInputValue } from './valueTypes'
 
 export interface SqlQueryValidationReport {
@@ -40,6 +40,6 @@ export async function validateSqlQuery({ inputValue, database, signal }: SqlQuer
 }
 
 export function useSqlQueryValidation() {
-	const databaseHandle = useCurrentUserModuleDatabase()
+	const databaseHandle = useCurrentUserExerciseDatabase()
 	return useCallback(({ normalizedInput, signal }: { normalizedInput: unknown; signal: AbortSignal }) => validateSqlQuery({ inputValue: normalizedInput, signal, database: databaseHandle.database }), [databaseHandle.database])
 }
