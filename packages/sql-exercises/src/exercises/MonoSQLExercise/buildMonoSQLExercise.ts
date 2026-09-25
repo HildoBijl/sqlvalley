@@ -2,9 +2,8 @@ import { buildMonoExercise } from '@step-wise/input-exercises'
 import type { DatabaseHandle } from '@sqlvalley/sql'
 
 import { ensureSqlModuleContext } from '../../sqlModuleProvider'
-import { sqlValueTypes, validateSqlInput } from '../../sqlInput'
+import { sqlValueTypes } from '../../sqlInput'
 import type { MonoSQLExerciseDefinitionSpec } from './types'
-import { fromRawInput, resolveValue } from './input'
 import { gradeSqlQuery } from './gradeSqlQuery'
 
 // Builds the logical definition; rendering is paired separately by createMonoSQLExercise.
@@ -13,17 +12,15 @@ export function buildMonoSQLExercise<Parameters extends Record<string, unknown>>
 		metadata: { version: spec.version, skill: spec.skill, setup: spec.setup },
 		valueTypes: sqlValueTypes,
 		generateParameters: ({ context }) => spec.generateParameters(context),
-		getSolution: ({ parameters }) => ({ query: resolveValue(spec.solution, parameters) }),
-		checkInput: async ({ rawInput, solution, context }) => {
+		getSolution: ({ parameters }) => ({ query: typeof spec.solution === 'function' ? spec.solution(parameters) : spec.solution }),
+		checkInput: async ({ input, solution, context }) => {
 			let handle: DatabaseHandle | undefined
 			try {
 				if (!solution) throw new Error('Missing SQL exercise solution.')
-				const input = fromRawInput(rawInput)
-				const validation = validateSqlInput(input)
-				if (!validation.valid) return { correct: false, report: { query: { correct: false, result: { reason: 'invalid-query' } } } }
+				if (typeof input.query !== 'string') throw new Error('Invalid SQL query value.')
 				handle = ensureSqlModuleContext(context).getGradingDatabase('full')
 				if (!handle.database) throw handle.error ?? new Error('Database is not ready for verification.')
-				const result = gradeSqlQuery({ query: input, solution: solution.query, database: handle.database, comparisonOptions: spec.comparisonOptions })
+				const result = gradeSqlQuery({ query: input.query, solution: solution.query, database: handle.database, comparisonOptions: spec.comparisonOptions })
 				return { correct: result.correct, report: { query: result } }
 			} catch {
 				return { correct: false, report: { query: { correct: false, result: { reason: 'grading-error' } } } }

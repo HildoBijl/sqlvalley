@@ -40,4 +40,4 @@ When names are ignored, columns are matched by content. Duplicate rows and colum
 
 Row reports include the mismatch count and up to three sample input rows. Sample values retain strings, finite numbers, booleans, and nulls. Binary values use `{ type: 'binary', value: number[] }`; non-finite numbers and undefined use explicit tags. These representations survive JSON storage without losing their types. Unsupported objects in sample values throw an error.
 
-Consumers generate messages from these facts. Public exports include `compareQueryResults` and its input, option, result, and report types; comparison helpers remain internal.
+Consumers generate messages from these facts. Public exports include `compareQueryResults`, its input, option, result, and report types, and the `isComparisonReport` and `isReportValue` guards for checking persisted data. Comparison helpers remain internal.

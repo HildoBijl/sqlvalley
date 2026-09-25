@@ -22,7 +22,9 @@ export function gradeSqlQuery({ query, solution, database, comparisonOptions }: 
 	try {
 		const expected = database.exec(solution)[0]
 		const comparison = compareQueryResults(output[0], expected, comparisonOptions)
-		return { correct: comparison.correct, result: comparison.report }
+		return comparison.correct
+			? { correct: true, result: comparison.report }
+			: { correct: false, result: comparison.report }
 	} catch {
 		return { correct: false, result: { reason: 'grading-error' } }
 	}
