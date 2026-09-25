@@ -1,4 +1,4 @@
-import { ButtonBase, useTheme } from '@mui/material/';
+import { ButtonBase, useTheme } from '@mui/material';
 import { Element, Rectangle } from '@sqlvalley/drawing'
 import type { Module } from '@step-wise/module-tree-definition'
 import { Vector } from '@step-wise/geometry';

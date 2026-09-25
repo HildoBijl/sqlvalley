@@ -18,8 +18,8 @@
     "@step-wise/react-utils": "^0.1.0"
   },
   "peerDependencies": {
-    "@mui/icons-material": "^6.4.7",
-    "@mui/material": "^6.4.7",
+    "@mui/icons-material": "^7.3.11",
+    "@mui/material": "^7.3.11",
     "react": "^19.0.0"
   }
 }

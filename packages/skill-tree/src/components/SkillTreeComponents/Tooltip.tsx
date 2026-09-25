@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { usePointerPosition } from '@step-wise/react-utils';
-import { useTheme } from "@mui/material/";
+import { useTheme } from "@mui/material";
 
 interface TooltipProps {
 	children?: ReactNode;

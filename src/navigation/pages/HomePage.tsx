@@ -124,7 +124,7 @@ export default function HomePage() {
 
 				<Grid container spacing={4}>
 					{steps.map((step, index) => (
-						<Grid item xs={12} md={4} key={index}>
+						<Grid size={{ xs: 12, md: 4 }} key={index}>
 							<Box sx={{ textAlign: 'center' }}>
 								<Box
 									sx={{
@@ -224,7 +224,7 @@ export default function HomePage() {
 				<Container maxWidth="lg">
 					<Grid container spacing={4}>
 						{/* Project Info */}
-						<Grid item xs={12} md={4}>
+						<Grid size={{ xs: 12, md: 4 }}>
 							<Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
 								SQL Valley
 							</Typography>
@@ -234,7 +234,7 @@ export default function HomePage() {
 						</Grid>
 
 						{/* Contact Information */}
-						<Grid item xs={12} md={4}>
+						<Grid size={{ xs: 12, md: 4 }}>
 							<Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
 								Contact
 							</Typography>
@@ -275,7 +275,7 @@ export default function HomePage() {
 						</Grid>
 
 						{/* Team */}
-						<Grid item xs={12} md={4}>
+						<Grid size={{ xs: 12, md: 4 }}>
 							<Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
 								Development Team
 							</Typography>

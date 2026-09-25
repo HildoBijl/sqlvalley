@@ -2,7 +2,7 @@ import { Curve, Drawing } from '@sqlvalley/drawing'
 import { isReadyToLearn } from '@sqlvalley/progress'
 import type { Vector } from '@step-wise/geometry';
 import type { ModuleTree } from '@step-wise/module-tree-definition'
-import { useTheme } from '@mui/material/';
+import { useTheme } from '@mui/material';
 import { NodeCard } from './SkillTreeComponents/NodeCard';
 import { Tooltip } from './SkillTreeComponents/Tooltip';
 import type { ModulePositionMeta } from '../utils/positionProcessing';

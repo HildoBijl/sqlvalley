@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material/';
+import { useTheme } from '@mui/material';
 import type { Vector } from '@step-wise/geometry';
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { SkillTree } from './SkillTree';

@@ -127,7 +127,7 @@ function ERDiagramView({ tableInfo }: { tableInfo: TableInfo[] }) {
 
 			<Grid container spacing={3}>
 				{tableInfo.map((table) => (
-					<Grid item xs={12} md={6} lg={4} key={table.name}>
+					<Grid size={{ xs: 12, md: 6, lg: 4 }} key={table.name}>
 						<Card variant="outlined" sx={{ height: 'fit-content' }}>
 							<CardContent>
 								<Typography

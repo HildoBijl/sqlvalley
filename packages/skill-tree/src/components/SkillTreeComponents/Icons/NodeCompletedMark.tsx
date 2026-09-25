@@ -1,5 +1,5 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useTheme } from "@mui/material/";
+import { useTheme } from "@mui/material";
 import { treeColors } from "../../../utils/graphics/treeColors";
 
 interface NodeCompletedMarkProps {

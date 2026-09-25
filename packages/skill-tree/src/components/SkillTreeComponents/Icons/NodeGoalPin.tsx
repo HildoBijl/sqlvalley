@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import { PlayArrow } from "@mui/icons-material";
-import { useTheme } from "@mui/material/";
+import { useTheme } from "@mui/material";
 import { treeColors } from "../../../utils/graphics/treeColors";
 
 interface NodeGoalPinProps {

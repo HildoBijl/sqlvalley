@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { useTheme } from '@mui/material/';
+import { useTheme } from '@mui/material';
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@sqlvalley/drawing'
 

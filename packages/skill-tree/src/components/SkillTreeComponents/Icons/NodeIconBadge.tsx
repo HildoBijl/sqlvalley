@@ -1,6 +1,6 @@
 import School from "@mui/icons-material/School";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { useTheme } from "@mui/material/";
+import { useTheme } from "@mui/material";
 import { treeColors } from "../../../utils/graphics/treeColors";
 
 interface NodeIconBadgeProps {
