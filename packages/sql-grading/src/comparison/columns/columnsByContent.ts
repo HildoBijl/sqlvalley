@@ -12,7 +12,7 @@ export function compareColumnsByContent(context: ComparisonContext): ColumnCompa
 		return mismatchedColumns.length === 0
 			? { columnMappings: [expected.columns.map((_, index) => index)] }
 			: {
-				error: { correct: false, report: { reason: 'ordered-column-values', columns: mismatchedColumns } },
+				mismatch: { correct: false, report: { reason: 'ordered-column-values', columns: mismatchedColumns } },
 				columnMappings: [],
 			}
 	}
@@ -26,7 +26,7 @@ export function compareColumnsByContent(context: ComparisonContext): ColumnCompa
 	const unmatchedColumns = input.columns.filter((_, inputIndex) => candidatesByInput[inputIndex].length === 0)
 	if (unmatchedColumns.length > 0) {
 		return {
-			error: { correct: false, report: { reason: 'unmatched-column-values', columns: unmatchedColumns } },
+			mismatch: { correct: false, report: { reason: 'unmatched-column-values', columns: unmatchedColumns } },
 			columnMappings: [],
 		}
 	}
@@ -34,7 +34,7 @@ export function compareColumnsByContent(context: ComparisonContext): ColumnCompa
 	// Otherwise, a group of equivalent input columns is competing for too few expected columns.
 	const surplusGroup = findSurplusCandidateGroup(candidates, candidatesByInput)
 	return {
-		error: {
+		mismatch: {
 			correct: false,
 			report: {
 				reason: 'surplus-column-match',

@@ -1,5 +1,5 @@
 import { isPlainDataObject } from '@step-wise/js-utils'
-import type { ComparisonReport } from '@sqlvalley/sql-grading'
+import type { ComparisonReport, ReportValue } from '@sqlvalley/sql-grading'
 import type { FieldFeedbackOptions, InputFeedback } from '@sqlvalley/input-exercise-components'
 
 export type SqlSubmissionReport = {
@@ -32,12 +32,12 @@ function isSqlResult(value: unknown): value is SqlSubmissionReport['result'] {
 		case 'execution-error':
 		case 'grading-error': return true
 		case 'row-count': return typeof value.input === 'number' && Number.isSafeInteger(value.input) && value.input >= 0 && typeof value.expected === 'number' && Number.isSafeInteger(value.expected) && value.expected >= 0
-		case 'column-count': return typeof value.input === 'number' && Number.isSafeInteger(value.input) && value.input >= 0 && typeof value.expected === 'number' && Number.isSafeInteger(value.expected) && value.expected >= 0 && isStringArray(value.missing) && isStringArray(value.extra)
+		case 'column-count': return typeof value.input === 'number' && Number.isSafeInteger(value.input) && value.input >= 0 && typeof value.expected === 'number' && Number.isSafeInteger(value.expected) && value.expected >= 0 && ((value.missing === undefined && value.extra === undefined) || (isStringArray(value.missing) && isStringArray(value.extra)))
 		case 'column-names': return isStringArray(value.missing) && isStringArray(value.extra)
 		case 'ordered-column-values':
 		case 'unmatched-column-values': return isStringArray(value.columns)
 		case 'surplus-column-match': return isStringArray(value.columns) && typeof value.matchingExpectedColumnCount === 'number' && Number.isSafeInteger(value.matchingExpectedColumnCount) && value.matchingExpectedColumnCount >= 0
-		case 'row-values': return typeof value.differenceCount === 'number' && Number.isSafeInteger(value.differenceCount) && value.differenceCount > 0 && typeof value.ordered === 'boolean' && Array.isArray(value.differences) && value.differences.length <= value.differenceCount && value.differences.every(item => isPlainDataObject(item) && typeof item.index === 'number' && Number.isSafeInteger(item.index) && item.index >= 0 && isStringArray(item.row))
+		case 'row-values': return typeof value.differenceCount === 'number' && Number.isSafeInteger(value.differenceCount) && value.differenceCount > 0 && typeof value.ordered === 'boolean' && Array.isArray(value.differences) && value.differences.length <= value.differenceCount && value.differences.every(item => isPlainDataObject(item) && typeof item.index === 'number' && Number.isSafeInteger(item.index) && item.index >= 0 && Array.isArray(item.row) && item.row.every(isReportValue))
 		default: return false
 	}
 }
@@ -83,18 +83,38 @@ function formatQuotedList(items: string[], limit = 6): string {
 }
 
 function getColumnCountFeedback(report: Extract<ComparisonReport, { reason: 'column-count' }>): string {
+	if (report.missing === undefined && report.extra === undefined) return `Your query returns ${report.input} ${report.input === 1 ? 'column' : 'columns'}, but ${report.expected} ${report.expected === 1 ? 'is' : 'are'} expected.`
 	if (report.input > report.expected) {
-		const detail = report.extra.length > 0 ? ` The superfluous columns appear to be ${formatQuotedList(report.extra)}.` : ''
+		const detail = report.extra && report.extra.length > 0 ? ` The superfluous columns appear to be ${formatQuotedList(report.extra)}.` : ''
 		return `Your output seems to have more columns than was expected.${detail}`
 	}
-	const detail = report.missing.length > 0 ? ` The missing columns appear to be ${formatQuotedList(report.missing)}.` : ''
+	const detail = report.missing && report.missing.length > 0 ? ` The missing columns appear to be ${formatQuotedList(report.missing)}.` : ''
 	return `Your output seems to have fewer columns than was expected.${detail}`
 }
 
-function formatSampleDifferences(differences: Array<{ index: number; row: string[] }>, includeIndex: boolean, limit = 2): string {
+function formatSampleDifferences(differences: Array<{ index: number; row: ReportValue[] }>, includeIndex: boolean, limit = 2): string {
 	if (differences.length === 0) return ''
 	const samples = differences.slice(0, limit)
 	const label = samples.length === 1 ? 'Example' : 'Examples'
-	const formatted = samples.map(sample => `${includeIndex ? `row ${sample.index + 1}: ` : ''}(${sample.row.join(', ')})`)
+	const formatted = samples.map(sample => `${includeIndex ? `row ${sample.index + 1}: ` : ''}(${sample.row.map(formatReportValue).join(', ')})`)
 	return ` ${label}: ${formatted.join('; ')}`
+}
+
+function isReportValue(value: unknown): value is ReportValue {
+	if (value === null || typeof value === 'string' || typeof value === 'boolean') return true
+	if (typeof value === 'number') return Number.isFinite(value)
+	if (!isPlainDataObject(value)) return false
+	if (value.type === 'undefined') return true
+	if (value.type === 'number') return value.value === 'NaN' || value.value === 'Infinity' || value.value === '-Infinity'
+	return value.type === 'binary' && Array.isArray(value.value) && value.value.every(byte => typeof byte === 'number' && Number.isInteger(byte) && byte >= 0 && byte <= 255)
+}
+
+function formatReportValue(value: ReportValue): string {
+	if (value === null) return 'NULL'
+	if (typeof value === 'string') return JSON.stringify(value)
+	if (typeof value === 'boolean') return value ? 'TRUE' : 'FALSE'
+	if (typeof value === 'number') return String(value)
+	if (value.type === 'undefined') return 'undefined'
+	if (value.type === 'number') return value.value
+	return `X'${value.value.map(byte => byte.toString(16).padStart(2, '0')).join('')}'`
 }

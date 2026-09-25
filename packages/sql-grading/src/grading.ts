@@ -26,18 +26,18 @@ export function compareQueryResults(
 	const context: ComparisonContext = { input, expected, options: mergeDefaults({ ...options }, defaultComparisonOptions) }
 
 	// Check table dimensions first.
-	const columnCountError = compareColumnCount(context)
-	if (columnCountError) return columnCountError
-	const rowCountError = compareRowCount(context)
-	if (rowCountError) return rowCountError
+	const columnCountMismatch = compareColumnCount(context)
+	if (columnCountMismatch) return columnCountMismatch
+	const rowCountMismatch = compareRowCount(context)
+	if (rowCountMismatch) return rowCountMismatch
 
 	// Check the columns, while gathering a set of viable column mappings.
-	const { error: columnError, columnMappings } = compareColumns(context)
-	if (columnError) return columnError
+	const { mismatch: columnMismatch, columnMappings } = compareColumns(context)
+	if (columnMismatch) return columnMismatch
 
 	// Check if a mapping exists for which the row values match.
-	const rowError = compareRows(context, columnMappings)
-	if (rowError) return rowError
+	const rowMismatch = compareRows(context, columnMappings)
+	if (rowMismatch) return rowMismatch
 
 	// All requirements are met.
 	return { correct: true, report: { reason: 'correct' } }

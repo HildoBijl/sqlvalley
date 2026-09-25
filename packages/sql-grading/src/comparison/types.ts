@@ -1,4 +1,4 @@
-import type { ComparisonOptions, ComparisonResult, SqlQueryResult } from '../types'
+import type { ComparisonOptions, ComparisonMismatch, SqlQueryResult } from '../types'
 
 export interface ComparisonContext {
 	input: SqlQueryResult
@@ -7,6 +7,6 @@ export interface ComparisonContext {
 }
 
 export interface ColumnComparisonResult {
-	error?: ComparisonResult
+	mismatch?: ComparisonMismatch
 	columnMappings: Iterable<readonly number[]>
 }

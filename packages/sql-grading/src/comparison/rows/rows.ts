@@ -1,4 +1,4 @@
-import type { ComparisonResult } from '../../types'
+import type { ComparisonMismatch, ReportValue } from '../../types'
 
 import type { ComparisonContext } from '../types'
 import { areValuesEqual, serializeReportValue } from '../values'
@@ -7,7 +7,7 @@ const maxDifferenceSamples = 3
 
 interface RowDifference {
 	index: number
-	row: string[]
+	row: ReportValue[]
 }
 
 interface RowDifferences {
@@ -16,7 +16,7 @@ interface RowDifferences {
 }
 
 // Accept a matching column mapping, or report samples from the closest mapping.
-export function compareRows(context: ComparisonContext, columnMappings: Iterable<readonly number[]>): ComparisonResult | undefined {
+export function compareRows(context: ComparisonContext, columnMappings: Iterable<readonly number[]>): ComparisonMismatch | undefined {
 	// Check for each mapping how many differences there are. On zero, note that everything is in order. Otherwise track the smallest difference set to report on it.
 	let fewestDifferences: RowDifferences | undefined
 	for (const mapping of columnMappings) {

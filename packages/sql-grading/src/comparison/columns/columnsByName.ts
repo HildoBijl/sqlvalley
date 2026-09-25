@@ -13,7 +13,7 @@ export function compareColumnsByName(context: ComparisonContext): ColumnComparis
 	const { missing, extra } = getColumnNameDifferences(context)
 	if (missing.length > 0 || extra.length > 0) {
 		return {
-			error: { correct: false, report: { reason: 'column-names', missing, extra } },
+			mismatch: { correct: false, report: { reason: 'column-names', missing, extra } },
 			columnMappings: [],
 		}
 	}
@@ -23,7 +23,7 @@ export function compareColumnsByName(context: ComparisonContext): ColumnComparis
 		const ordered = expectedNames.every((name, index) => name === inputNames[index])
 		return ordered
 			? { columnMappings: [expectedNames.map((_, index) => index)] }
-			: { error: { correct: false, report: { reason: 'column-order' } }, columnMappings: [] }
+			: { mismatch: { correct: false, report: { reason: 'column-order' } }, columnMappings: [] }
 	}
 
 	// Set up a candidates list for the mapping: for each column a list of other columns it can be matched with. Turn it into an iterable of potential mappings.
