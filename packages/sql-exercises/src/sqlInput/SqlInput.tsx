@@ -25,7 +25,7 @@ export function SqlInput({ name, disabled = false, onSubmit, height = '125px' }:
 	const completionSchema = useExerciseCompletionSchema()
 	const invalid = validation.status === 'invalid'
 	return <>
-		<Box aria-invalid={invalid || undefined} sx={invalid ? { outline: '1px solid', outlineColor: 'error.main', borderRadius: 1 } : undefined}>
+		<Box aria-invalid={invalid || undefined}>
 			<SQLEditor value={typeof value === 'string' ? value : ''} onChange={setValue} height={height} readOnly={disabled} onExecute={disabled ? undefined : onSubmit} completionSchema={completionSchema} />
 		</Box>
 		{feedback ? <Alert severity={feedback.type} sx={{ mt: 1.5 }}>{feedback.message}</Alert> : null}

@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Alert, Box, Button, CircularProgress, Container } from '@mui/material';
+import { Alert, Box, Button, Container } from '@mui/material';
 import { Bolt, CheckCircle, Edit, EditNote, Lightbulb, MenuBook, Storage } from '@mui/icons-material';
 
 import {
@@ -16,6 +16,7 @@ import {
 	skillTreeVisualizationById,
 	type SkillTreeVisualizationId,
 } from '@/curriculum/skillTreeVisualizations';
+import { LoadingScreen } from '@/ui'
 import { moduleComponents, moduleProviders } from '@/curriculum/utils/loaders'
 
 import { ContentHeader } from '@/learning/components/ContentHeader';
@@ -130,13 +131,7 @@ export default function SkillPage() {
 		}
 	}, [currentTab, summaryUnlocked, selectTab, tabs]);
 
-	if (isLoading) {
-		return (
-			<Container maxWidth="lg" sx={{ py: 3, display: 'flex', justifyContent: 'center' }}>
-				<CircularProgress />
-			</Container>
-		);
-	}
+	if (isLoading) return <LoadingScreen message="Loading module..." />
 
 	if (!skillMeta) {
 		return (
@@ -164,7 +159,7 @@ export default function SkillPage() {
 	if (!ModuleProvider) throw new Error(`Missing provider for module "${skillMeta.id}".`)
 
 	return (
-		<Suspense fallback={<CircularProgress />}>
+		<Suspense fallback={<LoadingScreen message="Loading module..." />}>
 			<ModuleProvider key={skillMeta.id} moduleId={skillMeta.id}>
 				<Container maxWidth="lg" sx={{ py: 3 }}>
 					<ContentHeader
@@ -264,7 +259,7 @@ function StaticPracticeTab({
 
 	return (
 		<Box>
-			<Suspense fallback={<CircularProgress />}>
+			<Suspense fallback={<LoadingScreen message="Loading module..." />}>
 				<PracticeComponent onComplete={onComplete} isCompleted={isCompleted} />
 			</Suspense>
 		</Box>

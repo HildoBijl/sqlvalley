@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Alert, Box, Button, CircularProgress, Container } from '@mui/material';
+import { Alert, Box, Button, Container } from '@mui/material';
 import {
 	Bolt,
 	CheckCircle,
@@ -35,6 +35,7 @@ import {
 	TheoryTab,
 	VideoTab,
 } from '@/learning/components/TabContent/ContentTab';
+import { LoadingScreen } from '@/ui'
 import { moduleProviders } from '@/curriculum/utils/loaders'
 import { useContentTabs } from '@/learning/hooks/useContentTabs';
 import type { TabConfig } from '@/learning/types';
@@ -179,7 +180,7 @@ export default function ConceptPage() {
 	if (!ModuleProvider) throw new Error(`Missing provider for module "${conceptMeta.id}".`)
 
 	return (
-		<Suspense fallback={<CircularProgress />}>
+		<Suspense fallback={<LoadingScreen message="Loading module..." />}>
 			<ModuleProvider key={conceptMeta.id} moduleId={conceptMeta.id}>
 				<Container maxWidth="lg" sx={{ py: 2 }}>
 					<ContentHeader

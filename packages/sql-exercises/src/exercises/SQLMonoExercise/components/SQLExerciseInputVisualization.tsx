@@ -93,10 +93,12 @@ function QueryResults({ validationReport, status, showSmallDatasetWarning }: { v
 
 // A small container used to display a message about query results.
 function ResultsPlaceholder({ message, children }: { message: string; children?: ReactNode }) {
-	return <Box sx={{ px: 3, py: 6, textAlign: 'center', bgcolor: 'action.hover', borderRadius: 1 }}>
-		<Typography color="text.secondary">{message}</Typography>
+	return <>
+		<Box sx={{ px: 3, py: 3, textAlign: 'center', bgcolor: 'action.hover', borderRadius: 1 }}>
+			<Typography color="text.secondary">{message}</Typography>
+		</Box>
 		{children ? <Box sx={{ mt: 2, textAlign: 'left' }}>{children}</Box> : null}
-	</Box>
+	</>
 }
 
 // A storage type for the upcoming useShowSmallDatasetWarning function.
