@@ -1,18 +1,2 @@
-/**
- * Grading module for comparing query results.
- */
-
-// Types
-export type { ComparisonReport, ComparisonResult, CompareOptions } from './types';
-export { DEFAULT_OPTIONS } from './types';
-
-// Main grading function
-export { compareQueryResults } from './grading';
-
-// Re-export utilities that may be useful externally
-export { formatQuotedList, formatList } from './formatting';
-export { parseSchemaRows } from './schemaHelpers';
-export * from './exerciseTypes';
-export * from './validation';
-
-export * from './comparisonFeedback'
+export * from './types'
+export { compareQueryResults } from './grading'

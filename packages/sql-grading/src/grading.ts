@@ -1,79 +1,44 @@
-/**
- * Main grading function for comparing query results.
- */
+import { mergeDefaults } from '@step-wise/js-utils'
 
-import type { SqlQueryResult } from './exerciseTypes';
-import type { ComparisonResult, CompareOptions } from './types';
-import { DEFAULT_OPTIONS } from './types';
-import { SUCCESS_MESSAGE } from './messages';
-import { normalizeColumnName } from './tableManipulation';
-import {
-	compareColumns,
-	compareRowCount,
-	compareRows,
-	validateInputs,
-	type GradingContext,
-} from './gradingSupport';
+import type { ComparisonOptions, ComparisonResult, SqlQueryResult } from './types'
+import { type ComparisonContext, compareColumnCount, compareColumns, compareRowCount, compareRows } from './comparison'
 
-/**
- * Compare two query results and provide grading feedback.
- *
- * @param actual - The user's query result
- * @param expected - The expected (model solution) query result
- * @param options - Comparison options
- * @returns Comparison result with match status and feedback
- */
+const defaultComparisonOptions: Required<ComparisonOptions> = {
+	requireEqualColumnOrder: false,
+	requireEqualColumnNames: false,
+	requireEqualRowOrder: false,
+	caseSensitiveColumnNames: false,
+	caseSensitiveValues: false,
+}
+
+// Compare two query results and report the first unmet requirement.
 export function compareQueryResults(
-	actual: SqlQueryResult | undefined,
+	input: SqlQueryResult | undefined,
 	expected: SqlQueryResult | undefined,
-	options: CompareOptions = {},
+	options: ComparisonOptions = {},
 ): ComparisonResult {
-	// Merge options with defaults
-	const { requireEqualColumnOrder, requireEqualColumnNames, ignoreRowOrder, caseSensitive } = {
-		...DEFAULT_OPTIONS,
-		...options,
-	};
+	// Evaluate potential empty cases.
+	if (!input && !expected) return { correct: true, report: { reason: 'correct' } }
+	if (!input) return { correct: false, report: { reason: 'empty-result' } }
+	if (!expected) return { correct: false, report: { reason: 'empty-expected-result' } }
 
-	// Validate inputs
-	const inputError = validateInputs(actual, expected);
-	if (inputError) return inputError;
+	// Gather all data into a comparison context to easily pass around.
+	const context: ComparisonContext = { input, expected, options: mergeDefaults({ ...options }, defaultComparisonOptions) }
 
-	// At this point, both actual and expected are defined
-	const validActual = actual!;
-	const validExpected = expected!;
+	// Check table dimensions first.
+	const columnCountError = compareColumnCount(context)
+	if (columnCountError) return columnCountError
+	const rowCountError = compareRowCount(context)
+	if (rowCountError) return rowCountError
 
-	// Build grading context
-	const ctx: GradingContext = {
-		actual: validActual,
-		expected: validExpected,
-		actualColumnNames: validActual.columns.map((col) => normalizeColumnName(col, caseSensitive)),
-		expectedColumnNames: validExpected.columns.map((col) => normalizeColumnName(col, caseSensitive)),
-		actualRowCount: validActual.values.length,
-		expectedRowCount: validExpected.values.length,
-		actualColumnCount: validActual.columns.length,
-		expectedColumnCount: validExpected.columns.length,
-		ignoreColumnOrder: !requireEqualColumnOrder,
-		ignoreColumnNames: !requireEqualColumnNames,
-		ignoreRowOrder,
-		caseSensitive,
-	};
+	// Check the columns, while gathering a set of viable column mappings.
+	const { error: columnError, columnMappings } = compareColumns(context)
+	if (columnError) return columnError
 
-	// Compare columns
-	const { error: columnError, columnMapping } = compareColumns(ctx);
-	if (columnError) return columnError;
+	// Check if a mapping exists for which the row values match.
+	const rowError = compareRows(context, columnMappings)
+	if (rowError) return rowError
 
-	// Compare row counts
-	const rowCountError = compareRowCount(ctx);
-	if (rowCountError) return rowCountError;
-
-	// Compare row values
-	const rowError = compareRows(ctx, columnMapping);
-	if (rowError) return rowError;
-
-	// Success
-	return {
-		match: true,
-		feedback: SUCCESS_MESSAGE,
-		report: { reason: 'correct' },
-	};
+	// All requirements are met.
+	return { correct: true, report: { reason: 'correct' } }
 }

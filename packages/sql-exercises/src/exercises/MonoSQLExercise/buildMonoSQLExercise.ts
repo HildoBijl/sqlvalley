@@ -1,9 +1,8 @@
 import { buildMonoExercise } from '@step-wise/input-exercises'
 import type { DatabaseHandle } from '@sqlvalley/sql'
-import { validateSqlInput } from '@sqlvalley/sql-grading'
 
 import { ensureSqlModuleContext } from '../../sqlModuleProvider'
-import { sqlValueTypes } from '../../sqlInput'
+import { sqlValueTypes, validateSqlInput } from '../../sqlInput'
 import type { MonoSQLExerciseDefinitionSpec } from './types'
 import { fromRawInput, resolveValue } from './input'
 import { gradeSqlQuery } from './gradeSqlQuery'
@@ -21,7 +20,7 @@ export function buildMonoSQLExercise<Parameters extends Record<string, unknown>>
 				if (!solution) throw new Error('Missing SQL exercise solution.')
 				const input = fromRawInput(rawInput)
 				const validation = validateSqlInput(input)
-				if (!validation.ok) return { correct: false, report: { query: { correct: false, result: { reason: 'invalid-query' } } } }
+				if (!validation.valid) return { correct: false, report: { query: { correct: false, result: { reason: 'invalid-query' } } } }
 				handle = ensureSqlModuleContext(context).getGradingDatabase('full')
 				if (!handle.database) throw handle.error ?? new Error('Database is not ready for verification.')
 				const result = gradeSqlQuery({ query: input, solution: solution.query, database: handle.database, comparisonOptions: spec.comparisonOptions })

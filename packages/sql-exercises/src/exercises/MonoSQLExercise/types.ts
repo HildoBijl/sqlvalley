@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 
 import type { ExerciseMetadata } from '@step-wise/exercise-definition'
 import type { ExerciseId, ExerciseVersion } from '@sqlvalley/exercise-instances'
-import type { CompareOptions } from '@sqlvalley/sql-grading'
+import type { ComparisonOptions } from '@sqlvalley/sql-grading'
 import type { MonoExerciseProblemProps, MonoExerciseSolutionProps } from '@sqlvalley/input-exercise-components'
 
 export interface MonoSQLExerciseDefinitionSpec<Parameters extends Record<string, unknown>> {
@@ -12,7 +12,7 @@ export interface MonoSQLExerciseDefinitionSpec<Parameters extends Record<string,
 	setup?: ExerciseMetadata['setup']
 	generateParameters: (moduleContext: unknown) => Parameters | Promise<Parameters>
 	solution: string | ((parameters: Parameters) => string)
-	comparisonOptions?: CompareOptions
+	comparisonOptions?: ComparisonOptions
 }
 
 export interface MonoSQLExerciseSpec<Parameters extends Record<string, unknown>> extends MonoSQLExerciseDefinitionSpec<Parameters> {
