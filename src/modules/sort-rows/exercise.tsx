@@ -1,6 +1,5 @@
 import {
 	createMonoSQLExercise,
-	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql-exercises';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,9 +10,7 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 	{
 		exerciseId: 'sort-by-perf-salary',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve all contracts, sorted first by performance score ascending, and for equal scores, by salary descending.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT *
 FROM contracts
@@ -23,9 +20,7 @@ ORDER BY perf_score ASC, salary DESC;
 	{
 		exerciseId: 'sort-dept-budget-skip',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve 5 departments with the smallest budgets, skipping the first 3. Put departments with unknown budget at the end.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT *
 FROM departments
@@ -36,9 +31,7 @@ LIMIT 5 OFFSET 3;
 	{
 		exerciseId: 'sort-end-date-null-last',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve all contracts of all employees, ordered by end date with later end dates shown first. Put everyone with an unlimited contract at the start.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT *
 FROM contracts

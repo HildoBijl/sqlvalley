@@ -5,25 +5,25 @@ SQL module contexts, registered input fields, and mono exercises built on @sqlva
 
 ## Exercise authoring
 
-The specification version is optional; Step-Wise defaults it to `1`. Pass a `MonoSQLExerciseDefinitionSpec` to `buildMonoSQLExercise` to build a logical solo definition using @step-wise/input-exercises. Add `Problem` and `Solution` components to form a `MonoSQLExerciseSpec`, then pass it to `createMonoSQLExercise` to pair that definition with the MonoExercise renderer and return an ExerciseRegistration for the exercise manager.
+The specification version is optional; Step-Wise defaults it to `1`. Pass a `MonoSQLExerciseDefinitionSpec` to `buildMonoSQLExercise` to build a logical solo definition using @step-wise/input-exercises. Add a `Problem` and an optional custom `Solution` component to form a `MonoSQLExerciseSpec`, then pass it to `createMonoSQLExercise` to pair that definition with the MonoExercise renderer and return an ExerciseRegistration for the exercise manager.
 
 `createMonoSQLExercise` supplies SQL content for the generic `Problem`, `InputArea`, `InputVisualization`, and `Solution` slots. MonoExercise owns shared section styling and solution visibility. The SQL solution view reads the resolved solution from `useSolution()`, so display and insertion use the same value.
 
 Definition specifications retain their parameter generic for generation and solution logic. Component props use the base `ExerciseParameters` type, with exercise-specific narrowing inside the component.
 
-Exercise authors supply content components; the adapter supplies the SQL editor, preview, and available-table information. Use the exported `SQLExerciseSolution` for the standard query display, or supply a custom Solution component reading `useSolution()` from `@sqlvalley/input-exercise-components`. The lowercase `solution` remains the grading query (or a parameter-dependent function); uppercase `Solution` is its presentation.
+Exercise authors supply content components; the adapter supplies the SQL editor, preview, and available-table information. The default `SQLExerciseSolution` uses `SQLDisplay` to show the solution query; supply a custom Solution component reading `useSolution()` from `@sqlvalley/input-exercise-components`. The lowercase `solution` remains the grading query (or a parameter-dependent function); uppercase `Solution` is its presentation.
 
 ```tsx
-import { type MonoSQLExerciseSpec, SQLExerciseSolution } from '@sqlvalley/sql-exercises'
+import type { MonoSQLExerciseSpec } from '@sqlvalley/sql-exercises'
 
 const exercise: MonoSQLExerciseSpec<Record<string, never>> = {
 	exerciseId: 'employee-names',
-	generateParameters: () => ({}),
 	Problem: () => <p>List every employee's first name.</p>,
-	Solution: SQLExerciseSolution,
 	solution: 'SELECT first_name FROM employees',
 }
 ```
+
+Omitting `generateParameters` uses the upstream empty-object default. Grading computes the expected output before running the submitted query and resets the grading database afterward. Preview and grading both use the first result set.
 
 SQL specifications accept optional `skill` and `setup` metadata, forwarded to the upstream reducer for skill updates. Module exercise builders supply their skill ID.
 

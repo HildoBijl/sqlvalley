@@ -1,6 +1,5 @@
 import {
 	createMonoSQLExercise,
-	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql-exercises';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,9 +10,7 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 	{
 		exerciseId: 'multi-criterion-start-date-range',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve the first 10 employees (their ID, start date, position and performance score) whose start date falls between January 1 and September 30 of 2025 (inclusive), sorted by start date.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT e_id, start_date, position, perf_score
 FROM contracts
@@ -35,9 +32,7 @@ LIMIT 10;
 	{
 		exerciseId: 'multi-criterion-work-status-active',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve the employee ID, status, and monthly salary of employees whose status is active and whose monthly salary is either above 10,000 or below 1,000.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT e_id, status, salary / 12 AS monthly_salary
 FROM contracts
@@ -48,9 +43,7 @@ WHERE status = 'active'
 	{
 		exerciseId: 'multi-criterion-departments-expenditure',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve an overview of department names and their budget per employee, sorted from highest to lowest. Exclude the departments of Human Resources, Customer Support and Public Relations in this overview.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT d_name AS name,
        budget / nr_employees AS expenditure

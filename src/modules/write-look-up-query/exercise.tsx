@@ -1,6 +1,5 @@
 import {
 	createMonoSQLExercise,
-	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql-exercises';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,9 +10,7 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 	{
 		exerciseId: 'lookup-manager-city',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Find the names of the departments whose manager lives in Palo Alto.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT d_name
 FROM departments
@@ -27,9 +24,7 @@ WHERE manager_id IN (
 	{
 		exerciseId: 'lookup-employee-position',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Find the first and last name of all employees that have ever worked as a warehouse associate.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT first_name, last_name
 FROM employees
@@ -43,9 +38,7 @@ WHERE e_id IN (
 	{
 		exerciseId: 'lookup-manager-sick',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Find the names of the departments whose manager has at some point been on sick leave.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT d_name
 FROM departments
@@ -71,7 +64,7 @@ WHERE manager_id IN (
 	//   },
 	//   {
 	//     id: 'lookup-before-vendor-created',
-	//     prompt: 'Retrieve all transactions that occurred before the corresponding vendor’s registration date.',
+	//     prompt: 'Retrieve all transactions that occurred before the corresponding vendorâ€™s registration date.',
 	//     solution: `
 	// SELECT *
 	// FROM transactions t

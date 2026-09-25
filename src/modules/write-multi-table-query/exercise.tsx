@@ -1,6 +1,5 @@
 import {
 	createMonoSQLExercise,
-	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql-exercises';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,9 +10,7 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 	{
 		exerciseId: 'multitable-mock-join-le',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'List the email addresses of unverified accounts who have bought a product for less than half of its estimated value.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT email
 FROM accounts
@@ -29,9 +26,7 @@ WHERE email_verified = FALSE AND username IN (
 	{
 		exerciseId: 'multitable-mock-in-notin',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Find the first name and last name of accounts who appear as buyers in transactions related to "Musical Instruments" products, but never sold anything (of any type).'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT first_name, last_name
 FROM accounts
@@ -52,9 +47,7 @@ WHERE username IN (
 	{
 		exerciseId: 'multitable-mock-intersect',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve the usernames of all users who have at some point bought one or more products from the "Fine Art" category, and who also appear as owners of products categorized as "Designer Fashion".'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT DISTINCT buyer
 FROM transactions
@@ -72,9 +65,7 @@ WHERE category = 'Designer Fashion'
 	{
 		exerciseId: 'multitable-universal-query',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Find the product categories of which all transactions have been validated by employees whose current salary is less than 200000.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT DISTINCT category FROM products
 EXCEPT

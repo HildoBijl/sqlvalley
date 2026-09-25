@@ -4,27 +4,34 @@ import { type ComparisonOptions, compareQueryResults } from '@sqlvalley/sql-grad
 import type { SqlSubmissionReport } from '../../sqlInput'
 
 interface GradeSqlQueryOptions {
-	query: string
-	solution: string
+	input: string
+	expected: string
 	database: Database
 	comparisonOptions?: ComparisonOptions
 }
 
 // Grade against the full dataset independently of the learner's preview size.
-export function gradeSqlQuery({ query, solution, database, comparisonOptions }: GradeSqlQueryOptions): SqlSubmissionReport {
-	let output
+export function gradeSqlQuery({ input, expected, database, comparisonOptions }: GradeSqlQueryOptions): SqlSubmissionReport {
+	// Run the solution query.
+	let expectedResult
 	try {
-		output = database.exec(query)
+		expectedResult = database.exec(expected)[0]
+	} catch {
+		return { correct: false, result: { reason: 'grading-error' } }
+	}
+
+	// Run the input query.
+	let inputResult
+	try {
+		inputResult = database.exec(input)[0]
 	} catch {
 		return { correct: false, result: { reason: 'execution-error' } }
 	}
-	if (!output[0]) return { correct: false, result: { reason: 'empty-result' } }
+
+	// Compare the two outcomes.
 	try {
-		const expected = database.exec(solution)[0]
-		const comparison = compareQueryResults(output[0], expected, comparisonOptions)
-		return comparison.correct
-			? { correct: true, result: comparison.report }
-			: { correct: false, result: comparison.report }
+		const comparison = compareQueryResults(inputResult, expectedResult, comparisonOptions)
+		return comparison.correct ? { correct: true, result: comparison.report } : { correct: false, result: comparison.report }
 	} catch {
 		return { correct: false, result: { reason: 'grading-error' } }
 	}

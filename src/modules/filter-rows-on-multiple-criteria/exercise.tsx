@@ -1,6 +1,5 @@
 import {
 	createMonoSQLExercise,
-	SQLExerciseSolution,
 	type MonoSQLExerciseSpec,
 } from '@sqlvalley/sql-exercises';
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
@@ -11,9 +10,7 @@ const EXERCISES: MonoSQLExerciseSpec<Parameters>[] = [
 	{
 		exerciseId: 'multi-filter-employees-between',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve all departments where the number of employees is not between 10 and 20 (inclusive), and whose budget is known.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT *
 FROM departments
@@ -24,9 +21,7 @@ WHERE nr_employees NOT BETWEEN 10 AND 20
 	{
 		exerciseId: 'multi-filter-on-leave',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve all contracts where the employee is either on sick leave or paid leave, and the end date is after 2024.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT *
 FROM contracts
@@ -37,9 +32,7 @@ WHERE (status = 'paid leave' OR status = 'sick leave')
 	{
 		exerciseId: 'multi-filter-phone-area',
 		version: 1,
-		generateParameters: () => ({}),
 		Problem: () => <>{'Retrieve all employees whose phone number starts with 408 and who live in either Mountain View or Santa Clara.'}</>,
-		Solution: SQLExerciseSolution,
 		solution: `
 SELECT *
 FROM employees

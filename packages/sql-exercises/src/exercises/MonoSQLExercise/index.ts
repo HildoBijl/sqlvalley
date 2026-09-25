@@ -1,4 +1,3 @@
-export { buildMonoSQLExercise } from './buildMonoSQLExercise'
-export { createMonoSQLExercise } from './createMonoSQLExercise'
-export type { MonoSQLExerciseDefinitionSpec, MonoSQLExerciseSpec } from './types'
-export { SQLExerciseSolution } from './views'
+export { type MonoSQLExerciseDefinitionSpec, buildMonoSQLExercise } from './buildMonoSQLExercise'
+export { type MonoSQLExerciseSpec, createMonoSQLExercise } from './createMonoSQLExercise'
+export { SQLExerciseSolution } from './components'
