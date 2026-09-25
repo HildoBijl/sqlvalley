@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { type Module, moduleTree } from '../moduleDefinition'
-import { skillExerciseLoaders } from '../utils/loaders';
+import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 
-import type { ExerciseRegistration } from '@sqlvalley/exercise-manager';
+import { type Module, moduleTree } from '../moduleDefinition'
+import { subscribeToExerciseUpdates } from '../utils/exerciseHotReload'
+import { skillExerciseLoaders } from '../utils/exerciseLoaders'
 
 type SkillExerciseLoader = (typeof skillExerciseLoaders)[keyof typeof skillExerciseLoaders];
 type SkillExerciseModule = Record<string, unknown>;
@@ -73,26 +74,30 @@ export function useSkillContent(
 			return () => { cancelled = true; };
 		}
 
-		loader()
-			.then((loadedModule) => {
-				if (cancelled) return;
-				const mod = loadedModule as SkillExerciseModule;
-				const build = typeof mod.default === 'function' ? (mod.default as BuildExercises) : null;
-				if (!build) {
-					throw new Error(`Exercise module for "${skillId}" has no default builder export.`);
-				}
-				updateState({ exerciseDefinitions: build(skillId), error: null });
-			})
-			.catch((error) => {
-				console.error('Failed to load skill content:', error);
-				updateState({ exerciseDefinitions: null, error: 'Failed to load skill exercises. Please try again later.' });
-			})
-			.finally(() => {
-				updateState({ isLoading: false });
-			});
+		let requestId = 0
+		const reloadExercises = async () => {
+			const request = ++requestId
+			try {
+				const loadedModule = await loader()
+				if (cancelled || request !== requestId) return
+				const mod = loadedModule as SkillExerciseModule
+				const build = typeof mod.default === 'function' ? (mod.default as BuildExercises) : null
+				if (!build) throw new Error(`Exercise module for "${skillId}" has no default builder export.`)
+				updateState({ exerciseDefinitions: build(skillId), error: null, isLoading: false })
+			} catch (error) {
+				if (cancelled || request !== requestId) return
+				console.error('Failed to load skill content:', error)
+				updateState({ error: 'Failed to load skill exercises. Please try again later.', isLoading: false })
+			}
+		}
+
+		// Keep the mounted manager and stored instance while replacing its registrations.
+		const unsubscribe = import.meta.hot ? subscribeToExerciseUpdates(skillId, () => { void reloadExercises() }) : undefined
+		void reloadExercises()
 
 		return () => {
 			cancelled = true;
+			unsubscribe?.()
 		};
 	}, [skillId, loadExercises]);
 

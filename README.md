@@ -37,6 +37,8 @@ npm run dev
 
 This will open a new browser tab at http://localhost:3000/ showing the site locally.
 
+Exercise edits hot-reload during development, preserving the current instance and draft input. After changing parameter generation, use the admin exercise selector to generate a new instance.
+
 
 ## The tech stack
 
