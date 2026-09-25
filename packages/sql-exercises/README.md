@@ -5,33 +5,51 @@ SQL module contexts, registered input fields, and mono exercises built on @sqlva
 
 ## Exercise authoring
 
-The specification version is optional; Step-Wise defaults it to `1`. Pass a `MonoSQLExerciseDefinitionSpec` to `buildMonoSQLExercise` to build a logical solo definition using @step-wise/input-exercises. Add a `Problem` and an optional custom `Solution` component to form a `MonoSQLExerciseSpec`, then pass it to `createMonoSQLExercise` to pair that definition with the MonoExercise renderer and return an ExerciseRegistration for the exercise manager.
-
-`createMonoSQLExercise` supplies SQL content for the generic `Problem`, `InputArea`, `InputVisualization`, and `Solution` slots. MonoExercise owns shared section styling and solution visibility. The SQL solution view reads the resolved solution from `useSolution()`, so display and insertion use the same value.
-
-Definition specifications retain their parameter generic for generation and solution logic. Component props use the base `ExerciseParameters` type, with exercise-specific narrowing inside the component.
-
-Exercise authors supply content components; the adapter supplies the SQL editor, preview, and available-table information. The default `SQLExerciseSolution` uses `SQLDisplay` to show the solution query; supply a custom Solution component reading `useSolution()` from `@sqlvalley/input-exercise-components`. The lowercase `solution` remains the grading query (or a parameter-dependent function); uppercase `Solution` is its presentation.
+Use `buildSQLMonoExercise` to pair a logical definition with a React component and an exercise ID. Keep each exercise in its own `.tsx` file, with separate `definition` and `component` specifications:
 
 ```tsx
-import type { MonoSQLExerciseSpec } from '@sqlvalley/sql-exercises'
+import type { SQLMonoExerciseSpec } from '@sqlvalley/sql-exercises'
 
-const exercise: MonoSQLExerciseSpec<Record<string, never>> = {
+function Problem() {
+	return <p>List every employee's first name.</p>
+}
+
+const solution = 'SELECT first_name FROM employees'
+
+export default {
 	exerciseId: 'employee-names',
-	Problem: () => <p>List every employee's first name.</p>,
-	solution: 'SELECT first_name FROM employees',
+	definition: {
+		metadata: { version: 1 },
+		solution,
+	},
+	component: { Problem },
+} satisfies SQLMonoExerciseSpec
+```
+
+Each module's `exercises/index.ts` gathers these specs in selection order and passes them with its skill ID to the application's `buildModuleExercises` utility. It preserves explicit skills, supplies the module skill otherwise, and calls `buildSQLMonoExercise` without modifying the imported specs. Metadata is set before constructing reducers.
+
+Definition specifications accept upstream `metadata` (including `version`, `skill`, and `setup`) and optional `comparisonOptions`. Metadata defaults to `{}`. Omitting `generateParameters` uses the upstream empty-object default; when provided it receives the standard object argument, including `context`.
+
+Use either a static `solution` query string or a standard `getSolution` callback, never both:
+
+```ts
+definition: {
+	generateParameters: () => ({ column: 'first_name' }),
+	getSolution: ({ parameters }) => ({
+		query: `SELECT ${parameters.column} FROM employees`,
+	}),
 }
 ```
 
-Omitting `generateParameters` uses the upstream empty-object default. Grading computes the expected output before running the submitted query and resets the grading database afterward. Preview and grading both use the first result set.
+The static shorthand becomes `getSolution: () => ({ query: solution })`. Callback arguments and asynchronous solution support follow `@step-wise/input-exercises`. Parameter types remain generic for generation and solution logic; rendering props use the base exercise-parameter type.
 
-SQL specifications accept optional `skill` and `setup` metadata, forwarded to the upstream reducer for skill updates. Module exercise builders supply their skill ID.
+`buildSQLMonoExerciseDefinition` and `buildSQLMonoExerciseComponent` are also available independently, with `SQLMonoExerciseDefinitionSpec` and `SQLMonoExerciseComponentSpec`. `SQLMonoExerciseSpec` combines those specs with the ID. Definitions preserve the upstream reducer and `valueOperations`. The builders live in `construction/`, alongside the private SQL grading helper.
 
-`buildMonoSQLExercise` preserves the complete upstream input-exercise definition, including solution callbacks and `valueOperations`. These remain available on the definition paired with a renderer by `createMonoSQLExercise`.
+The component builder supplies the SQL input, preview, and available-table caption. `MonoExercise` owns section layout and solution visibility. Supply a custom `Solution` component or use the default `SQLExerciseSolution`, which reads `useSolution()` and renders its query with `SQLDisplay`.
+
+Grading computes the expected output before running the submitted query and resets the grading database afterward. Preview and grading both use the first result set. Skill metadata is forwarded to the upstream reducer.
 
 SQL submissions use a query field containing { type: 'SQL', value: query }; drafts store the editor string under `query`. Editor values remain strings; registered input fields handle conversion through value operations. Submission normalizes the draft into typed input values. Frontend validation trims outer whitespace, runs the query on the selected user database, shows errors below the editor, and supplies transient results to the visualization. The upstream reducer converts typed input values before calling the SQL checker, which uses the interpreted `input.query` directly. Submission grading independently uses the full grading database and produces a persisted plain-data report. The upstream reducer owns attempted, solved, givenUp, and done state transitions.
-
-The application learning-store v8 to v9 migration converts existing SQL submissions, string drafts, and give-up actions, preserving reports, draft contents, progress, and timestamps.
 
 
 ## Table introductions
@@ -45,9 +63,9 @@ Call `buildTablesIntroducedByModule({ moduleTree, tableIntroductions, tableKeys 
 
 The provider, context types, and hooks live in `src/sqlModuleProvider/` and are exported from `@sqlvalley/sql-exercises`.
 
-`SqlModuleProvider` receives `moduleId`, `moduleTree`, and `tablesIntroducedByModule` below a `DatabaseProvider`. It resolves accessible tables and acquires separate user and grading databases for each source dataset size, or one of each when the source has no selectable sizes. Cache keys identify the module and purpose, so returning to a module reuses its databases and preserves user changes. Databases remain in memory until the app-level `DatabaseProvider` unmounts or its source changes; they do not survive a page reload. The module page keys the provider subtree by module ID to reset local UI state on navigation.
+`SqlModuleProvider` receives `moduleId`, `moduleTree`, and `tablesIntroducedByModule` below a `DatabaseProvider`. It resolves accessible tables and acquires separate user and grading databases for each source dataset size, and requires the source to include both `small` and `full`. These names are centralized in the exported `sqlDatasetSizes` constant; incompatible sources are rejected by the provider. Cache keys identify the module and purpose, so returning to a module reuses its databases and preserves user changes. Databases remain in memory until the app-level `DatabaseProvider` unmounts or its source changes; they do not survive a page reload. The module page keys the provider subtree by module ID to reset local UI state on navigation.
 
-Its module provider exposes `{ loading, error?, context }`. The inner `SqlModuleContext` contains `moduleId`, `tableKeys`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useModuleContext()` to display loading and error states. Exercise generation waits until loading finishes without an error. React components use `useUserModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. Both return a `DatabaseHandle`. Omit the size only for sources without selectable sizes. Read-only theory components may use `useGradingModuleDatabase('small')`; interactive previews and editors must use user databases.
+Its module provider exposes `{ loading, error?, context }`. The inner `SqlModuleContext` contains `moduleId`, `tableKeys`, `getUserDatabase(size)`, and `getGradingDatabase(size)`. `loading` indicates whether any database is loading, and `error` holds the first initialization error or `undefined`. The provider always renders its children; contents can read `useModuleContext()` to display loading and error states. Exercise generation waits until loading finishes without an error. React components use `useUserModuleDatabase('small')`, which only retrieves user databases. Exercise generators and action processors can use `ensureSqlModuleContext(context).getGradingDatabase('full')` or explicitly select another size. Both return a `DatabaseHandle`. Read-only theory components may use `useGradingModuleDatabase('small')`; interactive previews and editors must use user databases.
 
 Dataset selection is provided by `DatabaseProvider` through `useDatasetSize()`. The application supplies its persisted preference; SQL inputs and visualizations remain independent of the store. Grading continues to use the full grading database regardless of this selection.
 
@@ -62,7 +80,7 @@ Each application module index exports its configured `ModuleProvider`. `SkillPag
 <SqlInput name="query" disabled={disabled} onSubmit={onSubmit} />
 ```
 
-`useSqlQueryValidation` returns a validation function bound to the selected user database. `SqlInput` registers `normalizeInput` and `hydrateInput`: drafts retain untrimmed editor strings, while validation and submission use trimmed typed input values. Solution insertion hydrates typed values back into editor strings. Dataset changes rerun validation; obsolete runs are cancelled before executing SQL. Validation reports contain the normalized query and its preview results. The visualization checks empty small-dataset results against the full user database and displays a warning when that same query returns rows there. Comparison failures do not affect validation.
+`useSqlQueryValidation` returns a validation function bound to the selected user database. `SqlInput` registers `normalizeSqlInput` and `hydrateSqlInput` under the field registration `normalizeInput` and `hydrateInput` options: drafts retain untrimmed editor strings, while validation and submission use trimmed typed input values. Solution insertion hydrates typed values back into editor strings. Dataset changes rerun validation; obsolete runs are cancelled before executing SQL. Validation reports contain the normalized query and its preview results. The visualization checks empty small-dataset results against the full user database and displays a warning when that same query returns rows there. Comparison failures do not affect validation.
 
 `useModuleCompletionSchema()` calls the database source's optional `buildCompletionSchema(tableKeys)` function with the module's table keys and memoizes the result. The mock-data source supplies its existing schema builder. No database loading or queries are required, and dataset size does not affect the schema. Sources without this function provide no table/column suggestions; SQL keyword completion remains available.
 
@@ -80,3 +98,5 @@ SQL grading stores `{ query: { correct, result } }`, where `result` contains a r
 The SQL value helpers `isSqlInputValue`, `isSqlDomainValue`, `interpretSqlInputValue`, and `toSqlInputValue` are exported individually and bundled in `sqlValueTypes` for exercise definitions. `sqlType` defines the SQL discriminator; `SqlType` is derived from it and used by `SqlInputValue`.
 
 SQL exercise components read resources from the manager through `useExerciseContext()`. The module-page hooks continue to read `useModuleContext()` for use outside exercises. Pass the SQL module context to `ExerciseManager resources={resources}` so generation, grading, previews, and feedback share the same resources.
+
+The exported `useSqlExerciseContext`, `useCurrentUserExerciseDatabase`, and `useExerciseCompletionSchema` hooks support custom components inside an exercise session. Use the corresponding module hooks outside exercise sessions.

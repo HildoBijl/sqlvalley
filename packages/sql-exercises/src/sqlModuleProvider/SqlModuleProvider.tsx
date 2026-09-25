@@ -1,9 +1,10 @@
 import { type ReactNode, useMemo } from 'react'
 
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
-import { type DatabaseHandle, useDatabaseContext, useDatabase, useDatabases } from '@sqlvalley/sql'
+import { type DatabaseHandle, useDatabaseContext, useDatabases } from '@sqlvalley/sql'
 import { type ExerciseResources, ModuleContextProvider } from '@sqlvalley/exercise-manager'
 
+import { sqlDatasetSizes } from '../datasetSizes'
 import { type TablesIntroducedByModule, getAvailableTableKeys } from '../tableIntroductions'
 
 import type { SqlModuleContext } from './types'
@@ -22,8 +23,8 @@ interface SqlModuleProviderProps {
 export function SqlModuleProvider({ moduleId, moduleTree, tablesIntroducedByModule, children }: SqlModuleProviderProps) {
 	const { source } = useDatabaseContext()
 	const tableKeys = useMemo(() => getAvailableTableKeys({ moduleId, moduleTree, tablesIntroducedByModule }), [moduleId, moduleTree, tablesIntroducedByModule])
-	const InternalSqlModuleProvider = source.datasetSizes === undefined ? SingleDatabaseProvider : MultipleDatabaseProvider
-	return <InternalSqlModuleProvider moduleId={moduleId} tableKeys={tableKeys}>{children}</InternalSqlModuleProvider>
+	if (!Object.values(sqlDatasetSizes).every(size => source.datasetSizes?.includes(size))) throw new Error('SqlModuleProvider requires a database source with both small and full dataset sizes.')
+	return <MultipleDatabaseProvider moduleId={moduleId} tableKeys={tableKeys}>{children}</MultipleDatabaseProvider>
 }
 
 /*
@@ -34,14 +35,6 @@ interface DatabaseProviderProps {
 	moduleId: ModuleId
 	tableKeys: readonly string[]
 	children: ReactNode
-}
-
-function SingleDatabaseProvider({ moduleId, tableKeys, children }: DatabaseProviderProps) {
-	const userDatabase = useDatabase({ key: `module:${moduleId}:user`, tables: tableKeys })
-	const gradingDatabase = useDatabase({ key: `module:${moduleId}:grading`, tables: tableKeys })
-	const userDatabases = useMemo(() => new Map([[undefined, userDatabase]]), [userDatabase])
-	const gradingDatabases = useMemo(() => new Map([[undefined, gradingDatabase]]), [gradingDatabase])
-	return <ModuleDatabaseProvider moduleId={moduleId} tableKeys={tableKeys} userDatabases={userDatabases} gradingDatabases={gradingDatabases}>{children}</ModuleDatabaseProvider>
 }
 
 function MultipleDatabaseProvider({ moduleId, tableKeys, children }: DatabaseProviderProps) {

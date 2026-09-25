@@ -41,12 +41,12 @@ export const sqlValueTypes = {
  * Input normalization/hydration: between InputState and InputValue. Because the DomainValue equals the InputState - they're both just strings - functionality can be reused.
  */
 
-export function normalizeInput(inputState: unknown): SqlInputValue {
+export function normalizeSqlInput(inputState: unknown): SqlInputValue {
 	if (inputState !== undefined && !isSqlDomainValue(inputState)) throw new Error('Invalid SQL input state.')
 	return toSqlInputValue(inputState ?? '')
 }
 
-export function hydrateInput(inputValue: unknown): string {
+export function hydrateSqlInput(inputValue: unknown): string {
 	if (!isSqlInputValue(inputValue)) throw new Error('Invalid SQL input value.')
 	return interpretSqlInputValue(inputValue)
 }

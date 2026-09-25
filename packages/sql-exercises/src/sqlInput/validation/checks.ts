@@ -25,7 +25,7 @@ export async function validateSqlQuery({ inputValue, database, signal }: SqlQuer
 	// Check if it's something we can run.
 	if (!isSqlInputValue(inputValue) || !inputValue.value) return { valid: false as const }
 	const query = interpretSqlInputValue(inputValue)
-	const syntax = validateSqlInput(query)
+	const syntax = checkQueryText(query)
 	if (!syntax.valid) return { valid: false as const, feedback: syntax.message }
 
 	// Only run the query for validation if the input hasn't changed in a certain time. This is to prevent app from stalling on every keystroke.
@@ -43,7 +43,7 @@ export async function validateSqlQuery({ inputValue, database, signal }: SqlQuer
 }
 
 // Check only the form of the input. Reject clearly invalid ones early on.
-export function validateSqlInput(query: string) {
+function checkQueryText(query: string) {
 	if (!query.trim()) return { valid: false as const, message: 'Please enter a valid SQL SELECT query so we can check it.' }
 	if (!/\b(select|with)\b/i.test(query)) return { valid: false as const, message: 'Start with a SELECT (or WITH) clause so we can understand the query.' }
 	return { valid: true as const }

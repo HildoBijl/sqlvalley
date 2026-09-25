@@ -4,7 +4,8 @@ import { SQLEditor } from '@sqlvalley/sql'
 import { useInputField } from '@sqlvalley/input-exercise-components'
 
 import { useExerciseCompletionSchema } from '../exerciseContext'
-import { sqlType, normalizeInput, hydrateInput } from './valueTypes'
+
+import { sqlType, normalizeSqlInput, hydrateSqlInput } from './valueTypes'
 import { useSqlQueryValidation } from './validation'
 import { getSqlFeedback } from './feedback'
 
@@ -18,7 +19,7 @@ export interface SqlInputProps {
 export function SqlInput({ name, disabled = false, onSubmit, height = '125px' }: SqlInputProps) {
 	// Register the input field to the InputExercise.
 	const validate = useSqlQueryValidation()
-	const { value, setValue, validation, feedback } = useInputField(name, { type: sqlType, normalizeInput, hydrateInput, validate, getFeedback: getSqlFeedback })
+	const { value, setValue, validation, feedback } = useInputField(name, { type: sqlType, normalizeInput: normalizeSqlInput, hydrateInput: hydrateSqlInput, validate, getFeedback: getSqlFeedback })
 
 	// Render the editor field.
 	const completionSchema = useExerciseCompletionSchema()

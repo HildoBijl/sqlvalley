@@ -73,4 +73,9 @@ export default [
 			'@typescript-eslint/no-explicit-any': 'warn',
 		},
 	},
+	{
+		files: ['src/modules/*/exercises/*.tsx'],
+		// Exercise specs intentionally combine logic and local components; they are not Fast Refresh boundaries.
+		rules: { 'react-refresh/only-export-components': 'off' },
+	},
 ]
