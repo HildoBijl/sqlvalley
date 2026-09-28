@@ -63,8 +63,8 @@ WHERE prod_id IN (
   FROM products
   WHERE category = 'Fine Art'
 );`} tableWidth={150} tableScale={0.7} />
-			<Par>The latter query seems easier to understand than the one before. Computationally it is also better. In the previous query (with <ISQL>JOIN</ISQL>), we have to look up the product's category for <Em>all</Em> transactions. This uses the <ISQL>products</ISQL> table many times. In this last query (with <ISQL>IN</ISQL>), we only access the <ISQL>products</ISQL> table once. It makes the query much faster.</Par>
-			<Info>Databases internally use optimizers. If the DBMS gets the earlier example with joins, there's a very good chance it will already recognize it can be done more efficiently, and not set up the entire join. So perhaps both queries will result in a similar run-time. Nevertheless, it's good practice not to rely too much on the DBMS optimizers, and keep your own query as efficient as possible.</Info>
+			<Par>The latter query expresses the membership check directly. Either form may be faster: the execution plan depends on indexes, table sizes and the optimizer.</Par>
+			<Info>Write the form that expresses the request clearly. When performance matters, compare execution plans and timings on representative data. In SQLite, <ISQL>EXPLAIN QUERY PLAN</ISQL> shows the scans and index lookups chosen by the optimizer.</Info>
 		</Section>
 
 		<Section title={`Trick 4. Work in steps: set up sub-queries from inside to outside`}>

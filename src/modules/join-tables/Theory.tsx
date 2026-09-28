@@ -22,7 +22,7 @@ export function Theory() {
 			<Par>Suppose we get the following data request.</Par>
 			<Quote>For each department with more than five employees, show the manager (first and last name) and the budget.</Quote>
 			<Par>To set up such an overview, we need data from both the <ISQL>departments</ISQL> table (the department name and budget) and the <ISQL>employees</ISQL> table (the manager's first/last name). We have to join the two tables! How do we do so in SQL?</Par>
-			<Par>We know that a join is basically a Cartesian product followed by a filter. To set up a Cartesian product in SQL, we can add multiple tables to the <ISQL>WHERE</ISQL> clause. When we do, SQL sets up a large table with one row for each possible <Em>combination</Em> of rows from the first and second table.</Par>
+			<Par>We know that a join is basically a Cartesian product followed by a filter. To set up a Cartesian product in SQL, we can add multiple tables to the <ISQL>FROM</ISQL> clause. When we do, SQL sets up a large table with one row for each possible <Em>combination</Em> of rows from the first and second table.</Par>
 			<FigureExampleQuery query={`SELECT *
 FROM departments, employees;`} tableScale={0.45} tableWidth={800} below />
 			<Warning>We can also take the Cartesian product of even more tables. Note that the number of rows in such a Cartesian product grows very rapidly. Be careful setting up the Cartesian product of several large tables.</Warning>

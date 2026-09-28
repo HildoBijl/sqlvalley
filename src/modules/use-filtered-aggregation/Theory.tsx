@@ -68,10 +68,10 @@ FROM departments;`} tableScale={0.8} tableWidth={220} />
 SELECT
   city,
   COUNT(*) AS num_people,
-  COUNT(*) * 100 / (SELECT COUNT(*) FROM employees) AS percentage
+  COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees) AS percentage
 FROM employees
 GROUP BY city;`} tableScale={0.8} tableWidth={320} />
-			<Par>Note that we use <ISQL>COUNT</ISQL> and then start calculating with it, multiplying it by <ISQL>100</ISQL>. Also note that we have casually included a subquery within our calculations for the total number of employees. SQL allows subqueries wherever their value make sense. In this case, the subquery returns a single number, so SQL will treat the subquery as a number and use it in its calculations.</Par>
+			<Par>Note that we use <ISQL>COUNT</ISQL> and then start calculating with it, multiplying it by <ISQL>100.0</ISQL> to avoid integer division. Also note that we have casually included a subquery within our calculations for the total number of employees. SQL allows subqueries wherever their value make sense. In this case, the subquery returns a single number, so SQL will treat the subquery as a number and use it in its calculations.</Par>
 		</Section>
 
 		<Section title="Use aggregation on text">

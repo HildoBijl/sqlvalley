@@ -45,7 +45,7 @@ SELECT
   COUNT(revenue) AS num_quarters
 FROM quarterly_performance;`} tableWidth={320} />
 			<Info>
-				<Par>Whenever aggregation functions encounter <ISQL>NULL</ISQL> values, they generally <Em>ignore</Em> them. Any <ISQL>NULL</ISQL> values are first removed, and <Em>only then</Em> will aggregation be applied. Aggregation functions only return <ISQL>NULL</ISQL> when <Em>all</Em> values in the column equal <ISQL>NULL</ISQL>. For example:</Par>
+				<Par>Whenever aggregation functions encounter <ISQL>NULL</ISQL> values, they generally <Em>ignore</Em> them. Any <ISQL>NULL</ISQL> values are first removed, and <Em>only then</Em> will aggregation be applied. <ISQL>SUM</ISQL>, <ISQL>AVG</ISQL>, <ISQL>MIN</ISQL> and <ISQL>MAX</ISQL> return <ISQL>NULL</ISQL> if there are no non-NULL inputs, including an empty input. <ISQL>COUNT(column)</ISQL> returns <ISQL>0</ISQL> in that case. For example:</Par>
 				<List sx={{ my: 0.5 }} items={[
 					<><ISQL>SUM(revenue)</ISQL> gives the sum of all non-<ISQL>NULL</ISQL> revenue values.</>,
 					<><ISQL>COUNT(revenue)</ISQL> counts the number of entries in the "revenue" column that are not <ISQL>NULL</ISQL>.</>,

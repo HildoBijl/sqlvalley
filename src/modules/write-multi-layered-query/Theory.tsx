@@ -45,8 +45,8 @@ WHERE validated_by IN (
 			<Par>The query becomes large, and we're not even there yet! And to make it worse, we're <Em>repeating</Em> ourselves. If we later on want to change the limit of "200,000" then we need to do so in multiple places. Maybe someone changes it in one place and forgets to change it in the other place. We'd get a wrong query! We need a way to make this process easier.</Par>
 		</Section>
 
-		<Section title="Define temporary tables">
-			<Par>The key to our problem lies in defining <Term>temporary tables</Term>. Before using <ISQL>SELECT</ISQL>, we may use the <ISQL>WITH</ISQL> keyword to define a temporary table, which we can then use in the rest of our query.</Par>
+		<Section title="Name intermediate query results">
+			<Par>The key to our problem lies in naming <Term>intermediate query results</Term>. Before the main <ISQL>SELECT</ISQL>, use <ISQL>WITH</ISQL> to define a result that can be referenced like a table within the statement.</Par>
 			<FigureExampleQuery query={`
 WITH low_salary_employees AS (
   SELECT e_id
@@ -56,13 +56,13 @@ WITH low_salary_employees AS (
 
 SELECT vendor AS username
 FROM transactions
-WHERE validated_by IN low_salary_employees
+WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
 UNION
 SELECT buyer AS username
 FROM transactions
-WHERE validated_by IN low_salary_employees;`} tableScale={0.8} tableWidth={150} />
-			<Par>Such temporary tables are formally called <Term>Common Table Expressions (CTEs)</Term>. They are very powerful tools at structuring queries and making them easier to read. But keep in mind that they are temporary: as soon as the query ends they are forgotten!</Par>
-			<Info>Another way to see CTEs is as a table alias. When defining a CTE like <ISQL>low_salary_employees</ISQL>, SQL does not directly set up the table. Instead, whenever SQL encounters the name <ISQL>low_salary_employees</ISQL> later on in the query, it simply substitutes the given definition into the query. So the above two example queries literally do the same thing.</Info>
+WHERE validated_by IN (SELECT e_id FROM low_salary_employees);`} tableScale={0.8} tableWidth={150} />
+			<Par>These named results are formally called <Term>Common Table Expressions (CTEs)</Term>. They are very powerful tools at structuring queries and making them easier to read. But keep in mind that they are temporary: as soon as the query ends they are forgotten!</Par>
+			<Info>A CTE names a query result for the duration of one statement. The DBMS may inline its definition or materialize its result in a temporary table. These are execution choices; a CTE does not guarantee that its query runs exactly once.</Info>
 			<Par>Instead of just one CTE, we can create more. We only use the <ISQL>WITH</ISQL> keyword once, but we add the table definitions separated by commas.</Par>
 			<FigureExampleQuery query={`
 WITH low_salary_employees AS (
@@ -72,13 +72,13 @@ WITH low_salary_employees AS (
 ), affected_transactions AS (
   SELECT *
   FROM transactions
-  WHERE validated_by IN low_salary_employees
+  WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
 )
 
 SELECT vendor AS username FROM affected_transactions
 UNION
 SELECT buyer AS username FROM affected_transactions;`} tableScale={0.8} tableWidth={150} />
-			<Warning>Later CTEs may use earlier ones, but not the other way around! Make sure you write your CTEs in a sensible order.</Warning>
+			<Warning>Define CTEs before the CTEs that use them. This order is easier to follow and works across more DBMSs. SQLite also allows acyclic references to CTEs declared later in the same WITH clause.</Warning>
 			<Par>Let's continue extending our query. Now that the affected users are known, we should get their email addresses. We could do so through a nested query, but it's better to simply add yet another CTE.</Par>
 			<FigureExampleQuery query={`
 WITH low_salary_employees AS (
@@ -88,7 +88,7 @@ WITH low_salary_employees AS (
 ), affected_transactions AS (
   SELECT *
   FROM transactions
-  WHERE validated_by IN low_salary_employees
+  WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
 ), affected_users AS (
   SELECT vendor AS username FROM affected_transactions
   UNION
@@ -97,7 +97,7 @@ WITH low_salary_employees AS (
 
 SELECT email
 FROM accounts
-WHERE username IN affected_users;`} tableScale={0.8} tableWidth={250} />
+WHERE username IN (SELECT username FROM affected_users);`} tableScale={0.8} tableWidth={250} />
 			<Par>This is the result we wanted. The above query is quite easy to read, given how many tables it touches. It is way easier than the alternative that we would have gotten without CTEs. Good luck making sense of the following query!</Par>
 			<FigureExampleQuery query={`
 SELECT email
