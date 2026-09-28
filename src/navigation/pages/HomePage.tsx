@@ -1,305 +1,57 @@
-import {
-	Box,
-	Typography,
-	Button,
-	Container,
-	Grid,
-	Stack,
-	Paper,
-	useTheme,
-	alpha,
-	Divider,
-	Link,
-} from '@mui/material';
-import {
-	PlayArrow,
-	AutoStories,
-	School,
-	Edit,
-	CheckCircle
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Container, Link, Typography } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
 
 export default function HomePage() {
-	const theme = useTheme();
-	const navigate = useNavigate();
-
-	const steps = [
-		{
-			icon: <School fontSize="large" />,
-			title: 'Learn Concepts',
-			description: 'Start with fundamental database concepts. Each concept includes theory pages and examples to help you understand the underlying principles.',
-		},
-		{
-			icon: <Edit fontSize="large" />,
-			title: 'Practice Skills',
-			description: 'Apply what you\'ve learned through skill-specific exercises. Write SQL queries and get immediate feedback on whether they produce the expected results.',
-		},
-		{
-			icon: <CheckCircle fontSize="large" />,
-			title: 'Track Progress',
-			description: 'The skill tree shows which concepts and skills you\'ve completed and which are available next. Prerequisites are clearly marked so you know what to learn first.',
-		},
-	];
-
-	return (
-		<Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
-			{/* Hero Section */}
-			<Box
-				sx={{
-					background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
-					color: 'white',
-					py: { xs: 6, md: 10 },
-				}}
-			>
-				<Container maxWidth="md">
-					<Box
-						component="img"
-						src="/SQLValleyTitle.svg"
-						alt="SQL Valley"
-						sx={{
-							width: { xs: '100%', md: '400px' },
-							height: 'auto',
-							mb: 3,
-						}}
-					/>
-					<Typography
-						variant="h5"
-						sx={{
-							mb: 4,
-							opacity: 0.95,
-							fontWeight: 400,
-							lineHeight: 1.6,
-						}}
-					>
-						An interactive learning tool for SQL developed by the Database Group at TU/e.
-						Navigate through concepts and skills using a visual skill tree, practice with real databases,
-						and get immediate feedback on your queries.
-					</Typography>
-					<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-						<Button
-							variant="contained"
-							size="large"
-							startIcon={<AutoStories />}
-							onClick={() => navigate('/learn')}
-							sx={{
-								bgcolor: 'white',
-								color: 'primary.main',
-								py: 1.5,
-								px: 3,
-								'&:hover': {
-									bgcolor: 'grey.100',
-								},
-							}}
-						>
-							Start Learning
-						</Button>
-						{/* <Button
-							variant="outlined"
-							size="large"
-							startIcon={<Code />}
-							onClick={() => navigate('/playground')}
-							sx={{
-								borderColor: 'white',
-								color: 'white',
-								py: 1.5,
-								px: 3,
-								'&:hover': {
-									borderColor: 'white',
-									bgcolor: 'rgba(255, 255, 255, 0.1)',
-								},
-							}}
-						>
-							SQL Playground
-						</Button> */}
-					</Stack>
-				</Container>
-			</Box>
-
-			{/* How It Works Section */}
-			<Container maxWidth="lg" sx={{ py: 10 }}>
-				<Typography variant="h4" gutterBottom sx={{ fontWeight: 600, mb: 6, textAlign: 'center' }}>
-					How It Works
-				</Typography>
-
-				<Grid container spacing={4}>
-					{steps.map((step, index) => (
-						<Grid size={{ xs: 12, md: 4 }} key={index}>
-							<Box sx={{ textAlign: 'center' }}>
-								<Box
-									sx={{
-										width: 80,
-										height: 80,
-										borderRadius: '50%',
-										bgcolor: alpha(theme.palette.primary.main, 0.1),
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										mx: 'auto',
-										mb: 3,
-										color: 'primary.main',
-									}}
-								>
-									{step.icon}
-								</Box>
-								<Typography variant="h6" gutterBottom sx={{ fontWeight: 500, mb: 2 }}>
-									{step.title}
-								</Typography>
-								<Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-									{step.description}
-								</Typography>
-							</Box>
-						</Grid>
-					))}
-				</Grid>
-			</Container>
-
-			{/* About Section */}
-			<Box sx={{ bgcolor: 'background.paper', py: 8 }}>
-				<Container maxWidth="md">
-					<Paper
-						elevation={0}
-						sx={{
-							p: 4,
-							border: '1px solid',
-							borderColor: 'divider',
-							borderRadius: 2,
-						}}
-					>
-						<Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
-							About This Tool
-						</Typography>
-						<Stack spacing={2}>
-							<Typography variant="body1" color="text.secondary">
-								SQL Valley was developed by the Database Group at Eindhoven University of Technology
-								to support student-centered, competency-based SQL instruction.
-							</Typography>
-							<Typography variant="body1" color="text.secondary">
-								The tool addresses common challenges in learning SQL: lack of immediate feedback,
-								difficulty setting up local databases, and unclear learning progression. By providing
-								a structured skill tree with integrated theory and practice, students can learn at
-								their own pace while maintaining clear visibility of their progress.
-							</Typography>
-							<Typography variant="body1" color="text.secondary">
-								All SQL queries run directly in your browser using an in-memory database, so you can
-								practice safely without worrying about breaking anything or needing to install software.
-							</Typography>
-						</Stack>
-					</Paper>
-				</Container>
-			</Box>
-
-			{/* CTA Section */}
-			<Container maxWidth="sm" sx={{ py: 8, textAlign: 'center' }}>
-				<Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
-					Ready to Learn SQL?
-				</Typography>
-				<Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-					Start with the basics or jump to any concept you want to explore.
-				</Typography>
-				<Button
-					variant="contained"
-					size="large"
-					startIcon={<PlayArrow />}
-					onClick={() => navigate('/learn')}
-					sx={{
-						py: 1.5,
-						px: 4,
-					}}
-				>
-					Begin Learning
-				</Button>
-			</Container>
-
-			{/* Footer */}
-			<Box
-				component="footer"
-				sx={{
-					bgcolor: 'background.paper',
-					borderTop: 1,
-					borderColor: 'divider',
-					py: 4,
-				}}
-			>
-				<Container maxWidth="lg">
-					<Grid container spacing={4}>
-						{/* Project Info */}
-						<Grid size={{ xs: 12, md: 4 }}>
-							<Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
-								SQL Valley
-							</Typography>
-							<Typography variant="body2" color="text.secondary">
-								Interactive SQL learning platform for TU/e database courses (2ID50, JBI050)
-							</Typography>
-						</Grid>
-
-						{/* Contact Information */}
-						<Grid size={{ xs: 12, md: 4 }}>
-							<Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
-								Contact
-							</Typography>
-							<Stack spacing={0.5}>
-								<Box>
-									<Typography variant="body2" color="text.secondary">
-										Hildo Bijl ·
-										<Link
-											href="mailto:h.j.bijl@tue.nl"
-											sx={{
-												ml: 0.5,
-												color: 'text.secondary',
-												textDecoration: 'none',
-												'&:hover': { color: 'primary.main' },
-											}}
-										>
-											h.j.bijl@tue.nl
-										</Link>
-									</Typography>
-								</Box>
-								<Box>
-									<Typography variant="body2" color="text.secondary">
-										Nick Yakovets ·
-										<Link
-											href="mailto:n.yakovets@tue.nl"
-											sx={{
-												ml: 0.5,
-												color: 'text.secondary',
-												textDecoration: 'none',
-												'&:hover': { color: 'primary.main' },
-											}}
-										>
-											n.yakovets@tue.nl
-										</Link>
-									</Typography>
-								</Box>
-							</Stack>
-						</Grid>
-
-						{/* Team */}
-						<Grid size={{ xs: 12, md: 4 }}>
-							<Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
-								Development Team
-							</Typography>
-							<Stack spacing={0.5}>
-								<Typography variant="body2" color="text.secondary">
-									Strahil Peykov (Educational Programmer)
-								</Typography>
-								<Typography variant="body2" color="text.secondary">
-									Alexandra Boala (Skill Tree Developer)
-								</Typography>
-								<Typography variant="body2" color="text.secondary">
-									Razvan Efros (Storyline Designer)
-								</Typography>
-							</Stack>
-						</Grid>
-					</Grid>
-
-					<Divider sx={{ my: 3 }} />
-
-					<Typography variant="body2" color="text.secondary" align="center">
-						© {new Date().getFullYear()} Eindhoven University of Technology
-					</Typography>
-				</Container>
-			</Box>
+	return <Container maxWidth="lg" sx={{ pt: { xs: 4, md: 7 }, pb: 4, '& a:focus-visible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 3 } }}>
+		<Box component="section" aria-labelledby="home-title" sx={{ maxWidth: 680 }}>
+			<Typography id="home-title" component="h1" sx={{ fontSize: { xs: 36, md: 48 }, fontWeight: 700, lineHeight: 1.2, mb: 2.5 }}>
+				Learn SQL
+			</Typography>
+			<Typography sx={{ fontSize: 18, lineHeight: 1.7, mb: 2 }}>
+				SQL Valley combines explanations of database concepts with SQL exercises.
+				Write and run queries in your browser, then submit your answer for feedback.
+			</Typography>
+			<Typography sx={{ fontSize: 16, lineHeight: 1.7, color: 'text.secondary', mb: 3 }}>
+				Use the skill tree to choose a topic. It shows how topics connect,
+				what you’ve completed, and which skills you can work on next.
+			</Typography>
+			<Button component={RouterLink} to="/learn" variant="contained" sx={{ fontSize: 16, px: 2.5, py: 1.25 }}>
+				Open the skill tree
+			</Button>
+			<Typography sx={{ fontSize: 16, lineHeight: 1.7, mt: 2.5 }}>
+				New to databases? <Link component={RouterLink} to="/concept/database?tab=theory" color="inherit" underline="always">Read the introduction</Link>.
+			</Typography>
+			<Typography sx={{ fontSize: 14, lineHeight: 1.7, color: 'text.secondary', mt: 3 }}>
+				No installation needed. Your progress is saved in this browser.
+			</Typography>
 		</Box>
-	);
+
+		<Box component="footer" sx={{ mt: { xs: 5, md: 7 }, pt: 3, borderTop: '1px solid', borderColor: 'divider', '& h2': { fontSize: 16, fontWeight: 500, mb: 1.5 }, '& p': { fontSize: 14, lineHeight: 1.7, color: 'text.secondary' } }}>
+			<Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', sm: 'repeat(2, minmax(0, 1fr))', md: 'repeat(3, minmax(0, 1fr))' }, gap: { xs: 3, md: 5 } }}>
+				<Box>
+					<Typography component="h2">About SQL Valley</Typography>
+					<Typography>
+						Developed by the Database Group at Eindhoven University of Technology
+						for database courses 2ID50 and JBI050.
+					</Typography>
+				</Box>
+				<Box>
+					<Typography component="h2">Contact</Typography>
+					<Typography>Hildo Bijl</Typography>
+					<Link href="mailto:h.j.bijl@tue.nl" color="inherit" underline="always" sx={{ display: 'inline-block', fontSize: 14, py: 0.5, mb: 1 }}>h.j.bijl@tue.nl</Link>
+					<Typography>Nick Yakovets</Typography>
+					<Link href="mailto:n.yakovets@tue.nl" color="inherit" underline="always" sx={{ display: 'inline-block', fontSize: 14, py: 0.5 }}>n.yakovets@tue.nl</Link>
+				</Box>
+				<Box>
+					<Typography component="h2">Development team</Typography>
+					<Box component="dl" sx={{ m: 0, fontSize: 14, lineHeight: 1.7, '& dt': { color: 'text.primary' }, '& dd': { m: 0, mb: 1, color: 'text.secondary' } }}>
+						<dt>Strahil Peykov</dt><dd>Educational Programmer</dd>
+						<dt>Alexandra Boala</dt><dd>Skill Tree Developer</dd>
+						<dt>Razvan Efros</dt><dd>Storyline Designer</dd>
+					</Box>
+				</Box>
+			</Box>
+			<Typography sx={{ mt: 3 }}>© {new Date().getFullYear()} Eindhoven University of Technology</Typography>
+		</Box>
+	</Container>
 }
