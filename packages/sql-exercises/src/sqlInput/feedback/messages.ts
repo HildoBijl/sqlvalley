@@ -54,7 +54,7 @@ function getColumnNameMessage(missing: string[], extra: string[]): string {
 }
 
 function getColumnCountMessage(report: Extract<ComparisonReport, { reason: 'column-count' }>): string {
-	if (report.missing === undefined && report.extra === undefined) return `Your query returns ${report.input} ${report.input === 1 ? 'column' : 'columns'}, but ${report.expected} ${report.expected === 1 ? 'is' : 'are'} expected.`
+	if (!('missing' in report)) return `Your query returns ${report.input} ${report.input === 1 ? 'column' : 'columns'}, but ${report.expected} ${report.expected === 1 ? 'is' : 'are'} expected.`
 	if (report.input > report.expected) {
 		const detail = report.extra && report.extra.length > 0 ? ` The superfluous columns appear to be ${formatQuotedList(report.extra)}.` : ''
 		return `Your output seems to have more columns than was expected.${detail}`

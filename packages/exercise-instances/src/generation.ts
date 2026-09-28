@@ -5,7 +5,7 @@ import type { ExerciseId, ExerciseInstance } from './types'
 // Generate a complete instance before handing it to application storage.
 export async function generateExerciseInstance(
 	exerciseId: ExerciseId,
-	definition: Exercise<ExerciseMetadata, ExerciseAction, ExerciseState, ExerciseParameters, SoloExerciseReport, never, unknown>,
+	definition: Pick<Exercise<ExerciseMetadata, ExerciseAction, ExerciseState, ExerciseParameters, SoloExerciseReport, never, unknown>, 'metadata' | 'generateParameters' | 'getInitialState'>,
 	context: unknown,
 ): Promise<ExerciseInstance> {
 	const parameters = await definition.generateParameters({ example: false, context })
