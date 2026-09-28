@@ -3,9 +3,11 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { safeStorage } from './safeStorage'
 
+export type StateUpdate<T> = T | ((current: T) => T)
+
 export interface HydrationState {
 	hasHydrated: boolean
-	setHasHydrated: (hasHydrated: boolean) => void
+	setHasHydrated: (hasHydrated: StateUpdate<boolean>) => void
 }
 
 export type SetState<T> = (partial: Partial<T> | ((state: T) => Partial<T>)) => void
@@ -42,7 +44,7 @@ export function createPersistedStore<TState extends object, TActions extends obj
 			...initialState,
 			...createActions(scopedSet),
 			hasHydrated: false,
-			setHasHydrated: hasHydrated => set({ hasHydrated } as Partial<StoreState>),
+			setHasHydrated: update => set(state => ({ hasHydrated: typeof update === 'function' ? update(state.hasHydrated) : update }) as Partial<StoreState>),
 		}
 	}
 

@@ -17,7 +17,7 @@
     "@lezer/highlight": "^1.2.3",
     "@sqlvalley/sqljs": "*",
     "@step-wise/js-utils": "^0.1.1",
-    "@step-wise/react-utils": "^0.1.0",
+    "@step-wise/react-utils": "^0.1.2",
     "@uiw/react-codemirror": "^4.25.3"
   },
   "peerDependencies": {

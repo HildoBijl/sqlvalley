@@ -35,7 +35,7 @@ export function App() {
 					<ThemeProvider theme={muiTheme}>
 						<CssBaseline />
 						<SQLJSProvider>
-							<DatabaseProvider source={databaseSource} datasetSize={datasetSize} setDatasetSize={setDatasetSize}>
+							<DatabaseProvider source={databaseSource} datasetSizeHandle={[datasetSize, setDatasetSize]}>
 								<RouterProvider router={router} />
 							</DatabaseProvider>
 						</SQLJSProvider>

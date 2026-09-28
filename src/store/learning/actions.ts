@@ -2,16 +2,16 @@ import { isPlainDataObject } from '@step-wise/js-utils'
 import type { ModuleType } from '@step-wise/module-tree-definition'
 import type { ExerciseAction, ExerciseInstance, ExerciseReport, ExerciseState } from '@sqlvalley/exercise-instances'
 
-import type { SetState } from '../infrastructure'
+import type { SetState, StateUpdate } from '../infrastructure'
 import { type ConceptState, type LearningState, type SkillState, createModuleState } from './state'
 
 export interface LearningActions {
-	setModuleTab: (id: string, moduleType: ModuleType, tab: string) => void
+	setModuleTab: (id: string, moduleType: ModuleType, tab: StateUpdate<string | undefined>) => void
 	completeConcept: (conceptId: string) => void
 	completeSkill: (skillId: string) => void
 	startNewExercise: (skillId: string, exerciseInstance: ExerciseInstance) => void
 	submitExerciseAction: (skillId: string, action: ExerciseAction, resultingState: ExerciseState, report: ExerciseReport | undefined, solvedSkillIds: readonly string[]) => void
-	setExerciseDraftInput: (skillId: string, draftInput: ExerciseInstance['draftInput']) => void
+	setExerciseDraftInput: (skillId: string, draftInput: StateUpdate<ExerciseInstance['draftInput']>) => void
 }
 
 function getConceptModuleForUpdate(moduleId: string, state: LearningState): ConceptState {
@@ -26,12 +26,10 @@ function getSkillModuleForUpdate(moduleId: string, state: LearningState): SkillS
 
 export function createLearningActions(set: SetState<LearningState>): LearningActions {
 	return {
-		setModuleTab: (id, moduleType, tab) => set(state => {
-			const now = Date.now()
-			const nextState = moduleType === 'skill'
-				? { ...getSkillModuleForUpdate(id, state), tab, lastAccessed: now, }
-				: { ...getConceptModuleForUpdate(id, state), tab, lastAccessed: now }
-			return { modules: { ...state.modules, [id]: nextState } }
+		setModuleTab: (id, moduleType, update) => set(state => {
+			const module = moduleType === 'skill' ? getSkillModuleForUpdate(id, state) : getConceptModuleForUpdate(id, state)
+			const tab = typeof update === 'function' ? update(module.tab) : update
+			return { modules: { ...state.modules, [id]: { ...module, tab, lastAccessed: Date.now() } } }
 		}),
 
 		completeConcept: conceptId => set(state => {
@@ -96,12 +94,14 @@ export function createLearningActions(set: SetState<LearningState>): LearningAct
 			return { modules }
 		}),
 
-		setExerciseDraftInput: (skillId, draftInput) => set(state => {
-			if (draftInput !== undefined && !isPlainDataObject(draftInput)) throw new Error('Draft input must be a plain data object or undefined.')
+		setExerciseDraftInput: (skillId, update) => set(state => {
 			const skillModule = getSkillModuleForUpdate(skillId, state)
 			if (skillModule.exerciseHistory.length === 0) throw new Error(`Cannot set draft input for "${skillId}" without an active exercise.`)
 
-			const updatedExercise: ExerciseInstance = { ...skillModule.exerciseHistory[skillModule.exerciseHistory.length - 1], draftInput }
+			const currentExercise = skillModule.exerciseHistory[skillModule.exerciseHistory.length - 1]
+			const draftInput = typeof update === 'function' ? update(currentExercise.draftInput) : update
+			if (draftInput !== undefined && !isPlainDataObject(draftInput)) throw new Error('Draft input must be a plain data object or undefined.')
+			const updatedExercise: ExerciseInstance = { ...currentExercise, draftInput }
 			const exerciseHistory = [...skillModule.exerciseHistory.slice(0, -1), updatedExercise]
 			return {
 				modules: {

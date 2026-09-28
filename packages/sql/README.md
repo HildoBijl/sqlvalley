@@ -63,4 +63,4 @@ Without a `key`, databases close when their consumer unmounts. An optional `key`
 
 `useQuery` reruns when its database or query changes; an undefined query skips execution. `useQueryResult` returns only the first result. For explicit execution, call `handle.database.exec(query)` once available. Mutations do not automatically refresh other queries.
 
-Dataset selection uses local state by default, starting at `defaultDatasetSize` or the first source size. Supply `datasetSize` and `setDatasetSize` to the `DatabaseProvider` together to control it externally, for example through an application store.
+Dataset selection uses local state by default, starting at `defaultDatasetSize` or the first source size. Supply `datasetSizeHandle={[datasetSize, setDatasetSize]}` to `DatabaseProvider` to control it externally, for example through an application store. Its setter must support both values and functional updates, like a React state setter. The provider uses `useControllableState`; controlled/uncontrolled mode must stay fixed while mounted. Dataset sizes are validated before being exposed or updated, and `defaultDatasetSize` is only supported in uncontrolled mode.

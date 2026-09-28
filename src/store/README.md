@@ -18,6 +18,15 @@ export function StoryToggle() {
 }
 ```
 
+All `set...` actions accept either a value or a function of the latest value, including settings, skill-tree settings, learning tabs/drafts, and hydration state. Existing value calls still work. For keyed actions, pass the updater as the final argument:
+
+```ts
+useSettingsStore.getState().setPracticeDatasetSize(size => size === 'small' ? 'full' : 'small')
+useLearningStore.getState().setExerciseDraftInput(skillId, draft => ({ ...draft, query: 'SELECT * FROM employees' }))
+```
+
+An unset module tab or draft is `undefined`; unset planning mode and goal values are exposed to updaters as `false` and `null`. Draft validation runs on the updater's result before storing it.
+
 `useCurrentExerciseInstance(skillId)` subscribes to the current exercise for a skill and returns its latest instance, or `undefined` when none exists. Import it from `@/store`.
 
 Code outside React can use the same store directly:

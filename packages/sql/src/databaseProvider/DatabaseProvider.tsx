@@ -1,5 +1,6 @@
-import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { type ReactNode, useCallback, useEffect, useMemo } from 'react'
 
+import { type StateHandle, useControllableState } from '@step-wise/react-utils'
 import { useSQLJSContext } from '@sqlvalley/sqljs'
 
 import type { DatabaseSource } from './types'
@@ -12,30 +13,31 @@ type SourceDatasetSize<Source extends DatabaseSource> = Source extends { dataset
 // The properties that can be given to the DatabaseProvider.
 interface DatabaseProviderProps<Source extends DatabaseSource> {
 	source: Source
-	datasetSize?: SourceDatasetSize<Source>
-	setDatasetSize?: (size: SourceDatasetSize<Source>) => void
+	datasetSizeHandle?: StateHandle<SourceDatasetSize<Source>>
 	defaultDatasetSize?: SourceDatasetSize<Source>
 	children: ReactNode
 }
 
 // Expose handles to databases to all child components.
-export function DatabaseProvider<Source extends DatabaseSource>({ source, children, datasetSize: controlledSize, setDatasetSize: controlledSetter, defaultDatasetSize }: DatabaseProviderProps<Source>) {
-	// Check if the datasetSize is controlled externally or left uncontrolled, to be registered internally.
-	const controlled = controlledSetter !== undefined
-	if (!controlled && controlledSize !== undefined) throw new Error('datasetSize requires setDatasetSize.')
-	if (controlled && defaultDatasetSize !== undefined) throw new Error('defaultDatasetSize is only supported in uncontrolled mode.')
+export function DatabaseProvider<Source extends DatabaseSource>({ source, children, datasetSizeHandle, defaultDatasetSize }: DatabaseProviderProps<Source>) {
+	if (datasetSizeHandle !== undefined && defaultDatasetSize !== undefined) throw new Error('defaultDatasetSize is only supported in uncontrolled mode.')
 
-	// Get the dataset size, either externally or internally.
-	const [internalSize, setInternalSize] = useState<string | undefined>(() => defaultDatasetSize ?? source.datasetSizes?.[0])
-	const datasetSize = controlled ? controlledSize : internalSize
+	// Use an internal state fallback if no datasetSizeHandle is given.
+	const [datasetSize, setSize] = useControllableState<SourceDatasetSize<Source>>(
+		datasetSizeHandle,
+		() => {
+			const size = defaultDatasetSize ?? source.datasetSizes?.[0]
+			validateDatasetSize(source, size)
+			return size
+		},
+	)
 	validateDatasetSize(source, datasetSize)
 
 	// Set up a custom setDatasetSize which applies the right registration.
 	const setDatasetSize = useCallback((size: string | undefined) => {
 		validateDatasetSize(source, size)
-		if (controlledSetter) controlledSetter(size)
-		else setInternalSize(size)
-	}, [source, controlledSetter])
+		setSize(size)
+	}, [source, setSize])
 
 	// Connect to SQLJS and set up a database cache.
 	const { SQLJS, error } = useSQLJSContext()
