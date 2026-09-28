@@ -6,7 +6,7 @@ function Problem() {
 
 const solution = `
 SELECT first_name, last_name
-FROM accounts
+FROM accounts a
 WHERE username IN (
 	SELECT buyer
 	FROM transactions
@@ -15,14 +15,16 @@ WHERE username IN (
     FROM products
     WHERE category = 'Musical Instruments'
   )
-) AND username NOT IN (
-	SELECT vendor
-	FROM transactions
+) AND NOT EXISTS (
+	SELECT 1
+	FROM transactions t
+	WHERE t.vendor = a.username
 )`
 
 export default {
 	exerciseId: 'multitable-mock-in-notin',
 	definition: {
+		metadata: { version: 2 },
 		solution,
 	},
 	component: {

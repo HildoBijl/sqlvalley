@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import type { Database } from '@sqlvalley/sqljs'
-import type { QueryResult } from '@sqlvalley/sql'
+import { type QueryResult, executeQuery } from '@sqlvalley/sql'
 
 import { useCurrentUserExerciseDatabase } from '../../exerciseContext'
 
@@ -35,7 +35,7 @@ export async function validateSqlQuery({ inputValue, database, signal }: SqlQuer
 	// Run the query and check the output.
 	try {
 		if (!database) throw new Error('Database is not ready.')
-		const results = database.exec(query)
+		const results = executeQuery(database, query)
 		return { valid: true as const, report: { query, results } satisfies SqlQueryValidationReport }
 	} catch (error) {
 		return { valid: false as const, feedback: formatSqlErrorMessage(error instanceof Error ? error.message : String(error)) }

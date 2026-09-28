@@ -29,19 +29,20 @@ single_alloc_per_dept AS (
 SELECT 
     d.d_name,
     d.nr_employees AS estimated_employees,
-    ta.total_allocated,
+    COALESCE(ta.total_allocated, 0) AS total_allocated,
     COALESCE(sa.only_allocated, 0) AS only_in_this_department,
     m.first_name,
     m.last_name
 FROM departments d
-JOIN total_allocations ta ON d.d_id = ta.d_id
-JOIN single_alloc_per_dept sa ON d.d_id = sa.d_id
+LEFT JOIN total_allocations ta ON d.d_id = ta.d_id
+LEFT JOIN single_alloc_per_dept sa ON d.d_id = sa.d_id
 JOIN employees m ON d.manager_id = m.e_id
 WHERE d.nr_employees - COALESCE(sa.only_allocated, 0) > 3;`
 
 export default {
 	exerciseId: 'multilayered-wrong-employee-counts',
 	definition: {
+		metadata: { version: 2 },
 		solution,
 	},
 	component: {

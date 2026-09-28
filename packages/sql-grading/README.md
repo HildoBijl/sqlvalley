@@ -23,7 +23,7 @@ Inputs have the shape `{ columns, values }`; SQL.js results can be passed direct
 
 ## Comparison options
 
-All options default to `false`:
+All options default to `false` except `caseSensitiveValues`, which defaults to `true`:
 
 - `requireEqualColumnNames`: require matching names.
 - `requireEqualColumnOrder`: require matching column positions.

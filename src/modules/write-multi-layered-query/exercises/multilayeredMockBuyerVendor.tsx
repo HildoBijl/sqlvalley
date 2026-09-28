@@ -15,14 +15,15 @@ const solution = `
     FROM transactions
     GROUP BY buyer
   )
-  SELECT v.username, v.earned, b.spent
+  SELECT v.username, COALESCE(b.spent, 0) AS spent, v.earned
   FROM vendor_totals v
-  JOIN buyer_totals b ON v.username = b.username
-  WHERE v.earned > b.spent;`
+  LEFT JOIN buyer_totals b ON v.username = b.username
+  WHERE v.earned > COALESCE(b.spent, 0);`
 
 export default {
 	exerciseId: 'multilayered-mock-buyer-vendor',
 	definition: {
+		metadata: { version: 2 },
 		solution,
 	},
 	component: {
