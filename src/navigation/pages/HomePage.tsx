@@ -2,11 +2,18 @@ import { Box, Button, Container, Link, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 
 export default function HomePage() {
-	return <Container maxWidth="lg" sx={{ pt: { xs: 4, md: 7 }, pb: 4, '& a:focus-visible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 3 } }}>
+	return <Container maxWidth="lg" sx={{ pt: { xs: 4, md: 5 }, pb: 4, '& a:focus-visible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 3 } }}>
 		<Box component="section" aria-labelledby="home-title" sx={{ maxWidth: 680 }}>
-			<Typography id="home-title" component="h1" sx={{ fontSize: { xs: 36, md: 48 }, fontWeight: 700, lineHeight: 1.2, mb: 2.5 }}>
-				Learn SQL
-			</Typography>
+			<Box component="h1" id="home-title" sx={{ m: 0, mb: 3 }}>
+				<Box component="span" role="img" aria-label="SQL Valley" sx={{
+					display: 'block',
+					width: { xs: 200, sm: 240 },
+					height: { xs: 100, sm: 120 },
+					bgcolor: theme => theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.primary.main,
+					mask: 'url(/SQLValleyTitle.svg) center / contain no-repeat',
+					WebkitMask: 'url(/SQLValleyTitle.svg) center / contain no-repeat',
+				}} />
+			</Box>
 			<Typography sx={{ fontSize: 18, lineHeight: 1.7, mb: 2 }}>
 				SQL Valley combines explanations of database concepts with SQL exercises.
 				Write and run queries in your browser, then submit your answer for feedback.
@@ -26,7 +33,7 @@ export default function HomePage() {
 			</Typography>
 		</Box>
 
-		<Box component="footer" sx={{ mt: { xs: 5, md: 7 }, pt: 3, borderTop: '1px solid', borderColor: 'divider', '& h2': { fontSize: 16, fontWeight: 500, mb: 1.5 }, '& p': { fontSize: 14, lineHeight: 1.7, color: 'text.secondary' } }}>
+		<Box component="footer" sx={{ mt: 5, pt: 3, borderTop: '1px solid', borderColor: 'divider', '& h2': { fontSize: 16, fontWeight: 500, mb: 1.5 }, '& p': { fontSize: 14, lineHeight: 1.7, color: 'text.secondary' } }}>
 			<Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', sm: 'repeat(2, minmax(0, 1fr))', md: 'repeat(3, minmax(0, 1fr))' }, gap: { xs: 3, md: 5 } }}>
 				<Box>
 					<Typography component="h2">About SQL Valley</Typography>
