@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import type { PlainDataObject } from '@step-wise/js-utils'
 import { useLatestRef } from '@step-wise/react-utils'
-import type { InputExerciseRawInput } from '@step-wise/input-exercises'
+import type { InputValueMap } from '@step-wise/input-interpretation'
 
 import type { InputFieldOptions, FieldValidationState } from '../fieldTypes'
 
@@ -23,7 +23,7 @@ interface InputValidationOptions {
 	input: PlainDataObject | undefined
 	context: unknown
 	fields: ReadonlyMap<string, InputFieldOptions>
-	normalizeInput: (input: PlainDataObject | undefined) => InputExerciseRawInput
+	normalizeInput: (input: PlainDataObject | undefined) => InputValueMap
 }
 
 export function useInputValidation({ input, context, fields, normalizeInput }: InputValidationOptions) {

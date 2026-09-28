@@ -1,7 +1,8 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import type { PlainDataObject, PlainDataValue } from '@step-wise/js-utils'
-import type { InputExerciseRawInput, InputExerciseSolution } from '@step-wise/input-exercises'
+import type { InputValueMap } from '@step-wise/input-interpretation'
+import type { InputExerciseSolution } from '@step-wise/input-exercises'
 
 import type { InputFieldOptions, FieldValidationState } from './fieldTypes'
 
@@ -26,8 +27,8 @@ export interface InputExerciseContextValue {
 	canGiveUp: boolean
 	isSubmitButtonEnabled: boolean
 	submitInput: () => Promise<void>
-	normalizeInput: (input: PlainDataObject | undefined) => InputExerciseRawInput
-	hydrateInput: (input: InputExerciseRawInput) => PlainDataObject
+	normalizeInput: (input: PlainDataObject | undefined) => InputValueMap
+	hydrateInput: (input: InputValueMap) => PlainDataObject
 	getInputKey: (input: PlainDataObject | undefined) => string
 
 	// Solution generation/insertion

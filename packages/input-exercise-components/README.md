@@ -5,7 +5,7 @@ React presentation for solo input exercises. Exercise definitions and reducers c
 
 ## Public API
 
-`MonoExercise` accepts `MonoExerciseProps` containing `Problem`, `InputArea`, `Solution`, and optional `InputVisualization` components. It wraps these in `InputExerciseProvider`. Fields use `useInputField(name, { type, normalizeInput, hydrateInput, validate, getFeedback })` to read and update draft editor states; missing string values display as empty strings. Submission normalizes each registered field into its typed InputValue. Value conversion belongs to the fields and the definition's `valueOperations`. Feedback is restored from stored reports.
+`MonoExercise` accepts `MonoExerciseProps` containing `Problem`, `InputArea`, `Solution`, and optional `InputVisualization` components. It wraps these in `InputExerciseProvider`. Fields use `useInputField(name, { type, normalizeInput, hydrateInput, validate, getFeedback })` to read and update draft editor states; missing string values display as empty strings. Submission normalizes each registered field into its typed `InputValue`; the combined field values use `InputValueMap` from `@step-wise/input-interpretation`. Value conversion belongs to the fields and the definition's `valueOperations`. Feedback is restored from stored reports.
 
 MonoExercise renders the Problem section, input area and buttons, input visualization, and finally the Solution section after completion. It owns shared section headings, spacing, rounded backgrounds, and solution collapse controls. The problem section uses the standard heading "Exercise". Supplied components contain subject-specific content, not section wrappers. Story slots are deferred until story mode is implemented.
 

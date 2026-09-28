@@ -2,12 +2,12 @@ import { useCallback, useRef } from 'react'
 
 import type { PlainDataObject } from '@step-wise/js-utils'
 import { isExerciseDone } from '@step-wise/exercise-definition'
-import type { InputExerciseRawInput } from '@step-wise/input-exercises'
+import type { InputValueMap } from '@step-wise/input-interpretation'
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 interface SubmitInputOptions {
 	input: PlainDataObject | undefined
-	normalizeInput: (input: PlainDataObject) => InputExerciseRawInput
+	normalizeInput: (input: PlainDataObject) => InputValueMap
 	isSubmitButtonEnabled: boolean
 	canSubmitCurrentInput: (input: PlainDataObject) => boolean
 }
