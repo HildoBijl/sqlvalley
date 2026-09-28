@@ -45,10 +45,8 @@ export type ComparisonReport = { reason: 'correct' } | ComparisonMismatchReport
 
 export type ComparisonMismatchReport =
 	| { reason: 'empty-result' | 'empty-expected-result' | 'column-order' }
-	| ({ reason: 'column-count'; input: number; expected: number } & (
-		| { missing: string[]; extra: string[] }
-		| { missing?: never; extra?: never }
-	))
+	| { reason: 'column-count'; input: number; expected: number }
+	| { reason: 'column-count'; input: number; expected: number; missing: string[]; extra: string[] }
 	| { reason: 'row-count'; input: number; expected: number }
 	| { reason: 'column-names'; missing: string[]; extra: string[] }
 	| { reason: 'ordered-column-values' | 'unmatched-column-values'; columns: string[] }
