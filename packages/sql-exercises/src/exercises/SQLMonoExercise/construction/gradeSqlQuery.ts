@@ -1,4 +1,5 @@
 import type { Database } from '@sqlvalley/sqljs'
+import { executeQuery } from '@sqlvalley/sql'
 import { type ComparisonOptions, compareQueryResults } from '@sqlvalley/sql-grading'
 
 import type { SqlSubmissionReport } from '../../../sqlInput'
@@ -15,15 +16,17 @@ export function gradeSqlQuery({ input, expected, database, comparisonOptions }: 
 	// Run the solution query.
 	let expectedResult
 	try {
-		expectedResult = database.exec(expected)[0]
+		expectedResult = executeQuery(database, expected)[0]
 	} catch {
 		return { correct: false, result: { reason: 'grading-error' } }
 	}
 
+	if (!expectedResult) return { correct: false, result: { reason: 'grading-error' } }
+
 	// Run the input query.
 	let inputResult
 	try {
-		inputResult = database.exec(input)[0]
+		inputResult = executeQuery(database, input)[0]
 	} catch {
 		return { correct: false, result: { reason: 'execution-error' } }
 	}

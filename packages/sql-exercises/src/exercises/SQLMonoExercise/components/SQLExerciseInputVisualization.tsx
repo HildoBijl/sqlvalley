@@ -4,7 +4,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
 import { isStateDone } from '@step-wise/exercise-definition'
 import type { Database } from '@sqlvalley/sqljs'
-import { DataTable, useDatasetSize } from '@sqlvalley/sql'
+import { DataTable, executeQuery, useDatasetSize } from '@sqlvalley/sql'
 import { type MonoExerciseInputVisualizationProps, useInputExerciseContext } from '@sqlvalley/input-exercise-components'
 
 import { sqlDatasetSizes } from '../../../datasetSizes'
@@ -125,7 +125,7 @@ function useShowSmallDatasetWarning(validationReport: SqlQueryValidationReport |
 		const timeout = setTimeout(() => {
 			let hasRows = false
 			try {
-				hasRows = !!database.exec(validationReport.query)[0]?.values.length
+				hasRows = !!executeQuery(database, validationReport.query)[0]?.values.length
 			} catch { /* A failed comparison must not change validation feedback. */ }
 			setShowWarningData({ validationReport, database, hasRows })
 		}, 0)

@@ -14,14 +14,15 @@ dept_budget AS (
 	SELECT d_id, budget
 	FROM departments
 )
-SELECT b.d_id, b.budget, e.total_spent
+SELECT b.d_id, b.budget, COALESCE(e.total_spent, 0) AS total_spent
 FROM dept_budget b
-JOIN dept_expenses e ON b.d_id = e.d_id
-WHERE e.total_spent <= b.budget`
+LEFT JOIN dept_expenses e ON b.d_id = e.d_id
+WHERE COALESCE(e.total_spent, 0) <= b.budget`
 
 export default {
 	exerciseId: 'multilayered-mock-dept-expense',
 	definition: {
+		metadata: { version: 2 },
 		solution,
 	},
 	component: {

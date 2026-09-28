@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import type { DatabaseHandle, QueryResult } from './types'
+import { executeQuery } from './executeQuery'
 
 interface QueryResultState {
 	database: DatabaseHandle['database']
@@ -17,7 +18,7 @@ export function useQuery({ database, loading, error }: DatabaseHandle, query: st
 	useEffect(() => {
 		if (!database || !query) return
 		try {
-			setQueryResultState({ database, query, results: database.exec(query) })
+			setQueryResultState({ database, query, results: executeQuery(database, query) })
 		} catch (error) {
 			setQueryResultState({ database, query, error: error instanceof Error ? error : new Error(String(error)) })
 		}

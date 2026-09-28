@@ -8,7 +8,7 @@ const defaultComparisonOptions: Required<ComparisonOptions> = {
 	requireEqualColumnNames: false,
 	requireEqualRowOrder: false,
 	caseSensitiveColumnNames: false,
-	caseSensitiveValues: false,
+	caseSensitiveValues: true,
 }
 
 // Compare two query results and report the first unmet requirement.
