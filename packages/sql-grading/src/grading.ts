@@ -23,7 +23,7 @@ export function compareQueryResults(
 	if (!expected) return { correct: false, report: { reason: 'empty-expected-result' } }
 
 	// Gather all data into a comparison context to easily pass around.
-	const context: ComparisonContext = { input, expected, options: mergeDefaults({ ...options }, defaultComparisonOptions) }
+	const context: ComparisonContext = { input, expected, options: mergeDefaults(options, defaultComparisonOptions) }
 
 	// Check table dimensions first.
 	const columnCountMismatch = compareColumnCount(context)
