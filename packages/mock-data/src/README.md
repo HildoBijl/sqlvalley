@@ -96,7 +96,7 @@ The CSV parser is intentionally strict:
 - Empty cells become `null`.
 - Boolean cells accept `true` or `false`, ignoring casing and surrounding whitespace.
 - Number cells must contain a finite numeric value.
-- String and date cells are trimmed. Dates are currently stored as strings and are not format-validated.
+- String cells are trimmed. Date cells must be valid ISO calendar dates (`YYYY-MM-DD`) or timestamps (`YYYY-MM-DD HH:MM:SS`); invalid formats or calendar dates cause an error.
 
 ### Changing a table definition
 

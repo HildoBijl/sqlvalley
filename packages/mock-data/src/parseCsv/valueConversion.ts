@@ -21,11 +21,20 @@ function stringOrNull(value: string | undefined): string | null {
 	return trimmed.length === 0 ? null : trimmed
 }
 
+function dateOrNull(value: string | undefined): string | null {
+	const date = stringOrNull(value)
+	if (date === null) return null
+	const parsed = new Date(`${date.length === 10 ? `${date}T00:00:00` : date.replace(' ', 'T')}Z`)
+	if (!/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/.test(date) || !Number.isFinite(parsed.getTime()) || parsed.toISOString().replace('T', ' ').slice(0, date.length) !== date)
+		throw new TypeError(`Expected an ISO calendar date or timestamp (YYYY-MM-DD[ HH:MM:SS]), received "${value}".`)
+	return date
+}
+
 export const converters = {
 	boolean: booleanOrNull,
 	number: numberOrNull,
 	string: stringOrNull,
-	date: stringOrNull,
+	date: dateOrNull,
 }
 
 export type ColumnType = keyof typeof converters
