@@ -32,7 +32,7 @@ export function Header() {
 
 	return (
 		<AppBar position="static" elevation={0} sx={{ bgcolor: 'background.paper', color: 'text.primary', borderBottom: '1px solid', borderColor: 'divider', '& a:focus-visible, & .Mui-focusVisible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 2 } }}>
-			<Container maxWidth="lg">
+			<Container maxWidth={false} sx={{ maxWidth: 1040 }}>
 				<Toolbar disableGutters sx={{ gap: { xs: 1, sm: 3 }, py: 1 }}>
 					{/* Logo/Title */}
 					<Typography
