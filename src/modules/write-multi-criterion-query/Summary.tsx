@@ -16,11 +16,12 @@ export function Summary() {
 			]} />
 			<Info>We can use processed column values in the <ISQL>WHERE</ISQL> and <ISQL>ORDER BY</ISQL> clauses too. Newly defined column names from the <ISQL>SELECT</ISQL> clause may be used within the <ISQL>ORDER BY</ISQL> clause as well. (But usually not within the <ISQL>WHERE</ISQL> clause.)</Info>
 			<Quote>Find the income taxes paid per position, but only for contracts that lasted exactly one year, and only for the top 5 performance scores.</Quote>
+			<Par>For a one-year contract, compare the end date with the first anniversary. Here February 29 maps to February 28 in a non-leap year.</Par>
 			<FigureExampleQuery query={`SELECT
   position,
   0.3*salary AS taxes
 FROM contracts
-WHERE JULIANDAY(end_date) - JULIANDAY(start_date) BETWEEN 365 AND 366
+WHERE end_date = DATE(start_date, '+1 year', 'floor')
 ORDER BY perf_score DESC
 LIMIT 5;`} tableWidth={240} tableScale={0.7} />
 		</Section>

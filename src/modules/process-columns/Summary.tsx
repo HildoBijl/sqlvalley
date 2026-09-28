@@ -111,7 +111,7 @@ function FigureProcessingCommands() {
 			<span style={operationStyle}>Division</span>
 		</Element>
 		<Element position={[x12, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
-			<ISQL>5 / 2</ISQL>
+			<ISQL>5.0 / 2</ISQL>
 		</Element>
 		<Element position={[x1i, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
@@ -308,7 +308,7 @@ function FigureProcessingCommands() {
 			<span style={operationStyle}>Search</span>
 		</Element>
 		<Element position={[x22, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
-			<ISQL>CHARINDEX('SQL Valley', 'Val')</ISQL>
+			<ISQL>INSTR('SQL Valley', 'Val')</ISQL>
 		</Element>
 		<Element position={[x2i, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>

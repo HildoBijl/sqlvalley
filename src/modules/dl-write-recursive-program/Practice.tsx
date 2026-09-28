@@ -28,7 +28,7 @@ twoDepartmentsInCommon(a, b) :- allocation(a, d1), allocation(a, d2), allocation
 wellAcquainted(a, b) :- twoDepartmentsInCommon(a, b).
 sameNetwork(a, b) :- wellAcquainted(a, b).
 sameNetwork(a, b) :- sameNetwork(a, x), wellAcquainted(x, b).
-requestedPeople(a, b) :- sameNetwork(a, b), not oneDepartmentInCommon(a, b).
+requestedPeople(a, b) :- sameNetwork(a, b), a != b, not oneDepartmentInCommon(a, b).
 requestedPeopleNames(afn, aln, bfn, bln) :- requestedPeople(a, b), employee(a, afn, aln, _, _, _, _, _, _), employee(b, bfn, bln, _, _, _, _, _, _).
 ?- requestedPeopleNames(firstNameA, lastNameA, firstNameB, lastNameB).
 `}</DL>
@@ -91,7 +91,7 @@ suspiciousTransaction(id) :- transaction(id, _, _, _, _, _, e, _), not authorize
 			<DL>{`
 suspiciousChain(p, t, t, 1) :- suspiciousTransaction(t), transaction(t, _, _, p, _, _, _, _).
 suspiciousChain(p, ft, nt, n) :-
-        suspiciousChain(ft, lt, m),
+        suspiciousChain(p, ft, lt, m),
         suspiciousTransaction(nt),
         transaction(lt, _, u, p, ld, _, _, _),
         transaction(nt, u, _, p, nd, _, _, _),
@@ -136,35 +136,34 @@ fullSuspiciousChainWithUsers(p, v, b, n) :-
 		</>,
 	},
 	{
-		problem: <Par>Expand the program of the previous exercise: we are now looking for the full chains in which the product at the end ended back up at the first person who sold it, while <Em>every</Em> person in the chain was a different person. Output the prodict ID, the user's username and the number of steps in the (circular) chain.</Par>,
+		problem: <Par>Expand the program of the previous exercise: find the full chains in which the product returns to the first vendor and no other person appears twice. Output the product ID, that user's username and the number of transactions. For this exercise, use a Datalog extension with lists: <IDL>[v]</IDL> is a one-element list, <IDL>[v | vs]</IDL> prepends a value, and <IDL>member(v, vs)</IDL> tests membership in a bound list.</Par>,
 		solution: <>
-			<Par>There are two requirements: we want all buyers (or equivalently all vendors) in the chain to be different, but the first vendor must equal the last buyer. The first requirement is the hardest. It has an "every" statement, so we first do the opposite: we find all full chains where there are two transactions with the same buyer. For this, we keep the definitions from before, and we make nice use of the original <IDL>suspiciousChain</IDL> predicate that we set up. We use it to find two transactions within the chain that have the same vendor.</Par>
+			<Par>First and last transaction IDs do not identify a path: different paths can share those endpoints. We therefore keep a list of vendors for each path. A transaction can extend the path only if its vendor has not appeared before. The final buyer may equal the first vendor, which closes the cycle.</Par>
+			<Par>Keep the definitions of <IDL>suspiciousTransaction</IDL> and <IDL>suspiciousMultiStepChain</IDL> from the previous exercise. Add the following rules. The list operations are an extension, not part of core Datalog.</Par>
 			<DL>{`
-fullSuspiciousChainWithDoubleVendor(p, ft, lt, n) :-
-        fullSuspiciousChain(p, ft, lt, n),
-        suspiciousChain(p, ft, tx, _),
-        suspiciousChain(p, tx, ty, _),
-        suspiciousChain(p, ty, lt, _),
-        tx != ty,
-        transaction(tx, v, _, _, _, _, _, _),
-        transaction(ty, v, _, _, _, _, _, _).
-`}</DL>
-			<Par>Now we have filtered out the chains that <Em>do</Em> have a double vendor. We want all other chains, and then only the chains with equal first buyer and last vendor. This is done through the following query.</Par>
-			<DL>{`
+simpleSuspiciousChain(p, t, t, 1, [v]) :-
+        suspiciousTransaction(t),
+        transaction(t, v, _, p, _, _, _, _).
+simpleSuspiciousChain(p, ft, nt, n, [v | vs]) :-
+        simpleSuspiciousChain(p, ft, lt, m, vs),
+        suspiciousTransaction(nt),
+        transaction(lt, _, v, p, ld, _, _, _),
+        transaction(nt, v, _, p, nd, _, _, _),
+        ld < nd,
+        not member(v, vs),
+        n = m + 1.
 fullCircularSuspiciousChain(p, ft, lt, n) :-
-        fullSuspiciousChain(p, ft, lt, n),
-        not fullSuspiciousChainWithDoubleVendor(p, ft, lt, n),
+        simpleSuspiciousChain(p, ft, lt, n, _),
+        not suspiciousMultiStepChain(p, _, ft, _),
+        not suspiciousMultiStepChain(p, lt, _, _),
         transaction(ft, u, _, _, _, _, _, _),
         transaction(lt, _, u, _, _, _, _, _).
-        `}</DL>
-			<Par>With that, we have filtered out all the unwanted chains, leaving us with the correct ones. As final step, we join in the requested data again, identically to how we did that last time, except that now we only have one user to display. (We could've done that in the previous step already, but keeping it separate is clearer.)</Par>
-			<DL>{`
 fullCircularSuspiciousChainWithUser(p, u, n) :-
-        fullCircularSuspiciousChain(p, ft, lt, n),
+        fullCircularSuspiciousChain(p, ft, _, n),
         transaction(ft, u, _, _, _, _, _, _).
 ?- fullCircularSuspiciousChainWithUser(product, user, numSteps).
 `}</DL>
-			<Par>With that, we have found all full cycles of suspicious transactions.</Par>
+			<Par>The endpoint checks still use all suspicious chains: a path must be maximal even if extending it would repeat a vendor. The increasing dates bound its length, so the list construction terminates on a finite transaction table.</Par>
 		</>,
 	},
 ]

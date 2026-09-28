@@ -15,7 +15,7 @@ export function Summary() {
 			<Par>If we want to filter rows based on multiple conditions, we can combine them using <ISQL>AND</ISQL>, <ISQL>OR</ISQL> and <ISQL>NOT</ISQL>.</Par>
 			<FigureCombinedCondition />
 			<Info>When evaluating the conditions, SQL always first resolves the comparisons, turning them into <ISQL>TRUE</ISQL>/<ISQL>FALSE</ISQL>. Then it applies any potential <ISQL>NOT</ISQL> operators. At the end it resolves <ISQL>AND</ISQL>/<ISQL>OR</ISQL>. Brackets can be used to indicate a different operation order.</Info>
-			<Par>A very different (and less common) way of applying multiple conditions is by <Term>merging</Term> two tables with <Em>identical column names</Em>.</Par>
+			<Par>A very different (and less common) way of applying multiple conditions is by <Term>merging</Term> two query results with the <Em>same number of columns</Em>. Columns are matched by position, not by name; other DBMSs may also require compatible column types.</Par>
 			<List items={[
 				<>The <ISQL>UNION</ISQL> command gathers all rows present in <Em>at least one</Em> of the two tables (like an <ISQL>OR</ISQL>).</>,
 				<>The <ISQL>INTERSECT</ISQL> command gathers all rows present in <Em>both</Em> tables (like an <ISQL>AND</ISQL>).</>,

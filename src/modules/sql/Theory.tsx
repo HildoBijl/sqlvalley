@@ -27,9 +27,9 @@ FROM employees;`}</SQLDisplay>
 		<Section title="Properties of SQL queries">
 			<Par>There are a few important things to keep in mind for SQL queries.</Par>
 			<List items={[
-				<>Superfluous <Term>white-space</Term> is ignored. So the above query without the linebreak <ISQL>SELECT * FROM companies;</ISQL> does exactly the same. Enters and tabs (indentation), though useless in execution, are very commonly used to display queries in a more clear manner.</>,
-				<>SQL keywords are <Em>not</Em> <Term>case sensitive</Term>. So <ISQL>select * from companies;</ISQL> would do the same thing. Nevertheless, it is common to write keywords in upper case, to clearly distinguish them from table and column names.</>,
-				<>Queries usually end with a <Term>semi-colon</Term>. This is to distinguish where one query ends and the next one begins. If you only have one query, this semi-colon is optional: writing <ISQL>SELECT * FROM companies</ISQL> is fine. Always adding a semi-colon is a good habit though, so at SQL Valley we usually use one anyway.</>,
+				<>Superfluous <Term>white-space</Term> is ignored. So the above query without the linebreak <ISQL>SELECT * FROM employees;</ISQL> does exactly the same. Enters and tabs (indentation), though useless in execution, are very commonly used to display queries in a more clear manner.</>,
+				<>SQL keywords are <Em>not</Em> <Term>case sensitive</Term>. So <ISQL>select * from employees;</ISQL> would do the same thing. Nevertheless, it is common to write keywords in upper case, to clearly distinguish them from table and column names.</>,
+				<>Queries usually end with a <Term>semi-colon</Term>. This is to distinguish where one query ends and the next one begins. If you only have one query, this semi-colon is optional: writing <ISQL>SELECT * FROM employees</ISQL> is fine. Always adding a semi-colon is a good habit though, so at SQL Valley we usually use one anyway.</>,
 			]} />
 		</Section>
 

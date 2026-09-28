@@ -1,4 +1,4 @@
-import { Page, Section, Par, List, Em, DL, IDL } from '@/ui'
+import { Page, Section, Par, List, DL, IDL } from '@/ui'
 import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
 
 export function Practice() {
@@ -75,7 +75,7 @@ G(x) :- A(x), B(x), not D(x), not F(x).
 			<List items={[
 				<>The program is not positive: there are negations.</>,
 				<>The program is not semi-positive: the negations <IDL>not C</IDL>, <IDL>not D</IDL> and <IDL>not F</IDL> all violate the requirements.</>,
-				<>The program is stratified: there are two cycles <IDL>(C,D)</IDL> and <IDL>(E,F)</IDL> but within these cycles all dependencies are positive. Only <Em>between</Em> these cycles are there various negative dependencies, but those do not violate the requirements for the program to be stratified. We can first safely evaluate <IDL>(C,D)</IDL>, then evaluate <IDL>(E,F)</IDL> and finally evaluate <IDL>G</IDL>.</>,
+				<>The program is stratified: the only cycle is <IDL>(C,D)</IDL>, and both dependencies within it are positive. The negative dependencies lie outside this cycle. We can evaluate <IDL>(C,D)</IDL> first, then <IDL>E</IDL> and <IDL>F</IDL>, and finally <IDL>G</IDL>.</>,
 			]} />
 		</>,
 	},

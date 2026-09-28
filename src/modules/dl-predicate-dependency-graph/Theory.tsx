@@ -28,13 +28,13 @@ soldAndBoughtBack(v, p) :- sold(v, _, p, d1), sold(_, v, p, d2), d2 > d1.
 withNames(fn, ln, pn) :-
         soldAndBoughtBack(v, p),
         account(v, _, _, _, fn, ln, _, _, _, _),
-        product(p, pn, _, _, _).
+        product(p, pn, _, _, _, _).
 `}</DL>
 			<Par>The idea now is to make an overview of <Em>which</Em> predicate <Term>directly depends</Term> on <Em>which other</Em> predicate(s): they are referenced within the rules describing the predicate. We can see from the above program that ...</Par>
 			<List items={[
 				<><IDL>sold</IDL> directly depends on <IDL>transaction</IDL>.</>,
 				<><IDL>soldAndBoughtBack</IDL> directly depends on <IDL>sold</IDL>.</>,
-				<><IDL>withNames</IDL> directly depends on <IDL>sold</IDL>, but also on <IDL>account</IDL> and <IDL>product</IDL>.</>,
+				<><IDL>withNames</IDL> directly depends on <IDL>soldAndBoughtBack</IDL>, but also on <IDL>account</IDL> and <IDL>product</IDL>.</>,
 			]} />
 			<Par>All these dependencies can be drawn out in a graph. We draw every predicate as a node, and we draw an edge (including arrow) from one node to another if the first node directly depends on the second node. The result is a first (still messy) version of a <Term>predicate dependency graph</Term>.</Par>
 			<FirstDependencyGraph />
