@@ -2,9 +2,8 @@ import { useMemo } from 'react';
 import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material';
 import {
 	AutoStories as LearnIcon,
-	// PlayArrow as PlaygroundIcon,
 } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 import {
 	defaultSkillTreeVisualization,
 	isSkillTreeVisualizationId,
@@ -15,7 +14,6 @@ import { useAdminMode, useSkillTreeSettingsStore } from '@/store';
 import { SettingsMenu } from './Settings';
 
 export function Header() {
-	const navigate = useNavigate();
 	const location = useLocation();
 	const isAdmin = useAdminMode();
 	const skillTreeHistory = useSkillTreeHistory();
@@ -33,27 +31,29 @@ export function Header() {
 		}));
 
 	return (
-		<AppBar position="static" sx={{ bgcolor: 'background.paper', color: 'text.primary' }}>
-			<Container maxWidth="lg">
-				<Toolbar>
+		<AppBar position="static" elevation={0} sx={{ bgcolor: 'background.paper', color: 'text.primary', borderBottom: '1px solid', borderColor: 'divider', '& a:focus-visible, & .Mui-focusVisible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 2 } }}>
+			<Container maxWidth={false} sx={{ maxWidth: 1040 }}>
+				<Toolbar disableGutters sx={{ gap: { xs: 1, sm: 3 }, py: 1 }}>
 					{/* Logo/Title */}
 					<Typography
 						variant="h6"
-						component="div"
+						component={RouterLink}
+						to="/"
 						sx={{
-							flexGrow: 0,
-							mr: 4,
+							flexShrink: 0,
+							fontSize: 16,
+							textDecoration: 'none',
+							'&:hover': { textDecoration: 'none' },
 							fontWeight: 600,
-							color: 'primary.main',
+							color: theme => theme.palette.mode === 'dark' ? 'primary.light' : 'primary.main',
 							cursor: 'pointer',
 						}}
-						onClick={() => navigate('/')}
 					>
 						SQL Valley
 					</Typography>
 
 					{/* Navigation */}
-					<Box sx={{ flexGrow: 1, display: 'flex', gap: 1 }}>
+					<Box sx={{ flexGrow: 1, minWidth: 0, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
 						{navItems.map((item) => {
 							const Icon = item.icon;
 							const isActive = location.pathname === item.path ||
@@ -63,9 +63,12 @@ export function Header() {
 								<Button
 									key={item.path}
 									startIcon={<Icon />}
-									onClick={() => navigate(item.path)}
+									component={RouterLink}
+									to={item.path}
+									aria-current={isActive ? 'page' : undefined}
 									sx={{
-										color: isActive ? 'primary.main' : 'text.secondary',
+										fontSize: 14,
+										color: theme => isActive ? (theme.palette.mode === 'dark' ? 'primary.light' : 'primary.main') : 'text.secondary',
 										fontWeight: isActive ? 600 : 400,
 										'&:hover': {
 											bgcolor: 'action.hover',
