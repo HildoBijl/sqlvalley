@@ -24,7 +24,7 @@ export function useFieldFeedback(name: string): InputFeedback | undefined {
 	const submittedInput = lastInputEvent?.action.input
 	const hasSubmittedInput = isPlainDataObject(submittedInput) && Object.prototype.hasOwnProperty.call(submittedInput, name)
 	const submittedInputValue = useStableValue(hasSubmittedInput ? submittedInput[name] : undefined, deepEqual)
-	const report = useStableValue(lastInputEvent?.report?.[name], deepEqual)
+	const report = useStableValue(lastInputEvent?.event.report?.[name], deepEqual)
 
 	// Load in validation info for the field.
 	const validation = getFieldValidation(name)

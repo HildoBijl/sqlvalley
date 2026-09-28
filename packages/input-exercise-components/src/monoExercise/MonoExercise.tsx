@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 import { Box } from '@mui/material'
 
 import { getCurrentState, isStateDone } from '@step-wise/exercise-definition'
-import { type MonoExerciseState, isMonoExercise } from '@step-wise/input-exercises'
+import { isMonoExercise, isMonoExerciseState } from '@step-wise/input-exercises'
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
 import { InputExerciseProvider, useInputExerciseContext } from '../inputExercise'
@@ -31,7 +31,8 @@ function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization 
 
 	// Extract exercise status.
 	const parameters = exerciseInstance.parameters
-	const state = getCurrentState(exerciseInstance) as MonoExerciseState
+	const state = getCurrentState(exerciseInstance)
+	if (!isMonoExerciseState(state)) throw new Error('MonoExercise requires a mono-exercise state.')
 	const complete = isStateDone(state)
 
 	// Render the exercise.

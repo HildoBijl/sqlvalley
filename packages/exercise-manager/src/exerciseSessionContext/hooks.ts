@@ -1,5 +1,7 @@
 import { useContext, useMemo } from 'react'
 
+import { getLastInputEvent, isInputExerciseInstance } from '@step-wise/input-exercises'
+
 import type { ExerciseSessionContextValue } from './types'
 import { ExerciseSessionContext } from './context'
 
@@ -32,6 +34,10 @@ export function useExerciseContext() {
 
 // Get the latest input event together with its report, skipping other action types.
 export function useLastInputEvent() {
-	const { history } = useCurrentExerciseInstance()
-	return useMemo(() => [...history].reverse().find(event => event.action.type === 'input'), [history])
+	const instance = useCurrentExerciseInstance()
+	return useMemo(() => {
+		if (!isInputExerciseInstance(instance)) throw new Error('useLastInputEvent requires an input-exercise instance.')
+		const match = getLastInputEvent(instance)
+		if (match?.mode === 'solo') return match
+	}, [instance])
 }
