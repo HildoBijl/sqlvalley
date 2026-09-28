@@ -96,7 +96,9 @@ The CSV parser is intentionally strict:
 - Empty cells become `null`.
 - Boolean cells accept `true` or `false`, ignoring casing and surrounding whitespace.
 - Number cells must contain a finite numeric value.
-- String and date cells are trimmed. Dates are currently stored as strings and are not format-validated.
+- String cells are trimmed. Date cells must be valid ISO calendar dates (`YYYY-MM-DD`) or timestamps (`YYYY-MM-DD HH:MM:SS`); invalid formats or calendar dates cause an error.
+
+Keep foreign-key references valid when all tables of a dataset are loaded. Unknown product owners use an empty cell (SQL `NULL`), rather than an unrelated identifier. Accounts known only by username have their other fields left unknown. Modules may intentionally load only a subset of tables, so foreign-key completeness is checked on the complete fixtures rather than enforced during partial loading.
 
 ### Changing a table definition
 

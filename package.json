@@ -12,7 +12,8 @@
     "lint": "eslint . --report-unused-disable-directives",
     "lint:strict": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "node scripts/run-tests.mjs"
   },
   "dependencies": {
     "@codemirror/lang-sql": "^6.6.1",
@@ -59,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
     "@vitejs/plugin-react-swc": "^3.8.0",
+    "esbuild": "^0.25.12",
     "eslint": "^9.0.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
