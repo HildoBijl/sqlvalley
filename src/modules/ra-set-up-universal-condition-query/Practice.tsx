@@ -31,7 +31,7 @@ const companiesExercises = [
 			<Par>Alternatively, we could also do this without division. (We then indirectly apply the division formula.) To do so, we have to reformulate the request through a double-negative: find the names of people for which is does <Em>not</Em> hold that they <Em>don't</Em> work at a certain company.</Par>
 			<Par>We start with the entity list (all working people) and the requirement list (all companies).</Par>
 			<RA>
-				all_people ← ∏<sub>person_name</sub>(company)<br />
+				all_people ← ∏<sub>person_name</sub>(works)<br />
 				all_companies ← ∏<sub>company_name</sub>(company)<br />
 			</RA>
 			<Par>Next, we check which combinations do exist. What are the jobs people have?</Par>
@@ -41,7 +41,7 @@ const companiesExercises = [
 			<Par>Anyone who appears in this list has some company they're not working at. So this list of people is</Par>
 			<RA>people_with_missing_job ← ∏<sub>person_name</sub>(missing_jobs)</RA>
 			<Par>We want to find the opposite: we want to find the people for who there does <Em>not</Em> exist a company they don't work for. This results in the final query</Par>
-			<RA>all_people - people_with_missing_jobs</RA>
+			<RA>all_people - people_with_missing_job</RA>
 			<Par>Note that, according to the division formula, this is exactly the same as the result we found earlier.</Par>
 		</>,
 	},
@@ -76,8 +76,8 @@ const companiesExercises = [
 			<Par>We rephrase our query without "every" using a double negative: "Find the companies for which there does not exist a city which the company is located in but has no employee living there." To find this, we first find the opposite: we find the companies for which there <Em>exists</Em> a city the company is located in but none of its employees are living there.</Par>
 			<Par>We first set up a list of companies (the entities) and cities (the requirements).</Par>
 			<RA>
-				all_companies ← ∏<sub>company_name</sub>(companies)<br />
-				all_cities ← ∏<sub>city</sub>(companies)
+				all_companies ← ∏<sub>company_name</sub>(company)<br />
+				all_cities ← ∏<sub>city</sub>(company)
 			</RA>
 			<Par>The list of companies and their locations is given by the (already existing) <RelationName>company</RelationName> relation</Par>
 			<RA>company_is_in_city ← company</RA>
@@ -176,7 +176,7 @@ const shoppingExercises = [
 				bought_more_than_on_list ← ∏<sub>cID</sub>(products_bought_more_than_on_list)<br />
 				<br />
 				bought_unplanned_products ← bought_not_from_list ∪ bought_more_than_on_list<br />
-				never_bought_unplanned_products ← ∏<sub>cID</sub>(customers) - bought_unplanned_products<br />
+				never_bought_unplanned_products ← ∏<sub>cID</sub>(customer) - bought_unplanned_products<br />
 				∏<sub>cID,cName</sub>(never_bought_unplanned_products ⋈ customer)
 			</RA>
 		</>,
@@ -186,15 +186,15 @@ const shoppingExercises = [
 		solution: <>
 			<Par>If we would manually run this query, we would iterate over all stores, and then check for each item on Gerard's list whether it is in stock in sufficient quantity. So the entity list is all stores, and the checklist consists of all products on Gerard's shopping list for the given date.</Par>
 			<RA>
-				all_stores ← ∏<sub>sID</sub>(store)<br />
+				all_stores ← ∏<sub>sID</sub>(σ<sub>city="Eindhoven"</sub>(store))<br />
 				list ← ∏<sub>pID,quantity</sub>(σ<sub>cID="123456" ∧ date="1891-05-15"</sub>(shoppinglist))
 			</RA>
 			<Par>To set up the checklist table, we want to find the products for each store that are in sufficient stock.</Par>
-			<RA>sufficient_stock_for_product ← ∏<sub>sID,pID</sub>(σ<sub>inventory.date = date="1891-05-15" ∧ inventory.pID = list.pID ∧ inventory.quantity ≥ list.quantity</sub>(inventory ⨯ list))</RA>
+			<RA>sufficient_stock_for_product ← ∏<sub>sID,pID</sub>(σ<sub>inventory.date = "1891-05-15" ∧ inventory.pID = list.pID ∧ inventory.quantity ≥ list.quantity</sub>(inventory ⨯ list))</RA>
 			<Par>Next, we are looking for all stores that have <Em>all</Em> products in sufficient stock. In other words, we are looking for the rows in our checklist table that have all columns checked off. This is actually a problem that can be solved with division!</Par>
 			<RA>store_with_sufficient_stock ← sufficient_stock_for_product ÷ ∏<sub>pID</sub>(list)</RA>
 			<Par>These are the stores we are looking for. As final step we join in the store name.</Par>
-			<RA>∏<sub>sID,sName</sub>(store_with_sufficient_stock ⋈ stores)</RA>
+			<RA>∏<sub>sID,sName</sub>(store_with_sufficient_stock ⋈ all_stores ⋈ store)</RA>
 		</>,
 	},
 	{

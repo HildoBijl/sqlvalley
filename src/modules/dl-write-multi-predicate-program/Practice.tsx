@@ -51,9 +51,9 @@ requestedEmailAddress(e) :-
 			<Par>On top of this, it would really help if we'd have an overview of which user bought from which category. Starting with that, and then comparing it with the available categories, we get the following script.</Par>
 			<DL>{`
 boughtFromCategory(u, c) :- transaction(_, _, u, pid, _, _, _, _), product(pid, _, c, _, _, _).
-productCategory(c) :- product(_, _, c, _, _, ).
+productCategory(c) :- product(_, _, c, _, _, _).
 username(u) :- account(u, _, _, _, _, _, _, _ ,_ ,_).
-didNotBuyFromCategory(u, c) :- username(u), category(c), not boughtFromCategory(u, c).
+didNotBuyFromCategory(u, c) :- username(u), productCategory(c), not boughtFromCategory(u, c).
 didNotBuyFromSomeCategory(u) :- didNotBuyFromCategory(u, _).
 boughtFromAllCategories(u) :- username(u), not didNotBuyFromSomeCategory(u).
 ?- boughtFromAllCategories(u).

@@ -21,9 +21,9 @@ export function Theory() {
 SELECT * FROM vendor_chain;`;
 	const q5 = `${q3} EXCEPT ${q2}`;
 	const q6 = 'SELECT DISTINCT t1.vendor, t3.buyer FROM transactions t1, transactions t2, transactions t3 WHERE t1.buyer = t2.vendor AND t2.buyer = t3.vendor';
-	const q7 = `${q6} EXCEPT ${q3}`;
+	const q7 = `${q6} EXCEPT ${q3} EXCEPT ${q2}`;
 	const q8 = 'SELECT DISTINCT t1.vendor, t4.buyer FROM transactions t1, transactions t2, transactions t3, transactions t4 WHERE t1.buyer = t2.vendor AND t2.buyer = t3.vendor AND t3.buyer = t4.vendor';
-	const q9 = `${q8} EXCEPT ${q6}`;
+	const q9 = `${q8} EXCEPT ${q6} EXCEPT ${q3} EXCEPT ${q2}`;
 	const data1 = useQueryResult(db, q1)
 	const data2 = useQueryResult(db, q2)
 	const data3 = useQueryResult(db, q3)
@@ -80,7 +80,7 @@ SELECT * FROM vendor_chain;`;
 				<>The <Term>result set</Term> <M>R</M> containing <Em>all</Em> rows we have found so far.</>,
 				<>The <Term>delta set</Term> <M>\Delta</M> containing <Em>only</Em> new rows we just found. These are then added to the result set <M>R</M>.</>,
 			]} />
-			<Par>The fixed-point algorithm works through the following steps.</Par>
+			<Par>For this linear recursion (one recursive reference in the rule), a semi-naive fixed-point algorithm works through the following steps. Rules with several recursive references need to combine new and previously found facts.</Par>
 			<List items={[
 				<>
 					<Par><Term>Initialization</Term>: start with the base case(s).</Par>

@@ -8,12 +8,12 @@ export function Summary() {
 			<List useNumbers items={[
 				<>
 					<Par sx={{ mb: 1 }}>We can <Term>define helpful intermediate predicates</Term> that do not have any arguments that we do not need.</Par>
-					<FigureExampleDLQuery query={<>managerId(id) :- department(_, _, id, _, _).<br />employeeId(id) :- employee(id, _, _, _, _, _, _, _, _).<br />nonManagerId(id) :- employeeId(id), not managerId(id).</>} actualQuery="SELECT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
+					<FigureExampleDLQuery query={<>managerId(id) :- department(_, _, id, _, _).<br />employeeId(id) :- employee(id, _, _, _, _, _, _, _, _).<br />nonManagerId(id) :- employeeId(id), not managerId(id).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
 					<Par sx={{ mt: 1 }}>This method is considered the cleanest as it results in programs with short rules. It does result in <Em>more</Em> rules/predicates, but since these are often <Term>reusable</Term> this could also be an advantage.</Par>
 				</>,
 				<>
 					<Par sx={{ mb: 1 }}>We can <Term>use anonymous variables</Term> to get rid of any unbound variables.</Par>
-					<FigureExampleDLQuery query={<>nonManagerId(id) :-<br />        employee(id, _, _, _, _, _, _, _, _),<br />        not department(_, _, id, _, _).</>} actualQuery="SELECT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
+					<FigureExampleDLQuery query={<>nonManagerId(id) :-<br />        employee(id, _, _, _, _, _, _, _, _),<br />        not department(_, _, id, _, _).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
 					<Par sx={{mt: 1}}>This method is considered as a quick work-around. It results in fewer yet longer and more complicated rules, which is not beneficial for readability.</Par>
 				</>,
 			]} />

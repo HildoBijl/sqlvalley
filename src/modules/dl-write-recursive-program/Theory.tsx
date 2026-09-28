@@ -4,7 +4,7 @@ import { Page, Section, Par, List, Warning, Em, Term, DL, IDL } from '@/ui'
 export function Theory() {
 	return <Page>
 		<Section>
-			<Par>We know how to write safe Datalog programs with the <IDL>not</IDL> keyword. We can set up recursive predicates. We can check if our program is stratified and hence is guaranteed to have a unique model. Let's bring all these skills together to tackle some very complex data requests.</Par>
+			<Par>We know how to write safe Datalog programs with the <IDL>not</IDL> keyword. We can set up recursive predicates. We can check if our program is stratified and hence is guaranteed to have a unique intended model under stratified semantics. Let's bring all these skills together to tackle some very complex data requests.</Par>
 		</Section>
 
 		<Section title="Step 1: Simplify the situation">
@@ -23,7 +23,7 @@ musicalInstrument(id) :- product(id, _, 'Musical Instruments', _, _, _).
 			<Par>Using these predicates, we can find all suspicious transactions. We only take those arguments that we'll need later on.</Par>
 			<DL>{`
 suspiciousTransaction(v, b, pid, d) :-
-        transaction(v, b, pid, d, _, eid, _),
+        transaction(_, v, b, pid, d, _, eid, _),
         cio(eid),
         not musicalInstrument(pid).
 `}</DL>
@@ -67,7 +67,7 @@ transferredProduct(v, b, p, n, d2) :-
 			<Par>Note that we require the vendor and buyer to be the same user, and the number of steps to be at least five. (The date is not relevant anymore.) With this, we are done!</Par>
 			<Warning>It's a common mistake to forget which output was actually requested.</Warning>
 			<Par>Actually we're not done. We had to find the <Em>username</Em> of the user (we have that) and the <Em>name</Em> of the product (we don't have that one). We only have the product ID, so we still have to join in the product name. That's easy enough, but we shouldn't forget it.</Par>
-			<DL>{`suspiciousProductName(n, u) :- suspiciousProduct(p, u), product(p, n, _, _, _).`}</DL>
+			<DL>{`suspiciousProductName(n, u) :- suspiciousProduct(p, u), product(p, n, _, _, _, _).`}</DL>
 			<Par>Finally, we have to make sure this predicate is generated and given as output. We set up the final query with sensible argument names.</Par>
 			<DL>{`?- suspiciousProductName(productName, userName).`}</DL>
 			<Par>And with that we are done! Well, almost...</Par>
@@ -85,7 +85,7 @@ transferredProduct(v, b, p, n, d2) :-
 cio(id) :- contract(id, 'CIO', _, _, _, _, _).
 musicalInstrument(id) :- product(id, _, 'Musical Instruments', _, _, _).
 suspiciousTransaction(v, b, pid, d) :-
-        transaction(v, b, pid, d, _, eid, _),
+        transaction(_, v, b, pid, d, _, eid, _),
         cio(eid),
         not musicalInstrument(pid).
 transferredProduct(v, b, p, 1, d) :- suspiciousTransaction(v, b, p, d).
@@ -95,7 +95,7 @@ transferredProduct(v, b, p, n, d2) :-
         n = m + 1,
         d1 < d2.
 suspiciousProduct(p, u) :- transferredProduct(u, u, p, n, _), n >= 5.
-suspiciousProductName(n, u) :- suspiciousProduct(p, u), product(p, n, _, _, _).
+suspiciousProductName(n, u) :- suspiciousProduct(p, u), product(p, n, _, _, _, _).
 ?- suspiciousProductName(productName, userName).
 `}</DL>
 			<Par>To check for safety, we walk through all the rules and check if there are any potential causes that a rule may not be safe.</Par>

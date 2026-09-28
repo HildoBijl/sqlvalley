@@ -95,7 +95,7 @@ WHERE status = 'active'`} query2={`SELECT *
 FROM contracts
 WHERE position = 'transportation supervisor'`} operator="EXCEPT" />
 			<Par>Since the <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> keywords do very similar things as <ISQL>AND</ISQL>, <ISQL>OR</ISQL> and <ISQL>NOT</ISQL>, their usage is not so common, but there are a few edge cases where they can be really useful.</Par>
-			<Info>Contrary to set theory in mathematics, SQL allows duplicate rows. The <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> have fixed rules of how to deal with duplicate rows. Suppose that table A consists of five identical rows, and table B consists of three of the same identical rows. Then <ISQL>A UNION B</ISQL> has five rows (maximum), <ISQL>A INTERSECT B</ISQL> has three rows (minimum) and <ISQL>A EXCEPT B</ISQL> has two rows (minus).</Info>
+			<Info>Contrary to set theory in mathematics, SQL allows duplicate rows. The <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> have fixed rules of how to deal with duplicate rows. Suppose that table A consists of five identical rows, and table B consists of three of the same identical rows. Then <ISQL>A UNION B</ISQL> has one row, <ISQL>A INTERSECT B</ISQL> has one row, and <ISQL>A EXCEPT B</ISQL> has no rows. These operators remove duplicates. Use <ISQL>UNION ALL</ISQL> to keep all eight rows. Some DBMSs also support <ISQL>INTERSECT ALL</ISQL> and <ISQL>EXCEPT ALL</ISQL>, but SQLite does not.</Info>
 		</Section>
 	</Page>;
 }

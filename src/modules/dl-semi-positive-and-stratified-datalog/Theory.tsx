@@ -16,20 +16,20 @@ export function Theory() {
 			<Par>We know that negation in Datalog can be tricky: we need safe queries, or we could get infinitely large outputs. Similarly recursion in Datalog is tricky: we need the fixed-point algorithm to compute predicates. When combining negation with recursion, there are even more pitfalls. We'll study some of the problems that occur, and then see what is required to avoid them.</Par>
 		</Section>
 
-		<Section title="The problem: non-unique results â€“ multiple models">
-			<Par>Let's consider a very simple Datalog program. We have one fact â€“ Alice is a person â€“ and two rules â€“ a person is happy if they're not stressed, and a person is stressed if they're not happy.</Par>
+		<Section title="The problem: two possible outcomes">
+			<Par>Let's consider a very simple Datalog program. The fact says Alice is a person. The two rules say that a person is happy if they're not stressed, and stressed if they're not happy.</Par>
 			<DL>{`
 person('Alice').
 happy(x) :- person(x), not stressed(x).
 stressed(x) :- person(x), not happy(x).
 `}</DL>
-			<Par>We can evaluate this program. To evaluate programs, Datalog starts off with a set of facts â€“ here <IDL>{`{ person('Alice') }`}</IDL> â€“ and evaluates all rules with this set of facts to update/extend its set of facts. This is repeated until nothing changes anymore.</Par>
-			<Par>When updating the set of facts, Datalog generally evaluates all rules <Em>together</Em> for this set of facts. When we apply this to our example, <Em>both</Em> rules are triggered: Alice is currently neither happy nor stressed. The updated set of facts will then be <IDL>{`{ person('Alice'), happy('Alice'), stressed('Alice') }`}</IDL>. So Alice is now both happy and stressed. We then evaluate the rules again, and this time we come back to <IDL>{`{ person('Alice') }`}</IDL>. We're back where we started. This process is repeated, and the algorithm never ends!</Par>
+			<Par>Suppose we try evaluating this program by repeatedly replacing the derived facts with the consequences of all rules, keeping the original facts. This naive procedure need not converge when negation is present.</Par>
+			<Par>In this attempted procedure, we evaluate all rules <Em>together</Em> for this set of facts. When we apply this to our example, <Em>both</Em> rules are triggered: Alice is currently neither happy nor stressed. The updated set of facts will then be <IDL>{`{ person('Alice'), happy('Alice'), stressed('Alice') }`}</IDL>. So Alice is now both happy and stressed. We then evaluate the rules again, and this time we come back to <IDL>{`{ person('Alice') }`}</IDL>. We're back where we started. This process is repeated, and the algorithm never ends!</Par>
 			<Par>You might think this procedure is silly, and we should just evaluate rules one at a time. We could do so, but which of the two rules should we then check first? If we check the first rule first, we'll end up with <IDL>{`{ person('Alice'), happy('Alice') }`}</IDL>. If we check the second rule first, we'll wind up with <IDL>{`{ person('Alice'), stressed('Alice') }`}</IDL>. Both these sets won't change further, and are hence valid outcomes of the program. But they're different!</Par>
-			<Par>We define a <Term>model</Term> as a set of facts that makes all rules true. All the programs we've seen before have always had a single model, but this program seems to have two! Having multiple models is definitely a problem: which output should our program give?</Par>
+			<Par>A <Term>model</Term> is a set of facts satisfying the facts and rules of a program. Positive Datalog selects the <Term>least model</Term>: it contains only the facts required by the program. Other satisfying models may contain additional facts. With negation, we need to specify the intended semantics. The two stable outcomes above are different; the set containing both happy and stressed is also a model of the implications, but is not a stable outcome.</Par>
 		</Section>
 
-		<Section title="The root cause: shrinking result sets â€“ no monotonicity">
+		<Section title="Why negation can remove conclusions">
 			<Par>To find out what's different, we take a step back first. Let's consider a Datalog program where we don't have problems; for instance one where we track ancestry. We start with some facts about who is a parent of who. Then we say that a person is someone's ancestor if they're their parent, or if they're an ancestor of their parent.</Par>
 			<DL>{`
 parent('Alice', 'Bob').
@@ -46,14 +46,14 @@ ancestor(a, b) :- ancestor(a, x), parent(x, b).
 				<>With the five ancestor facts we have now, we evaluate all rules again. This time we also find <IDL>{`{ ancestor('Alice', 'Dave') }`}</IDL>.</>,
 				<>We evaluate the rules again, but no new entries pop up. We have found a model: a set of facts for which all rules hold true.</>,
 			]} />
-			<Par>A key realization from the above example is that the set of facts <Em>only grows</Em>. We started with three parent facts, and then we kept getting more and more ancestor facts until we were done. A program where the set of facts can only grow is called <Term>monotonic</Term>.</Par>
-			<Par>More mathematically, we can write the set of facts as <M>D</M> and the set of rules as a function <M>f(D)</M>. The program starts with an initial set of facts <M>D_0</M> and then derives <M>D_1 = f(D_0), D_2 = f(D_1), \ldots</M> until the set of facts stops changing: we have found a model. We now say that the rules <M>f</M> are <Term>monotonic</Term> if <M>D \subseteq f(D)</M> for all possible sets <M>D</M>. In words: applying the rules can never make us lose any fact.</Par>
+			<Par>For positive Datalog, adding input facts cannot invalidate a conclusion. This property is called <Term>monotonicity</Term>. It lets us compute the least model by repeatedly adding consequences of the rules.</Par>
+			<Par>A consequence operator <M>f</M> is <Term>monotonic</Term> if <M>X \subseteq Y</M> implies <M>f(X) \subseteq f(Y)</M>. This differs from <Term>inflationarity</Term>, which means <M>D \subseteq f(D)</M>. To evaluate a positive program, keep the original facts and repeatedly add rule consequences, starting with no derived facts. The result grows until it reaches the least fixed point.</Par>
 			<Info>
-				<Par sx={{ mb: 0.5 }}>Monotonic programs have three very important properties.</Par>
+				<Par sx={{ mb: 0.5 }}>For safe positive Datalog over a finite domain, this gives three useful properties.</Par>
 				<List items={[
-					<>They are <Term>guaranteed to converge</Term>. Since the set of facts can only grow, and the set of all possible facts is finite (for safe rules), we must reach the end eventually.</>,
+					<>They are <Term>guaranteed to converge</Term>. Since the set of facts can only grow, and the set of possible facts is finite (provided rules cannot generate new values indefinitely), we must reach the end eventually.</>,
 					<>The <Term>rule order does not matter</Term>. As long as we keep checking rules, any fact that could possibly be true, given the set of initial facts, will eventually be found.</>,
-					<>There is only <Term>one model</Term>. We will always reach the maximal set of derivable facts.</>,
+					<>There is a <Term>unique least model</Term>. Every derived fact belongs to it; no unsupported facts are added.</>,
 				]} />
 			</Info>
 			<Par>To improve our intuition of what monotonicity means, let's also study a program that's non-monotonic.</Par>
@@ -71,25 +71,25 @@ stressed(x) :- working(x).
 				<>We evaluate the rules another time and get <IDL>{`{ person('Alice'), working('Alice'), stressed('Alice') }`}</IDL>.</>,
 				<>We evaluate the rules again and get exactly the same result. So we're done.</>,
 			]} />
-			<Par>Crucial in this example is that, at the fourth step, the set of facts <Em>decreases</Em>. We remove a fact! Alice used to be happy, but then she started working, wound up stressed, and this removed her happiness. This shows that the above program is <Em>not</Em> monotonic. Luckily this non-monotonic program does have a unique model. (We'll soon see why: it's "stratified".) But non-monotonic programs don't always have a single model, as the very first example showed.</Par>
+			<Par>Crucial in this example is that, at the fourth step, the set of facts <Em>decreases</Em>. We remove a fact! Alice used to be happy, but then she started working, wound up stressed, and this removed her happiness. This shows that its consequence operator is <Em>not</Em> monotonic. This program has a unique intended model under stratified semantics. (We'll soon see why: it's "stratified".) Without such a restriction, negation can leave more than one stable outcome, as the first example showed.</Par>
 			<Warning>Generally non-monotonic programs are harder to compute than monotonic ones, since facts can also disappear again.</Warning>
 		</Section>
 
 		<Section title="Different Datalog types: positive, semi-positive and stratified Datalog">
 			<Par>The problem of having multiple models originates from the <IDL>not</IDL> keyword. It causes us to lose monotonicity. To fix those problems, we must apply some restrictions to when/how <IDL>not</IDL> can be used. Let's study three such possible restrictions, going from "very strict" to "less strict".</Par>
 			<Par>Option one is to ban <Em>all</Em> negation. This is called <Term>positive Datalog</Term>. The <IDL>not</IDL> keyword is simply not allowed.</Par>
-			<Info>Positive Datalog is monotonic. Because of this, we always have a single model that we are guaranteed to find.</Info>
+			<Info>Positive Datalog is monotonic and has a unique least model. Over a finite domain, repeated rule evaluation reaches that model.</Info>
 			<Par>Obviously, the <IDL>not</IDL> keyword is pretty useful, so this is not an ideal solution. Let's loosen the restrictions.</Par>
 			<Par>Option two is to allow the <IDL>not</IDL> keyword, but <Em>only</Em> at the original tables of our database: the EDBs. This is called <Term>semi-positive Datalog</Term>. We may use <IDL>not originalFact(x)</IDL> but we can't write <IDL>not derivedPredicate(x)</IDL>.</Par>
-			<Info>Semi-positive Datalog is also monotonic. After all, we never apply negation to a derived predicate, so it can never happen that a new fact of a derived predicate is negated which then removes a fact somewhere else. Because semi-positive Datalog is monotonic, it benefits from all the advantages of monotonicity: semi-positive Datalog programs are also relatively easy to compute.</Info>
-			<Par>As it turns out, we can loosen the restrictions a bit further. The problem of multiple models only occurs when we <Em>mix</Em> negation with recursion. The third option is to not allow any <Em>cycle</Em> with negation. This is called <Term>stratified Datalog</Term>.</Par>
+			<Info>For a fixed original database, semi-positive rule evaluation is monotonic in the derived facts: negation only inspects original facts, which do not change during evaluation. The query itself need not be monotonic in the original database. Adding an original fact can invalidate a conclusion that depended on its absence.</Info>
+			<Par>We can allow more negation while keeping a well-defined intended result. In <Term>stratified Datalog</Term>, no dependency cycle may contain a negative edge. This lets us finish computing each negated predicate before using its absence in another rule.</Par>
 			<Par>This definition may initially sound a bit vague. We can clarify it using the predicate dependency graph. Let's consider the following example program.</Par>
 			<SampleNonStratifiedProgram />
 			<Par>We say that a predicate <IDL>X</IDL> <Term>negatively depends</Term> on a predicate <IDL>Y</IDL> if the literal <IDL>not Y</IDL> appears in a rule for <IDL>X</IDL>. So in the above example program, <IDL>C</IDL> negatively depends on <IDL>D</IDL> and <IDL>D</IDL> negatively depends on <IDL>B</IDL>.</Par>
 			<DependencyGraph />
 			<Par>When drawing the dependency graph (before collapsing cycles) we always indicate negative dependencies. This is done by writing a minus sign next to the arrow. (We can also add a plus sign to all other arrows, but this is rather implicit, so it's often skipped.)</Par>
 			<Par>The program is stratified if <Em>all</Em> cycles consist of <Em>only positive</Em> dependencies. If there is <Em>any</Em> cycle containing <Em>any</Em> negative dependency, then the program is <Em>not</Em> stratified. The above dependency graph shows that the example program is <Em>not</Em> stratified: there is a cycle <IDL>(C,D,E)</IDL> with a negative dependency from <IDL>C</IDL> to <IDL>D</IDL> in it. If this was a positive dependency, or if there was no cycle, the example program <Em>would</Em> be stratified.</Par>
-			<Info>Stratified Datalog programs are not monotonic, which can make them harder to compute. However, stratification <Em>does</Em> guarantee a unique model. To find it, we can once more collapse the cycles into single nodes, divide the dependency graph into layers, and compute the predicates layer by layer. Since all cycles are positive, the fixed-point algorithm won't have any problems with them.</Info>
+			<Info>Stratified Datalog programs can be nonmonotonic as queries over the original database. They have a unique <Term>perfect model</Term>, computed one stratum at a time. Within each stratum, negated predicates have already been computed and positive recursion reaches its least fixed point. This does not mean that no other interpretation satisfies the rules.</Info>
 			<Par>An intuitive way to keep track of these three categories is through the following thoughts.</Par>
 			<List items={[
 				<><Term>Positive Datalog</Term>: You can't use negation at all.</>,
@@ -136,8 +136,8 @@ export function DependencyGraph() {
 			<Curve points={[p4Bounds.topLeft.add([2, 0]), p5Bounds.bottomRight.add([-2, 0])]} endArrow={true} color={themeColor} />
 			<Curve points={[p5Bounds.bottomLeft.add([2, 0]), p3Bounds.topRight.add([-2, 0])]} endArrow={true} color={themeColor} />
 
-			<Element position={p3Bounds.middleRight.add(p4Bounds.middleLeft).divide(2).add([0, 10])} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>â€“</span></Element>
-			<Element position={p4Bounds.bottomMiddle.add(p2Bounds.topMiddle).divide(2).add([-5, 6])} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>â€“</span></Element>
+			<Element position={p3Bounds.middleRight.add(p4Bounds.middleLeft).divide(2).add([0, 10])} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></Element>
+			<Element position={p4Bounds.bottomMiddle.add(p2Bounds.topMiddle).divide(2).add([-5, 6])} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></Element>
 		</> : null}
 	</Drawing>;
 }
@@ -160,10 +160,10 @@ export function DatalogTypeVennDiagram() {
 	]
 	return <Drawing width={w} height={h} maxWidth={w}>
 		<Rectangle style={{ fill: infoColor, fillOpacity: 0.06, stroke: infoColor, strokeWidth: 2 }} dimensions={[[circles[1].x - circles[1].w / 2 - 8, 40], [circles[1].x + circles[1].w / 2 + 12, h - 8]]} cornerRadius={10} />
-		<Element position={[circles[1].x - circles[1].w / 2 - 8 + 6, 40 + 2]} anchor={[-1, -1]} style={{ color: infoColor, fontWeight: 'bold', textAlign: 'center' }}>Monotonic programs</Element>
+		<Element position={[circles[1].x - circles[1].w / 2 - 8 + 6, 40 + 2]} anchor={[-1, -1]} style={{ color: infoColor, fontWeight: 'bold', textAlign: 'center' }}>Monotone evaluation<br />with fixed EDB</Element>
 
 		<Rectangle style={{ fill: warningColor, fillOpacity: 0.06, stroke: warningColor, strokeWidth: 2 }} dimensions={[[circles[2].x - circles[2].w / 2 - 8, 0], [circles[2].x + circles[2].w / 2 + 12, h]]} cornerRadius={10} />
-		<Element position={[circles[2].x - circles[2].w / 2 - 8 + 6, 2]} anchor={[-1, -1]} style={{ color: warningColor, fontWeight: 'bold', textAlign: 'center' }}>Programs with a unique model</Element>
+		<Element position={[circles[2].x - circles[2].w / 2 - 8 + 6, 2]} anchor={[-1, -1]} style={{ color: warningColor, fontWeight: 'bold', textAlign: 'center' }}>Unique intended result</Element>
 
 		{circles.map((circle, index) => <Rectangle key={index} dimensions={[[circle.x - circle.w / 2, circle.y - circle.h / 2], [circle.x + circle.w / 2, circle.y + circle.h / 2]]} cornerRadius={circle.w / 2} style={{ fill: themeColor, fillOpacity: 0.06, stroke: themeColor, strokeWidth: 2 }} />)}
 

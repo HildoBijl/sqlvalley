@@ -15,7 +15,7 @@ export function Theory() {
 			<Par>To set up a query like this for a single table, there are generally five steps to follow. At first these steps add data, and then they start removing it, so that we only end up with the data that we need.</Par>
 			<List useNumbers items={[
 				<>Select all columns and where needed <Term>create extra columns</Term>. For our example, we need to calculate the taxes and the contract duration.</>,
-				<>Set up the <Term>filter</Term> to only get the entries required. For the example, we only want contracts lasting longer than a year.</>,
+				<>Set up the <Term>filter</Term> to only get the entries required. For the example, we only want contracts ending on the first anniversary of their start date.</>,
 				<>If needed, <Term>sort and limit</Term> the entries. For the example, we need to sort by performance score, and only take the top 5.</>,
 				<><Term>Cut columns</Term> to only get the required output. For the example, we only want the position and the taxes paid.</>,
 				<><Term>Remove duplicates</Term> if required. For the example, if there are two contracts with equal taxes and position, they should likely both be included, so this is not needed.</>
@@ -31,21 +31,21 @@ export function Theory() {
   0.3*salary AS taxes,
   JULIANDAY(end_date) - JULIANDAY(start_date) AS duration
 FROM contracts;`} tableWidth={800} tableScale={0.7} below />
-			<Par>As second step, we want to apply the filter. We can add a <ISQL>WHERE</ISQL> clause with this newly found <ISQL>duration</ISQL>. There is one caveat though.</Par>
-			<Warning>When the DBMS evaluates the query, it starts with <ISQL>FROM</ISQL>, then applies <ISQL>WHERE</ISQL>, then <ISQL>SELECT</ISQL> and it ends with <ISQL>ORDER BY</ISQL>. Newly created columns get created at the <ISQL>SELECT</ISQL> step. We therefore usually <Em>cannot</Em> use newly defined column names within the <ISQL>WHERE</ISQL> clause! So using <ISQL>duration BETWEEN 365 AND 366</ISQL> would fail. Some DBMSs do allow this through a work-around, but it's better not to count on this, and simply copy the full calculation into the <ISQL>WHERE</ISQL> clause.</Warning>
+			<Par>As second step, we want to apply the filter. We compare the end date with the start date shifted by one calendar year. We use SQLite's <ISQL>'floor'</ISQL> modifier so that February 29 has its anniversary on February 28 in a non-leap year. A day count of 365 or 366 alone would also admit dates just before or after the anniversary.</Par>
+			<Warning>When the DBMS evaluates the query, it starts with <ISQL>FROM</ISQL>, then applies <ISQL>WHERE</ISQL>, then <ISQL>SELECT</ISQL> and it ends with <ISQL>ORDER BY</ISQL>. Newly created columns get created at the <ISQL>SELECT</ISQL> step. We therefore usually <Em>cannot</Em> use newly defined column names within the <ISQL>WHERE</ISQL> clause! Referencing <ISQL>duration</ISQL> there is therefore not portable. Some DBMSs do allow this through a work-around, but it's better not to count on this, and write the required expression in the <ISQL>WHERE</ISQL> clause.</Warning>
 			<FigureExampleQuery query={`SELECT
   *,
   0.3*salary AS taxes,
   JULIANDAY(end_date) - JULIANDAY(start_date) AS duration
 FROM contracts
-WHERE JULIANDAY(end_date) - JULIANDAY(start_date) BETWEEN 365 AND 366;`} tableWidth={800} tableScale={0.7} below />
+WHERE end_date = DATE(start_date, '+1 year', 'floor');`} tableWidth={800} tableScale={0.7} below />
 			<Par>For the third step, we sort and limit the results. We want to sort by the performance score (high to low) and only take the top 5 performers.</Par>
 			<FigureExampleQuery query={`SELECT
   *,
   0.3*salary AS taxes,
   JULIANDAY(end_date) - JULIANDAY(start_date) AS duration
 FROM contracts
-WHERE JULIANDAY(end_date) - JULIANDAY(start_date) BETWEEN 365 AND 366
+WHERE end_date = DATE(start_date, '+1 year', 'floor')
 ORDER BY perf_score DESC
 LIMIT 5;`} tableWidth={800} tableScale={0.7} below />
 			<Par>As fourth step, we limit the columns we get. We were only instructed to find the taxes per position, so we select those two columns, cutting out the rest.</Par>
@@ -53,7 +53,7 @@ LIMIT 5;`} tableWidth={800} tableScale={0.7} below />
   position,
   0.3*salary AS taxes
 FROM contracts
-WHERE JULIANDAY(end_date) - JULIANDAY(start_date) BETWEEN 365 AND 366
+WHERE end_date = DATE(start_date, '+1 year', 'floor')
 ORDER BY perf_score DESC
 LIMIT 5;`} tableWidth={240} tableScale={0.7} />
 			<Par>Finally, we should check if we need to remove duplicates. For the example, this is not the case, and so we keep the query as is. And with this we are done setting up the query.</Par>

@@ -21,7 +21,7 @@ export function Theory() {
 		<Section title="Each column has a data type">
 			<Par>In a database table, every column has a specific <Term>data type</Term>. Let's consider for instance a <ISQL>contracts</ISQL> table tracking the various positions of employees as they move through a company.</Par>
 			<FigureDataTypeDemo />
-			<Par>Note that some columns contain <Term>numbers</Term>, others contain <Term>text</Term>, and others have <Term>date/time</Term> values. A column with a certain type <Em>cannot</Em> contain values of another type!</Par>
+			<Par>Note that some columns contain <Term>numbers</Term>, others contain <Term>text</Term>, and others have <Term>date/time</Term> values. Many DBMSs enforce the declared type. SQLite normally uses <Term>type affinity</Term>: it attempts conversions but may store values of different types in one column. SQLite STRICT tables enforce a narrower set of column types.</Par>
 			<Par>Optionally, columns may be given further restrictions. For instance, the <ISQL>perf_score</ISQL> column may be set up to only allow numbers between <ISQL>0</ISQL> and <ISQL>100</ISQL>, and the <ISQL>status</ISQL> column may be set up to only take values from a list of possible employee statuses. The set of all possible values that can be put in a column is formally called the <Term>domain</Term> of that column.</Par>
 		</Section>
 
@@ -36,19 +36,19 @@ export function Theory() {
 			<List items={[
 				<><strong>Numbers</strong>
 					<List items={[
-						<>The <ISQL>INTEGER</ISQL> type stores whole numbers like <ISQL>842</ISQL>. It can store any whole number between -2,147,483,648 and 2,147,483,647. Alternatively, use <ISQL>TINYINT</ISQL> (0 to 255) or <ISQL>SMALLINT</ISQL> (-32,768 to 32,767) to save space, or use <ISQL>BIGINT</ISQL> to store larger numbers.</>,
+						<>The <ISQL>INTEGER</ISQL> type stores whole numbers like <ISQL>842</ISQL>. Its range depends on the DBMS: SQLite supports signed 64-bit integers, while many other DBMSs use 32-bit <ISQL>INTEGER</ISQL> and provide <ISQL>BIGINT</ISQL> for a larger range. Types such as <ISQL>TINYINT</ISQL> and <ISQL>SMALLINT</ISQL> also vary by DBMS.</>,
 						<>The <ISQL>FLOAT</ISQL> type stores floating-point numbers like <ISQL>3,141.592,65</ISQL>. Most DBMSs allow for fine-tuning the precision with which the numbers are stored.</>,
 					]} /></>,
 				<><strong>Text</strong>
 					<List items={[
-						<>The <ISQL>VARCHAR(n)</ISQL> type stores a small piece of text like <ISQL>'The Netherlands'</ISQL>. The number <ISQL>n</ISQL> indicates the <Em>maximum</Em> number of characters that can be stored. Many DBMSs require <ISQL>n &lt; 256</ISQL>.</>,
-						<>The <ISQL>TEXT</ISQL> type stores large pieces of text, up to 2,147,483,647 characters.</>,
+						<>The <ISQL>VARCHAR(n)</ISQL> type stores a small piece of text like <ISQL>'The Netherlands'</ISQL>. The number <ISQL>n</ISQL> indicates the <Em>maximum</Em> number of characters that can be stored. The permitted maximum depends on the DBMS. SQLite does not enforce the length in a <ISQL>VARCHAR(n)</ISQL> declaration.</>,
+						<>The <ISQL>TEXT</ISQL> type stores pieces of text. Its maximum size depends on the DBMS and its configuration.</>,
 					]} /></>,
 				<><strong>Date/time</strong>
 					<List items={[
 						<>The <ISQL>DATE</ISQL> type stores a date, like <ISQL>{date}</ISQL>.</>,
 						<>The <ISQL>TIME</ISQL> type stores a specific time, like <ISQL>{time}</ISQL>. Millisecond or microsecond precision can be added.</>,
-						<>The <ISQL>DATETIME</ISQL> type stores both a date and time, like <ISQL>{`${date} ${time}`}</ISQL>, and hence registers an exact moment in time.</>,
+						<>The <ISQL>DATETIME</ISQL> type stores both a date and time, like <ISQL>{`${date} ${time}`}</ISQL>, but without a time zone it does not identify a unique instant across time zones.</>,
 					]} /></>,
 				<><strong>Other</strong>
 					<List items={[
