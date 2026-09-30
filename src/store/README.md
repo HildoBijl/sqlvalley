@@ -65,6 +65,8 @@ Every persisted learning module has an explicit `moduleType` discriminator. Call
 - Legend visibility
 - Planning mode and goal nodes per skill tree
 
+`useSkillTreeMemory(treeId)` selects the flags needed by a skill-tree view and binds its planning-mode and goal setters to that tree. It uses shallow comparison to avoid rerenders for unrelated store updates and supports functional setter updates.
+
 
 ## Hydration
 

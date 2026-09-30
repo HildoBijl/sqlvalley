@@ -3,12 +3,14 @@ import { isReadyToLearn } from '@sqlvalley/progress'
 import type { Vector } from '@step-wise/geometry';
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { useTheme } from '@mui/material';
-import { NodeCard } from './SkillTreeComponents/NodeCard';
-import { Tooltip } from './SkillTreeComponents/Tooltip';
+
 import type { ModulePositionMeta } from '../utils/positionProcessing';
 import { resolveConnectorStyle } from '../utils/graphics/connectorStyle';
 import { useHoverState } from '../utils/graphics/mouseEvents';
 import { useGoalProgress } from '../utils/logic/useGoalProgress';
+
+import { NodeCard } from './SkillTreeComponents/NodeCard';
+import { Tooltip } from './SkillTreeComponents/Tooltip';
 
 /*
  * SkillTree component that renders the tree structure with nodes and connectors.
@@ -67,8 +69,7 @@ export function SkillTree({
 
 
 	const onNavigate = (id: string) => {
-		const item = moduleTree[id];
-		window.location.href = item.type === 'skill' ? `/skill/${id}` : `/concept/${id}`;
+		window.location.href = `/module/${id}`
 	}
 
 	const {

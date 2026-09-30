@@ -1,2 +1,2 @@
-export * from './SkillCompletionDialog'
-export * from './ConceptCompletionDialog'
+export * from './CompletionDialog'
+export * from './CompleteModuleButton'

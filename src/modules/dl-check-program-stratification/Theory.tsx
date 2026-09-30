@@ -1,6 +1,7 @@
 
 import { Page, Section, Par, List, Info, Em, Link } from '@/ui'
 import { IDL } from '@/learning'
+
 import { SampleNonStratifiedProgram, DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory'
 
 export function Theory() {
@@ -10,7 +11,7 @@ export function Theory() {
 		</Section>
 
 		<Section title="Step 1: Draw the predicate dependency graph and indicate negative dependencies">
-			<Par>Let's consider a sample Datalog program. (This is the same example as used to introduce the <Link to="/concept/dl-semi-positive-and-stratified-datalog">stratified Datalog</Link> ideas.)</Par>
+			<Par>Let's consider a sample Datalog program. (This is the same example as used to introduce the <Link to="/module/dl-semi-positive-and-stratified-datalog">stratified Datalog</Link> ideas.)</Par>
 			<SampleNonStratifiedProgram />
 			<Par>If we want to check if this program is positive, semi-positive and/or stratified, it always helps to draw a dependency graph for it. When doing so, we don't collapse cycles just yet. We only draw the dependencies, and we indicate which of the dependencies are negative.</Par>
 			<DependencyGraph />

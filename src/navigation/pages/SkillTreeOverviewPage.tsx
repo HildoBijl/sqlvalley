@@ -2,58 +2,28 @@ import { useEffect } from 'react'
 import { Container } from '@mui/material'
 
 import { useModuleCompletion } from '@sqlvalley/progress'
-import {
-	SkillTreeCanvas,
-	useTreeBounds,
-} from '@sqlvalley/skill-tree'
+import { SkillTreeCanvas, useTreeBounds } from '@sqlvalley/skill-tree'
 
-import { useSkillTreeSettingsStore, useLearningStore } from '@/store'
+import { useSkillTreeSettingsStore, useSkillTreeMemory, useLearningStore } from '@/store'
 import { type SkillTreeVisualizationId, modulePresentation, moduleTree, skillTreeVisualizationById } from '@/curriculum'
 
 export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizationId }) {
+	// Register the skill tree as visited, so we know where to send the user back to if needed.
+	const markSkillTreeVisited = useSkillTreeSettingsStore(state => state.markSkillTreeVisited)
+	useEffect(() => { markSkillTreeVisited(treeId) }, [markSkillTreeVisited, treeId])
+
+	// Load the respective module tree positions/paths.
 	const { modulePositions, visiblePaths } = skillTreeVisualizationById.get(treeId)!
-
-	const markSkillTreeVisited = useSkillTreeSettingsStore(
-		state => state.markSkillTreeVisited,
-	)
-
-	useEffect(() => {
-		markSkillTreeVisited(treeId)
-	}, [markSkillTreeVisited, treeId])
-
-	const moduleStates = useLearningStore(state => state.modules)
-
-	const { isCompleted } = useModuleCompletion(moduleTree, moduleStates)
 	const treeBounds = useTreeBounds(modulePositions)
 
-	const planningMode = useSkillTreeSettingsStore(
-		s => s.planningModeByTreeId[treeId] ?? false,
-	)
-	const setPlanningMode = useSkillTreeSettingsStore(s => s.setPlanningMode)
+	// Load in completion data for the user.
+	const moduleStates = useLearningStore(state => state.modules)
+	const { isCompleted } = useModuleCompletion(moduleTree, moduleStates)
 
-	const goalNodeId = useSkillTreeSettingsStore(
-		s => s.goalNodeIdByTreeId[treeId] ?? null,
-	)
-	const setGoalNodeId = useSkillTreeSettingsStore(s => s.setGoalNodeId)
+	// Load in the memory store API.
+	const memoryStoreAPI = useSkillTreeMemory(treeId)
 
-	const hasSeenPlanningModeIntro = useSkillTreeSettingsStore(
-		s => s.hasSeenPlanningModeIntro,
-	)
-	const setHasSeenPlanningModeIntro = useSkillTreeSettingsStore(
-		s => s.setHasSeenPlanningModeIntro,
-	)
-
-	const hasSeenSkillTreeIntro = useSkillTreeSettingsStore(
-		s => s.hasSeenSkillTreeIntro,
-	)
-	const setHasSeenSkillTreeIntro = useSkillTreeSettingsStore(
-		s => s.setHasSeenSkillTreeIntro,
-	)
-
-	const hideLegend = useSkillTreeSettingsStore(s => s.hideLegend)
-	const setHideLegend = useSkillTreeSettingsStore(s => s.setHideLegend)
-	const hasHydrated = useSkillTreeSettingsStore(s => s.hasHydrated)
-
+	// Render the Skill Tree canvas with the appropriate settings.
 	return <Container maxWidth={false} sx={{ py: 4, maxWidth: '1400px' }}>
 		<SkillTreeCanvas
 			moduleTree={moduleTree}
@@ -62,24 +32,7 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 			treeBounds={treeBounds}
 			visiblePaths={visiblePaths}
 			isCompleted={isCompleted}
-			memoryStoreAPI={{
-				planningMode,
-				setPlanningMode: value => setPlanningMode(treeId, value),
-				goalNodeId,
-				setGoalNodeId: id => setGoalNodeId(treeId, id),
-				hasSeenPlanningModeIntro,
-				setHasSeenPlanningModeIntro,
-				hasSeenSkillTreeIntro,
-				setHasSeenSkillTreeIntro,
-				hideLegend,
-				setHideLegend,
-				hasHydrated,
-			}}
-			settings={{
-				allowZoom: true,
-				initialZoom: 1,
-				allowPlanningMode: true,
-				trackProgress: true,
-			}} />
+			memoryStoreAPI={memoryStoreAPI}
+			settings={{ allowZoom: true, initialZoom: 1, allowPlanningMode: true, trackProgress: true }} />
 	</Container>
 }

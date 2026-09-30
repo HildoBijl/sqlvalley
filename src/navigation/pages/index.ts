@@ -1,5 +1,5 @@
 export * from './HomePage'
 export * from './SkillTreeOverviewPage'
-export * from './modulePages'
+export * from './modulePage'
 export * from './NotFoundPage'
 export * from './RouteErrorPage'

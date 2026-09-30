@@ -69,7 +69,7 @@ Its module provider exposes `{ loading, error?, context }`. The inner `SqlModule
 
 Dataset selection is provided by `DatabaseProvider` through `useDatasetSize()`. The application supplies its persisted preference; SQL inputs and visualizations remain independent of the store. Grading continues to use the full grading database regardless of this selection.
 
-Each application module index exports its configured `ModuleProvider`. `SkillPage` and `ConceptPage` load this independently of exercise definitions and wrap their page content in it, keyed by module ID. The interactive practice tab reads module context and passes the resource wrapper explicitly to `ExerciseManager`. Theory and summary examples use the curriculum hook `useTheoryPageDatabase()`, which selects the small grading database. Data-explorer integration can migrate separately.
+Each application module index exports its configured `ModuleProvider`. `ModulePage` loads this independently of exercise definitions and wraps the shared `ModulePageContent` in it, keyed by module ID. The interactive practice tab reads module context and passes the resource wrapper explicitly to `ExerciseManager`. Theory and summary examples use the curriculum hook `useTheoryPageDatabase()`, which selects the small grading database. Data-explorer integration can migrate separately.
 
 
 ## Registered SQL input

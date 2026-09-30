@@ -89,7 +89,7 @@ WHERE current_salary > (
   FROM contracts
   WHERE e_id = 41651199 AND salary IS NOT NULL
 );`} tableWidth={260} />
-			<Warning>The <ISQL>ANY</ISQL>/<ISQL>SOME</ISQL> and <ISQL>ALL</ISQL> keywords work in nearly all DBMSs, but sadly not in SQLite. Since we use SQLite on SQL Valley, we cannot use those keywords on this site. Luckily there are various alternatives to do the same thing, for instance through <Link to="/skill/aggregate-columns">aggregation</Link>.</Warning>
+			<Warning>The <ISQL>ANY</ISQL>/<ISQL>SOME</ISQL> and <ISQL>ALL</ISQL> keywords work in nearly all DBMSs, but sadly not in SQLite. Since we use SQLite on SQL Valley, we cannot use those keywords on this site. Luckily there are various alternatives to do the same thing, for instance through <Link to="/module/aggregate-columns">aggregation</Link>.</Warning>
 		</Section>
 	</Page>
 }

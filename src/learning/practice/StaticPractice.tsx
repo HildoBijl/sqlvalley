@@ -8,8 +8,8 @@ interface StaticPracticeProps {
 	isCompleted: boolean
 }
 
-export function StaticPractice({ component: Component, ...props }: StaticPracticeProps) {
+export function StaticPractice({ component: Component, onComplete, isCompleted }: StaticPracticeProps) {
 	return <Suspense fallback={<LoadingScreen message="Loading exercises..." />}>
-		<Component {...props} />
+		<Component onComplete={onComplete} isCompleted={isCompleted} />
 	</Suspense>
 }

@@ -28,7 +28,7 @@ export function HomePage() {
 					Open the skill tree
 				</Button>
 				<Typography sx={{ fontSize: 16, lineHeight: 1.7, mt: 2.5 }}>
-					New to databases? <Link component={RouterLink} to="/concept/database?tab=theory" color="inherit" underline="always">Read the introduction</Link>.
+					New to databases? <Link component={RouterLink} to="/module/database?tab=theory" color="inherit" underline="always">Read the introduction</Link>.
 				</Typography>
 				<Typography sx={{ fontSize: 14, lineHeight: 1.7, color: 'text.secondary', mt: 3 }}>
 					No installation needed. Your progress is saved in this browser.

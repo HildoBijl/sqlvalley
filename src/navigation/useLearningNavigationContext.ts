@@ -5,8 +5,8 @@ import { defaultSkillTreeVisualization, isSkillTreeVisualizationId, skillTreeVis
 
 import { getLearningPath } from './paths'
 
-// Upon a module completion, find out which skill tree to send the user back to.
-export function useLearningNavigation(moduleId?: string) {
+// Given a moduleId, find which tree is most representative of "owning" that module. This is needed for any "back to tree" button.
+export function useLearningNavigationContext(moduleId?: string) {
 	// Load in the (existing) skill trees the user has visited.
 	const history = useSkillTreeSettingsStore(state => state.recentSkillTreeIds)
 	const treeHistory = useMemo(() => [...new Set(history.filter(isSkillTreeVisualizationId))], [history])
@@ -16,6 +16,6 @@ export function useLearningNavigation(moduleId?: string) {
 	const tree = visitedTree ?? skillTreeVisualizationDefinitions.find(tree => moduleId && tree.moduleIds.has(moduleId))
 
 	// Return the data as requested.
-	const backPath = getLearningPath(visitedTree?.id ?? treeHistory[0] ?? defaultSkillTreeVisualization)
+	const backPath = getLearningPath(tree?.id ?? treeHistory[0] ?? defaultSkillTreeVisualization)
 	return { treeHistory, tree, backPath }
 }
