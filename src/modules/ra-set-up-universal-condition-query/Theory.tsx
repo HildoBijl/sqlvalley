@@ -1,9 +1,9 @@
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable } from '@sqlvalley/sql';
+import { DataTable } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM } from '@/ui'
 import { RA, IRA } from '@/learning'
@@ -108,16 +108,16 @@ export function Theory() {
 			<BM>{`a \\div b = \\Pi_{A-B}\\left(a\\right) - \\Pi_{A-B}\\left(\\left(\\Pi_{A-B}\\left(a\\right) \\times b\\right) - a\\right).`}</BM>
 			<Info>The above division formula is exactly the procedure that we have followed in the large example script from before. <M>a</M> represents the checklist table (statuses held), <M>b</M> represents the checklist (all statuses), and <M>{`\\Pi_{A-B}\\left(a\\right)`}</M> represents the entity list (all employee IDs).</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 type RowData = {
-	id: number;
-	active: boolean;
-	sickLeave: boolean;
-	fmla: boolean;
-	paidLeave: boolean;
-};
+	id: number
+	active: boolean
+	sickLeave: boolean
+	fmla: boolean
+	paidLeave: boolean
+}
 
 const rows: RowData[] = [
 	{ id: 41378877, active: true, sickLeave: true, fmla: false, paidLeave: false },
@@ -125,14 +125,14 @@ const rows: RowData[] = [
 	{ id: 41651199, active: true, sickLeave: true, fmla: false, paidLeave: true },
 	{ id: 41655533, active: true, sickLeave: false, fmla: false, paidLeave: false },
 	{ id: 42223311, active: true, sickLeave: false, fmla: false, paidLeave: true },
-];
+]
 
 export function ChecklistTable({ all = false, flip = false, scale = 0.8 }) {
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [tRef, tBounds] = useRefWithBounds(drawingData);
-	const tableWidth = 500;
-	const width = tableWidth * scale;
-	const height = tBounds?.height ?? 200;
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [tRef, tBounds] = useRefWithBounds(drawingData)
+	const tableWidth = 500
+	const width = tableWidth * scale
+	const height = tBounds?.height ?? 200
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width}>
 		<Element scale={scale} anchor={[-1, -1]}>
@@ -149,7 +149,7 @@ export function ChecklistTable({ all = false, flip = false, scale = 0.8 }) {
 					</TableHead>
 
 					<TableBody>
-						{rows.map((row) => (
+						{rows.map(row => (
 							<TableRow key={row.id}>
 								<TableCell component="th" scope="row">
 									{row.id}
@@ -172,26 +172,26 @@ export function ChecklistTable({ all = false, flip = false, scale = 0.8 }) {
 				</Table>
 			</TableContainer>
 		</Element>
-	</Drawing>;
+	</Drawing>
 }
 
 function FigureDivisionTable() {
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const d1 = useQueryResult(db, 'SELECT DISTINCT e_id, status FROM contracts;')
 	const d2 = useQueryResult(db, 'SELECT DISTINCT status FROM contracts;')
 	const d3 = useQueryResult(db, 'SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts);')
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData);
-	const height = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200, t3Bounds?.height || 200);
-	const w1 = 240;
-	const w2 = 100;
-	const w3 = 140;
-	const w4 = 100;
-	const w5 = 100;
-	const width = w1 + w2 + w3 + w4 + w5;
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData)
+	const height = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200, t3Bounds?.height || 200)
+	const w1 = 240
+	const w2 = 100
+	const w3 = 140
+	const w4 = 100
+	const w5 = 100
+	const width = w1 + w2 + w3 + w4 + w5
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width * 0.8}>
 		<Element position={[0, 0]} anchor={[-1, -1]}>
@@ -215,5 +215,5 @@ function FigureDivisionTable() {
 				<DataTable ref={t3Ref} data={d3} showPagination={false} compact />
 			</Box>
 		</Element>
-	</Drawing>;
+	</Drawing>
 }

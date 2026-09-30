@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, Quote, Warning, Term } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -13,5 +13,5 @@ export function Summary() {
 			<Warning>The view tables are never stored! They are always generated anew when requested. This ensures the data is always up-to-date. (An exception are so-called <Term>materialized views</Term>, which are a separate concept.)</Warning>
 			<Par>Views are useful tools to not have to repeat complex queries often. It makes earlier queries reusable and simplifies further queries. Views are also useful at providing <Term>access control</Term>: defining which user gets access to which data.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

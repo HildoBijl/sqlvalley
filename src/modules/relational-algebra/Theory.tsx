@@ -1,4 +1,4 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em, M } from '@/ui'
 import { FigureTerminology } from '../database-table/Theory'
@@ -52,7 +52,7 @@ export function Theory() {
 				</>,
 				<>
 					<Par sx={{ mb: 1 }}>A <Term>relation instance</Term> <M>r</M> is a set of tuples <M>{`\\{t_1, t_2, \\ldots\\}`}</M>. We often write the relation instance as <M>r(R)</M> instead of just <M>r</M> to show "The instance <M>r</M> satisfies the schema <M>R</M>." This implicitly means that every tuple <M>t \in r(R)</M> satisfies <M>{`t.A_i \\in \\textrm{dom}(A_i)`}</M> for every attribute <M>A_i \in R</M>. In other words, all values of each tuple are in the domain of the respective attribute.</Par>
-					<Info>Example: We may consider the relation instance <Em>departments(DepartmentsSchema)</Em> to be defined as:<br/><M>{`\\{(5000, \\textrm{Operations}, 41376655, 3308400, 12), (3000, \\textrm{Finance \\& Legal}, 41655533, 2563000, 8), \\ldots\\}`}</M></Info>
+					<Info>Example: We may consider the relation instance <Em>departments(DepartmentsSchema)</Em> to be defined as:<br /><M>{`\\{(5000, \\textrm{Operations}, 41376655, 3308400, 12), (3000, \\textrm{Finance \\& Legal}, 41655533, 2563000, 8), \\ldots\\}`}</M></Info>
 				</>,
 			]} />
 			<Par>These definitions have a few important implications. Most importantly, keep in mind that relation instances are <Em>sets</Em>, based on mathematical set theory.</Par>
@@ -62,5 +62,5 @@ export function Theory() {
 			]} />
 			<Par>When you know all the above about relational algebra, you are ready to start applying it.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -1,5 +1,5 @@
 import { Page, Section, Par, Term } from '@/ui'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -8,5 +8,5 @@ export function Summary() {
 			<FigureExampleDLQuery query={<>employeeFromPaloAltoName(fn, ln) :- employee(_, fn, ln, _, _, _, 'Palo Alto', _, _).</>} actualQuery="SELECT DISTINCT first_name, last_name FROM employees WHERE city='Palo Alto'" tableWidth={200} />
 			<Par>We keep the rule short by using argument matching where possible, and by turning variables we don't need into anonymous variables.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

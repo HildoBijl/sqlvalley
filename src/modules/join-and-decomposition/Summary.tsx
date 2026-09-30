@@ -1,10 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL, DataTable } from '@sqlvalley/sql'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -25,31 +23,31 @@ export function Summary() {
 			]} /> Any potential missing values are given the value <ISQL>NULL</ISQL> in the joined table.</Par>
 			<Info>When we are talking about a "join", we usually talk about the non-natural inner join.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureJoinAndDecomposition() {
-	const themeColor = useThemeColor();
+	const themeColor = useThemeColor()
 
 	// Get the data.
-	const db = useTheoryPageDatabase();
-	const query1 = 'SELECT * FROM departments';
+	const db = useTheoryPageDatabase()
+	const query1 = 'SELECT * FROM departments'
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d JOIN employees e ON d.manager_id = e.e_id;`)
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData);
-	const x = 80;
-	const delta = 20; // The space between the two arrows.
-	const y1 = 20 + (t1Bounds?.height ?? 160) - 28;
-	const y2 = y1 + (t2Bounds?.height ?? 160);
-	const y3 = y2 + 60;
-	const width = 800;
-	const height = y3 + (t3Bounds?.height ?? 160);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData)
+	const x = 80
+	const delta = 20 // The space between the two arrows.
+	const y1 = 20 + (t1Bounds?.height ?? 160) - 28
+	const y2 = y1 + (t2Bounds?.height ?? 160)
+	const y3 = y2 + 60
+	const width = 800
+	const height = y3 + (t3Bounds?.height ?? 160)
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width}>
 		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
@@ -81,5 +79,5 @@ function FigureJoinAndDecomposition() {
 				</Element>
 			</> : null}
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

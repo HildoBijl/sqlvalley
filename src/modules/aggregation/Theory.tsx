@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -36,5 +36,5 @@ export function Theory() {
 			<Par>The result is a table containing both the grouping attributes (on the left) and any aggregated statistics within each group (on the right).</Par>
 			<Info>Something to think about: Perhaps the above quarterly performance table is already the result of an aggregation? Maybe multiple months have been squashed into quarters? Or perhaps all transactions have been grouped by quarter and aggregated together? Aggregations are more common than you think!</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

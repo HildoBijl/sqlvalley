@@ -1,6 +1,6 @@
 import { Page, Section, Par, Quote, Info, Warning, Em, Term } from '@/ui'
 import { IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -49,5 +49,5 @@ departmentManagerContactInfo(did, dn, fn, ln, p, e) :-
 			<Par>In short, to set up a <Term>join rule</Term> in Datalog, we use two (or more) predicates in one rule. The join conditions are applied by using the <Em>same variable name</Em> in the respective predicates. Unused variables can be turned into anonymous variables.</Par>
 			<Info>Because Datalog does not use argument names, there is no such thing as a natural join. Luckily we just saw that the non-natural join is pretty easy to set up.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

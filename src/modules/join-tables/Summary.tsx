@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Term } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -26,5 +26,5 @@ ON departments.manager_id = employees.e_id;`} tableScale={0.45} tableWidth={800}
 				<>Use <ISQL>FULL JOIN</ISQL> to always keep rows from both tables.</>,
 			]} /></Par>
 		</Section>
-	</Page>;
+	</Page>
 }

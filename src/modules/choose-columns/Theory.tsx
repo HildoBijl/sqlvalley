@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, useRefWithElement, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Info, Warning, Term, Em } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -51,32 +50,32 @@ FROM employees;`} />
   e.phone AS number
 FROM employees AS e;`} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureSelectColumns() {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const c1 = 'first_name', c2 = 'last_name', c3 = 'city';
+	const c1 = 'first_name', c2 = 'last_name', c3 = 'city'
 	const query = `
 SELECT ${c1}, ${c2}, ${c3}
 FROM employees;`
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
-	const [eRef, editor] = useRefWithElement<HTMLElement>();
-	const c1QueryBounds = useTextNodeBounds(editor, c1, drawingData);
-	const c2QueryBounds = useTextNodeBounds(editor, c2, drawingData);
-	const c3QueryBounds = useTextNodeBounds(editor, c3, drawingData);
+	const [eRef, editor] = useRefWithElement<HTMLElement>()
+	const c1QueryBounds = useTextNodeBounds(editor, c1, drawingData)
+	const c2QueryBounds = useTextNodeBounds(editor, c2, drawingData)
+	const c3QueryBounds = useTextNodeBounds(editor, c3, drawingData)
 
 	// Find the table column name bounds.
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData);
-	const c1NameBounds = useTextNodeBounds(table, c1, drawingData);
-	const c2NameBounds = useTextNodeBounds(table, c2, drawingData);
-	const c3NameBounds = useTextNodeBounds(table, c3, drawingData);
+	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
+	const c1NameBounds = useTextNodeBounds(table, c1, drawingData)
+	const c2NameBounds = useTextNodeBounds(table, c2, drawingData)
+	const c3NameBounds = useTextNodeBounds(table, c3, drawingData)
 
 	return <Drawing ref={drawingRef} width={800} height={20 + (tBounds?.height || 200)} maxWidth={800} disableSVGPointerEvents>
 		<Element ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind>
@@ -94,40 +93,40 @@ FROM employees;`
 			<Curve points={[c2QueryBounds.bottomRight.add([0, 2]), [c2QueryBounds.right + 40, 0], [c2NameBounds.left - 40, 0], c2NameBounds.bottomLeft.add([-2, 2])]} color={themeColor} endArrow />
 			<Curve points={[c3QueryBounds.bottomRight.add([0, 2]), [c3QueryBounds.right + 40, 0], [c3NameBounds.left - 40, 0], c3NameBounds.bottomLeft.add([-2, 2])]} color={themeColor} endArrow />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 function FigureSelectUnique() {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const c = 'city';
+	const c = 'city'
 	const query1 = `
 SELECT ${c}
-FROM employees;`;
+FROM employees;`
 	const query2 = `
 SELECT DISTINCT ${c}
-FROM employees;`;
-	const db = useTheoryPageDatabase();
+FROM employees;`
+	const db = useTheoryPageDatabase()
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, query2)
 
 	// Find the table column name bounds.
-	const [e1Ref, e1Bounds] = useRefWithBounds(drawingData);
-	const [e2Ref, e2Bounds] = useRefWithBounds(drawingData);
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
+	const [e1Ref, e1Bounds] = useRefWithBounds(drawingData)
+	const [e2Ref, e2Bounds] = useRefWithBounds(drawingData)
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
 
 	// Set up dimensions.
-	const w1 = e1Bounds?.width || 100;
-	const w2 = t1Bounds?.width || 100;
-	const w3 = e2Bounds?.width || 100;
-	const w4 = t2Bounds?.width || 100;
-	const delta1 = 20;
-	const delta2 = 40;
-	const width = w1 + w2 + w3 + w4 + 2 * delta1 + delta2;
-	const height = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200);
+	const w1 = e1Bounds?.width || 100
+	const w2 = t1Bounds?.width || 100
+	const w3 = e2Bounds?.width || 100
+	const w4 = t2Bounds?.width || 100
+	const delta1 = 20
+	const delta2 = 40
+	const width = w1 + w2 + w3 + w4 + 2 * delta1 + delta2
+	const height = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200)
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width} disableSVGPointerEvents>
 		<Element ref={e1Ref} position={[0, 0]} anchor={[-1, -1]} behind>
@@ -155,22 +154,22 @@ FROM employees;`;
 		{e2Bounds && t2Bounds ? <>
 			<Curve points={[e2Bounds.topMiddle.add([0, 5]), [e2Bounds.midpoint.x, t2Bounds.midpoint.y + e2Bounds.height / 2], t2Bounds.middleLeft.add([-4, e2Bounds.height / 2])]} color={themeColor} curveDistance={60} endArrow />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 export function FigureRenameColumns({ query = '' }) {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
 	// Find the element bounds.
-	const [eRef, eBounds] = useRefWithBounds(drawingData);
-	const [tRef, tBounds] = useRefWithBounds(drawingData);
-	const arrowWidth = 80;
-	const width = (eBounds?.width || 200) + (tBounds?.width || 200) + arrowWidth;
+	const [eRef, eBounds] = useRefWithBounds(drawingData)
+	const [tRef, tBounds] = useRefWithBounds(drawingData)
+	const arrowWidth = 80
+	const width = (eBounds?.width || 200) + (tBounds?.width || 200) + arrowWidth
 
 	return <Drawing ref={drawingRef} width={width} height={tBounds?.height || 200} maxWidth={width} disableSVGPointerEvents>
 		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
@@ -184,5 +183,5 @@ export function FigureRenameColumns({ query = '' }) {
 		</Element>
 
 		{eBounds && tBounds ? <Curve points={[eBounds.middleRight.add([4, 0]), [tBounds.left - 4, eBounds.midpoint.y]]} color={themeColor} endArrow /> : null}
-	</Drawing>;
+	</Drawing>
 }

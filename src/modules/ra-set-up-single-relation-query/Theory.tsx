@@ -1,6 +1,6 @@
 import { Page, Par, List, Section, Term, Em } from '@/ui'
 import { RA, RelationName } from '@/learning'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -28,5 +28,5 @@ export function Theory() {
 			<Par>We basically build up the query from inside to outside, every time adding an operator <Em>around</Em> what we already have. This is a very common way of setting up relational algebra queries.</Par>
 			<FigureExampleRAQuery query={<>∏<sub>first_name,last_name</sub>(σ<sub>current_salary &gt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT first_name, last_name FROM employees WHERE current_salary > 200000" tableWidth={200} />
 		</Section>
-	</Page>;
+	</Page>
 }

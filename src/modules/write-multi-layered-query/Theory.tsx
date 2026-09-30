@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -132,5 +132,5 @@ WHERE username IN (
 			]} />
 			<Par>With these tips and tricks, we can not only turn every data request into a functioning query, but we keep our process clear while doing so.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

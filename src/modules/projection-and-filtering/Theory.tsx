@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Line, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
+import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Term } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -33,24 +32,24 @@ export function Theory() {
 			]} />
 			<Par>And there are many more possible table manipulation operations.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureProjection() {
-	const themeColor = useThemeColor();
-	const db = useTheoryPageDatabase();
+	const themeColor = useThemeColor()
+	const db = useTheoryPageDatabase()
 	const dataFull = useQueryResult(db, 'SELECT * FROM departments;')
 	const dataProjection = useQueryResult(db, 'SELECT d_name, nr_employees FROM departments;')
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const height = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200);
-	const w1 = 600;
-	const w2 = 120;
-	const w3 = 340;
-	const arrowMargin = 10;
-	const width = w1 + w2 + w3;
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const height = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200)
+	const w1 = 600
+	const w2 = 120
+	const w3 = 340
+	const arrowMargin = 10
+	const width = w1 + w2 + w3
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width * 0.8}>
 		<Element position={[0, 0]} anchor={[-1, -1]}>
@@ -67,23 +66,23 @@ function FigureProjection() {
 
 		<Line points={[[w1 + arrowMargin, height / 2], [w1 + w2 - arrowMargin, height / 2]]} color={themeColor} endArrow />
 		<Element position={[w1 + w2 / 2 - 3, height / 2]} anchor={[0, 1]}><span style={{ fontWeight: 500, fontSize: '1em' }}>Projection</span></Element>
-	</Drawing>;
+	</Drawing>
 }
 
 function FigureFiltering() {
-	const themeColor = useThemeColor();
-	const db = useTheoryPageDatabase();
+	const themeColor = useThemeColor()
+	const db = useTheoryPageDatabase()
 	const dataFull = useQueryResult(db, 'SELECT * FROM departments;')
 	const dataFiltering = useQueryResult(db, 'SELECT * FROM departments WHERE nr_employees > 10;')
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const w = 800;
-	const arrowHeight = 80;
-	const arrowMargin = 10;
-	const h1 = t1Bounds?.height ?? 200;
-	const h2 = t2Bounds?.height ?? 200;
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const w = 800
+	const arrowHeight = 80
+	const arrowMargin = 10
+	const h1 = t1Bounds?.height ?? 200
+	const h2 = t2Bounds?.height ?? 200
 
 	return <Drawing ref={drawingRef} width={w} height={h1 + arrowHeight + h2} maxWidth={w * 0.8}>
 		<Element position={[0, 0]} anchor={[-1, -1]}>
@@ -100,5 +99,5 @@ function FigureFiltering() {
 
 		<Line points={[[w / 2, h1 + arrowMargin], [w / 2, h1 + arrowHeight - arrowMargin]]} color={themeColor} endArrow />
 		<Element position={[w / 2 + 6, h1 + arrowHeight / 2 - 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '1em' }}>Filtering: <code style={{ marginLeft: '4px' }}>nr_employees &gt; 10</code></span></Element>
-	</Drawing>;
+	</Drawing>
 }

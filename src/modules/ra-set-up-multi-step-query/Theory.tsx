@@ -1,8 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { Page, Section, Par, List, Info, Term, Em, M, Link } from '@/ui'
 import { RA } from '@/learning'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -70,5 +70,5 @@ export function Theory() {
 			</Box>
 			<Par>By using the above tips and tricks, you should be able to turn most data requests into properly functioning relational algebra scripts.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

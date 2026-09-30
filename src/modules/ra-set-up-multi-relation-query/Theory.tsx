@@ -1,6 +1,6 @@
 import { Page, Section, Par, List, Warning, Term, Em, M } from '@/ui'
 import { RA, IRA, RelationName } from '@/learning'
-import { FigureExampleRAQuery, FigureSingleTable } from '@/curriculum/utils';
+import { FigureExampleRAQuery, FigureSingleTable } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -44,5 +44,5 @@ export function Theory() {
 			<Par>This is everything that can be done using the rename operator.</Par>
 			<Warning>In some literature, the rename operator is also used to instantly rename <Em>all</Em> attributes. In that case, the <Term>bracket notation</Term> is used, like in <IRA>ρ<sub>contracts(id, pos, sal, start, end, score, status)</sub>(contracts)</IRA>. The new relation name is put outside of the brackets, and within the brackets are all the new attribute names in the order in which they appear in the original relation. This bracket notation is often frowned upon, because it assumes there is an ordering of the attributes. In relational algebra this is generally not the case: tuples have no order of attributes, but names are used to distinguish them.</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }

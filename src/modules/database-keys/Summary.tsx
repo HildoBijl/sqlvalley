@@ -1,8 +1,8 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Term } from '@/ui'
 import { RelationName, PrimaryKey } from '@/learning'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -16,5 +16,5 @@ export function Summary() {
 			<FigureSingleTable query={`SELECT * FROM employees;`} title="List of employees" tableWidth={800} tableScale={0.65} />
 			<Par>Within the schema, the primary key is indicated through an underline. <List items={[<><RelationName>employees</RelationName> (<PrimaryKey>e_id</PrimaryKey>, first_name, last_name, phone, email, address, city, hire_date, current_salary)</>]} /></Par>
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -1,5 +1,5 @@
 import { Page, Section, Par, Term, M, BM } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -9,5 +9,5 @@ export function Summary() {
 			<Par>The projection operator is formally defined as</Par>
 			<BM>{`\\Pi_{A_1, \\ldots, A_n}(r) := \\{ t[S] \\, | \\, t \\in r, S = \\{A_1, \\ldots, A_n\\} \\}.`}</BM>
 		</Section>
-	</Page>;
+	</Page>
 }

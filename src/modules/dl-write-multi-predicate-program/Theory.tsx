@@ -1,6 +1,6 @@
 import { Page, Section, Par, List, Em, Term } from '@/ui'
 import { IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -40,5 +40,5 @@ export function Theory() {
 			]} />
 			<Par>Through some practice with these tips and tricks, their use will become more and more automatic.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

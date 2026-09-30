@@ -109,5 +109,5 @@ suspiciousProductName(n, u) :- suspiciousProduct(p, u), product(p, n, _, _, _, _
 			<Par>To check for stratification, we can draw a quick dependency diagram. In this case that's a bit overkill though: the only cycle that appears is the one where <IDL>transferredProduct</IDL> refers to itself. This is done through a <Em>positive</Em> dependency, so there is certainly no cycle with a negative dependency in it. Everything is in order: the program is stratified.</Par>
 			<Par>And with that we now <Em>are</Em> done. (Yes, really.) We have seen all the steps involved in writing recursive Datalog programs and are ready to put them into practice.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

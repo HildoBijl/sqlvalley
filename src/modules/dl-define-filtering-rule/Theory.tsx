@@ -1,6 +1,6 @@
 import { Page, Section, Par, Quote, List, Info, Warning, Em, Term, Link } from '@/ui'
 import { DL, IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -58,5 +58,5 @@ highEarningSeniorEmployee(id, fn, ln, p, e, a, c, hd, cs) :-
 				<Par>Suppose that we want to find all senior employees from Palo Alto. These are all employees who live in Palo Alto and either have a high salary or have worked at the company for a while. To find these employees, we <Em>first</Em> set up a list of all senior employees (as we just did) and <Em>then</Em> restrict this list to people from Palo Alto. (Or the other way around.) In Datalog, using lots of easily-defined predicates is better than trying to fit everything into one complicated rule.</Par>
 			</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }

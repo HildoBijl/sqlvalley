@@ -1,8 +1,8 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Info, Warning, Term, Em, M, BM } from '@/ui'
 import { RA, IRA } from '@/learning'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -54,5 +54,5 @@ export function Theory() {
 			]} />
 			<Par>So altogether the above definition says: "The filtering of the relation <M>r</M> subject to the predicate/condition <M>p</M> is defined as the set of all tuples <M>t</M> from <M>r</M> for which the predicate <M>p</M> evaluates as true."</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

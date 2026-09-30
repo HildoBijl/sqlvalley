@@ -1,6 +1,6 @@
 import { Page, Section, Par, Warning, Term, M, BM } from '@/ui'
 import { IRA } from '@/learning'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -14,5 +14,5 @@ export function Summary() {
 			<Par>The filtering operator is formally defined as</Par>
 			<BM>{`\\sigma_p(r) := \\{t \\, | \\, t \\in r \\, \\textrm{and} \\, p(t) \\}.`}</BM>
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -93,10 +93,6 @@ export const modulePresentation = {
 		name: 'Use Filtered Aggregation',
 		description: 'How do we select which rows to aggregate, and/or subsequently filter aggregated results?',
 	},
-	'use-dynamic-aggregation': {
-		name: 'Use Dynamic Aggregation',
-		description: 'How do we apply multiple different aggregation groupings at the same time?',
-	},
 	'write-look-up-query': {
 		name: 'Write Look-up Query',
 		description: 'How do we select data from one table based on a condition in another table?',
@@ -112,14 +108,6 @@ export const modulePresentation = {
 	'write-multi-layered-query': {
 		name: 'Write Multi-Layered Query',
 		description: 'How do we set up complex multi-table queries and structure their set-up through intermediate queries?',
-	},
-	'pivot-table': {
-		name: 'Pivot Tables',
-		description: 'How can we smoothly display aggregated data through so-called pivot tables?',
-	},
-	'create-pivot-table': {
-		name: 'Create Pivot Table',
-		description: 'How do we use SQL to shape aggregated data into a pivot table?',
 	},
 
 	// Relational algebra.

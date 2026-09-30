@@ -5,14 +5,13 @@ import { Page, Section, Par, Quote, List, Info, Term, Em, M } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Summary() {
-	const db = useTheoryPageDatabase();
-	const q1 = 'SELECT * FROM employees';
-	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000';
+	const db = useTheoryPageDatabase()
+	const q1 = 'SELECT * FROM employees'
+	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000'
 	const data1 = useQueryResult(db, q1)
 	const data3 = useQueryResult(db, q3)
 
-	if (!data1 || !data3)
-		return null
+	if (!data1 || !data3) return null
 
 	return <Page>
 		<Section>
@@ -36,5 +35,5 @@ export function Summary() {
 			]} />
 			<Par>This is continued until the delta set <M>\Delta</M> ends up empty: no new cases can be found. The final result set <M>R</M> is then the output of the recursive query.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

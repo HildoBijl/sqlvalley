@@ -1,17 +1,16 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable, ISQL } from '@sqlvalley/sql';
+import { DataTable, ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
-	const now = new Date();
-	const date = now.toLocaleDateString('en-CA');
-	const time = now.toLocaleTimeString('en-GB', { hour12: false });
+	const now = new Date()
+	const date = now.toLocaleDateString('en-CA')
+	const time = now.toLocaleTimeString('en-GB', { hour12: false })
 
 	return <Page>
 		<Section>
@@ -58,33 +57,33 @@ export function Theory() {
 			]} />
 			<Par>It's not necessary to remember all these types. The main lesson is that every data type has limitations on exactly what it can store and with what precision. These limitations should be taken into account.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function FigureDataTypeDemo() {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, `SELECT * FROM contracts;`)
 
 	// Find the bounds of the table.
-	const [tableRef, tableBounds, table] = useRefWithBounds(drawingData);
-	const [labelTextRef, labelTextBounds] = useRefWithBounds(drawingData);
-	const [labelNumberRef, labelNumberBounds] = useRefWithBounds(drawingData);
-	const [labelDateRef, labelDateBounds] = useRefWithBounds(drawingData);
+	const [tableRef, tableBounds, table] = useRefWithBounds(drawingData)
+	const [labelTextRef, labelTextBounds] = useRefWithBounds(drawingData)
+	const [labelNumberRef, labelNumberBounds] = useRefWithBounds(drawingData)
+	const [labelDateRef, labelDateBounds] = useRefWithBounds(drawingData)
 
 	const c1Bounds = useTextNodeBounds(table, String(data?.values[0]?.[1] ?? ''), drawingData)
-	const c2Bounds = useTextNodeBounds(table, data && data.columns[2] || '', drawingData);
+	const c2Bounds = useTextNodeBounds(table, data && data.columns[2] || '', drawingData)
 	const c3Bounds = useTextNodeBounds(table, String(data?.values[0]?.[3] ?? ''), drawingData)
 	const c4Bounds = useTextNodeBounds(table, String(data?.values[0]?.[4] ?? ''), drawingData)
-	const c5Bounds = useTextNodeBounds(table, data && data.columns[5] || '', drawingData);
+	const c5Bounds = useTextNodeBounds(table, data && data.columns[5] || '', drawingData)
 	const c6Bounds = useTextNodeBounds(table, String(data?.values[0]?.[6] ?? ''), drawingData)
 
-	const r = 20;
-	const height = tableBounds?.height || 200;
-	const delta = 20; // How much do we jump in from the left of the column?
+	const r = 20
+	const height = tableBounds?.height || 200
+	const delta = 20 // How much do we jump in from the left of the column?
 
 	return <Drawing ref={drawingRef} width={800} height={25 + height + 48} maxWidth={800} disableSVGPointerEvents>
 		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The contracts table</span></Element>
@@ -114,5 +113,5 @@ export function FigureDataTypeDemo() {
 			<Curve points={[[labelDateBounds.right + 2, labelDateBounds.midpoint.y + 2], [c3Bounds.left + delta, labelDateBounds?.midpoint.y + 2], [c3Bounds.left + delta, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
 			<Curve points={[[labelDateBounds.right + 2, labelDateBounds.midpoint.y + 2], [c4Bounds.left + delta, labelDateBounds?.midpoint.y + 2], [c4Bounds.left + delta, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

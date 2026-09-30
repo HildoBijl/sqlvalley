@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, List, Term, Em } from '@/ui'
-import { DatalogTypeVennDiagram } from './Theory';
+import { DatalogTypeVennDiagram } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -15,5 +15,5 @@ export function Summary() {
 			<Par>Positive Datalog has a unique least model. Semi-positive and stratified programs have a unique intended result under stratified semantics. With the original database fixed, positive and semi-positive rule evaluation is monotonic in derived facts: adding facts does not invalidate earlier consequences. With negation, however, adding facts to the original database may remove query answers. Stratified programs are evaluated one stratum at a time.</Par>
 			<DatalogTypeVennDiagram />
 		</Section>
-	</Page>;
+	</Page>
 }

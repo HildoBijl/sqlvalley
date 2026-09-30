@@ -1,10 +1,10 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
-	const now = new Date();
+	const now = new Date()
 	const date = now.toISOString().slice(0, 10)
 	const time = now.toISOString().slice(11, 19)
 	const lastWeek = new Date(now)
@@ -92,5 +92,5 @@ FROM departments;`} tableWidth={350} />
   COALESCE(perf_score, salary/1000, 20) AS backup_score
 FROM contracts;`} tableWidth={400} />
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -1,24 +1,22 @@
 import { Fragment } from 'react'
 
-
 import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { Page, Section, Par, List, Warning, Info, Quote, Term, Em } from '@/ui'
 import { DL, IDL } from '@/learning'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
-	const db = useTheoryPageDatabase();
-	const q1 = 'SELECT * FROM employees';
-	const q2 = 'SELECT * FROM employees WHERE current_salary >= 200000';
-	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000';
+	const db = useTheoryPageDatabase()
+	const q1 = 'SELECT * FROM employees'
+	const q2 = 'SELECT * FROM employees WHERE current_salary >= 200000'
+	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000'
 	const data1 = useQueryResult(db, q1)
 	const data2 = useQueryResult(db, q2)
 	const data3 = useQueryResult(db, q3)
 
-	if (!data1 || !data2 || !data3)
-		return null
+	if (!data1 || !data2 || !data3) return null
 	const e1 = data1.values[0]
 
 	return <Page>
@@ -100,7 +98,7 @@ export function Theory() {
 			<Par>This would instantly get us all high-earning employees (with all nine arguments). However, we are now setting up queries that contain conditions, which is generally frowned upon in Datalog. It's cleaner to <Em>first</Em> define a rule for a new predicate (in table-terms: define a new view) and only <Em>then</Em> set up a simple query that requests the full predicate (in table-terms: query the view). This keeps every line in your Datalog program short and comprehensible.</Par>
 			<Info>Datalog programs can have any number of queries, each retrieving different data. When we set up Datalog programs, we will usually do so to find specific data, which is why our programs usually end with a single query. This query then marks the end of our program.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function DatalogFacts({ data, predicate }: { data: QueryResult; predicate: string }) {

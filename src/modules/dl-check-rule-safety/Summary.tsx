@@ -12,5 +12,5 @@ export function Summary() {
 			<Info>You may ignore negative literals and arithmetic literals when checking for rule safety.</Info>
 			<Par>In practice, the positive non-arithmetic literals are the predicates. In other words, each variable must at some point take its value from an already existing table.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

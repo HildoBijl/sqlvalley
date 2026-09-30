@@ -1,7 +1,6 @@
 import { Page, Section, Par, Term } from '@/ui'
 import { DL, IDL, ManualExerciseSet } from '@/learning'
-
-import { SQLValleySchema } from '@/curriculum/utils';
+import { SQLValleySchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -11,7 +10,7 @@ export function Practice() {
 			<Par>When an exercise says "Find ... " or "Create an overview of ... " then it means "Set up a Datalog rule (or rules) for a new predicate that contains (and only contains) ... ".</Par>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [

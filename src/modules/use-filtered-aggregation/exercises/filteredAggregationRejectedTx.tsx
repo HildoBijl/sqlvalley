@@ -5,7 +5,7 @@ function Problem() {
 }
 
 const solution = `
-SELECT 
+SELECT
   vendor,
   COUNT(*) AS total_tx,
   SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) AS rejected_tx

@@ -1,8 +1,7 @@
 import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link } from '@/ui'
 import { RA, IRA, RelationName } from '@/learning'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
-
-import { FigureTwoTables } from '../database/Theory';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
+import { FigureTwoTables } from '../database/Theory'
 
 export function Theory() {
 	return <Page>
@@ -55,5 +54,5 @@ export function Theory() {
 			<FigureExampleRAQuery query={<>σ<sub>current_salary &gt; 0.2*budget</sub>(departments ⋈ ρ<sub>e_id→manager_id</sub>(employees))</>} actualQuery="SELECT DISTINCT * FROM departments NATURAL JOIN (SELECT e_id AS manager_id, first_name, last_name, phone, email, address, city, hire_date, current_salary FROM employees) WHERE current_salary > 0.2*budget" tableWidth={900} tableScale={0.5} below />
 			<Info>When filtering after using a natural join, we never need the dot-notation to indicate where an attribute comes from. After all, the natural join guarantees there are no equally-named attributes left. Any sets of equally-named attributes are required to be equal, and are hence automatically merged into single attributes!</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

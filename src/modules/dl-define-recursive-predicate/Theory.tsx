@@ -1,6 +1,6 @@
 import { Page, Section, Par, Quote, List, Info, Warning, Em, Term } from '@/ui'
 import { DL, IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -73,5 +73,5 @@ SELECT * FROM vendor_chain;`} tableWidth={260} />
 			<Info>Some more strict Datalog engines don't allow literals like <IDL>n = m + 1</IDL>. Instead, they use a built-in <Term>successor predicate</Term> <IDL>succ(m, n)</IDL> which defines <IDL>n</IDL> to be one larger than (i.e., the successor of) <IDL>m</IDL>. So instead of <IDL>n = m + 1</IDL> we'd then have to use <IDL>succ(m, n)</IDL>.</Info>
 			<Par>Tackling the problem of cycles is really tricky. There's a few approaches that can do so, and that will give the <Em>least</Em> amount of steps for which B can be reached from A. However, these approaches require techniques we haven't discussed so far: think of tracking which links we already visited, or using recursive aggregation within Datalog. Because it's a bit too advanced, we won't discuss those methods further for now. Whenever we add a counter, we'll simply have to ensure that there <Em>are</Em> no cycles.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

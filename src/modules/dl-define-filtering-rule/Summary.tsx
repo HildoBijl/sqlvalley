@@ -1,5 +1,5 @@
 import { Page, Section, Par, Info, Warning, Term } from '@/ui'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -13,5 +13,5 @@ export function Summary() {
 			<FigureExampleDLQuery query={<>seniorEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), hd &lt; '2024-01-01'.<br />seniorEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 200000.</>} actualQuery="SELECT DISTINCT * FROM employees WHERE hire_date < '2024-01-01' OR current_salary >= 200000" tableWidth={940} below />
 			<Warning>In the special case where "and" and "or" are both used, it's best to use multiple predicates, applying the filtering condition in steps.</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }

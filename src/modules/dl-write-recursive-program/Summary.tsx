@@ -13,5 +13,5 @@ export function Summary() {
 			]} />
 			<Info>Being skilled at writing Datalog programs requires experience. Just write lots of programs. So go forth and practice!</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

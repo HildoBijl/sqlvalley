@@ -1,7 +1,7 @@
 
 import { Page, Section, Par, Info, Term, Em } from '@/ui'
 import { IDL, DL } from '@/learning'
-import { FirstDependencyGraph, CleanedSecondDependencyGraph } from './Theory';
+import { FirstDependencyGraph, CleanedSecondDependencyGraph } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -25,5 +25,5 @@ I(x) :- G(x), H(x).
 			<CleanedSecondDependencyGraph />
 			<Info>Datalog internally uses the dependency graph to know in which order it can evaluate predicates. Everything within a layer can be done at the same time, in parallel. If there is a node containing a cycle, like at node <IDL>(E,F,G)</IDL>, the fixed-point algorithm is needed to handle this cycle.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

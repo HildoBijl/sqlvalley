@@ -1,7 +1,6 @@
 import { Page, Section, Par, Term, Em } from '@/ui'
 import { DL, IDL, ManualExerciseSet } from '@/learning'
-
-import { SQLValleySchema } from '@/curriculum/utils';
+import { SQLValleySchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -11,7 +10,7 @@ export function Practice() {
 			<Par>When an exercise says "Find ... " or "Create an overview of ... " then it means "Set up a Datalog program (including query) that outputs (and only outputs) ... ".</Par>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [
@@ -86,7 +85,7 @@ validatedAllUsers(eid) :- employeeId(eid), not didNotValidateSomeUser(eid).
 validatedUser(eid, u) :- transaction(_, u, _, _, _, _, eid, _).
 validatedUser(eid, u) :- transaction(_, _, u, _, _, _, eid, _).
 validatedUserFromDifferentCity(eid) :-
-        validatedUser(eid, u), 
+        validatedUser(eid, u),
         employee(eid, _, _, _, _, _, ec, _, _),
         account(u, _, _, _, _, _, _, uc, _, _),
         ec != uc.

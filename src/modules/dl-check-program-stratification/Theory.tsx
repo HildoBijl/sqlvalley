@@ -1,7 +1,7 @@
 
 import { Page, Section, Par, List, Info, Em, Link } from '@/ui'
 import { IDL } from '@/learning'
-import { SampleNonStratifiedProgram, DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory';
+import { SampleNonStratifiedProgram, DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory'
 
 export function Theory() {
 	return <Page>
@@ -34,5 +34,5 @@ export function Theory() {
 			]} />
 			<Info>With some practice, you will also be able to check if a program is positive/semi-positive/stratified <Em>without</Em> drawing a dependency graph. For now, it's recommend to draw one anyway, just to get familiar with how it all works.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -2,14 +2,14 @@
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { Page, Section, Par, List, Info, Warning, Quote, Term, Em, M } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
-	const db = useTheoryPageDatabase();
-	const q1 = 'SELECT * FROM transactions';
-	const q2 = 'SELECT DISTINCT vendor, buyer FROM transactions';
-	const q3 = 'SELECT DISTINCT t1.vendor, t2.buyer FROM transactions t1, transactions t2 WHERE t1.buyer = t2.vendor';
+	const db = useTheoryPageDatabase()
+	const q1 = 'SELECT * FROM transactions'
+	const q2 = 'SELECT DISTINCT vendor, buyer FROM transactions'
+	const q3 = 'SELECT DISTINCT t1.vendor, t2.buyer FROM transactions t1, transactions t2 WHERE t1.buyer = t2.vendor'
 	const q4 = `WITH RECURSIVE vendor_chain AS (
     SELECT vendor, buyer
     FROM transactions
@@ -18,12 +18,12 @@ export function Theory() {
     FROM transactions t
     JOIN vendor_chain c ON c.buyer = t.vendor
 )
-SELECT * FROM vendor_chain;`;
-	const q5 = `${q3} EXCEPT ${q2}`;
-	const q6 = 'SELECT DISTINCT t1.vendor, t3.buyer FROM transactions t1, transactions t2, transactions t3 WHERE t1.buyer = t2.vendor AND t2.buyer = t3.vendor';
-	const q7 = `${q6} EXCEPT ${q3} EXCEPT ${q2}`;
-	const q8 = 'SELECT DISTINCT t1.vendor, t4.buyer FROM transactions t1, transactions t2, transactions t3, transactions t4 WHERE t1.buyer = t2.vendor AND t2.buyer = t3.vendor AND t3.buyer = t4.vendor';
-	const q9 = `${q8} EXCEPT ${q6} EXCEPT ${q3} EXCEPT ${q2}`;
+SELECT * FROM vendor_chain;`
+	const q5 = `${q3} EXCEPT ${q2}`
+	const q6 = 'SELECT DISTINCT t1.vendor, t3.buyer FROM transactions t1, transactions t2, transactions t3 WHERE t1.buyer = t2.vendor AND t2.buyer = t3.vendor'
+	const q7 = `${q6} EXCEPT ${q3} EXCEPT ${q2}`
+	const q8 = 'SELECT DISTINCT t1.vendor, t4.buyer FROM transactions t1, transactions t2, transactions t3, transactions t4 WHERE t1.buyer = t2.vendor AND t2.buyer = t3.vendor AND t3.buyer = t4.vendor'
+	const q9 = `${q8} EXCEPT ${q6} EXCEPT ${q3} EXCEPT ${q2}`
 	const data1 = useQueryResult(db, q1)
 	const data2 = useQueryResult(db, q2)
 	const data3 = useQueryResult(db, q3)
@@ -34,8 +34,7 @@ SELECT * FROM vendor_chain;`;
 	const data8 = useQueryResult(db, q8)
 	const data9 = useQueryResult(db, q9)
 
-	if (!data1 || !data2 || !data3 || !data4 || !data5 || !data6 || !data7 || !data8 || !data9)
-		return null
+	if (!data1 || !data2 || !data3 || !data4 || !data5 || !data6 || !data7 || !data8 || !data9) return null
 
 	return <Page>
 		<Section>
@@ -113,5 +112,5 @@ SELECT * FROM vendor_chain;`;
 			<FigureSingleTable query={q4} title={<>The final result set <M>R</M></>} tableWidth={260} tableScale={0.8} />
 			<Par>This shows how the DBMS, when given a recursive query, will keep searching for new cases until there's none left to be found.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

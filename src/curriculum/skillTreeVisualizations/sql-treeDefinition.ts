@@ -31,7 +31,6 @@ const nodes: Record<string, GridPosition> = {
 	// Aggregation in SQL.
 	'aggregate-columns': { col: 6, row: 5 },
 	'use-filtered-aggregation': { col: 5, row: 6 },
-	// 'use-dynamic-aggregation': { col: 6, row: 6 },
 
 	// Multi-table SQL querying.
 	'write-look-up-query': { col: 3, row: 6 },

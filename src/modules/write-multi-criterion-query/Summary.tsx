@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Info, Quote, List, Term } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -25,5 +25,5 @@ WHERE end_date = DATE(start_date, '+1 year', 'floor')
 ORDER BY perf_score DESC
 LIMIT 5;`} tableWidth={240} tableScale={0.7} />
 		</Section>
-	</Page>;
+	</Page>
 }

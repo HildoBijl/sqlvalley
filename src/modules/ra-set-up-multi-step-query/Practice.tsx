@@ -1,7 +1,6 @@
 import { Page, Section, Par, Term, Em } from '@/ui'
 import { RA, RelationName, PrimaryKey, ManualExerciseSet } from '@/learning'
-
-import { CompaniesSchema, ShoppingSchema } from '@/curriculum/utils';
+import { CompaniesSchema, ShoppingSchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -14,7 +13,7 @@ export function Practice() {
 			<ShoppingSchema />
 			<ManualExerciseSet exercises={shoppingExercises} startingNumber={companiesExercises.length + 1} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const companiesExercises = [

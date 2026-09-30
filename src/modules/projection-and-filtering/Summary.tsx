@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Line, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
+import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, Term } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -15,28 +14,28 @@ export function Summary() {
 			<FigureProjectionAndFiltering />
 			<Par>Other operations include renaming columns, copying columns, and applying an operation to all the values in a column.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureProjectionAndFiltering() {
-	const themeColor = useThemeColor();
-	const db = useTheoryPageDatabase();
+	const themeColor = useThemeColor()
+	const db = useTheoryPageDatabase()
 	const dataFull = useQueryResult(db, 'SELECT * FROM departments;')
 	const dataProjection = useQueryResult(db, 'SELECT d_name, nr_employees FROM departments;')
 	const dataFiltering = useQueryResult(db, 'SELECT * FROM departments WHERE nr_employees > 10;')
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData);
-	const w1 = 600;
-	const w2 = 120;
-	const w3 = 340;
-	const width = w1 + w2 + w3;
-	const arrowMargin = 10;
-	const arrowHeight = 80;
-	const h1 = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200);
-	const h2 = t3Bounds?.height || 200;
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData)
+	const w1 = 600
+	const w2 = 120
+	const w3 = 340
+	const width = w1 + w2 + w3
+	const arrowMargin = 10
+	const arrowHeight = 80
+	const h1 = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200)
+	const h2 = t3Bounds?.height || 200
 
 	return <Drawing ref={drawingRef} width={width} height={h1 + arrowHeight + h2} maxWidth={width * 0.8}>
 		<Element position={[0, 0]} anchor={[-1, -1]}>
@@ -62,5 +61,5 @@ function FigureProjectionAndFiltering() {
 
 		<Line points={[[w1 / 2, h1 + arrowMargin], [w1 / 2, h1 + arrowHeight - arrowMargin]]} color={themeColor} endArrow />
 		<Element position={[w1 / 2 + 6, h1 + arrowHeight / 2 - 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '1em' }}>Filtering: <code style={{ marginLeft: '4px' }}>nr_employees &gt; 10</code></span></Element>
-	</Drawing>;
+	</Drawing>
 }

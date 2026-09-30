@@ -1,18 +1,17 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Info, Term, Em } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
-	const now = new Date();
-	const date = now.toLocaleDateString('en-CA');
-	const time = now.toLocaleTimeString('en-GB', { hour12: false });
-	const e_id = '41376655';
+	const now = new Date()
+	const date = now.toLocaleDateString('en-CA')
+	const time = now.toLocaleTimeString('en-GB', { hour12: false })
+	const e_id = '41376655'
 
 	return <Page>
 		<Section>
@@ -72,44 +71,44 @@ FROM contracts
 WHERE perf_score IS NULL;`} columnName="perf_score" />
 			<Info>Because <ISQL>NULL</ISQL> means "unknown", any comparison involving <ISQL>NULL</ISQL>, like for instance <ISQL>{`NULL < 10`}</ISQL>, always resolves to <ISQL>NULL</ISQL>, and never to <ISQL>TRUE</ISQL> or <ISQL>FALSE</ISQL>. After all, it is also unknown whether "some unknown value" is smaller than <ISQL>10</ISQL>. Even the comparison <ISQL>NULL = NULL</ISQL> resolves to <ISQL>NULL</ISQL>, since two unknown values are not necessarily equal. Only <ISQL>NULL IS NULL</ISQL> resolves to <ISQL>TRUE</ISQL>.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function FigureFiltering({ query = '', columnName = '' }) {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
 	// Find the table column name bounds.
-	const [eRef, eBounds] = useRefWithBounds(drawingData);
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData);
-	const columnNameBounds = useTextNodeBounds(table, columnName, drawingData);
+	const [eRef, eBounds] = useRefWithBounds(drawingData)
+	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
+	const columnNameBounds = useTextNodeBounds(table, columnName, drawingData)
 
 	// Set up dimensions.
-	const width = 800;
-	const h1 = eBounds?.height || 100;
-	const delta = 15;
-	const h2 = tBounds?.height || 200;
-	const height = h1 + delta + h2;
+	const width = 800
+	const h1 = eBounds?.height || 100
+	const delta = 15
+	const h2 = tBounds?.height || 200
+	const height = h1 + delta + h2
 
 	// Check where to position the query and where to put the arrow.
-	const arrowX = columnNameBounds?.midpoint.x || width;
-	let queryPosition, arrowPosition;
+	const arrowX = columnNameBounds?.midpoint.x || width
+	let queryPosition, arrowPosition
 	if (arrowX > 0.75 * width) {
-		queryPosition = 0; // Center
-		arrowPosition = 1; // Right
+		queryPosition = 0 // Center
+		arrowPosition = 1 // Right
 	} else if (arrowX < 0.25 * width) {
-		queryPosition = 0; // Center
-		arrowPosition = -1; // Left
+		queryPosition = 0 // Center
+		arrowPosition = -1 // Left
 	} else if (arrowX >= 0.5 * width) {
-		queryPosition = -1; // Left
-		arrowPosition = 1; // Right
+		queryPosition = -1 // Left
+		arrowPosition = 1 // Right
 	} else {
-		queryPosition = 1; // Right
-		arrowPosition = -1; // Left
+		queryPosition = 1 // Right
+		arrowPosition = -1 // Left
 	}
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width} disableSVGPointerEvents>
@@ -128,5 +127,5 @@ export function FigureFiltering({ query = '', columnName = '' }) {
 		{eBounds && columnNameBounds ? <>
 			<Curve points={[arrowPosition === 1 ? eBounds.middleRight.add([4, 0]) : eBounds.middleLeft.add([-4, 0]), [columnNameBounds.midpoint.x, eBounds.midpoint.y], [columnNameBounds.midpoint.x, h1 + delta - 4]]} color={themeColor} curveDistance={60} endArrow />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

@@ -1,6 +1,6 @@
 import { Page, Section, Par, Term } from '@/ui'
 import { IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -10,5 +10,5 @@ export function Summary() {
 			<Par>The notation can be shortened/simplified using <Term>anonymous variables</Term>: we turn any variable we don't use into an underscore <IDL>_</IDL>. The underscore here means "This variable can be anything; we won't use its value."</Par>
 			<FigureExampleDLQuery query={<>employeeName(fn, ln) :- employee(_, fn, ln, _, _, _, _, _, _).</>} actualQuery="SELECT DISTINCT first_name, last_name FROM employees" tableWidth={200} />
 		</Section>
-	</Page>;
+	</Page>
 }

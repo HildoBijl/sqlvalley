@@ -1,6 +1,6 @@
 import { Page, Section, Par, Quote, List, Info, Warning, Em, Term } from '@/ui'
 import { DL, IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -44,5 +44,5 @@ export function Theory() {
 			<Par>This second method works just as well as the first, and on top of that it results in fewer predicates and rules. Nevertheless, the first method is generally recommended. After all, it keeps rules shorter and programs easier to understand, which significantly reduces the risk for errors.</Par>
 			<Info>No matter the method that you use: after setting up a negation rule, <Em>always</Em> run a quick check to verify that your rule is safe!</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -1,7 +1,6 @@
 import { Page, Section, Par, Term } from '@/ui'
 import { DL, IDL, ManualExerciseSet } from '@/learning'
-
-import { SQLValleySchema } from '@/curriculum/utils';
+import { SQLValleySchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -11,7 +10,7 @@ export function Practice() {
 			<Par>When an exercise says "Find ... " or "Create an overview of ... " then it means "Set up a Datalog rule (or rules) for a new predicate that contains (and only contains) ... ".</Par>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [
@@ -27,7 +26,7 @@ const exercises = [
 		problem: <Par>Find the names of all large departments: either the number of employees is more than 12, or the budget is more than 2000000.</Par>,
 		solution: <>
 			<Par>We take the <IDL>department</IDL> predicate and apply the conditions. Since it is an or-condition, we set up two rules.</Par>
-			<DL>largeDepartment(n) :- department(_, n, _, _, ne), ne &gt; 12.<br/>largeDepartment(n) :- department(_, n, _, b, _), b &gt; 2000000.</DL>
+			<DL>largeDepartment(n) :- department(_, n, _, _, ne), ne &gt; 12.<br />largeDepartment(n) :- department(_, n, _, b, _), b &gt; 2000000.</DL>
 			<Par>You can read this as "A department is a large department if the number of employees is larger than 12. A department is also a large department if the budget is larger than two million."</Par>
 		</>,
 	},
@@ -37,7 +36,7 @@ const exercises = [
 			<Par>In this request we mix an and-condition with an or-condition. We set this up in multiple steps. First we find all musical instruments.</Par>
 			<DL>musicalInstrument(id, n, o, v, s) :- product(id, n, 'Musical Instruments', o, v, s).</DL>
 			<Par>From this list, we find all the products that have been sold or withdrawn.</Par>
-			<DL>removedMusicalInstrument(n, o) :- musicalInstrument(_, n, o, _, 'sold').<br/>removedMusicalInstrument(n, o) :- musicalInstrument(_, n, o, _, 'withdrawn').</DL>
+			<DL>removedMusicalInstrument(n, o) :- musicalInstrument(_, n, o, _, 'sold').<br />removedMusicalInstrument(n, o) :- musicalInstrument(_, n, o, _, 'withdrawn').</DL>
 			<Par>Note that we could have also cut some arguments from <IDL>musicalInstrument</IDL>, which would have made the script even shorter.</Par>
 		</>,
 	},

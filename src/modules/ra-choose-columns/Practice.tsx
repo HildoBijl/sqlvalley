@@ -1,7 +1,6 @@
 import { Page, Section, Par, Term } from '@/ui'
 import { RA, RelationName, ManualExerciseSet } from '@/learning'
-
-import { CompaniesSchema } from '@/curriculum/utils';
+import { CompaniesSchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -11,7 +10,7 @@ export function Practice() {
 			<Par>When an exercise says "Find ... " then it means "Write a relational algebra query that gives ... ".</Par>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [

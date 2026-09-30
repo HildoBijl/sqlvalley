@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Warning, Info, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -27,5 +27,5 @@ FROM quarterly_performance
 GROUP BY fiscal_year;`} tableWidth={400} />
 			<Warning>When using an aggregated query, the <ISQL>SELECT</ISQL> clause may <Em>only</Em> contain columns from the <ISQL>GROUP BY</ISQL> clause and results from aggregation functions.</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }

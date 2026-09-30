@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Quote, Info, Term } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -29,5 +29,5 @@ WHERE username IN (SELECT username FROM affected_users);`} tableScale={0.8} tabl
 			<Info>CTEs are forgotten again as soon as the query ends.</Info>
 			<Par>Whenever writing complicated queries, it helps to set up many small and <Term>intuitive</Term> CTEs, <Term>based on keys</Term>. By building them up and <Term>testing</Term> them as we go, we keep the process of writing queries clear and free of errors.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -1,5 +1,5 @@
 import { Page, Section, Par, List, Term, M } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -19,5 +19,5 @@ export function Summary() {
 				<Par key={2}>When the request has the words "never" or "every", first <Term>do the opposite</Term> and then flip the result around.</Par>,
 			]} />
 		</Section>
-	</Page>;
+	</Page>
 }

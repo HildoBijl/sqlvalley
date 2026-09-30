@@ -1,18 +1,16 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/drawing'
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL, DataTable } from '@sqlvalley/sql'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
-import { DataTable } from '@sqlvalley/sql';
-
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
-import { FigureTwoTables } from '../database/Theory';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { FigureTwoTables } from '../database/Theory'
 
-export const adjustedManagerId = '11111111';
-export const addedManagerId = '41655533';
+export const adjustedManagerId = '11111111'
+export const addedManagerId = '41655533'
 export const adjustedDepartments = `SELECT
   d_id, d_name,
   CASE
@@ -20,7 +18,7 @@ export const adjustedDepartments = `SELECT
       WHEN d_id = 4000 THEN ${addedManagerId}
       ELSE manager_id
   END AS manager_id,
-  budget, nr_employees FROM departments`;
+  budget, nr_employees FROM departments`
 
 export function Theory() {
 	return <Page>
@@ -100,32 +98,32 @@ export function Theory() {
 			]} />
 			<Info>Note that the distinction of natural/non-natural join is completely separate from the distinction of inner/outer join. The first issue is about "Do we manually specify on which attributes to perform the join, or do we just pick equally named attributes?" The second issue is about "How do we handle entries without a matching reference?" When we talk about a "join" we usually refer to the the non-natural inner join, but you could very well apply a natural full outer join too.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureNaturalJoin() {
-	const themeColor = useThemeColor();
+	const themeColor = useThemeColor()
 
 	// Get the data.
-	const db = useTheoryPageDatabase();
-	const query1 = 'SELECT d_id, d_name, manager_id e_id, budget, nr_employees FROM departments';
+	const db = useTheoryPageDatabase()
+	const query1 = 'SELECT d_id, d_name, manager_id e_id, budget, nr_employees FROM departments'
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d NATURAL JOIN employees e;`)
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [t1Ref, t1Bounds, table1] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds, table2] = useRefWithBounds(drawingData);
-	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData);
-	const textNode1Bounds = useTextNodeBounds(table1, 'e_id', drawingData, 0, 1);
-	const textNode2Bounds = useTextNodeBounds(table2, 'e_id', drawingData, 0, 1);
-	const x = 80;
-	const y1 = 20 + (t1Bounds?.height ?? 160) + 15;
-	const y2 = y1 + (t2Bounds?.height ?? 160);
-	const y3 = y2 + 60;
-	const width = 800;
-	const height = y3 + (t3Bounds?.height ?? 160);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [t1Ref, t1Bounds, table1] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds, table2] = useRefWithBounds(drawingData)
+	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData)
+	const textNode1Bounds = useTextNodeBounds(table1, 'e_id', drawingData, 0, 1)
+	const textNode2Bounds = useTextNodeBounds(table2, 'e_id', drawingData, 0, 1)
+	const x = 80
+	const y1 = 20 + (t1Bounds?.height ?? 160) + 15
+	const y2 = y1 + (t2Bounds?.height ?? 160)
+	const y3 = y2 + 60
+	const width = 800
+	const height = y3 + (t3Bounds?.height ?? 160)
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width}>
 		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
@@ -157,25 +155,25 @@ function FigureNaturalJoin() {
 
 		{textNode1Bounds ? <Rectangle dimensions={textNode1Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
 		{textNode2Bounds ? <Rectangle dimensions={textNode2Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 export function FigureTwoTablesAdjusted() {
-	const themeColor = useThemeColor();
+	const themeColor = useThemeColor()
 
 	// Get the data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data1 = useQueryResult(db, adjustedDepartments)
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [t1Ref, t1Bounds, table1] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const textNode1Bounds = useTextNodeBounds(table1, adjustedManagerId, drawingData, 0, 2);
-	const textNode2Bounds = useTextNodeBounds(table1, addedManagerId, drawingData, 1, 2);
-	const x = 80;
-	const y = 20 + (t1Bounds?.height ?? 160) + 15;
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [t1Ref, t1Bounds, table1] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const textNode1Bounds = useTextNodeBounds(table1, adjustedManagerId, drawingData, 0, 2)
+	const textNode2Bounds = useTextNodeBounds(table1, addedManagerId, drawingData, 1, 2)
+	const x = 80
+	const y = 20 + (t1Bounds?.height ?? 160) + 15
 
 	return <Drawing ref={drawingRef} width={800} height={y + (t2Bounds?.height ?? 200)} maxWidth={800}>
 		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
@@ -194,5 +192,5 @@ export function FigureTwoTablesAdjusted() {
 
 		{textNode1Bounds ? <Rectangle dimensions={textNode1Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
 		{textNode2Bounds ? <Rectangle dimensions={textNode2Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-	</Drawing>;
+	</Drawing>
 }

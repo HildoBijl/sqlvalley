@@ -3,18 +3,17 @@ import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { Page, Section, Par, Term, Em } from '@/ui'
 import { DL } from '@/learning'
-import { DatalogFacts, DatalogOutput } from './Theory';
 import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { DatalogFacts, DatalogOutput } from './Theory'
 
 export function Summary() {
-	const db = useTheoryPageDatabase();
-	const q1 = 'SELECT * FROM employees';
-	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000';
+	const db = useTheoryPageDatabase()
+	const q1 = 'SELECT * FROM employees'
+	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000'
 	const data1 = useQueryResult(db, q1)
 	const data3 = useQueryResult(db, q3)
 
-	if (!data1 || !data3)
-		return null
+	if (!data1 || !data3) return null
 
 	return <Page>
 		<Section>
@@ -31,5 +30,5 @@ export function Summary() {
 			<Par>The output is usually given in list form, showing all combinations of variables for which the query literal (or literals) holds true. You could of course visualize this for yourself as a table once more.</Par>
 			<DatalogOutput data={{ values: data3.values, columns: ['firstName', 'lastName'] }} />
 		</Section>
-	</Page>;
+	</Page>
 }

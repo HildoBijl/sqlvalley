@@ -1,8 +1,8 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Term, Em } from '@/ui'
 import { RelationName, PrimaryKey, ForeignKey } from '@/learning'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -37,5 +37,5 @@ export function Theory() {
 			]} />
 			<Par>To apply a foreign key, we look up values in steps. For example, if we want the phone number of the manager of "Human Resources", we first look through the departments to find the manager ID. This is <ISQL>42223311</ISQL>. We then jump to the list of employees, find the row (the employee) corresponding to this ID (Marcelle Johnson) and extract the respective phone number: 408-555-0674. Looking things up like this is simple enough, and these references keep our database clean.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

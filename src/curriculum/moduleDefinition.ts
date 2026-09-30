@@ -30,13 +30,10 @@ const moduleDefinition = {
 	'write-multi-criterion-query': skill('sort-rows', 'process-columns', 'filter-rows-on-multiple-criteria'),
 	'aggregate-columns': skill('aggregation', 'choose-columns'),
 	'use-filtered-aggregation': skill('aggregate-columns', 'filter-rows-on-multiple-criteria', 'process-columns'),
-	'use-dynamic-aggregation': skill('aggregate-columns'),
 	'write-look-up-query': skill('foreign-key', 'write-single-criterion-query'),
 	'join-tables': skill('join-and-decomposition', 'choose-columns', 'filter-rows-on-multiple-criteria'),
 	'write-multi-table-query': skill('write-look-up-query', 'join-tables'),
 	'write-multi-layered-query': skill('write-multi-criterion-query', 'write-multi-table-query', 'use-filtered-aggregation'),
-	'pivot-table': concept('database-table'),
-	'create-pivot-table': skill('pivot-table', 'write-single-criterion-query', 'aggregate-columns'),
 
 	// Relational algebra.
 	'relational-algebra': concept('query-language'),

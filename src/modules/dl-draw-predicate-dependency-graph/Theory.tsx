@@ -1,7 +1,7 @@
 
 import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link } from '@/ui'
 import { IDL } from '@/learning'
-import { SampleDatalogScriptForDependencyGraph, SecondDependencyGraph, CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory';
+import { SampleDatalogScriptForDependencyGraph, SecondDependencyGraph, CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory'
 
 export function Theory() {
 	return <Page>
@@ -57,5 +57,5 @@ export function Theory() {
 					<>Because we start with a finite set of nodes, we <Em>will</Em> run out of unassigned nodes.</>,
 				]} /></Info>
 		</Section>
-	</Page>;
+	</Page>
 }

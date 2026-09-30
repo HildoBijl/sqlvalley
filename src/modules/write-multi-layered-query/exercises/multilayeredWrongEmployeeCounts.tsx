@@ -26,7 +26,7 @@ single_alloc_per_dept AS (
 	FROM single_allocations
 	GROUP BY d_id
 )
-SELECT 
+SELECT
     d.d_name,
     d.nr_employees AS estimated_employees,
     COALESCE(ta.total_allocated, 0) AS total_allocated,

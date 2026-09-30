@@ -1,6 +1,6 @@
 import { Page, Section, Par, Term } from '@/ui'
 import { IRA, RelationName } from '@/learning'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -12,5 +12,5 @@ export function Summary() {
 			<FigureExampleRAQuery query={<>∏<sub>e_id</sub>(σ<sub>contracts.e_id = e2.e_id ∧ contracts.position ≠ e2.position</sub>(contracts ⨯ ρ<sub>e2</sub>(contracts)))</>} actualQuery="SELECT DISTINCT e1.e_id FROM contracts e1, contracts e2 WHERE e1.e_id = e2.e_id AND e1.position <> e2.position" tableWidth={120} tableScale={0.8} />
 			<Par>In this latter case, when we compare a relation with itself, we need a <Term>table rename</Term> to make the attribute references work. A table rename is done through <IRA>ρ<sub>e2</sub>(contracts)</IRA>, which temporarily (only within this query) renames the second <RelationName>contracts</RelationName> relation as <RelationName>e2</RelationName>.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

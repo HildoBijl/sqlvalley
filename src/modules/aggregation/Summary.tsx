@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
+import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Term } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -19,24 +18,24 @@ export function Summary() {
 			<FigureAggregation />
 			<Par>The <Term>aggregated table</Term> usually has the grouping attributes on the left, and the aggregated statistics on the right. Common aggregation methods are the <Term>total</Term> value, the <Term>highest</Term> value, or the <Term>number</Term> of values, but you could even aggregate text values if desired.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureAggregation() {
-	const themeColor = useThemeColor();
-	const db = useTheoryPageDatabase();
+	const themeColor = useThemeColor()
+	const db = useTheoryPageDatabase()
 	const dataFull = useQueryResult(db, 'SELECT * FROM quarterly_performance;')
 	const dataAggregated = useQueryResult(db, 'SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance GROUP BY fiscal_year;')
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const w1 = 900;
-	const w2 = 500;
-	const delta = 20;
-	const arrowMargin = 5;
-	const h1 = t1Bounds?.height ?? 200;
-	const h2 = t2Bounds?.height ?? 200;
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const w1 = 900
+	const w2 = 500
+	const delta = 20
+	const arrowMargin = 5
+	const h1 = t1Bounds?.height ?? 200
+	const h2 = t2Bounds?.height ?? 200
 
 	return <Drawing ref={drawingRef} width={w1} height={h1 + delta + h2} maxWidth={w1 * 0.8}>
 		<Element position={[0, 0]} anchor={[-1, -1]}>
@@ -53,5 +52,5 @@ function FigureAggregation() {
 
 		<Curve points={[[(w1 - w2) / 2, h1 + arrowMargin], [(w1 - w2) / 2, h1 + delta + h2 / 2], [w1 - w2 - arrowMargin, h1 + delta + h2 / 2]]} color={themeColor} endArrow />
 		<Element position={[(w1 - w2) / 2 + 80, h1 + delta + h2 / 2 - 2]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '1em', color: themeColor }}>Aggregate by year</span></Element>
-	</Drawing>;
+	</Drawing>
 }

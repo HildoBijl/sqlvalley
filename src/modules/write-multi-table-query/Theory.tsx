@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Quote, List, Warning, Info, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -167,5 +167,5 @@ WHERE a.username = 'Jim_Business';`} tableWidth={600} tableScale={0.7} below />
 			<Par>Indeed, this person has not bought any "Fine Art" products, which corresponds with the output of our query.</Par>
 			<Warning>A check with such a small sample of course does not guarantee that our query is correct. To be fully certain, we'd have to check <Em>all</Em> accounts. But a quick check like this does filter out any obvious errors. It's always worthwhile to do so.</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }

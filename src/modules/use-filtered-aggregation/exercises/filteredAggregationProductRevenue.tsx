@@ -5,7 +5,7 @@ function Problem() {
 }
 
 const solution = `
-SELECT 
+SELECT
     prod_id,
     COUNT(*) AS tx_count,
     SUM(price) AS revenue

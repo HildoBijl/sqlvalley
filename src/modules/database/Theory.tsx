@@ -1,12 +1,11 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Glyph, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
+import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em, Link } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {
@@ -38,18 +37,18 @@ export function Theory() {
 			<Par>Every DBMS has its own specific way of how exactly it stores its data. As a result, a DBMS and a database are inextricably linked. You cannot just take a database and couple it to a different DBMS. It <Em>is</Em> possible (and common) that a single DBMS has multiple different databases on the same machine, for instance for different applications.</Par>
 			<Warning>Because a database and its DBMS are so linked, people often use the word "database" when they actually mean DBMS. "Hey, which database are you using at SQL Valley? Oh, we're using SQLite!"</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function FigureTwoTables() {
-	const db = useTheoryPageDatabase();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const db = useTheoryPageDatabase()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	const data1 = useQueryResult(db, 'SELECT * FROM departments;')
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const x = 80;
-	const y = 108;
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const x = 80
+	const y = 108
 
 	return <Drawing ref={drawingRef} width={800} height={y + (t2Bounds?.height ?? 200)} maxWidth={800}>
 		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
@@ -65,17 +64,17 @@ export function FigureTwoTables() {
 				<DataTable ref={t2Ref} data={data2} showPagination={false} compact />
 			</Box>
 		</Element>
-	</Drawing>;
+	</Drawing>
 }
 
 export function FigureDatabaseUsage() {
-	const themeColor = useThemeColor();
-	const h = 210;
-	const w = 800;
-	const y = h / 2 + 32;
-	const xUser = 60;
-	const xServer = w / 2;
-	const xDatabase = w - 60;
+	const themeColor = useThemeColor()
+	const h = 210
+	const w = 800
+	const y = h / 2 + 32
+	const xUser = 60
+	const xServer = w / 2
+	const xDatabase = w - 60
 
 	return <Drawing width={w} height={h}>
 		<Glyph name="User" position={[xUser, y - 25]} width={100} />
@@ -98,5 +97,5 @@ export function FigureDatabaseUsage() {
 
 		<Curve points={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} endArrow={true} color={themeColor} />
 		<Element position={[(xUser + xServer) / 2, y + 52]} anchor={[0, -1]}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></Element>
-	</Drawing>;
+	</Drawing>
 }

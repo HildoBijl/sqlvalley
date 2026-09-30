@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -29,5 +29,5 @@ SELECT
 FROM employees
 GROUP BY city;`} tableScale={0.8} tableWidth={440} />
 		</Section>
-	</Page>;
+	</Page>
 }

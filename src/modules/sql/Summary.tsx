@@ -1,4 +1,4 @@
-import { ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Warning, Term } from '@/ui'
 
@@ -11,5 +11,5 @@ FROM employees;`}</SQLDisplay>
 			<Par>This query retrieves all columns from the table <ISQL>employees</ISQL>. In SQL queries, superfluous white-space (linebreaks/tabs) is ignored, keywords are not case sensitive, and queries usually end with a semi-colon.</Par>
 			<Warning>Although there is a standard for how SQL should work, every DBMS has its own dialect. For advanced features, always check the specifications of your DBMS.</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }

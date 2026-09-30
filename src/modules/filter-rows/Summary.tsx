@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Term, Em } from '@/ui'
-import { FigureFiltering } from './Theory';
+import { FigureFiltering } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -16,5 +16,5 @@ WHERE position >= 's';`} columnName="position" />
 				<>To check for <Term><ISQL>NULL</ISQL> values</Term>, use the <ISQL>IS</ISQL> comparison rather than <ISQL>=</ISQL>. For instance, use <ISQL>end_date IS NULL</ISQL> to find all contracts without end date.</>,
 			]} /></Par>
 		</Section>
-	</Page>;
+	</Page>
 }

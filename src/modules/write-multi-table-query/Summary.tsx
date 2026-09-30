@@ -1,4 +1,4 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Term, Em } from '@/ui'
 
@@ -16,5 +16,5 @@ export function Summary() {
 			]} />
 			<Par>These tricks will help you get on your way when writing more complicated queries.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

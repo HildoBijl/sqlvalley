@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
-import { FigureSingleTable, FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable, FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -77,5 +77,5 @@ FROM quarterly_performance
 GROUP BY fiscal_year, quarter;`} tableWidth={500} />
 			<Info>Earlier we saw that we should not add regular columns to a <ISQL>SELECT</ISQL> statement when using aggregation. Grouping is an exception: when we group by certain columns, then we <Em>can</Em> add these grouping columns to our <ISQL>SELECT</ISQL> statement. In fact, it's very helpful to do so, to get sensible data! After all, the above tables wouldn't make sense if we didn't show the "fiscal_year" in them.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

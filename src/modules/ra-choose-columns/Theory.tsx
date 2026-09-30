@@ -1,5 +1,5 @@
 import { Page, Par, List, Section, Term, Em, M, BM } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -26,5 +26,5 @@ export function Theory() {
 			]} />
 			<Par>So altogether the above definition says: "The projection of the relation <M>r</M> onto the attributes <M>A_1, \ldots, A_n</M> is defined as the set of all possible tuples <M>(t[A_1], \ldots, t[A_n])</M>, where <M>t</M> comes from the relation <M>r</M>."</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

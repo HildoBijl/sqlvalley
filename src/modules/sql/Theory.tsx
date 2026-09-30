@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -40,14 +39,14 @@ FROM employees;`}</SQLDisplay>
 			<Par>The SQL standard has since been updated and expanded numerous time. Creators of DBMSs often work together with ANSI/ISO to make the standard both easier and more powerful to use. These DBMS creators then attempt to conform their system to the standard. After all, it makes it easier for users of other DBMSs to switch to their DBMS. This conformance to the SQL standard is the reason that SQL is the most commonly used query language in the world.</Par>
 			<Warning>The conformance of DBMSs to the SQL standard is not perfect. In practice every DBMS uses its own dialect of SQL. At SQL Valley, we mainly focus on the parts of SQL that work for all DBMSs. Sometimes we add a note "The way this works does vary slightly (or a lot) per DBMS."</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureEmployeeTable() {
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, 'SELECT * FROM employees;')
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [tRef, tBounds] = useRefWithBounds(drawingData);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [tRef, tBounds] = useRefWithBounds(drawingData)
 
 	return <Drawing ref={drawingRef} width={800} height={25 + (tBounds?.height || 200)} maxWidth={800}>
 		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The full employees table</span></Element>
@@ -56,5 +55,5 @@ function FigureEmployeeTable() {
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
 		</Element>
-	</Drawing>;
+	</Drawing>
 }

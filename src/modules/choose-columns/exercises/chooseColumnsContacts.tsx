@@ -17,9 +17,9 @@ export default {
 	definition: {
 		solution,
 		comparisonOptions: {
-		requireEqualColumnNames: true,
-		requireEqualColumnOrder: false,
-	},
+			requireEqualColumnNames: true,
+			requireEqualColumnOrder: false,
+		},
 	},
 	component: {
 		Problem,

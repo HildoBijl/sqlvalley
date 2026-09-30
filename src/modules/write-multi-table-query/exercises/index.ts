@@ -1,7 +1,6 @@
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 
 import { buildModuleExercises } from '@/curriculum/utils/buildModuleExercises'
-
 import multitableMockJoinLe from './multitableMockJoinLe'
 import multitableMockInNotin from './multitableMockInNotin'
 import multitableMockIntersect from './multitableMockIntersect'

@@ -1,11 +1,10 @@
-import { type ReactNode } from 'react';
-import { useTheme } from '@mui/material';
+import type { ReactNode } from 'react'
+import { useTheme } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@sqlvalley/drawing'
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em, M } from '@/ui'
 import { DL, IDL } from '@/learning'
-
 
 function DPGDL({ children }: { children: ReactNode }) {
 	return <DL style={{ padding: '10px 20px' }}>{children}</DL>
@@ -100,7 +99,7 @@ stressed(x) :- working(x).
 			<Par>Any positive Datalog program is also semi-positive and stratified, and similarly any semi-positive Datalog program is also stratified. The opposite doesn't always hold. This is also shown by the following Venn diagram. It shows the hierarchy of types of Datalog programs, including which type of program is guaranteed to have which property.</Par>
 			<DatalogTypeVennDiagram />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function SampleNonStratifiedProgram() {
@@ -115,12 +114,12 @@ export function DependencyGraph() {
 	const themeColor = useThemeColor()
 
 	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData);
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData);
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData);
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData);
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
+	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
+	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
+	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
+	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
 
 	// Render the drawing.
 	return <Drawing ref={drawingRef} width={200} height={210} maxWidth={200}>
@@ -140,19 +139,19 @@ export function DependencyGraph() {
 			<Element position={p3Bounds.middleRight.add(p4Bounds.middleLeft).divide(2).add([0, 10])} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></Element>
 			<Element position={p4Bounds.bottomMiddle.add(p2Bounds.topMiddle).divide(2).add([-5, 6])} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></Element>
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 export function DatalogTypeVennDiagram() {
-	const theme = useTheme();
-	const themeColor = theme.palette.primary.main;
-	const infoColor = theme.palette.info.main;
-	const warningColor = theme.palette.warning.main;
+	const theme = useTheme()
+	const themeColor = theme.palette.primary.main
+	const infoColor = theme.palette.info.main
+	const warningColor = theme.palette.warning.main
 
 	// Render the drawing.
-	const w = 700, h = 300;
-	const circleHeight = 200;
-	const circleY = h / 2 + 20;
+	const w = 700, h = 300
+	const circleHeight = 200
+	const circleY = h / 2 + 20
 	const circles = [
 		{ w: 0.25 * w, h: circleHeight / 4, x: 220, y: circleY },
 		{ w: 0.50 * w, h: circleHeight / 2, x: 280, y: circleY },

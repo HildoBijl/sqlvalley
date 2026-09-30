@@ -1,5 +1,5 @@
 import { Page, Section, Par, Info, Term, Em } from '@/ui'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -9,5 +9,5 @@ export function Summary() {
 			<FigureExampleDLQuery query={<>departmentManagerContactInfo(did, dn, fn, ln, p, e) :- department(did, dn, mid, _, _), employee(mid, fn, ln, p, e, _, _, _, _).</>} actualQuery="SELECT DISTINCT d.d_id, d.d_name, e.first_name, e.last_name, e.phone, e.email FROM departments d JOIN employees e ON d.manager_id=e.e_id" tableWidth={700} below />
 			<Info>Whenever the <Em>same variable name</Em> is used multiple times in a rule, Datalog requires it to have the <Em>same value</Em> at every occurrence. This is the trick we use to connect the predicates, completing the join. (An exception is the underscore, which does not count as a variable name: it represents an anonymous variable.)</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

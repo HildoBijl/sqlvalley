@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, Section, Warning, Term, Em } from '@/ui'
-import { FigureSingleTable, FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable, FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -37,7 +37,7 @@ FROM (
   FROM quarterly_performance
   WHERE quarter <= 2
   GROUP BY fiscal_year
-) 
+)
 WHERE average_revenue_q12 > 5000000;`} tableScale={0.8} tableWidth={220} />
 			<Par>Note that we took our aggregated table and treated it as a new table. It works, but it's a bit cumbersome, and since this is a use-case that occurs often in practice, SQL has a cleaner solution. We add a <ISQL>HAVING</ISQL> clause <Em>after</Em> the <ISQL>GROUP BY</ISQL> clause to filter the resulting table.</Par>
 			<FigureExampleQuery query={`
@@ -87,5 +87,5 @@ SELECT GROUP_CONCAT(SUBSTRING(d_name, 1, 4), " - ") AS department_codes_list
 FROM departments;`} tableScale={0.8} tableWidth={200} />
 			<Par>Admittedly, it's not the most sensible use-case, but the idea is clear: a <Em>lot</Em> is possible with aggregation.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

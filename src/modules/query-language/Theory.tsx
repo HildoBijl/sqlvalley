@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
+import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Link } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -50,24 +49,24 @@ WHERE current_salary > 200000
 			<Par>When learning a query language, you usually start with the DQL, move on to the DML and end with the DDL. But in theory, you can start with any part of the query language.</Par>
 			<Info>Here at SQL Valley we obviously focus on the SQL query language. On top of this, we mainly focus on the DQL side.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function FigureQueryExample() {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data1 = useQueryResult(db, `SELECT * FROM employees;`)
 	const data2 = useQueryResult(db, `SELECT first_name, last_name FROM employees WHERE current_salary > 200000;`)
 
 	// Find the bounds for "d_name".
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
 
-	const arrowHeight = 80;
-	const arrowMargin = 10;
+	const arrowHeight = 80
+	const arrowMargin = 10
 
 	return <Drawing ref={drawingRef} width={800} height={arrowHeight + (t1Bounds?.height ?? 200) + (t2Bounds?.height ?? 100)} maxWidth={800} disableSVGPointerEvents>
 		<Element position={[0, 0]} anchor={[-1, -1]} scale={0.6} behind>
@@ -88,5 +87,5 @@ export function FigureQueryExample() {
 				<p style={{ fontSize: '0.8rem', fontStyle: 'italic', margin: 0, lineHeight: 1.4 }}>"Find the names of all employees earning<br />more than two hundred thousand per year."</p>
 			</Element>
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

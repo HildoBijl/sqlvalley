@@ -1,7 +1,6 @@
 import { Page, Section, Par, Term, Em } from '@/ui'
 import { DL, IDL, ManualExerciseSet } from '@/learning'
-
-import { SQLValleySchema } from '@/curriculum/utils';
+import { SQLValleySchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -11,7 +10,7 @@ export function Practice() {
 			<Par>When an exercise says "Find ... " or "Create an overview of ... " then it means "Set up a Datalog rule (or rules) for a new predicate that contains (and only contains) ... ".</Par>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [
@@ -21,9 +20,9 @@ const exercises = [
 			<Par>The products that have been sold are the ones that are in the transaction predicate. These are</Par>
 			<DL>soldProduct(id) :- transaction(_, _, _, id, _, _, _, _).</DL>
 			<Par>The products that have not been sold are all registered products <Em>except</Em> the ones in this list.</Par>
-			<DL>productNeverSold(id) :-<br/>        product(id, _, _, _, _, _),<br/>        not soldProduct(id).</DL>
+			<DL>productNeverSold(id) :-<br />        product(id, _, _, _, _, _),<br />        not soldProduct(id).</DL>
 			<Par>This could also be squashed into a single rule (not recommended) through</Par>
-			<DL>productNeverSold(id) :-<br/>        product(id, _, _, _, _, _),<br/>        not transaction(_, _, _, id, _, _, _, _).</DL>
+			<DL>productNeverSold(id) :-<br />        product(id, _, _, _, _, _),<br />        not transaction(_, _, _, id, _, _, _, _).</DL>
 		</>,
 	},
 	{
@@ -32,9 +31,9 @@ const exercises = [
 			<Par>The employees who <Em>have</Em> been on sick leave are given by</Par>
 			<DL>employeeWithSickLeave(id) :- contract(id, _, _, _, _, _, 'sick leave').</DL>
 			<Par>The employees that never had sick leave are then found through</Par>
-			<DL>employeeNeverSickLeave(fn, ln) :-<br/>        employee(id, fn, ln, _, _, _, _, _, _),<br/>        not employeeWithSickLeave(id).</DL>
+			<DL>employeeNeverSickLeave(fn, ln) :-<br />        employee(id, fn, ln, _, _, _, _, _, _),<br />        not employeeWithSickLeave(id).</DL>
 			<Par>This could also be squashed into a single rule (not recommended) through</Par>
-			<DL>employeeNeverSickLeave(fn, ln) :-<br/>        employee(id, fn, ln, _, _, _, _, _, _),<br/>        not contract(id, _, _, _, _, _, 'sick leave').</DL>
+			<DL>employeeNeverSickLeave(fn, ln) :-<br />        employee(id, fn, ln, _, _, _, _, _, _),<br />        not contract(id, _, _, _, _, _, 'sick leave').</DL>
 		</>,
 	},
 	{
@@ -43,10 +42,10 @@ const exercises = [
 			<Par>We can set up two supporting predicates for users that at some point <Em>did</Em> buy or sell a product.</Par>
 			<DL>boughtSomething(b) :- transaction(_, _, b, _, _, _, _, _).<br />soldSomething(v) :- transaction(_, v, _, _, _, _, _, _).</DL>
 			<Par>The corresponding email addresses are now found through</Par>
-			<DL>inactiveUserEmails(e) :-<br/>        account(id, _, e, _, _, _, _, _, _, _),<br/>        not boughtSomething(id),<br/>        not soldSomething(id).</DL>
+			<DL>inactiveUserEmails(e) :-<br />        account(id, _, e, _, _, _, _, _, _, _),<br />        not boughtSomething(id),<br />        not soldSomething(id).</DL>
 			<Par>Note that this gives all the users that both never bought something <Em>and</Em> never sold something, which is what we want.</Par>
 			<Par>We can also squash everything into one big rule (not recommended) through</Par>
-			<DL>inactiveUserEmails(e) :-<br/>        account(id, _, e, _, _, _, _, _, _, _),<br/>        not transaction(_, _, id, _, _, _, _, _),<br/>        not transaction(_, id, _, _, _, _, _, _, _).</DL>
+			<DL>inactiveUserEmails(e) :-<br />        account(id, _, e, _, _, _, _, _, _, _),<br />        not transaction(_, _, id, _, _, _, _, _),<br />        not transaction(_, id, _, _, _, _, _, _, _).</DL>
 			<Par>Note that this rule would be a lot harder to understand for an outsider, which is of course not ideal if we want to write clear code.</Par>
 		</>,
 	},

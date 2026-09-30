@@ -1,6 +1,6 @@
 import { Page, Par, Section, Warning, Info, Term, Em, M, BM, Link } from '@/ui'
 import { RelationName } from '@/learning'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -51,5 +51,5 @@ export function Theory() {
 			<BM>{`r - s = \\{ t \\, | \\, t \\in r \\, \\textrm{and} \\, t \\notin s \\}.`}</BM>
 			<Info>If you take the difference <M>r - s</M>, and if <M>s</M> has tuples that are <Em>not</Em> in <M>r</M>, then these tuples are ignored. They have no effect on the set difference.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

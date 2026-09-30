@@ -14,7 +14,7 @@ export default defineSQLMonoExercise({
 			query: `
 SELECT *
 FROM contracts
-WHERE position='${parameters.position.replace(/'/g, "''")}';`,
+WHERE position='${parameters.position.replace(/'/g, '\'\'')}';`,
 		}),
 	},
 	component: {

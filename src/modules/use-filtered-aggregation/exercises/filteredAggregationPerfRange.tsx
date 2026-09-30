@@ -5,7 +5,7 @@ function Problem() {
 }
 
 const solution = `
-SELECT 
+SELECT
   e_id,
   MIN(perf_score) AS lowest_score,
   MAX(perf_score) AS highest_score

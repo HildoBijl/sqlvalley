@@ -1,5 +1,5 @@
 import { Page, Section, Par, Warning, List, Term, Em } from '@/ui'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -20,5 +20,5 @@ export function Summary() {
 				<>Don't forget the <Term>query</Term> at the end.</>,
 			]} />
 		</Section>
-	</Page>;
+	</Page>
 }

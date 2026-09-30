@@ -1,11 +1,9 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
+import { Vector } from '@step-wise/geometry'
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
-import { Vector } from '@step-wise/geometry';
-import { SQLDisplay } from '@sqlvalley/sql';
+import { SQLDisplay, DataTable } from '@sqlvalley/sql'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
 
 import { useThemeColor, Page, Section, Par } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -16,7 +14,7 @@ export function Summary() {
 			<Par>To sort rows in tables, and/or limit the number of given rows, there is a variety of options we can add to the end of an SQL query.</Par>
 			<FigureSorting />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const query = `
@@ -29,37 +27,37 @@ LIMIT 3
 OFFSET 1;`
 
 function FigureSorting() {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up data for the two tables.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data1 = useQueryResult(db, 'SELECT * FROM departments')
 	const data2 = useQueryResult(db, query)
 
 	// Obtain bounds of elements.
-	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
+	const [eRef, eBounds, editor] = useRefWithBounds(drawingData)
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
 
 	// Extract heights.
-	const editorHeight = eBounds?.height ?? 200;
-	const t1Height = t1Bounds?.height ?? 400;
-	const t2Height = t2Bounds?.height ?? 300;
-	const height = editorHeight + 20 + t1Height + 20 + t2Height;
+	const editorHeight = eBounds?.height ?? 200
+	const t1Height = t1Bounds?.height ?? 400
+	const t2Height = t2Bounds?.height ?? 300
+	const height = editorHeight + 20 + t1Height + 20 + t2Height
 
 	// Find bounds of query parts.
-	const ascBounds = useTextNodeBounds(editor, 'ASC', drawingData);
-	const descBounds = useTextNodeBounds(editor, 'DESC', drawingData);
-	const limitBounds = useTextNodeBounds(editor, 'LIMIT', drawingData);
-	const offsetBounds = useTextNodeBounds(editor, ';', drawingData);
+	const ascBounds = useTextNodeBounds(editor, 'ASC', drawingData)
+	const descBounds = useTextNodeBounds(editor, 'DESC', drawingData)
+	const limitBounds = useTextNodeBounds(editor, 'LIMIT', drawingData)
+	const offsetBounds = useTextNodeBounds(editor, ';', drawingData)
 
 	// Define position data.
-	const offset = 28; // Between text lines.
-	const b1 = new Vector([350, 36]);
-	const b2 = new Vector([b1.x, b1.y + offset]);
-	const b3 = new Vector([b2.x, b2.y + offset]);
-	const b4 = new Vector([b3.x, b3.y + offset]);
+	const offset = 28 // Between text lines.
+	const b1 = new Vector([350, 36])
+	const b2 = new Vector([b1.x, b1.y + offset])
+	const b3 = new Vector([b2.x, b2.y + offset])
+	const b4 = new Vector([b3.x, b3.y + offset])
 
 	// Render the figure.
 	return <Drawing ref={drawingRef} width={700} height={height} maxWidth={700} disableSVGPointerEvents>
@@ -102,5 +100,5 @@ function FigureSorting() {
 				</> : null}
 			</> : null}
 		</> : null}
-	</Drawing >;
+	</Drawing >
 }

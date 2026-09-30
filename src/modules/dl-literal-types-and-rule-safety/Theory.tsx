@@ -1,7 +1,7 @@
 
 import { Page, Section, Par, List, Quote, Info, Term, Em } from '@/ui'
 import { DL, IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -59,5 +59,5 @@ export function Theory() {
 			<Par>In general, all rules in a Datalog program have to be safe for the program to work properly.</Par>
 			<Info>Later on we will encounter a few tiny exceptions to the "all rules must be safe" idea. We'll get some arithmetic literals that <Em>do</Em> sufficiently bound variables. We will elaborate on those cases whenever we encounter them.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

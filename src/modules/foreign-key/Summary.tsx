@@ -1,8 +1,8 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Term, Em } from '@/ui'
 import { RelationName, PrimaryKey, ForeignKey } from '@/learning'
-import { FigureTwoTables } from '../database/Theory';
+import { FigureTwoTables } from '../database/Theory'
 
 export function Summary() {
 	return <Page>
@@ -16,5 +16,5 @@ export function Summary() {
 				<><RelationName>employees</RelationName> (<PrimaryKey>e_id</PrimaryKey>, first_name, last_name, phone, email, address, city, hire_date, current_salary)</>,
 			]} /></Par>
 		</Section>
-	</Page>;
+	</Page>
 }

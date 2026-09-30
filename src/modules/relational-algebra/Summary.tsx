@@ -14,5 +14,5 @@ export function Summary() {
 			<Info>We often write <M>r(R)</M> instead of just <M>r</M> to show that <M>r</M> satisfies the schema <M>R</M>. This means that, for every tuple <M>t \in r(R)</M> and for every attribute <M>A_i \in R</M>, we have <M>{`t.A_i \\in \\textrm{dom}(A_i)`}</M>.</Info>
 			<Par>Because relation instances are sets, it means they have no ordering and cannot have duplicate tuples. If there would be duplicates, the excess tuples are implicitly removed.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

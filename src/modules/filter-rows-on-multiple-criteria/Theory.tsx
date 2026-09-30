@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, List, Section, Info, Term, Em } from '@/ui'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
@@ -97,12 +96,12 @@ WHERE position = 'transportation supervisor'`} operator="EXCEPT" />
 			<Par>Since the <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> keywords do very similar things as <ISQL>AND</ISQL>, <ISQL>OR</ISQL> and <ISQL>NOT</ISQL>, their usage is not so common, but there are a few edge cases where they can be really useful.</Par>
 			<Info>Contrary to set theory in mathematics, SQL allows duplicate rows. The <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> have fixed rules of how to deal with duplicate rows. Suppose that table A consists of five identical rows, and table B consists of three of the same identical rows. Then <ISQL>A UNION B</ISQL> has one row, <ISQL>A INTERSECT B</ISQL> has one row, and <ISQL>A EXCEPT B</ISQL> has no rows. These operators remove duplicates. Use <ISQL>UNION ALL</ISQL> to keep all eight rows. Some DBMSs also support <ISQL>INTERSECT ALL</ISQL> and <ISQL>EXCEPT ALL</ISQL>, but SQLite does not.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureCombinedCondition({ c1 = '', v1 = '', c2 = '', v2 = '', combiner = 'AND', addNot = false }) {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const query = `
@@ -110,23 +109,23 @@ SELECT *
 FROM contracts
 WHERE ${addNot ? 'NOT (' : ''}${c1} = '${v1}'
   ${combiner} ${c2} = '${v2}'${addNot ? ')' : ''};`
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
-	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);
-	const c1QueryBounds = useTextNodeBounds(editor, v1, drawingData);
-	const c2QueryBounds = useTextNodeBounds(editor, v2, drawingData);
+	const [eRef, eBounds, editor] = useRefWithBounds(drawingData)
+	const c1QueryBounds = useTextNodeBounds(editor, v1, drawingData)
+	const c2QueryBounds = useTextNodeBounds(editor, v2, drawingData)
 
 	// Find the table column name bounds.
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData);
-	const c1NameBounds = useTextNodeBounds(table, c1, drawingData);
-	const c2NameBounds = useTextNodeBounds(table, c2, drawingData);
+	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
+	const c1NameBounds = useTextNodeBounds(table, c1, drawingData)
+	const c2NameBounds = useTextNodeBounds(table, c2, drawingData)
 
-	const h1 = eBounds?.height || 100;
-	const delta = 30;
-	const h2 = tBounds?.height || 200;
-	const height = h1 + delta + h2;
+	const h1 = eBounds?.height || 100
+	const delta = 30
+	const h2 = tBounds?.height || 200
+	const height = h1 + delta + h2
 
 	return <Drawing ref={drawingRef} width={800} height={height} maxWidth={800} disableSVGPointerEvents>
 		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
@@ -143,37 +142,37 @@ WHERE ${addNot ? 'NOT (' : ''}${c1} = '${v1}'
 			<Curve points={[c1QueryBounds.middleRight.add([4, 0]), [c1NameBounds.midpoint.x, c1QueryBounds.midpoint.y], c1NameBounds.bottomMiddle.add([0, -4])]} color={themeColor} curveDistance={60} endArrow />
 			<Curve points={[[c2NameBounds.midpoint.x, eBounds.top - 6], c2NameBounds.bottomMiddle]} color={themeColor} endArrow />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 function FigureAndExplanation() {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const db = useTheoryPageDatabase();
-	const status = 'active';
-	const position = 'director of pr';
-	const examplePosition = 'CIO';
+	const db = useTheoryPageDatabase()
+	const status = 'active'
+	const position = 'director of pr'
+	const examplePosition = 'CIO'
 	const data = useQueryResult(db, `
 SELECT position, status
 FROM contracts
 WHERE status = '${status}'
   AND position = '${examplePosition}'
-LIMIT 1;`);
+LIMIT 1;`)
 
 	// Find the editor bounds.
-	const [aRef, aBounds] = useRefWithBounds(drawingData);
-	const [c1Ref, c1Bounds] = useRefWithBounds(drawingData);
-	const [c2Ref, c2Bounds] = useRefWithBounds(drawingData);
-	const [r1Ref, r1Bounds] = useRefWithBounds(drawingData);
-	const [r2Ref, r2Bounds] = useRefWithBounds(drawingData);
-	const [rRef, rBounds] = useRefWithBounds(drawingData);
+	const [aRef, aBounds] = useRefWithBounds(drawingData)
+	const [c1Ref, c1Bounds] = useRefWithBounds(drawingData)
+	const [c2Ref, c2Bounds] = useRefWithBounds(drawingData)
+	const [r1Ref, r1Bounds] = useRefWithBounds(drawingData)
+	const [r2Ref, r2Bounds] = useRefWithBounds(drawingData)
+	const [rRef, rBounds] = useRefWithBounds(drawingData)
 
 	// Position data.
-	const lineHeight = 50;
-	const andX = 382;
-	const exampleY = 60;
+	const lineHeight = 50
+	const andX = 382
+	const exampleY = 60
 
 	return <Drawing ref={drawingRef} width={800} height={3.5 * lineHeight} maxWidth={800} disableSVGPointerEvents>
 		{/* Example row */}
@@ -245,27 +244,27 @@ LIMIT 1;`);
 
 			<Curve points={[rBounds.topMiddle.add([0, 2]), [andX, 3.2 * lineHeight]]} color={themeColor} size={2} endArrow />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 function FigureRewrittenQuery({ query = '' }) {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
-	const [eRef, eBounds] = useRefWithBounds(drawingData);
+	const [eRef, eBounds] = useRefWithBounds(drawingData)
 
 	// Find the table column name bounds.
-	const [tRef, tBounds] = useRefWithBounds(drawingData);
+	const [tRef, tBounds] = useRefWithBounds(drawingData)
 
-	const h1 = eBounds?.height || 100;
-	const delta = 10;
-	const h2 = tBounds?.height || 200;
-	const height = h1 + delta + h2;
+	const h1 = eBounds?.height || 100
+	const delta = 10
+	const h2 = tBounds?.height || 200
+	const height = h1 + delta + h2
 
 	return <Drawing ref={drawingRef} width={800} height={height} maxWidth={800} disableSVGPointerEvents>
 		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
@@ -279,43 +278,43 @@ function FigureRewrittenQuery({ query = '' }) {
 		</Element> : null}
 
 		{eBounds && tBounds ? <Curve points={[eBounds.middleRight.add([2, 0]), [tBounds.midpoint.x + eBounds.width / 2, eBounds.midpoint.y], [tBounds.midpoint.x + eBounds.width / 2, tBounds.bottom - 4]]} color={themeColor} curveDistance={40} endArrow /> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 export function FigureMergingTables({ query1 = '', query2 = '', operator = 'UNION' }) {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data1 = useQueryResult(db, query1)
 	const data2 = useQueryResult(db, query2)
 	const data = useQueryResult(db, `${query1}
 ${operator}
-${query2}`);
+${query2}`)
 
 	// Find the editor bounds.
-	const [e1Ref, e1Bounds] = useRefWithBounds(drawingData);
-	const [e2Ref, e2Bounds] = useRefWithBounds(drawingData);
-	const [eRef, eBounds] = useRefWithBounds(drawingData);
+	const [e1Ref, e1Bounds] = useRefWithBounds(drawingData)
+	const [e2Ref, e2Bounds] = useRefWithBounds(drawingData)
+	const [eRef, eBounds] = useRefWithBounds(drawingData)
 
 	// Find the table column name bounds.
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData);
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData);
-	const [tRef, tBounds] = useRefWithBounds(drawingData);
+	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
+	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
+	const [tRef, tBounds] = useRefWithBounds(drawingData)
 
-	const h1 = Math.max(e1Bounds?.height || 200, t1Bounds?.height || 200);
-	const delta1 = 15;
-	const h2 = Math.max(e2Bounds?.height || 200, t2Bounds?.height || 200);
-	const delta2 = 55;
-	const h3 = Math.max(eBounds?.height || 200, tBounds?.height || 200);
-	const height = h1 + delta1 + h2 + delta2 + h3;
+	const h1 = Math.max(e1Bounds?.height || 200, t1Bounds?.height || 200)
+	const delta1 = 15
+	const h2 = Math.max(e2Bounds?.height || 200, t2Bounds?.height || 200)
+	const delta2 = 55
+	const h3 = Math.max(eBounds?.height || 200, tBounds?.height || 200)
+	const height = h1 + delta1 + h2 + delta2 + h3
 
-	const w1 = Math.max(e1Bounds?.width || 200, e2Bounds?.width || 200, eBounds?.width || 200);
-	const delta3 = 50;
-	const w2 = 700;
-	const width = w1 + delta3 + w2;
-	const tableScale = 0.8;
+	const w1 = Math.max(e1Bounds?.width || 200, e2Bounds?.width || 200, eBounds?.width || 200)
+	const delta3 = 50
+	const w2 = 700
+	const width = w1 + delta3 + w2
+	const tableScale = 0.8
 
 	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width} disableSVGPointerEvents>
 		<Element ref={e1Ref} position={[0, 0]} anchor={[-1, -1]} behind>
@@ -360,5 +359,5 @@ ${query2}`}</SQLDisplay>
 			<Curve points={[t2Bounds.topMiddle.add([0, 2]), tBounds.bottomMiddle.add([0, -2])]} color={themeColor} endArrow />
 			<Element position={[tBounds.midpoint.x + 8, (t2Bounds.top + tBounds.bottom) / 2 - 4]} anchor={[-1, 0]}><ISQL>{operator}</ISQL></Element>
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

@@ -1,9 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable } from '@sqlvalley/sql';
+import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
 import { RelationName } from '@/learning'
@@ -53,30 +52,30 @@ export function Theory() {
 			}} />
 			<Info>As you see, the field of databases has different branches. Every subfield has its own local language. On SQL Valley, we use whatever terminology is most appropriate for the respective topic.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function FigureTerminology({ terminology }: { terminology?: { [key: string]: React.ReactNode } }) {
-	const themeColor = useThemeColor();
+	const themeColor = useThemeColor()
 
 	// Get data.
-	const db = useTheoryPageDatabase();
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, 'SELECT * FROM departments;')
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
 
 	// Find the text nodes.
 	const text = String(data?.values[2]?.[1] ?? '')
-	const textNodeBounds = useTextNodeBounds(table, text, drawingData, 0, 1);
-	const columnNameNodeBounds = useTextNodeBounds(table, 'd_id', drawingData, 0, 1);
+	const textNodeBounds = useTextNodeBounds(table, text, drawingData, 0, 1)
+	const columnNameNodeBounds = useTextNodeBounds(table, 'd_id', drawingData, 0, 1)
 
 	// Define coordinates.
-	const x = 180;
-	const y = 60;
-	const w = 700;
-	const r = 10;
+	const x = 180
+	const y = 60
+	const w = 700
+	const r = 10
 
 	// Render the drawing.
 	return <Drawing ref={drawingRef} width={w} height={y + (tBounds?.height || 200)} maxWidth={w} disableSVGPointerEvents>
@@ -112,5 +111,5 @@ export function FigureTerminology({ terminology }: { terminology?: { [key: strin
 			<Element position={textNodeBounds.bottomRight.add([-8, 3])} anchor={[1, 1]}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.cell}</span></Element>
 			<Rectangle dimensions={textNodeBounds} cornerRadius={r} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

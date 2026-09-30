@@ -1,8 +1,8 @@
 import { Drawing, Element } from '@sqlvalley/drawing'
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, Info } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Summary() {
 	return <Page>
@@ -17,40 +17,40 @@ FROM contracts;`} tableWidth={350} />
 			<FigureProcessingCommands />
 			<Info>Processing functions for <ISQL>DATE</ISQL> values are also available, but they strongly differ per DBMS. Look up the specifications for your own DBMS whenever you need them.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureProcessingCommands() {
-	const themeColor = useThemeColor();
+	const themeColor = useThemeColor()
 
 	// Define styles.
-	const titleStyle = { fontWeight: 600, fontSize: '1.2em' };
-	const headerStyle = { fontWeight: 550, fontSize: '1.05em' };
-	const operationStyle = { color: themeColor, fontWeight: 500, fontSize: '0.9em' };
+	const titleStyle = { fontWeight: 600, fontSize: '1.2em' }
+	const headerStyle = { fontWeight: 550, fontSize: '1.05em' }
+	const operationStyle = { color: themeColor, fontWeight: 500, fontSize: '0.9em' }
 
 	// Define heights.
-	const titleHeight = 50;
-	const headerHeight = 33;
-	const lineHeight = 30;
-	const height = titleHeight + headerHeight + 10.5 * lineHeight;
+	const titleHeight = 50
+	const headerHeight = 33
+	const lineHeight = 30
+	const height = titleHeight + headerHeight + 10.5 * lineHeight
 
 	// Define widths.
-	const w1 = 400;
-	const delta = 25; // Margin between two halves.
-	const w2 = 550;
-	const w = w1 + delta + w2;
+	const w1 = 400
+	const delta = 25 // Margin between two halves.
+	const w2 = 550
+	const w = w1 + delta + w2
 
-	const x11 = 4;
-	const x12 = 180;
-	const x13 = w1 - 60;
-	const x1i = (x12 + x13) / 2 + 25;
-	const xm1 = x12;
+	const x11 = 4
+	const x12 = 180
+	const x13 = w1 - 60
+	const x1i = (x12 + x13) / 2 + 25
+	const xm1 = x12
 
-	const x21 = w1 + delta;
-	const x22 = x21 + 240;
-	const x23 = x21 + w2 - 80;
-	const x2i = (x22 + x23) / 2 + 36;
-	const xm2 = x22;
+	const x21 = w1 + delta
+	const x22 = x21 + 240
+	const x23 = x21 + w2 - 80
+	const x2i = (x22 + x23) / 2 + 36
+	const xm2 = x22
 
 	return <Drawing width={w} height={height} maxWidth={w} disableSVGPointerEvents>
 		{/* Numbers */}
@@ -344,5 +344,5 @@ function FigureProcessingCommands() {
 		<Element position={[x23, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>'Default'</ISQL>
 		</Element>
-	</Drawing>;
+	</Drawing>
 }

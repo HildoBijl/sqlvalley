@@ -1,6 +1,6 @@
 import { Page, Section, Par, Quote, Info, Warning, List, Em, Term } from '@/ui'
 import { IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils';
+import { FigureExampleDLQuery } from '@/curriculum/utils'
 
 export function Theory() {
 	return <Page>
@@ -32,5 +32,5 @@ export function Theory() {
 			<Par>This query does the exact same thing as the previous one, but it's clearer and easier to set up.</Par>
 			<Warning>Normally, if you use the same variable name twice in a single Datalog rule, you require the two corresponding values to be equal. The underscore <IDL>_</IDL> is exempt from this idea. You can apply it as much as you like, and every time it means "This can have any value. We don't care about what exact value it is."</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }

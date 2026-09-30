@@ -1,13 +1,12 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql';
+import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { FigureMergingTables } from './Theory';
 import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { FigureMergingTables } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -27,36 +26,36 @@ WHERE status = 'sick leave'`} query2={`SELECT *
 FROM contracts
 WHERE position = 'transportation supervisor'`} operator="UNION" />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 function FigureCombinedCondition() {
-	const themeColor = useThemeColor();
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
+	const themeColor = useThemeColor()
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const query = `
 SELECT *
 FROM contracts
 WHERE NOT (status = 'paid leave' OR status = 'sick leave')
-  AND start_date < '2023-01-01';`;
-	const db = useTheoryPageDatabase();
+  AND start_date < '2023-01-01';`
+	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
-	const [eRef, eBounds, editor] = useRefWithBounds(drawingData);
-	const c1QueryBounds = useTextNodeBounds(editor, 'sick leave', drawingData);
-	const c2QueryBounds = useTextNodeBounds(editor, 'start_date', drawingData);
+	const [eRef, eBounds, editor] = useRefWithBounds(drawingData)
+	const c1QueryBounds = useTextNodeBounds(editor, 'sick leave', drawingData)
+	const c2QueryBounds = useTextNodeBounds(editor, 'start_date', drawingData)
 
 	// Find the table column name bounds.
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData);
-	const c1NameBounds = useTextNodeBounds(table, 'status', drawingData);
-	const c2NameBounds = useTextNodeBounds(table, 'start_date', drawingData);
+	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
+	const c1NameBounds = useTextNodeBounds(table, 'status', drawingData)
+	const c2NameBounds = useTextNodeBounds(table, 'start_date', drawingData)
 
-	const h1 = eBounds?.height || 100;
-	const delta = 30;
-	const h2 = tBounds?.height || 200;
-	const height = h1 + delta + h2;
+	const h1 = eBounds?.height || 100
+	const delta = 30
+	const h2 = tBounds?.height || 200
+	const height = h1 + delta + h2
 
 	return <Drawing ref={drawingRef} width={800} height={height} maxWidth={800} disableSVGPointerEvents>
 		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
@@ -73,5 +72,5 @@ WHERE NOT (status = 'paid leave' OR status = 'sick leave')
 			<Curve points={[c1QueryBounds.middleRight.add([9, 2]), [c1NameBounds.midpoint.x, c1QueryBounds.midpoint.y + 2], c1NameBounds.bottomMiddle.add([0, -4])]} color={themeColor} curveDistance={60} endArrow />
 			<Curve points={[[c2QueryBounds.midpoint.x + 4, c2QueryBounds.top + 2], [c2QueryBounds.midpoint.x + 4, eBounds.top + delta / 2 - 2], [c2NameBounds.midpoint.x, eBounds.top + delta / 2 - 2], c2NameBounds.bottomMiddle]} color={themeColor} curveDistance={20} endArrow />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

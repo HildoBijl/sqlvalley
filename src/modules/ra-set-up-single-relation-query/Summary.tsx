@@ -1,5 +1,5 @@
 import { Page, Section, Par, List, Term } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -13,5 +13,5 @@ export function Summary() {
 			<Par>By following these steps, you basically set up the query from the inside out.</Par>
 			<FigureExampleRAQuery query={<>∏<sub>first_name,last_name</sub>(σ<sub>current_salary &gt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT first_name, last_name FROM employees WHERE current_salary > 200000" tableWidth={200} />
 		</Section>
-	</Page>;
+	</Page>
 }

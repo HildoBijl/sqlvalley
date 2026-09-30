@@ -6,7 +6,7 @@ export function Practice() {
 		<Section>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [

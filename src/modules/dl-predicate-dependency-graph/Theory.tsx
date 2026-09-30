@@ -1,11 +1,10 @@
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
+import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em } from '@/ui'
 import { DL, IDL } from '@/learning'
-import { SQLValleySchema } from '@/curriculum/utils';
-
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
+import { SQLValleySchema } from '@/curriculum/utils'
 
 function DPGDL({ children }: { children: ReactNode }) {
 	return <DL style={{ padding: '10px 20px' }}>{children}</DL>
@@ -71,7 +70,7 @@ withNames(fn, ln, pn) :-
 			<Par>Now it's once more possible to compute all the predicates layer by layer.</Par>
 			<Info>Whenever Datalog encounters multiple predicates in a single node, it knows it has to apply the fixed-point algorithm to compute the predicates within this node.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }
 
 export function SampleDatalogScriptForDependencyGraph() {
@@ -89,13 +88,13 @@ export function FirstDependencyGraph() {
 	const themeColor = useThemeColor()
 
 	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData);
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData);
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData);
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData);
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData);
-	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
+	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
+	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
+	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
+	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
+	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData)
 
 	// Render the drawing.
 	return <Drawing ref={drawingRef} width={500} height={250} maxWidth={500}>
@@ -113,20 +112,20 @@ export function FirstDependencyGraph() {
 			<Curve points={[p6Bounds.bottomMiddle.add([-40, -4]), p1Bounds.topRight.add([0, 0])]} endArrow={true} color={themeColor} />
 			<Curve points={[p6Bounds.bottomMiddle.add([0, -3]), p2Bounds.topMiddle.add([0, 3])]} endArrow={true} color={themeColor} />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 export function CleanedFirstDependencyGraph({ layer = 3 }) {
 	const themeColor = useThemeColor()
 
 	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData);
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData);
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData);
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData);
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData);
-	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
+	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
+	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
+	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
+	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
+	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData)
 
 	// Render the drawing.
 	return <Drawing ref={drawingRef} width={500} height={40 + 80 * layer} maxWidth={500}>
@@ -154,24 +153,24 @@ export function CleanedFirstDependencyGraph({ layer = 3 }) {
 			{p6Bounds && p1Bounds ? <Curve points={[p6Bounds.bottomMiddle.add([-30, -2]), p1Bounds.topMiddle.add([20, 2])]} endArrow={true} color={themeColor} /> : null}
 			{p6Bounds && p2Bounds ? <Curve points={[p6Bounds.bottomMiddle.add([0, -3]), p2Bounds.topMiddle.add([0, 3])]} endArrow={true} color={themeColor} /> : null}
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 export function SecondDependencyGraph({ collapsed = false }) {
 	const themeColor = useThemeColor()
 
 	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData);
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData);
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData);
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData);
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData);
-	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData);
-	const [p7Ref, p7Bounds] = useRefWithBounds(drawingData);
-	const [p8Ref, p8Bounds] = useRefWithBounds(drawingData);
-	const [p9Ref, p9Bounds] = useRefWithBounds(drawingData);
-	const [p567Ref, p567Bounds] = useRefWithBounds(drawingData);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
+	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
+	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
+	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
+	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
+	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData)
+	const [p7Ref, p7Bounds] = useRefWithBounds(drawingData)
+	const [p8Ref, p8Bounds] = useRefWithBounds(drawingData)
+	const [p9Ref, p9Bounds] = useRefWithBounds(drawingData)
+	const [p567Ref, p567Bounds] = useRefWithBounds(drawingData)
 
 	// Render the drawing.
 	return <Drawing ref={drawingRef} width={500} height={220} maxWidth={500}>
@@ -214,21 +213,21 @@ export function SecondDependencyGraph({ collapsed = false }) {
 				</> : null}
 			</>}
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }
 
 export function CleanedSecondDependencyGraph() {
 	const themeColor = useThemeColor()
 
 	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>();
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData);
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData);
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData);
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData);
-	const [p567Ref, p567Bounds] = useRefWithBounds(drawingData);
-	const [p8Ref, p8Bounds] = useRefWithBounds(drawingData);
-	const [p9Ref, p9Bounds] = useRefWithBounds(drawingData);
+	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
+	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
+	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
+	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
+	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
+	const [p567Ref, p567Bounds] = useRefWithBounds(drawingData)
+	const [p8Ref, p8Bounds] = useRefWithBounds(drawingData)
+	const [p9Ref, p9Bounds] = useRefWithBounds(drawingData)
 
 	// Render the drawing.
 	return <Drawing ref={drawingRef} width={500} height={275} maxWidth={500}>
@@ -257,5 +256,5 @@ export function CleanedSecondDependencyGraph() {
 			<Curve points={[p9Bounds.bottomLeft.add([5, -3]), p8Bounds.topRight.add([-5, 3])]} endArrow={true} color={themeColor} />
 			<Curve points={[p9Bounds.bottomRight.add([-10, -4]), p567Bounds.topLeft.add([10, 4])]} endArrow={true} color={themeColor} />
 		</> : null}
-	</Drawing>;
+	</Drawing>
 }

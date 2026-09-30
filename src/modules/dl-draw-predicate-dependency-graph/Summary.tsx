@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, List, Term } from '@/ui'
-import { CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory';
+import { CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory'
 
 export function Summary() {
 	return <Page>
@@ -14,5 +14,5 @@ export function Summary() {
 			<Par>By following these three steps, we are guaranteed to end up with a dependency graph with layers. It can help us understand the Datalog program and evaluate the predicates within.</Par>
 			<CleanedSecondDependencyGraph />
 		</Section>
-	</Page>;
+	</Page>
 }

@@ -6,7 +6,7 @@ export function Practice() {
 		<Section>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [
@@ -33,7 +33,7 @@ const exercises = [
 	{
 		problem: <>
 			<Par>Is the following Datalog rule safe? If not, indicate due to which variable(s) and what type of problem will appear.</Par>
-			<DL>buyerOfExpensiveProduct(buyer) :-<br/>        transactions(tid, vendor, buyer, pid, date, price, validatedBy, status),<br/>        price &gt; limit.</DL>
+			<DL>buyerOfExpensiveProduct(buyer) :-<br />        transactions(tid, vendor, buyer, pid, date, price, validatedBy, status),<br />        price &gt; limit.</DL>
 		</>,
 		solution: <>
 			<Par>This is an unsafe rule: the variable <IDL>limit</IDL> is undefined. It does not appear in the head of the body, so it only makes the comparison literal ineffective. The result is that all transactions are considered "expensive".</Par>
@@ -43,7 +43,7 @@ const exercises = [
 	{
 		problem: <>
 			<Par>Is the following Datalog rule safe? If not, indicate due to which variable(s) and what type of problem will appear.</Par>
-			<DL>managerContactInfo(dn, fn, ln, p, e) :-<br/>        department(did, dn, mid, b, ne),<br/>        employee(eid, fn, ln, p, e, a, c, hd, cs),<br/>        pid = eid.</DL>
+			<DL>managerContactInfo(dn, fn, ln, p, e) :-<br />        department(did, dn, mid, b, ne),<br />        employee(eid, fn, ln, p, e, a, c, hd, cs),<br />        pid = eid.</DL>
 		</>,
 		solution: <>
 			<Par>If we look closely, we see that there's a variable <IDL>pid</IDL> in the last literal that is not used elsewhere. An equality comparison is not a predicate, so this is already considered unsafe. It will result in the comparison being ineffective, meaning the join isn't properly filtered. The resulting output will have a Cartesian product showing every employee being the manager of every department.</Par>

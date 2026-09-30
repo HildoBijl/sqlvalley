@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Info, Term, Em } from '@/ui'
-import { FigureRenameColumns } from './Theory';
+import { FigureRenameColumns } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -21,5 +21,5 @@ FROM employees;`} />
 FROM employees AS e;`} />
 			<Info>Ideally table/column names are without spaces and in lower case. If you deviate from this (not recommended) then you may use <Em>double</Em> quotation marks to make this work, like in <ISQL>SELECT "First Name" FROM "All Employees";</ISQL>. For regular column names, double quotation marks are optional and unnecessary.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

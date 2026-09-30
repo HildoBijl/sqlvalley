@@ -1,7 +1,6 @@
 import { Page, Section, Par, Term, Em } from '@/ui'
 import { RA, IRA, RelationName, PrimaryKey, ManualExerciseSet } from '@/learning'
-
-import { CompaniesSchema, ShoppingSchema } from '@/curriculum/utils';
+import { CompaniesSchema, ShoppingSchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -14,7 +13,7 @@ export function Practice() {
 			<ShoppingSchema />
 			<ManualExerciseSet exercises={shoppingExercises} startingNumber={companiesExercises.length + 1} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const companiesExercises = [
@@ -91,7 +90,7 @@ const companiesExercises = [
 			<RA>all_companies - companies_with_city_without_employees</RA>
 			<Par>This solves the exercise.</Par>
 			<Par>Another slightly more complicated way to solve this is by forcibly using division. The idea is to check every combination of (company_name, city) for the given condition. The given condition is "If a company is in a city, then there must also be an employee of it living there." This can be rephrased using logics as "The company is <Em>not</Em> located in the city, <Em>or</Em> there is an employee of the company living in the city." This results in the following checklist table.</Par>
-			<RA>company_not_in_city ← all_companies ⨯ all_cities - company_is_in_city<br/>company_city_satisfies_condition ← company_not_in_city ∪ company_has_employee_in_city</RA>
+			<RA>company_not_in_city ← all_companies ⨯ all_cities - company_is_in_city<br />company_city_satisfies_condition ← company_not_in_city ∪ company_has_employee_in_city</RA>
 			<Par>Every company for which <Em>all</Em> cities satisfy this check are suitable for our output. So the final result would then be given through</Par>
 			<RA>company_city_satisfies_condition ÷ all_cities</RA>
 			<Par>This gives all companies for which all cities satisfy the given condition.</Par>
@@ -202,8 +201,8 @@ const shoppingExercises = [
 		solution: <>
 			<Par>Note that this problem is the same as the previous problem, but then for general customers and dates. For every shopping customer (cID, date) and for every store (sID) we want to check if the given store on the given date held all the products the given customer wanted. So our entities are the combinations (cID, date, sID) and the checks are the respective products (pID) from the relevant list. We first set up the entity lists.</Par>
 			<RA>
-				all_customers ← ∏<sub>cID,date</sub>(shoppinglist)<br/>
-				all_stores ← ∏<sub>sID</sub>(store)<br/>
+				all_customers ← ∏<sub>cID,date</sub>(shoppinglist)<br />
+				all_stores ← ∏<sub>sID</sub>(store)<br />
 				all_entities ← all_customers ⨯ all_stores
 			</RA>
 			<Par>We want to find the combinations of (cID, date, sID, pID) that <Em>can</Em> be bought, because there is a stock of sufficient quantity.</Par>

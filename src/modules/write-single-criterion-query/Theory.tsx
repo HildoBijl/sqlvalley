@@ -1,7 +1,7 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Info, Term } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures';
+import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -35,5 +35,5 @@ WHERE hire_date < '2025-01-01';`} tableWidth={160} />
 			<Par>Note that the steps above are not in the order in which the query is eventually written. The start of the query (the <ISQL>SELECT</ISQL> part) is usually only added at the end. Starting with <ISQL>FROM</ISQL>, continuing with <ISQL>WHERE</ISQL> and ending up with <ISQL>SELECT</ISQL> is a very normal way of writing queries.</Par>
 			<Info>Sadly SQL does not allow another keyword order. It requires the action <ISQL>SELECT</ISQL> to be at the start. The query <ISQL>{`FROM employees WHERE hire_date < '2025-01-01' SELECT DISINCT city`}</ISQL> is not valid.</Info>
 		</Section>
-	</Page>;
+	</Page>
 }

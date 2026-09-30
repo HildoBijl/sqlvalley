@@ -1,5 +1,5 @@
 import { Page, Section, Par, Info, Term, Em, M } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
 
 export function Summary() {
 	return <Page>
@@ -10,5 +10,5 @@ export function Summary() {
 			<Info>Sometimes the attributes don't directly have the proper names for the natural join to work. We can first use the <Term>rename operator</Term> <M>\rho</M> to adjust attribute names, allowing the natural join to work.</Info>
 			<FigureExampleRAQuery query={<>departments ⋈ ρ<sub>e_id→manager_id</sub>(employees)</>} actualQuery="SELECT DISTINCT * FROM departments NATURAL JOIN (SELECT e_id AS manager_id, first_name, last_name, phone, email, address, city, hire_date, current_salary FROM employees)" tableWidth={940} tableScale={0.55} below />
 		</Section>
-	</Page>;
+	</Page>
 }

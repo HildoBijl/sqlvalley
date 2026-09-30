@@ -1,7 +1,6 @@
 import { Page, Section, Info, Par, Term, Em } from '@/ui'
 import { DL, IDL, ManualExerciseSet } from '@/learning'
-
-import { SQLValleySchema } from '@/curriculum/utils';
+import { SQLValleySchema } from '@/curriculum/utils'
 
 export function Practice() {
 	return <Page>
@@ -11,7 +10,7 @@ export function Practice() {
 			<Par>When an exercise says "Find ... " or "Create an overview of ... " then it means "Set up a Datalog rule (or rules) for a new predicate that contains (and only contains) ... ".</Par>
 			<ManualExerciseSet exercises={exercises} />
 		</Section>
-	</Page>;
+	</Page>
 }
 
 const exercises = [
@@ -41,7 +40,7 @@ contractFrom2024(id, pos, sal, start, end, per, stat) :-
 		problem: <Par>Find all employees that currently do not have a modal salary between 120000 and 220000.</Par>,
 		solution: <>
 			<Par>The conditions imply that the salary should be below 120000 <Em>or</Em> above 220000. Starting at the <IDL>employee</IDL> predicate, we get the rules</Par>
-			<DL>nonModalEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &lt; 120000.<br/>nonModalEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt; 220000.</DL>
+			<DL>nonModalEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &lt; 120000.<br />nonModalEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt; 220000.</DL>
 			<Info>Datalog also has a <IDL>not</IDL> keyword, so in theory we could also first find all modal employees, and then find all other employees. However, the <IDL>not</IDL> keyword has a few caveats that we ought to be aware of when using it. So for now let's not go there and stick with the or-condition.</Info>
 		</>,
 	},

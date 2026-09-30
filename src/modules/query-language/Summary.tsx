@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, Term } from '@/ui'
-import { FigureQueryExample } from './Theory';
+import { FigureQueryExample } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -14,5 +14,5 @@ WHERE current_salary > 200000
 `}</code></pre></Par>
 			<Par>The <Term>query language</Term> describes the exact way in which a query has to be set up. Every DBMS has its own query language, although the most commonly used databases use (some dialect of) the query language SQL.</Par>
 		</Section>
-	</Page>;
+	</Page>
 }

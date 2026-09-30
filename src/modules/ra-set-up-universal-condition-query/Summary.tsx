@@ -1,11 +1,9 @@
-import { Fragment } from 'react';
-
-import { Box } from '@mui/material';
-
+import { Fragment } from 'react'
+import { Box } from '@mui/material'
 
 import { Page, Section, Par, Info, List, Term, Em, M } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils';
-import { ChecklistTable } from './Theory';
+import { FigureExampleRAQuery } from '@/curriculum/utils'
+import { ChecklistTable } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -27,5 +25,5 @@ export function Summary() {
 				statuses_held ← ∏<sub>e_id,status</sub>(contracts)<br />
 				statuses_held ÷ all_statuses</>} actualQuery="SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts)" tableWidth={100} />
 		</Section>
-	</Page>;
+	</Page>
 }

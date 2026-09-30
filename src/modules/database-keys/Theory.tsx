@@ -1,8 +1,8 @@
-import { ISQL } from '@sqlvalley/sql';
+import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
 import { RelationName, PrimaryKey } from '@/learning'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
+import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
 
 export function Theory() {
 	return <Page>
@@ -41,5 +41,5 @@ export function Theory() {
 			<List items={[<><RelationName>employees</RelationName> (e_id, <PrimaryKey>first_name</PrimaryKey>, <PrimaryKey>last_name</PrimaryKey>, phone, email, address, city, hire_date, current_salary)</>]} />
 			<Warning>By defining a primary key, we <Em>require</Em> these attributes (their combination) to be unique. If we define <ISQL>{`{first_name, last_name}`}</ISQL> as primary key, no two people with the same name may be entered into the table. The database won't allow it!</Warning>
 		</Section>
-	</Page>;
+	</Page>
 }
