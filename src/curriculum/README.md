@@ -7,7 +7,6 @@ The content loader supplies lazy components matching learning's `ModuleContent` 
 Import public tools from `@/curriculum`. Internal files use relative imports to keep loading and hot-reload dependencies independent.
 
 - `moduleDefinition.ts` and `modulePresentation.ts`: module IDs, prerequisites, names, and descriptions.
-- `getNextModuleIds.ts`: selects follow-up modules using prerequisites and the current learning goal.
 - `content`: lazy module content and provider registries. Static practice has its own props contract.
 - `exercises`: builds registrations with module defaults and loads them through `useModuleExercises(moduleId, { enabled })`, returning `{ exercises, loading, error }`. Loader and HMR helpers remain private.
 - `database`: table introductions and the curriculum-specific `SqlModuleProvider`.
@@ -15,5 +14,7 @@ Import public tools from `@/curriculum`. Internal files use relative imports to 
 - `skillTreeVisualizations`: SQL, relational-algebra, and Datalog layouts plus their shared registry. Navigation owns paths and menu labels.
 
 Generic query figures and `useTheoryPageDatabase` live in `@/learning`; they consume the current database context without looking up curriculum modules.
+
+Follow-up module selection lives in `@sqlvalley/progress`. Navigation validates the stored goal and supplies the curriculum tree, allowed module IDs, and completion state to `getNextModuleIds`.
 
 The exercise HMR registry must stay independent of runtime exercise imports. Vite injects its import into exercise builder modules; update that path when moving the registry.

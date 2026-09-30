@@ -2,7 +2,7 @@ import { type GridPosition, type ModulePositionMeta, defineSkillTree } from '@sq
 
 import { moduleTree } from '../moduleDefinition'
 
-// Where each module sits on the grid. Cells are 1-indexed, and fractional values place a module between two cells.
+// Define where each module sits on the grid. Cells are 1-indexed, and fractional values place a module between two cells.
 const nodes: Record<string, GridPosition> = {
 	// Fundamental database concepts (shared with SQL and RA tree).
 	'database': { col: 3, row: 1 },
