@@ -22,12 +22,15 @@ import { SQLEditor, SQLDisplay, ISQL } from '@sqlvalley/sql'
 
 `DataTable` accepts `TableData`: `{ columns, values }` with readonly column names and rows of `unknown` cells. SQL.js query results fit directly. Cells format nulls, booleans, and numbers, while other text wraps when necessary to keep the full value visible.
 
-Pagination is enabled by default, with a maximum of 100 displayed rows. Use `maxRows`, `showPagination`, `compact`, and `highlightHeader` to adjust the display.
+Pagination is enabled by default, with a maximum of 100 displayed rows. Use `maxRows`, `showPagination`, `compact`, and `highlightHeader` to adjust the display. Set `maxRows={Infinity}` to allow all rows. Both paginated and unpaginated tables grow with their contents and scroll horizontally when necessary.
+
+The shared MUI DataGrid renderer preserves query order by default. Set `controls` to enable sorting, filtering, and per-column menus, as used in Data Explorer. It does not display a toolbar or column-hiding controls.
 
 ```tsx
 import { DataTable } from '@sqlvalley/sql'
 
 <DataTable data={result} compact />
+<DataTable data={result} maxRows={Infinity} controls />
 <DataTable data={{ columns: ['name'], values: [['Alice'], ['Bob']] }} showPagination={false} />
 ```
 

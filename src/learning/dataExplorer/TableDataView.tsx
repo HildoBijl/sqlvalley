@@ -1,10 +1,8 @@
 import { Alert, Box, Chip, Typography } from '@mui/material'
 
-import type { QueryResult } from '@sqlvalley/sql'
+import { type QueryResult, DataTable } from '@sqlvalley/sql'
 
 import { LoadingScreen } from '@/ui'
-
-import { ExplorerDataGrid } from './ExplorerDataGrid'
 
 interface TableDataViewProps {
 	tableNames: string[]
@@ -30,5 +28,5 @@ function TablePreview({ selectedTable, result, loading, error }: Pick<TableDataV
 	if (loading) return <LoadingScreen message="Loading table data..." />
 	if (!selectedTable) return <Typography>Select a table to load its rows.</Typography>
 	if (!result) return <Typography>No rows returned.</Typography>
-	return <ExplorerDataGrid key={selectedTable} data={result} />
+	return <DataTable key={selectedTable} data={result} maxRows={Infinity} controls />
 }

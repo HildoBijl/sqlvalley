@@ -10,6 +10,7 @@
     "./databaseProvider": "./src/databaseProvider/index.ts"
   },
   "dependencies": {
+    "@mui/x-data-grid": "^8.29.3",
     "@codemirror/lang-sql": "^6.6.1",
     "@codemirror/language": "^6.11.3",
     "@codemirror/theme-one-dark": "^6.1.2",

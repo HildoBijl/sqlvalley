@@ -18,10 +18,11 @@ export function CellValue({ value }: CellValueProps) {
 	// Wrap long values so the entire contents remain visible.
 	const text = String(value)
 	return <Typography component="span" variant="body2" title={text} sx={{
-		fontSize: '0.8125rem',
 		display: 'block',
+		fontSize: '0.8125rem',
+		overflowWrap: 'normal',
 		whiteSpace: 'normal',
-		overflowWrap: 'normal', wordBreak: 'normal',
+		wordBreak: 'normal',
 	}}>
 		{text}
 	</Typography>
