@@ -28,7 +28,7 @@ function DataTableBodyInternal({ values, columnCount }: DataTableBodyProps) {
 		{values.map((row, rowIndex) => (
 			<TableRow key={rowIndex} sx={{ '&:nth-of-type(odd)': { bgcolor: 'action.hover' }, transition: 'none' }}>
 				{row.map((cell, cellIndex) => (
-					<TableCell key={cellIndex}>
+					<TableCell key={cellIndex} sx={{ px: 1, '&:first-of-type': { pl: 2 }, '&:last-of-type': { pr: 2 } }}>
 						<CellValue value={cell} />
 					</TableCell>
 				))}

@@ -37,10 +37,10 @@ export function DataTable({
 
 	// Render the table display.
 	const { columns, values } = data
-	return <Box ref={ref}>
+	return <Box ref={ref} sx={{ minWidth: 0, maxWidth: '100%' }}>
 		<Paper variant="outlined" sx={{
 			borderRadius: 2,
-			overflow: 'hidden',
+			overflowX: 'auto',
 		}}>
 			<Table stickyHeader size={compact ? 'small' : 'medium'} sx={{
 				tableLayout: 'auto',

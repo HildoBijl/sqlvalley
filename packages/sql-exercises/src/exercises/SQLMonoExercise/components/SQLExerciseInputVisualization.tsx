@@ -64,7 +64,7 @@ function QueryResults({ validationReport, status, showSmallDatasetWarning }: { v
 
 	// Display the given results.
 	const result = validationReport.results[0]
-	if (result && result.values.length > 0) return <DataTable data={result} />
+	if (result && result.values.length > 0) return <DataTable data={result} maxRows={Infinity} />
 
 	// If there are no results, show this with the small-dataset-warning added to it if needed.
 	return <ResultsPlaceholder message="Query executed successfully but returned no rows.">

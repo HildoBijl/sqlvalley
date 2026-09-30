@@ -7,22 +7,21 @@ interface CellValueProps {
 // Render a Cell in a DataTable for a given unknown value type.
 export function CellValue({ value }: CellValueProps) {
 	// Undefined values.
-	if (value === null || value === undefined) return <Chip label="NULL" size="small" variant="outlined" />
+	if (value === null || value === undefined) return <Chip label="NULL" size="small" variant="outlined" sx={{ '& .MuiChip-label': { fontSize: '0.75rem' } }} />
 
 	// Booleans.
-	if (typeof value === 'boolean') return <Chip label={value ? 'TRUE' : 'FALSE'} size="small" color={value ? 'success' : 'default'} variant="outlined" />
+	if (typeof value === 'boolean') return <Chip label={value ? 'TRUE' : 'FALSE'} size="small" color={value ? 'success' : 'default'} variant="outlined" sx={{ '& .MuiChip-label': { fontSize: '0.75rem' } }} />
 
 	// Numbers.
-	if (typeof value === 'number') return <Typography component="span" sx={{ fontFamily: 'monospace', color: 'info.main' }}>{String(value)}</Typography>
+	if (typeof value === 'number') return <Typography component="span" variant="body2" sx={{ fontFamily: 'monospace', color: 'info.main' }}>{String(value)}</Typography>
 
-	// Truncate text only when it exceeds the available width.
+	// Wrap long values so the entire contents remain visible.
 	const text = String(value)
-	return <Typography component="span" title={text} sx={{
+	return <Typography component="span" variant="body2" title={text} sx={{
+		fontSize: '0.8125rem',
 		display: 'block',
-		maxWidth: 200,
-		overflow: 'hidden',
-		textOverflow: 'ellipsis',
-		whiteSpace: 'nowrap',
+		whiteSpace: 'normal',
+		overflowWrap: 'normal', wordBreak: 'normal',
 	}}>
 		{text}
 	</Typography>

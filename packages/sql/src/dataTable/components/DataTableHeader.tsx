@@ -10,6 +10,9 @@ export function DataTableHeader({ columns, highlightHeader }: DataTableHeaderPro
 		<TableRow>
 			{columns.map((column, index) => (
 				<TableCell key={index} sx={{
+					px: 1,
+					'&:first-of-type': { pl: 2 },
+					'&:last-of-type': { pr: 2 },
 					fontWeight: highlightHeader ? 'bold' : 'medium',
 					bgcolor: highlightHeader ? 'background.paper' : 'transparent',
 					color: highlightHeader ? 'primary.main' : 'text.primary',
