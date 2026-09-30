@@ -1,5 +1,5 @@
 export * from './notation'
-export * from './containers'
+export * from './ManualExerciseSet'
 export * from './layout'
 export * from './completion'
 export * from './practice'

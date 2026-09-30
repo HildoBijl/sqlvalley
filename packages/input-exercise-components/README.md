@@ -7,7 +7,7 @@ React presentation for solo input exercises. Exercise definitions and reducers c
 
 `MonoExercise` accepts `MonoExerciseProps` containing `Problem`, `InputArea`, `Solution`, and optional `InputVisualization` components. It wraps these in `InputExerciseProvider`. Fields use `useInputField(name, { type, normalizeInput, hydrateInput, validate, getFeedback })` to read and update draft editor states; missing string values display as empty strings. Submission normalizes each registered field into its typed `InputValue`; the combined field values use `InputValueMap` from `@step-wise/input-interpretation`. Value conversion belongs to the fields and the definition's `valueOperations`. Feedback is restored from stored reports.
 
-MonoExercise renders the Problem section, input area and buttons, input visualization, and finally the Solution section after completion. It owns shared section headings, spacing, rounded backgrounds, and solution collapse controls. The problem section uses the standard heading "Exercise". Supplied components contain subject-specific content, not section wrappers. Story slots are deferred until story mode is implemented.
+MonoExercise renders the Problem section, input area and buttons, input visualization, and finally the Solution section after completion. It uses the shared `ExerciseSection` for section headings, spacing, rounded backgrounds, and solution collapse controls. The problem section uses the standard heading "Exercise". Supplied components contain subject-specific content, not section wrappers. Story slots are deferred until story mode is implemented.
 
 ```tsx
 const componentProps = {
@@ -29,6 +29,17 @@ The package exports component props and field feedback types. It does not build 
 `ExerciseAdminTools` reads `admin.showControls` from the exercise context and renders nothing when disabled. It combines the exercise manager?s `ExerciseSelection` and `RegenerateExerciseButton` with `ShowSolutionButton`. When enabled, this package renders the exercise selector and Show Solution button using `admin.exerciseIds` and `admin.selectExerciseById` from the session context and solution handling from the input provider. Tools are disabled while `submitting` is true; Show Solution is also disabled when no solution is available. Showing a solution fills the draft without submitting an answer. Regenerate starts a fresh instance of the same exercise, including new parameters and an empty draft.
 
 MonoExercise checks its definition with `isMonoExercise` and its current state with `isMonoExerciseState`. These upstream guards narrow the types without casts or revalidating the entire history.
+
+
+## Exercise sections
+
+`ExerciseSection` is a standalone presentation component, also used by manually authored exercises. It needs no exercise provider. Pass `title` and children; add `collapsible` for Show/Hide controls and `defaultExpanded={false}` to start collapsed. Sections default to expanded with a shaded background. Use the optional Material UI `sx` prop to customize spacing and appearance; manual exercises use a white solution panel.
+
+```tsx
+<ExerciseSection title="Solution" collapsible defaultExpanded={false}>
+	<Solution />
+</ExerciseSection>
+```
 
 
 ## Shared input provider

@@ -5,9 +5,10 @@ import { getCurrentState, isStateDone } from '@step-wise/exercise-definition'
 import { isMonoExercise, isMonoExerciseState } from '@step-wise/input-exercises'
 import { useExerciseSessionContext } from '@sqlvalley/exercise-manager'
 
+import { ExerciseSection } from '../ExerciseSection'
 import { InputExerciseProvider, useInputExerciseContext } from '../inputExercise'
 
-import { ExerciseControls, MonoExerciseSection } from './components'
+import { ExerciseControls } from './components'
 import type { MonoExerciseInputAreaProps, MonoExerciseInputVisualizationProps, MonoExerciseProblemProps, MonoExerciseSolutionProps } from './types'
 
 export interface MonoExerciseProps {
@@ -37,14 +38,14 @@ function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization 
 
 	// Render the exercise.
 	return <Box>
-		<MonoExerciseSection title="Exercise">
+		<ExerciseSection title="Exercise">
 			<Problem parameters={parameters} />
-		</MonoExerciseSection>
+		</ExerciseSection>
 		<InputArea parameters={parameters} disabled={complete || submitting} onSubmit={submitInput} />
 		<ExerciseControls />
 		{InputVisualization ? <InputVisualization parameters={parameters} input={input} state={state} /> : null}
-		{complete ? <MonoExerciseSection title="Solution" collapsible>
+		{complete ? <ExerciseSection title="Solution" collapsible>
 			<Solution parameters={parameters} state={state} />
-		</MonoExerciseSection> : null}
+		</ExerciseSection> : null}
 	</Box>
 }
