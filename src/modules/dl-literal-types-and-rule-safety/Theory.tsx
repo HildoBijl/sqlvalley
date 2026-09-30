@@ -1,5 +1,6 @@
 
-import { Page, Section, Par, List, Quote, Info, Term, Em, DL, IDL } from '@/ui'
+import { Page, Section, Par, List, Quote, Info, Term, Em } from '@/ui'
+import { DL, IDL } from '@/learning'
 import { FigureExampleDLQuery } from '@/curriculum/utils';
 
 export function Theory() {

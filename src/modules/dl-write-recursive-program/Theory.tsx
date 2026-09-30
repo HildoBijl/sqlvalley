@@ -1,5 +1,6 @@
 
-import { Page, Section, Par, List, Warning, Em, Term, DL, IDL } from '@/ui'
+import { Page, Section, Par, List, Warning, Em, Term } from '@/ui'
+import { DL, IDL } from '@/learning'
 
 export function Theory() {
 	return <Page>

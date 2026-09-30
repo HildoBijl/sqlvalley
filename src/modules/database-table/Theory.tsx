@@ -5,7 +5,8 @@ import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { DataTable } from '@sqlvalley/sql';
 
-import { useThemeColor, Page, Section, Par, List, Info, Term, Em, RelationName } from '@/ui'
+import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
+import { RelationName } from '@/learning'
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {

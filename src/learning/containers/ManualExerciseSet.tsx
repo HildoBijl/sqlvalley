@@ -1,9 +1,8 @@
-import { type ReactNode, useState } from 'react';
-import { Paper, Box, Button, Collapse, Divider, Typography } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { type ReactNode, useState } from 'react'
+import { Paper, Box, Button, Collapse, Divider, Typography } from '@mui/material'
+import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
-import { ExerciseSection } from '@/ui'
-
+import { ExerciseSection } from './ExerciseSection'
 
 interface Exercise {
 	problem: ReactNode,
@@ -11,8 +10,8 @@ interface Exercise {
 }
 
 interface ManualExerciseSetProps {
-	exercises: Exercise[];
-	startingNumber?: number;
+	exercises: Exercise[]
+	startingNumber?: number
 }
 
 export function ManualExerciseSet({ exercises, startingNumber = 1 }: ManualExerciseSetProps) {
@@ -20,12 +19,12 @@ export function ManualExerciseSet({ exercises, startingNumber = 1 }: ManualExerc
 }
 
 interface ManualExerciseProps {
-	exercise: Exercise;
-	number: number;
+	exercise: Exercise
+	number: number
 }
 
 function ManualExercise({ exercise, number }: ManualExerciseProps) {
-	const [expanded, setExpanded] = useState(false);
+	const [expanded, setExpanded] = useState(false)
 
 	return <Box>
 		{/* Problem */}
@@ -49,7 +48,7 @@ function ManualExercise({ exercise, number }: ManualExerciseProps) {
 					size="small"
 					color="primary"
 					variant="text"
-					onClick={() => setExpanded((prev) => !prev)}
+					onClick={() => setExpanded(prev => !prev)}
 					endIcon={expanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
 					sx={{ textTransform: 'none', fontWeight: 500, px: 1 }}
 				>

@@ -1,6 +1,6 @@
-import { createContext } from 'react';
-import { createTheme, useTheme } from '@mui/material/styles';
-import type { PaletteMode } from '@mui/material';
+import { createContext } from 'react'
+import { createTheme, useTheme } from '@mui/material/styles'
+import type { PaletteMode } from '@mui/material'
 
 export const getTheme = (mode: PaletteMode) =>
 	createTheme({
@@ -76,16 +76,13 @@ export const getTheme = (mode: PaletteMode) =>
 				styleOverrides: { root: { '& .MuiOutlinedInput-root': { borderRadius: 8 } } },
 			},
 		},
-	});
-
-// Backwards-compat: existing imports that expect a theme object
-export const theme = getTheme('light');
+	})
 
 export const ColorModeContext = createContext<{
-	mode: PaletteMode;
-	toggleColorMode: () => void;
-}>({ mode: 'dark', toggleColorMode: () => { } });
+	mode: PaletteMode
+	toggleColorMode: () => void
+}>({ mode: 'dark', toggleColorMode: () => { } })
 
 export function useThemeColor() {
-	return useTheme().palette.primary.main;
+	return useTheme().palette.primary.main
 }

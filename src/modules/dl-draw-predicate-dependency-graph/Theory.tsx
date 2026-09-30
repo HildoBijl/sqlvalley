@@ -1,5 +1,6 @@
 
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link, IDL } from '@/ui'
+import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link } from '@/ui'
+import { IDL } from '@/learning'
 import { SampleDatalogScriptForDependencyGraph, SecondDependencyGraph, CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory';
 
 export function Theory() {

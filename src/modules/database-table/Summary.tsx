@@ -1,5 +1,6 @@
 
-import { Page, Section, Par, List, Info, Term, RelationName } from '@/ui'
+import { Page, Section, Par, List, Info, Term } from '@/ui'
+import { RelationName } from '@/learning'
 import { FigureTerminology } from './Theory';
 
 export function Summary() {

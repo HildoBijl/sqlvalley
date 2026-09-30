@@ -5,7 +5,8 @@ import { type DrawingData, useRefWithValue, Drawing, Element, useRefWithBounds }
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql';
 
-import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM, RA, IRA } from '@/ui'
+import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM } from '@/ui'
+import { RA, IRA } from '@/learning'
 import { FigureExampleRAQuery, useTheoryPageDatabase } from '@/curriculum/utils'
 
 export function Theory() {

@@ -1,4 +1,5 @@
-import { Page, Par, Section, Warning, Info, Term, Em, M, BM, RelationName, Link } from '@/ui'
+import { Page, Par, Section, Warning, Info, Term, Em, M, BM, Link } from '@/ui'
+import { RelationName } from '@/learning'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 export function Theory() {

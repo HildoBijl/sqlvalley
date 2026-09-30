@@ -1,4 +1,5 @@
-import { Page, Section, Par, List, Warning, Term, Em, M, RA, IRA, RelationName } from '@/ui'
+import { Page, Section, Par, List, Warning, Term, Em, M } from '@/ui'
+import { RA, IRA, RelationName } from '@/learning'
 import { FigureExampleRAQuery, FigureSingleTable } from '@/curriculum/utils';
 
 export function Theory() {

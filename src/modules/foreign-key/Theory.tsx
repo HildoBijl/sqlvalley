@@ -1,6 +1,7 @@
 import { ISQL } from '@sqlvalley/sql';
 
-import { Page, Section, Par, List, Warning, Term, Em, RelationName, PrimaryKey, ForeignKey } from '@/ui'
+import { Page, Section, Par, List, Warning, Term, Em } from '@/ui'
+import { RelationName, PrimaryKey, ForeignKey } from '@/learning'
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 
 export function Theory() {

@@ -1,9 +1,9 @@
-import { type ReactNode } from 'react';
-import { Typography, type TypographyProps } from '@mui/material';
+import type { ReactNode } from 'react'
+import { type TypographyProps, Typography } from '@mui/material'
 
 export type RelationNameProps = TypographyProps & {
-	children: ReactNode;
-};
+	children: ReactNode
+}
 
 export function RelationName({ children, sx, ...props }: RelationNameProps) {
 	return <Typography
@@ -14,5 +14,5 @@ export function RelationName({ children, sx, ...props }: RelationNameProps) {
 		{...props}
 	>
 		{children}
-	</Typography>;
+	</Typography>
 }

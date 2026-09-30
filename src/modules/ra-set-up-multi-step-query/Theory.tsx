@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 
-import { Page, Section, Par, List, Info, Term, Em, M, RA, Link } from '@/ui'
+import { Page, Section, Par, List, Info, Term, Em, M, Link } from '@/ui'
+import { RA } from '@/learning'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 export function Theory() {

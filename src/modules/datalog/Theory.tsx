@@ -3,7 +3,8 @@ import { Fragment } from 'react'
 
 import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
-import { Page, Section, Par, List, Warning, Info, Quote, Term, Em, DL, IDL } from '@/ui'
+import { Page, Section, Par, List, Warning, Info, Quote, Term, Em } from '@/ui'
+import { DL, IDL } from '@/learning'
 import { FigureSingleTable } from '@/curriculum/utils/queryFigures';
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 

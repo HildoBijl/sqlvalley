@@ -1,0 +1,12 @@
+import type { ReactNode } from 'react'
+import { type TypographyProps, Typography } from '@mui/material'
+
+export type TermProps = TypographyProps & {
+	children: ReactNode
+}
+
+export function Term({ children, sx, ...props }: TermProps) {
+	return <Typography component="strong" variant="inherit" fontWeight="bold" sx={{ ...sx }} {...props}>
+		{children}
+	</Typography>
+}

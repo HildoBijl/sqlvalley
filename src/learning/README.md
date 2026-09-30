@@ -1,5 +1,9 @@
 # Learning - Educational components
 
-Here you find a large variety of components related to the educational part of the web app.
+Educational tools that do not depend on the module tree. Import shared notation and containers from `@/learning`.
 
-This part of the ReadMe is still under development. Check back later.
+- `notation`: relation names, primary and foreign keys, relational algebra (`RA`/`IRA`), and Datalog (`DL`/`IDL`). These components remain independent so their presentation can evolve separately.
+- `containers`: `ExerciseSection` and `ManualExerciseSet`, which arrange manually authored exercises and their solutions.
+- `components`: the remaining educational components, pending further organization.
+
+General document formatting, notices, loading screens, and theme utilities live in `@/ui`.

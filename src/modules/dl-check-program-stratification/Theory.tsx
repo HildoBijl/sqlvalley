@@ -1,5 +1,6 @@
 
-import { Page, Section, Par, List, Info, Em, IDL, Link } from '@/ui'
+import { Page, Section, Par, List, Info, Em, Link } from '@/ui'
+import { IDL } from '@/learning'
 import { SampleNonStratifiedProgram, DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory';
 
 export function Theory() {

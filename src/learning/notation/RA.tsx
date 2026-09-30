@@ -1,18 +1,18 @@
-import { type ReactNode, type CSSProperties, type Ref } from 'react';
+import type { ReactNode, CSSProperties, Ref } from 'react'
 
 export interface RAProps {
-	children: ReactNode;
-	inline?: boolean;
-	className?: string;
-	style?: CSSProperties;
-	ref?: Ref<HTMLPreElement>;
+	children: ReactNode
+	inline?: boolean
+	className?: string
+	style?: CSSProperties
+	ref?: Ref<HTMLPreElement>
 }
 
 export function RA({ children, inline = false, className, style, ref }: RAProps) {
 	children = typeof children === 'string' ? children.trim() : children
 
 	if (inline) {
-		return <code ref={ref} className={className} style={{ whiteSpace: "pre", ...style }}>
+		return <code ref={ref} className={className} style={{ whiteSpace: 'pre', ...style }}>
 			{children}
 		</code>
 	}
@@ -22,7 +22,7 @@ export function RA({ children, inline = false, className, style, ref }: RAProps)
 	</pre>
 }
 
-type IRAProps = Omit<RAProps, "inline">;
+type IRAProps = Omit<RAProps, 'inline'>
 
 export function IRA(props: IRAProps) {
 	return <RA {...props} inline />

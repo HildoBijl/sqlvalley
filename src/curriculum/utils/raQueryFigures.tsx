@@ -5,7 +5,8 @@ import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithB
 import { DataTable } from '@sqlvalley/sql';
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
-import { useThemeColor, RA } from '@/ui'
+import { useThemeColor } from '@/ui'
+import { RA } from '@/learning'
 import { useTheoryPageDatabase } from './useTheoryPageDatabase'
 
 type FigureExampleRAQueryProps = {

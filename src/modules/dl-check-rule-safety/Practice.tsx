@@ -1,5 +1,5 @@
-import { Page, Section, Par, Em, DL, IDL } from '@/ui'
-import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
+import { Page, Section, Par, Em } from '@/ui'
+import { DL, IDL, ManualExerciseSet } from '@/learning'
 
 export function Practice() {
 	return <Page>

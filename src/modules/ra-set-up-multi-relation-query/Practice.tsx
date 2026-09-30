@@ -1,5 +1,5 @@
-import { Page, Section, Par, RA, Term, Em, RelationName, PrimaryKey } from '@/ui'
-import { ManualExerciseSet } from '@/learning/components/ManualExerciseSet';
+import { Page, Section, Par, Term, Em } from '@/ui'
+import { RA, RelationName, PrimaryKey, ManualExerciseSet } from '@/learning'
 
 import { CompaniesSchema, ShoppingSchema } from '@/curriculum/utils';
 

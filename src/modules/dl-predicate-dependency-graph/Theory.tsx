@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react'
 
 
-import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em, DL, IDL } from '@/ui'
+import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em } from '@/ui'
+import { DL, IDL } from '@/learning'
 import { SQLValleySchema } from '@/curriculum/utils';
 
 import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'

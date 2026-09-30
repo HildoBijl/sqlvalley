@@ -1,5 +1,11 @@
 # Application UI
 
-Shared SQL Valley components and styling: `html` contains page and content elements, `flow` contains loading and error views, and `theme.ts` defines the application theme. Import these from `@/ui`.
+Shared SQL Valley components and styling. Import these from `@/ui`.
 
-Reusable figures and drawing tools live in `@sqlvalley/drawing`.
+- `document`: page and section spacing, paragraphs, lists, quotes, links, and inline emphasis.
+- `alerts`: informational and warning notices, sharing a private `Alert` implementation.
+- `status`: loading screens and error boundaries.
+- `maths`: inline and block mathematical notation using KaTeX.
+- `theme.ts`: theme creation, color-mode context, and the theme-color hook.
+
+Educational notation and exercise containers live in `@/learning`.

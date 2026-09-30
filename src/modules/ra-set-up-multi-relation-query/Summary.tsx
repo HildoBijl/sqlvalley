@@ -1,4 +1,5 @@
-import { Page, Section, Par, Term, IRA, RelationName } from '@/ui'
+import { Page, Section, Par, Term } from '@/ui'
+import { IRA, RelationName } from '@/learning'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 export function Summary() {

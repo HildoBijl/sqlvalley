@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 
-import { DL } from '@/ui'
+import { DL } from '@/learning'
 import { FigureExampleRAQuery } from './raQueryFigures';
 
 type Props = ComponentProps<typeof FigureExampleRAQuery>;

@@ -1,5 +1,6 @@
 
-import { Page, Section, Par, Info, Term, Em, IDL, DL } from '@/ui'
+import { Page, Section, Par, Info, Term, Em } from '@/ui'
+import { IDL, DL } from '@/learning'
 import { FirstDependencyGraph, CleanedSecondDependencyGraph } from './Theory';
 
 export function Summary() {

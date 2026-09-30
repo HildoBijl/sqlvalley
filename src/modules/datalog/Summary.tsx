@@ -1,7 +1,8 @@
 
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
-import { Page, Section, Par, Term, Em, DL } from '@/ui'
+import { Page, Section, Par, Term, Em } from '@/ui'
+import { DL } from '@/learning'
 import { DatalogFacts, DatalogOutput } from './Theory';
 import { useTheoryPageDatabase } from '@/curriculum/utils'
 

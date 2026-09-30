@@ -1,4 +1,5 @@
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, RA, IRA, RelationName, Link } from '@/ui'
+import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link } from '@/ui'
+import { RA, IRA, RelationName } from '@/learning'
 import { FigureExampleRAQuery } from '@/curriculum/utils';
 
 import { FigureTwoTables } from '../database/Theory';

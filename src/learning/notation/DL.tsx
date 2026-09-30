@@ -1,18 +1,18 @@
-import { type ReactNode, type CSSProperties, type Ref } from 'react';
+import type { ReactNode, CSSProperties, Ref } from 'react'
 
 export interface DLProps {
-	children: ReactNode;
-	inline?: boolean;
-	className?: string;
-	style?: CSSProperties;
-	ref?: Ref<HTMLPreElement>;
+	children: ReactNode
+	inline?: boolean
+	className?: string
+	style?: CSSProperties
+	ref?: Ref<HTMLPreElement>
 }
 
 export function DL({ children, inline = false, className, style, ref }: DLProps) {
 	children = typeof children === 'string' ? children.trim() : children
 
 	if (inline) {
-		return <code ref={ref} className={className} style={{ whiteSpace: "pre", ...style }}>
+		return <code ref={ref} className={className} style={{ whiteSpace: 'pre', ...style }}>
 			{children}
 		</code>
 	}
@@ -22,7 +22,7 @@ export function DL({ children, inline = false, className, style, ref }: DLProps)
 	</pre>
 }
 
-type IDLProps = Omit<DLProps, "inline">;
+type IDLProps = Omit<DLProps, 'inline'>
 
 export function IDL(props: IDLProps) {
 	return <DL {...props} inline />
