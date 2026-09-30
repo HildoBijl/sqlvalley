@@ -37,6 +37,7 @@ Follow the style of the surrounding code and move changed code toward these conv
 - Prefer single quotes for strings where the language permits them.
 - Prefer compact code when it remains immediately readable. Avoid vertical expansion when a statement naturally fits on one line, but do not compress complex logic merely to reduce line count.
 - Return JSX directly without wrapping parentheses. Put the opening element or fragment on the same line as `return`, including for multiline JSX.
+- When a JSX opening tag spans multiple lines, put its closing `>` after the last prop rather than on a separate line.
 
 ```tsx
 return <Component>

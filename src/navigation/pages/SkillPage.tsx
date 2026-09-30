@@ -16,20 +16,13 @@ import {
 	skillTreeVisualizationById,
 	type SkillTreeVisualizationId,
 } from '@/curriculum/skillTreeVisualizations';
+import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
+import { EXERCISES_REQUIRED_FOR_SKILL_COMPLETION, useModuleCompletion } from '@sqlvalley/progress';
+import { type TabConfig, LearningHeader, LearningTabs, ModuleContentView, SkillCompletionDialog, DataExplorer, InteractivePractice } from '@/learning'
 import { LoadingScreen } from '@/ui'
 import { moduleComponents, moduleProviders } from '@/curriculum/utils/loaders'
 
-import { ContentHeader } from '@/learning/components/ContentHeader';
-import { ContentTabs } from '@/learning/components/ContentTabs';
-import { DataExplorerTab } from '@/learning/components/DataExplorerTab';
-import { SkillCompletionDialog } from '@/learning/components/SkillCompletionDialog';
-import { StoryTab, SummaryTab, TheoryTab, VideoTab } from '@/learning/components/TabContent/ContentTab';
-import { useContentTabs } from '@/learning/hooks/useContentTabs';
-import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
-import { EXERCISES_REQUIRED_FOR_SKILL_COMPLETION, useModuleCompletion } from '@sqlvalley/progress';
-import { InteractivePracticeTab } from '@/learning/components/InteractivePracticeTab'
-
-import type { TabConfig } from '@/learning/types';
+import { useModuleTabs } from '../hooks'
 
 export default function SkillPage() {
 	const { skillId } = useParams<{ skillId: string }>();
@@ -57,7 +50,7 @@ export default function SkillPage() {
 		// { key: 'video', label: 'Video', icon: <OndemandVideo /> },
 		{ key: 'practice', label: 'Practice', icon: <Edit /> },
 		{ key: 'data', label: 'Data Explorer', icon: <Storage /> },
-		{ key: 'summary', label: 'Summary', icon: <Bolt /> },
+		{ key: 'summary', label: 'Summary', icon: <Bolt />, align: 'end' },
 	];
 
 	const availableTabs = allTabs.filter((tab) => {
@@ -72,7 +65,7 @@ export default function SkillPage() {
 		selectTab,
 		tabs,
 		moduleState,
-	} = useContentTabs(skillId, 'skill', availableTabs, {
+	} = useModuleTabs(skillId, 'skill', availableTabs, {
 		defaultTab: 'theory',
 	});
 
@@ -162,7 +155,7 @@ export default function SkillPage() {
 		<Suspense fallback={<LoadingScreen message="Loading module..." />}>
 			<ModuleProvider key={skillMeta.id} moduleId={skillMeta.id}>
 				<Container maxWidth="lg" sx={{ py: 3 }}>
-					<ContentHeader
+					<LearningHeader
 						title={presentation.name}
 						description={presentation.description}
 						onBack={() => navigate(backToLearningPath)}
@@ -178,7 +171,7 @@ export default function SkillPage() {
 					)}
 
 					{visibleTabs.length > 0 && (
-						<ContentTabs value={currentTab} tabs={visibleTabs} onChange={handleTabChange}>
+						<LearningTabs value={currentTab} tabs={visibleTabs} onChange={handleTabChange}>
 							{currentTab === 'practice' && hasStaticPractice && (
 								<StaticPracticeTab
 									moduleId={skillMeta.id}
@@ -188,18 +181,18 @@ export default function SkillPage() {
 							)}
 
 							{currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
-								<InteractivePracticeTab
+								<InteractivePractice
 									skillId={skillMeta.id}
 									exercises={exerciseDefinitions ?? []}
 								/>
 							)}
 
-							{currentTab === 'theory' && <TheoryTab contentId={skillMeta.id} />}
-							{currentTab === 'video' && <VideoTab contentId={skillMeta.id} />}
-							{currentTab === 'summary' && summaryUnlocked && <SummaryTab contentId={skillMeta.id} />}
-							{currentTab === 'story' && <StoryTab contentId={skillMeta.id} />}
-							{currentTab === 'data' && hasTables && <DataExplorerTab tables={tables} />}
-						</ContentTabs>
+							{currentTab === 'theory' && <ModuleContentView content={moduleComponents[skillMeta.id]} section="Theory" />}
+							{currentTab === 'video' && <ModuleContentView content={moduleComponents[skillMeta.id]} section="Video" />}
+							{currentTab === 'summary' && summaryUnlocked && <ModuleContentView content={moduleComponents[skillMeta.id]} section="Summary" />}
+							{currentTab === 'story' && <ModuleContentView content={moduleComponents[skillMeta.id]} section="Story" />}
+							{currentTab === 'data' && hasTables && <DataExplorer tables={tables} />}
+						</LearningTabs>
 					)}
 
 					{currentTab === 'practice' && hasStaticPractice && !isSkillMastered && (
@@ -234,7 +227,6 @@ export default function SkillPage() {
 							selectTab('summary');
 						}}
 						onContinueLearning={() => navigate(backToLearningPath)}
-						showStoryButton={showStoryButton}
 					/>
 				</Container>
 			</ModuleProvider>

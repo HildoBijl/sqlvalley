@@ -1,2 +1,7 @@
 export * from './notation'
 export * from './containers'
+export * from './layout'
+export * from './completion'
+export * from './InteractivePractice'
+export * from './ModuleContentView'
+export * from './dataExplorer'

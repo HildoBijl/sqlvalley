@@ -1,15 +1,9 @@
 import { moduleTree } from '@/curriculum/moduleDefinition'
-import {
-	defineSkillTree,
-	type GridPosition,
-	type ModulePositionMeta,
-	type ModulePositionMetaRaw,
-} from '@sqlvalley/skill-tree';
+import { defineSkillTree, type GridPosition, type ModulePositionMeta, type ModulePositionMetaRaw } from '@sqlvalley/skill-tree';
 
-// Where each module sits on the grid. Cells are 1-indexed, and fractional
-// values place a module between two cells. See the README in this folder.
+// Where each module sits on the grid. Cells are 1-indexed, and fractional values place a module between two cells. See the README in this folder.
 const nodes: Record<string, GridPosition> = {
-	// Fundamental database concepts (shared with SQL and RA tree)
+	// Fundamental database concepts (shared with SQL and RA tree).
 	'database': { col: 3, row: 1 },
 	'database-table': { col: 2.5, row: 2 },
 	'query-language': { col: 3.5, row: 2 },
@@ -49,10 +43,8 @@ const processedModulePositions = defineSkillTree({
 	nodes,
 });
 
-export const datalogModulePositions: Record<string, ModulePositionMeta> =
-	processedModulePositions.modulePositions;
-export const datalogModulePositionList: ModulePositionMeta[] =
-	processedModulePositions.modulePositionList;
+export const datalogModulePositions: Record<string, ModulePositionMeta> = processedModulePositions.modulePositions;
+export const datalogModulePositionList: ModulePositionMeta[] = processedModulePositions.modulePositionList;
 export const datalogConnectors = processedModulePositions.connectors;
 
 export type { ModulePositionMeta, ModulePositionMetaRaw };

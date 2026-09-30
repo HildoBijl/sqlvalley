@@ -2,12 +2,12 @@ import { type ExerciseRegistration, ExerciseManager, useModuleContext } from '@s
 
 import { exerciseStorage, useAdminMode, useCurrentExerciseInstance } from '@/store'
 
-interface InteractivePracticeTabProps {
+interface InteractivePracticeProps {
 	skillId: string
 	exercises: readonly ExerciseRegistration[]
 }
 
-export function InteractivePracticeTab({ skillId, exercises }: InteractivePracticeTabProps) {
+export function InteractivePractice({ skillId, exercises }: InteractivePracticeProps) {
 	const resources = useModuleContext()
 	const isAdmin = useAdminMode()
 	const currentExerciseInstance = useCurrentExerciseInstance(skillId)

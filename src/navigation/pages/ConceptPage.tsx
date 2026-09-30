@@ -26,19 +26,11 @@ import {
 	skillTreeVisualizationDefinitions,
 	type SkillTreeVisualizationId,
 } from '@/curriculum/skillTreeVisualizations';
-import { ContentHeader } from '@/learning/components/ContentHeader';
-import { ConceptCompletionDialog } from '@/learning/components/ConceptCompletionDialog';
-import { ContentTabs } from '@/learning/components/ContentTabs';
-import {
-	StoryTab,
-	SummaryTab,
-	TheoryTab,
-	VideoTab,
-} from '@/learning/components/TabContent/ContentTab';
+import { type TabConfig, LearningHeader, LearningTabs, ModuleContentView, ConceptCompletionDialog } from '@/learning'
 import { LoadingScreen } from '@/ui'
-import { moduleProviders } from '@/curriculum/utils/loaders'
-import { useContentTabs } from '@/learning/hooks/useContentTabs';
-import type { TabConfig } from '@/learning/types';
+import { moduleComponents, moduleProviders } from '@/curriculum/utils/loaders'
+
+import { useModuleTabs } from '../hooks'
 
 export default function ConceptPage() {
 	const { conceptId } = useParams<{ conceptId: string }>();
@@ -70,7 +62,7 @@ export default function ConceptPage() {
 		{ key: 'story', label: 'Story', icon: <MenuBook /> },
 		{ key: 'theory', label: 'Theory', icon: <Lightbulb /> },
 		// { key: 'video', label: 'Video', icon: <OndemandVideo /> },
-		{ key: 'summary', label: 'Summary', icon: <Bolt /> },
+		{ key: 'summary', label: 'Summary', icon: <Bolt />, align: 'end' },
 	];
 
 	const availableTabs = hideStories
@@ -83,7 +75,7 @@ export default function ConceptPage() {
 		selectTab,
 		tabs,
 		moduleState,
-	} = useContentTabs(
+	} = useModuleTabs(
 		conceptId,
 		'concept',
 		availableTabs,
@@ -183,7 +175,7 @@ export default function ConceptPage() {
 		<Suspense fallback={<LoadingScreen message="Loading module..." />}>
 			<ModuleProvider key={conceptMeta.id} moduleId={conceptMeta.id}>
 				<Container maxWidth="lg" sx={{ py: 2 }}>
-					<ContentHeader
+					<LearningHeader
 						title={presentation.name}
 						description={presentation.description}
 						onBack={() => navigate(backToLearningPath)}
@@ -192,18 +184,18 @@ export default function ConceptPage() {
 					/>
 
 					{visibleTabs.length > 0 && (
-						<ContentTabs
+						<LearningTabs
 							value={currentTab}
 							tabs={visibleTabs}
 							onChange={handleTabChange}
 						>
-							{currentTab === 'theory' && <TheoryTab contentId={conceptMeta.id} />}
-							{currentTab === 'video' && <VideoTab contentId={conceptMeta.id} />}
+							{currentTab === 'theory' && <ModuleContentView content={moduleComponents[conceptMeta.id]} section="Theory" />}
+							{currentTab === 'video' && <ModuleContentView content={moduleComponents[conceptMeta.id]} section="Video" />}
 							{currentTab === 'summary' && summaryUnlocked && (
-								<SummaryTab contentId={conceptMeta.id} />
+								<ModuleContentView content={moduleComponents[conceptMeta.id]} section="Summary" />
 							)}
-							{currentTab === 'story' && <StoryTab contentId={conceptMeta.id} />}
-						</ContentTabs>
+							{currentTab === 'story' && <ModuleContentView content={moduleComponents[conceptMeta.id]} section="Story" />}
+						</LearningTabs>
 					)}
 
 					<Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
@@ -225,11 +217,11 @@ export default function ConceptPage() {
 					<ConceptCompletionDialog
 						open={showCompletionDialog}
 						conceptName={presentation.name}
-						nextUp={nextUp}
-						onNavigateToNext={(id) => {
+						onContinue={nextUp[0] ? () => {
+							const id = nextUp[0]
 							const type = moduleTree[id]?.type;
 							navigate(type === 'skill' ? `/skill/${id}` : `/concept/${id}`);
-						}}
+						} : undefined}
 						onClose={() => setShowCompletionDialog(false)}
 						onViewSummary={() => {
 							setShowCompletionDialog(false);
