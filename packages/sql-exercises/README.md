@@ -2,6 +2,8 @@
 
 SQL module contexts, registered input fields, and mono exercises built on @sqlvalley/sql, exercise-manager, and input-exercise-components. Generic database and editor APIs remain in [@sqlvalley/sql](../sql/README.md).
 
+`DatasetSizeSelector` provides small/full dataset buttons shared by exercise results and the app?s Data Explorer. It reads and updates the enclosing `DatabaseProvider` setting.
+
 
 ## Exercise authoring
 

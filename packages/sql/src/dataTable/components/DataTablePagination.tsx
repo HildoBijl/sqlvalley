@@ -1,4 +1,4 @@
-import { TablePagination, Box, Typography } from '@mui/material'
+import { Alert, TablePagination } from '@mui/material'
 
 interface DataTablePaginationProps {
 	showPagination: boolean
@@ -56,9 +56,5 @@ function PaginationControls({ showPagination, displayCount, page, rowsPerPage, c
 
 function RowLimitNotice({ totalCount, maxRows }: RowLimitNoticeProps) {
 	if (totalCount <= maxRows) return null
-	return <Box sx={{ p: 1, bgcolor: 'warning.main', color: 'warning.contrastText' }}>
-		<Typography variant="caption">
-			Showing first {maxRows} of {totalCount} rows
-		</Typography>
-	</Box>
+	return <Alert severity="warning">Showing first {maxRows} of {totalCount} rows.</Alert>
 }

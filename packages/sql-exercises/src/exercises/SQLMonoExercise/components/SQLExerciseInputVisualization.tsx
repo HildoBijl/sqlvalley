@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useState } from 'react'
-import { Alert, Box, Button, Collapse, Divider, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { Alert, Box, Button, Collapse, Divider, Paper, Typography } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
 import { isStateDone } from '@step-wise/exercise-definition'
@@ -7,6 +7,7 @@ import type { Database } from '@sqlvalley/sqljs'
 import { DataTable, executeQuery, useDatasetSize } from '@sqlvalley/sql'
 import { type MonoExerciseInputVisualizationProps, useInputExerciseContext } from '@sqlvalley/input-exercise-components'
 
+import { DatasetSizeSelector } from '../../../DatasetSizeSelector'
 import { sqlDatasetSizes } from '../../../datasetSizes'
 import type { SqlQueryValidationReport } from '../../../sqlInput'
 import { useSqlExerciseContext } from '../../../exerciseContext'
@@ -19,7 +20,6 @@ export function SQLExerciseInputVisualization({ state }: MonoExerciseInputVisual
 	const validationReport = validation.status === 'valid' ? validation.report as SqlQueryValidationReport | undefined : undefined
 
 	// Get the dataset size. Check the small-dataset-warning.
-	const [datasetSize, setDatasetSize] = useDatasetSize()
 	const showSmallDatasetWarning = useShowSmallDatasetWarning(validationReport)
 
 	// Control expansion of the component. Hide the component upon exercise completion to make sure the solution becomes visible,
@@ -35,26 +35,7 @@ export function SQLExerciseInputVisualization({ state }: MonoExerciseInputVisual
 		<Box sx={{ px: 2.5, py: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, flexWrap: 'wrap' }}>
 			<Typography variant="subtitle1" sx={{ fontWeight: 600 }}>Query Results</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-				<ToggleButtonGroup
-					size="small"
-					exclusive
-					value={datasetSize}
-					onChange={(_event, nextValue) => {
-						if (!nextValue) return
-						setDatasetSize(nextValue)
-					}}
-					sx={{
-						flexWrap: 'wrap',
-						'& .MuiToggleButton-root': {
-							px: 1,
-							py: 0.25,
-							textTransform: 'none',
-						},
-					}}
-				>
-					<ToggleButton value={sqlDatasetSizes.small}>Use small data set</ToggleButton>
-					<ToggleButton value={sqlDatasetSizes.full}>Use full data set</ToggleButton>
-				</ToggleButtonGroup>
+				<DatasetSizeSelector />
 				<Button
 					size="small"
 					color="primary"
