@@ -1,7 +1,7 @@
 import { Box, Button, Container, Link, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 
-export default function HomePage() {
+export function HomePage() {
 	return <Container maxWidth={false} sx={{ maxWidth: 1040, pt: { xs: 3, md: 7 }, pb: 4, '& a:focus-visible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 3 } }}>
 		<Box component="section" aria-labelledby="home-title" sx={{ display: 'grid', gridTemplateColumns: { xs: '100px minmax(0, 1fr)', sm: '120px minmax(0, 1fr)', md: '260px minmax(0, 1fr)' }, columnGap: { xs: 2.5, md: 8 }, rowGap: 2.5, alignItems: 'start' }}>
 			<Box role="img" aria-label="SQL Valley" sx={{

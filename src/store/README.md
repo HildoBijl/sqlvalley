@@ -146,3 +146,5 @@ Create a sibling folder using the structure above and assemble it with `createPe
 Choose a unique storage key and keep it unchanged after release. Add runtime validation for every persisted field rather than relying on TypeScript types, which do not validate local-storage data.
 
 Exercise submissions save the resulting state and apply collected successful skill IDs in one store update. Each reported skill ID increments its own solved counter; this can differ from the skill where the exercise is displayed.
+
+`clearPersistedData()` removes application-owned local-storage entries. Reload the page afterward to discard in-memory state.

@@ -7,11 +7,12 @@ The content loader supplies lazy components matching learning's `ModuleContent` 
 Import public tools from `@/curriculum`. Internal files use relative imports to keep loading and hot-reload dependencies independent.
 
 - `moduleDefinition.ts` and `modulePresentation.ts`: module IDs, prerequisites, names, and descriptions.
+- `getNextModuleIds.ts`: selects follow-up modules using prerequisites and the current learning goal.
 - `content`: lazy module content and provider registries. Static practice has its own props contract.
 - `exercises`: builds registrations with module defaults and loads them through `useModuleExercises(moduleId, { enabled })`, returning `{ exercises, loading, error }`. Loader and HMR helpers remain private.
 - `database`: table introductions and the curriculum-specific `SqlModuleProvider`.
 - `schemas`: shared lesson content describing the SQL Valley, Companies, and Shopping datasets.
-- `skillTreeVisualizations`: SQL, relational-algebra, and Datalog layouts plus their shared registry. Navigation paths remain here until the navigation cleanup.
+- `skillTreeVisualizations`: SQL, relational-algebra, and Datalog layouts plus their shared registry. Navigation owns paths and menu labels.
 
 Generic query figures and `useTheoryPageDatabase` live in `@/learning`; they consume the current database context without looking up curriculum modules.
 

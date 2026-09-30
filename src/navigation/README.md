@@ -1,9 +1,16 @@
 # Navigation
 
-The navigation folder is responsible for bundling all the components defined elsewhere into sensible pages, as well as displaying the right page, based on the given URL.
+Navigation combines curriculum, learning components, and application state into pages. Only the router is exported through `@/navigation`.
 
-It contains three parts. The first two are separately defined (no dependencies between them) and the third one bundles the other two together.
+- `router.tsx`: routes, the survey redirect, and error/not-found pages.
+- `paths.ts`: learning overview paths and labels, plus module URL construction.
+- `useLearningNavigation.ts`: shared tree-history selection and return destinations.
+- `layout`: the header, settings menu, and outlet loading/error boundaries.
+- `pages`: the home page and one skill-tree overview page configured by tree ID.
+- `pages/modulePages`: separate concept and skill pages, a shared module layout, tab synchronization, static practice, and skill completion handling.
 
-- **[layout/](./layout/)** defines the layout of a page: the header bar on top and the page below.
-- **[pages/](./pages/)** contains all pages that can be displayed in the web app.
-- **[router.tsx](./router.tsx)** imports all of the above, and uses the given URL to display the correct page in the right way. This is the only part that is exported.
+Module IDs are validated before mounting page state. Stateful module pages are keyed by ID so completion dialogs reset when navigating to another module. Tab selection uses only available tabs, with precedence URL ? stored preference ? default; unrelated query parameters are preserved. Interactive exercise availability is loaded before selecting tabs.
+
+Curriculum owns tree layouts and follow-up module selection. Learning owns reusable presentation; navigation supplies content, progress, and callbacks. Video tabs remain commented out until video content is introduced.
+
+The retired playground prototype and its route have been removed.
