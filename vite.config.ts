@@ -40,7 +40,7 @@ function exerciseHotReload(): Plugin {
 			if (!match) return
 			return {
 				code: `${code}
-import { updateExerciseModule as __updateExerciseModule } from '/src/curriculum/utils/exerciseHotReload.ts'
+import { updateExerciseModule as __updateExerciseModule } from '/src/curriculum/exercises/exerciseHotReload.ts'
 if (import.meta.hot) {
 	import.meta.hot.accept(module => {
 		if (module) __updateExerciseModule(${JSON.stringify(match[1])}, module)

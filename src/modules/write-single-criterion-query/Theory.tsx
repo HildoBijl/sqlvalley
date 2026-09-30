@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Info, Term } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -17,7 +17,7 @@ export function Theory() {
 				<>Make sure all the cities we have are unique. (Removing duplicates)</>,
 			]} />
 			<Par>This gets us the following query.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT DISTINCT city
 FROM employees
 WHERE hire_date < '2025-01-01';`} tableWidth={160} />

@@ -1,6 +1,5 @@
 import { Page, Section, Par, List, Em, Term } from '@/ui'
-import { IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils'
+import { IDL, DLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -11,13 +10,13 @@ export function Theory() {
 		<Section title="Assemble the program step by step">
 			<Par>Let's study an example data request and see how we can set up a Datalog program for it. Suppose we have predicates for products that can be sold (including categories), for transactions of those products (including vendors and buyers) and for accounts. How would we for example find all the users who have never bought a product from the 'Fine Art' category?</Par>
 			<Par>Datalog is all about defining small and simple predicates, so let's start by doing so. We could set up a list of all Fine Art products.</Par>
-			<FigureExampleDLQuery query={<>fineArtProduct(id) :- product(id, _, 'Fine Art', _, _, _).</>} actualQuery="SELECT DISTINCT p_id AS id FROM products WHERE category='Fine Art'" tableWidth={100} />
+			<DLQueryFigure query={<>fineArtProduct(id) :- product(id, _, 'Fine Art', _, _, _).</>} actualQuery="SELECT DISTINCT p_id AS id FROM products WHERE category='Fine Art'" tableWidth={100} />
 			<Par>We could then use this to find all people who bought one of those products.</Par>
-			<FigureExampleDLQuery query={<>boughtFineArt(u) :- transaction(_, _, u, id, _, _, _, _), fineArtProduct(id).</>} actualQuery="SELECT DISTINCT buyer AS u FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='Fine Art')" tableWidth={150} />
+			<DLQueryFigure query={<>boughtFineArt(u) :- transaction(_, _, u, id, _, _, _, _), fineArtProduct(id).</>} actualQuery="SELECT DISTINCT buyer AS u FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='Fine Art')" tableWidth={150} />
 			<Par>Finally, we should find all the accounts that are not in this list. After all, those are the people who have never bought a Fine Art product.</Par>
-			<FigureExampleDLQuery query={<>neverBoughtFineArt(u) :- account(u, _, _, _, _, _, _, _, _, _), not boughtFineArt(u).</>} actualQuery="SELECT DISTINCT username AS u FROM accounts EXCEPT SELECT buyer AS u FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='Fine Art')" tableWidth={150} />
+			<DLQueryFigure query={<>neverBoughtFineArt(u) :- account(u, _, _, _, _, _, _, _, _, _), not boughtFineArt(u).</>} actualQuery="SELECT DISTINCT username AS u FROM accounts EXCEPT SELECT buyer AS u FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='Fine Art')" tableWidth={150} />
 			<Par>The final step in a program is to actually query the predicate. The examples above already show tables, but in an actual Datalog program this won't be the case. We only get data once we run a query.</Par>
-			<FigureExampleDLQuery query={<>?- neverBoughtFineArt(username).</>} actualQuery="SELECT DISTINCT username AS username FROM accounts EXCEPT SELECT buyer AS username FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='Fine Art')" tableWidth={150} />
+			<DLQueryFigure query={<>?- neverBoughtFineArt(username).</>} actualQuery="SELECT DISTINCT username AS username FROM accounts EXCEPT SELECT buyer AS username FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='Fine Art')" tableWidth={150} />
 			<Par>And with that we've completed our Datalog program.</Par>
 		</Section>
 

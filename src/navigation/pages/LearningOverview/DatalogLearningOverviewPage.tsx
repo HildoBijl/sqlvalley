@@ -1,4 +1,4 @@
-import { datalogModulePositions, datalogConnectors } from '@/curriculum/skillTreeVisualizations';
+import { datalogModulePositions, datalogConnectors } from '@/curriculum'
 import { SkillTreeOverviewPage } from '../SkillTreeOverviewPage';
 
 /*

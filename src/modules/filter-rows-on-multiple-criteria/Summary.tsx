@@ -5,7 +5,7 @@ import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { useTheoryPageDatabase } from '@/learning'
 import { FigureMergingTables } from './Theory'
 
 export function Summary() {

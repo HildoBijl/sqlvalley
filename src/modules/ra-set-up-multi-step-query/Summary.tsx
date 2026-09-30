@@ -1,11 +1,11 @@
 import { Page, Section, Par, List, Term, M } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils'
+import { RAQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
 		<Section>
 			<Par>As data requests get more complex, relational algebra queries get larger. To structure them, we can use the <Term>assignment operator</Term> <M>\leftarrow</M>. It temporarily creates a new relation that we can then use within our query. We can for example find all department managers earning less than 200,000 per year.</Par>
-			<FigureExampleRAQuery query={<>
+			<RAQueryFigure query={<>
 				department_managers ← ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments))<br />
 				low_earners ← ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))<br />
 				low_earning_managers ← department_managers ∩ low_earners<br />

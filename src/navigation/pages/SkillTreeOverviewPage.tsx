@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Container } from '@mui/material';
-import { modulePresentation, moduleTree } from '@/curriculum'
-import type { SkillTreeVisualizationId } from '@/curriculum/skillTreeVisualizations';
+import { type SkillTreeVisualizationId, modulePresentation, moduleTree } from '@/curriculum'
+
 import { useModuleCompletion } from '@sqlvalley/progress';
 import {
 	SkillTreeCanvas,

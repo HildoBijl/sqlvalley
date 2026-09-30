@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Term } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -10,11 +10,11 @@ export function Summary() {
 				<>Add the two tables we want to join to the <ISQL>FROM</ISQL> clause. This creates the Cartesian product of the two tables.</>,
 				<>Specify in the <ISQL>WHERE</ISQL> clause the <Term>join conditions</Term>: what must hold for each combination of rows.</>,
 			]} /></Par>
-			<FigureExampleQuery query={`SELECT *
+			<SQLQueryFigure query={`SELECT *
 FROM departments, employees
 WHERE departments.manager_id = employees.e_id;`} tableScale={0.45} tableWidth={800} below />
 			<Par>The above solution is considered unclean because, within the <ISQL>WHERE</ISQL> clause, the join conditions will get mixed up with any potential <Term>external conditions</Term> we may still add later on. It is better for the query readability to keep join conditions and external conditions separate. We can fix this using the <ISQL>JOIN ... ON</ISQL> command. The join conditions are now placed after <ISQL>ON</ISQL>. Any further conditions can be added afterwards with <ISQL>WHERE</ISQL>.</Par>
-			<FigureExampleQuery query={`SELECT *
+			<SQLQueryFigure query={`SELECT *
 FROM departments
 JOIN employees
 ON departments.manager_id = employees.e_id;`} tableScale={0.45} tableWidth={800} below />

@@ -2,7 +2,7 @@
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { Page, Section, Par, Quote, List, Info, Term, Em, M } from '@/ui'
-import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { useTheoryPageDatabase } from '@/learning'
 
 export function Summary() {
 	const db = useTheoryPageDatabase()

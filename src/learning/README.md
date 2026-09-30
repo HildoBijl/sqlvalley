@@ -9,6 +9,7 @@ Educational tools that do not depend on the module tree. Import public component
 - `completion`: skill and concept completion dialogs, sharing private presentation. Callers supply navigation callbacks.
 - `InteractivePractice.tsx`: connects the exercise manager to application storage and module resources.
 - `dataExplorer`: `DataExplorer` previews up to 100 rows from the full dataset and displays schema information read directly from SQLite. Its dataset size is intentionally independent of the practice setting.
+- `queryFigures`: `TableQueryFigure`, `SQLQueryFigure`, `RAQueryFigure`, and `DLQueryFigure` display supplied queries and their results. `useTheoryPageDatabase` reads the original small grading dataset independently of user edits. These tools do not select curriculum modules.
 
 General document formatting, notices, loading screens, and theme utilities live in `@/ui`.
 

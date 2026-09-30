@@ -1,6 +1,5 @@
 import { Page, Section, Par, Quote, List, Info, Warning, Em, Term } from '@/ui'
-import { DL, IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils'
+import { DL, IDL, DLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -11,7 +10,7 @@ export function Theory() {
 		<Section title="Step 1: define a rule for the base case">
 			<Par>Suppose that, from a list of transactions, we want to see who received money from whom, either directly or indirectly. We can set up a predicate to show this, but this predicate requires recursion. We call it a <Term>recursive predicate</Term>.</Par>
 			<Par>The first step in implementing recursion is always to define the <Term>base case rule</Term>. We can set up a predicate containing all pairs of people who <Em>definitely</Em> exchanged money, due to the simple fact that one sold a product to another.</Par>
-			<FigureExampleDLQuery query={<>receivedMoneyFrom(v, b) :- transaction(_, v, b, _, _, _, _, _).</>} actualQuery="SELECT DISTINCT vendor, buyer FROM transactions" tableWidth={260} />
+			<DLQueryFigure query={<>receivedMoneyFrom(v, b) :- transaction(_, v, b, _, _, _, _, _).</>} actualQuery="SELECT DISTINCT vendor, buyer FROM transactions" tableWidth={260} />
 			<Par>You can read this rule in normal language as follows.</Par>
 			<Quote>We say that v received money from b, if there is some transaction where v functioned as vendor (second argument) and b functioned as buyer (third argument).</Quote>
 		</Section>
@@ -20,7 +19,7 @@ export function Theory() {
 			<Par>The second step in implementing recursion is to <Em>extend</Em> the predicate with a second rule: the <Term>recursion rule</Term>. In natural language, we would define it through:</Par>
 			<Quote>We also say that v received money from b, if there is some other person x for which v received money from x and x sold something to b.</Quote>
 			<Par>This second rule for the <IDL>receivedMoneyFrom</IDL> predicate refers to <Em>itself</Em>. We can set it up in Datalog, adding it to the previous rule.</Par>
-			<FigureExampleDLQuery query={<>receivedMoneyFrom(v, b) :- transaction(_, v, b, _, _, _, _, _).<br />receivedMoneyFrom(v, b) :- receivedMoneyFrom(v, x), transaction(_, x, b, _, _, _, _, _).</>} actualQuery={`WITH RECURSIVE vendor_chain AS (
+			<DLQueryFigure query={<>receivedMoneyFrom(v, b) :- transaction(_, v, b, _, _, _, _, _).<br />receivedMoneyFrom(v, b) :- receivedMoneyFrom(v, x), transaction(_, x, b, _, _, _, _, _).</>} actualQuery={`WITH RECURSIVE vendor_chain AS (
     SELECT vendor, buyer
     FROM transactions
     UNION

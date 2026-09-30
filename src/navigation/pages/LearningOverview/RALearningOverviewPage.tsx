@@ -1,4 +1,4 @@
-import { raModulePositions, raConnectors } from '@/curriculum/skillTreeVisualizations';
+import { raModulePositions, raConnectors } from '@/curriculum'
 import { SkillTreeOverviewPage } from '../SkillTreeOverviewPage';
 
 /*

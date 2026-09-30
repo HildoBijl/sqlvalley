@@ -1,5 +1,5 @@
 import { Page, Section, Par, List, Info, Term, Em, M } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils'
+import { RAQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -16,7 +16,7 @@ export function Summary() {
 				]} /></>,
 			]} />
 			<Par>Through this strategy, we could for instance find all department managers earning less than 200,000 per year.</Par>
-			<FigureExampleRAQuery query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) ∩ ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 200000" tableWidth={150} />
+			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) ∩ ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 200000" tableWidth={150} />
 			<Info>Whenever you use the set operators, it is common to do so only on keys (or combinations of keys) and not on full relations.</Info>
 		</Section>
 	</Page>

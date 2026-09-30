@@ -1,8 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Term, Em } from '@/ui'
-import { RelationName, PrimaryKey, ForeignKey } from '@/learning'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
+import { RelationName, PrimaryKey, ForeignKey, TableQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -12,9 +11,9 @@ export function Theory() {
 
 		<Section title="The problem of duplicate data">
 			<Par>Suppose that we have a list of all employees in a company.</Par>
-			<FigureSingleTable query={`SELECT * FROM employees;`} title="List of employees" tableScale={0.65} />
+			<TableQueryFigure query={`SELECT * FROM employees;`} title="List of employees" tableScale={0.65} />
 			<Par>Every department in the company also has a manager, which is an employee. It would be nice if we would have the phone numbers of the managers of all departments. After all, if there's an issue, we'd know who to call. So we could set up a table like this.</Par>
-			<FigureSingleTable query={`SELECT d.d_id, d.d_name, d.budget, d.nr_employees, e.first_name manager_first_name, e.last_name manager_last_name, e.phone manager_phone FROM departments d LEFT JOIN employees e ON e.e_id=d.manager_id;`} title="List of departments with manager info" tableWidth={700} tableScale={0.65} />
+			<TableQueryFigure query={`SELECT d.d_id, d.d_name, d.budget, d.nr_employees, e.first_name manager_first_name, e.last_name manager_last_name, e.phone manager_phone FROM departments d LEFT JOIN employees e ON e.e_id=d.manager_id;`} title="List of departments with manager info" tableWidth={700} tableScale={0.65} />
 			<Par>This would however be a bad idea. The reason is that every manager's phone number also appears in the list of employees, and it would then be in our database multiple times. We would have <Term>duplicate data</Term>!</Par>
 			<Warning>
 				<Par>Duplicate data is bad for three reasons. In increasing importance:</Par>
@@ -29,7 +28,7 @@ export function Theory() {
 
 		<Section title="Foreign key: a reference to a row in another table">
 			<Par>The solution to our problem lies in making references. We know that the <ISQL>employees</ISQL> table has all employees, including contact information and such. So within the <ISQL>departments</ISQL> we only have to <Em>refer</Em> to the right row. And referring to a row in a table is generally done through its key! Every employee has a unique employee ID <ISQL>e_id</ISQL>. So we can add this to the <ISQL>departments</ISQL> table as <ISQL>manager_id</ISQL>.</Par>
-			<FigureSingleTable query={`SELECT * FROM departments;`} title="List of departments with the ID of the manager" tableWidth={700} tableScale={0.65} />
+			<TableQueryFigure query={`SELECT * FROM departments;`} title="List of departments with the ID of the manager" tableWidth={700} tableScale={0.65} />
 			<Par>When the key of one table appears as reference in another table, then we say that this second table has a <Term>foreign key</Term> pointing to the first table. A common way to indicate a foreign key in the table's schema is by making the foreign key italic. It shows a reference to a primary key or another suitable unique key. The referenced table may also be the same table.</Par>
 			<List items={[
 				<><RelationName>departments</RelationName> (<PrimaryKey>d_id</PrimaryKey>, d_name, <ForeignKey>manager_id</ForeignKey>, budget, nr_employees)</>,

@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, Quote, Section, Warning, Info, Term, Em, Link } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -13,15 +13,15 @@ export function Theory() {
 			<Par>Let's consider the employees and departments of a company. Suppose that we are told to gather the following data.</Par>
 			<Quote>Find the IDs and names of all the managers who manage a department with more than ten employees.</Quote>
 			<Par>To do so, we can first look at the departments and see which ones qualify.</Par>
-			<FigureExampleQuery query={`SELECT *
+			<SQLQueryFigure query={`SELECT *
 FROM departments
 WHERE nr_employees > 10;`} tableWidth={500} />
 			<Par>After having filtered for the number of employees, we actually only care about the manager IDs. So we extract those.</Par>
-			<FigureExampleQuery query={`SELECT manager_id
+			<SQLQueryFigure query={`SELECT manager_id
 FROM departments
 WHERE nr_employees > 10;`} tableWidth={100} />
 			<Par>We now want to look up the names of the employees whose ID is <Em>in</Em> this list. But how can we do this? Exactly for this situation, SQL has the keyword <ISQL>IN</ISQL>. We can use it as shown.</Par>
-			<FigureExampleQuery query={`SELECT e_id, first_name, last_name
+			<SQLQueryFigure query={`SELECT e_id, first_name, last_name
 FROM employees
 WHERE e_id IN (
   SELECT manager_id
@@ -37,7 +37,7 @@ WHERE e_id IN (
 			<Par>We could have done the above task in a different way. We could rephrase the task to the following.</Par>
 			<Quote>Find the IDs and names of all employees for which there exists a department with more than ten employees which they are the manager of.</Quote>
 			<Par>Note that this comes down to exactly the same. Based on this rationale, we can set up the following query.</Par>
-			<FigureExampleQuery query={`SELECT e_id, first_name, last_name
+			<SQLQueryFigure query={`SELECT e_id, first_name, last_name
 FROM employees
 WHERE EXISTS (
   SELECT *
@@ -57,11 +57,11 @@ WHERE EXISTS (
 			<Par>We can also use looked-up <Em>values</Em> for comparisons. Consider the following request.</Par>
 			<Quote>Find employee IDs and positions of all the people who at some point earned more than the current salary of Elvis Vallelonga (ID <ISQL>41651199</ISQL>).</Quote>
 			<Par>To do this, we first have to find the respective salary from the <ISQL>employees</ISQL> table.</Par>
-			<FigureExampleQuery query={`SELECT current_salary
+			<SQLQueryFigure query={`SELECT current_salary
 FROM employees
 WHERE e_id = 41651199;`} tableWidth={120} />
 			<Par>Then we go through all the contracts in <ISQL>contracts</ISQL> to find which ones had a higher salary. That can be done through the following query.</Par>
-			<FigureExampleQuery query={`SELECT DISTINCT e_id, position
+			<SQLQueryFigure query={`SELECT DISTINCT e_id, position
 FROM contracts
 WHERE salary > (
   SELECT current_salary
@@ -72,11 +72,11 @@ WHERE salary > (
 			<Par>If we want to compare against <Em>multiple</Em> values, we can use the <ISQL>ANY</ISQL>/<ISQL>SOME</ISQL> and <ISQL>ALL</ISQL> keywords. (The keywords <ISQL>ANY</ISQL> and <ISQL>SOME</ISQL> do the exact same thing.) Consider for instance the following request.</Par>
 			<Quote>Find the names of all employees who currently earn more than any current or past salary of Elvis Vallelonga (ID <ISQL>41651199</ISQL>).</Quote>
 			<Par>We can find the current and past salaries through the <ISQL>contracts</ISQL> table.</Par>
-			<FigureExampleQuery query={`SELECT salary
+			<SQLQueryFigure query={`SELECT salary
 FROM contracts
 WHERE e_id = 41651199 AND salary IS NOT NULL;`} tableWidth={260} />
 			<Par>If we require some value to be bigger than <Em>all</Em> of these values, we use the <ISQL>ALL</ISQL> keyword.</Par>
-			<FigureExampleQuery query={`SELECT first_name, last_name, current_salary
+			<SQLQueryFigure query={`SELECT first_name, last_name, current_salary
 FROM employees
 WHERE current_salary > ALL (
   SELECT salary

@@ -9,7 +9,7 @@ Curriculum discovers content files and exercise builders through Vite globs. Lea
 
 Put one exercise spec in each file under `exercises/`, with a stable, unique `exerciseId`. Export the spec as default, using `SQLMonoExerciseSpec` or `defineSQLMonoExercise` for parameter inference.
 
-The folder's `exercises/index.ts` imports all specs and exports a default `buildExercises(skillId)` function that calls `buildModuleExercises`. The module's root index re-exports that builder as `Exercise`.
+The folder's `exercises/index.ts` imports all specs and exports a default `buildExercises(skillId)` function that calls `buildModuleExercises` from `@/curriculum`. The module's root index re-exports that builder as `Exercise`.
 
 
 ## Static exercises

@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Quote, List, Warning, Info, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -32,7 +32,7 @@ export function Theory() {
 			{/* <Par>To solve this, it helps to rephrase the English-language text using words that SQL knows: words like "exists". An equivalent query would be:</Par> */}
 			<Quote>Find the usernames of all accounts for which there exists a corresponding transaction (as buyer), where the corresponding product has category equal to "Fine Art".</Quote>
 			<Par>This is a query that can directly be turned into SQL. For "corresponding" we use a join, which gives the following result.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT DISTINCT username
 FROM accounts AS a
 JOIN transactions AS t
@@ -47,7 +47,7 @@ WHERE p.category = 'Fine Art';`} tableWidth={150} tableScale={0.7} />
 			<Par>Once we have a query that works, we're far from done! Usually the first draft of a query is messy. It may be inefficient from a computational point of view, and hard for humans to understand on top of that. We can simplify it! This can be done using the intuitive ideas we found at step 1, and/or by trying different tools within SQL. When doing so, it also helps to rewrite the English-language request, to check if it still means the same thing.</Par>
 			<Par>Let's try this out on our example. We have already realized we don't really need the <ISQL>accounts</ISQL> table. We could cut that out. That gives the following request/query.</Par>
 			<Quote>Find the usernames of the transaction buyers for which the corresponding product has category equal to "Fine Art".</Quote>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT DISTINCT buyer
 FROM transactions AS t
 JOIN products AS p
@@ -55,7 +55,7 @@ ON t.prod_id = p.p_id
 WHERE p.category = 'Fine Art';`} tableWidth={150} tableScale={0.7} />
 			<Par>We have also realized that we could first create a list of all "Fine Art" products. We then check if the product is in this list. Using this idea, we can again rewrite our request/query.</Par>
 			<Quote>Find the usernames of the transaction buyers for which the corresponding product is in the list of products with category equal to "Fine Art".</Quote>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT DISTINCT buyer
 FROM transactions
 WHERE prod_id IN (
@@ -71,14 +71,14 @@ WHERE prod_id IN (
 			<Par>In the last query we have applied two steps. First we created a list of Fine Art products, and then we found the corresponding buyers of them. If we already know in advance (after trick 1) that we would do this, we could have built up our query step by step.</Par>
 			<Par>First we find a list of all Fine Art products. We can test it, to see if it works as intended.</Par>
 			<Quote>Find the IDs of all products whose category equals "Fine Art".</Quote>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT DISTINCT p_id
 FROM products
 WHERE category = 'Fine Art';`} tableWidth={120} tableScale={0.7} />
 			<Info>Testing parts of your query is very important. It's easy to make a mistake in SQL, so by testing early, you find your mistakes early, when it's still easy to identify them.</Info>
 			<Par>Once we have this list, we can build the next step of our query <Em>around</Em> it.</Par>
 			<Quote>Find the IDs of the transaction buyers for which the corresponding product is in the list of products with category equal to "Fine Art".</Quote>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT DISTINCT buyer
 FROM transactions
 WHERE prod_id IN (
@@ -88,7 +88,7 @@ WHERE prod_id IN (
 );`} tableWidth={150} tableScale={0.7} />
 			<Par>In many applications, we may need to go further. Perhaps we don't just want the username of the buyer, but also the email address? Through this layered approach, it is very easy to add this. We just add another look-up.</Par>
 			<Quote>Find the usernames and email addresses of the accounts for which the account ID is in the list of buyers for transactions where the corresponding product is in the list of products with category equal to "Fine Art".</Quote>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT username, email
 FROM accounts
 WHERE username IN (
@@ -115,7 +115,7 @@ WHERE username IN (
 			<Par>The solution is to use trick 2: we rephrase the request, and we do so using a negative. Keep in mind that SQL does not know the word "all" but it does know the word "exists". The word "all" means "there does not exist anything of the opposite". So we could rephrase our request using such a double negative.</Par>
 			<Quote>Find the usernames of the accounts for which there does not exist a product category which the respective account has not bought a product in.</Quote>
 			<Par>Note that this request means the same as the one above, but then uses the words "exists" and "not" rather than "all". It's what we need to set up a query in SQL.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT username
 FROM accounts AS a
 WHERE NOT EXISTS (
@@ -141,7 +141,7 @@ WHERE NOT EXISTS (
 			<Par>The final step, whenever writing queries, always is to check your results. The best way to do so is using examples. Here we should check at least one <Term>positive</Term> example (that does appear in our output) and one <Term>negative</Term> example (that is omitted from the output).</Par>
 			<Par>Consider once more the first example.</Par>
 			<Quote>Find the usernames and email addresses of the accounts that bought a "Fine Art" product.</Quote>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT username, email
 FROM accounts
 WHERE username IN (
@@ -156,7 +156,7 @@ WHERE username IN (
 			<Par>To check if this is the correct output, we should take one random sample from this output (okay, there only is one here), dive into the tables, and see if this person really meets the criteria. When we do, we see that user <ISQL>lizardman</ISQL> indeed bought a "Fine Art" product, being the "Frida Kahlo Self-Portrait Sketch".</Par>
 			<Info>When running these checks, the Data Explorer is your friend! But you can also quickly write some basic queries for support.</Info>
 			<Par>To check a negative example, we take one (random) account that is <Em>not</Em> in our output. For instance, we consider the user <ISQL>Jim_Business</ISQL> and look up the products that this user has bought.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT a.username, t.t_id, t.date_time, p.p_id, p.name, p.category
 FROM accounts AS a
 JOIN transactions AS t

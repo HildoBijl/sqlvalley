@@ -1,14 +1,14 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, Quote, Section, Info, Warning, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
 		<Section>
 			<Par>When tables are linked through a foreign key, we often have to look up values from one table based on a condition from the other table. On way to do so, is to first find a list of all the relevant IDs/keys from the second table, and then to use the <ISQL>IN</ISQL> keyword to find the matching rows from the first table.</Par>
 			<Quote>Find the IDs and names of all the managers who manage a department with more than ten employees.</Quote>
-			<FigureExampleQuery query={`SELECT e_id, first_name, last_name
+			<SQLQueryFigure query={`SELECT e_id, first_name, last_name
 FROM employees
 WHERE e_id IN (
   SELECT manager_id
@@ -16,7 +16,7 @@ WHERE e_id IN (
   WHERE nr_employees > 10
 );`} tableWidth={260} />
 			<Par>Another option is to use the <ISQL>EXISTS</ISQL> keyword, which runs the inner query and checks if it returns any (non-zero) number of rows.</Par>
-			<FigureExampleQuery query={`SELECT e_id, first_name, last_name
+			<SQLQueryFigure query={`SELECT e_id, first_name, last_name
 FROM employees
 WHERE EXISTS (
   SELECT 1

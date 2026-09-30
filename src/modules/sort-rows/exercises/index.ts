@@ -1,6 +1,6 @@
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 
-import { buildModuleExercises } from '@/curriculum/utils/buildModuleExercises'
+import { buildModuleExercises } from '@/curriculum'
 import sortByPerfSalary from './sortByPerfSalary'
 import sortDeptBudgetSkip from './sortDeptBudgetSkip'
 import sortEndDateNullLast from './sortEndDateNullLast'

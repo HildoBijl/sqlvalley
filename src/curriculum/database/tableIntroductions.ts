@@ -1,7 +1,7 @@
 import { type TableKey, allTableKeys } from '@sqlvalley/mock-data'
 import { type TableIntroductions, buildTablesIntroducedByModule, getAvailableTableKeys as resolveAvailableTableKeys } from '@sqlvalley/sql-exercises'
 
-import { type ModuleId, moduleTree } from './moduleDefinition'
+import { type ModuleId, moduleTree } from '../moduleDefinition'
 
 // Tables become accessible at their introduction modules and in dependent modules.
 const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {

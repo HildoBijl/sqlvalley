@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Theory() {
 	const now = new Date()
@@ -19,7 +19,7 @@ export function Theory() {
 
 		<Section title="Create new (processed) columns">
 			<Par>Suppose that we have a list of contracts with corresponding salaries. When paying those salaries, taxes also need to be paid. We could calculate this income tax by multiplying the salaries by a factor, for instance <ISQL>0.3</ISQL>. (Or whatever the tax rate is.) In SQL it is possible to directly create a new column <ISQL>taxes</ISQL> whose value is <ISQL>0.3 * salary</ISQL>.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   position,
   salary,
   0.3*salary AS taxes
@@ -47,7 +47,7 @@ FROM contracts;`} tableWidth={350} />
 
 		<Section title="Process text values">
 			<Par>The most common thing to do with text is concatenate multiple pieces of text. This is done through <ISQL>||</ISQL>.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   first_name,
   last_name,
   first_name || ' ' || last_name AS full_name
@@ -74,7 +74,7 @@ FROM employees;`} tableWidth={350} />
 
 		<Section title="Conditionally process values">
 			<Par>It is possible to adjust column values based on various conditions. We could for instance designate departments as being small, medium or large, using the <ISQL>CASE</ISQL> keyword.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   d_name,
   nr_employees,
   CASE
@@ -85,7 +85,7 @@ FROM employees;`} tableWidth={350} />
 FROM departments;`} tableWidth={350} />
 			<Info>When using <ISQL>CASE</ISQL>, add as many <ISQL>WHEN ... THEN ...</ISQL> conditions as needed. SQL looks for the <Em>first</Em> condition that matches. If no condition matches, then the <ISQL>ELSE</ISQL> outcome is used. (Or when <ISQL>ELSE</ISQL> is omitted, then <ISQL>NULL</ISQL> is returned.)</Info>
 			<Par>When dealing with a column containing <ISQL>NULL</ISQL> values, it could be useful to set up a fallback value. This is done through the <ISQL>COALESCE(v1, v2, ...)</ISQL> function. This function gives the <Em>first</Em> value that is not <ISQL>NULL</ISQL>. An example (albeit a not very sensible one) is the following query. It tries to get the performance score, but if that is unknown it divides the salary by 1000 and uses that, but if the salary is unknown too it just defaults to 20.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   position,
   salary,
   perf_score,

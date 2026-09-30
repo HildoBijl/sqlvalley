@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Box } from '@mui/material'
 
 import { Page, Section, Par, Info, List, Term, Em, M } from '@/ui'
-import { FigureExampleRAQuery } from '@/curriculum/utils'
+import { RAQueryFigure } from '@/learning'
 import { ChecklistTable } from './Theory'
 
 export function Summary() {
@@ -21,7 +21,7 @@ export function Summary() {
 				<Par key={3}>Find the entities satisfying the conditions by <Term>squashing</Term> the table: project it onto the entities. If needed, process the result further.</Par>,
 			]} />
 			<Par>A short-cut to find all entities that satisfy all checks is the <Term>division operator</Term> <M>\div</M>. Given a checklist table and a checklist, it gives all entities satisfying all checks. Or more formally, the division <M>a \div b</M> gives a relation <M>c</M> consisting of all tuples such that <M>b \times c \subseteq a</M>.</Par>
-			<FigureExampleRAQuery query={<>all_statuses ← ∏<sub>status</sub>(contracts)<br />
+			<RAQueryFigure query={<>all_statuses ← ∏<sub>status</sub>(contracts)<br />
 				statuses_held ← ∏<sub>e_id,status</sub>(contracts)<br />
 				statuses_held ÷ all_statuses</>} actualQuery="SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts)" tableWidth={100} />
 		</Section>

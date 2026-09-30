@@ -1,6 +1,6 @@
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 
-import { buildModuleExercises } from '@/curriculum/utils/buildModuleExercises'
+import { buildModuleExercises } from '@/curriculum'
 import multiFilterEmployeesBetween from './multiFilterEmployeesBetween'
 import multiFilterOnLeave from './multiFilterOnLeave'
 import multiFilterPhoneArea from './multiFilterPhoneArea'

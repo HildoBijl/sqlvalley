@@ -1,4 +1,4 @@
-import { modulePositions, connectors } from '@/curriculum/skillTreeVisualizations';
+import { sqlModulePositions, sqlConnectors } from '@/curriculum'
 import { SkillTreeOverviewPage } from '../SkillTreeOverviewPage';
 
 /*
@@ -8,8 +8,8 @@ export default function LearningOverviewPage() {
 	return (
 		<SkillTreeOverviewPage
 			treeId="sql"
-			modulePositions={modulePositions}
-			visiblePaths={connectors}
+			modulePositions={sqlModulePositions}
+			visiblePaths={sqlConnectors}
 		/>
 	);
 }

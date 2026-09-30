@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Quote, List, Warning, Info, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -26,21 +26,21 @@ export function Theory() {
 		<Section title="Practical application of the five steps">
 			<Par>To start, we need to calculate the taxes and the contract duration. The taxes can be found through <ISQL>0.3*salary AS taxes</ISQL>. The contract duration is harder. How to find it depends on our DBMS, so we look this up. Google and Artificial Intelligence are your friends here.</Par>
 			<Par>For SQLite, there apparently is the <ISQL>JULIANDAY(date)</ISQL> function that calculates the number of days since Nov 24, 4714 BC. We can use this to find the number of days of the contract, simply by finding the <Em>difference</Em> in number of days. So we use <ISQL>JULIANDAY(end_date) - JULIANDAY(start_date) AS duration</ISQL>. This leads to the following query.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   *,
   0.3*salary AS taxes,
   JULIANDAY(end_date) - JULIANDAY(start_date) AS duration
 FROM contracts;`} tableWidth={800} tableScale={0.7} below />
 			<Par>As second step, we want to apply the filter. We compare the end date with the start date shifted by one calendar year. We use SQLite's <ISQL>'floor'</ISQL> modifier so that February 29 has its anniversary on February 28 in a non-leap year. A day count of 365 or 366 alone would also admit dates just before or after the anniversary.</Par>
 			<Warning>When the DBMS evaluates the query, it starts with <ISQL>FROM</ISQL>, then applies <ISQL>WHERE</ISQL>, then <ISQL>SELECT</ISQL> and it ends with <ISQL>ORDER BY</ISQL>. Newly created columns get created at the <ISQL>SELECT</ISQL> step. We therefore usually <Em>cannot</Em> use newly defined column names within the <ISQL>WHERE</ISQL> clause! Referencing <ISQL>duration</ISQL> there is therefore not portable. Some DBMSs do allow this through a work-around, but it's better not to count on this, and write the required expression in the <ISQL>WHERE</ISQL> clause.</Warning>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   *,
   0.3*salary AS taxes,
   JULIANDAY(end_date) - JULIANDAY(start_date) AS duration
 FROM contracts
 WHERE end_date = DATE(start_date, '+1 year', 'floor');`} tableWidth={800} tableScale={0.7} below />
 			<Par>For the third step, we sort and limit the results. We want to sort by the performance score (high to low) and only take the top 5 performers.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   *,
   0.3*salary AS taxes,
   JULIANDAY(end_date) - JULIANDAY(start_date) AS duration
@@ -49,7 +49,7 @@ WHERE end_date = DATE(start_date, '+1 year', 'floor')
 ORDER BY perf_score DESC
 LIMIT 5;`} tableWidth={800} tableScale={0.7} below />
 			<Par>As fourth step, we limit the columns we get. We were only instructed to find the taxes per position, so we select those two columns, cutting out the rest.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   position,
   0.3*salary AS taxes
 FROM contracts

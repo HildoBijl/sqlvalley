@@ -5,8 +5,8 @@ import { ISQL, DataTable } from '@sqlvalley/sql'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
-import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { TableQueryFigure, useTheoryPageDatabase } from '@/learning'
+
 import { FigureTwoTables } from '../database/Theory'
 
 export const adjustedManagerId = '11111111'
@@ -31,7 +31,7 @@ export function Theory() {
 			<FigureTwoTables />
 			<Par>Let's say that we want a list of all departments <Em>including</Em> all attributes of the corresponding managers. In other words, we want all data in one big table. We could combine the two tables into one: we can <Term>join</Term> the tables.</Par>
 			<Par>For the join to make sense, we must have one table (often placed on the left) with a foreign key to the other table (placed on the right). To execute the join, we walk through all the rows of the left table, and look up the respective record of the right table. We add this data to the back of the row. If we do this for all rows, we get the joined table. It has columns from both tables.</Par>
-			<FigureSingleTable query={`SELECT * FROM departments d JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} />
+			<TableQueryFigure query={`SELECT * FROM departments d JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} />
 		</Section>
 
 		<Section title="Decomposition: split a table into two through a foreign key">
@@ -51,11 +51,11 @@ export function Theory() {
 			<List useNumbers items={[
 				<>
 					<Par sx={{ mb: 1 }}>Find the <Term>Cartesian product</Term> of the two tables. This is the table with all possible combinations of one row from the left table and one row from the right table. This is a huge table, but we'll show it below anyway for our example data. Note that every combination of rows is present.</Par>
-					<FigureSingleTable query={`SELECT * FROM departments, employees;`} tableScale={0.45} />
+					<TableQueryFigure query={`SELECT * FROM departments, employees;`} tableScale={0.45} />
 				</>,
 				<>
 					<Par sx={{ mb: 1 }}>Only keep the row combinations that are relevant, filtering out the rest. Here,  "relevant" means "having equal foreign key". So we only keep the rows where <ISQL>manager_id</ISQL> equals <ISQL>e_id</ISQL>. This completes the join.</Par>
-					<FigureSingleTable query={`SELECT * FROM departments, employees WHERE manager_id=e_id;`} tableScale={0.45} />
+					<TableQueryFigure query={`SELECT * FROM departments, employees WHERE manager_id=e_id;`} tableScale={0.45} />
 				</>,
 			]} />
 			<Info>The above definition of a join, through a Cartesian product, is a <Em>generalization</Em> of the idea we saw earlier. The look-up idea we saw earlier only works when the foreign key is unique in the second (for us <ISQL>employees</ISQL>) table. If this is not the case, for instance because multiple employees have the same employee ID, then the look-up fails. This generalized method with the Cartesian product always works.</Info>
@@ -81,19 +81,19 @@ export function Theory() {
 			<List items={[
 				<>
 					<Par>In the <Term>inner join</Term> (the default method) employees without a department or departments without an existing employee are ignored during the join. Since no valid matching is present, these entries disappear completely.</Par>
-					<Par sx={{ my: 1 }}><FigureSingleTable query={`SELECT * FROM (${adjustedDepartments}) d INNER JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d INNER JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
 				</>,
 				<>
 					<Par>In the <Term>left (outer) join</Term> we <Em>always</Em> keep the rows from the left table (departments). If no matching row exists from the right table (employees) then we include <ISQL>NULL</ISQL> values to show something is missing. (But rows from the right table will still disappear on missing matchings.)</Par>
-					<Par sx={{ my: 1 }}><FigureSingleTable query={`SELECT * FROM (${adjustedDepartments}) d LEFT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d LEFT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
 				</>,
 				<>
 					<Par>In the <Term>right (outer) join</Term> we <Em>always</Em> keep the rows from the right table (employees). If no matching row exists from the left table (departments) then we include <ISQL>NULL</ISQL> values to show something is missing. (But rows from the left table will still disappear on missing matchings.)</Par>
-					<Par sx={{ my: 1 }}><FigureSingleTable query={`SELECT * FROM (${adjustedDepartments}) d RIGHT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d RIGHT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
 				</>,
 				<>
 					<Par>In the <Term>full (outer) join</Term> we <Em>always</Em> keep the rows from <Em>both</Em> tables. If any row from either table is without a matching row from the other table, we include <ISQL>NULL</ISQL> values. This ensures data never disappears.</Par>
-					<Par sx={{ my: 1 }}><FigureSingleTable query={`SELECT * FROM (${adjustedDepartments}) d FULL JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d FULL JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
 				</>,
 			]} />
 			<Info>Note that the distinction of natural/non-natural join is completely separate from the distinction of inner/outer join. The first issue is about "Do we manually specify on which attributes to perform the join, or do we just pick equally named attributes?" The second issue is about "How do we handle entries without a matching reference?" When we talk about a "join" we usually refer to the the non-natural inner join, but you could very well apply a natural full outer join too.</Info>

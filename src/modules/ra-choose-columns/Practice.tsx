@@ -1,6 +1,6 @@
 import { Page, Section, Par, Term } from '@/ui'
 import { RA, RelationName, ManualExerciseSet } from '@/learning'
-import { CompaniesSchema } from '@/curriculum/utils'
+import { CompaniesSchema } from '@/curriculum'
 
 export function Practice() {
 	return <Page>

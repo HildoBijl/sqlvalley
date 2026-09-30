@@ -6,8 +6,7 @@ import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM } from '@/ui'
-import { RA, IRA } from '@/learning'
-import { FigureExampleRAQuery, useTheoryPageDatabase } from '@/curriculum/utils'
+import { RA, IRA, RAQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -17,7 +16,7 @@ export function Theory() {
 
 		<Section title="Gain intuition of the data and the steps">
 			<Par>As example, let's study the employee contracts from the <Term>contracts</Term> relation. These contracts can have a variety of statuses.</Par>
-			<FigureExampleRAQuery query={<>âˆ<sub>status</sub>(contracts)</>} actualQuery="SELECT DISTINCT status FROM contracts" tableWidth={150} />
+			<RAQueryFigure query={<>âˆ<sub>status</sub>(contracts)</>} actualQuery="SELECT DISTINCT status FROM contracts" tableWidth={150} />
 			<Par>How can we find the employees who have had <Em>all</Em> these statuses at some point during their career?</Par>
 			<Par>To start, we apply the usual tricks in setting up complex queries.</Par>
 			<List items={[
@@ -32,11 +31,11 @@ export function Theory() {
 			<List sx={{ my: -1 }} itemSx={{ my: 1 }} contentSpacing={1} items={[
 				<>
 					<Par>The <Term>entity list</Term> contains (references to) all the entities that we want to run a checklist for. In our case, we want to run checks for each employee, so our entity list will be all the employee keys: their IDs.</Par>
-					<Box><FigureExampleRAQuery query={<>all_employees â† âˆ<sub>e_id</sub>(contracts)</>} actualQuery="SELECT DISTINCT e_id FROM contracts" tableWidth={100} /></Box>
+					<Box><RAQueryFigure query={<>all_employees â† âˆ<sub>e_id</sub>(contracts)</>} actualQuery="SELECT DISTINCT e_id FROM contracts" tableWidth={100} /></Box>
 				</>,
 				<>
 					<Par>The <Term>checklist</Term> contains (references to) all the checks that we need to run for said entities. In our case, we want to verify every status for every employee, so for us this is a list of all possible contract statuses.</Par>
-					<Box><FigureExampleRAQuery query={<>all_statuses â† âˆ<sub>status</sub>(contracts)</>} actualQuery="SELECT DISTINCT status FROM contracts" tableWidth={100} /></Box>
+					<Box><RAQueryFigure query={<>all_statuses â† âˆ<sub>status</sub>(contracts)</>} actualQuery="SELECT DISTINCT status FROM contracts" tableWidth={100} /></Box>
 				</>,
 			]} />
 			<Par>Now that we have defined this, we can run the checklist for each entity.</Par>
@@ -44,7 +43,7 @@ export function Theory() {
 
 		<Section title="Set up the checklist table">
 			<Par>To run the checklist for each entity, we set up a <Term>checklist table</Term>. This is the relation that has all combinations (entity, check) that hold <Em>according to the given data</Em>. For us, that is the list of statuses that the employees have held.</Par>
-			<FigureExampleRAQuery query={<>statuses_held â† âˆ<sub>e_id,status</sub>(contracts)</>} actualQuery="SELECT DISTINCT e_id, status FROM contracts" tableWidth={200} />
+			<RAQueryFigure query={<>statuses_held â† âˆ<sub>e_id,status</sub>(contracts)</>} actualQuery="SELECT DISTINCT e_id, status FROM contracts" tableWidth={200} />
 			<Par>The checklist table here is a relation with two attributes. However, it is very helpful to imagine it differently: as a 2-dimensional table, with the entities forming rows and the checks forming columns. Each field contains a checkmark if the given combination is present in our data.</Par>
 			<ChecklistTable />
 			<Par>Visualizating the checklist table in this way makes the subsequent steps a lot more intuitive.</Par>
@@ -63,21 +62,21 @@ export function Theory() {
 				</>,
 			]} />
 			<Par>This is summarized through the following relational algebra assignment.</Par>
-			<FigureExampleRAQuery query={<>statuses_not_held â† all_employees x all_statuses - statuses_held</>} actualQuery="SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts" tableWidth={200} />
+			<RAQueryFigure query={<>statuses_not_held â† all_employees x all_statuses - statuses_held</>} actualQuery="SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts" tableWidth={200} />
 			<Par>The result is a new checklist table, but then one that is closer to the result we are searching for.</Par>
 		</Section>
 
 		<Section title="Evaluate entities: squash the checklist table">
 			<Par>Once we have applied the conditions, we need to check which entities (which employees) satisfy the conditions. To do so, we <Term>squash</Term> the entity-requirement table into a list: we take the projection with respect to the entities. This gives us the employees for which there is a status they have <Em>not</Em> had.</Par>
-			<FigureExampleRAQuery query={<>employees_with_missing_status â† âˆ<sub>e_id</sub>(statuses_not_held)</>} actualQuery="SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts)" tableWidth={100} />
+			<RAQueryFigure query={<>employees_with_missing_status â† âˆ<sub>e_id</sub>(statuses_not_held)</>} actualQuery="SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts)" tableWidth={100} />
 			<Par>The above result is not yet what we want. We want to find the opposite: all employees for which there is <Em>not</Em> a status they have not had. To find these employees, we once more flip the result.</Par>
-			<FigureExampleRAQuery query={<>all_employees - employees_with_missing_status</>} actualQuery="SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts)" tableWidth={100} />
+			<RAQueryFigure query={<>all_employees - employees_with_missing_status</>} actualQuery="SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts)" tableWidth={100} />
 			<Info>The original request had a double negative: two not-statements. Each not-statement results in a flip (a set difference) in our final relational algebra script. It's a nice way to check if we haven't forgotten something: "Did we get the same number of flips as we have the word <Em>not</Em> in our request?"</Info>
 		</Section>
 
 		<Section title="Use a shortcut: the division operator">
 			<Par>The above procedure is a lengthy one. It has resulted in the following six-step script.</Par>
-			<FigureExampleRAQuery query={<>all_employees â† âˆ<sub>e_id</sub>(contracts)<br />
+			<RAQueryFigure query={<>all_employees â† âˆ<sub>e_id</sub>(contracts)<br />
 				all_statuses â† âˆ<sub>status</sub>(contracts)<br />
 				statuses_held â† âˆ<sub>e_id,status</sub>(contracts)<br />
 				statuses_not_held â† all_employees x all_statuses - statuses_held<br />
@@ -87,7 +86,7 @@ export function Theory() {
 			<Par>In short, the division operator takes a <Em>checklist table</Em> and a <Em>checklist</Em>, and it returns all the entities having <Em>all</Em> checks from the checklist marked. Generally put, we may write</Par>
 			<RA>entities_satisfying_all_checks â† checklist_table Ã· checklist</RA>
 			<Par>If we apply this division operator to our example, we could have significantly shortened the above script. The last three lines are replaced by a single division!</Par>
-			<FigureExampleRAQuery query={<>all_statuses â† âˆ<sub>status</sub>(contracts)<br />
+			<RAQueryFigure query={<>all_statuses â† âˆ<sub>status</sub>(contracts)<br />
 				statuses_held â† âˆ<sub>e_id,status</sub>(contracts)<br />
 				statuses_held Ã· all_statuses</>} actualQuery="SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts)" tableWidth={100} />
 			<Par>To see what is happening in the above script, we can display the data in the last step.</Par>

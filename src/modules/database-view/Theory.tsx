@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, Warning, Info, Quote, Term, Em } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
+import { TableQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -12,7 +12,7 @@ export function Theory() {
 			<Par>Suppose that we have a list of departments (including manager) and a list of employee data. Using this, we can generate an overview of the phone numbers of all department managers. This is a useful list to have for any company: it shows how to contact whoever is in charge.</Par>
 			<Par>To generate this list, we could give an instruction to the DBMS. The DBMS would then build the list for us. We could then print it out multiple times and hang it up all over the company.</Par>
 			<Quote>Make a list of department names including, for every department, who manages it: the manager's name and phone number.</Quote>
-			<FigureSingleTable query={`SELECT d_name, first_name AS manager_name, phone FROM departments JOIN employees ON manager_id=e_id;`} title="Department manager contact data" tableWidth={400} tableScale={0.8} />
+			<TableQueryFigure query={`SELECT d_name, first_name AS manager_name, phone FROM departments JOIN employees ON manager_id=e_id;`} title="Department manager contact data" tableWidth={400} tableScale={0.8} />
 			<Par>The problem appears when changes occur. Maybe a department changes manager, or a manager changes phone number. We'd have to update this list in all places where we hung it up!</Par>
 			<Par>The solution to this problem is quite simple: don't store this list. (And don't print it out and hang it up.) Whenever someone needs the contact information for all managers, just ask the DBMS again. It'll freshly assemble the data for us, including the latest updates. This ensures that the data is always up-to-date.</Par>
 			<Par>But this creates a new problem. Every time we'd want to get the list of manager contact data, we'd have to give the above (somewhat long) instructions to the database. Doing this over and over again could become tiring. Isn't there an easier way?</Par>
@@ -30,7 +30,7 @@ export function Theory() {
 			<Par>Once we have defined a view, we can use it. In its most simple form, we could directly request the table from the DBMS. "Please give me the manager contact data table." The DBMS would assemble it for us based on the provided view definition.</Par>
 			<Par>We could also use the view like we would use any other table. For instance, we can apply further table operations to it like projection and/or filtering.</Par>
 			<Quote>Find the names of all department managers with a 650 area code.</Quote>
-			<FigureSingleTable query={`SELECT first_name AS manager_name FROM departments JOIN employees ON manager_id=e_id WHERE phone LIKE '650%';`} tableWidth={100} tableScale={0.8} />
+			<TableQueryFigure query={`SELECT first_name AS manager_name FROM departments JOIN employees ON manager_id=e_id WHERE phone LIKE '650%';`} tableWidth={100} tableScale={0.8} />
 			<Par>The DBMS once more assembles the table for us, and then applies the requested operations.</Par>
 			<Info>Okay, in practice, the above isn't fully correct: the DBMS doesn't assemble the full manager contact data table. It always tries to make some optimizations. For example, in the above case, the department names aren't relevant, so those are never looked up. But again, query optimization is a whole concept of its own.</Info>
 		</Section>

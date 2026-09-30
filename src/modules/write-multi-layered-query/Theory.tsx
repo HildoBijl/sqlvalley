@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -12,12 +12,12 @@ export function Theory() {
 		<Section title="The problem: queries tend to grow larger">
 			<Par>Let's consider an example data request involving lots of tables. Suppose that all employees whose current salary is less than 200,000 are suspect: all transactions they have validated need to be reconsidered. And all users (both vendors and buyers) involved in those transactions need to be notified: we need their email addresses. How would we go about getting those?</Par>
 			<Par>First we need a list of employees (their IDs) who earn less than 200,000. That's still quite manageable.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT e_id
 FROM employees
 WHERE current_salary < 200000;`} tableScale={0.8} tableWidth={120} />
 			<Par>Then we need the transactions they have validated. This results in a subquery.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT vendor, buyer
 FROM transactions
 WHERE validated_by IN (
@@ -26,7 +26,7 @@ WHERE validated_by IN (
   WHERE current_salary < 200000
 );`} tableScale={0.8} tableWidth={300} />
 			<Par>We want a list of all involved users, so we need to merge the two lists. We can do that using a union.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT vendor AS username
 FROM transactions
 WHERE validated_by IN (
@@ -47,7 +47,7 @@ WHERE validated_by IN (
 
 		<Section title="Name intermediate query results">
 			<Par>The key to our problem lies in naming <Term>intermediate query results</Term>. Before the main <ISQL>SELECT</ISQL>, use <ISQL>WITH</ISQL> to define a result that can be referenced like a table within the statement.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
   SELECT e_id
   FROM employees
@@ -64,7 +64,7 @@ WHERE validated_by IN (SELECT e_id FROM low_salary_employees);`} tableScale={0.8
 			<Par>These named results are formally called <Term>Common Table Expressions (CTEs)</Term>. They are very powerful tools at structuring queries and making them easier to read. But keep in mind that they are temporary: as soon as the query ends they are forgotten!</Par>
 			<Info>A CTE names a query result for the duration of one statement. The DBMS may inline its definition or materialize its result in a temporary table. These are execution choices; a CTE does not guarantee that its query runs exactly once.</Info>
 			<Par>Instead of just one CTE, we can create more. We only use the <ISQL>WITH</ISQL> keyword once, but we add the table definitions separated by commas.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
   SELECT e_id
   FROM employees
@@ -80,7 +80,7 @@ UNION
 SELECT buyer AS username FROM affected_transactions;`} tableScale={0.8} tableWidth={150} />
 			<Warning>Define CTEs before the CTEs that use them. This order is easier to follow and works across more DBMSs. SQLite also allows acyclic references to CTEs declared later in the same WITH clause.</Warning>
 			<Par>Let's continue extending our query. Now that the affected users are known, we should get their email addresses. We could do so through a nested query, but it's better to simply add yet another CTE.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
   SELECT e_id
   FROM employees
@@ -99,7 +99,7 @@ SELECT email
 FROM accounts
 WHERE username IN (SELECT username FROM affected_users);`} tableScale={0.8} tableWidth={250} />
 			<Par>This is the result we wanted. The above query is quite easy to read, given how many tables it touches. It is way easier than the alternative that we would have gotten without CTEs. Good luck making sense of the following query!</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT email
 FROM accounts
 WHERE username IN (

@@ -5,7 +5,7 @@ import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	const now = new Date()

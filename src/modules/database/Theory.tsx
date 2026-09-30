@@ -5,14 +5,13 @@ import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em, Link } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
-import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
 		<Section>
 			<Par>Suppose that we are working for a company that's looking to keep track of their internal departments. How would we store this data? Could we just put it in something like an Excel file?</Par>
-			<FigureSingleTable query={`SELECT * FROM departments;`} title="List of departments" tableWidth={600} />
+			<TableQueryFigure query={`SELECT * FROM departments;`} title="List of departments" tableWidth={600} />
 		</Section>
 
 		<Section title="Why databases: a list of requirements">

@@ -1,6 +1,5 @@
 import { Page, Section, Par, List, Warning, Term, Em, M } from '@/ui'
-import { RA, IRA, RelationName } from '@/learning'
-import { FigureExampleRAQuery, FigureSingleTable } from '@/curriculum/utils'
+import { RA, IRA, RelationName, RAQueryFigure, TableQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -13,9 +12,9 @@ export function Theory() {
 			<Par>The key is that we need data from three relations now: from <RelationName>departments</RelationName>, from <RelationName>employee</RelationName> and from <RelationName>contracts</RelationName>. And just like we can join two relations, we can join three! Joining three (or more) relations is done in exactly the same way as joining two. Even the order in which we join does not matter. Both the Cartesian product <M>\times</M> and the natural join <M>\bowtie</M> are symmetric operators: it does not matter which relation is on the left or on the right. The final join, using either the Cartesian product or the natural join, then becomes</Par>
 			<RA>σ<sub>departments.manager_id = employees.e_id ∧ employees.e_id = contracts.e_id</sub>(departments ⨯ employees ⨯ contracts)</RA>
 			<RA>ρ<sub>manager_id→e_id</sub>(departments) ⋈ employees ⋈ contracts</RA>
-			<FigureSingleTable query="SELECT * FROM departments JOIN employees ON departments.manager_id=employees.e_id JOIN contracts ON employees.e_id=contracts.e_id" tableWidth={1000} tableScale={0.4} />
+			<TableQueryFigure query="SELECT * FROM departments JOIN employees ON departments.manager_id=employees.e_id JOIN contracts ON employees.e_id=contracts.e_id" tableWidth={1000} tableScale={0.4} />
 			<Par>Once we have this join, we can answer queries based on it. Solving the problem stated above by adding filtering and projection, we find the following query.</Par>
-			<FigureExampleRAQuery query={<>∏<sub>first_name,last_name,d_name,position,salary,current_salary</sub>(σ<sub>salary &lt; 0.5*current_salary</sub>(ρ<sub>manager_id→e_id</sub>(departments) ⋈ employees ⋈ contracts))</>} actualQuery="SELECT DISTINCT employees.first_name, employees.last_name, departments.d_name, contracts.position, contracts.salary, employees.current_salary FROM departments JOIN employees ON departments.manager_id=employees.e_id JOIN contracts ON employees.e_id=contracts.e_id WHERE contracts.salary < 0.5*employees.current_salary" tableWidth={600} tableScale={0.8} below />
+			<RAQueryFigure query={<>∏<sub>first_name,last_name,d_name,position,salary,current_salary</sub>(σ<sub>salary &lt; 0.5*current_salary</sub>(ρ<sub>manager_id→e_id</sub>(departments) ⋈ employees ⋈ contracts))</>} actualQuery="SELECT DISTINCT employees.first_name, employees.last_name, departments.d_name, contracts.position, contracts.salary, employees.current_salary FROM departments JOIN employees ON departments.manager_id=employees.e_id JOIN contracts ON employees.e_id=contracts.e_id WHERE contracts.salary < 0.5*employees.current_salary" tableWidth={600} tableScale={0.8} below />
 			<Par>It seems that Bob Dylon used to work in various other positions, but really enjoys being manager of the Operations department now.</Par>
 		</Section>
 
@@ -28,9 +27,9 @@ export function Theory() {
 			<RA>σ<sub>contracts.e_id = e2.e_id</sub>(contracts ⨯ ρ<sub>e2</sub>(contracts))</RA>
 			<Par>In this query, we temporarily rename the second <RelationName>contracts</RelationName> relation as <RelationName>e2</RelationName>. We then take the Cartesian product and apply filtering: we only keep the rows where the first <RelationName>contracts</RelationName> relation has the same "e_id" parameter as the second <RelationName>contracts</RelationName> relation, which is now called <RelationName>e2</RelationName>.</Par>
 			<Par>Once we have this relation, we can compare every person's job contracts with every one of their other job contracts. Our goal is to find two job contracts with different positions. So we add this condition to the filter.</Par>
-			<FigureExampleRAQuery query={<>σ<sub>contracts.e_id = e2.e_id ∧ contracts.position ≠ e2.position</sub>(contracts ⨯ ρ<sub>e2</sub>(contracts))</>} actualQuery="SELECT DISTINCT * FROM contracts e1, contracts e2 WHERE e1.e_id = e2.e_id AND e1.position <> e2.position" tableWidth={900} tableScale={0.5} below />
+			<RAQueryFigure query={<>σ<sub>contracts.e_id = e2.e_id ∧ contracts.position ≠ e2.position</sub>(contracts ⨯ ρ<sub>e2</sub>(contracts))</>} actualQuery="SELECT DISTINCT * FROM contracts e1, contracts e2 WHERE e1.e_id = e2.e_id AND e1.position <> e2.position" tableWidth={900} tableScale={0.5} below />
 			<Par>Note that these are all possible combinations of two contracts of the <Em>same person</Em> but with <Em>different</Em> positions. This is almost what we want. The final step is extracting the <Em>people</Em> having these contracts, which is done through a projection. Extracting the employee IDs (either from <RelationName>contracts</RelationName> or <RelationName>e2</RelationName>) gives the final result.</Par>
-			<FigureExampleRAQuery query={<>∏<sub>contracts.e_id</sub>(σ<sub>contracts.e_id = e2.e_id ∧ contracts.position ≠ e2.position</sub>(contracts ⨯ ρ<sub>e2</sub>(contracts)))</>} actualQuery="SELECT DISTINCT e1.e_id FROM contracts e1, contracts e2 WHERE e1.e_id = e2.e_id AND e1.position <> e2.position" tableWidth={120} tableScale={0.8} />
+			<RAQueryFigure query={<>∏<sub>contracts.e_id</sub>(σ<sub>contracts.e_id = e2.e_id ∧ contracts.position ≠ e2.position</sub>(contracts ⨯ ρ<sub>e2</sub>(contracts)))</>} actualQuery="SELECT DISTINCT e1.e_id FROM contracts e1, contracts e2 WHERE e1.e_id = e2.e_id AND e1.position <> e2.position" tableWidth={120} tableScale={0.8} />
 			<Par>This example shows how you can use a Cartesian product to join a relation with itself. This is useful if you want to compare pairs of different tuples from the same relation.</Par>
 		</Section>
 

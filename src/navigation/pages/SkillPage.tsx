@@ -9,18 +9,11 @@ import {
 	useSettingsStore,
 	useSkillTreeSettingsStore,
 } from '@/store';
-import { getModulePresentation, getAvailableTableKeys, isModuleId, moduleTree } from '@/curriculum'
-import {
-	defaultSkillTreeVisualization,
-	isSkillTreeVisualizationId,
-	skillTreeVisualizationById,
-	type SkillTreeVisualizationId,
-} from '@/curriculum/skillTreeVisualizations';
-import { useSkillContent } from '@/curriculum/hooks/useSkillContent';
+import { type SkillTreeVisualizationId, getModulePresentation, getAvailableTableKeys, isModuleId, moduleTree, defaultSkillTreeVisualization, isSkillTreeVisualizationId, skillTreeVisualizationById, useModuleExercises, moduleComponents, moduleProviders } from '@/curriculum'
+
 import { EXERCISES_REQUIRED_FOR_SKILL_COMPLETION, useModuleCompletion } from '@sqlvalley/progress';
 import { type TabConfig, LearningHeader, LearningTabs, ModuleContentView, SkillCompletionDialog, DataExplorer, InteractivePractice } from '@/learning'
 import { LoadingScreen } from '@/ui'
-import { moduleComponents, moduleProviders } from '@/curriculum/utils/loaders'
 
 import { useModuleTabs } from '../hooks'
 
@@ -39,6 +32,8 @@ export default function SkillPage() {
 		() => getBackToLearningPathFromHistory(skillTreeHistory, skillId),
 		[skillTreeHistory, skillId],
 	);
+
+	const skillMeta = skillId && isModuleId(skillId) && moduleTree[skillId].type === 'skill' ? moduleTree[skillId] : undefined
 
 	const hasStaticPractice = Boolean(skillId && moduleComponents[skillId]?.Practice);
 	const tables = useMemo(() => skillId && isModuleId(skillId) ? getAvailableTableKeys(skillId) : [], [skillId])
@@ -70,15 +65,14 @@ export default function SkillPage() {
 	});
 
 	const {
-		isLoading,
-		skillMeta,
-		exerciseDefinitions,
+		loading,
+		exercises,
 		error: contentError,
-	} = useSkillContent(skillId, {
-		loadExercises: !hasStaticPractice,
+	} = useModuleExercises(skillId, {
+		enabled: !hasStaticPractice,
 	});
 
-	const hasInteractivePractice = Boolean(exerciseDefinitions?.length);
+	const hasInteractivePractice = Boolean(exercises?.length);
 	const hasPractice = hasStaticPractice || hasInteractivePractice;
 
 	const moduleStates = useLearningStore((state) => state.modules);
@@ -124,7 +118,7 @@ export default function SkillPage() {
 		}
 	}, [currentTab, summaryUnlocked, selectTab, tabs]);
 
-	if (isLoading) return <LoadingScreen message="Loading module..." />
+	if (loading) return <LoadingScreen message="Loading module..." />
 
 	if (!skillMeta) {
 		return (
@@ -166,7 +160,7 @@ export default function SkillPage() {
 
 					{contentError && (
 						<Alert severity="warning" sx={{ mb: 2 }}>
-							{contentError}
+							{contentError.message}
 						</Alert>
 					)}
 
@@ -183,7 +177,7 @@ export default function SkillPage() {
 							{currentTab === 'practice' && hasInteractivePractice && !hasStaticPractice && (
 								<InteractivePractice
 									skillId={skillMeta.id}
-									exercises={exerciseDefinitions ?? []}
+									exercises={exercises ?? []}
 								/>
 							)}
 

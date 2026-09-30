@@ -1,6 +1,6 @@
 import { Page, Section, Par, Term, Em } from '@/ui'
 import { DL, IDL, ManualExerciseSet } from '@/learning'
-import { SQLValleySchema } from '@/curriculum/utils'
+import { SQLValleySchema } from '@/curriculum'
 
 export function Practice() {
 	return <Page>

@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
+import { TableQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -10,7 +10,7 @@ export function Theory() {
 
 		<Section title="Aggregation: combine multiple rows into a single value">
 			<Par>Let's dive into the financial data. Let's consider the financial performance of the company per quarter.</Par>
-			<FigureSingleTable query={`SELECT * FROM quarterly_performance`} tableScale={0.8} tableWidth={800} />
+			<TableQueryFigure query={`SELECT * FROM quarterly_performance`} tableScale={0.8} tableWidth={800} />
 			<Par>Based on this table, we can find general statistics for the entire period we kept financial records. Think of ...
 			</Par>
 			<List items={[
@@ -19,14 +19,14 @@ export function Theory() {
 				<>The <Term>highest</Term>/<Term>lowest</Term> revenue for any quarter.</>,
 				<>Or something as simple as the <Term>number of quarters</Term> for which we tracked the finances.</>,
 			]} />
-			<FigureSingleTable query={`SELECT SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance`} tableScale={0.8} tableWidth={420} />
+			<TableQueryFigure query={`SELECT SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance`} tableScale={0.8} tableWidth={420} />
 			<Par>To find any of these quantities, we need to take <Em>multiple</Em> rows and combine their data to find a <Em>single</Em> value. This idea of combining multiple rows to find a single value that says something about all respective rows is called <Term>aggregation</Term>.</Par>
 			<Info>Aggregation is usually performed on <Em>numeric</Em> values. In theory aggregation can also be performed on <Em>text</Em> values. Given a column with for example email addresses, we could aggregate this into a single piece of text containing all email addresses, or we could find the longest email addresses, or anything else. <Em>Any</Em> operation that combines multiple rows into a single value is considered aggregation.</Info>
 		</Section>
 
 		<Section title="Grouped aggregation: aggregate groups of rows">
 			<Par>We could apply aggregation to a <Em>full</Em> table, to turn the whole table into a few statistics. However, it is more common to first split the table up into <Term>groups</Term>, and then aggregate <Em>within</Em> each group. We could for instance check out the financial records <Em>per year</Em>.</Par>
-			<FigureSingleTable query={`SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance GROUP BY fiscal_year`} tableScale={0.8} tableWidth={500} />
+			<TableQueryFigure query={`SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance GROUP BY fiscal_year`} tableScale={0.8} tableWidth={500} />
 			<Par>Grouped aggregation takes place in three steps.</Par>
 			<List useNumbers items={[
 				<>We specify by which attribute(s) we group: the <Term>grouping attributes</Term>. For example by year.</>,

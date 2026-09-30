@@ -1,7 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Em } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -12,7 +12,7 @@ export function Summary() {
 				<>To filter rows <Em>after</Em> aggregation is applied, use a <ISQL>HAVING</ISQL> clause <Em>after</Em> <ISQL>GROUP BY</ISQL>. It operates on the aggregated table.</>,
 			]} />
 			<Info>You may <Em>not</Em> use columns from the original table in the <ISQL>HAVING</ISQL> filter, other than those given at <ISQL>GROUP BY</ISQL>. You <Em>can</Em> use additional aggregation functions.</Info>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
 FROM quarterly_performance
 WHERE quarter <= 2
@@ -20,7 +20,7 @@ GROUP BY fiscal_year
 HAVING AVG(revenue) > 5000000;`} tableScale={0.8} tableWidth={220} />
 			<Warning>In most DBMSs you <Em>cannot</Em> use the aliases defined in the <ISQL>SELECT</ISQL> clause within the <ISQL>HAVING</ISQL> clause. This means you may have to repeat calculations.</Warning>
 			<Par>When using aggregation, it is common to process values. This processing can happen both before and after aggregation.</Par>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 SELECT
   city,
   ROUND(AVG(current_salary / 12)) AS mean_monthly_salary,

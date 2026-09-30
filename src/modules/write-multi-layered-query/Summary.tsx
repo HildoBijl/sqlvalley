@@ -1,14 +1,14 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, Quote, Info, Term } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
 		<Section>
 			<Par>We can use the <ISQL>WITH</ISQL> statement before the <ISQL>SELECT</ISQL> clause to define <Term>named query results</Term>, formally known as <Term>Common Table Expressions (CTEs)</Term>. These CTEs are very useful to structure the queries we write, preventing us from repeating ourselves or getting queries within queries within queries.</Par>
 			<Quote>Find the email addresses of all users involved (as vendor or buyer) in transactions validated by employees earning less than 200,000.</Quote>
-			<FigureExampleQuery query={`
+			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
   SELECT e_id
   FROM employees

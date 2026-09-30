@@ -2,8 +2,7 @@
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { Page, Section, Par, List, Info, Warning, Quote, Term, Em, M } from '@/ui'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
-import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	const db = useTheoryPageDatabase()
@@ -43,12 +42,12 @@ SELECT * FROM vendor_chain;`
 
 		<Section title="The problem: current methods don't allow indefinite looping through chains">
 			<Par>Suppose that we have a table of transactions of products.</Par>
-			<FigureSingleTable query={q1} title="List of transactions" tableWidth={800} tableScale={0.8} />
+			<TableQueryFigure query={q1} title="List of transactions" tableWidth={800} tableScale={0.8} />
 			<Par>In this table we can find out who received money from whom: the vendor receives money from the buyer.</Par>
-			<FigureSingleTable query={q2} title="Directly received money" tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q2} title="Directly received money" tableWidth={260} tableScale={0.8} />
 			<Par>But now let's try to follow the money. If a person A sells something to a person B, and a person B sells something to a person C, then person A will have indirectly received money from person C. We call such a series of foreign key links a <Term>chain</Term>. And in this chain, some of person C's (possibly digital) banknotes will likely have ended up in person A's hands!</Par>
 			<Par>We can find all the two-step chains: we can ask the database for all combinations of people (A, C) such that there is a person B for whom it holds that A sold to B <Em>and</Em> B sold to C.</Par>
-			<FigureSingleTable query={q3} title="Received money in two steps" tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q3} title="Received money in two steps" tableWidth={260} tableScale={0.8} />
 			<Par>Pretty much all query languages allow this. And we can also increase the complexity of our query to find all three-step chains. And then we can merge all the tables we obtained to get an overview of all one-step, two-step and three-step chains combined in one table. It's all pretty useful.</Par>
 			<Par>The problem is: all these queries only work for a <Em>fixed</Em> length of chain. If the chains of people selling things to each other grow larger, the queries we need to write will grow larger too. And we always run the risk, if the chains grow too large, that whatever query we wrote won't suffice. We need queries that are guaranteed to work for <Em>any</Em> chain length!</Par>
 		</Section>
@@ -68,7 +67,7 @@ SELECT * FROM vendor_chain;`
 			]} />
 			<Info>The query above refers to itself! To be precise: to define whether or not someone "received money" from someone else, we actually used the words "received money from". This makes the definition self-referencing: recursive.</Info>
 			<Par>By defining the query in this way, the query language will find everyone belonging to the chain.</Par>
-			<FigureSingleTable query={q4} title="Received money in any number of steps" tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q4} title="Received money in any number of steps" tableWidth={260} tableScale={0.8} />
 			<Warning>Not all query languages allow for recursion! If a query language does not allow for recursion, there is <Em>no</Em> way to query chains of arbitrary length. This makes query languages that support recursion inherently more powerful than query languages that don't.</Warning>
 		</Section>
 
@@ -100,16 +99,16 @@ SELECT * FROM vendor_chain;`
 			]} />
 			<Par>The above might still sound a bit vague, so let's clarify it by applying it to our example.</Par>
 			<Par>We start with the initalization. Our anchor is the set of all people who directly sold to another person: the transactions table.</Par>
-			<FigureSingleTable query={q2} title={<>The delta set <M>\Delta</M> at initialization</>} tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q2} title={<>The delta set <M>\Delta</M> at initialization</>} tableWidth={260} tableScale={0.8} />
 			<Par>These rows are all added to <M>R</M>. Given these new rows, we now try to find <Em>additional</Em> rows according to our recursion definition. That is, we try to find people A, B and C, where (A, B) appears in the above delta set <M>\Delta</M>, and (B, C) appears in the original transactions table. This gives quite a lot of combinations of people, but only a few of them are actually new.</Par>
-			<FigureSingleTable query={q5} title={<>The delta set <M>\Delta</M> after the first iteration</>} tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q5} title={<>The delta set <M>\Delta</M> after the first iteration</>} tableWidth={260} tableScale={0.8} />
 			<Par>Next, we repeat this, but once again <Em>only</Em> for these new rows. So we once more try to find people A, B and C, where (A, B) appears in the above delta set <M>\Delta</M>, and (B, C) appears in the transactions table. This gives two more new pairs of people.</Par>
-			<FigureSingleTable query={q7} title={<>The delta set <M>\Delta</M> after the second iteration</>} tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q7} title={<>The delta set <M>\Delta</M> after the second iteration</>} tableWidth={260} tableScale={0.8} />
 			<Par>We repeat the process, using the above new rows to try and find more rows. There's one more row to be added.</Par>
-			<FigureSingleTable query={q9} title={<>The delta set <M>\Delta</M> after the third iteration</>} tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q9} title={<>The delta set <M>\Delta</M> after the third iteration</>} tableWidth={260} tableScale={0.8} />
 			<Par>Finally, we do the whole iteration one more time. This time we don't find any new rows to add: the delta set <M>\Delta</M> remains empty. That means the fixed-point algorithm is done!</Par>
 			<Par>The result is the full set of all rows that we have found.</Par>
-			<FigureSingleTable query={q4} title={<>The final result set <M>R</M></>} tableWidth={260} tableScale={0.8} />
+			<TableQueryFigure query={q4} title={<>The final result set <M>R</M></>} tableWidth={260} tableScale={0.8} />
 			<Par>This shows how the DBMS, when given a recursive query, will keep searching for new cases until there's none left to be found.</Par>
 		</Section>
 	</Page>

@@ -3,9 +3,7 @@ import { Fragment } from 'react'
 import { type QueryResult, useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { Page, Section, Par, List, Warning, Info, Quote, Term, Em } from '@/ui'
-import { DL, IDL } from '@/learning'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
-import { useTheoryPageDatabase } from '@/curriculum/utils'
+import { DL, IDL, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	const db = useTheoryPageDatabase()
@@ -26,7 +24,7 @@ export function Theory() {
 
 		<Section title="Step 1: the facts">
 			<Par>Datalog works with so-called <Term>facts</Term>. Consider for instance the table of employees.</Par>
-			<FigureSingleTable query={q1} title="List of employees" tableWidth={750} tableScale={0.6} />
+			<TableQueryFigure query={q1} title="List of employees" tableWidth={750} tableScale={0.6} />
 			<Par>In Datalog this table isn't considered as a table, but as a list of facts.</Par>
 			<DatalogFacts data={data1} predicate="employee" />
 			<Par>What the first line here basically says is, "There is an employee with employee ID '{e1[0]}', first name '{e1[1]}', last name '{e1[2]}', and so forth." This is now treated as a known fact.</Par>
@@ -71,13 +69,13 @@ export function Theory() {
 			<Par>The rule contains <Term>variables</Term> like <IDL>id</IDL>, <IDL>fn</IDL>, <IDL>ln</IDL>, etcetera. When Datalog receives a rule like this, it will try to find <Em>all</Em> possible combinations of values for <Em>all</Em> variables in the rule, such that <Em>all</Em> literals hold true. (This is an important idea, so read that sentence again!) In our example, there are only three possible sets of variable values for which all conditions can be met. So we get the following three new facts.</Par>
 			<DatalogFacts data={data2} predicate="highEarningEmployee" />
 			<Par>Or displayed more clearly for us, as a table:</Par>
-			<FigureSingleTable query={q2} title="High-earning employees" tableWidth={750} tableScale={0.6} />
+			<TableQueryFigure query={q2} title="High-earning employees" tableWidth={750} tableScale={0.6} />
 			<Par>A typical <Term>Datalog program</Term> contains multiple rules. We could for instance find the names of these high-earning employees with a second rule.</Par>
 			<DL>highEarningEmployeeName(fn, ln) :- highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs).</DL>
 			<Par>We can read this in English as:</Par>
 			<Quote>The tuple (fn, ln) is a high-earning employee name, when there exists some combination of values (id, fn, ln, p, e, a, c, hd, cs) that is considered a high-earning employee.</Quote>
 			<Par>It creates yet another predicate for us.</Par>
-			<FigureSingleTable query={q3} title="High-earning employee names" tableWidth={200} tableScale={0.6} />
+			<TableQueryFigure query={q3} title="High-earning employee names" tableWidth={200} tableScale={0.6} />
 
 			<Info>In reality, when Datalog receives a rule, it won't immediately execute it. It only uses the rule when requested. (See step 3: the query.) So the best way to see a rule is actually as a <Em>view definition</Em>. The predicate "highEarningEmployee" functions like a view that we created! A full <Term>Datalog program</Term> is essentially a collection of view definitions, ended by a query.</Info>
 		</Section>

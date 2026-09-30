@@ -4,7 +4,7 @@ import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithB
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em } from '@/ui'
 import { DL, IDL } from '@/learning'
-import { SQLValleySchema } from '@/curriculum/utils'
+import { SQLValleySchema } from '@/curriculum'
 
 function DPGDL({ children }: { children: ReactNode }) {
 	return <DL style={{ padding: '10px 20px' }}>{children}</DL>

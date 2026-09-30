@@ -4,12 +4,7 @@ import {
 	AutoStories as LearnIcon,
 } from '@mui/icons-material';
 import { Link as RouterLink, useLocation } from 'react-router-dom'
-import {
-	defaultSkillTreeVisualization,
-	isSkillTreeVisualizationId,
-	skillTreeVisualizationDefinitions,
-	type SkillTreeVisualizationId,
-} from '@/curriculum/skillTreeVisualizations';
+import { type SkillTreeVisualizationId, defaultSkillTreeVisualization, isSkillTreeVisualizationId, skillTreeVisualizationDefinitions } from '@/curriculum'
 import { useAdminMode, useSkillTreeSettingsStore } from '@/store';
 import { SettingsMenu } from './Settings';
 

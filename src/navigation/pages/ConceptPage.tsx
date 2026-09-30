@@ -18,17 +18,10 @@ import {
 	useSettingsStore,
 	useSkillTreeSettingsStore,
 } from '@/store';
-import { type Module, getModulePresentation, moduleTree } from '@/curriculum'
-import {
-	defaultSkillTreeVisualization,
-	isSkillTreeVisualizationId,
-	skillTreeVisualizationById,
-	skillTreeVisualizationDefinitions,
-	type SkillTreeVisualizationId,
-} from '@/curriculum/skillTreeVisualizations';
+import { type Module, type SkillTreeVisualizationId, getModulePresentation, moduleTree, defaultSkillTreeVisualization, isSkillTreeVisualizationId, skillTreeVisualizationById, skillTreeVisualizationDefinitions, moduleComponents, moduleProviders } from '@/curriculum'
+
 import { type TabConfig, LearningHeader, LearningTabs, ModuleContentView, ConceptCompletionDialog } from '@/learning'
 import { LoadingScreen } from '@/ui'
-import { moduleComponents, moduleProviders } from '@/curriculum/utils/loaders'
 
 import { useModuleTabs } from '../hooks'
 

@@ -1,6 +1,5 @@
 import { Page, Section, Par, Quote, List, Info, Warning, Em, Term } from '@/ui'
-import { DL, IDL } from '@/learning'
-import { FigureExampleDLQuery } from '@/curriculum/utils'
+import { DL, IDL, DLQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -22,16 +21,16 @@ export function Theory() {
 			<Par>The cleanest way of getting rid of unbound variables is to set up an intermediate predicate where we apply projection to remove the unbound variables. In the example, we could define</Par>
 			<DL>managerId(id) :- department(_, _, id, _, _).</DL>
 			Once we have this, we can find the IDs of all non-manager employees through
-			<FigureExampleDLQuery query={<>nonManagerId(id) :- employee(id, _, _, _, _, _, _, _, _), not managerId(id).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
+			<DLQueryFigure query={<>nonManagerId(id) :- employee(id, _, _, _, _, _, _, _, _), not managerId(id).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
 			<Par>If we really want to be clean, we could instead also defined another supporting predicate, and then apply that one as well.</Par>
-			<FigureExampleDLQuery query={<>employeeId(id) :- employee(id, _, _, _, _, _, _, _, _).<br />nonManagerId(id) :- employeeId(id), not managerId(id).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
+			<DLQueryFigure query={<>employeeId(id) :- employee(id, _, _, _, _, _, _, _, _).<br />nonManagerId(id) :- employeeId(id), not managerId(id).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
 			<Par>Both methods are fine and come down to the exact same idea.</Par>
 			<Par>Setting up negation through an intermediate predicate like this is a very useful way of keeping scripts clean and easy to follow. They also allow for <Term>reusability</Term>: if we need the predicate <IDL>managerId</IDL> anywhere else in our program, we can again use it. The downside is that it does define a lot of predicates. That's not really a big problem, but if you really want to let your script have as few lines as possible, you can also try the second method of getting rid of unbound variables.</Par>
 		</Section>
 
 		<Section title="Method 2: remove unbound variables through anonymous variables">
 			<Par>Rather than setting up a new predicate, we could also squash everything into one rule. To do so, we turn all unbound variables into anonymous variables.</Par>
-			<FigureExampleDLQuery query={<>nonManagerId(id) :- employee(id, _, _, _, _, _, _, _, _), not department(_, _, id, _, _).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
+			<DLQueryFigure query={<>nonManagerId(id) :- employee(id, _, _, _, _, _, _, _, _), not department(_, _, id, _, _).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
 			<Par>This works well, but the underscore in the negative literal can be a bit confusing. The above query effectively says,</Par>
 			<Quote>An ID belongs to a non-manager, if there is an employee with that ID (with any other employee arguments), and there is not any department for which the manager has that ID (with any other department arguments).</Quote>
 			<Warning>

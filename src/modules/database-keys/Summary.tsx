@@ -1,8 +1,7 @@
 import { ISQL } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Term } from '@/ui'
-import { RelationName, PrimaryKey } from '@/learning'
-import { FigureSingleTable } from '@/curriculum/utils/queryFigures'
+import { RelationName, PrimaryKey, TableQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -13,7 +12,7 @@ export function Summary() {
 				<>A <Term>candidate key</Term> is a superkey for which, if we remove any attribute, it is not a superkey anymore. So a candidate key can be seen as a minimal superkey. Example candidate keys include <ISQL>{`{e_id}`}</ISQL>, <ISQL>{`{first_name, last_name}`}</ISQL> and <ISQL>{`{email}`}</ISQL>.</>,
 				<>A <Term>primary key</Term> is a candidate key that we choose to use when referring to specific table rows. The primary key is ideally one whose value never changes. Using the employee ID <ISQL>{`{e_id}`}</ISQL> is a wise choice here.</>
 			]} />
-			<FigureSingleTable query={`SELECT * FROM employees;`} title="List of employees" tableWidth={800} tableScale={0.65} />
+			<TableQueryFigure query={`SELECT * FROM employees;`} title="List of employees" tableWidth={800} tableScale={0.65} />
 			<Par>Within the schema, the primary key is indicated through an underline. <List items={[<><RelationName>employees</RelationName> (<PrimaryKey>e_id</PrimaryKey>, first_name, last_name, phone, email, address, city, hire_date, current_salary)</>]} /></Par>
 		</Section>
 	</Page>

@@ -69,5 +69,5 @@ export type ModuleId = keyof typeof moduleDefinition
 export const moduleTree = createModuleTree(moduleDefinition)
 
 export function isModuleId(value: string): value is ModuleId {
-	return value in moduleDefinition
+	return Object.prototype.hasOwnProperty.call(moduleDefinition, value)
 }

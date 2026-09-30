@@ -4,4 +4,15 @@ This folder contains the module tree, curriculum configuration, and tools that a
 
 The content loader supplies lazy components matching learning's `ModuleContent` contract. Pages select the module and pass its content to `ModuleContentView`; learning does not import the curriculum registry. Static practice has a separate component contract.
 
-This part of the ReadMe is still under development. Check back later.
+Import public tools from `@/curriculum`. Internal files use relative imports to keep loading and hot-reload dependencies independent.
+
+- `moduleDefinition.ts` and `modulePresentation.ts`: module IDs, prerequisites, names, and descriptions.
+- `content`: lazy module content and provider registries. Static practice has its own props contract.
+- `exercises`: builds registrations with module defaults and loads them through `useModuleExercises(moduleId, { enabled })`, returning `{ exercises, loading, error }`. Loader and HMR helpers remain private.
+- `database`: table introductions and the curriculum-specific `SqlModuleProvider`.
+- `schemas`: shared lesson content describing the SQL Valley, Companies, and Shopping datasets.
+- `skillTreeVisualizations`: SQL, relational-algebra, and Datalog layouts plus their shared registry. Navigation paths remain here until the navigation cleanup.
+
+Generic query figures and `useTheoryPageDatabase` live in `@/learning`; they consume the current database context without looking up curriculum modules.
+
+The exercise HMR registry must stay independent of runtime exercise imports. Vite injects its import into exercise builder modules; update that path when moving the registry.

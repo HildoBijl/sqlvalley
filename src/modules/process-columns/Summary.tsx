@@ -2,13 +2,13 @@ import { Drawing, Element } from '@sqlvalley/drawing'
 import { ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, Info } from '@/ui'
-import { FigureExampleQuery } from '@/curriculum/utils/queryFigures'
+import { SQLQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
 		<Section>
 			<Par>In SQL there is a wide variety of functions that can be used to process the values in a column, for instance to create new columns.</Par>
-			<FigureExampleQuery query={`SELECT
+			<SQLQueryFigure query={`SELECT
   position,
   salary,
   0.3*salary AS taxes
