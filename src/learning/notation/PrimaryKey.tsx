@@ -6,12 +6,7 @@ export type PrimaryKeyProps = TypographyProps & {
 }
 
 export function PrimaryKey({ children, sx, ...props }: PrimaryKeyProps) {
-	return <Typography
-		component="span"
-		variant="inherit"
-		sx={{ textDecoration: 'underline', ...sx }}
-		{...props}
-	>
+	return <Typography component="span" variant="inherit" sx={{ textDecoration: 'underline', ...sx }}		{...props}>
 		{children}
 	</Typography>
 }

@@ -2,9 +2,10 @@ import { Alert, Box } from '@mui/material'
 import { EditNote, School } from '@mui/icons-material'
 
 import { LoadingScreen } from '@/ui'
-import { LearningHeader, LearningTabs, ModuleContentView, DataExplorer, InteractivePractice, StaticPractice, CompletionDialog, CompleteModuleButton } from '@/learning'
+import { LearningHeader, LearningTabs, DataExplorer, InteractivePractice, StaticPractice, CompletionDialog, CompleteModuleButton } from '@/learning'
 import type { ModuleId } from '@/curriculum'
 
+import { ModuleContentTab } from './ModuleContentTab'
 import { useModuleData, useModuleProgress, useModuleNavigation, useModulePageTabs, useCompletionDialog } from './hooks'
 
 export function ModulePageContent({ moduleId }: { moduleId: ModuleId }) {
@@ -34,13 +35,13 @@ function ModulePageReady({ data }: { data: ReturnType<typeof useModuleData> }) {
 			onBack={returnToOverview} />
 
 		<LearningTabs value={currentTab} tabs={tabs} onChange={handleTabChange}>
-			{currentTab === 'story' && <ModuleContentView content={content} section="Story" />}
-			{currentTab === 'video' && <ModuleContentView content={content} section="Video" />}
-			{currentTab === 'theory' && <ModuleContentView content={content} section="Theory" />}
+			{currentTab === 'story' && <ModuleContentTab content={content} contentKey="Story" />}
+			{currentTab === 'video' && <ModuleContentTab content={content} contentKey="Video" />}
+			{currentTab === 'theory' && <ModuleContentTab content={content} contentKey="Theory" />}
 			{currentTab === 'practice' && Practice && <StaticPractice component={Practice} onComplete={completeModule} isCompleted={completed} />}
 			{currentTab === 'practice' && hasInteractivePractice && <InteractivePractice skillId={moduleId} exercises={exercises} />}
 			{currentTab === 'data' && <DataExplorer tables={tables} />}
-			{currentTab === 'summary' && <ModuleContentView content={content} section="Summary" />}
+			{currentTab === 'summary' && <ModuleContentTab content={content} contentKey="Summary" />}
 		</LearningTabs>
 
 		{showCompleteButton && <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>

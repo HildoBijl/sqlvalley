@@ -7,7 +7,7 @@ Navigation combines curriculum, learning components, and application state into 
 - `useLearningNavigationContext.ts`: shared tree-history selection and return destinations.
 - `layout`: the header, settings menu, and outlet loading/error boundaries.
 - `pages`: the home page and one skill-tree overview page configured by tree ID.
-- `pages/modulePage`: `ModulePage` supplies the provider and layout; `ModulePageContent` shares the header, tabs, and content for concepts and skills. The content component selects `StaticPractice` or `InteractivePractice` from learning and renders an independent completion button and one shared completion dialog.
+- `pages/modulePage`: `ModulePage` supplies the provider and layout; `ModulePageContent` shares the header, tabs, and content for concepts and skills. `ModuleContentTab` renders individual content tabs and handles loading and missing content. The content component selects `StaticPractice` or `InteractivePractice` from learning and renders an independent completion button and one shared completion dialog.
 
 `/module/:moduleId` is the route for both concepts and skills. `ModulePage` validates the ID and supplies the module provider, loading boundary, and container, and renders the shared content component. Module type and available content determine practice, the header icon, progress, and completion behavior. Data Explorer remains skill-only. The old `/concept/...` and `/skill/...` routes have no redirects. Stateful module pages are keyed by ID so completion dialogs reset when navigating to another module. Tab selection uses only available tabs, with precedence URL ? stored preference ? default; unrelated query parameters are preserved. Interactive exercise availability is loaded before selecting tabs.
 

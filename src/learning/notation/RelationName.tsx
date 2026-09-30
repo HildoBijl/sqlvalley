@@ -6,13 +6,7 @@ export type RelationNameProps = TypographyProps & {
 }
 
 export function RelationName({ children, sx, ...props }: RelationNameProps) {
-	return <Typography
-		component="strong"
-		variant="inherit"
-		fontWeight="bold"
-		sx={{ ...sx }}
-		{...props}
-	>
+	return <Typography component="strong" variant="inherit" fontWeight="bold" sx={{ ...sx }}		{...props}>
 		{children}
 	</Typography>
 }

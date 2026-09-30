@@ -39,17 +39,12 @@ export function RAQueryFigure({ query = <></>, actualQuery = '', below = false, 
 
 	// Determine the arrow position: 'between', 'topRight' or 'bottomLeft'.
 	if (below) {
-		if (we + arrowRadius * 1.5 < wt)
-			arrowPos = 'topRight'
-		else if (wt + arrowRadius * 1.5 < we)
-			arrowPos = 'bottomLeft'
-		else
-			arrowPos = 'between'
+		if (we + arrowRadius * 1.5 < wt) arrowPos = 'topRight'
+		else if (wt + arrowRadius * 1.5 < we) arrowPos = 'bottomLeft'
+		else arrowPos = 'between'
 	} else {
-		if (he + arrowRadius * 1.5 < ht)
-			arrowPos = 'bottomLeft'
-		else
-			arrowPos = 'between'
+		if (he + arrowRadius * 1.5 < ht) arrowPos = 'bottomLeft'
+		else arrowPos = 'between'
 	}
 
 	// Determine the drawing size.

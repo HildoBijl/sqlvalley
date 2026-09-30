@@ -29,10 +29,12 @@ export function SQLQueryFigure({ query = '', actualQuery = '', below = false, ta
 
 	// Determine the arrow coordinates.
 	const arrowPoints = eBounds && tBounds && (arrowBetween ? (
-		below ? [[Math.min(eBounds.midpoint.x, tBounds.midpoint.x), eBounds.top + 4], [Math.min(eBounds.midpoint.x, tBounds.midpoint.x), ty - 4]]
+		below
+			? [[Math.min(eBounds.midpoint.x, tBounds.midpoint.x), eBounds.top + 4], [Math.min(eBounds.midpoint.x, tBounds.midpoint.x), ty - 4]]
 			: [[eBounds.right + 4, Math.min(eBounds.midpoint.y, tBounds.midpoint.y)], [tx - 4, Math.min(eBounds.midpoint.y, tBounds.midpoint.y)]]
 	) : (
-		below ? [eBounds.middleRight.add([4, 0]), [eBounds.right + arrowRadius, eBounds.midpoint.y], [eBounds.right + arrowRadius, ty - 4]]
+		below
+			? [eBounds.middleRight.add([4, 0]), [eBounds.right + arrowRadius, eBounds.midpoint.y], [eBounds.right + arrowRadius, ty - 4]]
 			: [eBounds.topMiddle.add([0, 4]), [eBounds.midpoint.x, eBounds.top + arrowRadius], [tx - 4, eBounds.top + arrowRadius]]
 	))
 

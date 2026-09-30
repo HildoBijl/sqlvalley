@@ -26,7 +26,7 @@ export function LearningHeader({
 	trailingContent,
 }: LearningHeaderProps) {
 	const showProgress = progress && typeof progress.current === 'number' && typeof progress.required === 'number'
-
+	
 	return <>
 		<Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
 			<Button startIcon={<ArrowBack />} onClick={onBack} sx={{ mr: 2 }}>Back to Learning</Button>

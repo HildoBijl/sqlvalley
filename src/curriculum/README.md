@@ -2,7 +2,7 @@
 
 This folder contains the module tree, curriculum configuration, and tools that apply them. Dynamically loaded module content lives in `src/modules`.
 
-The content loader supplies lazy components matching learning's `ModuleContent` contract. Pages select the module and pass its content to `ModuleContentView`; learning does not import the curriculum registry. Static practice has a separate component contract.
+The content loader supplies lazy components matching learning's `ModuleContent` contract. Pages select the module and pass its content to navigation's `ModuleContentTab`; learning does not import the curriculum registry. Static practice has a separate component contract.
 
 Import public tools from `@/curriculum`. Internal files use relative imports to keep loading and hot-reload dependencies independent.
 

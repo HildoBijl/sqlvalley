@@ -6,12 +6,7 @@ export type ForeignKeyProps = TypographyProps & {
 }
 
 export function ForeignKey({ children, sx, ...props }: ForeignKeyProps) {
-	return <Typography
-		component="span"
-		variant="inherit"
-		sx={{ fontStyle: 'italic', ...sx }}
-		{...props}
-	>
+	return <Typography component="span" variant="inherit" sx={{ fontStyle: 'italic', ...sx }}		{...props}>
 		{children}
 	</Typography>
 }
