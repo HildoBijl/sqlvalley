@@ -36,7 +36,7 @@ export function Header() {
 			outlineOffset: 2,
 		}
 	}}>
-		<Container maxWidth={false} sx={{ maxWidth: 1040 }}>
+		<Container maxWidth="lg">
 			<Toolbar disableGutters sx={{ gap: { xs: 1, sm: 3 }, py: 1 }}>
 
 				{/* Logo/Title. */}

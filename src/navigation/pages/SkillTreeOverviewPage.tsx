@@ -24,7 +24,7 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 	const memoryStoreAPI = useSkillTreeMemory(treeId)
 
 	// Render the Skill Tree canvas with the appropriate settings.
-	return <Container maxWidth={false} sx={{ py: 4, maxWidth: '1400px' }}>
+	return <Container maxWidth="lg" sx={{ py: 4 }}>
 		<SkillTreeCanvas
 			moduleTree={moduleTree}
 			modulePresentation={modulePresentation}

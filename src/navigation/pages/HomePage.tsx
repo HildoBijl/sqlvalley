@@ -8,10 +8,9 @@ export function HomePage() {
 			bgcolor: 'primary.main',
 			color: 'primary.contrastText',
 		}}>
-			<Container maxWidth={false} sx={{
-				maxWidth: 1040,
+			<Container maxWidth="lg" sx={{
 				display: 'grid',
-				gridTemplateColumns: { xs: '200px minmax(0, 1fr)', sm: '250px minmax(0, 1fr)', md: '300px minmax(0, 1fr)' },
+				gridTemplateColumns: { xs: '200px minmax(0, 1fr)', sm: '250px minmax(0, 1fr)', md: '400px minmax(0, 1fr)' },
 				gap: { xs: 3, sm: 3, md: 6 },
 				alignItems: 'center',
 				py: { xs: 3.5, sm: 5, md: 7 },
@@ -42,7 +41,7 @@ export function HomePage() {
 			</Container>
 		</Box>
 
-		<Container maxWidth={false} sx={{ maxWidth: 1040, pb: 4, '& a:focus-visible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 3 } }}>
+		<Container maxWidth="lg" sx={{ pb: 4, '& a:focus-visible': { outline: '2px solid', outlineColor: 'text.primary', outlineOffset: 3 } }}>
 			<Box component="footer" sx={{ mt: { xs: 4, md: 6 }, pt: 2, borderTop: '1px solid', borderColor: 'divider', '& h2': { fontSize: 16, fontWeight: 500, mb: 1 }, '& p': { fontSize: 14, lineHeight: 1.6, color: 'text.secondary' } }}>
 				<Box sx={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: 2.5, '@media (min-width: 700px)': { gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr)' } }}>
 					<Box>
