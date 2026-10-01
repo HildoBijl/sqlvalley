@@ -1,11 +1,10 @@
-import { type ComponentType, Suspense } from 'react'
+import { Suspense } from 'react'
 
 import { LoadingScreen } from '@/ui'
+import type { ModuleContentComponent, StaticPracticeComponentProps } from '../types'
 
-interface StaticPracticeProps {
-	component: ComponentType<{ onComplete: () => void, isCompleted: boolean }>
-	onComplete: () => void
-	isCompleted: boolean
+interface StaticPracticeProps extends StaticPracticeComponentProps {
+	component: ModuleContentComponent<StaticPracticeComponentProps>
 }
 
 export function StaticPractice({ component: Component, onComplete, isCompleted }: StaticPracticeProps) {

@@ -2,14 +2,14 @@ import { Alert, Box } from '@mui/material'
 import { EditNote, School } from '@mui/icons-material'
 
 import { LoadingScreen } from '@/ui'
-import { LearningHeader, LearningTabs, DataExplorer, InteractivePractice, StaticPractice, CompletionDialog, CompleteModuleButton } from '@/learning'
+import { type ModuleContent, LearningHeader, LearningTabs, DataExplorer, InteractivePractice, StaticPractice, CompletionDialog, CompleteModuleButton } from '@/learning'
 import type { ModuleId } from '@/curriculum'
 
 import { ModuleContentTab } from './ModuleContentTab'
 import { useModuleData, useModuleProgress, useModuleNavigation, useModulePageTabs, useCompletionDialog } from './hooks'
 
-export function ModulePageContent({ moduleId }: { moduleId: ModuleId }) {
-	const data = useModuleData(moduleId)
+export function ModulePageContent({ moduleId, content }: { moduleId: ModuleId; content: ModuleContent }) {
+	const data = useModuleData(moduleId, content)
 	if (data.loading) return <LoadingScreen message="Loading module..." />
 	if (data.error) return <Alert severity="warning" sx={{ mb: 2 }}>{data.error.message}</Alert>
 	return <ModulePageReady data={data} />

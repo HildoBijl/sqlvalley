@@ -1,10 +1,11 @@
-import { type ModuleId, getModulePresentation, getAvailableTableKeys, moduleTree, moduleComponents, useModuleExercises } from '@/curriculum'
+import type { ModuleContent } from '@/learning'
+import { type ModuleId, getModulePresentation, getAvailableTableKeys, moduleTree } from '@/curriculum'
+import { useModuleExercises } from '@/modules'
 
 // Load in general data about the given module.
-export function useModuleData(moduleId: ModuleId) {
+export function useModuleData(moduleId: ModuleId, content: ModuleContent) {
 	// Access the module tree, defined components, presentation files, etcetera.
 	const moduleType = moduleTree[moduleId].type
-	const content = moduleComponents[moduleId]
 	const presentation = getModulePresentation(moduleId)
 
 	// Set up some derived properties.

@@ -2,9 +2,9 @@ import { Suspense } from 'react'
 import { Typography } from '@mui/material'
 
 import { LoadingScreen } from '@/ui'
-import type { ModuleContent } from '@/learning'
+import type { ModuleContent, ModuleContentSection } from '@/learning'
 
-const emptyMessages: Record<keyof ModuleContent, string> = {
+const emptyMessages: Record<ModuleContentSection, string> = {
 	Theory: 'Theory content coming soon.',
 	Summary: 'Summary coming soon.',
 	Story: 'Story coming soon.',
@@ -13,7 +13,7 @@ const emptyMessages: Record<keyof ModuleContent, string> = {
 
 interface ModuleContentTabProps {
 	content: ModuleContent | undefined
-	contentKey: keyof ModuleContent
+	contentKey: ModuleContentSection
 }
 
 export function ModuleContentTab({ content, contentKey }: ModuleContentTabProps) {

@@ -5,7 +5,7 @@ Educational tools that do not depend on the module tree. Import public component
 - `notation`: relation names, primary and foreign keys, relational algebra (`RA`/`IRA`), and Datalog (`DL`/`IDL`). These components remain independent so their presentation can evolve separately.
 - `ManualExerciseSet.tsx`: arranges manually authored exercises and their solutions using the shared `ExerciseSection` from `@sqlvalley/input-exercise-components`, with closely spaced problem and solution panels and a white solution background.
 - `layout`: `LearningHeader` and `LearningTabs`. Tabs receive configuration, including optional `align: 'end'`, without interpreting tab names.
-- `types.ts`: defines the shared module-content contract for theory, summary, story, and video components.
+- `types.ts`: defines the shared module-content contract for theory, summary, story, video, and static practice components.
 - `completion`: a shared `CompletionDialog` with caller-supplied title/name and optional summary, story, and next-module actions. All actions close the dialog. `CompleteModuleButton` is independent and only invokes its callback.
 - `practice`: `StaticPractice` renders a supplied practice component within a local loading boundary; `InteractivePractice` connects the exercise manager to application storage and module resources.
 - `dataExplorer`: `DataExplorer` displays all rows using the shared `DataTable` with `controls` enabled for sorting and filtering, without a toolbar and schema information read directly from SQLite. Its small/full dataset selector shares the persisted practice setting.
@@ -16,10 +16,10 @@ General document formatting, notices, loading screens, and theme utilities live 
 
 ## Supplying module content
 
-`ModuleContent` contains optional `Theory`, `Summary`, `Story`, and `Video` components, either ordinary React components or lazy components. Curriculum selects and loads these; navigation renders them through its internal `ModuleContentTab`:
+`ModuleContent` contains optional `Theory`, `Summary`, `Story`, `Video`, and `Practice` components, either ordinary React components or lazy components. Modules select and load these; navigation renders passive sections through its internal `ModuleContentTab`:
 
 ```tsx
 <ModuleContentTab content={content} contentKey="Theory" />
 ```
 
-Practice registrations, providers, progress, and module-tree information remain separate from this presentation contract. URL and persisted tab synchronization lives in navigation's `useModuleTabSelection`. Video rendering remains supported while the navigation entries are commented out.
+Static practice receives completion state through `StaticPractice`; interactive practice registrations, providers, progress, and module-tree information remain separate from this content contract. URL and persisted tab synchronization lives in navigation's `useModuleTabSelection`. Video rendering remains supported while the navigation entries are commented out.

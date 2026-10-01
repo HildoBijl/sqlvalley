@@ -6,7 +6,7 @@ export interface ExerciseModule {
 	default: (moduleId: string) => ExerciseRegistration[]
 }
 
-const modules = import.meta.glob<ExerciseModule>('../../modules/*/exercises/index.ts')
+const modules = import.meta.glob<ExerciseModule>('./*/exercises/index.ts')
 
 export const skillExerciseLoaders: Partial<Record<string, () => Promise<ExerciseModule>>> = Object.fromEntries(
 	Object.entries(modules).map(([path, load]) => {
