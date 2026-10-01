@@ -12,8 +12,8 @@ const nodes: Record<string, GridPosition> = {
 
 	// Database table manipulation concepts.
 	'projection-and-filtering': { col: 3, row: 3 },
-	'foreign-key': { col: 5, row: 4 },
-	'join-and-decomposition': { col: 4, row: 4.5 },
+	'foreign-key': { col: 4, row: 4 },
+	'join-and-decomposition': { col: 4, row: 5 },
 
 	// RA fundamentals.
 	'relational-algebra': { col: 2, row: 3 },

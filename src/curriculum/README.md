@@ -14,6 +14,6 @@ Import public tools from `@/curriculum`. Internal files use relative imports to 
 
 Generic query figures and `useTheoryPageDatabase` live in `@/learning`; they consume the current database context without looking up curriculum modules.
 
-Follow-up module selection lives in `@sqlvalley/progress`. Navigation validates the stored goal and supplies the curriculum tree, allowed module IDs, and completion state to `getNextModuleIds`.
+Follow-up module selection lives in `@sqlvalley/progress`. Navigation validates the stored goal and supplies the curriculum tree, allowed module IDs, and completion state to `getNextModuleId`.
 
 The exercise HMR registry in `src/modules` must stay independent of runtime exercise imports. Vite injects its import into exercise builder modules; update that path when moving the registry.
