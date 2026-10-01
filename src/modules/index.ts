@@ -1,2 +1,2 @@
 export * from './moduleLoading'
-export * from './useModuleExercises'
+export { useModuleExercises } from './exerciseLoading'

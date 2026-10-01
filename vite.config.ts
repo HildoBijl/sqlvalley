@@ -30,7 +30,7 @@ export default defineConfig({
 	},
 });
 
-// Exercise specs are data exports, so explicitly publish updated builders to the loader.
+// This plugin injects a development-only HMR boundary into each module's exercise index to update the exercise registry when the module is hot-reloaded.
 function exerciseHotReload(): Plugin {
 	return {
 		name: 'exercise-hot-reload',
@@ -40,7 +40,7 @@ function exerciseHotReload(): Plugin {
 			if (!match) return
 			return {
 				code: `${code}
-import { updateExerciseModule as __updateExerciseModule } from '/src/modules/exerciseHotReload.ts'
+import { updateExerciseModule as __updateExerciseModule } from '/src/modules/exerciseLoading.ts'
 if (import.meta.hot) {
 	import.meta.hot.accept(module => {
 		if (module) __updateExerciseModule(${JSON.stringify(match[1])}, module)
