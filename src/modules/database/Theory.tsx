@@ -1,10 +1,11 @@
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Glyph, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
+import { type DrawingData, useRefWithValue, Drawing, Element, useRefWithBounds } from '@sqlvalley/drawing'
+import { Drawing as StepWiseDrawing, HtmlElement, Curve as StepWiseCurve, anchors } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql'
 
-import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em, Link } from '@/ui'
+import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em, Link, Glyph } from '@/ui'
 import { TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
@@ -74,27 +75,28 @@ export function FigureDatabaseUsage() {
 	const xUser = 60
 	const xServer = w / 2
 	const xDatabase = w - 60
+	const curveSmoothing = { mode: 'around', ratio: 1 } as const
 
-	return <Drawing width={w} height={h}>
+	return <StepWiseDrawing view={{ type: 'identity', width: w, height: h }}>
 		<Glyph name="User" position={[xUser, y - 25]} width={100} />
-		<Element position={[xUser, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>User</span></Element>
+		<HtmlElement position={[xUser, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>User</span></HtmlElement>
 
 		<Glyph name="Server" position={[xServer, y - 25]} width={60} />
-		<Element position={[xServer, y + 50]}><span style={{ fontSize: '1em', fontWeight: 500 }}>DBMS</span></Element>
+		<HtmlElement position={[xServer, y + 50]}><span style={{ fontSize: '1em', fontWeight: 500 }}>DBMS</span></HtmlElement>
 
 		<Glyph name="Database" position={[xDatabase, y - 25]} width={100} />
-		<Element position={[xDatabase, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>Database</span></Element>
+		<HtmlElement position={[xDatabase, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>Database</span></HtmlElement>
 
-		<Curve points={[[xUser + 26, y - 70], [(xUser + xServer) / 2, y - 120], [xServer - 35, y - 70]]} endArrow={true} color={themeColor} />
-		<Element position={[(xUser + xServer) / 2, y - 102]} anchor={[0, 1]}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>"Get me the departments<br />that are going over budget"</p></Element>
+		<StepWiseCurve positions={[[xUser + 26, y - 70], [(xUser + xServer) / 2, y - 120], [xServer - 35, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<HtmlElement position={[(xUser + xServer) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>"Get me the departments<br />that are going over budget"</p></HtmlElement>
 
-		<Curve points={[[xServer + 35, y - 70], [(xServer + xDatabase) / 2, y - 120], [xDatabase - 50, y - 70]]} endArrow={true} color={themeColor} />
-		<Element position={[(xServer + xDatabase) / 2, y - 102]} anchor={[0, 1]}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Pull up all relevant records</p></Element>
+		<StepWiseCurve positions={[[xServer + 35, y - 70], [(xServer + xDatabase) / 2, y - 120], [xDatabase - 50, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<HtmlElement position={[(xServer + xDatabase) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Pull up all relevant records</p></HtmlElement>
 
-		<Curve points={[[xDatabase - 50, y + 20], [(xServer + xDatabase) / 2, y + 70], [xServer + 35, y + 20]]} endArrow={true} color={themeColor} />
-		<Element position={[(xServer + xDatabase) / 2, y + 52]} anchor={[0, -1]}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Give all requested records</p></Element>
+		<StepWiseCurve positions={[[xDatabase - 50, y + 20], [(xServer + xDatabase) / 2, y + 70], [xServer + 35, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<HtmlElement position={[(xServer + xDatabase) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Give all requested records</p></HtmlElement>
 
-		<Curve points={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} endArrow={true} color={themeColor} />
-		<Element position={[(xUser + xServer) / 2, y + 52]} anchor={[0, -1]}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></Element>
-	</Drawing>
+		<StepWiseCurve positions={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<HtmlElement position={[(xUser + xServer) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></HtmlElement>
+	</StepWiseDrawing>
 }
