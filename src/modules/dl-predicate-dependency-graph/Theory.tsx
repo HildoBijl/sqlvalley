@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
+import { Drawing as StepWiseDrawing, HtmlElement, Curve as StepWiseCurve, anchors } from '@step-wise/drawing'
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em } from '@/ui'
 import { DL, IDL } from '@/learning'
@@ -87,174 +87,131 @@ I(x) :- G(x), H(x).
 export function FirstDependencyGraph() {
 	const themeColor = useThemeColor()
 
-	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
-	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData)
+	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 250 }} maxWidth={500}>
+		<HtmlElement target="p1" position={[80, 80]}><DPGDL>product</DPGDL></HtmlElement>
+		<HtmlElement target="p2" position={[240, 20]}><DPGDL>account</DPGDL></HtmlElement>
+		<HtmlElement target="p3" position={[420, 80]}><DPGDL>transaction</DPGDL></HtmlElement>
+		<HtmlElement target="p4" position={[80, 170]}><DPGDL>sold</DPGDL></HtmlElement>
+		<HtmlElement target="p5" position={[420, 170]}><DPGDL>soldAndBoughtBack</DPGDL></HtmlElement>
+		<HtmlElement target="p6" position={[240, 230]}><DPGDL>withNames</DPGDL></HtmlElement>
 
-	// Render the drawing.
-	return <Drawing ref={drawingRef} width={500} height={250} maxWidth={500}>
-		<Element ref={p1Ref} position={[80, 80]}><DPGDL>product</DPGDL></Element>
-		<Element ref={p2Ref} position={[240, 20]}><DPGDL>account</DPGDL></Element>
-		<Element ref={p3Ref} position={[420, 80]}><DPGDL>transaction</DPGDL></Element>
-		<Element ref={p4Ref} position={[80, 170]}><DPGDL>sold</DPGDL></Element>
-		<Element ref={p5Ref} position={[420, 170]}><DPGDL>soldAndBoughtBack</DPGDL></Element>
-		<Element ref={p6Ref} position={[240, 230]}><DPGDL>withNames</DPGDL></Element>
-
-		{p1Bounds && p2Bounds && p3Bounds && p4Bounds && p5Bounds && p6Bounds ? <>
-			<Curve points={[p4Bounds.bottomRight.add([2, 3]), p3Bounds.topLeft.add([-2, -1])]} endArrow={true} color={themeColor} />
-			<Curve points={[p5Bounds.middleLeft.add([-3, 0]), p4Bounds.middleRight.add([3, 0])]} endArrow={true} color={themeColor} />
-			<Curve points={[p6Bounds.bottomRight.add([-1, 0]), p5Bounds.topLeft.add([0, -2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p6Bounds.bottomMiddle.add([-40, -4]), p1Bounds.topRight.add([0, 0])]} endArrow={true} color={themeColor} />
-			<Curve points={[p6Bounds.bottomMiddle.add([0, -3]), p2Bounds.topMiddle.add([0, 3])]} endArrow={true} color={themeColor} />
-		</> : null}
-	</Drawing>
+		<StepWiseCurve positions={[
+			{ target: 'p4', anchor: anchors.topRight, pixelOffset: [2, 3] },
+			{ target: 'p3', anchor: anchors.bottomLeft, pixelOffset: [-2, -1] },
+		]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[
+			{ target: 'p5', anchor: anchors.left, pixelOffset: [-3, 0] },
+			{ target: 'p4', anchor: anchors.right, pixelOffset: [3, 0] },
+		]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[
+			{ target: 'p6', anchor: anchors.topRight, pixelOffset: [-1, 0] },
+			{ target: 'p5', anchor: anchors.bottomLeft, pixelOffset: [0, -2] },
+		]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[
+			{ target: 'p6', anchor: anchors.top, pixelOffset: [-40, -4] },
+			{ target: 'p1', anchor: anchors.bottomRight },
+		]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[
+			{ target: 'p6', anchor: anchors.top, pixelOffset: [0, -3] },
+			{ target: 'p2', anchor: anchors.bottom, pixelOffset: [0, 3] },
+		]} endArrow stroke={themeColor} strokeWidth={2} />
+	</StepWiseDrawing>
 }
 
 export function CleanedFirstDependencyGraph({ layer = 3 }) {
 	const themeColor = useThemeColor()
 
-	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
-	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData)
-
-	// Render the drawing.
-	return <Drawing ref={drawingRef} width={500} height={40 + 80 * layer} maxWidth={500}>
-		<Element position={[0, 20]}><strong>Layer 0:</strong></Element>
-		<Element ref={p1Ref} position={[120, 20]}><DPGDL>product</DPGDL></Element>
-		<Element ref={p2Ref} position={[265, 20]}><DPGDL>account</DPGDL></Element>
-		<Element ref={p3Ref} position={[420, 20]}><DPGDL>transaction</DPGDL></Element>
+	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 40 + 80 * layer }} maxWidth={500}>
+		<HtmlElement position={[0, 20]}><strong>Layer 0:</strong></HtmlElement>
+		<HtmlElement target="p1" position={[120, 20]}><DPGDL>product</DPGDL></HtmlElement>
+		<HtmlElement target="p2" position={[265, 20]}><DPGDL>account</DPGDL></HtmlElement>
+		<HtmlElement target="p3" position={[420, 20]}><DPGDL>transaction</DPGDL></HtmlElement>
 
 		{layer >= 1 ? <>
-			<Element position={[0, 100]}><strong>Layer 1:</strong></Element>
-			<Element ref={p4Ref} position={[420, 100]}><DPGDL>sold</DPGDL></Element>
-			{p3Bounds && p4Bounds ? <Curve points={[p4Bounds.bottomMiddle.add([0, -3]), p3Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} /> : null}
+			<HtmlElement position={[0, 100]}><strong>Layer 1:</strong></HtmlElement>
+			<HtmlElement target="p4" position={[420, 100]}><DPGDL>sold</DPGDL></HtmlElement>
+			<StepWiseCurve positions={[{ target: 'p4', anchor: anchors.top, pixelOffset: [0, -3] }, { target: 'p3', anchor: anchors.bottom, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
 		</> : null}
 
 		{layer >= 2 ? <>
-			<Element position={[0, 180]}><strong>Layer 2:</strong></Element>
-			{p5Bounds && p4Bounds ? <Curve points={[p5Bounds.bottomMiddle.add([0, -3]), p4Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} /> : null}
-			<Element ref={p5Ref} position={[420, 180]}><DPGDL>soldAndBoughtBack</DPGDL></Element>
+			<HtmlElement position={[0, 180]}><strong>Layer 2:</strong></HtmlElement>
+			<StepWiseCurve positions={[{ target: 'p5', anchor: anchors.top, pixelOffset: [0, -3] }, { target: 'p4', anchor: anchors.bottom, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+			<HtmlElement target="p5" position={[420, 180]}><DPGDL>soldAndBoughtBack</DPGDL></HtmlElement>
 		</> : null}
 
 		{layer >= 3 ? <>
-			<Element position={[0, 260]}><strong>Layer 3:</strong></Element>
-			<Element ref={p6Ref} position={[265, 260]}><DPGDL>withNames</DPGDL></Element>
-			{p6Bounds && p5Bounds ? <Curve points={[p6Bounds.bottomMiddle.add([30, -2]), p5Bounds.topLeft.add([20, 2])]} endArrow={true} color={themeColor} /> : null}
-			{p6Bounds && p1Bounds ? <Curve points={[p6Bounds.bottomMiddle.add([-30, -2]), p1Bounds.topMiddle.add([20, 2])]} endArrow={true} color={themeColor} /> : null}
-			{p6Bounds && p2Bounds ? <Curve points={[p6Bounds.bottomMiddle.add([0, -3]), p2Bounds.topMiddle.add([0, 3])]} endArrow={true} color={themeColor} /> : null}
+			<HtmlElement position={[0, 260]}><strong>Layer 3:</strong></HtmlElement>
+			<HtmlElement target="p6" position={[265, 260]}><DPGDL>withNames</DPGDL></HtmlElement>
+			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [30, -2] }, { target: 'p5', anchor: anchors.bottomLeft, pixelOffset: [20, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [-30, -2] }, { target: 'p1', anchor: anchors.bottom, pixelOffset: [20, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [0, -3] }, { target: 'p2', anchor: anchors.bottom, pixelOffset: [0, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
 		</> : null}
-	</Drawing>
+	</StepWiseDrawing>
 }
 
 export function SecondDependencyGraph({ collapsed = false }) {
 	const themeColor = useThemeColor()
+	const edge = (from: string, fromAnchor: typeof anchors[keyof typeof anchors], to: string, toAnchor: typeof anchors[keyof typeof anchors], fromOffset: [number, number] = [0, 0], toOffset: [number, number] = [0, 0]) => <StepWiseCurve positions={[{ target: from, anchor: fromAnchor, pixelOffset: fromOffset }, { target: to, anchor: toAnchor, pixelOffset: toOffset }]} endArrow stroke={themeColor} strokeWidth={2} />
 
-	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
-	const [p6Ref, p6Bounds] = useRefWithBounds(drawingData)
-	const [p7Ref, p7Bounds] = useRefWithBounds(drawingData)
-	const [p8Ref, p8Bounds] = useRefWithBounds(drawingData)
-	const [p9Ref, p9Bounds] = useRefWithBounds(drawingData)
-	const [p567Ref, p567Bounds] = useRefWithBounds(drawingData)
-
-	// Render the drawing.
-	return <Drawing ref={drawingRef} width={500} height={220} maxWidth={500}>
-		<Element ref={p1Ref} position={[80, 20]}><DPGDL>A</DPGDL></Element>
-		<Element ref={p2Ref} position={[240, 20]}><DPGDL>B</DPGDL></Element>
-		<Element ref={p3Ref} position={[420, 20]}><DPGDL>C</DPGDL></Element>
-		<Element ref={p4Ref} position={[80, 110]}><DPGDL>D</DPGDL></Element>
-		<Element ref={p8Ref} position={[240, 110]}><DPGDL>H</DPGDL></Element>
-		<Element ref={p9Ref} position={[80, 200]}><DPGDL>I</DPGDL></Element>
+	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 220 }} maxWidth={500}>
+		<HtmlElement target="p1" position={[80, 20]}><DPGDL>A</DPGDL></HtmlElement>
+		<HtmlElement target="p2" position={[240, 20]}><DPGDL>B</DPGDL></HtmlElement>
+		<HtmlElement target="p3" position={[420, 20]}><DPGDL>C</DPGDL></HtmlElement>
+		<HtmlElement target="p4" position={[80, 110]}><DPGDL>D</DPGDL></HtmlElement>
+		<HtmlElement target="p8" position={[240, 110]}><DPGDL>H</DPGDL></HtmlElement>
+		<HtmlElement target="p9" position={[80, 200]}><DPGDL>I</DPGDL></HtmlElement>
 
 		{collapsed ? <>
-			<Element ref={p567Ref} position={[420, 200]}><DPGDL>(E,F,G)</DPGDL></Element>
+			<HtmlElement target="p567" position={[420, 200]}><DPGDL>(E,F,G)</DPGDL></HtmlElement>
 		</> : <>
-			<Element ref={p5Ref} position={[420, 110]}><DPGDL>E</DPGDL></Element>
-			<Element ref={p6Ref} position={[420, 200]}><DPGDL>F</DPGDL></Element>
-			<Element ref={p7Ref} position={[240, 200]}><DPGDL>G</DPGDL></Element>
+			<HtmlElement target="p5" position={[420, 110]}><DPGDL>E</DPGDL></HtmlElement>
+			<HtmlElement target="p6" position={[420, 200]}><DPGDL>F</DPGDL></HtmlElement>
+			<HtmlElement target="p7" position={[240, 200]}><DPGDL>G</DPGDL></HtmlElement>
 		</>}
 
-		{p1Bounds && p2Bounds && p3Bounds && p4Bounds && p8Bounds && p9Bounds ? <>
-			<Curve points={[p4Bounds.bottomMiddle.add([0, -2]), p1Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p4Bounds.bottomRight.add([0, 0]), p2Bounds.topLeft.add([0, 0])]} endArrow={true} color={themeColor} />
-			<Curve points={[p8Bounds.bottomMiddle.add([0, -2]), p2Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p8Bounds.middleLeft.add([-2, 0]), p4Bounds.middleRight.add([2, 0])]} endArrow={true} color={themeColor} />
-			<Curve points={[p9Bounds.bottomRight.add([0, 0]), p8Bounds.topLeft.add([0, 0])]} endArrow={true} color={themeColor} />
-
-			{collapsed ? <>
-				{p567Bounds ? <>
-					<Curve points={[p567Bounds.bottomLeft.add([-2, 1]), p4Bounds.topRight.add([1, -2])]} endArrow={true} color={themeColor} />
-					<Curve points={[p9Bounds.middleRight.add([2, 0]), p567Bounds.middleLeft.add([-2, 0])]} endArrow={true} color={themeColor} />
-					<Curve points={[p567Bounds.bottomMiddle.add([0, -2]), p3Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} />
-				</> : null}
-			</> : <>
-				{p5Bounds && p6Bounds && p7Bounds ? <>
-					<Curve points={[p7Bounds.bottomLeft.add([0, 0]), p4Bounds.topRight.add([0, 0])]} endArrow={true} color={themeColor} />
-					<Curve points={[p9Bounds.middleRight.add([2, 0]), p7Bounds.middleLeft.add([-2, 0])]} endArrow={true} color={themeColor} />
-					<Curve points={[p5Bounds.bottomMiddle.add([0, -2]), p3Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} />
-					<Curve points={[p7Bounds.bottomRight.add([0, 0]), p5Bounds.topLeft.add([0, 0])]} endArrow={true} color={themeColor} />
-					<Curve points={[p5Bounds.topMiddle.add([0, 2]), p6Bounds.bottomMiddle.add([0, -2])]} endArrow={true} color={themeColor} />
-					<Curve points={[p6Bounds.middleLeft.add([-2, 0]), p7Bounds.middleRight.add([2, 0])]} endArrow={true} color={themeColor} />
-				</> : null}
-			</>}
-		</> : null}
-	</Drawing>
+		{edge('p4', anchors.top, 'p1', anchors.bottom, [0, -2], [0, 2])}
+		{edge('p4', anchors.topRight, 'p2', anchors.bottomLeft)}
+		{edge('p8', anchors.top, 'p2', anchors.bottom, [0, -2], [0, 2])}
+		{edge('p8', anchors.left, 'p4', anchors.right, [-2, 0], [2, 0])}
+		{edge('p9', anchors.topRight, 'p8', anchors.bottomLeft)}
+		{collapsed ? <>
+			{edge('p567', anchors.topLeft, 'p4', anchors.bottomRight, [-2, 1], [1, -2])}
+			{edge('p9', anchors.right, 'p567', anchors.left, [2, 0], [-2, 0])}
+			{edge('p567', anchors.top, 'p3', anchors.bottom, [0, -2], [0, 2])}
+		</> : <>
+			{edge('p7', anchors.topLeft, 'p4', anchors.bottomRight)}
+			{edge('p9', anchors.right, 'p7', anchors.left, [2, 0], [-2, 0])}
+			{edge('p5', anchors.top, 'p3', anchors.bottom, [0, -2], [0, 2])}
+			{edge('p7', anchors.topRight, 'p5', anchors.bottomLeft)}
+			{edge('p5', anchors.bottom, 'p6', anchors.top, [0, 2], [0, -2])}
+			{edge('p6', anchors.left, 'p7', anchors.right, [-2, 0], [2, 0])}
+		</>}
+	</StepWiseDrawing>
 }
 
 export function CleanedSecondDependencyGraph() {
 	const themeColor = useThemeColor()
 
-	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
-	const [p567Ref, p567Bounds] = useRefWithBounds(drawingData)
-	const [p8Ref, p8Bounds] = useRefWithBounds(drawingData)
-	const [p9Ref, p9Bounds] = useRefWithBounds(drawingData)
+	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 275 }} maxWidth={500}>
+		<HtmlElement position={[0, 25]}><strong>Layer 0:</strong></HtmlElement>
+		<HtmlElement target="p1" position={[120, 25]}><DPGDL>A</DPGDL></HtmlElement>
+		<HtmlElement target="p2" position={[270, 25]}><DPGDL>B</DPGDL></HtmlElement>
+		<HtmlElement target="p3" position={[420, 25]}><DPGDL>C</DPGDL></HtmlElement>
+		<HtmlElement position={[0, 100]}><strong>Layer 1:</strong></HtmlElement>
+		<HtmlElement target="p4" position={[185, 100]}><DPGDL>D</DPGDL></HtmlElement>
+		<HtmlElement position={[0, 175]}><strong>Layer 2:</strong></HtmlElement>
+		<HtmlElement target="p8" position={[205, 175]}><DPGDL>H</DPGDL></HtmlElement>
+		<HtmlElement target="p567" position={[345, 175]}><DPGDL>(E,F,G)</DPGDL></HtmlElement>
+		<HtmlElement position={[0, 250]}><strong>Layer 3:</strong></HtmlElement>
+		<HtmlElement target="p9" position={[270, 250]}><DPGDL>I</DPGDL></HtmlElement>
 
-	// Render the drawing.
-	return <Drawing ref={drawingRef} width={500} height={275} maxWidth={500}>
-		<Element position={[0, 25]}><strong>Layer 0:</strong></Element>
-		<Element ref={p1Ref} position={[120, 25]}><DPGDL>A</DPGDL></Element>
-		<Element ref={p2Ref} position={[270, 25]}><DPGDL>B</DPGDL></Element>
-		<Element ref={p3Ref} position={[420, 25]}><DPGDL>C</DPGDL></Element>
-
-		<Element position={[0, 100]}><strong>Layer 1:</strong></Element>
-		<Element ref={p4Ref} position={[185, 100]}><DPGDL>D</DPGDL></Element>
-
-		<Element position={[0, 175]}><strong>Layer 2:</strong></Element>
-		<Element ref={p8Ref} position={[205, 175]}><DPGDL>H</DPGDL></Element>
-		<Element ref={p567Ref} position={[345, 175]}><DPGDL>(E,F,G)</DPGDL></Element>
-
-		<Element position={[0, 250]}><strong>Layer 3:</strong></Element>
-		<Element ref={p9Ref} position={[270, 250]}><DPGDL>I</DPGDL></Element>
-
-		{p1Bounds && p2Bounds && p3Bounds && p4Bounds && p567Bounds && p8Bounds && p9Bounds ? <>
-			<Curve points={[p4Bounds.bottomLeft.add([5, -3]), p1Bounds.topRight.add([-5, 3])]} endArrow={true} color={themeColor} />
-			<Curve points={[p4Bounds.bottomRight.add([0, -2]), p2Bounds.topLeft.add([0, 2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p8Bounds.bottomRight.add([-2, -1]), p2Bounds.topMiddle.add([-10, 4])]} endArrow={true} color={themeColor} />
-			<Curve points={[p8Bounds.bottomMiddle.add([-5, -3]), p4Bounds.topMiddle.add([5, 2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p567Bounds.bottomMiddle.add([20, -4]), p3Bounds.topLeft.add([10, 3])]} endArrow={true} color={themeColor} />
-			<Curve points={[p567Bounds.bottomLeft.add([-2, 1]), p4Bounds.topRight.add([1, -2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p9Bounds.bottomLeft.add([5, -3]), p8Bounds.topRight.add([-5, 3])]} endArrow={true} color={themeColor} />
-			<Curve points={[p9Bounds.bottomRight.add([-10, -4]), p567Bounds.topLeft.add([10, 4])]} endArrow={true} color={themeColor} />
-		</> : null}
-	</Drawing>
+		<StepWiseCurve positions={[{ target: 'p4', anchor: anchors.topLeft, pixelOffset: [5, -3] }, { target: 'p1', anchor: anchors.bottomRight, pixelOffset: [-5, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[{ target: 'p4', anchor: anchors.topRight, pixelOffset: [0, -2] }, { target: 'p2', anchor: anchors.bottomLeft, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[{ target: 'p8', anchor: anchors.topRight, pixelOffset: [-2, -1] }, { target: 'p2', anchor: anchors.bottom, pixelOffset: [-10, 4] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[{ target: 'p8', anchor: anchors.top, pixelOffset: [-5, -3] }, { target: 'p4', anchor: anchors.bottom, pixelOffset: [5, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[{ target: 'p567', anchor: anchors.top, pixelOffset: [20, -4] }, { target: 'p3', anchor: anchors.bottomLeft, pixelOffset: [10, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[{ target: 'p567', anchor: anchors.topLeft, pixelOffset: [-2, 1] }, { target: 'p4', anchor: anchors.bottomRight, pixelOffset: [1, -2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[{ target: 'p9', anchor: anchors.topLeft, pixelOffset: [5, -3] }, { target: 'p8', anchor: anchors.bottomRight, pixelOffset: [-5, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<StepWiseCurve positions={[{ target: 'p9', anchor: anchors.topRight, pixelOffset: [-10, -4] }, { target: 'p567', anchor: anchors.bottomLeft, pixelOffset: [10, 4] }]} endArrow stroke={themeColor} strokeWidth={2} />
+	</StepWiseDrawing>
 }

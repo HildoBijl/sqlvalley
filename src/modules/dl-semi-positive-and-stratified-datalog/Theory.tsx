@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { useTheme } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useRefWithBounds } from '@sqlvalley/drawing'
+import { Drawing, HtmlElement, Curve, Rectangle, anchors } from '@step-wise/drawing'
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em, M } from '@/ui'
 import { DL, IDL } from '@/learning'
@@ -113,32 +113,21 @@ E(x) :- C(x).
 export function DependencyGraph() {
 	const themeColor = useThemeColor()
 
-	// Track bounds of components.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [p1Ref, p1Bounds] = useRefWithBounds(drawingData)
-	const [p2Ref, p2Bounds] = useRefWithBounds(drawingData)
-	const [p3Ref, p3Bounds] = useRefWithBounds(drawingData)
-	const [p4Ref, p4Bounds] = useRefWithBounds(drawingData)
-	const [p5Ref, p5Bounds] = useRefWithBounds(drawingData)
+	return <Drawing view={{ type: 'identity', width: 200, height: 210 }} maxWidth={200}>
+		<HtmlElement target="p1" position={[40, 20]}><DPGDL>A</DPGDL></HtmlElement>
+		<HtmlElement target="p2" position={[160, 20]}><DPGDL>B</DPGDL></HtmlElement>
+		<HtmlElement target="p3" position={[40, 110]}><DPGDL>C</DPGDL></HtmlElement>
+		<HtmlElement target="p4" position={[160, 110]}><DPGDL>D</DPGDL></HtmlElement>
+		<HtmlElement target="p5" position={[100, 190]}><DPGDL>E</DPGDL></HtmlElement>
 
-	// Render the drawing.
-	return <Drawing ref={drawingRef} width={200} height={210} maxWidth={200}>
-		<Element ref={p1Ref} position={[40, 20]}><DPGDL>A</DPGDL></Element>
-		<Element ref={p2Ref} position={[160, 20]}><DPGDL>B</DPGDL></Element>
-		<Element ref={p3Ref} position={[40, 110]}><DPGDL>C</DPGDL></Element>
-		<Element ref={p4Ref} position={[160, 110]}><DPGDL>D</DPGDL></Element>
-		<Element ref={p5Ref} position={[100, 190]}><DPGDL>E</DPGDL></Element>
+		<Curve positions={[{ target: 'p3', anchor: anchors.top, pixelOffset: [0, -2] }, { target: 'p1', anchor: anchors.bottom, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[{ target: 'p3', anchor: anchors.right, pixelOffset: [2, 0] }, { target: 'p4', anchor: anchors.left, pixelOffset: [-2, 0] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[{ target: 'p4', anchor: anchors.top, pixelOffset: [0, -2] }, { target: 'p2', anchor: anchors.bottom, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[{ target: 'p4', anchor: anchors.bottomLeft, pixelOffset: [2, 0] }, { target: 'p5', anchor: anchors.topRight, pixelOffset: [-2, 0] }]} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[{ target: 'p5', anchor: anchors.topLeft, pixelOffset: [2, 0] }, { target: 'p3', anchor: anchors.bottomRight, pixelOffset: [-2, 0] }]} endArrow stroke={themeColor} strokeWidth={2} />
 
-		{p1Bounds && p2Bounds && p3Bounds && p4Bounds && p5Bounds ? <>
-			<Curve points={[p3Bounds.bottomMiddle.add([0, -2]), p1Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p3Bounds.middleRight.add([2, 0]), p4Bounds.middleLeft.add([-2, 0])]} endArrow={true} color={themeColor} />
-			<Curve points={[p4Bounds.bottomMiddle.add([0, -2]), p2Bounds.topMiddle.add([0, 2])]} endArrow={true} color={themeColor} />
-			<Curve points={[p4Bounds.topLeft.add([2, 0]), p5Bounds.bottomRight.add([-2, 0])]} endArrow={true} color={themeColor} />
-			<Curve points={[p5Bounds.bottomLeft.add([2, 0]), p3Bounds.topRight.add([-2, 0])]} endArrow={true} color={themeColor} />
-
-			<Element position={p3Bounds.middleRight.add(p4Bounds.middleLeft).divide(2).add([0, 10])} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></Element>
-			<Element position={p4Bounds.bottomMiddle.add(p2Bounds.topMiddle).divide(2).add([-5, 6])} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></Element>
-		</> : null}
+		<HtmlElement position={{ positions: [{ target: 'p3', anchor: anchors.right }, { target: 'p4', anchor: anchors.left }], calculate: positions => positions[0].add(positions[1]).divide(2).add([0, 10]) }} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></HtmlElement>
+		<HtmlElement position={{ positions: [{ target: 'p4', anchor: anchors.top }, { target: 'p2', anchor: anchors.bottom }], calculate: positions => positions[0].add(positions[1]).divide(2).add([-5, 6]) }} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></HtmlElement>
 	</Drawing>
 }
 
@@ -158,19 +147,19 @@ export function DatalogTypeVennDiagram() {
 		{ w: 0.75 * w, h: circleHeight * 3 / 4, x: 340, y: circleY },
 		{ w: w, h: circleHeight, x: 400, y: circleY },
 	]
-	return <Drawing width={w} height={h} maxWidth={w}>
-		<Rectangle style={{ fill: infoColor, fillOpacity: 0.06, stroke: infoColor, strokeWidth: 2 }} dimensions={[[circles[1].x - circles[1].w / 2 - 8, 40], [circles[1].x + circles[1].w / 2 + 12, h - 8]]} cornerRadius={10} />
-		<Element position={[circles[1].x - circles[1].w / 2 - 8 + 6, 40 + 2]} anchor={[-1, -1]} style={{ color: infoColor, fontWeight: 'bold', textAlign: 'center' }}>Monotone evaluation<br />with fixed EDB</Element>
+	return <Drawing view={{ type: 'identity', width: w, height: h }} maxWidth={w}>
+		<Rectangle style={{ fill: infoColor, fillOpacity: 0.06, stroke: infoColor, strokeWidth: 2 }} corners={[[circles[1].x - circles[1].w / 2 - 8, 40], [circles[1].x + circles[1].w / 2 + 12, h - 8]]} cornerRadius={10} />
+		<HtmlElement position={[circles[1].x - circles[1].w / 2 - 8 + 6, 40 + 2]} anchor={[-1, -1]} style={{ color: infoColor, fontWeight: 'bold', textAlign: 'center' }}>Monotone evaluation with fixed EDB</HtmlElement>
 
-		<Rectangle style={{ fill: warningColor, fillOpacity: 0.06, stroke: warningColor, strokeWidth: 2 }} dimensions={[[circles[2].x - circles[2].w / 2 - 8, 0], [circles[2].x + circles[2].w / 2 + 12, h]]} cornerRadius={10} />
-		<Element position={[circles[2].x - circles[2].w / 2 - 8 + 6, 2]} anchor={[-1, -1]} style={{ color: warningColor, fontWeight: 'bold', textAlign: 'center' }}>Unique intended result</Element>
+		<Rectangle style={{ fill: warningColor, fillOpacity: 0.06, stroke: warningColor, strokeWidth: 2 }} corners={[[circles[2].x - circles[2].w / 2 - 8, 0], [circles[2].x + circles[2].w / 2 + 12, h]]} cornerRadius={10} />
+		<HtmlElement position={[circles[2].x - circles[2].w / 2 - 8 + 6, 2]} anchor={[-1, -1]} style={{ color: warningColor, fontWeight: 'bold', textAlign: 'center' }}>Unique intended result</HtmlElement>
 
-		{circles.map((circle, index) => <Rectangle key={index} dimensions={[[circle.x - circle.w / 2, circle.y - circle.h / 2], [circle.x + circle.w / 2, circle.y + circle.h / 2]]} cornerRadius={circle.w / 2} style={{ fill: themeColor, fillOpacity: 0.06, stroke: themeColor, strokeWidth: 2 }} />)}
+		{circles.map((circle, index) => <Rectangle key={index} corners={[[circle.x - circle.w / 2, circle.y - circle.h / 2], [circle.x + circle.w / 2, circle.y + circle.h / 2]]} cornerRadius={circle.w / 2} style={{ fill: themeColor, fillOpacity: 0.06, stroke: themeColor, strokeWidth: 2 }} />)}
 
-		<Element position={[circles[0].x, circles[0].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Positive<br />Datalog</Element>
-		<Element position={[circles[1].x + circles[1].w / 2 - 82, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Semi-Positive<br />Datalog</Element>
-		<Element position={[circles[2].x + circles[2].w / 2 - 77, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Stratified<br />Datalog</Element>
-		<Element position={[circles[3].x + circles[3].w / 2 - 72, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Datalog</Element>
+		<HtmlElement position={[circles[0].x, circles[0].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Positive<br />Datalog</HtmlElement>
+		<HtmlElement position={[circles[1].x + circles[1].w / 2 - 82, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Semi-Positive<br />Datalog</HtmlElement>
+		<HtmlElement position={[circles[2].x + circles[2].w / 2 - 77, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Stratified<br />Datalog</HtmlElement>
+		<HtmlElement position={[circles[3].x + circles[3].w / 2 - 72, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Datalog</HtmlElement>
 
 	</Drawing>
 }
