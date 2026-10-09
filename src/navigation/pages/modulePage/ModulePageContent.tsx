@@ -19,7 +19,7 @@ function ModulePageReady({ data }: { data: ReturnType<typeof useModuleData> }) {
 	// Call various hooks to gather data from different sources.
 	const { moduleId, isSkill, content, presentation, Practice, tables, exercises, hasInteractivePractice } = data
 	const { completed, isModuleCompleted, exerciseProgress, completeModule } = useModuleProgress(moduleId)
-	const { returnToOverview, continueToNext } = useModuleNavigation(moduleId, isModuleCompleted)
+	const { backPath, returnToOverview, continueToNext } = useModuleNavigation(moduleId, isModuleCompleted)
 	const { tabs, currentTab, handleTabChange, selectTab } = useModulePageTabs(data, completed)
 	const { dialogOpen, closeDialog } = useCompletionDialog(completed)
 
@@ -32,7 +32,7 @@ function ModulePageReady({ data }: { data: ReturnType<typeof useModuleData> }) {
 		<LearningHeader title={presentation.name} description={presentation.description}
 			icon={<Icon color="primary" sx={{ fontSize: 32 }} />} isCompleted={completed}
 			progress={hasInteractivePractice && currentTab === 'practice' ? exerciseProgress : undefined}
-			onBack={returnToOverview} />
+			backTo={backPath} />
 
 		<LearningTabs value={currentTab} tabs={tabs} onChange={handleTabChange}>
 			{currentTab === 'story' && <ModuleContentTab content={content} contentKey="Story" />}

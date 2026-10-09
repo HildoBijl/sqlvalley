@@ -20,6 +20,7 @@ export function useModuleNavigation(moduleId: ModuleId, isModuleCompleted: (id: 
 	// Set up navigation calls for the respective actions.
 	const navigate = useNavigate()
 	return {
+		backPath,
 		returnToOverview: () => navigate(backPath),
 		continueToNext: nextId && isModuleId(nextId) ? () => navigate(getModulePath(nextId)) : undefined,
 	}

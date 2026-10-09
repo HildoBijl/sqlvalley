@@ -1,11 +1,12 @@
 import { ArrowBack, CheckCircle } from '@mui/icons-material'
 import { Box, Button, Typography } from '@mui/material'
 import type { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 interface LearningHeaderProps {
 	title: string
 	description?: string
-	onBack: () => void
+	backTo: string
 	icon?: ReactNode
 	isCompleted?: boolean
 	progress?: {
@@ -19,7 +20,7 @@ interface LearningHeaderProps {
 export function LearningHeader({
 	title,
 	description,
-	onBack,
+	backTo,
 	icon,
 	isCompleted,
 	progress,
@@ -29,7 +30,7 @@ export function LearningHeader({
 	
 	return <>
 		<Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-			<Button startIcon={<ArrowBack />} onClick={onBack} sx={{ mr: 2 }}>Back to Learning</Button>
+			<Button component={Link} to={backTo} startIcon={<ArrowBack />} sx={{ mr: 2, '&, &:hover': { color: 'primary.main' } }}>Back to Learning</Button>
 			{icon && <Box sx={{ mr: 1, display: 'flex', alignItems: 'center' }}>{icon}</Box>}
 
 			<Typography variant="h4" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
