@@ -1,22 +1,38 @@
+import { type ComponentProps, useCallback } from 'react'
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
+import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, HtmlElement, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
 import { useTheoryPageDatabase } from '../useTheoryPageDatabase'
 
+const targets = ['query', 'table'] as const
+
 export function SQLQueryFigure({ query = '', actualQuery = '', below = false, tableWidth = 300, tableScale = 0.8, delta = 20, arrowLength = 60, arrowRadius = 60 }) {
+	const calculateView = useCallback(({ query, table }: TargetBoundsRecord<typeof targets>): DrawingView => {
+		const { width: we, height: he } = query
+		const { width: wt, height: ht } = table
+		const arrowBetween = below ? we + arrowRadius * 1.5 > wt : he + arrowRadius * 1.5 > ht
+		const gap = arrowBetween ? arrowLength : delta
+		return { type: 'identity', width: below ? Math.max(we, wt) : we + gap + wt, height: below ? he + gap + ht : Math.max(he, ht) }
+	}, [below, arrowLength, arrowRadius, delta])
+
+	return <MeasuredDrawing targets={targets} calculateView={calculateView} style={{ fontSize: 16 }}>
+		<SQLQueryFigureContents query={query} actualQuery={actualQuery} below={below} tableWidth={tableWidth} tableScale={tableScale} delta={delta} arrowLength={arrowLength} arrowRadius={arrowRadius} />
+	</MeasuredDrawing>
+}
+
+function SQLQueryFigureContents({ query, actualQuery, below, tableWidth, tableScale, delta, arrowLength, arrowRadius }: Required<ComponentProps<typeof SQLQueryFigure>>) {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, actualQuery || query)
 
 	// Find the bounds of the respective elements.
-	const [eRef, eBounds] = useRefWithBounds(drawingData)
-	const [tRef, tBounds] = useRefWithBounds(drawingData)
+	const eBounds = useDrawingTargetBounds('query')
+	const tBounds = useDrawingTargetBounds('table')
 	const we = eBounds?.width || 100
 	const wt = tBounds?.width || 100
 	const he = eBounds?.height || 100
@@ -38,23 +54,17 @@ export function SQLQueryFigure({ query = '', actualQuery = '', below = false, ta
 			: [eBounds.topMiddle.add([0, 4]), [eBounds.midpoint.x, eBounds.top + arrowRadius], [tx - 4, eBounds.top + arrowRadius]]
 	))
 
-	// Determine the drawing size.
-	const width = below ? Math.max(we, wt) : (we + (arrowBetween ? arrowLength : delta) + wt)
-	const height = below ? he + (arrowBetween ? arrowLength : delta) + ht : Math.max(he, ht)
-
-	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width} disableSVGPointerEvents>
-		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
+	return <>
+		<HtmlElement target="query" position={[0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ width: 'max-content', whiteSpace: 'normal' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
-		<Element position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} behind>
+		<HtmlElement position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind ignoreMouse={false} style={{ whiteSpace: 'normal' }}>
 			<Box sx={{ width: tableWidth / tableScale }}>
-				<DataTable ref={tRef} data={data} showPagination={false} compact />
+				<DataTable data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{arrowPoints ? <>
-			<Curve points={arrowPoints} color={themeColor} curveDistance={arrowRadius} endArrow />
-		</> : null}
-	</Drawing>
+		{arrowPoints ? <Curve positions={arrowPoints} stroke={themeColor} strokeWidth={2} smoothing={{ distance: arrowRadius }} endArrow /> : null}
+	</>
 }

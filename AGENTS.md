@@ -100,6 +100,7 @@ import { type DatasetSize, type TableKey, allTableKeys } from '@sqlvalley/mock-d
 
 ## Packages and dependencies
 
+- When migrating drawings to `@step-wise/drawing`, explicitly set `strokeWidth={2}` on arrows to preserve their appearance; the toolbox defaults to a stroke width of 1.
 - Declare cross-package imports through workspace dependencies in the consuming package's `package.json`.
 - Keep dependency direction one-way. A lower-level package must not import from a package that consumes it.
 - Prefer deriving union types and key lists from their runtime source of truth instead of declaring the same options twice.

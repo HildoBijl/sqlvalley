@@ -1,7 +1,7 @@
-import type { ComponentType, ReactNode } from 'react'
+import { type ComponentType, type ReactNode, useCallback } from 'react'
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
+import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, HtmlElement, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
@@ -20,17 +20,32 @@ type RAQueryFigureProps = {
 	Component?: ComponentType<{ children: ReactNode }>
 }
 
+const targets = ['query', 'table'] as const
+
 export function RAQueryFigure({ query = <></>, actualQuery = '', below = false, tableWidth = 300, tableScale = 0.8, delta = 20, arrowLength = 50, arrowRadius = 60, Component = RA }: RAQueryFigureProps) {
+	const calculateView = useCallback(({ query, table }: TargetBoundsRecord<typeof targets>): DrawingView => {
+		const { width: we, height: he } = query
+		const { width: wt, height: ht } = table
+		const arrowBetween = below ? we + arrowRadius * 1.5 >= wt && wt + arrowRadius * 1.5 >= we : he + arrowRadius * 1.5 >= ht
+		const gap = arrowBetween ? arrowLength : delta
+		return { type: 'identity', width: below ? Math.max(we, wt) : we + gap + wt, height: below ? he + gap + ht : Math.max(he, ht) }
+	}, [below, arrowLength, arrowRadius, delta])
+
+	return <MeasuredDrawing targets={targets} calculateView={calculateView} style={{ fontSize: 16 }}>
+		<RAQueryFigureContents query={query} actualQuery={actualQuery} below={below} tableWidth={tableWidth} tableScale={tableScale} delta={delta} arrowLength={arrowLength} arrowRadius={arrowRadius} Component={Component} />
+	</MeasuredDrawing>
+}
+
+function RAQueryFigureContents({ query, actualQuery, below, tableWidth, tableScale, delta, arrowLength, arrowRadius, Component }: Required<RAQueryFigureProps>) {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, actualQuery)
 
 	// Find the bounds of the respective elements.
-	const [eRef, eBounds] = useRefWithBounds(drawingData)
-	const [tRef, tBounds] = useRefWithBounds(drawingData)
+	const eBounds = useDrawingTargetBounds('query')
+	const tBounds = useDrawingTargetBounds('table')
 	const we = eBounds?.width || 100
 	const wt = tBounds?.width || 100
 	const he = eBounds?.height || 100
@@ -46,10 +61,6 @@ export function RAQueryFigure({ query = <></>, actualQuery = '', below = false, 
 		if (he + arrowRadius * 1.5 < ht) arrowPos = 'bottomLeft'
 		else arrowPos = 'between'
 	}
-
-	// Determine the drawing size.
-	const width = below ? Math.max(we, wt) : (we + (arrowPos === 'between' ? arrowLength : delta) + wt)
-	const height = below ? he + (arrowPos === 'between' ? arrowLength : delta) + ht : Math.max(he, ht)
 
 	if (eBounds && tBounds) {
 		// Determine the table position.
@@ -86,19 +97,17 @@ export function RAQueryFigure({ query = <></>, actualQuery = '', below = false, 
 		}
 	}
 
-	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width} disableSVGPointerEvents>
-		<Element ref={eRef} position={[below && arrowPos === 'between' ? Math.max(0, (wt - we) / 2) : 0, 0]} anchor={[-1, -1]} behind>
+	return <>
+		<HtmlElement target="query" position={[below && arrowPos === 'between' ? Math.max(0, (wt - we) / 2) : 0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ width: 'max-content', whiteSpace: 'normal' }}>
 			<Component>{query}</Component>
-		</Element>
+		</HtmlElement>
 
-		<Element position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} behind>
+		<HtmlElement position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind ignoreMouse={false} style={{ whiteSpace: 'normal' }}>
 			<Box sx={{ width: tableWidth / tableScale }}>
-				<DataTable ref={tRef} data={data} showPagination={false} compact />
+				<DataTable data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{arrowPoints ? <>
-			<Curve points={arrowPoints} color={themeColor} curveDistance={arrowRadius} endArrow />
-		</> : null}
-	</Drawing>
+		{arrowPoints ? <Curve positions={arrowPoints} stroke={themeColor} strokeWidth={2} smoothing={{ distance: arrowRadius }} endArrow /> : null}
+	</>
 }
