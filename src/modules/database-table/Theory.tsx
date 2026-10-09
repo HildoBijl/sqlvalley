@@ -1,11 +1,12 @@
+import type { ComponentProps } from 'react'
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
+import { MeasuredDrawing, HtmlElement, Curve, Rectangle } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { RelationName, useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useFigureTextBounds, RelationName, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -54,7 +55,17 @@ export function Theory() {
 	</Page>
 }
 
-export function FigureTerminology({ terminology }: { terminology?: { [key: string]: React.ReactNode } }) {
+export function FigureTerminology(props: ComponentProps<typeof FigureTerminologyContents>) {
+	return <MeasuredDrawing targets={['table']}
+		calculateView={({ table }) => ({
+			type: 'identity', width: 700,
+			height: 60 + table.height,
+		})} style={{ fontSize: 16 }}>
+		<FigureTerminologyContents {...props} />
+	</MeasuredDrawing>
+}
+
+function FigureTerminologyContents({ terminology }: { terminology?: { [key: string]: React.ReactNode } }) {
 	const themeColor = useThemeColor()
 
 	// Get data.
@@ -62,53 +73,53 @@ export function FigureTerminology({ terminology }: { terminology?: { [key: strin
 	const data = useQueryResult(db, 'SELECT * FROM departments;')
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
+	const [tRef, tBounds, table] = useFigureTarget('table')
 
 	// Find the text nodes.
 	const text = String(data?.values[2]?.[1] ?? '')
-	const textNodeBounds = useTextNodeBounds(table, text, drawingData, 0, 1)
-	const columnNameNodeBounds = useTextNodeBounds(table, 'd_id', drawingData, 0, 1)
+	const textNodeBounds = useFigureTextBounds('textNodeBounds', table, text, { index: 0, parentDepth: 2 })
+	const columnNameNodeBounds = useFigureTextBounds('columnNameNodeBounds', table, 'd_id', { index: 0, parentDepth: 3 })
 
 	// Define coordinates.
 	const x = 180
 	const y = 60
 	const w = 700
-	const r = 10
+	const r = 12
+	const scale = 0.8
 
 	// Render the drawing.
-	return <Drawing ref={drawingRef} width={w} height={y + (tBounds?.height || 200)} maxWidth={w} disableSVGPointerEvents>
+	return <>
 		{/* Table. */}
-		<Element position={[x, y]} anchor={[-1, -1]} scale={0.8} behind>
-			<Box sx={{ width: (w - x) / 0.8 }}>
+		<HtmlElement position={[x, y]} anchor={[-1, -1]} scale={scale} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+			<Box sx={{ width: (w - x) / scale }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
 		{tBounds && textNodeBounds && columnNameNodeBounds ? <>
 			{/* Table marker. */}
-			<Element position={[x + (w - x) / 2, y - 38]} anchor={[0, 1]}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.table}</span></Element>
-			<Curve points={[[x, y - 40 + r], [x, y - 40], [w, y - 40], [w, y - 40 + r]]} curveDistance={r} color={themeColor} size={2} />
+			<HtmlElement position={[x + (w - x) / 2, y - 38]} anchor={[0, 1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.table}</span></HtmlElement>
+			<Curve positions={[[x, y - 40 + r], [x, y - 40], [w, y - 40], [w, y - 40 + r]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Contents marker. */}
-			<Element position={[x - 80, (columnNameNodeBounds.top + tBounds.top) / 2]} anchor={[1, 0]}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.contents}</span></Element>
-			<Curve points={[[x - 75 + r, columnNameNodeBounds.top + 2], [x - 75, columnNameNodeBounds.top + 2], [x - 75, tBounds.top], [x - 75 + r, tBounds.top]]} curveDistance={r} color={themeColor} size={2} />
+			<HtmlElement position={[x - 80, (columnNameNodeBounds.top + tBounds.top) / 2]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.contents}</span></HtmlElement>
+			<Curve positions={[[x - 75 + r, columnNameNodeBounds.top + 2], [x - 75, columnNameNodeBounds.top + 2], [x - 75, tBounds.top], [x - 75 + r, tBounds.top]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Column marker. */}
-			<Element position={[textNodeBounds.midpoint.x, y - 12]} anchor={[0, 1]}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.column}</span></Element>
-			<Curve points={[[textNodeBounds.left, y - 13 + r], [textNodeBounds.left, y - 13], [textNodeBounds.right, y - 13], [textNodeBounds.right, y - 13 + r]]} curveDistance={r} color={themeColor} size={2} />
+			<HtmlElement position={[textNodeBounds.midpoint.x, y - 12]} anchor={[0, 1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.column}</span></HtmlElement>
+			<Curve positions={[[textNodeBounds.left, y - 13 + r], [textNodeBounds.left, y - 13], [textNodeBounds.right, y - 13], [textNodeBounds.right, y - 13 + r]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Column names marker. */}
-			<Element position={[x - 25, columnNameNodeBounds.midpoint.y - 3]} anchor={[1, 0]}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.columnNames}</span></Element>
-			<Curve points={[[x - 20 + r, columnNameNodeBounds.bottom], [x - 20, columnNameNodeBounds.bottom], [x - 20, columnNameNodeBounds.top], [x - 20 + r, columnNameNodeBounds.top]]} curveDistance={r} color={themeColor} size={2} />
+			<HtmlElement position={[x - 25, columnNameNodeBounds.midpoint.y - 3]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.columnNames}</span></HtmlElement>
+			<Curve positions={[[x - 20 + r, columnNameNodeBounds.bottom], [x - 20, columnNameNodeBounds.bottom], [x - 20, columnNameNodeBounds.top], [x - 20 + r, columnNameNodeBounds.top]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Row marker. */}
-			<Element position={[x - 25, textNodeBounds.midpoint.y]} anchor={[1, 0]}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.row}</span></Element>
-			<Curve points={[[x - 20 + r, textNodeBounds.bottom], [x - 20, textNodeBounds.bottom], [x - 20, textNodeBounds.top], [x - 20 + r, textNodeBounds.top]]} curveDistance={r} color={themeColor} size={2} />
+			<HtmlElement position={[x - 25, textNodeBounds.midpoint.y]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.row}</span></HtmlElement>
+			<Curve positions={[[x - 20 + r, textNodeBounds.bottom], [x - 20, textNodeBounds.bottom], [x - 20, textNodeBounds.top], [x - 20 + r, textNodeBounds.top]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Cell marker. */}
-			<Element position={textNodeBounds.bottomRight.add([-8, 3])} anchor={[1, 1]}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.cell}</span></Element>
-			<Rectangle dimensions={textNodeBounds} cornerRadius={r} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} />
+			<HtmlElement position={textNodeBounds.bottomRight.add([-8, 3])} anchor={[1, 1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.cell}</span></HtmlElement>
+			<Rectangle corners={[textNodeBounds.min, textNodeBounds.max]} cornerRadius={r} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} />
 		</> : null}
-	</Drawing>
+	</>
 }

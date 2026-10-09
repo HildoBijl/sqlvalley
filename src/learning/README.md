@@ -9,7 +9,9 @@ Educational tools that do not depend on the module tree. Import public component
 - `completion`: a shared `CompletionDialog` with caller-supplied title/name and optional summary, story, and next-module actions. All actions close the dialog. `CompleteModuleButton` is independent and only invokes its callback.
 - `practice`: `StaticPractice` renders a supplied practice component within a local loading boundary; `InteractivePractice` connects the exercise manager to application storage and module resources.
 - `dataExplorer`: `DataExplorer` displays all rows using the shared `DataTable` with `controls` enabled for sorting and filtering, without a toolbar and schema information read directly from SQLite. Its small/full dataset selector shares the persisted practice setting.
-- `queryFigures`: `TableQueryFigure`, `SQLQueryFigure`, `RAQueryFigure`, and `DLQueryFigure` display supplied queries and their results. They use `MeasuredDrawing` from `@step-wise/drawing` to size figures from named query and table targets. `useTheoryPageDatabase` reads the original small grading dataset independently of user edits. These tools do not select curriculum modules.
+- `queryFigures`: `TableQueryFigure`, `SQLQueryFigure`, `RAQueryFigure`, and `DLQueryFigure` display supplied queries and their results. They use measured drawings from `@step-wise/drawing` to size figures from named targets. `TableQueryFigure` uses `TargetBoundsDrawing` to encompass its table and optional title, with a 5px outer margin. `useTheoryPageDatabase` reads the original small grading dataset independently of user edits. These tools do not select curriculum modules.
+
+`figureTargets.ts` registers HTML elements and text annotations with `@step-wise/drawing`, tracking replaced table roots and asynchronously rendered editor/table text. Use these hooks inside a drawing; keep each figure's layout in its module.
 
 General document formatting, notices, loading screens, and theme utilities live in `@/ui`.
 

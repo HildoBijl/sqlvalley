@@ -1,12 +1,12 @@
 import { Box } from '@mui/material'
 
+import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
 import { Vector } from '@step-wise/geometry'
-import { type DrawingData, useRefWithValue, useRefWithElement, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -39,8 +39,17 @@ export function Theory() {
 }
 
 function FigureSortOnSingleColumn() {
+	return <MeasuredDrawing targets={['table']}
+		calculateView={({ table }) => ({
+			type: 'identity', width: 800,
+			height: 20 + table.height,
+		})} style={{ fontSize: 16 }}>
+		<FigureSortOnSingleColumnContents />
+	</MeasuredDrawing>
+}
+
+function FigureSortOnSingleColumnContents() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const sortColumn = 'd_name'
@@ -52,32 +61,41 @@ ORDER BY ${sortColumn} DESC;`
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
-	const [eRef, editor] = useRefWithElement<HTMLElement>()
-	const descBounds = useTextNodeBounds(editor, 'DESC', drawingData)
+	const [eRef, , editor] = useFigureTarget('query')
+	const descBounds = useFigureTextBounds('descBounds', editor, 'DESC')
 
 	// Find the bounds for "d_name".
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
-	const sortColumnNameBounds = useTextNodeBounds(table, sortColumn, drawingData)
+	const [tRef, tBounds, table] = useFigureTarget('table')
+	const sortColumnNameBounds = useFigureTextBounds('sortColumnNameBounds', table, sortColumn)
 
-	return <Drawing ref={drawingRef} width={800} height={20 + (tBounds?.height ?? 200)} maxWidth={800} disableSVGPointerEvents>
-		<Element ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind>
+	return <>
+		<HtmlElement ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
-		<Element position={[320, 20]} anchor={[-1, -1]} scale={0.6} behind>
+		<HtmlElement position={[320, 20]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{descBounds && sortColumnNameBounds ? <Curve points={[descBounds.bottomRight.add([0, 0]), [descBounds.right + 70, 0], [sortColumnNameBounds.left - 30, 0], sortColumnNameBounds.topLeft.add([-12, 8])]} color={themeColor} endArrow /> : null}
-		{sortColumnNameBounds && tBounds ? <Curve points={[[sortColumnNameBounds.left - 10, tBounds.top - 6], sortColumnNameBounds.topLeft.add([-10, 12])]} color={themeColor} endArrow /> : null}
-	</Drawing>
+		{descBounds && sortColumnNameBounds ? <Curve positions={[descBounds.bottomRight.add([0, 0]), [descBounds.right + 70, 0], [sortColumnNameBounds.left - 30, 0], sortColumnNameBounds.topLeft.add([-12, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+		{sortColumnNameBounds && tBounds ? <Curve positions={[[sortColumnNameBounds.left - 10, tBounds.top - 6], sortColumnNameBounds.topLeft.add([-10, 12])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+	</>
 }
 
 function FigureSortOnMultipleColumns() {
+	return <MeasuredDrawing targets={['table']}
+		calculateView={({ table }) => ({
+			type: 'identity', width: 800,
+			height: 40 + table.height,
+		})} style={{ fontSize: 16 }}>
+		<FigureSortOnMultipleColumnsContents />
+	</MeasuredDrawing>
+}
+
+function FigureSortOnMultipleColumnsContents() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const sortColumn1 = 'nr_employees'
@@ -91,48 +109,57 @@ ORDER BY
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
-	const [eRef, editor] = useRefWithElement<HTMLElement>()
-	const ascBounds = useTextNodeBounds(editor, 'ASC', drawingData)
-	const descBounds = useTextNodeBounds(editor, 'DESC', drawingData)
+	const [eRef, , editor] = useFigureTarget('query')
+	const ascBounds = useFigureTextBounds('ascBounds', editor, 'ASC')
+	const descBounds = useFigureTextBounds('descBounds', editor, 'DESC')
 
 	// Find the bounds for "d_name".
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
-	const sortColumn1NameBounds = useTextNodeBounds(table, sortColumn1, drawingData)
-	const sortColumn2NameBounds = useTextNodeBounds(table, sortColumn2, drawingData)
+	const [tRef, tBounds, table] = useFigureTarget('table')
+	const sortColumn1NameBounds = useFigureTextBounds('sortColumn1NameBounds', table, sortColumn1)
+	const sortColumn2NameBounds = useFigureTextBounds('sortColumn2NameBounds', table, sortColumn2)
 
 	const drawingHeight = 20 + (tBounds?.height ?? 200) + 20
-	return <Drawing ref={drawingRef} width={800} height={drawingHeight} maxWidth={800} disableSVGPointerEvents>
+	return <>
 		{/* SQL query */}
-		<Element ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind>
+		<HtmlElement ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
 		{/* Table */}
-		<Element position={[320, 20]} anchor={[-1, -1]} scale={0.6} behind>
+		<HtmlElement position={[320, 20]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
 		{/* First sorting arrows */}
 		{ascBounds && sortColumn1NameBounds && tBounds ? <>
-			<Element position={sortColumn1NameBounds.bottomLeft.add([-36, -6])} anchor={[-1, 1]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem' }}>Primary sorting</span></Element>
-			<Curve points={[ascBounds.bottomRight.add([0, 0]), [ascBounds.right + 70, 0], [sortColumn1NameBounds.left - 30, 0], sortColumn1NameBounds.topLeft.add([-16, 8])]} color={themeColor} endArrow />
-			<Curve points={[sortColumn1NameBounds.topLeft.add([-14, 12]), [sortColumn1NameBounds.left - 14, tBounds.top - 6]]} color={themeColor} endArrow />
+			<HtmlElement position={sortColumn1NameBounds.bottomLeft.add([-36, -6])} anchor={[-1, 1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem' }}>Primary sorting</span></HtmlElement>
+			<Curve positions={[ascBounds.bottomRight.add([0, 0]), [ascBounds.right + 70, 0], [sortColumn1NameBounds.left - 30, 0], sortColumn1NameBounds.topLeft.add([-16, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<Curve positions={[sortColumn1NameBounds.topLeft.add([-14, 12]), [sortColumn1NameBounds.left - 14, tBounds.top - 6]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
 		</> : null}
 
 		{/* Second sorting arrows */}
 		{descBounds && sortColumn2NameBounds && tBounds ? <>
-			<Element position={[sortColumn2NameBounds.left - 34, drawingHeight - 16]} anchor={[-1, -1]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem', opacity: 0.5 }}>Secondary sorting</span></Element>
-			<Curve points={[descBounds.topRight.add([0, 3]), [descBounds.right + 120, drawingHeight], [sortColumn2NameBounds.left - 40, drawingHeight], [sortColumn2NameBounds.left - 14, drawingHeight - 24]]} color={themeColor} endArrow style={{ opacity: 0.5 }} />
-			<Curve points={[[sortColumn2NameBounds.left - 12, tBounds.top - 6], sortColumn2NameBounds.topLeft.add([-12, 12])]} color={themeColor} endArrow style={{ opacity: 0.5 }} />
+			<HtmlElement position={[sortColumn2NameBounds.left - 34, drawingHeight - 16]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem', opacity: 0.5 }}>Secondary sorting</span></HtmlElement>
+			<Curve positions={[descBounds.topRight.add([0, 3]), [descBounds.right + 120, drawingHeight], [sortColumn2NameBounds.left - 40, drawingHeight], [sortColumn2NameBounds.left - 14, drawingHeight - 24]]} stroke={themeColor} endArrow style={{ opacity: 0.5 }} strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<Curve positions={[[sortColumn2NameBounds.left - 12, tBounds.top - 6], sortColumn2NameBounds.topLeft.add([-12, 12])]} stroke={themeColor} endArrow style={{ opacity: 0.5 }} strokeWidth={2} smoothing={{ ratio: 1 }} />
 		</> : null}
-	</Drawing>
+	</>
 }
 
 function FigureLimitRows() {
+	return <MeasuredDrawing targets={['table', 'query']}
+		calculateView={({ table, query }) => ({
+			type: 'identity', width: 800,
+			height: Math.max(table.height, query.height),
+		})} style={{ fontSize: 16 }}>
+		<FigureLimitRowsContents />
+	</MeasuredDrawing>
+}
+
+function FigureLimitRowsContents() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const sortColumn = 'd_name'
@@ -145,37 +172,46 @@ LIMIT 3;`
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
-	const [eRef, eBounds, editor] = useRefWithBounds(drawingData)
-	const limitBounds = useTextNodeBounds(editor, ';', drawingData)
+	const [eRef, , editor] = useFigureTarget('query')
+	const limitBounds = useFigureTextBounds('limitBounds', editor, ';')
 
 	// Find the bounds for "d_name".
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
-	const sortColumnNameBounds = useTextNodeBounds(table, sortColumn, drawingData)
+	const [tRef, tBounds, table] = useFigureTarget('table')
+	const sortColumnNameBounds = useFigureTextBounds('sortColumnNameBounds', table, sortColumn)
 
 	const minY = (sortColumnNameBounds?.top ?? 60) + 12
 	const maxY = (tBounds?.top ?? 200) - 6
 	const avgY = (minY + maxY) / 2
 	const x = (tBounds?.left ?? 320) - 10
-	return <Drawing ref={drawingRef} width={800} height={Math.max(tBounds?.height ?? 200, eBounds?.height ?? 200)} maxWidth={800} disableSVGPointerEvents>
-		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
+	return <>
+		<HtmlElement ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
-		<Element position={[320, 0]} anchor={[-1, -1]} scale={0.6} behind>
+		<HtmlElement position={[320, 0]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{limitBounds && sortColumnNameBounds ? <Curve points={[limitBounds.middleRight.add([2, 2]), limitBounds.middleRight.add([70, 2]), [x - 30, avgY], [x - 8, avgY]]} color={themeColor} endArrow /> : null}
+		{limitBounds && sortColumnNameBounds ? <Curve positions={[limitBounds.middleRight.add([2, 2]), limitBounds.middleRight.add([70, 2]), [x - 30, avgY], [x - 8, avgY]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
 
-		{sortColumnNameBounds && tBounds ? <Curve points={[[x, minY], [x, maxY]]} color={themeColor} arrow /> : null}
-	</Drawing>
+		{sortColumnNameBounds && tBounds ? <Curve positions={[[x, minY], [x, maxY]]} stroke={themeColor} startArrow endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+	</>
 }
 
 function FigureLimitRowsWithOffset() {
+	return <MeasuredDrawing targets={['table', 'query']}
+		calculateView={({ table, query }) => ({
+			type: 'identity', width: 800,
+			height: Math.max(table.height, query.height),
+		})} style={{ fontSize: 16 }}>
+		<FigureLimitRowsWithOffsetContents />
+	</MeasuredDrawing>
+}
+
+function FigureLimitRowsWithOffsetContents() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const sortColumn = 'd_name'
@@ -189,36 +225,45 @@ LIMIT 3 OFFSET ${offset};`
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
-	const [eRef, eBounds, editor] = useRefWithBounds(drawingData)
-	const offsetBounds = useTextNodeBounds(editor, ';', drawingData)
+	const [eRef, , editor] = useFigureTarget('query')
+	const offsetBounds = useFigureTextBounds('offsetBounds', editor, ';')
 
 	// Find the bounds for "d_name".
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
-	const sortColumnNameBounds = useTextNodeBounds(table, sortColumn, drawingData)
+	const [tRef, tBounds, table] = useFigureTarget('table')
+	const sortColumnNameBounds = useFigureTextBounds('sortColumnNameBounds', table, sortColumn)
 
 	const point = tBounds && sortColumnNameBounds && new Vector(tBounds.left - 4, sortColumnNameBounds.top + 10)
-	return <Drawing ref={drawingRef} width={800} height={Math.max(tBounds?.height ?? 200, eBounds?.height ?? 200)} maxWidth={800} disableSVGPointerEvents>
-		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
+	return <>
+		<HtmlElement ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
-		<Element position={[320, 0]} anchor={[-1, -1]} scale={0.6} behind>
+		<HtmlElement position={[320, 0]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{point ? <Element position={point} anchor={[1, 0]} scale={0.6} behind>
+		{point ? <HtmlElement position={point} anchor={[1, 0]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<span style={{ color: themeColor, fontWeight: 600 }}>+{offset}</span>
-		</Element> : null}
+		</HtmlElement> : null}
 
-		{offsetBounds && point ? <Curve points={[offsetBounds.middleRight.add([2, 2]), offsetBounds.middleRight.add([70, 2]), point.add([-40, 0]), point.add([-14, 0])]} color={themeColor} endArrow /> : null}
-	</Drawing>
+		{offsetBounds && point ? <Curve positions={[offsetBounds.middleRight.add([2, 2]), offsetBounds.middleRight.add([70, 2]), point.add([-40, 0]), point.add([-14, 0])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+	</>
 }
 
 function FigureSortNullValues() {
+	return <MeasuredDrawing targets={['table']}
+		calculateView={({ table }) => ({
+			type: 'identity', width: 800,
+			height: 20 + table.height,
+		})} style={{ fontSize: 16 }}>
+		<FigureSortNullValuesContents />
+	</MeasuredDrawing>
+}
+
+function FigureSortNullValuesContents() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const sortColumn = 'budget'
@@ -230,25 +275,25 @@ ORDER BY ${sortColumn} ASC NULLS LAST;`
 	const data = useQueryResult(db, query)
 
 	// Find the bounds for "DESC".
-	const [eRef, editor] = useRefWithElement<HTMLElement>()
-	const descBounds = useTextNodeBounds(editor, 'DESC', drawingData)
+	const [eRef, , editor] = useFigureTarget('query')
+	const descBounds = useFigureTextBounds('descBounds', editor, 'DESC')
 
 	// Find the bounds for "d_name".
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
-	const sortColumnNameBounds = useTextNodeBounds(table, sortColumn, drawingData)
+	const [tRef, tBounds, table] = useFigureTarget('table')
+	const sortColumnNameBounds = useFigureTextBounds('sortColumnNameBounds', table, sortColumn)
 
-	return <Drawing ref={drawingRef} width={800} height={20 + (tBounds?.height ?? 200)} maxWidth={800} disableSVGPointerEvents>
-		<Element ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind>
+	return <>
+		<HtmlElement ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
-		<Element position={[320, 20]} anchor={[-1, -1]} scale={0.6} behind>
+		<HtmlElement position={[320, 20]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{descBounds && sortColumnNameBounds ? <Curve points={[descBounds.bottomRight.add([0, 0]), [descBounds.right + 70, 0], [sortColumnNameBounds.left - 30, 0], sortColumnNameBounds.topLeft.add([-12, 8])]} color={themeColor} endArrow /> : null}
-		{sortColumnNameBounds && tBounds ? <Curve points={[sortColumnNameBounds.topLeft.add([-10, 12]), [sortColumnNameBounds.left - 10, tBounds.top - 6]]} color={themeColor} endArrow /> : null}
-	</Drawing>
+		{descBounds && sortColumnNameBounds ? <Curve positions={[descBounds.bottomRight.add([0, 0]), [descBounds.right + 70, 0], [sortColumnNameBounds.left - 30, 0], sortColumnNameBounds.topLeft.add([-12, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+		{sortColumnNameBounds && tBounds ? <Curve positions={[sortColumnNameBounds.topLeft.add([-10, 12]), [sortColumnNameBounds.left - 10, tBounds.top - 6]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+	</>
 }

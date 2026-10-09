@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, useRefWithBounds } from '@sqlvalley/drawing'
+import { MeasuredDrawing, HtmlElement } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -43,17 +43,23 @@ FROM employees;`}</SQLDisplay>
 }
 
 function FigureEmployeeTable() {
+	return <MeasuredDrawing targets={['table']}
+		calculateView={({ table }) => ({ type: 'identity', width: 800, height: 25 + table.height })} style={{ fontSize: 16 }}>
+		<FigureEmployeeTableContents />
+	</MeasuredDrawing>
+}
+
+function FigureEmployeeTableContents() {
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, 'SELECT * FROM employees;')
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [tRef, tBounds] = useRefWithBounds(drawingData)
+	const [tRef] = useFigureTarget('table')
 
-	return <Drawing ref={drawingRef} width={800} height={25 + (tBounds?.height || 200)} maxWidth={800}>
-		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The full employees table</span></Element>
-		<Element position={[0, 25]} anchor={[-1, -1]} scale={0.6}>
+	return <>
+		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The full employees table</span></HtmlElement>
+		<HtmlElement position={[0, 25]} anchor={[-1, -1]} scale={0.6} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 / 0.6 }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
-	</Drawing>
+		</HtmlElement>
+	</>
 }

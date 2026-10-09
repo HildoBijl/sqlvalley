@@ -1,4 +1,4 @@
-import { type Ref, useCallback, useMemo, useState } from 'react'
+import { type CSSProperties, type Ref, useLayoutEffect, useMemo, useState } from 'react'
 import { Alert, Box, Paper, Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 import { DataGrid } from '@mui/x-data-grid'
@@ -12,6 +12,7 @@ export interface TableData {
 
 export interface DataTableProps {
 	data?: TableData | null
+	width?: CSSProperties['width']
 	maxRows?: number
 	showPagination?: boolean
 	highlightHeader?: boolean
@@ -22,25 +23,31 @@ export interface DataTableProps {
 
 const getRowHeight = () => 'auto' as const
 
-export function DataTable({ data, maxRows = 100, showPagination = true, highlightHeader = true, compact = false, controls = false, ref }: DataTableProps) {
+export function DataTable({ data, width, maxRows = 100, showPagination = true, highlightHeader = true, compact = false, controls = false, ref }: DataTableProps) {
 	const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
+	const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
-	// Track the table's available width and use it to determine column widths.
+	// Measure layout width independently of CSS transforms used by drawings.
 	const [availableWidth, setAvailableWidth] = useState(0)
-	const onResize = useCallback((size: { width: number }) => setAvailableWidth(size.width), [])
+	useLayoutEffect(() => {
+		if (!container) return
+		const observer = new ResizeObserver(([entry]) => setAvailableWidth(entry.contentRect.width))
+		observer.observe(container)
+		return () => observer.disconnect()
+	}, [container])
 	const columns = useTableColumns(data, controls, availableWidth)
 
 	// Turn the array rows into row objects including column ID.
 	const rows = useMemo(() => (data?.values ?? []).slice(0, maxRows).map((values, id) => ({ id, ...Object.fromEntries(values.map((value, index) => [`column_${index}`, value instanceof Uint8Array ? String(value) : value])) })), [data, maxRows])
 
 	// When there is no data, show a not of this.
-	if (!data) return <Paper ref={ref} sx={{ p: 3, textAlign: 'center' }}>
+	if (!data) return <Paper ref={ref} style={{ width }} sx={{ p: 3, textAlign: 'center' }}>
 		<Typography color="text.secondary">No data to display</Typography>
 	</Paper>
 
-	// Render a DataGrid with the data.
-	return <Box ref={ref} sx={{ minWidth: 0, maxWidth: '100%' }}>
-		<Paper variant="outlined" sx={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0, borderRadius: 2, overflow: 'hidden' }}>
+	// Render the same grid for static and interactive tables.
+	return <Box ref={ref} style={{ width }} sx={{ minWidth: 0, maxWidth: '100%' }}>
+		<Paper ref={setContainer} variant="outlined" sx={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0, borderRadius: 2, overflow: 'hidden' }}>
 			<DataGrid
 				rows={rows}
 				columns={columns}
@@ -50,7 +57,6 @@ export function DataTable({ data, maxRows = 100, showPagination = true, highligh
 				disableColumnSorting={!controls}
 				disableColumnFilter={!controls}
 				getRowHeight={getRowHeight}
-				onResize={onResize}
 				columnHeaderHeight={compact ? 40 : 56}
 				getRowClassName={({ indexRelativeToCurrentPage }) => indexRelativeToCurrentPage % 2 === 0 ? 'striped' : ''}
 				paginationModel={showPagination ? paginationModel : { page: 0, pageSize: -1 }}

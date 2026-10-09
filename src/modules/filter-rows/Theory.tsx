@@ -1,11 +1,12 @@
+import type { ComponentProps } from 'react'
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
+import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Info, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	const now = new Date()
@@ -74,25 +75,32 @@ WHERE perf_score IS NULL;`} columnName="perf_score" />
 	</Page>
 }
 
-export function FigureFiltering({ query = '', columnName = '' }) {
+export function FigureFiltering(props: ComponentProps<typeof FigureFilteringContents>) {
+	return <MeasuredDrawing targets={['query', 'table']}
+		calculateView={({ query, table }) => ({
+			type: 'identity', width: 800,
+			height: query.height + 15 + table.height,
+		})} style={{ fontSize: 16 }}>
+		<FigureFilteringContents {...props} />
+	</MeasuredDrawing>
+}
+
+function FigureFilteringContents({ query = '', columnName = '' }) {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
 	// Find the table column name bounds.
-	const [eRef, eBounds] = useRefWithBounds(drawingData)
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
-	const columnNameBounds = useTextNodeBounds(table, columnName, drawingData)
+	const [eRef, eBounds] = useFigureTarget('query')
+	const [tRef, , table] = useFigureTarget('table')
+	const columnNameBounds = useFigureTextBounds('columnNameBounds', table, columnName)
 
 	// Set up dimensions.
 	const width = 800
 	const h1 = eBounds?.height || 100
 	const delta = 15
-	const h2 = tBounds?.height || 200
-	const height = h1 + delta + h2
 
 	// Check where to position the query and where to put the arrow.
 	const arrowX = columnNameBounds?.midpoint.x || width
@@ -110,22 +118,25 @@ export function FigureFiltering({ query = '', columnName = '' }) {
 		queryPosition = 1 // Right
 		arrowPosition = -1 // Left
 	}
+	// The query moves after the column is measured; target bounds can still contain its previous position.
+	const queryLeft = (queryPosition + 1) * (width - (eBounds?.width ?? 0)) / 2
+	const arrowStartX = arrowPosition === 1 ? queryLeft + (eBounds?.width ?? 0) + 4 : queryLeft - 4
 
-	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width} disableSVGPointerEvents>
-		<Element ref={eRef} position={[(queryPosition + 1) * width / 2, 0]} anchor={[queryPosition, -1]} behind>
+	return <>
+		<HtmlElement ref={eRef} position={[(queryPosition + 1) * width / 2, 0]} anchor={[queryPosition, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
 		{eBounds ? <>
-			<Element position={[0, h1 + delta]} anchor={[-1, -1]} scale={0.8} behind>
+			<HtmlElement position={[0, h1 + delta]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 				<Box sx={{ width: width / 0.8 }}>
 					<DataTable ref={tRef} data={data} showPagination={false} compact />
 				</Box>
-			</Element>
+			</HtmlElement>
 		</> : null}
 
 		{eBounds && columnNameBounds ? <>
-			<Curve points={[arrowPosition === 1 ? eBounds.middleRight.add([4, 0]) : eBounds.middleLeft.add([-4, 0]), [columnNameBounds.midpoint.x, eBounds.midpoint.y], [columnNameBounds.midpoint.x, h1 + delta - 4]]} color={themeColor} curveDistance={60} endArrow />
+			<Curve positions={[[arrowStartX, h1 / 2], [columnNameBounds.midpoint.x, h1 / 2], [columnNameBounds.midpoint.x, h1 + delta - 4]]} stroke={themeColor} smoothing={{ distance: 60 }} endArrow strokeWidth={2} />
 		</> : null}
-	</Drawing>
+	</>
 }

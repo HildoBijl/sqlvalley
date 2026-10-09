@@ -1,7 +1,4 @@
-import { Box } from '@mui/material'
-
-import { type DrawingData, useRefWithValue, Drawing, Element, useRefWithBounds } from '@sqlvalley/drawing'
-import { Drawing as StepWiseDrawing, HtmlElement, Curve as StepWiseCurve, anchors } from '@step-wise/drawing'
+import { Drawing, HtmlElement, Curve, anchors, TargetBoundsDrawing } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql'
 
@@ -12,7 +9,7 @@ export function Theory() {
 	return <Page>
 		<Section>
 			<Par>Suppose that we are working for a company that's looking to keep track of their internal departments. How would we store this data? Could we just put it in something like an Excel file?</Par>
-			<TableQueryFigure query={`SELECT * FROM departments;`} title="List of departments" tableWidth={600} />
+			<TableQueryFigure query={`SELECT * FROM departments;`} title="List of departments" tableWidth={750} />
 		</Section>
 
 		<Section title="Why databases: a list of requirements">
@@ -42,29 +39,20 @@ export function Theory() {
 
 export function FigureTwoTables() {
 	const db = useTheoryPageDatabase()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-
 	const data1 = useQueryResult(db, 'SELECT * FROM departments;')
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
-	const x = 80
-	const y = 108
+	const tableScale = 0.6
+	return <TargetBoundsDrawing targets={['table1Title', 'table1', 'table2Title', 'table2']} maxWidth={800} style={{ fontSize: 16 }}>
+		<HtmlElement target="table1" position={[0, 25]} anchor={[-1, -1]} scale={tableScale} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+			<DataTable data={data1} width={800} showPagination={false} compact />
+		</HtmlElement>
+		<HtmlElement target="table1Title" position={{ target: 'table1', anchor: 'topLeft', pixelOffset: [10, 2] }} anchor="bottomLeft" ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
 
-	return <Drawing ref={drawingRef} width={800} height={y + (t2Bounds?.height ?? 200)} maxWidth={800}>
-		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
-		<Element position={[0, 25]} anchor={[-1, -1]} scale={0.6}>
-			<Box sx={{ width: 800 }}>
-				<DataTable data={data1} showPagination={false} compact />
-			</Box>
-		</Element>
-
-		<Element position={[790, y - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></Element>
-		<Element position={[x, y]} anchor={[-1, -1]} scale={0.6}>
-			<Box sx={{ width: (800 - x) / 0.6 }}>
-				<DataTable ref={t2Ref} data={data2} showPagination={false} compact />
-			</Box>
-		</Element>
-	</Drawing>
+		<HtmlElement target="table2" position={[80, 104]} anchor={[-1, -1]} scale={tableScale} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+			<DataTable data={data2} width={1100} showPagination={false} compact />
+		</HtmlElement>
+		<HtmlElement target="table2Title" position={{ target: 'table2', anchor: 'topRight', pixelOffset: [-10, 2] }} anchor="bottomRight" ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
+	</TargetBoundsDrawing>
 }
 
 export function FigureDatabaseUsage() {
@@ -77,7 +65,7 @@ export function FigureDatabaseUsage() {
 	const xDatabase = w - 60
 	const curveSmoothing = { mode: 'around', ratio: 1 } as const
 
-	return <StepWiseDrawing view={{ type: 'identity', width: w, height: h }}>
+	return <Drawing view={{ type: 'identity', width: w, height: h }}>
 		<Glyph name="User" position={[xUser, y - 25]} width={100} />
 		<HtmlElement position={[xUser, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>User</span></HtmlElement>
 
@@ -87,16 +75,16 @@ export function FigureDatabaseUsage() {
 		<Glyph name="Database" position={[xDatabase, y - 25]} width={100} />
 		<HtmlElement position={[xDatabase, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>Database</span></HtmlElement>
 
-		<StepWiseCurve positions={[[xUser + 26, y - 70], [(xUser + xServer) / 2, y - 120], [xServer - 35, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[[xUser + 26, y - 70], [(xUser + xServer) / 2, y - 120], [xServer - 35, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
 		<HtmlElement position={[(xUser + xServer) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>"Get me the departments<br />that are going over budget"</p></HtmlElement>
 
-		<StepWiseCurve positions={[[xServer + 35, y - 70], [(xServer + xDatabase) / 2, y - 120], [xDatabase - 50, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[[xServer + 35, y - 70], [(xServer + xDatabase) / 2, y - 120], [xDatabase - 50, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
 		<HtmlElement position={[(xServer + xDatabase) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Pull up all relevant records</p></HtmlElement>
 
-		<StepWiseCurve positions={[[xDatabase - 50, y + 20], [(xServer + xDatabase) / 2, y + 70], [xServer + 35, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[[xDatabase - 50, y + 20], [(xServer + xDatabase) / 2, y + 70], [xServer + 35, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
 		<HtmlElement position={[(xServer + xDatabase) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Give all requested records</p></HtmlElement>
 
-		<StepWiseCurve positions={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
+		<Curve positions={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
 		<HtmlElement position={[(xUser + xServer) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></HtmlElement>
-	</StepWiseDrawing>
+	</Drawing>
 }

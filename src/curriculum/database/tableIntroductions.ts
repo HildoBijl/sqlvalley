@@ -7,7 +7,7 @@ import { type ModuleId, moduleTree } from '../moduleDefinition'
 const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {
 	// Company internals.
 	departments: 'database',
-	employees: 'query-language',
+	employees: 'database',
 	contracts: 'sql',
 	allocations: 'join-tables',
 

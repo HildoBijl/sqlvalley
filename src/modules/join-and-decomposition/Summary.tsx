@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
+import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
 import { ISQL, DataTable } from '@sqlvalley/sql'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useTheoryPageDatabase } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -27,6 +27,16 @@ export function Summary() {
 }
 
 function FigureJoinAndDecomposition() {
+	return <MeasuredDrawing targets={['table1', 'table2', 'table3']}
+		calculateView={({ table1, table2, table3 }) => ({
+			type: 'identity', width: 800,
+			height: table1.height + table2.height + table3.height + 52,
+		})} style={{ fontSize: 16 }}>
+		<FigureJoinAndDecompositionContents />
+	</MeasuredDrawing>
+}
+
+function FigureJoinAndDecompositionContents() {
 	const themeColor = useThemeColor()
 
 	// Get the data.
@@ -37,47 +47,45 @@ function FigureJoinAndDecomposition() {
 	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d JOIN employees e ON d.manager_id = e.e_id;`)
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
-	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData)
+	const [t1Ref, t1Bounds] = useFigureTarget('table1')
+	const [t2Ref, t2Bounds] = useFigureTarget('table2')
+	const [t3Ref] = useFigureTarget('table3')
 	const x = 80
 	const delta = 20 // The space between the two arrows.
 	const y1 = 20 + (t1Bounds?.height ?? 160) - 28
 	const y2 = y1 + (t2Bounds?.height ?? 160)
 	const y3 = y2 + 60
 	const width = 800
-	const height = y3 + (t3Bounds?.height ?? 160)
 
-	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width}>
-		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
-		<Element ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+	return <>
+		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
+		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 480 / 0.6 }}>
 				<DataTable data={data1} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
 		{t1Bounds ? <>
-			<Element position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></Element>
-			<Element ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
+			<HtmlElement position={[790, y1 - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
+			<HtmlElement ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 				<Box sx={{ width: (width - x) / 0.6 }}>
 					<DataTable data={data2} showPagination={false} compact />
 				</Box>
-			</Element>
+			</HtmlElement>
 
 			{t2Bounds ? <>
-				<Curve points={[[width / 2 - delta / 2, y2 + 4], [width / 2 - delta / 2, y3 - 4]]} color={themeColor} endArrow />
-				<Element position={[width / 2 - delta / 2 - 6, (y2 + y3) / 2 - 4]} anchor={[1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Join</span></Element>
+				<Curve positions={[[width / 2 - delta / 2, y2 + 4], [width / 2 - delta / 2, y3 - 4]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+				<HtmlElement position={[width / 2 - delta / 2 - 6, (y2 + y3) / 2 - 4]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Join</span></HtmlElement>
 
-				<Curve points={[[width / 2 + delta / 2, y3 - 4], [width / 2 + delta / 2, y2 + 4]]} color={themeColor} endArrow />
-				<Element position={[width / 2 + delta / 2 + 6, (y2 + y3) / 2 + 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Decomposition</span></Element>
+				<Curve positions={[[width / 2 + delta / 2, y3 - 4], [width / 2 + delta / 2, y2 + 4]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+				<HtmlElement position={[width / 2 + delta / 2 + 6, (y2 + y3) / 2 + 4]} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Decomposition</span></HtmlElement>
 
-				<Element ref={t3Ref} position={[0, y3]} anchor={[-1, -1]} scale={0.45}>
+				<HtmlElement ref={t3Ref} position={[0, y3]} anchor={[-1, -1]} scale={0.45} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 					<Box sx={{ width: width / 0.45 }}>
 						<DataTable data={data3} showPagination={false} compact />
 					</Box>
-				</Element>
+				</HtmlElement>
 			</> : null}
 		</> : null}
-	</Drawing>
+	</>
 }

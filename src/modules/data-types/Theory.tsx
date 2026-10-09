@@ -1,11 +1,12 @@
+import { Fragment } from 'react'
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
+import { type Position, MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	const now = new Date()
@@ -18,7 +19,7 @@ export function Theory() {
 		</Section>
 
 		<Section title="Each column has a data type">
-			<Par>In a database table, every column has a specific <Term>data type</Term>. Let's consider for instance a <ISQL>contracts</ISQL> table tracking the various positions of employees as they move through a company.</Par>
+			<Par>In a database table, every column has a specific <Term>data type</Term>. Let's consider for instance an <ISQL>expenses</ISQL> table tracking the various positions of employees as they move through a company.</Par>
 			<FigureDataTypeDemo />
 			<Par>Note that some columns contain <Term>numbers</Term>, others contain <Term>text</Term>, and others have <Term>date/time</Term> values. Many DBMSs enforce the declared type. SQLite normally uses <Term>type affinity</Term>: it attempts conversions but may store values of different types in one column. SQLite STRICT tables enforce a narrower set of column types.</Par>
 			<Par>Optionally, columns may be given further restrictions. For instance, the <ISQL>perf_score</ISQL> column may be set up to only allow numbers between <ISQL>0</ISQL> and <ISQL>100</ISQL>, and the <ISQL>status</ISQL> column may be set up to only take values from a list of possible employee statuses. The set of all possible values that can be put in a column is formally called the <Term>domain</Term> of that column.</Par>
@@ -61,57 +62,53 @@ export function Theory() {
 }
 
 export function FigureDataTypeDemo() {
+	return <MeasuredDrawing targets={['table']}
+		calculateView={({ table }) => ({
+			type: 'identity', width: 800,
+			height: table.height + 73,
+		})} style={{ fontSize: 16 }}>
+		<FigureDataTypeDemoContents />
+	</MeasuredDrawing>
+}
+
+function FigureDataTypeDemoContents() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const db = useTheoryPageDatabase()
-	const data = useQueryResult(db, `SELECT * FROM contracts;`)
+	const data = useQueryResult(db, `SELECT * FROM expenses;`)
+	console.log(data)
 
 	// Find the bounds of the table.
-	const [tableRef, tableBounds, table] = useRefWithBounds(drawingData)
-	const [labelTextRef, labelTextBounds] = useRefWithBounds(drawingData)
-	const [labelNumberRef, labelNumberBounds] = useRefWithBounds(drawingData)
-	const [labelDateRef, labelDateBounds] = useRefWithBounds(drawingData)
+	const [tableRef, , table] = useFigureTarget('table')
 
-	const c1Bounds = useTextNodeBounds(table, String(data?.values[0]?.[1] ?? ''), drawingData)
-	const c2Bounds = useTextNodeBounds(table, data && data.columns[2] || '', drawingData)
-	const c3Bounds = useTextNodeBounds(table, String(data?.values[0]?.[3] ?? ''), drawingData)
-	const c4Bounds = useTextNodeBounds(table, String(data?.values[0]?.[4] ?? ''), drawingData)
-	const c5Bounds = useTextNodeBounds(table, data && data.columns[5] || '', drawingData)
-	const c6Bounds = useTextNodeBounds(table, String(data?.values[0]?.[6] ?? ''), drawingData)
+	useFigureTextBounds('numberColumn', table, data?.columns[1] ?? '')
+	useFigureTextBounds('textColumn', table, data?.columns[3] ?? '')
+	useFigureTextBounds('dateColumn', table, data?.columns[4] ?? '')
+	const labels = [
+		{ text: 'Number', target: 'numberColumn', offset: 0 },
+		{ text: 'Text', target: 'textColumn', offset: 0 },
+		{ text: 'Date', target: 'dateColumn', offset: 15 },
+	]
 
-	const r = 20
-	const height = tableBounds?.height || 200
-	const delta = 20 // How much do we jump in from the left of the column?
-
-	return <Drawing ref={drawingRef} width={800} height={25 + height + 48} maxWidth={800} disableSVGPointerEvents>
-		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The contracts table</span></Element>
-		<Element position={[0, 25]} anchor={[-1, -1]} scale={0.8} behind>
+	return <>
+		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The expenses table</span></HtmlElement>
+		<HtmlElement position={[0, 25]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 / 0.8 }}>
 				<DataTable ref={tableRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{/* Labels. */}
-		{tableBounds && c1Bounds && c2Bounds && c3Bounds ? <>
-			<Element ref={labelTextRef} position={[c1Bounds.left - 10, tableBounds.top + 40]} anchor={[1, 0]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.8rem' }}>Text</span></Element>
-			<Element ref={labelNumberRef} position={[c2Bounds.left - 10, tableBounds.top + 30]} anchor={[1, 0]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.8rem' }}>Number</span></Element>
-			<Element ref={labelDateRef} position={[c3Bounds.left - 10, tableBounds.top + 20]} anchor={[1, 0]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.8rem' }}>Date</span></Element>
-		</> : null}
-
-		{tableBounds && labelTextBounds && labelNumberBounds && labelDateBounds && c1Bounds && c2Bounds && c3Bounds && c4Bounds && c5Bounds && c6Bounds ? <>
-			{/* Text arrows. */}
-			<Curve points={[[labelTextBounds.right + 2, labelTextBounds.midpoint.y + 2], [c1Bounds.left + delta + 10, labelTextBounds?.midpoint.y + 2], [c1Bounds.left + delta + 10, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
-			<Curve points={[[labelTextBounds.right + 2, labelTextBounds.midpoint.y + 2], [c6Bounds.left + delta - 8, labelTextBounds?.midpoint.y + 2], [c6Bounds.left + delta - 8, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
-
-			{/* Number label/arrow. */}
-			<Curve points={[[labelNumberBounds.right + 2, labelNumberBounds.midpoint.y + 2], [c2Bounds.left + delta, labelNumberBounds?.midpoint.y + 2], [c2Bounds.left + delta, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
-			<Curve points={[[labelNumberBounds.right + 2, labelNumberBounds.midpoint.y + 2], [c5Bounds.left + delta - 14, labelNumberBounds?.midpoint.y + 2], [c5Bounds.left + delta - 14, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
-
-			{/* Date label/arrow. */}
-			<Curve points={[[labelDateBounds.right + 2, labelDateBounds.midpoint.y + 2], [c3Bounds.left + delta, labelDateBounds?.midpoint.y + 2], [c3Bounds.left + delta, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
-			<Curve points={[[labelDateBounds.right + 2, labelDateBounds.midpoint.y + 2], [c4Bounds.left + delta, labelDateBounds?.midpoint.y + 2], [c4Bounds.left + delta, tableBounds.top]]} color={themeColor} curveDistance={r} endArrow />
-		</> : null}
-	</Drawing>
+		{labels.map(({ text, target, offset }) => {
+			// Share the column's horizontal anchor and the table's bottom edge across both layers.
+			const position = (x: number, y: number): Position => ({
+				positions: [{ target }, { target: 'table', anchor: 'bottom' }],
+				calculate: ([column, table]) => [column.x + offset + x, table.y + y],
+			})
+			return <Fragment key={text}>
+				<HtmlElement position={position(-44, 24)} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.8rem' }}>{text}</span></HtmlElement>
+				<Curve positions={[position(-40, 25), position(0, 25), position(0, 2)]} stroke={themeColor} smoothing={{ distance: 15 }} endArrow strokeWidth={2} />
+			</Fragment>
+		})}
+	</>
 }

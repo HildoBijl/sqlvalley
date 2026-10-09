@@ -1,6 +1,4 @@
-import { Box } from '@mui/material'
-
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useRefWithBounds } from '@sqlvalley/drawing'
+import { TargetBoundsDrawing, HtmlElement, Curve } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable } from '@sqlvalley/sql'
 
@@ -30,7 +28,7 @@ WHERE current_salary > 200000
 			<Par><pre><code>{`highEarners(fn, ln) :- employees(_, fn, ln, _, _, _, _, _, s), s > 200000.
 ?- highEarners(fn, ln).`}</code></pre></Par>
 			<Par>In <Term>relational algebra</Term> (a more theoretical and mathematical query language) this is done using</Par>
-			<Par><pre><code>highEarners â† âˆ<sub>first_name,last_name</sub>(Ïƒ<sub>current_salary &gt; 200000</sub>(employees))</code></pre></Par>
+			<Par><pre><code>highEarners ← ∏<sub>first_name,last_name</sub>(σ<sub>current_salary &gt; 200000</sub>(employees))</code></pre></Par>
 			<Par>Or in an object-database like <Link to="https://www.mongodb.com/">MongoDB</Link> the query looks like this.</Par>
 			<Par><pre><code>{`db.employees.find(
   { current_salary: { $gt: 200000 } },
@@ -54,38 +52,28 @@ WHERE current_salary > 200000
 
 export function FigureQueryExample() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-
-	// Set up query data.
 	const db = useTheoryPageDatabase()
-	const data1 = useQueryResult(db, `SELECT * FROM employees;`)
-	const data2 = useQueryResult(db, `SELECT first_name, last_name FROM employees WHERE current_salary > 200000;`)
-
-	// Find the bounds for "d_name".
-	const [t1Ref, t1Bounds] = useRefWithBounds(drawingData)
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
-
+	const data1 = useQueryResult(db, 'SELECT * FROM employees;')
+	const data2 = useQueryResult(db, 'SELECT first_name, last_name FROM employees WHERE current_salary > 200000;')
+	const tableScale = 0.6
 	const arrowHeight = 80
 	const arrowMargin = 10
 
-	return <Drawing ref={drawingRef} width={800} height={arrowHeight + (t1Bounds?.height ?? 200) + (t2Bounds?.height ?? 100)} maxWidth={800} disableSVGPointerEvents>
-		<Element position={[0, 0]} anchor={[-1, -1]} scale={0.6} behind>
-			<Box sx={{ width: 800 / 0.6 }}>
-				<DataTable ref={t1Ref} data={data1} showPagination={false} compact />
-			</Box>
-		</Element>
+	return <TargetBoundsDrawing targets={['table1', 'table2', 'label']} margin={5} maxWidth={800} style={{ fontSize: 16 }}>
+		<HtmlElement target="table1" position={[0, 0]} anchor="topLeft" scale={tableScale}>
+			<DataTable data={data1} width={1200} showPagination={false} compact />
+		</HtmlElement>
 
-		<Element position={[300, arrowHeight + (t1Bounds?.height ?? 200)]} anchor={[-1, -1]} scale={0.6} behind>
-			<Box sx={{ width: 200 / 0.6 }}>
-				<DataTable ref={t2Ref} data={data2} showPagination={false} compact />
-			</Box>
-		</Element>
+		<HtmlElement target="table2" position={{ target: 'table1', anchor: 'bottom', pixelOffset: [0, arrowHeight] }} anchor="top" scale={tableScale}>
+			<DataTable data={data2} width={300} showPagination={false} compact />
+		</HtmlElement>
 
-		{t1Bounds ? <>
-			<Curve points={[t1Bounds.topMiddle.add([0, arrowMargin]), t1Bounds.topMiddle.add([0, arrowHeight - arrowMargin])]} color={themeColor} endArrow />
-			<Element position={[408, (t1Bounds?.height ?? 200) + arrowHeight / 2 - 4]} anchor={[-1, 0]}>
-				<p style={{ fontSize: '0.8rem', fontStyle: 'italic', margin: 0, lineHeight: 1.4 }}>"Find the names of all employees earning<br />more than two hundred thousand per year."</p>
-			</Element>
-		</> : null}
-	</Drawing>
+		<Curve positions={[
+			{ target: 'table1', anchor: 'bottom', pixelOffset: [0, arrowMargin] },
+			{ target: 'table2', anchor: 'top', pixelOffset: [0, -arrowMargin] },
+		]} stroke={themeColor} endArrow strokeWidth={2} />
+		<HtmlElement target="label" position={{ target: 'table1', anchor: 'bottom', pixelOffset: [8, arrowHeight / 2 - 4] }} anchor="left">
+			<p style={{ fontSize: '0.8rem', fontStyle: 'italic', margin: 0, lineHeight: 1.4 }}>"Find the names of all employees earning<br />more than two hundred thousand per year."</p>
+		</HtmlElement>
+	</TargetBoundsDrawing>
 }

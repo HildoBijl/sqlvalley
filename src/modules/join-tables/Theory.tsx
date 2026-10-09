@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Rectangle, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
+import { MeasuredDrawing, HtmlElement, Rectangle } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@/ui'
-import { SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useFigureTextBounds, SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 import { adjustedManagerId, addedManagerId, adjustedDepartments, FigureTwoTablesAdjusted } from '../join-and-decomposition/Theory'
 
@@ -123,6 +123,16 @@ ON d.manager_id = e.e_id`} actualQuery={`SELECT * FROM (${adjustedDepartments}) 
 }
 
 function FigureNaturalJoinAdjustedTables() {
+	return <MeasuredDrawing targets={['table1', 'table2']}
+		calculateView={({ table1, table2 }) => ({
+			type: 'identity', width: 800,
+			height: table1.height + table2.height + 35,
+		})} style={{ fontSize: 16 }}>
+		<FigureNaturalJoinAdjustedTablesContents />
+	</MeasuredDrawing>
+}
+
+function FigureNaturalJoinAdjustedTablesContents() {
 	const themeColor = useThemeColor()
 
 	// Get the data.
@@ -132,34 +142,32 @@ function FigureNaturalJoinAdjustedTables() {
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [t1Ref, t1Bounds, table1] = useRefWithBounds(drawingData)
-	const [t2Ref, t2Bounds, table2] = useRefWithBounds(drawingData)
-	const textNode1Bounds = useTextNodeBounds(table1, 'e_id', drawingData, 0, 1)
-	const textNode2Bounds = useTextNodeBounds(table2, 'e_id', drawingData, 0, 1)
+	const [t1Ref, t1Bounds, table1] = useFigureTarget('table1')
+	const [t2Ref, , table2] = useFigureTarget('table2')
+	const textNode1Bounds = useFigureTextBounds('textNode1Bounds', table1, 'e_id', { index: 0, parentDepth: 1 })
+	const textNode2Bounds = useFigureTextBounds('textNode2Bounds', table2, 'e_id', { index: 0, parentDepth: 1 })
 	const x = 80
 	const y1 = 20 + (t1Bounds?.height ?? 160) + 15
 	const width = 800
-	const height = y1 + (t2Bounds?.height ?? 160)
 
-	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width}>
-		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
-		<Element ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+	return <>
+		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
+		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 480 / 0.6 }}>
 				<DataTable data={data1} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
 		{t1Bounds ? <>
-			<Element position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></Element>
-			<Element ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
+			<HtmlElement position={[790, y1 - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
+			<HtmlElement ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 				<Box sx={{ width: (width - x) / 0.6 }}>
 					<DataTable data={data2} showPagination={false} compact />
 				</Box>
-			</Element>
+			</HtmlElement>
 		</> : null}
 
-		{textNode1Bounds ? <Rectangle dimensions={textNode1Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-		{textNode2Bounds ? <Rectangle dimensions={textNode2Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-	</Drawing>
+		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min, textNode2Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+	</>
 }

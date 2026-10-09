@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, Rectangle, useRefWithBounds, useTextNodeBounds } from '@sqlvalley/drawing'
+import { MeasuredDrawing, HtmlElement, Curve, Rectangle } from '@step-wise/drawing'
 import { ISQL, DataTable } from '@sqlvalley/sql'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { TableQueryFigure, useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useFigureTextBounds, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 import { FigureTwoTables } from '../database/Theory'
 
@@ -102,6 +102,16 @@ export function Theory() {
 }
 
 function FigureNaturalJoin() {
+	return <MeasuredDrawing targets={['table1', 'table2', 'table3']}
+		calculateView={({ table1, table2, table3 }) => ({
+			type: 'identity', width: 800,
+			height: table1.height + table2.height + table3.height + 95,
+		})} style={{ fontSize: 16 }}>
+		<FigureNaturalJoinContents />
+	</MeasuredDrawing>
+}
+
+function FigureNaturalJoinContents() {
 	const themeColor = useThemeColor()
 
 	// Get the data.
@@ -112,53 +122,61 @@ function FigureNaturalJoin() {
 	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d NATURAL JOIN employees e;`)
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [t1Ref, t1Bounds, table1] = useRefWithBounds(drawingData)
-	const [t2Ref, t2Bounds, table2] = useRefWithBounds(drawingData)
-	const [t3Ref, t3Bounds] = useRefWithBounds(drawingData)
-	const textNode1Bounds = useTextNodeBounds(table1, 'e_id', drawingData, 0, 1)
-	const textNode2Bounds = useTextNodeBounds(table2, 'e_id', drawingData, 0, 1)
+	const [t1Ref, t1Bounds, table1] = useFigureTarget('table1')
+	const [t2Ref, t2Bounds, table2] = useFigureTarget('table2')
+	const [t3Ref] = useFigureTarget('table3')
+	const textNode1Bounds = useFigureTextBounds('textNode1Bounds', table1, 'e_id', { index: 0, parentDepth: 1 })
+	const textNode2Bounds = useFigureTextBounds('textNode2Bounds', table2, 'e_id', { index: 0, parentDepth: 1 })
 	const x = 80
 	const y1 = 20 + (t1Bounds?.height ?? 160) + 15
 	const y2 = y1 + (t2Bounds?.height ?? 160)
 	const y3 = y2 + 60
 	const width = 800
-	const height = y3 + (t3Bounds?.height ?? 160)
 
-	return <Drawing ref={drawingRef} width={width} height={height} maxWidth={width}>
-		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
-		<Element ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+	return <>
+		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
+		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 480 / 0.6 }}>
 				<DataTable data={data1} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
 		{t1Bounds ? <>
-			<Element position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></Element>
-			<Element ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
+			<HtmlElement position={[790, y1 - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
+			<HtmlElement ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 				<Box sx={{ width: (width - x) / 0.6 }}>
 					<DataTable data={data2} showPagination={false} compact />
 				</Box>
-			</Element>
+			</HtmlElement>
 
 			{t2Bounds ? <>
-				<Curve points={[[width / 2, y2 + 4], [width / 2, y3 - 4]]} color={themeColor} endArrow />
-				<Element position={[width / 2 + 6, (y2 + y3) / 2 - 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Natural join</span></Element>
+				<Curve positions={[[width / 2, y2 + 4], [width / 2, y3 - 4]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+				<HtmlElement position={[width / 2 + 6, (y2 + y3) / 2 - 4]} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Natural join</span></HtmlElement>
 
-				<Element ref={t3Ref} position={[0, y3]} anchor={[-1, -1]} scale={0.45}>
+				<HtmlElement ref={t3Ref} position={[0, y3]} anchor={[-1, -1]} scale={0.45} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 					<Box sx={{ width: width / 0.45 }}>
 						<DataTable data={data3} showPagination={false} compact />
 					</Box>
-				</Element>
+				</HtmlElement>
 			</> : null}
 		</> : null}
 
-		{textNode1Bounds ? <Rectangle dimensions={textNode1Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-		{textNode2Bounds ? <Rectangle dimensions={textNode2Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-	</Drawing>
+		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min, textNode2Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+	</>
 }
 
 export function FigureTwoTablesAdjusted() {
+	return <MeasuredDrawing targets={['table1', 'table2']}
+		calculateView={({ table1, table2 }) => ({
+			type: 'identity', width: 800,
+			height: table1.height + table2.height + 35,
+		})} style={{ fontSize: 16 }}>
+		<FigureTwoTablesAdjustedContents />
+	</MeasuredDrawing>
+}
+
+function FigureTwoTablesAdjustedContents() {
 	const themeColor = useThemeColor()
 
 	// Get the data.
@@ -167,30 +185,29 @@ export function FigureTwoTablesAdjusted() {
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 
 	// Set up reference to the table.
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
-	const [t1Ref, t1Bounds, table1] = useRefWithBounds(drawingData)
-	const [t2Ref, t2Bounds] = useRefWithBounds(drawingData)
-	const textNode1Bounds = useTextNodeBounds(table1, adjustedManagerId, drawingData, 0, 2)
-	const textNode2Bounds = useTextNodeBounds(table1, addedManagerId, drawingData, 1, 2)
+	const [t1Ref, t1Bounds, table1] = useFigureTarget('table1')
+	const [t2Ref] = useFigureTarget('table2')
+	const textNode1Bounds = useFigureTextBounds('textNode1Bounds', table1, adjustedManagerId, { index: 0, parentDepth: 2 })
+	const textNode2Bounds = useFigureTextBounds('textNode2Bounds', table1, addedManagerId, { index: 1, parentDepth: 2 })
 	const x = 80
 	const y = 20 + (t1Bounds?.height ?? 160) + 15
 
-	return <Drawing ref={drawingRef} width={800} height={y + (t2Bounds?.height ?? 200)} maxWidth={800}>
-		<Element position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></Element>
-		<Element ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+	return <>
+		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
+		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 }}>
 				<DataTable data={data1} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		<Element position={[790, y - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></Element>
-		<Element ref={t2Ref} position={[x, y]} anchor={[-1, -1]} scale={0.6}>
+		<HtmlElement position={[790, y - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
+		<HtmlElement ref={t2Ref} position={[x, y]} anchor={[-1, -1]} scale={0.6} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: (800 - x) / 0.6 }}>
 				<DataTable data={data2} showPagination={false} compact />
 			</Box>
-		</Element>
+		</HtmlElement>
 
-		{textNode1Bounds ? <Rectangle dimensions={textNode1Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-		{textNode2Bounds ? <Rectangle dimensions={textNode2Bounds} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-	</Drawing>
+		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min, textNode2Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+	</>
 }

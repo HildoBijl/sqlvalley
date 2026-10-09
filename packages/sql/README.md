@@ -26,6 +26,8 @@ Pagination is enabled by default, with a maximum of 100 displayed rows. Use `max
 
 The shared MUI DataGrid renderer preserves query order by default. Set `controls` to enable sorting, filtering, and per-column menus, as used in Data Explorer. It does not display a toolbar or column-hiding controls.
 
+Tables fill their container by default. Supply `width` to set an explicit width, using a number in pixels (for example, `width={800}`) or a CSS width string. This also applies to the no-data placeholder.
+
 ```tsx
 import { DataTable } from '@sqlvalley/sql'
 

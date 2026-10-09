@@ -5,6 +5,11 @@ Each folder matches a module ID in the curriculum. Its `index.ts` exports `Modul
 The module registry discovers these index files through a Vite glob. Opening a module loads its complete page-level implementation as one operation, after which navigation can switch sections without another lazy module load. Learning renders the supplied components; navigation selects the active tab. Video components remain available even while video tabs are disabled in navigation.
 
 
+## Drawings
+
+Module illustrations use `@step-wise/drawing`. Use `Drawing` for fixed dimensions and `MeasuredDrawing` for layouts sized from named targets. Target hooks must run inside the drawing, so measured figures separate their outer view from their content component. `useFigureTarget` and `useFigureTextBounds` from `@/learning` support table and query annotations. Set `strokeWidth={2}` explicitly on arrows.
+
+
 ## Interactive exercises
 
 Put one exercise spec in each file under `exercises/`, with a stable, unique `exerciseId`. Export the spec as default, using `SQLMonoExerciseSpec` or `defineSQLMonoExercise` for parameter inference.

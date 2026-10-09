@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
-import { type DrawingData, useRefWithValue, Drawing, Element, Curve, useTextNodeBounds, useRefWithBounds } from '@sqlvalley/drawing'
+import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
 import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
 import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { useTheoryPageDatabase } from '@/learning'
+import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
 import { FigureMergingTables } from './Theory'
 
 export function Summary() {
@@ -30,8 +30,17 @@ WHERE position = 'transportation supervisor'`} operator="UNION" />
 }
 
 function FigureCombinedCondition() {
+	return <MeasuredDrawing targets={['query', 'table']}
+		calculateView={({ query, table }) => ({
+			type: 'identity', width: 800,
+			height: query.height + 30 + table.height,
+		})} style={{ fontSize: 16 }}>
+		<FigureCombinedConditionContents />
+	</MeasuredDrawing>
+}
+
+function FigureCombinedConditionContents() {
 	const themeColor = useThemeColor()
-	const [drawingRef, drawingData] = useRefWithValue<DrawingData>()
 
 	// Set up query data.
 	const query = `
@@ -43,34 +52,31 @@ WHERE NOT (status = 'paid leave' OR status = 'sick leave')
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
-	const [eRef, eBounds, editor] = useRefWithBounds(drawingData)
-	const c1QueryBounds = useTextNodeBounds(editor, 'sick leave', drawingData)
-	const c2QueryBounds = useTextNodeBounds(editor, 'start_date', drawingData)
+	const [eRef, eBounds, editor] = useFigureTarget('query')
+	const c1QueryBounds = useFigureTextBounds('c1QueryBounds', editor, 'sick leave')
+	const c2QueryBounds = useFigureTextBounds('c2QueryBounds', editor, 'start_date')
 
 	// Find the table column name bounds.
-	const [tRef, tBounds, table] = useRefWithBounds(drawingData)
-	const c1NameBounds = useTextNodeBounds(table, 'status', drawingData)
-	const c2NameBounds = useTextNodeBounds(table, 'start_date', drawingData)
+	const [tRef, , table] = useFigureTarget('table')
+	const c1NameBounds = useFigureTextBounds('c1NameBounds', table, 'status')
+	const c2NameBounds = useFigureTextBounds('c2NameBounds', table, 'start_date')
 
-	const h1 = eBounds?.height || 100
 	const delta = 30
-	const h2 = tBounds?.height || 200
-	const height = h1 + delta + h2
 
-	return <Drawing ref={drawingRef} width={800} height={height} maxWidth={800} disableSVGPointerEvents>
-		<Element ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind>
+	return <>
+		<HtmlElement ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<SQLDisplay>{query}</SQLDisplay>
-		</Element>
+		</HtmlElement>
 
-		{eBounds ? <Element position={[0, eBounds.height + delta]} anchor={[-1, -1]} scale={0.8} behind>
+		{eBounds ? <HtmlElement position={[0, eBounds.height + delta]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
 			<Box sx={{ width: 800 / 0.8 }}>
 				<DataTable ref={tRef} data={data} showPagination={false} compact />
 			</Box>
-		</Element> : null}
+		</HtmlElement> : null}
 
 		{eBounds && c1QueryBounds && c1NameBounds && c2QueryBounds && c2NameBounds ? <>
-			<Curve points={[c1QueryBounds.middleRight.add([9, 2]), [c1NameBounds.midpoint.x, c1QueryBounds.midpoint.y + 2], c1NameBounds.bottomMiddle.add([0, -4])]} color={themeColor} curveDistance={60} endArrow />
-			<Curve points={[[c2QueryBounds.midpoint.x + 4, c2QueryBounds.top + 2], [c2QueryBounds.midpoint.x + 4, eBounds.top + delta / 2 - 2], [c2NameBounds.midpoint.x, eBounds.top + delta / 2 - 2], c2NameBounds.bottomMiddle]} color={themeColor} curveDistance={20} endArrow />
+			<Curve positions={[c1QueryBounds.middleRight.add([9, 2]), [c1NameBounds.midpoint.x, c1QueryBounds.midpoint.y + 2], c1NameBounds.bottomMiddle.add([0, -4])]} stroke={themeColor} smoothing={{ distance: 60 }} endArrow strokeWidth={2} />
+			<Curve positions={[[c2QueryBounds.midpoint.x + 4, c2QueryBounds.top + 2], [c2QueryBounds.midpoint.x + 4, eBounds.top + delta / 2 - 2], [c2NameBounds.midpoint.x, eBounds.top + delta / 2 - 2], c2NameBounds.bottomMiddle]} stroke={themeColor} smoothing={{ distance: 20 }} endArrow strokeWidth={2} />
 		</> : null}
-	</Drawing>
+	</>
 }

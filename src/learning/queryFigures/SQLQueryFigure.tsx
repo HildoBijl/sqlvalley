@@ -15,7 +15,8 @@ export function SQLQueryFigure({ query = '', actualQuery = '', below = false, ta
 		const { width: wt, height: ht } = table
 		const arrowBetween = below ? we + arrowRadius * 1.5 > wt : he + arrowRadius * 1.5 > ht
 		const gap = arrowBetween ? arrowLength : delta
-		return { type: 'identity', width: below ? Math.max(we, wt) : we + gap + wt, height: below ? he + gap + ht : Math.max(he, ht) }
+		// Keep fractional measurement changes from repeatedly resizing the drawing and its tables.
+		return { type: 'identity', width: Math.ceil(below ? Math.max(we, wt) : we + gap + wt), height: Math.ceil(below ? he + gap + ht : Math.max(he, ht)) }
 	}, [below, arrowLength, arrowRadius, delta])
 
 	return <MeasuredDrawing targets={targets} calculateView={calculateView} style={{ fontSize: 16 }}>
