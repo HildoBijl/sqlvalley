@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { type DrawingTextTargetOptions, useDrawingTarget, useDrawingTargetBounds, useDrawingTextTarget } from '@step-wise/drawing'
 
@@ -25,16 +25,8 @@ export function useFigureTarget<T extends HTMLElement = HTMLDivElement>(name: st
 	return [ref, bounds, element] as const
 }
 
-// Editors and tables can replace text nodes after their containing element mounts.
+// The toolbox tracks text nodes as editors and tables replace their contents.
 export function useFigureTextBounds(name: string, element: HTMLElement | null, text: string, options?: DrawingTextTargetOptions) {
-	const [revision, setRevision] = useState(0)
-	useEffect(() => {
-		if (!element) return
-		const observer = new MutationObserver(() => setRevision(current => current + 1))
-		observer.observe(element, { childList: true, characterData: true, subtree: true })
-		return () => observer.disconnect()
-	}, [element])
-	const container = useMemo(() => ({ current: element, revision }), [element, revision])
-	useDrawingTextTarget(text ? name : undefined, container, text, options)
+	useDrawingTextTarget(text ? name : undefined, element, text, options)
 	return useDrawingTargetBounds(name)
 }

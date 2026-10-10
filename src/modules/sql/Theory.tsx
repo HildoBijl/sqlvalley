@@ -1,11 +1,7 @@
-import { Box } from '@mui/material'
-
-import { MeasuredDrawing, HtmlElement } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
+import { ISQL, SQLDisplay } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { useFigureTarget, useTheoryPageDatabase } from '@/learning'
+import { TableQueryFigure } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -18,7 +14,7 @@ export function Theory() {
 			<SQLDisplay>{`SELECT *
 FROM employees;`}</SQLDisplay>
 			<Par>This query instructs the DBMS to take all columns (the asterisk "*" means "all") from the table named <ISQL>employees</ISQL> and return them. So effectively, this query loads in the full table. The result would be the following.</Par>
-			<FigureEmployeeTable />
+			<TableQueryFigure query="SELECT * FROM employees;" title="The full employees table" tableWidth={1200} tableScale={0.7} />
 			<Par>The above query (with whatever table name applies) is used very often. It's a quick way to check out the data in a table. Use it at the start of every exercise you make here at SQL Valley, just to get started.</Par>
 			<Info>One of the reasons why SQL is popular is its readability. Even without ever having seen SQL, you probably had an idea what the above query was for.</Info>
 		</Section>
@@ -40,26 +36,4 @@ FROM employees;`}</SQLDisplay>
 			<Warning>The conformance of DBMSs to the SQL standard is not perfect. In practice every DBMS uses its own dialect of SQL. At SQL Valley, we mainly focus on the parts of SQL that work for all DBMSs. Sometimes we add a note "The way this works does vary slightly (or a lot) per DBMS."</Warning>
 		</Section>
 	</Page>
-}
-
-function FigureEmployeeTable() {
-	return <MeasuredDrawing targets={['table']}
-		calculateView={({ table }) => ({ type: 'identity', width: 800, height: 25 + table.height })} style={{ fontSize: 16 }}>
-		<FigureEmployeeTableContents />
-	</MeasuredDrawing>
-}
-
-function FigureEmployeeTableContents() {
-	const db = useTheoryPageDatabase()
-	const data = useQueryResult(db, 'SELECT * FROM employees;')
-	const [tRef] = useFigureTarget('table')
-
-	return <>
-		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The full employees table</span></HtmlElement>
-		<HtmlElement position={[0, 25]} anchor={[-1, -1]} scale={0.6} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 800 / 0.6 }}>
-				<DataTable ref={tRef} data={data} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
-	</>
 }

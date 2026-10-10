@@ -1,12 +1,10 @@
-import type { ComponentProps } from 'react'
-import { Box } from '@mui/material'
+import type { ReactNode } from 'react'
 
-import { MeasuredDrawing, HtmlElement, Curve, Rectangle } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable } from '@sqlvalley/sql'
+import { TargetBoundsDrawing, HtmlElement, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { useFigureTarget, useFigureTextBounds, RelationName, useTheoryPageDatabase } from '@/learning'
+import { RelationName, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -55,71 +53,90 @@ export function Theory() {
 	</Page>
 }
 
-export function FigureTerminology(props: ComponentProps<typeof FigureTerminologyContents>) {
-	return <MeasuredDrawing targets={['table']}
-		calculateView={({ table }) => ({
-			type: 'identity', width: 700,
-			height: 60 + table.height,
-		})} style={{ fontSize: 16 }}>
-		<FigureTerminologyContents {...props} />
-	</MeasuredDrawing>
+type Terminology = Partial<Record<'table' | 'contents' | 'column' | 'columnNames' | 'row' | 'cell', ReactNode>>
+
+export function FigureTerminology({ terminology }: { terminology?: Terminology }) {
+	return <TargetBoundsDrawing targets={['table', 'tableLabel', 'contentsLabel', 'columnLabel', 'columnNamesLabel', 'rowLabel', 'cellLabel']} margin={5} maxWidth={700} style={{ fontSize: 16 }}>
+		<FigureTerminologyContents terminology={terminology} />
+	</TargetBoundsDrawing>
 }
 
-function FigureTerminologyContents({ terminology }: { terminology?: { [key: string]: React.ReactNode } }) {
+function FigureTerminologyContents({ terminology }: { terminology?: Terminology }) {
 	const themeColor = useThemeColor()
 
 	// Get data.
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, 'SELECT * FROM departments;')
 
-	// Set up reference to the table.
-	const [tRef, tBounds, table] = useFigureTarget('table')
+	// Define targets within the drawing that will be measured.
+	useDrawingElementTarget('cell', 'table', table => table.querySelector('[data-id="2"] [data-field="column_1"]'))
+	useDrawingElementTarget('header', 'table', table => table.querySelector('[role="columnheader"]'))
 
-	// Find the text nodes.
-	const text = String(data?.values[2]?.[1] ?? '')
-	const textNodeBounds = useFigureTextBounds('textNodeBounds', table, text, { index: 0, parentDepth: 2 })
-	const columnNameNodeBounds = useFigureTextBounds('columnNameNodeBounds', table, 'd_id', { index: 0, parentDepth: 3 })
+	// Read bounds in drawing coordinates.
+	const table = useDrawingTargetBounds('table')
+	const header = useDrawingTargetBounds('header')
+	const cell = useDrawingTargetBounds('cell')
 
-	// Define coordinates.
-	const x = 180
-	const y = 60
-	const w = 700
+	// Define annotation positions and styling.
 	const r = 12
-	const scale = 0.8
+	const labelStyle = { color: themeColor, fontWeight: 500, fontSize: '0.8em' }
 
 	// Render the drawing.
 	return <>
 		{/* Table. */}
-		<HtmlElement position={[x, y]} anchor={[-1, -1]} scale={scale} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: (w - x) / scale }}>
-				<DataTable ref={tRef} data={data} showPagination={false} compact />
-			</Box>
+		<HtmlElement target="table" position={[0, 0]} anchor="topLeft" scale={0.8} behind>
+			<DataTable data={data} width={650} showPagination={false} compact />
 		</HtmlElement>
 
-		{tBounds && textNodeBounds && columnNameNodeBounds ? <>
+		{table && header && cell ? <>
 			{/* Table marker. */}
-			<HtmlElement position={[x + (w - x) / 2, y - 38]} anchor={[0, 1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.table}</span></HtmlElement>
-			<Curve positions={[[x, y - 40 + r], [x, y - 40], [w, y - 40], [w, y - 40 + r]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
+			<HtmlElement target="tableLabel" position={[table.midpoint.x, table.min.y - 38]} anchor="bottom"><span style={labelStyle}>{terminology?.table}</span></HtmlElement>
+			<Curve positions={[
+				table.min.add([0, -40 + r]),
+				table.min.add([0, -40]),
+				[table.max.x, table.min.y - 40],
+				[table.max.x, table.min.y - 40 + r],
+			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Contents marker. */}
-			<HtmlElement position={[x - 80, (columnNameNodeBounds.top + tBounds.top) / 2]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.contents}</span></HtmlElement>
-			<Curve positions={[[x - 75 + r, columnNameNodeBounds.top + 2], [x - 75, columnNameNodeBounds.top + 2], [x - 75, tBounds.top], [x - 75 + r, tBounds.top]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
+			<HtmlElement target="contentsLabel" position={[table.min.x - 80, (header.max.y + table.max.y) / 2 + 1]} anchor="right"><span style={labelStyle}>{terminology?.contents}</span></HtmlElement>
+			<Curve positions={[
+				[table.min.x - 75 + r, header.max.y + 2],
+				[table.min.x - 75, header.max.y + 2],
+				[table.min.x - 75, table.max.y],
+				[table.min.x - 75 + r, table.max.y],
+			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Column marker. */}
-			<HtmlElement position={[textNodeBounds.midpoint.x, y - 12]} anchor={[0, 1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.column}</span></HtmlElement>
-			<Curve positions={[[textNodeBounds.left, y - 13 + r], [textNodeBounds.left, y - 13], [textNodeBounds.right, y - 13], [textNodeBounds.right, y - 13 + r]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
+			<HtmlElement target="columnLabel" position={[cell.midpoint.x, table.min.y - 12]} anchor="bottom"><span style={labelStyle}>{terminology?.column}</span></HtmlElement>
+			<Curve positions={[
+				[cell.min.x, table.min.y - 13 + r],
+				[cell.min.x, table.min.y - 13],
+				[cell.max.x, table.min.y - 13],
+				[cell.max.x, table.min.y - 13 + r],
+			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Column names marker. */}
-			<HtmlElement position={[x - 25, columnNameNodeBounds.midpoint.y - 3]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.columnNames}</span></HtmlElement>
-			<Curve positions={[[x - 20 + r, columnNameNodeBounds.bottom], [x - 20, columnNameNodeBounds.bottom], [x - 20, columnNameNodeBounds.top], [x - 20 + r, columnNameNodeBounds.top]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
+			<HtmlElement target="columnNamesLabel" position={[table.min.x - 25, header.midpoint.y - 3]} anchor="right"><span style={labelStyle}>{terminology?.columnNames}</span></HtmlElement>
+			<Curve positions={[
+				[table.min.x - 20 + r, header.min.y],
+				[table.min.x - 20, header.min.y],
+				[table.min.x - 20, header.max.y],
+				[table.min.x - 20 + r, header.max.y],
+			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Row marker. */}
-			<HtmlElement position={[x - 25, textNodeBounds.midpoint.y]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.row}</span></HtmlElement>
-			<Curve positions={[[x - 20 + r, textNodeBounds.bottom], [x - 20, textNodeBounds.bottom], [x - 20, textNodeBounds.top], [x - 20 + r, textNodeBounds.top]]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
+			<HtmlElement target="rowLabel" position={[table.min.x - 25, cell.midpoint.y]} anchor="right"><span style={labelStyle}>{terminology?.row}</span></HtmlElement>
+			<Curve positions={[
+				[table.min.x - 20 + r, cell.min.y],
+				[table.min.x - 20, cell.min.y],
+				[table.min.x - 20, cell.max.y],
+				[table.min.x - 20 + r, cell.max.y],
+			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Cell marker. */}
-			<HtmlElement position={textNodeBounds.bottomRight.add([-8, 3])} anchor={[1, 1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ color: themeColor, fontWeight: 500, fontSize: '0.8em' }}>{terminology?.cell}</span></HtmlElement>
-			<Rectangle corners={[textNodeBounds.min, textNodeBounds.max]} cornerRadius={r} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} />
+			<HtmlElement target="cellLabel" position={[cell.max.x - 8, cell.min.y + 2]} anchor="bottomRight"><span style={labelStyle}>{terminology?.cell}</span></HtmlElement>
+			<Rectangle corners={[cell.min, cell.max]} cornerRadius={r} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} />
 		</> : null}
 	</>
 }
