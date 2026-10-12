@@ -24,13 +24,13 @@ export function Theory() {
 
 		<Section title="Step 1: the facts">
 			<Par>Datalog works with so-called <Term>facts</Term>. Consider for instance the table of employees.</Par>
-			<TableQueryFigure query={q1} title="List of employees" tableWidth={750} tableScale={0.6} />
+			<TableQueryFigure query={q1} title="List of employees" tableWidth={1100} tableScale={0.7} />
 			<Par>In Datalog this table isn't considered as a table, but as a list of facts.</Par>
 			<DatalogFacts data={data1} predicate="employee" />
 			<Par>What the first line here basically says is, "There is an employee with employee ID '{e1[0]}', first name '{e1[1]}', last name '{e1[2]}', and so forth." This is now treated as a known fact.</Par>
 			<Info>Because of the way Datalog defines facts, <Term>duplicates facts</Term> are <Em>not</Em> possible. If we define the same fact twice, Datalog will still treat it as a single fact. It's just like how saying "The sky is blue" twice won't make the sky any more blue.</Info>
 			<Warning>You may wonder, "Our table is called employees, not employee. This will fail!" You would be correct: we of course have to use the right name. The reason why we use "employee" here is a naming convention. In SQL tables are collections of rows like "the employees table" so table names are often <Term>plural</Term>. In Datalog, facts describe properties like "This combination of values is an employee" so table/predicate names are often <Term>singular</Term>. That's why we use "employee" here in Datalog. It helps us get used to this convention.</Warning>
-			<Par>In reality, Datalog programs actually don't mention the facts at the top. To be precise: the facts step is usually skipped altogether, since the facts are assumed known, based on stored tables. But it's helpful to imagine the facts mentioned at the top of any script anyway, and in a few rare cases, we can still add facts of our own.</Par>
+			<Par>In reality, Datalog programs actually don't mention the facts at the top. To be precise: the facts step is usually skipped altogether, since the facts are assumed known, based on stored tables. But it's helpful to imagine the facts mentioned at the top of any script anyway. And in a few rare cases, we can still add facts of our own.</Par>
 		</Section>
 
 		<Section title="Datalog terminology">
@@ -69,13 +69,13 @@ export function Theory() {
 			<Par>The rule contains <Term>variables</Term> like <IDL>id</IDL>, <IDL>fn</IDL>, <IDL>ln</IDL>, etcetera. When Datalog receives a rule like this, it will try to find <Em>all</Em> possible combinations of values for <Em>all</Em> variables in the rule, such that <Em>all</Em> literals hold true. (This is an important idea, so read that sentence again!) In our example, there are only three possible sets of variable values for which all conditions can be met. So we get the following three new facts.</Par>
 			<DatalogFacts data={data2} predicate="highEarningEmployee" />
 			<Par>Or displayed more clearly for us, as a table:</Par>
-			<TableQueryFigure query={q2} title="High-earning employees" tableWidth={750} tableScale={0.6} />
+			<TableQueryFigure query={q2} title="High-earning employees" tableWidth={1100} tableScale={0.7} />
 			<Par>A typical <Term>Datalog program</Term> contains multiple rules. We could for instance find the names of these high-earning employees with a second rule.</Par>
 			<DL>highEarningEmployeeName(fn, ln) :- highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs).</DL>
 			<Par>We can read this in English as:</Par>
 			<Quote>The tuple (fn, ln) is a high-earning employee name, when there exists some combination of values (id, fn, ln, p, e, a, c, hd, cs) that is considered a high-earning employee.</Quote>
 			<Par>It creates yet another predicate for us.</Par>
-			<TableQueryFigure query={q3} title="High-earning employee names" tableWidth={200} tableScale={0.6} />
+			<TableQueryFigure query={q3} title="High-earning employee names" tableWidth={300} tableScale={0.7} />
 
 			<Info>In reality, when Datalog receives a rule, it won't immediately execute it. It only uses the rule when requested. (See step 3: the query.) So the best way to see a rule is actually as a <Em>view definition</Em>. The predicate "highEarningEmployee" functions like a view that we created! A full <Term>Datalog program</Term> is essentially a collection of view definitions, ended by a query.</Info>
 		</Section>
@@ -88,7 +88,7 @@ export function Theory() {
 			<Par>At this point Datalog will do all the work. (Note that it didn't do any work when we only defined rules. It only stored their definitions.) It then generates the following output.</Par>
 			<DatalogOutput data={{ values: data3.values, columns: ['firstName', 'lastName'] }} />
 			<Info>The above is how Datalog usually returns data. On SQL Valley, we will display the output of Datalog programs as tables, rather than in the usual Datalog format, just so it's easier for us to understand it. Just keep in mind that Datalog doesn't actually work with tables.</Info>
-			<Par>Let's dissect what is happening in the query. The command "?-" can be read as "Find all possible combinations of variables for which ...". Within the query, there are only two variables: <IDL>firstName</IDL> and <IDL>lastName</IDL>. Datalog will find <Em>all</Em> possible combinations of values for these variables for which all the given literals (conditions) hold true. It then outputs these combinations of variables.</Par>
+			<Par>Let's dissect what is happening in the query. The command <IDL>?-</IDL> can be read as "Find all possible combinations of variables for which ...". Within the query, there are only two variables: <IDL>firstName</IDL> and <IDL>lastName</IDL>. Datalog will find <Em>all</Em> possible combinations of values for these variables for which all the given literals (conditions) hold true. It then outputs these combinations of variables.</Par>
 			<Info>Note that in the output step the variable names do matter! It is how Datalog shows the output. Of course we can use any variable names that we want here.</Info>
 			<Warning>Some Datalog engines don't use "?-" but instead use "?" for queries. When using Datalog, always check out the local syntax.</Warning>
 			<Par>It is worthwhile to note that we could in theory also add more conditions to the query. In fact, we could have skipped the rules altogether and immediately set up the following query.</Par>

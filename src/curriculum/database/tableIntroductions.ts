@@ -8,8 +8,8 @@ const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {
 	// Company internals.
 	departments: 'database',
 	employees: 'database',
-	contracts: 'sql',
-	allocations: 'join-tables',
+	contracts: ['sql','relational-algebra','datalog'],
+	allocations: ['join-tables', 'dl-check-rule-safety'],
 
 	// Financials.
 	expenses: 'data-types',

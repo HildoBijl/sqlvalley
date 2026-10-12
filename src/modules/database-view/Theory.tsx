@@ -30,7 +30,7 @@ export function Theory() {
 			<Par>Once we have defined a view, we can use it. In its most simple form, we could directly request the table from the DBMS. "Please give me the manager contact data table." The DBMS would assemble it for us based on the provided view definition.</Par>
 			<Par>We could also use the view like we would use any other table. For instance, we can apply further table operations to it like projection and/or filtering.</Par>
 			<Quote>Find the names of all department managers with a 650 area code.</Quote>
-			<TableQueryFigure query={`SELECT first_name AS manager_name FROM departments JOIN employees ON manager_id=e_id WHERE phone LIKE '650%';`} tableWidth={100} tableScale={0.8} />
+			<TableQueryFigure query={`SELECT first_name AS manager_name FROM departments JOIN employees ON manager_id=e_id WHERE phone LIKE '650%';`} tableWidth={150} tableScale={0.8} />
 			<Par>The DBMS once more assembles the table for us, and then applies the requested operations.</Par>
 			<Info>Okay, in practice, the above isn't fully correct: the DBMS doesn't assemble the full manager contact data table. It always tries to make some optimizations. For example, in the above case, the department names aren't relevant, so those are never looked up. But again, query optimization is a whole concept of its own.</Info>
 		</Section>
