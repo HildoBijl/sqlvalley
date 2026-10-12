@@ -1,6 +1,6 @@
 import { type ComponentProps, useCallback } from 'react'
 
-import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { type DrawingView, type TargetBoundsRecord, MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
@@ -19,12 +19,12 @@ export function SQLQueryFigure({ query = '', actualQuery = '', below = false, ta
 		return { type: 'identity', width: Math.ceil(below ? Math.max(we, wt) : we + gap + wt), height: Math.ceil(below ? he + gap + ht : Math.max(he, ht)) }
 	}, [below, arrowLength, arrowRadius, delta])
 
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={targets}
 		calculateView={calculateView}
 		style={{ fontSize: 16 }}>
 		<SQLQueryFigureContents query={query} actualQuery={actualQuery} below={below} tableWidth={tableWidth} tableScale={tableScale} delta={delta} arrowLength={arrowLength} arrowRadius={arrowRadius} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function SQLQueryFigureContents({ query, actualQuery, below, tableWidth, tableScale, delta, arrowLength, arrowRadius }: Required<ComponentProps<typeof SQLQueryFigure>>) {

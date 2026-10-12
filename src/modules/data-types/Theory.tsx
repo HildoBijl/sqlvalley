@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { type Position, MeasuredDrawing, Curve, useDrawingTextTarget } from '@step-wise/drawing'
+import { type Position, MeasuredDrawingFigure, Curve, useDrawingTextTarget } from '@step-wise/drawing'
 import { DataTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
@@ -60,12 +60,12 @@ export function Theory() {
 }
 
 export function FigureDataTypeDemo() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table']}
 		calculateView={({ table }) => ({ type: 'identity', width: 800, height: table.height + 73 })}
 		style={{ fontSize: 16 }}>
 		<FigureDataTypeDemoContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureDataTypeDemoContents() {

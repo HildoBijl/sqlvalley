@@ -7,7 +7,7 @@ The module registry discovers these index files through a Vite glob. Opening a m
 
 ## Drawings
 
-Module illustrations use `@step-wise/drawing`. Use `Drawing` for fixed dimensions and `MeasuredDrawing` for layouts sized from named targets. Target hooks must run inside the drawing, so measured figures separate their outer view from their content component. Use `FigureHtml target` for containers, `useDrawingTextTarget` or `useDrawingElementTarget` for descendants, and `useDrawingTargetBounds` for direction-aware bounds. Put `MeasuredDrawing` props on separate lines, and pass table widths directly to `DataTable`. Set `strokeWidth={2}` explicitly on arrows.
+Module illustrations use `@step-wise/drawing`. Use `DrawingFigure` for fixed dimensions and `MeasuredDrawingFigure` for layouts sized from named targets. Target hooks must run inside the drawing, so measured figures separate their outer view from their content component. Use `FigureHtml target` for containers, `useDrawingTextTarget` or `useDrawingElementTarget` for descendants, and `useDrawingTargetBounds` for direction-aware bounds. Put `MeasuredDrawingFigure` props on separate lines, and pass table widths directly to `DataTable`. Set `strokeWidth={2}` explicitly on arrows.
 
 
 ## Interactive exercises

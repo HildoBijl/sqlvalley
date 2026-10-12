@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { useTheme } from '@mui/material'
 
-import { Drawing, Curve, Rectangle, anchors } from '@step-wise/drawing'
+import { DrawingFigure, Curve, Rectangle, anchors } from '@step-wise/drawing'
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em, M } from '@/ui'
 import { FigureHtml, DL, IDL } from '@/learning'
@@ -113,7 +113,7 @@ E(x) :- C(x).
 export function DependencyGraph() {
 	const themeColor = useThemeColor()
 
-	return <Drawing view={{ type: 'identity', width: 200, height: 210 }} maxWidth={200}>
+	return <DrawingFigure view={{ type: 'identity', width: 200, height: 210 }} maxWidth={200}>
 		<FigureHtml target="p1" position={[40, 20]}><DPGDL>A</DPGDL></FigureHtml>
 		<FigureHtml target="p2" position={[160, 20]}><DPGDL>B</DPGDL></FigureHtml>
 		<FigureHtml target="p3" position={[40, 110]}><DPGDL>C</DPGDL></FigureHtml>
@@ -128,7 +128,7 @@ export function DependencyGraph() {
 
 		<FigureHtml position={{ positions: [{ target: 'p3', anchor: anchors.right }, { target: 'p4', anchor: anchors.left }], calculate: positions => positions[0].add(positions[1]).divide(2).add([0, 10]) }} anchor={[0, 1]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></FigureHtml>
 		<FigureHtml position={{ positions: [{ target: 'p4', anchor: anchors.top }, { target: 'p2', anchor: anchors.bottom }], calculate: positions => positions[0].add(positions[1]).divide(2).add([-5, 6]) }} anchor={[1, 0]}><span style={{ color: themeColor, fontSize: '1.5em' }}>−</span></FigureHtml>
-	</Drawing>
+	</DrawingFigure>
 }
 
 export function DatalogTypeVennDiagram() {
@@ -147,7 +147,7 @@ export function DatalogTypeVennDiagram() {
 		{ w: 0.75 * w, h: circleHeight * 3 / 4, x: 340, y: circleY },
 		{ w: w, h: circleHeight, x: 400, y: circleY },
 	]
-	return <Drawing view={{ type: 'identity', width: w, height: h }} maxWidth={w}>
+	return <DrawingFigure view={{ type: 'identity', width: w, height: h }} maxWidth={w}>
 		<Rectangle style={{ fill: infoColor, fillOpacity: 0.06, stroke: infoColor, strokeWidth: 2 }} corners={[[circles[1].x - circles[1].w / 2 - 8, 40], [circles[1].x + circles[1].w / 2 + 12, h - 8]]} cornerRadius={10} />
 		<FigureHtml position={[circles[1].x - circles[1].w / 2 - 8 + 6, 40 + 2]} anchor={[-1, -1]} style={{ color: infoColor, fontWeight: 'bold', textAlign: 'center' }}>Monotone evaluation with fixed EDB</FigureHtml>
 
@@ -161,5 +161,5 @@ export function DatalogTypeVennDiagram() {
 		<FigureHtml position={[circles[2].x + circles[2].w / 2 - 77, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Stratified<br />Datalog</FigureHtml>
 		<FigureHtml position={[circles[3].x + circles[3].w / 2 - 72, circles[1].y]} style={{ color: themeColor, fontWeight: 'bold', textAlign: 'center', lineHeight: 1.2 }}>Datalog</FigureHtml>
 
-	</Drawing>
+	</DrawingFigure>
 }

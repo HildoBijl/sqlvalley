@@ -1,4 +1,4 @@
-import { Drawing } from '@step-wise/drawing'
+import { DrawingFigure } from '@step-wise/drawing'
 import { ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, Info } from '@/ui'
@@ -52,7 +52,7 @@ function FigureProcessingCommands() {
 	const x2i = (x22 + x23) / 2 + 36
 	const xm2 = x22
 
-	return <Drawing view={{ type: 'identity', width: w, height }} maxWidth={w}>
+	return <DrawingFigure view={{ type: 'identity', width: w, height }} maxWidth={w}>
 		{/* Numbers */}
 		<FigureHtml position={[xm1, 0]} anchor={[0, -1]} behind>
 			<span style={titleStyle}>Numbers</span>
@@ -344,5 +344,5 @@ function FigureProcessingCommands() {
 		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>'Default'</ISQL>
 		</FigureHtml>
-	</Drawing>
+	</DrawingFigure>
 }

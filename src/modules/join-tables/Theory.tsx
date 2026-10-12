@@ -1,4 +1,4 @@
-import { MeasuredDrawing, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@/ui'
@@ -120,12 +120,12 @@ ON d.manager_id = e.e_id`} actualQuery={`SELECT * FROM (${adjustedDepartments}) 
 }
 
 function FigureNaturalJoinAdjustedTables() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + 35 })}
 		style={{ fontSize: 16 }}>
 		<FigureNaturalJoinAdjustedTablesContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureNaturalJoinAdjustedTablesContents() {

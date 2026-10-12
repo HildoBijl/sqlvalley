@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 
-import { MeasuredDrawing, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM } from '@/ui'
@@ -127,12 +127,12 @@ const rows: RowData[] = [
 ]
 
 export function ChecklistTable(props: ComponentProps<typeof ChecklistTableContents>) {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table']}
 		calculateView={({ table }) => ({ type: 'identity', width: 500 * (props.scale ?? 0.8), height: table.height })}
 		style={{ fontSize: 16 }}>
 		<ChecklistTableContents {...props} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function ChecklistTableContents({ all = false, flip = false, scale = 0.8 }) {
@@ -181,11 +181,11 @@ function ChecklistTableContents({ all = false, flip = false, scale = 0.8 }) {
 }
 
 function FigureDivisionTable() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2', 'table3']}
 		calculateView={({ table1, table2, table3 }) => ({ type: 'identity', width: 680, height: Math.max(table1.height, table2.height, table3.height) })} maxWidth={544} style={{ fontSize: 16 }}>
 		<FigureDivisionTableContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureDivisionTableContents() {

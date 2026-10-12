@@ -1,4 +1,4 @@
-import { Drawing, Curve, anchors, TargetBoundsDrawing } from '@step-wise/drawing'
+import { DrawingFigure, Curve, anchors, TargetBoundsDrawingFigure } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em, Link, Glyph } from '@/ui'
@@ -41,7 +41,7 @@ export function FigureTwoTables() {
 	const data1 = useQueryResult(db, 'SELECT * FROM departments;')
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 	const tableScale = 0.7
-	return <TargetBoundsDrawing targets={['table1Title', 'table1', 'table2Title', 'table2']} maxWidth={900} style={{ fontSize: 16 }}>
+	return <TargetBoundsDrawingFigure targets={['table1Title', 'table1', 'table2Title', 'table2']} maxWidth={900} style={{ fontSize: 16 }}>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={tableScale}>
 			<DataTable data={data1} width={800} showPagination={false} compact />
 		</FigureHtml>
@@ -51,7 +51,7 @@ export function FigureTwoTables() {
 			<DataTable data={data2} width={1200} showPagination={false} compact />
 		</FigureHtml>
 		<FigureHtml target="table2Title" position={{ target: 'table2', anchor: 'topRight', pixelOffset: [-10, 2] }} anchor="bottomRight"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
-	</TargetBoundsDrawing>
+	</TargetBoundsDrawingFigure>
 }
 
 export function FigureDatabaseUsage() {
@@ -64,7 +64,7 @@ export function FigureDatabaseUsage() {
 	const xDatabase = w - 60
 	const curveSmoothing = { mode: 'around', ratio: 1 } as const
 
-	return <Drawing view={{ type: 'identity', width: w, height: h }}>
+	return <DrawingFigure view={{ type: 'identity', width: w, height: h }}>
 		<Glyph name="User" position={[xUser, y - 25]} width={100} />
 		<FigureHtml position={[xUser, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>User</span></FigureHtml>
 
@@ -85,5 +85,5 @@ export function FigureDatabaseUsage() {
 
 		<Curve positions={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
 		<FigureHtml position={[(xUser + xServer) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></FigureHtml>
-	</Drawing>
+	</DrawingFigure>
 }

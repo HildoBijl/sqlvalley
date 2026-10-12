@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Drawing as StepWiseDrawing, Curve as StepWiseCurve, anchors } from '@step-wise/drawing'
+import { DrawingFigure as StepWiseDrawingFigure, Curve as StepWiseCurve, anchors } from '@step-wise/drawing'
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em } from '@/ui'
 import { FigureHtml, DL, IDL } from '@/learning'
@@ -87,7 +87,7 @@ I(x) :- G(x), H(x).
 export function FirstDependencyGraph() {
 	const themeColor = useThemeColor()
 
-	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 250 }} maxWidth={500}>
+	return <StepWiseDrawingFigure view={{ type: 'identity', width: 500, height: 250 }} maxWidth={500}>
 		<FigureHtml target="p1" position={[80, 80]}><DPGDL>product</DPGDL></FigureHtml>
 		<FigureHtml target="p2" position={[240, 20]}><DPGDL>account</DPGDL></FigureHtml>
 		<FigureHtml target="p3" position={[420, 80]}><DPGDL>transaction</DPGDL></FigureHtml>
@@ -115,13 +115,13 @@ export function FirstDependencyGraph() {
 			{ target: 'p6', anchor: anchors.top, pixelOffset: [0, -3] },
 			{ target: 'p2', anchor: anchors.bottom, pixelOffset: [0, 3] },
 		]} endArrow stroke={themeColor} strokeWidth={2} />
-	</StepWiseDrawing>
+	</StepWiseDrawingFigure>
 }
 
 export function CleanedFirstDependencyGraph({ layer = 3 }) {
 	const themeColor = useThemeColor()
 
-	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 40 + 80 * layer }} maxWidth={500}>
+	return <StepWiseDrawingFigure view={{ type: 'identity', width: 500, height: 40 + 80 * layer }} maxWidth={500}>
 		<FigureHtml position={[0, 20]}><strong>Layer 0:</strong></FigureHtml>
 		<FigureHtml target="p1" position={[120, 20]}><DPGDL>product</DPGDL></FigureHtml>
 		<FigureHtml target="p2" position={[265, 20]}><DPGDL>account</DPGDL></FigureHtml>
@@ -146,14 +146,14 @@ export function CleanedFirstDependencyGraph({ layer = 3 }) {
 			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [-30, -2] }, { target: 'p1', anchor: anchors.bottom, pixelOffset: [20, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
 			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [0, -3] }, { target: 'p2', anchor: anchors.bottom, pixelOffset: [0, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
 		</> : null}
-	</StepWiseDrawing>
+	</StepWiseDrawingFigure>
 }
 
 export function SecondDependencyGraph({ collapsed = false }) {
 	const themeColor = useThemeColor()
 	const edge = (from: string, fromAnchor: typeof anchors[keyof typeof anchors], to: string, toAnchor: typeof anchors[keyof typeof anchors], fromOffset: [number, number] = [0, 0], toOffset: [number, number] = [0, 0]) => <StepWiseCurve positions={[{ target: from, anchor: fromAnchor, pixelOffset: fromOffset }, { target: to, anchor: toAnchor, pixelOffset: toOffset }]} endArrow stroke={themeColor} strokeWidth={2} />
 
-	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 220 }} maxWidth={500}>
+	return <StepWiseDrawingFigure view={{ type: 'identity', width: 500, height: 220 }} maxWidth={500}>
 		<FigureHtml target="p1" position={[80, 20]}><DPGDL>A</DPGDL></FigureHtml>
 		<FigureHtml target="p2" position={[240, 20]}><DPGDL>B</DPGDL></FigureHtml>
 		<FigureHtml target="p3" position={[420, 20]}><DPGDL>C</DPGDL></FigureHtml>
@@ -186,13 +186,13 @@ export function SecondDependencyGraph({ collapsed = false }) {
 			{edge('p5', anchors.bottom, 'p6', anchors.top, [0, 2], [0, -2])}
 			{edge('p6', anchors.left, 'p7', anchors.right, [-2, 0], [2, 0])}
 		</>}
-	</StepWiseDrawing>
+	</StepWiseDrawingFigure>
 }
 
 export function CleanedSecondDependencyGraph() {
 	const themeColor = useThemeColor()
 
-	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 275 }} maxWidth={500}>
+	return <StepWiseDrawingFigure view={{ type: 'identity', width: 500, height: 275 }} maxWidth={500}>
 		<FigureHtml position={[0, 25]}><strong>Layer 0:</strong></FigureHtml>
 		<FigureHtml target="p1" position={[120, 25]}><DPGDL>A</DPGDL></FigureHtml>
 		<FigureHtml target="p2" position={[270, 25]}><DPGDL>B</DPGDL></FigureHtml>
@@ -213,5 +213,5 @@ export function CleanedSecondDependencyGraph() {
 		<StepWiseCurve positions={[{ target: 'p567', anchor: anchors.topLeft, pixelOffset: [-2, 1] }, { target: 'p4', anchor: anchors.bottomRight, pixelOffset: [1, -2] }]} endArrow stroke={themeColor} strokeWidth={2} />
 		<StepWiseCurve positions={[{ target: 'p9', anchor: anchors.topLeft, pixelOffset: [5, -3] }, { target: 'p8', anchor: anchors.bottomRight, pixelOffset: [-5, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
 		<StepWiseCurve positions={[{ target: 'p9', anchor: anchors.topRight, pixelOffset: [-10, -4] }, { target: 'p567', anchor: anchors.bottomLeft, pixelOffset: [10, 4] }]} endArrow stroke={themeColor} strokeWidth={2} />
-	</StepWiseDrawing>
+	</StepWiseDrawingFigure>
 }

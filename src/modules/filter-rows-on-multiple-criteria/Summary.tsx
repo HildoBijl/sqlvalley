@@ -1,4 +1,4 @@
-import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
@@ -27,12 +27,12 @@ WHERE position = 'transportation supervisor'`} operator="UNION" />
 }
 
 function FigureCombinedCondition() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query', 'table']}
 		calculateView={({ query, table }) => ({ type: 'identity', width: 800, height: query.height + 30 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureCombinedConditionContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureCombinedConditionContents() {

@@ -1,4 +1,4 @@
-import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { Vector } from '@step-wise/geometry'
 import { SQLDisplay, DataTable, useQueryResult } from '@sqlvalley/sql'
 
@@ -24,12 +24,12 @@ LIMIT 3
 OFFSET 1;`
 
 function FigureSorting() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query', 'table1', 'table2']}
 		calculateView={({ query, table1, table2 }) => ({ type: 'identity', width: 700, height: query.height + table1.height + table2.height + 40 })}
 		style={{ fontSize: 16 }}>
 		<FigureSortingContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureSortingContents() {

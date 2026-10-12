@@ -1,4 +1,4 @@
-import { TargetBoundsDrawing, Curve } from '@step-wise/drawing'
+import { TargetBoundsDrawingFigure, Curve } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Link } from '@/ui'
@@ -58,7 +58,7 @@ export function FigureQueryExample() {
 	const arrowHeight = 80
 	const arrowMargin = 10
 
-	return <TargetBoundsDrawing targets={['table1', 'table2', 'label']} margin={5} maxWidth={800} style={{ fontSize: 16 }}>
+	return <TargetBoundsDrawingFigure targets={['table1', 'table2', 'label']} margin={5} maxWidth={800} style={{ fontSize: 16 }}>
 		<FigureHtml target="table1" position={[0, 0]} anchor="topLeft" scale={tableScale}>
 			<DataTable data={data1} width={1200} showPagination={false} compact />
 		</FigureHtml>
@@ -74,5 +74,5 @@ export function FigureQueryExample() {
 		<FigureHtml target="label" position={{ target: 'table1', anchor: 'bottom', pixelOffset: [8, arrowHeight / 2 - 4] }} anchor="left">
 			<p style={{ fontSize: '0.8rem', fontStyle: 'italic', margin: 0, lineHeight: 1.4 }}>"Find the names of all employees earning<br />more than two hundred thousand per year."</p>
 		</FigureHtml>
-	</TargetBoundsDrawing>
+	</TargetBoundsDrawingFigure>
 }

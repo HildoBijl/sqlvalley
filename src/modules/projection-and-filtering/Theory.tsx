@@ -1,4 +1,4 @@
-import { MeasuredDrawing, Line, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Line, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Term } from '@/ui'
@@ -33,11 +33,11 @@ export function Theory() {
 }
 
 function FigureProjection() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 1060, height: Math.max(table1.height, table2.height) })} maxWidth={848} style={{ fontSize: 16 }}>
 		<FigureProjectionContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureProjectionContents() {
@@ -69,11 +69,11 @@ function FigureProjectionContents() {
 }
 
 function FigureFiltering() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 800, height: table1.height + 80 + table2.height })} maxWidth={640} style={{ fontSize: 16 }}>
 		<FigureFilteringContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureFilteringContents() {

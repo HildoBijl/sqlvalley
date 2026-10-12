@@ -1,4 +1,4 @@
-import { MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Term } from '@/ui'
@@ -19,11 +19,11 @@ export function Summary() {
 }
 
 function FigureAggregation() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 900, height: table1.height + 20 + table2.height })} maxWidth={720} style={{ fontSize: 16 }}>
 		<FigureAggregationContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureAggregationContents() {

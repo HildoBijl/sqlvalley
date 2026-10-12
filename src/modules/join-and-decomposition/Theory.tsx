@@ -1,4 +1,4 @@
-import { MeasuredDrawing, Curve, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { ISQL, DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
@@ -99,12 +99,12 @@ export function Theory() {
 }
 
 function FigureNaturalJoin() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2', 'table3']}
 		calculateView={({ table1, table2, table3 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + table3.height + 95 })}
 		style={{ fontSize: 16 }}>
 		<FigureNaturalJoinContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureNaturalJoinContents() {
@@ -160,12 +160,12 @@ function FigureNaturalJoinContents() {
 }
 
 export function FigureTwoTablesAdjusted() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + 35 })}
 		style={{ fontSize: 16 }}>
 		<FigureTwoTablesAdjustedContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureTwoTablesAdjustedContents() {

@@ -1,4 +1,4 @@
-import { MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { ISQL, DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
@@ -24,12 +24,12 @@ export function Summary() {
 }
 
 function FigureJoinAndDecomposition() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table1', 'table2', 'table3']}
 		calculateView={({ table1, table2, table3 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + table3.height + 52 })}
 		style={{ fontSize: 16 }}>
 		<FigureJoinAndDecompositionContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureJoinAndDecompositionContents() {

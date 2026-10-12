@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { TargetBoundsDrawing, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { TargetBoundsDrawingFigure, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
@@ -56,9 +56,9 @@ export function Theory() {
 type Terminology = Partial<Record<'table' | 'contents' | 'column' | 'columnNames' | 'row' | 'cell', ReactNode>>
 
 export function FigureTerminology({ terminology }: { terminology?: Terminology }) {
-	return <TargetBoundsDrawing targets={['table', 'tableLabel', 'contentsLabel', 'columnLabel', 'columnNamesLabel', 'rowLabel', 'cellLabel']} margin={5} maxWidth={700} style={{ fontSize: 16 }}>
+	return <TargetBoundsDrawingFigure targets={['table', 'tableLabel', 'contentsLabel', 'columnLabel', 'columnNamesLabel', 'rowLabel', 'cellLabel']} margin={5} maxWidth={700} style={{ fontSize: 16 }}>
 		<FigureTerminologyContents terminology={terminology} />
-	</TargetBoundsDrawing>
+	</TargetBoundsDrawingFigure>
 }
 
 function FigureTerminologyContents({ terminology }: { terminology?: Terminology }) {

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { TargetBoundsDrawing } from '@step-wise/drawing'
+import { TargetBoundsDrawingFigure } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { FigureHtml } from '../FigureHtml'
@@ -12,10 +12,10 @@ export function TableQueryFigure({ query = '', title = '', tableWidth = 800, tab
 	const data = useQueryResult(db, query)
 
 	// Render the drawing.
-	return <TargetBoundsDrawing targets={title ? ['title', 'table'] : ['table']} margin={5} maxWidth={tableWidth * tableScale} style={{ fontSize: 16 }}>
+	return <TargetBoundsDrawingFigure targets={title ? ['title', 'table'] : ['table']} margin={5} maxWidth={tableWidth * tableScale} style={{ fontSize: 16 }}>
 		{title ? <FigureHtml target="title" position={[10, 0]} anchor="bottomLeft"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>{title}</span></FigureHtml> : null}
 		<FigureHtml target="table" position={[0, 0]} anchor="topLeft" scale={tableScale}>
 			<DataTable data={data} width={tableWidth} showPagination={false} compact />
 		</FigureHtml>
-	</TargetBoundsDrawing>
+	</TargetBoundsDrawingFigure>
 }

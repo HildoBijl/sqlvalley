@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react'
 
-import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Info, Warning, Term, Em } from '@/ui'
@@ -53,12 +53,12 @@ FROM employees AS e;`} />
 }
 
 function FigureSelectColumns() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table']}
 		calculateView={({ table }) => ({ type: 'identity', width: 800, height: 20 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureSelectColumnsContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureSelectColumnsContents() {
@@ -106,12 +106,12 @@ FROM employees;`
 }
 
 function FigureSelectUnique() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query1', 'table1', 'query2', 'table2']}
 		calculateView={({ query1, table1, query2, table2 }) => ({ type: 'identity', width: query1.width + table1.width + query2.width + table2.width + 80, height: Math.max(table1.height, table2.height) })}
 		style={{ fontSize: 16 }}>
 		<FigureSelectUniqueContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureSelectUniqueContents() {
@@ -168,12 +168,12 @@ FROM employees;`
 }
 
 export function FigureRenameColumns(props: ComponentProps<typeof FigureRenameColumnsContents>) {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query', 'table']}
 		calculateView={({ query, table }) => ({ type: 'identity', width: query.width + table.width + 80, height: table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureRenameColumnsContents {...props} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureRenameColumnsContents({ query = '' }) {

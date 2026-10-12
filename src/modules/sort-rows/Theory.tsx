@@ -1,5 +1,5 @@
 import { Vector } from '@step-wise/geometry'
-import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Term, Em } from '@/ui'
@@ -36,12 +36,12 @@ export function Theory() {
 }
 
 function FigureSortOnSingleColumn() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table']}
 		calculateView={({ table }) => ({ type: 'identity', width: 320 + table.width, height: 20 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureSortOnSingleColumnContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureSortOnSingleColumnContents() {
@@ -81,12 +81,12 @@ ORDER BY ${sortColumn} DESC;`
 }
 
 function FigureSortOnMultipleColumns() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table']}
 		calculateView={({ table }) => ({ type: 'identity', width: 320 + table.width, height: 40 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureSortOnMultipleColumnsContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureSortOnMultipleColumnsContents() {
@@ -145,12 +145,12 @@ ORDER BY
 }
 
 function FigureLimitRows() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table', 'query']}
 		calculateView={({ table, query }) => ({ type: 'identity', width: 320 + table.width, height: Math.max(table.height, query.height) })}
 		style={{ fontSize: 16 }}>
 		<FigureLimitRowsContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureLimitRowsContents() {
@@ -195,12 +195,12 @@ LIMIT 3;`
 }
 
 function FigureLimitRowsWithOffset() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table', 'query']}
 		calculateView={({ table, query }) => ({ type: 'identity', width: 320 + table.width, height: Math.max(table.height, query.height) })}
 		style={{ fontSize: 16 }}>
 		<FigureLimitRowsWithOffsetContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureLimitRowsWithOffsetContents() {
@@ -247,12 +247,12 @@ LIMIT 3 OFFSET ${offset};`
 }
 
 function FigureSortNullValues() {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['table']}
 		calculateView={({ table }) => ({ type: 'identity', width: 320 + table.width, height: 20 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureSortNullValuesContents />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureSortNullValuesContents() {

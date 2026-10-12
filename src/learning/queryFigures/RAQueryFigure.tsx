@@ -1,6 +1,6 @@
 import { type ComponentType, type ReactNode, useCallback } from 'react'
 
-import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { type DrawingView, type TargetBoundsRecord, MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
@@ -31,12 +31,12 @@ export function RAQueryFigure({ query = <></>, actualQuery = '', below = false, 
 		return { type: 'identity', width: below ? Math.max(we, wt) : we + gap + wt, height: below ? he + gap + ht : Math.max(he, ht) }
 	}, [below, arrowLength, arrowRadius, delta])
 
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={targets}
 		calculateView={calculateView}
 		style={{ fontSize: 16 }}>
 		<RAQueryFigureContents query={query} actualQuery={actualQuery} below={below} tableWidth={tableWidth} tableScale={tableScale} delta={delta} arrowLength={arrowLength} arrowRadius={arrowRadius} Component={Component} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function RAQueryFigureContents({ query, actualQuery, below, tableWidth, tableScale, delta, arrowLength, arrowRadius, Component }: Required<RAQueryFigureProps>) {

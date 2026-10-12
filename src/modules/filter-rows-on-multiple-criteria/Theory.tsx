@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react'
 
-import { MeasuredDrawing, Drawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, DrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
@@ -102,12 +102,12 @@ WHERE position = 'transportation supervisor'`} operator="EXCEPT" />
 }
 
 function FigureCombinedCondition(props: ComponentProps<typeof FigureCombinedConditionContents>) {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query', 'table']}
 		calculateView={({ query, table }) => ({ type: 'identity', width: 800, height: query.height + 30 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureCombinedConditionContents {...props} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureCombinedConditionContents({ c1 = '', v1 = '', c2 = '', v2 = '', combiner = 'AND', addNot = false }) {
@@ -155,9 +155,9 @@ WHERE ${addNot ? 'NOT (' : ''}${c1} = '${v1}'
 }
 
 function FigureAndExplanation() {
-	return <Drawing view={{ type: 'identity', width: 800, height: 175 }} style={{ fontSize: 16 }}>
+	return <DrawingFigure view={{ type: 'identity', width: 800, height: 175 }} style={{ fontSize: 16 }}>
 		<FigureAndExplanationContents />
-	</Drawing>
+	</DrawingFigure>
 }
 
 function FigureAndExplanationContents() {
@@ -260,12 +260,12 @@ LIMIT 1;`)
 }
 
 function FigureRewrittenQuery(props: ComponentProps<typeof FigureRewrittenQueryContents>) {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query', 'table']}
 		calculateView={({ query, table }) => ({ type: 'identity', width: 800, height: query.height + 10 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureRewrittenQueryContents {...props} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureRewrittenQueryContents({ query = '' }) {
@@ -302,12 +302,12 @@ const delta3 = 50 // Horizontall between largest query and tables.
 const w2 = 850 // Table width.
 const tableScale = 0.7
 export function FigureMergingTables(props: ComponentProps<typeof FigureMergingTablesContents>) {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query1', 'query2', 'query', 'table1', 'table2', 'table']}
 		calculateView={({ query1, query2, query, table1, table2, table }) => ({ type: 'identity', width: Math.max(query1.width, query2.width, query.width) + delta3 + w2 * tableScale, height: Math.max(query1.height, table1.height) + Math.max(query2.height, table2.height) + Math.max(query.height, table.height) + delta1 + delta2 })}
 		style={{ fontSize: 16 }}>
 		<FigureMergingTablesContents {...props} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureMergingTablesContents({ query1 = '', query2 = '', operator = 'UNION' }) {

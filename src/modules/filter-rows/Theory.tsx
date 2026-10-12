@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react'
 
-import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Info, Term, Em } from '@/ui'
@@ -74,12 +74,12 @@ WHERE perf_score IS NULL;`} columnName="perf_score" />
 }
 
 export function FigureFiltering(props: ComponentProps<typeof FigureFilteringContents>) {
-	return <MeasuredDrawing
+	return <MeasuredDrawingFigure
 		targets={['query', 'table']}
 		calculateView={({ query, table }) => ({ type: 'identity', width: 800, height: query.height + 15 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureFilteringContents {...props} />
-	</MeasuredDrawing>
+	</MeasuredDrawingFigure>
 }
 
 function FigureFilteringContents({ query = '', columnName = '' }) {
