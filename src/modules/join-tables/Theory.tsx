@@ -122,10 +122,7 @@ ON d.manager_id = e.e_id`} actualQuery={`SELECT * FROM (${adjustedDepartments}) 
 function FigureNaturalJoinAdjustedTables() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2']}
-		calculateView={({ table1, table2 }) => ({
-			type: 'identity', width: 800,
-			height: table1.height + table2.height + 35,
-		})}
+		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + 35 })}
 		style={{ fontSize: 16 }}>
 		<FigureNaturalJoinAdjustedTablesContents />
 	</MeasuredDrawing>
@@ -150,6 +147,7 @@ function FigureNaturalJoinAdjustedTablesContents() {
 	const x = 80
 	const y1 = 20 + (t1Bounds?.height ?? 160) + 15
 	const width = 800
+	const padding = 6
 
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
@@ -164,7 +162,7 @@ function FigureNaturalJoinAdjustedTablesContents() {
 			</FigureHtml>
 		</> : null}
 
-		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min, textNode2Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min.add([-padding, -padding]), textNode1Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min.add([-padding, -padding]), textNode2Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
 	</>
 }

@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react'
 import { MeasuredDrawing, Drawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
-import { useThemeColor, Page, Par, List, Section, Info, Term, Em } from '@/ui'
+import { useThemeColor, Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
@@ -74,7 +74,7 @@ WHERE status IN ('sick leave', 'paid leave');`} />
 		</Section>
 
 		<Section title={<>Merge tables using <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL></>}>
-			<Par>A completely different way to combine different conditions is through <Term>merging tables</Term>. If we have two tables with <Em>identical columns</Em>, we can merge them together. One way to do so is through the <ISQL>UNION</ISQL> operator. This operator merges two tables, and it keeps a row if it is in <Em>either</Em> (or both) of the given tables. So it kind of functions like an <ISQL>OR</ISQL>.</Par>
+			<Par>A completely different way to combine different conditions is through <Term>merging tables</Term>. If we have two tables with the <Em>same number of columns</Em>, we can merge them together. One way to do so is through the <ISQL>UNION</ISQL> operator. This operator merges two tables, and it keeps a row if it is in <Em>either</Em> (or both) of the given tables. So it kind of functions like an <ISQL>OR</ISQL>.</Par>
 			<FigureMergingTables query1={`SELECT *
 FROM contracts
 WHERE status = 'sick leave'`} query2={`SELECT *
@@ -92,8 +92,11 @@ FROM contracts
 WHERE status = 'active'`} query2={`SELECT *
 FROM contracts
 WHERE position = 'transportation supervisor'`} operator="EXCEPT" />
+			<Warning>The <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> commands match columns by their <Em>position</Em> and not by their name. When using them, always make sure that both tables have the columns in the same order. In fact, column names don't even have to match. Types do: you cannot merge a number column with a text one.</Warning>
 			<Par>Since the <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> keywords do very similar things as <ISQL>AND</ISQL>, <ISQL>OR</ISQL> and <ISQL>NOT</ISQL>, their usage is not so common, but there are a few edge cases where they can be really useful.</Par>
-			<Info>Contrary to set theory in mathematics, SQL allows duplicate rows. The <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> have fixed rules of how to deal with duplicate rows. Suppose that table A consists of five identical rows, and table B consists of three of the same identical rows. Then <ISQL>A UNION B</ISQL> has one row, <ISQL>A INTERSECT B</ISQL> has one row, and <ISQL>A EXCEPT B</ISQL> has no rows. These operators remove duplicates. Use <ISQL>UNION ALL</ISQL> to keep all eight rows. Some DBMSs also support <ISQL>INTERSECT ALL</ISQL> and <ISQL>EXCEPT ALL</ISQL>, but SQLite does not.</Info>
+			<Info>
+				<Par>Contrary to set theory in mathematics, SQL allows duplicate rows. However, whenever you use <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> or <ISQL>EXCEPT</ISQL>, duplicates are always removed: a single row remains. If you don't want that, you can use <ISQL>UNION ALL</ISQL>, <ISQL>INTERSECT ALL</ISQL> and <ISQL>EXCEPT ALL</ISQL>. These commands cleverly deal with duplicates. Suppose that table A consists of five identical rows, and table B consists of three of the same identical rows. Then <ISQL>A UNION ALL B</ISQL> has eight rows, <ISQL>A INTERSECT ALL B</ISQL> has three rows, and <ISQL>A EXCEPT ALL B</ISQL> has two rows.</Par>
+			</Info>
 		</Section>
 	</Page>
 }
@@ -101,10 +104,7 @@ WHERE position = 'transportation supervisor'`} operator="EXCEPT" />
 function FigureCombinedCondition(props: ComponentProps<typeof FigureCombinedConditionContents>) {
 	return <MeasuredDrawing
 		targets={['query', 'table']}
-		calculateView={({ query, table }) => ({
-			type: 'identity', width: 800,
-			height: query.height + 30 + table.height,
-		})}
+		calculateView={({ query, table }) => ({ type: 'identity', width: 800, height: query.height + 30 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureCombinedConditionContents {...props} />
 	</MeasuredDrawing>
@@ -262,10 +262,7 @@ LIMIT 1;`)
 function FigureRewrittenQuery(props: ComponentProps<typeof FigureRewrittenQueryContents>) {
 	return <MeasuredDrawing
 		targets={['query', 'table']}
-		calculateView={({ query, table }) => ({
-			type: 'identity', width: 800,
-			height: query.height + 10 + table.height,
-		})}
+		calculateView={({ query, table }) => ({ type: 'identity', width: 800, height: query.height + 10 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureRewrittenQueryContents {...props} />
 	</MeasuredDrawing>
@@ -299,13 +296,15 @@ function FigureRewrittenQueryContents({ query = '' }) {
 	</>
 }
 
+const delta1 = 15 // Vertically between table 1 and table 2.
+const delta2 = 55 // Vertically between table 2 and table 3.
+const delta3 = 50 // Horizontall between largest query and tables.
+const w2 = 850 // Table width.
+const tableScale = 0.7
 export function FigureMergingTables(props: ComponentProps<typeof FigureMergingTablesContents>) {
 	return <MeasuredDrawing
 		targets={['query1', 'query2', 'query', 'table1', 'table2', 'table']}
-		calculateView={({ query1, query2, query, table1, table2, table }) => ({
-			type: 'identity', width: Math.max(query1.width, query2.width, query.width) + 750,
-			height: Math.max(query1.height, table1.height) + Math.max(query2.height, table2.height) + Math.max(query.height, table.height) + 70,
-		})}
+		calculateView={({ query1, query2, query, table1, table2, table }) => ({ type: 'identity', width: Math.max(query1.width, query2.width, query.width) + delta3 + w2 * tableScale, height: Math.max(query1.height, table1.height) + Math.max(query2.height, table2.height) + Math.max(query.height, table.height) + delta1 + delta2 })}
 		style={{ fontSize: 16 }}>
 		<FigureMergingTablesContents {...props} />
 	</MeasuredDrawing>
@@ -333,15 +332,10 @@ ${query2}`)
 	const tBounds = useDrawingTargetBounds('table')
 
 	const h1 = Math.max(e1Bounds?.height || 200, t1Bounds?.height || 200)
-	const delta1 = 15
 	const h2 = Math.max(e2Bounds?.height || 200, t2Bounds?.height || 200)
-	const delta2 = 55
 
 	const w1 = Math.max(e1Bounds?.width || 200, e2Bounds?.width || 200, eBounds?.width || 200)
-	const delta3 = 50
-	const w2 = 700
-	const width = w1 + delta3 + w2
-	const tableScale = 0.8
+	const width = w1 + delta3 + w2 * tableScale
 
 	return <>
 		<FigureHtml target="query1" position={[0, 0]} anchor={[-1, -1]} behind>
@@ -359,15 +353,15 @@ ${query2}`}</SQLDisplay>
 		</FigureHtml>
 
 		<FigureHtml target="table1" position={[width, 0]} anchor={[1, -1]} scale={tableScale} behind>
-			<DataTable data={data1} showPagination={false} compact width={w2 / tableScale} />
+			<DataTable data={data1} showPagination={false} compact width={w2} />
 		</FigureHtml>
 
 		<FigureHtml target="table2" position={[width, h1 + delta1]} anchor={[1, -1]} scale={tableScale} behind>
-			<DataTable data={data2} showPagination={false} compact width={w2 / tableScale} />
+			<DataTable data={data2} showPagination={false} compact width={w2} />
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[width, h1 + delta1 + h2 + delta2]} anchor={[1, -1]} scale={tableScale} behind>
-			<DataTable data={data} showPagination={false} compact width={w2 / tableScale} />
+			<DataTable data={data} showPagination={false} compact width={w2} />
 		</FigureHtml>
 
 		{/* Horizontal arrows */}

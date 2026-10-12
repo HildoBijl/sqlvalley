@@ -21,10 +21,7 @@ export function Summary() {
 function FigureAggregation() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2']}
-		calculateView={({ table1, table2 }) => ({
-			type: 'identity', width: 900,
-			height: table1.height + 20 + table2.height,
-		})} maxWidth={720} style={{ fontSize: 16 }}>
+		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 900, height: table1.height + 20 + table2.height })} maxWidth={720} style={{ fontSize: 16 }}>
 		<FigureAggregationContents />
 	</MeasuredDrawing>
 }
@@ -38,7 +35,7 @@ function FigureAggregationContents() {
 	const t1Bounds = useDrawingTargetBounds('table1')
 	const t2Bounds = useDrawingTargetBounds('table2')
 	const w1 = 900
-	const w2 = 500
+	const w2 = 600
 	const delta = 20
 	const arrowMargin = 5
 	const h1 = t1Bounds?.height ?? 200

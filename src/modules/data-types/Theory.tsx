@@ -62,10 +62,7 @@ export function Theory() {
 export function FigureDataTypeDemo() {
 	return <MeasuredDrawing
 		targets={['table']}
-		calculateView={({ table }) => ({
-			type: 'identity', width: 800,
-			height: table.height + 73,
-		})}
+		calculateView={({ table }) => ({ type: 'identity', width: 800, height: table.height + 73 })}
 		style={{ fontSize: 16 }}>
 		<FigureDataTypeDemoContents />
 	</MeasuredDrawing>

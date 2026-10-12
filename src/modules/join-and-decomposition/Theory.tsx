@@ -28,7 +28,7 @@ export function Theory() {
 			<FigureTwoTables />
 			<Par>Let's say that we want a list of all departments <Em>including</Em> all attributes of the corresponding managers. In other words, we want all data in one big table. We could combine the two tables into one: we can <Term>join</Term> the tables.</Par>
 			<Par>For the join to make sense, we must have one table (often placed on the left) with a foreign key to the other table (placed on the right). To execute the join, we walk through all the rows of the left table, and look up the respective record of the right table. We add this data to the back of the row. If we do this for all rows, we get the joined table. It has columns from both tables.</Par>
-			<TableQueryFigure query={`SELECT * FROM departments d JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} />
+			<TableQueryFigure query={`SELECT * FROM departments d JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1600} />
 		</Section>
 
 		<Section title="Decomposition: split a table into two through a foreign key">
@@ -48,11 +48,11 @@ export function Theory() {
 			<List useNumbers items={[
 				<>
 					<Par sx={{ mb: 1 }}>Find the <Term>Cartesian product</Term> of the two tables. This is the table with all possible combinations of one row from the left table and one row from the right table. This is a huge table, but we'll show it below anyway for our example data. Note that every combination of rows is present.</Par>
-					<TableQueryFigure query={`SELECT * FROM departments, employees;`} tableScale={0.45} />
+					<TableQueryFigure query={`SELECT * FROM departments, employees;`} tableWidth={1600} tableScale={0.45} />
 				</>,
 				<>
 					<Par sx={{ mb: 1 }}>Only keep the row combinations that are relevant, filtering out the rest. Here,  "relevant" means "having equal foreign key". So we only keep the rows where <ISQL>manager_id</ISQL> equals <ISQL>e_id</ISQL>. This completes the join.</Par>
-					<TableQueryFigure query={`SELECT * FROM departments, employees WHERE manager_id=e_id;`} tableScale={0.45} />
+					<TableQueryFigure query={`SELECT * FROM departments, employees WHERE manager_id=e_id;`} tableWidth={1600} tableScale={0.45} />
 				</>,
 			]} />
 			<Info>The above definition of a join, through a Cartesian product, is a <Em>generalization</Em> of the idea we saw earlier. The look-up idea we saw earlier only works when the foreign key is unique in the second (for us <ISQL>employees</ISQL>) table. If this is not the case, for instance because multiple employees have the same employee ID, then the look-up fails. This generalized method with the Cartesian product always works.</Info>
@@ -78,19 +78,19 @@ export function Theory() {
 			<List items={[
 				<>
 					<Par>In the <Term>inner join</Term> (the default method) employees without a department or departments without an existing employee are ignored during the join. Since no valid matching is present, these entries disappear completely.</Par>
-					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d INNER JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d INNER JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1600} /></Par>
 				</>,
 				<>
 					<Par>In the <Term>left (outer) join</Term> we <Em>always</Em> keep the rows from the left table (departments). If no matching row exists from the right table (employees) then we include <ISQL>NULL</ISQL> values to show something is missing. (But rows from the right table will still disappear on missing matchings.)</Par>
-					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d LEFT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d LEFT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1600} /></Par>
 				</>,
 				<>
 					<Par>In the <Term>right (outer) join</Term> we <Em>always</Em> keep the rows from the right table (employees). If no matching row exists from the left table (departments) then we include <ISQL>NULL</ISQL> values to show something is missing. (But rows from the left table will still disappear on missing matchings.)</Par>
-					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d RIGHT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d RIGHT JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1600} /></Par>
 				</>,
 				<>
 					<Par>In the <Term>full (outer) join</Term> we <Em>always</Em> keep the rows from <Em>both</Em> tables. If any row from either table is without a matching row from the other table, we include <ISQL>NULL</ISQL> values. This ensures data never disappears.</Par>
-					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d FULL JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1100} /></Par>
+					<Par sx={{ my: 1 }}><TableQueryFigure query={`SELECT * FROM (${adjustedDepartments}) d FULL JOIN employees e ON d.manager_id=e.e_id;`} tableScale={0.6} tableWidth={1600} /></Par>
 				</>,
 			]} />
 			<Info>Note that the distinction of natural/non-natural join is completely separate from the distinction of inner/outer join. The first issue is about "Do we manually specify on which attributes to perform the join, or do we just pick equally named attributes?" The second issue is about "How do we handle entries without a matching reference?" When we talk about a "join" we usually refer to the the non-natural inner join, but you could very well apply a natural full outer join too.</Info>
@@ -101,10 +101,7 @@ export function Theory() {
 function FigureNaturalJoin() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2', 'table3']}
-		calculateView={({ table1, table2, table3 }) => ({
-			type: 'identity', width: 800,
-			height: table1.height + table2.height + table3.height + 95,
-		})}
+		calculateView={({ table1, table2, table3 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + table3.height + 95 })}
 		style={{ fontSize: 16 }}>
 		<FigureNaturalJoinContents />
 	</MeasuredDrawing>
@@ -133,6 +130,7 @@ function FigureNaturalJoinContents() {
 	const y2 = y1 + (t2Bounds?.height ?? 160)
 	const y3 = y2 + 60
 	const width = 800
+	const padding = 6
 
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
@@ -156,18 +154,15 @@ function FigureNaturalJoinContents() {
 			</> : null}
 		</> : null}
 
-		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min, textNode2Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min.add([-padding, -padding]), textNode1Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min.add([-padding, -padding]), textNode2Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
 	</>
 }
 
 export function FigureTwoTablesAdjusted() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2']}
-		calculateView={({ table1, table2 }) => ({
-			type: 'identity', width: 800,
-			height: table1.height + table2.height + 35,
-		})}
+		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + 35 })}
 		style={{ fontSize: 16 }}>
 		<FigureTwoTablesAdjustedContents />
 	</MeasuredDrawing>
@@ -184,12 +179,13 @@ function FigureTwoTablesAdjustedContents() {
 	// Set up reference to the table.
 	const t1Bounds = useDrawingTargetBounds('table1')
 
-	useDrawingTextTarget('textNode1Bounds', 'table1', adjustedManagerId, { index: 0, parentDepth: 2 })
+	useDrawingTextTarget('textNode1Bounds', 'table1', adjustedManagerId, { index: 0, parentDepth: 1 })
 	const textNode1Bounds = useDrawingTargetBounds('textNode1Bounds')
-	useDrawingTextTarget('textNode2Bounds', 'table1', addedManagerId, { index: 1, parentDepth: 2 })
+	useDrawingTextTarget('textNode2Bounds', 'table1', addedManagerId, { index: 1, parentDepth: 1 })
 	const textNode2Bounds = useDrawingTargetBounds('textNode2Bounds')
 	const x = 80
 	const y = 20 + (t1Bounds?.height ?? 160) + 15
+	const padding = 6
 
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
@@ -202,7 +198,7 @@ function FigureTwoTablesAdjustedContents() {
 			<DataTable data={data2} showPagination={false} compact width={(800 - x) / 0.6} />
 		</FigureHtml>
 
-		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
-		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min, textNode2Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min.add([-padding, -padding]), textNode1Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min.add([-padding, -padding]), textNode2Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
 	</>
 }

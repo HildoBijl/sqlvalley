@@ -129,10 +129,7 @@ const rows: RowData[] = [
 export function ChecklistTable(props: ComponentProps<typeof ChecklistTableContents>) {
 	return <MeasuredDrawing
 		targets={['table']}
-		calculateView={({ table }) => ({
-			type: 'identity', width: 500 * (props.scale ?? 0.8),
-			height: table.height,
-		})}
+		calculateView={({ table }) => ({ type: 'identity', width: 500 * (props.scale ?? 0.8), height: table.height })}
 		style={{ fontSize: 16 }}>
 		<ChecklistTableContents {...props} />
 	</MeasuredDrawing>
@@ -186,10 +183,7 @@ function ChecklistTableContents({ all = false, flip = false, scale = 0.8 }) {
 function FigureDivisionTable() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2', 'table3']}
-		calculateView={({ table1, table2, table3 }) => ({
-			type: 'identity', width: 680,
-			height: Math.max(table1.height, table2.height, table3.height),
-		})} maxWidth={544} style={{ fontSize: 16 }}>
+		calculateView={({ table1, table2, table3 }) => ({ type: 'identity', width: 680, height: Math.max(table1.height, table2.height, table3.height) })} maxWidth={544} style={{ fontSize: 16 }}>
 		<FigureDivisionTableContents />
 	</MeasuredDrawing>
 }

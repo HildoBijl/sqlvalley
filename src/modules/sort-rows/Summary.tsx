@@ -26,10 +26,7 @@ OFFSET 1;`
 function FigureSorting() {
 	return <MeasuredDrawing
 		targets={['query', 'table1', 'table2']}
-		calculateView={({ query, table1, table2 }) => ({
-			type: 'identity', width: 700,
-			height: query.height + table1.height + table2.height + 40,
-		})}
+		calculateView={({ query, table1, table2 }) => ({ type: 'identity', width: 700, height: query.height + table1.height + table2.height + 40 })}
 		style={{ fontSize: 16 }}>
 		<FigureSortingContents />
 	</MeasuredDrawing>

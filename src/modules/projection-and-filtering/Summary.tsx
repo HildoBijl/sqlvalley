@@ -17,10 +17,7 @@ export function Summary() {
 function FigureProjectionAndFiltering() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2', 'table3']}
-		calculateView={({ table1, table2, table3 }) => ({
-			type: 'identity', width: 1060,
-			height: Math.max(table1.height, table2.height) + 80 + table3.height,
-		})} maxWidth={848} style={{ fontSize: 16 }}>
+		calculateView={({ table1, table2, table3 }) => ({ type: 'identity', width: 1060, height: Math.max(table1.height, table2.height) + 80 + table3.height })} maxWidth={848} style={{ fontSize: 16 }}>
 		<FigureProjectionAndFilteringContents />
 	</MeasuredDrawing>
 }

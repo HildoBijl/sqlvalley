@@ -76,10 +76,7 @@ WHERE perf_score IS NULL;`} columnName="perf_score" />
 export function FigureFiltering(props: ComponentProps<typeof FigureFilteringContents>) {
 	return <MeasuredDrawing
 		targets={['query', 'table']}
-		calculateView={({ query, table }) => ({
-			type: 'identity', width: 800,
-			height: query.height + 15 + table.height,
-		})}
+		calculateView={({ query, table }) => ({ type: 'identity', width: 800, height: query.height + 15 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureFilteringContents {...props} />
 	</MeasuredDrawing>

@@ -35,10 +35,7 @@ export function Theory() {
 function FigureProjection() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2']}
-		calculateView={({ table1, table2 }) => ({
-			type: 'identity', width: 1060,
-			height: Math.max(table1.height, table2.height),
-		})} maxWidth={848} style={{ fontSize: 16 }}>
+		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 1060, height: Math.max(table1.height, table2.height) })} maxWidth={848} style={{ fontSize: 16 }}>
 		<FigureProjectionContents />
 	</MeasuredDrawing>
 }
@@ -74,10 +71,7 @@ function FigureProjectionContents() {
 function FigureFiltering() {
 	return <MeasuredDrawing
 		targets={['table1', 'table2']}
-		calculateView={({ table1, table2 }) => ({
-			type: 'identity', width: 800,
-			height: table1.height + 80 + table2.height,
-		})} maxWidth={640} style={{ fontSize: 16 }}>
+		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 800, height: table1.height + 80 + table2.height })} maxWidth={640} style={{ fontSize: 16 }}>
 		<FigureFilteringContents />
 	</MeasuredDrawing>
 }

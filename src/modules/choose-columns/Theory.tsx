@@ -55,10 +55,7 @@ FROM employees AS e;`} />
 function FigureSelectColumns() {
 	return <MeasuredDrawing
 		targets={['table']}
-		calculateView={({ table }) => ({
-			type: 'identity', width: 800,
-			height: 20 + table.height,
-		})}
+		calculateView={({ table }) => ({ type: 'identity', width: 800, height: 20 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureSelectColumnsContents />
 	</MeasuredDrawing>
@@ -111,10 +108,7 @@ FROM employees;`
 function FigureSelectUnique() {
 	return <MeasuredDrawing
 		targets={['query1', 'table1', 'query2', 'table2']}
-		calculateView={({ query1, table1, query2, table2 }) => ({
-			type: 'identity', width: query1.width + table1.width + query2.width + table2.width + 80,
-			height: Math.max(table1.height, table2.height),
-		})}
+		calculateView={({ query1, table1, query2, table2 }) => ({ type: 'identity', width: query1.width + table1.width + query2.width + table2.width + 80, height: Math.max(table1.height, table2.height) })}
 		style={{ fontSize: 16 }}>
 		<FigureSelectUniqueContents />
 	</MeasuredDrawing>
@@ -176,10 +170,7 @@ FROM employees;`
 export function FigureRenameColumns(props: ComponentProps<typeof FigureRenameColumnsContents>) {
 	return <MeasuredDrawing
 		targets={['query', 'table']}
-		calculateView={({ query, table }) => ({
-			type: 'identity', width: query.width + table.width + 80,
-			height: table.height,
-		})}
+		calculateView={({ query, table }) => ({ type: 'identity', width: query.width + table.width + 80, height: table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureRenameColumnsContents {...props} />
 	</MeasuredDrawing>
