@@ -103,10 +103,13 @@ function chooseSubgoalStep(
 
 	// Walk through the candidates (in tree order) to find the one with the fewest missing prerequisites and return the next step toward it.
 	for (const candidateId of moduleIdsInTreeOrder) {
+		// For the given candidate, find a valid prerequisite that is ready to learn.
 		if (!candidates.has(candidateId)) continue
 		const requiredModuleIds = getRequiredModuleIds(moduleTree, [candidateId])
 		const nextStepId = moduleIdsInTreeOrder.find(id => allowedModuleIds.has(id) && requiredModuleIds.includes(id) && isReadyToLearn(moduleTree, id, isModuleCompleted))
 		if (!nextStepId) continue
+
+		// If the candidate is better than the best we found so far, replace it.
 		const subgoalIsSkill = getModule(moduleTree, candidateId).type === 'skill'
 		const missingRequirementCount = requiredModuleIds.filter(id => !isModuleCompleted(id)).length
 		if (bestStepId && bestSubgoalIsSkill && !subgoalIsSkill) continue

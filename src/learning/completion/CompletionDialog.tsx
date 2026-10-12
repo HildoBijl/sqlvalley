@@ -1,5 +1,5 @@
-import { Box, Button, Dialog, DialogActions, DialogTitle, Stack, Typography } from '@mui/material'
-import { ArrowBack, ArrowForward, Bolt, EmojiEvents, MenuBook, Replay } from '@mui/icons-material'
+import { Box, Button, Dialog, DialogActions, DialogTitle, Typography } from '@mui/material'
+import { ArrowBack, ArrowForward, Bolt, EmojiEvents, Map, MenuBook } from '@mui/icons-material'
 
 interface CompletionDialogProps {
 	open: boolean
@@ -40,13 +40,13 @@ export function CompletionDialog({ open, onClose, title, name, onViewSummary, on
 		</DialogTitle>
 		
 		<DialogActions sx={{ px: 4, pb: 4 }}>
-			<Stack spacing={1.5} sx={{ width: '100%' }}>
-				{onViewSummary && <Button onClick={() => runAction(onViewSummary)} variant="contained" startIcon={<Bolt />} fullWidth>View summary</Button>}
-				{onViewStory && <Button onClick={() => runAction(onViewStory)} variant="contained" startIcon={<MenuBook />} fullWidth>Check out the story</Button>}
-				{onContinue && <Button onClick={() => runAction(onContinue)} variant="contained" startIcon={<ArrowForward />} fullWidth>Continue to next module</Button>}
-				<Button onClick={() => runAction(onReturnToOverview)} variant="outlined" startIcon={<ArrowBack />} fullWidth>Back to learning overview</Button>
-				<Button onClick={onClose} variant="outlined" startIcon={<Replay />} fullWidth>Stay on this module</Button>
-			</Stack>
+			<Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' }, gap: 1.5, width: '100%' }}>
+				{onViewStory && onViewSummary && <Button onClick={() => runAction(onViewStory)} variant="contained" startIcon={<MenuBook />} sx={{ gridColumn: '1 / -1' }}>Check out the story</Button>}
+				<Button onClick={() => runAction(onReturnToOverview)} variant="outlined" startIcon={<Map />} sx={{ gridColumn: onViewSummary || onViewStory ? undefined : '1 / -1' }}>Learning overview</Button>
+				{onViewSummary ? <Button onClick={() => runAction(onViewSummary)} variant="contained" startIcon={<Bolt />}>View summary</Button> : onViewStory ? <Button onClick={() => runAction(onViewStory)} variant="contained" startIcon={<MenuBook />}>Check out the story</Button> : null}
+				<Button onClick={onClose} variant="outlined" startIcon={<ArrowBack />} sx={{ gridColumn: onContinue ? undefined : '1 / -1' }}>Stay on this module</Button>
+				{onContinue && <Button onClick={() => runAction(onContinue)} variant="contained" startIcon={<ArrowForward />}>Next module</Button>}
+			</Box>
 		</DialogActions>
 	</Dialog>
 }
