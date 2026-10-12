@@ -1,36 +1,40 @@
-import { ButtonBase, useTheme } from '@mui/material';
-import { Element, Rectangle } from '@sqlvalley/drawing'
+import type { HTMLAttributes } from 'react'
+import { ButtonBase, useTheme } from '@mui/material'
+
+import { Vector } from '@step-wise/geometry'
 import type { Module } from '@step-wise/module-tree-definition'
-import { Vector } from '@step-wise/geometry';
-import { NodeCompletedMark } from './Icons/NodeCompletedMark';
-import { NodeGoalPin } from './Icons/NodeGoalPin';
-import { NodeIconBadge } from './Icons/NodeIconBadge';
-import { getNodeStyle } from '../../utils/graphics/nodeStyle';
-import { treeColors } from '../../utils/graphics/treeColors';
-import type { ModulePositionMeta } from '../../utils/positionProcessing';
-import { cardHeight, cardWidth } from '../../utils/settings';
+import { HtmlElement, Rectangle } from '@step-wise/drawing'
+
+import { cardHeight, cardWidth } from '../../utils/settings'
+import type { ModulePositionMeta } from '../../utils/positionProcessing'
+import { treeColors } from '../../utils/graphics/treeColors'
+import { getNodeStyle } from '../../utils/graphics/nodeStyle'
+
+import { NodeCompletedMark } from './Icons/NodeCompletedMark'
+import { NodeGoalPin } from './Icons/NodeGoalPin'
+import { NodeIconBadge } from './Icons/NodeIconBadge'
 
 /*
  * NodeCard component representing a concept or skill in the learning tree.
- * Renders the Rectangle with text directly inside the SVG.
+ * Renders SVG rectangles with an interactive HTML card above them.
  */
-interface NodeCardProps {
-	item: Module;
-	name: string;
-	positionData: ModulePositionMeta;
-	completed: boolean;
-	isHovered: boolean;
-	readyToLearn?: boolean;
-	isPrerequisite?: boolean;
-	isSomethingHovered?: boolean;
-	planningMode?: boolean;
-	hasGoal?: boolean;
-	isGoalNode?: boolean;
-	isOnGoalPath?: boolean;
-	onSetGoal?: () => void;
-	nextStepId?: string | null;
-	staticMode?: boolean;
-	isSelected?: boolean;
+interface NodeCardProps extends Pick<HTMLAttributes<HTMLDivElement>, 'onMouseEnter' | 'onMouseLeave' | 'onPointerDown'> {
+	item: Module
+	name: string
+	positionData: ModulePositionMeta
+	completed: boolean
+	isHovered: boolean
+	readyToLearn?: boolean
+	isPrerequisite?: boolean
+	isSomethingHovered?: boolean
+	planningMode?: boolean
+	hasGoal?: boolean
+	isGoalNode?: boolean
+	isOnGoalPath?: boolean
+	onSetGoal?: () => void
+	nextStepId?: string | null
+	staticMode?: boolean
+	isSelected?: boolean
 }
 
 export function NodeCard({
@@ -50,24 +54,25 @@ export function NodeCard({
 	nextStepId,
 	staticMode = false,
 	isSelected = false,
+	onMouseEnter,
+	onMouseLeave,
+	onPointerDown,
 }: NodeCardProps) {
-	const theme = useTheme();
-	const type = item.type;
-	const cornerRadius = type === 'concept' ? 4 : 12;
-
-
+	const theme = useTheme()
+	const type = item.type
+	const cornerRadius = type === 'concept' ? 4 : 12
 
 	const rectStart = new Vector(
 		positionData.position.x - cardWidth / 2,
 		positionData.position.y - cardHeight / 2,
-	);
+	)
 	const rectEnd = new Vector(
 		positionData.position.x + cardWidth / 2,
 		positionData.position.y + cardHeight / 2,
-	);
+	)
 
-	const iconSize = 20;
-	const checkmarkSize = 18;
+	const iconSize = 20
+	const checkmarkSize = 18
 
 	const { borderColor, fillColor, nodeOpacity, strokeWidth } = getNodeStyle({
 		planningMode,
@@ -82,118 +87,115 @@ export function NodeCard({
 		theme,
 		staticMode,
 		isSelected,
-	});
+	})
 
-	return (
-		<>
-			<Rectangle
-				dimensions={{ min: rectStart, max: rectEnd }}
-				cornerRadius={cornerRadius}
-				style={{
-					fill: theme.palette.background.paper,
-					stroke: theme.palette.divider,
-					strokeWidth: 1,
-					strokeOpacity: nodeOpacity,
-				}}
-			/>
-			<Rectangle
-				dimensions={{ min: rectStart, max: rectEnd }}
-				cornerRadius={cornerRadius}
-				style={{
-					fill: fillColor,
-					stroke: borderColor,
-					strokeWidth,
-					strokeOpacity: nodeOpacity,
-					transition: 'fill 90ms, stroke 90ms',
-				}}
-			/>
+	return <>
+		<Rectangle
+			corners={[rectStart, rectEnd]}
+			cornerRadius={cornerRadius}
+			style={{
+				fill: theme.palette.background.paper,
+				stroke: theme.palette.divider,
+				strokeWidth: 1,
+				strokeOpacity: nodeOpacity,
+			}}
+		/>
+		<Rectangle
+			corners={[rectStart, rectEnd]}
+			cornerRadius={cornerRadius}
+			style={{
+				fill: fillColor,
+				stroke: borderColor,
+				strokeWidth,
+				strokeOpacity: nodeOpacity,
+				transition: 'fill 90ms, stroke 90ms',
+			}}
+		/>
 
-			<Element
-				position={positionData.position}
-				anchor={[0, 0]}
-				passive={false}
-				style={{ opacity: nodeOpacity }}
-			>
-				<ButtonBase
-					focusRipple
-					centerRipple
-					sx={{
+		<HtmlElement
+			position={positionData.position}
+			anchor={[0, 0]}
+			ignoreMouse={false}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			onPointerDown={onPointerDown}
+			style={{ opacity: nodeOpacity, whiteSpace: 'normal' }}>
+			<ButtonBase
+				focusRipple
+				centerRipple
+				sx={{
+					width: cardWidth,
+					height: cardHeight,
+					position: 'relative',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					textAlign: 'center',
+					cursor: 'pointer',
+					borderRadius: `${cornerRadius}px`,
+					'&:hover': {
+						backgroundColor: 'action.hover',
+					},
+				}}
+				TouchRippleProps={{
+					style: {
+						opacity: 0.3,
+					},
+				}}>
+				<div
+					style={{
 						width: cardWidth,
 						height: cardHeight,
 						position: 'relative',
 						display: 'flex',
 						alignItems: 'center',
 						justifyContent: 'center',
-						textAlign: 'center',
-						cursor: 'pointer',
-						borderRadius: `${cornerRadius}px`,
-						'&:hover': {
-							backgroundColor: 'action.hover',
-						},
-					}}
-					TouchRippleProps={{
-						style: {
-							opacity: 0.3,
-						},
-					}}
-				>
-					<div
-						style={{
-							width: cardWidth,
-							height: cardHeight,
-							position: 'relative',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							pointerEvents: 'none',
-						}}
-					>
-						<NodeIconBadge type={type} iconSize={iconSize} />
+						pointerEvents: 'none',
+					}}>
+					<NodeIconBadge type={type} iconSize={iconSize} />
 
-						{completed && !isGoalNode && (
-							<NodeCompletedMark iconSize={checkmarkSize} />
-						)}
+					{completed && !isGoalNode && (
+						<NodeCompletedMark iconSize={checkmarkSize} />
+					)}
 
-						{planningMode &&
-							!isGoalNode &&
-							!completed &&
-							(!hasGoal || isHovered) && (
-								<NodeGoalPin
-									variant="set"
-									checkmarkSize={checkmarkSize}
-									onSetGoal={onSetGoal}
-								/>
-							)}
-
-						{planningMode && hasGoal && nextStepId === item.id && (
-							<NodeGoalPin variant="next-step" checkmarkSize={checkmarkSize} />
-						)}
-
-						{planningMode && isGoalNode && (
+					{planningMode &&
+						!isGoalNode &&
+						!completed &&
+						(!hasGoal || isHovered) && (
 							<NodeGoalPin
-								variant="active"
+								variant="set"
 								checkmarkSize={checkmarkSize}
 								onSetGoal={onSetGoal}
 							/>
 						)}
 
-						<div
-							style={{
-								width: cardWidth - 20,
-								textAlign: 'center',
-								fontWeight: 500,
-								fontSize: '17px',
-								color:
-									planningMode && isGoalNode
-										? treeColors.goalContrastText
-										: theme.palette.text.primary,
-							}}
-						>
-							{name}
-						</div>
+					{planningMode && hasGoal && nextStepId === item.id && (
+						<NodeGoalPin variant="next-step" checkmarkSize={checkmarkSize} />
+					)}
+
+					{planningMode && isGoalNode && (
+						<NodeGoalPin
+							variant="active"
+							checkmarkSize={checkmarkSize}
+							onSetGoal={onSetGoal}
+						/>
+					)}
+
+					<div
+						style={{
+							width: cardWidth - 20,
+							textAlign: 'center',
+							fontWeight: 500,
+							fontSize: '17px',
+							color:
+								planningMode && isGoalNode
+									? treeColors.goalContrastText
+									: theme.palette.text.primary,
+						}}>
+						{name}
 					</div>
-				</ButtonBase>
-			</Element>
-		</>
-	);
+				</div>
+			</ButtonBase>
+		</HtmlElement>
+	</>
 }

@@ -1,16 +1,17 @@
-import { Curve, Drawing } from '@sqlvalley/drawing'
-import { isReadyToLearn } from '@sqlvalley/progress'
-import type { Vector } from '@step-wise/geometry';
+import { useTheme } from '@mui/material'
+
+import type { Vector } from '@step-wise/geometry'
 import type { ModuleTree } from '@step-wise/module-tree-definition'
-import { useTheme } from '@mui/material';
+import { Curve, Drawing } from '@step-wise/drawing'
+import { isReadyToLearn } from '@sqlvalley/progress'
 
-import type { ModulePositionMeta } from '../utils/positionProcessing';
-import { resolveConnectorStyle } from '../utils/graphics/connectorStyle';
-import { useHoverState } from '../utils/graphics/mouseEvents';
-import { useGoalProgress } from '../utils/logic/useGoalProgress';
+import type { ModulePositionMeta } from '../utils/positionProcessing'
+import { resolveConnectorStyle } from '../utils/graphics/connectorStyle'
+import { useHoverState } from '../utils/graphics/mouseEvents'
+import { useGoalProgress } from '../utils/logic/useGoalProgress'
 
-import { NodeCard } from './SkillTreeComponents/NodeCard';
-import { Tooltip } from './SkillTreeComponents/Tooltip';
+import { NodeCard } from './SkillTreeComponents/NodeCard'
+import { Tooltip } from './SkillTreeComponents/Tooltip'
 
 /*
  * SkillTree component that renders the tree structure with nodes and connectors.
@@ -25,30 +26,30 @@ import { Tooltip } from './SkillTreeComponents/Tooltip';
  * @param isCompleted - Function to check if a module is completed.
  */
 interface SkillTreeProps {
-	moduleTree: ModuleTree;
-	modulePresentation: Record<string, { name: string; description: string }>;
-	modulePositions: Record<string, ModulePositionMeta>;
+	moduleTree: ModuleTree
+	modulePresentation: Record<string, { name: string; description: string }>
+	modulePositions: Record<string, ModulePositionMeta>
 	treeBounds: {
-		minX: number;
-		minY: number;
-		maxX: number;
-		maxY: number;
-		width: number;
-		height: number;
-	};
-	visiblePaths: { points: Vector[]; from: string; to: string }[];
-	isCompleted: (id: string) => boolean;
-	planningMode: boolean;
-	goalNodeId?: string | null;
-	setGoalNodeId?: (id: string | null) => void;
+		minX: number
+		minY: number
+		maxX: number
+		maxY: number
+		width: number
+		height: number
+	}
+	visiblePaths: { points: Vector[]; from: string; to: string }[]
+	isCompleted: (id: string) => boolean
+	planningMode: boolean
+	goalNodeId?: string | null
+	setGoalNodeId?: (id: string | null) => void
 	onGoalProgressChange?: (
 		completedCount: number,
 		totalCount: number,
 		nextStepName: string | null,
 		nextStepId: string | null,
-	) => void;
-	nextStepId?: string | null;
-	staticMode?: boolean;
+	) => void
+	nextStepId?: string | null
+	staticMode?: boolean
 }
 
 export function SkillTree({
@@ -65,8 +66,7 @@ export function SkillTree({
 	nextStepId,
 	staticMode,
 }: SkillTreeProps) {
-	const theme = useTheme();
-
+	const theme = useTheme()
 
 	const onNavigate = (id: string) => {
 		window.location.href = `/module/${id}`
@@ -82,7 +82,7 @@ export function SkillTree({
 		isConnectorInHoveredPath,
 		handlePointerDown,
 		handlePointerOutside,
-	} = useHoverState(moduleTree, modulePresentation, onNavigate);
+	} = useHoverState(moduleTree, modulePresentation, onNavigate)
 
 	const goalPath = useGoalProgress(
 		goalNodeId,
@@ -90,97 +90,83 @@ export function SkillTree({
 		modulePresentation,
 		isCompleted,
 		onGoalProgressChange,
-	);
+	)
 
-	return (
-		<div
-			onPointerDown={handlePointerOutside}
-			style={{
-				position: 'relative',
-				width: `${treeBounds.width}px`,
-				height: `${treeBounds.height}px`,
-				marginLeft: '35px',
-				marginTop: '35px',
-				backgroundColor: theme.palette.background.paper,
-			}}
-		>
-			<Drawing
-				width={treeBounds.width}
-				height={treeBounds.height}
-				useSvg={true}
-				useCanvas={false}
-				autoScale={false}
-			>
-				{visiblePaths.map((connector, i) => {
-					const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
-						connector,
-						planningMode,
-						goalNodeId,
-						goalPath,
-						localHoveredId,
-						isCompleted,
-						moduleTree,
-						isConnectorInHoveredPath,
-						staticMode,
-					);
+	if (treeBounds.width <= 0 || treeBounds.height <= 0) return null
 
-					return (
-						<Curve
-							key={i}
-							points={connector.points}
-							color={strokeColor}
-							size={strokeWidth}
-							curveDistance={20}
-							style={{ opacity }}
-						/>
-					);
-				})}
+	return <div
+		onPointerDown={handlePointerOutside}
+		style={{
+			position: 'relative',
+			width: `${treeBounds.width}px`,
+			height: `${treeBounds.height}px`,
+			marginLeft: '35px',
+			marginTop: '35px',
+			backgroundColor: theme.palette.background.paper,
+		}}>
+		<Drawing view={{ type: 'identity', width: treeBounds.width, height: treeBounds.height, yDirection: 'down' }}>
+			{visiblePaths.map((connector, i) => {
+				const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
+					connector,
+					planningMode,
+					goalNodeId,
+					goalPath,
+					localHoveredId,
+					isCompleted,
+					moduleTree,
+					isConnectorInHoveredPath,
+					staticMode,
+				)
 
-				{Object.values(modulePositions).map((positionData) => {
-					const item = moduleTree[positionData.id];
-					if (!item) return null;
+					return <Curve
+						key={i}
+						positions={connector.points}
+						stroke={strokeColor}
+						strokeWidth={strokeWidth}
+						smoothing={{ mode: 'around', distance: 20 }}
+						style={{ opacity }}
+					/>
+			})}
 
-					const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted);
+			{Object.values(modulePositions).map(positionData => {
+				const item = moduleTree[positionData.id]
+				if (!item) return null
 
-					return (
-						<g
-							key={item.id}
-							onMouseEnter={() => handleHoverStart(item.id)}
-							onMouseLeave={handleHoverEnd}
-							onPointerDown={(e) => {
-								e.stopPropagation();
-								const isGoal = planningMode && goalNodeId === item.id;
-								handlePointerDown(item.id, e, isGoal);
-							}}
-						>
-							<NodeCard
-								item={item}
-								name={modulePresentation[item.id]?.name ?? item.id}
-								positionData={modulePositions[item.id]}
-								completed={isCompleted(item.id)}
-								isHovered={localHoveredId === item.id}
-								readyToLearn={readyToLearn}
-								isPrerequisite={prerequisites.has(item.id)}
-								isSomethingHovered={localHoveredId !== null}
-								isSelected={selectedId === item.id}
-								planningMode={planningMode}
-								hasGoal={planningMode && !!goalNodeId}
-								isGoalNode={planningMode && goalNodeId === item.id}
-								isOnGoalPath={planningMode && goalPath.has(item.id)}
-								onSetGoal={() => {
-									if (planningMode && setGoalNodeId) {
-										setGoalNodeId(goalNodeId === item.id ? null : item.id);
-									}
-								}}
-								nextStepId={nextStepId}
-								staticMode={staticMode}
-							/>
-						</g>
-					);
-				})}
+				const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted)
 
-				<Tooltip>{tooltip}</Tooltip>
-			</Drawing>
-		</div>
-	);
+					return <NodeCard
+						key={item.id}
+						onMouseEnter={() => handleHoverStart(item.id)}
+						onMouseLeave={handleHoverEnd}
+						onPointerDown={e => {
+							e.stopPropagation()
+							const isGoal = planningMode && goalNodeId === item.id
+							handlePointerDown(item.id, e, isGoal)
+						}}
+						item={item}
+						name={modulePresentation[item.id]?.name ?? item.id}
+						positionData={modulePositions[item.id]}
+						completed={isCompleted(item.id)}
+						isHovered={localHoveredId === item.id}
+						readyToLearn={readyToLearn}
+						isPrerequisite={prerequisites.has(item.id)}
+						isSomethingHovered={localHoveredId !== null}
+						isSelected={selectedId === item.id}
+						planningMode={planningMode}
+						hasGoal={planningMode && !!goalNodeId}
+						isGoalNode={planningMode && goalNodeId === item.id}
+						isOnGoalPath={planningMode && goalPath.has(item.id)}
+						onSetGoal={() => {
+							if (planningMode && setGoalNodeId) {
+								setGoalNodeId(goalNodeId === item.id ? null : item.id)
+							}
+						}}
+						nextStepId={nextStepId}
+						staticMode={staticMode}
+					/>
+			})}
+
+			<Tooltip>{tooltip}</Tooltip>
+		</Drawing>
+	</div>
 }
