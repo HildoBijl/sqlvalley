@@ -1,9 +1,8 @@
-import { TargetBoundsDrawing, HtmlElement, Curve } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable } from '@sqlvalley/sql'
+import { TargetBoundsDrawing, Curve } from '@step-wise/drawing'
+import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Link } from '@/ui'
-import { useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -60,20 +59,20 @@ export function FigureQueryExample() {
 	const arrowMargin = 10
 
 	return <TargetBoundsDrawing targets={['table1', 'table2', 'label']} margin={5} maxWidth={800} style={{ fontSize: 16 }}>
-		<HtmlElement target="table1" position={[0, 0]} anchor="topLeft" scale={tableScale}>
+		<FigureHtml target="table1" position={[0, 0]} anchor="topLeft" scale={tableScale}>
 			<DataTable data={data1} width={1200} showPagination={false} compact />
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement target="table2" position={{ target: 'table1', anchor: 'bottom', pixelOffset: [0, arrowHeight] }} anchor="top" scale={tableScale}>
+		<FigureHtml target="table2" position={{ target: 'table1', anchor: 'bottom', pixelOffset: [0, arrowHeight] }} anchor="top" scale={tableScale}>
 			<DataTable data={data2} width={300} showPagination={false} compact />
-		</HtmlElement>
+		</FigureHtml>
 
 		<Curve positions={[
 			{ target: 'table1', anchor: 'bottom', pixelOffset: [0, arrowMargin] },
 			{ target: 'table2', anchor: 'top', pixelOffset: [0, -arrowMargin] },
 		]} stroke={themeColor} endArrow strokeWidth={2} />
-		<HtmlElement target="label" position={{ target: 'table1', anchor: 'bottom', pixelOffset: [8, arrowHeight / 2 - 4] }} anchor="left">
+		<FigureHtml target="label" position={{ target: 'table1', anchor: 'bottom', pixelOffset: [8, arrowHeight / 2 - 4] }} anchor="left">
 			<p style={{ fontSize: '0.8rem', fontStyle: 'italic', margin: 0, lineHeight: 1.4 }}>"Find the names of all employees earning<br />more than two hundred thousand per year."</p>
-		</HtmlElement>
+		</FigureHtml>
 	</TargetBoundsDrawing>
 }

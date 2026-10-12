@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react'
 
-import { TargetBoundsDrawing, HtmlElement, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { TargetBoundsDrawing, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { RelationName, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, RelationName, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -84,59 +84,59 @@ function FigureTerminologyContents({ terminology }: { terminology?: Terminology 
 	// Render the drawing.
 	return <>
 		{/* Table. */}
-		<HtmlElement target="table" position={[0, 0]} anchor="topLeft" scale={0.8} behind>
+		<FigureHtml target="table" position={[0, 0]} anchor="topLeft" scale={0.8} behind>
 			<DataTable data={data} width={650} showPagination={false} compact />
-		</HtmlElement>
+		</FigureHtml>
 
 		{table && header && cell ? <>
 			{/* Table marker. */}
-			<HtmlElement target="tableLabel" position={[table.midpoint.x, table.min.y - 38]} anchor="bottom"><span style={labelStyle}>{terminology?.table}</span></HtmlElement>
+			<FigureHtml target="tableLabel" position={[table.midpoint.x, table.top - 38]} anchor="bottom"><span style={labelStyle}>{terminology?.table}</span></FigureHtml>
 			<Curve positions={[
-				table.min.add([0, -40 + r]),
-				table.min.add([0, -40]),
-				[table.max.x, table.min.y - 40],
-				[table.max.x, table.min.y - 40 + r],
+				table.topLeft.add([0, -40 + r]),
+				table.topLeft.add([0, -40]),
+				[table.right, table.top - 40],
+				[table.right, table.top - 40 + r],
 			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Contents marker. */}
-			<HtmlElement target="contentsLabel" position={[table.min.x - 80, (header.max.y + table.max.y) / 2 + 1]} anchor="right"><span style={labelStyle}>{terminology?.contents}</span></HtmlElement>
+			<FigureHtml target="contentsLabel" position={[table.left - 80, (header.bottom + table.bottom) / 2 + 1]} anchor="right"><span style={labelStyle}>{terminology?.contents}</span></FigureHtml>
 			<Curve positions={[
-				[table.min.x - 75 + r, header.max.y + 2],
-				[table.min.x - 75, header.max.y + 2],
-				[table.min.x - 75, table.max.y],
-				[table.min.x - 75 + r, table.max.y],
+				[table.left - 75 + r, header.bottom + 2],
+				[table.left - 75, header.bottom + 2],
+				[table.left - 75, table.bottom],
+				[table.left - 75 + r, table.bottom],
 			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Column marker. */}
-			<HtmlElement target="columnLabel" position={[cell.midpoint.x, table.min.y - 12]} anchor="bottom"><span style={labelStyle}>{terminology?.column}</span></HtmlElement>
+			<FigureHtml target="columnLabel" position={[cell.midpoint.x, table.top - 12]} anchor="bottom"><span style={labelStyle}>{terminology?.column}</span></FigureHtml>
 			<Curve positions={[
-				[cell.min.x, table.min.y - 13 + r],
-				[cell.min.x, table.min.y - 13],
-				[cell.max.x, table.min.y - 13],
-				[cell.max.x, table.min.y - 13 + r],
+				[cell.left, table.top - 13 + r],
+				[cell.left, table.top - 13],
+				[cell.right, table.top - 13],
+				[cell.right, table.top - 13 + r],
 			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Column names marker. */}
-			<HtmlElement target="columnNamesLabel" position={[table.min.x - 25, header.midpoint.y - 3]} anchor="right"><span style={labelStyle}>{terminology?.columnNames}</span></HtmlElement>
+			<FigureHtml target="columnNamesLabel" position={[table.left - 25, header.midpoint.y - 3]} anchor="right"><span style={labelStyle}>{terminology?.columnNames}</span></FigureHtml>
 			<Curve positions={[
-				[table.min.x - 20 + r, header.min.y],
-				[table.min.x - 20, header.min.y],
-				[table.min.x - 20, header.max.y],
-				[table.min.x - 20 + r, header.max.y],
+				[table.left - 20 + r, header.top],
+				[table.left - 20, header.top],
+				[table.left - 20, header.bottom],
+				[table.left - 20 + r, header.bottom],
 			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Row marker. */}
-			<HtmlElement target="rowLabel" position={[table.min.x - 25, cell.midpoint.y]} anchor="right"><span style={labelStyle}>{terminology?.row}</span></HtmlElement>
+			<FigureHtml target="rowLabel" position={[table.left - 25, cell.midpoint.y]} anchor="right"><span style={labelStyle}>{terminology?.row}</span></FigureHtml>
 			<Curve positions={[
-				[table.min.x - 20 + r, cell.min.y],
-				[table.min.x - 20, cell.min.y],
-				[table.min.x - 20, cell.max.y],
-				[table.min.x - 20 + r, cell.max.y],
+				[table.left - 20 + r, cell.top],
+				[table.left - 20, cell.top],
+				[table.left - 20, cell.bottom],
+				[table.left - 20 + r, cell.bottom],
 			]} smoothing={{ distance: r }} stroke={themeColor} strokeWidth={2} />
 
 			{/* Cell marker. */}
-			<HtmlElement target="cellLabel" position={[cell.max.x - 8, cell.min.y + 2]} anchor="bottomRight"><span style={labelStyle}>{terminology?.cell}</span></HtmlElement>
-			<Rectangle corners={[cell.min, cell.max]} cornerRadius={r} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} />
+			<FigureHtml target="cellLabel" position={[cell.right - 8, cell.top + 2]} anchor="bottomRight"><span style={labelStyle}>{terminology?.cell}</span></FigureHtml>
+			<Rectangle corners={[cell.topLeft, cell.bottomRight]} cornerRadius={r} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} />
 		</> : null}
 	</>
 }

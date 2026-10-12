@@ -1,12 +1,9 @@
-import { Box } from '@mui/material'
-
-import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
+import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { Vector } from '@step-wise/geometry'
-import { SQLDisplay, DataTable } from '@sqlvalley/sql'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { SQLDisplay, DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par } from '@/ui'
-import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -27,11 +24,13 @@ LIMIT 3
 OFFSET 1;`
 
 function FigureSorting() {
-	return <MeasuredDrawing targets={['query', 'table1', 'table2']}
+	return <MeasuredDrawing
+		targets={['query', 'table1', 'table2']}
 		calculateView={({ query, table1, table2 }) => ({
 			type: 'identity', width: 700,
 			height: query.height + table1.height + table2.height + 40,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureSortingContents />
 	</MeasuredDrawing>
 }
@@ -45,19 +44,23 @@ function FigureSortingContents() {
 	const data2 = useQueryResult(db, query)
 
 	// Obtain bounds of elements.
-	const [eRef, eBounds, editor] = useFigureTarget('query')
-	const [t1Ref, t1Bounds] = useFigureTarget('table1')
-	const [t2Ref, t2Bounds] = useFigureTarget('table2')
+	const eBounds = useDrawingTargetBounds('query')
+	const t1Bounds = useDrawingTargetBounds('table1')
+	const t2Bounds = useDrawingTargetBounds('table2')
 
 	// Extract heights.
 	const editorHeight = eBounds?.height ?? 200
 	const t1Height = t1Bounds?.height ?? 400
 
 	// Find bounds of query parts.
-	const ascBounds = useFigureTextBounds('ascBounds', editor, 'ASC')
-	const descBounds = useFigureTextBounds('descBounds', editor, 'DESC')
-	const limitBounds = useFigureTextBounds('limitBounds', editor, 'LIMIT')
-	const offsetBounds = useFigureTextBounds('offsetBounds', editor, ';')
+	useDrawingTextTarget('ascBounds', 'query', 'ASC')
+	const ascBounds = useDrawingTargetBounds('ascBounds')
+	useDrawingTextTarget('descBounds', 'query', 'DESC')
+	const descBounds = useDrawingTargetBounds('descBounds')
+	useDrawingTextTarget('limitBounds', 'query', 'LIMIT')
+	const limitBounds = useDrawingTargetBounds('limitBounds')
+	useDrawingTextTarget('offsetBounds', 'query', ';')
+	const offsetBounds = useDrawingTargetBounds('offsetBounds')
 
 	// Define position data.
 	const offset = 28 // Between text lines.
@@ -69,15 +72,15 @@ function FigureSortingContents() {
 	// Render the figure.
 	return <>
 		{/* Query */}
-		<HtmlElement ref={eRef} position={[40, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+		<FigureHtml target="query" position={[40, 0]} anchor={[-1, -1]} behind>
 			<SQLDisplay>{query}</SQLDisplay>
-		</HtmlElement>
+		</FigureHtml>
 
 		{/* Explainer text */}
-		<HtmlElement position={b1} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ textWrap: 'nowrap' }}>Sort ascending by number of employees,</span></HtmlElement>
-		<HtmlElement position={b2} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ textWrap: 'nowrap' }}>and on equality, sort descending by budget.</span></HtmlElement>
-		<HtmlElement position={b3} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ textWrap: 'nowrap' }}>Then only pick the first three rows,</span></HtmlElement>
-		<HtmlElement position={b4} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ textWrap: 'nowrap' }}>after having skipped the first row.</span></HtmlElement>
+		<FigureHtml position={b1} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>Sort ascending by number of employees,</span></FigureHtml>
+		<FigureHtml position={b2} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>and on equality, sort descending by budget.</span></FigureHtml>
+		<FigureHtml position={b3} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>Then only pick the first three rows,</span></FigureHtml>
+		<FigureHtml position={b4} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>after having skipped the first row.</span></FigureHtml>
 
 		{eBounds ? <>
 			{/* Arrows to explainer text */}
@@ -87,23 +90,19 @@ function FigureSortingContents() {
 			{offsetBounds && <Curve positions={[offsetBounds.middleRight.add([5, 1]), offsetBounds.middleRight.add([123, 1]), b4.add([-22, 0]), b4.add([-4, 0])]} endArrow={true} stroke={themeColor} strokeWidth={2} smoothing={{ ratio: 1 }} />}
 
 			{/* Table 1 */}
-			<HtmlElement position={[0, editorHeight + 20]} anchor={[-1, -1]} scale={0.7} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-				<Box sx={{ width: 460 / 0.75 }}>
-					<DataTable ref={t1Ref} data={data1} showPagination={false} compact />
-				</Box>
-			</HtmlElement>
+			<FigureHtml target="table1" position={[0, editorHeight + 20]} anchor={[-1, -1]} scale={0.7}>
+				<DataTable data={data1} showPagination={false} compact width={460 / 0.75} />
+			</FigureHtml>
 
 			{t1Bounds ? <>
 				{/* Table 2. */}
-				<HtmlElement position={[700, editorHeight + 20 + t1Height + 20]} anchor={[1, -1]} scale={0.7} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-					<Box sx={{ width: 460 / 0.75 }}>
-						<DataTable ref={t2Ref} data={data2} showPagination={false} compact />
-					</Box>
-				</HtmlElement>
+				<FigureHtml target="table2" position={[700, editorHeight + 20 + t1Height + 20]} anchor={[1, -1]} scale={0.7}>
+					<DataTable data={data2} showPagination={false} compact width={460 / 0.75} />
+				</FigureHtml>
 
 				{/* Arrow between tables */}
 				{t2Bounds ? <>
-					<Curve positions={[[(t1Bounds.left + t2Bounds.left) / 2, t1Bounds.top + 10], [(t1Bounds.left + t2Bounds.left) / 2, t2Bounds.midpoint.y], t2Bounds.middleLeft.add([-10, 0])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+					<Curve positions={[[(t1Bounds.left + t2Bounds.left) / 2, t1Bounds.bottom + 10], [(t1Bounds.left + t2Bounds.left) / 2, t2Bounds.midpoint.y], t2Bounds.middleLeft.add([-10, 0])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
 				</> : null}
 			</> : null}
 		</> : null}

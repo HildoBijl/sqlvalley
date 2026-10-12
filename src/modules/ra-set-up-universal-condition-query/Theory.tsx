@@ -2,12 +2,11 @@ import type { ComponentProps } from 'react'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 
-import { MeasuredDrawing, HtmlElement } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable } from '@sqlvalley/sql'
+import { MeasuredDrawing, useDrawingTargetBounds } from '@step-wise/drawing'
+import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM } from '@/ui'
-import { useFigureTarget, RA, IRA, RAQueryFigure, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, RA, IRA, RAQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -128,22 +127,24 @@ const rows: RowData[] = [
 ]
 
 export function ChecklistTable(props: ComponentProps<typeof ChecklistTableContents>) {
-	return <MeasuredDrawing targets={['table']}
+	return <MeasuredDrawing
+		targets={['table']}
 		calculateView={({ table }) => ({
 			type: 'identity', width: 500 * (props.scale ?? 0.8),
 			height: table.height,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<ChecklistTableContents {...props} />
 	</MeasuredDrawing>
 }
 
 function ChecklistTableContents({ all = false, flip = false, scale = 0.8 }) {
-	const [tRef] = useFigureTarget('table')
+
 	const tableWidth = 500
 
 	return <>
-		<HtmlElement scale={scale} anchor={[-1, -1]} position={[0, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<TableContainer ref={tRef} component={Paper} sx={{ width: tableWidth }}>
+		<FigureHtml target="table" scale={scale} anchor={[-1, -1]} position={[0, 0]}>
+			<TableContainer component={Paper} sx={{ width: tableWidth }}>
 				<Table size="small">
 					<TableHead>
 						<TableRow>
@@ -178,12 +179,13 @@ function ChecklistTableContents({ all = false, flip = false, scale = 0.8 }) {
 					</TableBody>
 				</Table>
 			</TableContainer>
-		</HtmlElement>
+		</FigureHtml>
 	</>
 }
 
 function FigureDivisionTable() {
-	return <MeasuredDrawing targets={['table1', 'table2', 'table3']}
+	return <MeasuredDrawing
+		targets={['table1', 'table2', 'table3']}
 		calculateView={({ table1, table2, table3 }) => ({
 			type: 'identity', width: 680,
 			height: Math.max(table1.height, table2.height, table3.height),
@@ -198,9 +200,9 @@ function FigureDivisionTableContents() {
 	const d2 = useQueryResult(db, 'SELECT DISTINCT status FROM contracts;')
 	const d3 = useQueryResult(db, 'SELECT DISTINCT e_id FROM contracts EXCEPT SELECT DISTINCT e_id FROM (SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts);')
 
-	const [t1Ref, t1Bounds] = useFigureTarget('table1')
-	const [t2Ref, t2Bounds] = useFigureTarget('table2')
-	const [t3Ref, t3Bounds] = useFigureTarget('table3')
+	const t1Bounds = useDrawingTargetBounds('table1')
+	const t2Bounds = useDrawingTargetBounds('table2')
+	const t3Bounds = useDrawingTargetBounds('table3')
 	const height = Math.max(t1Bounds?.height || 200, t2Bounds?.height || 200, t3Bounds?.height || 200)
 	const w1 = 240
 	const w2 = 100
@@ -209,26 +211,20 @@ function FigureDivisionTableContents() {
 	const w5 = 100
 
 	return <>
-		<HtmlElement position={[0, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: w1 }}>
-				<DataTable ref={t1Ref} data={d1} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table1" position={[0, 0]} anchor={[-1, -1]}>
+			<DataTable data={d1} showPagination={false} compact width={w1} />
+		</FigureHtml>
 
-		<HtmlElement position={[w1 + w2 / 2, height / 2]} scale={2} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '1em' }}>Ã·</span></HtmlElement>
+		<FigureHtml position={[w1 + w2 / 2, height / 2]} scale={2}><span style={{ fontWeight: 500, fontSize: '1em' }}>Ã·</span></FigureHtml>
 
-		<HtmlElement position={[w1 + w2, height / 2]} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: w3 }}>
-				<DataTable ref={t2Ref} data={d2} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table2" position={[w1 + w2, height / 2]} anchor={[-1, 0]}>
+			<DataTable data={d2} showPagination={false} compact width={w3} />
+		</FigureHtml>
 
-		<HtmlElement position={[w1 + w2 + w3 + w4 / 2, height / 2]} scale={2} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '1em' }}>=</span></HtmlElement>
+		<FigureHtml position={[w1 + w2 + w3 + w4 / 2, height / 2]} scale={2}><span style={{ fontWeight: 500, fontSize: '1em' }}>=</span></FigureHtml>
 
-		<HtmlElement position={[w1 + w2 + w3 + w4, height / 2]} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: w5 }}>
-				<DataTable ref={t3Ref} data={d3} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table3" position={[w1 + w2 + w3 + w4, height / 2]} anchor={[-1, 0]}>
+			<DataTable data={d3} showPagination={false} compact width={w5} />
+		</FigureHtml>
 	</>
 }

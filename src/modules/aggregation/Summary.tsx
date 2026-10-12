@@ -1,11 +1,8 @@
-import { Box } from '@mui/material'
-
-import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable } from '@sqlvalley/sql'
+import { MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Term } from '@/ui'
-import { useFigureTarget, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -22,7 +19,8 @@ export function Summary() {
 }
 
 function FigureAggregation() {
-	return <MeasuredDrawing targets={['table1', 'table2']}
+	return <MeasuredDrawing
+		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({
 			type: 'identity', width: 900,
 			height: table1.height + 20 + table2.height,
@@ -37,8 +35,8 @@ function FigureAggregationContents() {
 	const dataFull = useQueryResult(db, 'SELECT * FROM quarterly_performance;')
 	const dataAggregated = useQueryResult(db, 'SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance GROUP BY fiscal_year;')
 
-	const [t1Ref, t1Bounds] = useFigureTarget('table1')
-	const [t2Ref, t2Bounds] = useFigureTarget('table2')
+	const t1Bounds = useDrawingTargetBounds('table1')
+	const t2Bounds = useDrawingTargetBounds('table2')
 	const w1 = 900
 	const w2 = 500
 	const delta = 20
@@ -47,19 +45,15 @@ function FigureAggregationContents() {
 	const h2 = t2Bounds?.height ?? 200
 
 	return <>
-		<HtmlElement position={[0, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: w1 }}>
-				<DataTable ref={t1Ref} data={dataFull} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table1" position={[0, 0]} anchor={[-1, -1]}>
+			<DataTable data={dataFull} showPagination={false} compact width={w1} />
+		</FigureHtml>
 
-		<HtmlElement position={[w1, h1 + delta]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: w2 }}>
-				<DataTable ref={t2Ref} data={dataAggregated} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table2" position={[w1, h1 + delta]} anchor={[1, -1]}>
+			<DataTable data={dataAggregated} showPagination={false} compact width={w2} />
+		</FigureHtml>
 
 		<Curve positions={[[(w1 - w2) / 2, h1 + arrowMargin], [(w1 - w2) / 2, h1 + delta + h2 / 2], [w1 - w2 - arrowMargin, h1 + delta + h2 / 2]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-		<HtmlElement position={[(w1 - w2) / 2 + 80, h1 + delta + h2 / 2 - 2]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '1em', color: themeColor }}>Aggregate by year</span></HtmlElement>
+		<FigureHtml position={[(w1 - w2) / 2 + 80, h1 + delta + h2 / 2 - 2]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '1em', color: themeColor }}>Aggregate by year</span></FigureHtml>
 	</>
 }

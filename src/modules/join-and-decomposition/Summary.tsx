@@ -1,11 +1,8 @@
-import { Box } from '@mui/material'
-
-import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
-import { ISQL, DataTable } from '@sqlvalley/sql'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { ISQL, DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { useFigureTarget, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -27,11 +24,13 @@ export function Summary() {
 }
 
 function FigureJoinAndDecomposition() {
-	return <MeasuredDrawing targets={['table1', 'table2', 'table3']}
+	return <MeasuredDrawing
+		targets={['table1', 'table2', 'table3']}
 		calculateView={({ table1, table2, table3 }) => ({
 			type: 'identity', width: 800,
 			height: table1.height + table2.height + table3.height + 52,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureJoinAndDecompositionContents />
 	</MeasuredDrawing>
 }
@@ -47,9 +46,9 @@ function FigureJoinAndDecompositionContents() {
 	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d JOIN employees e ON d.manager_id = e.e_id;`)
 
 	// Set up reference to the table.
-	const [t1Ref, t1Bounds] = useFigureTarget('table1')
-	const [t2Ref, t2Bounds] = useFigureTarget('table2')
-	const [t3Ref] = useFigureTarget('table3')
+	const t1Bounds = useDrawingTargetBounds('table1')
+	const t2Bounds = useDrawingTargetBounds('table2')
+
 	const x = 80
 	const delta = 20 // The space between the two arrows.
 	const y1 = 20 + (t1Bounds?.height ?? 160) - 28
@@ -58,33 +57,27 @@ function FigureJoinAndDecompositionContents() {
 	const width = 800
 
 	return <>
-		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
-		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 480 / 0.6 }}>
-				<DataTable data={data1} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
+		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+			<DataTable data={data1} showPagination={false} compact width={480 / 0.6} />
+		</FigureHtml>
 
 		{t1Bounds ? <>
-			<HtmlElement position={[790, y1 - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
-			<HtmlElement ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-				<Box sx={{ width: (width - x) / 0.6 }}>
-					<DataTable data={data2} showPagination={false} compact />
-				</Box>
-			</HtmlElement>
+			<FigureHtml position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
+			<FigureHtml target="table2" position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
+				<DataTable data={data2} showPagination={false} compact width={(width - x) / 0.6} />
+			</FigureHtml>
 
 			{t2Bounds ? <>
 				<Curve positions={[[width / 2 - delta / 2, y2 + 4], [width / 2 - delta / 2, y3 - 4]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-				<HtmlElement position={[width / 2 - delta / 2 - 6, (y2 + y3) / 2 - 4]} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Join</span></HtmlElement>
+				<FigureHtml position={[width / 2 - delta / 2 - 6, (y2 + y3) / 2 - 4]} anchor={[1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Join</span></FigureHtml>
 
 				<Curve positions={[[width / 2 + delta / 2, y3 - 4], [width / 2 + delta / 2, y2 + 4]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-				<HtmlElement position={[width / 2 + delta / 2 + 6, (y2 + y3) / 2 + 4]} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Decomposition</span></HtmlElement>
+				<FigureHtml position={[width / 2 + delta / 2 + 6, (y2 + y3) / 2 + 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Decomposition</span></FigureHtml>
 
-				<HtmlElement ref={t3Ref} position={[0, y3]} anchor={[-1, -1]} scale={0.45} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-					<Box sx={{ width: width / 0.45 }}>
-						<DataTable data={data3} showPagination={false} compact />
-					</Box>
-				</HtmlElement>
+				<FigureHtml target="table3" position={[0, y3]} anchor={[-1, -1]} scale={0.45}>
+					<DataTable data={data3} showPagination={false} compact width={width / 0.45} />
+				</FigureHtml>
 			</> : null}
 		</> : null}
 	</>

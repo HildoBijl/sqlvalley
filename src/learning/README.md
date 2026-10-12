@@ -2,6 +2,7 @@
 
 Educational tools that do not depend on the module tree. Import public components and types from `@/learning`.
 
+- `FigureHtml.tsx`: wraps the drawing toolbox's `HtmlElement` with pointer events enabled, normal whitespace, and content-sized width. All props, including refs, pass through; explicit styles and `ignoreMouse` override the defaults.
 - `notation`: relation names, primary and foreign keys, relational algebra (`RA`/`IRA`), and Datalog (`DL`/`IDL`). These components remain independent so their presentation can evolve separately.
 - `ManualExerciseSet.tsx`: arranges manually authored exercises and their solutions using the shared `ExerciseSection` from `@sqlvalley/input-exercise-components`, with closely spaced problem and solution panels and a white solution background.
 - `layout`: `LearningHeader` and `LearningTabs`. Tabs receive configuration, including optional `align: 'end'`, without interpreting tab names.
@@ -11,7 +12,7 @@ Educational tools that do not depend on the module tree. Import public component
 - `dataExplorer`: `DataExplorer` displays all rows using the shared `DataTable` with `controls` enabled for sorting and filtering, without a toolbar and schema information read directly from SQLite. Its small/full dataset selector shares the persisted practice setting.
 - `queryFigures`: `TableQueryFigure`, `SQLQueryFigure`, `RAQueryFigure`, and `DLQueryFigure` display supplied queries and their results. They use measured drawings from `@step-wise/drawing` to size figures from named targets. `TableQueryFigure` uses `TargetBoundsDrawing` to encompass its table and optional title, with a 5px outer margin. `useTheoryPageDatabase` reads the original small grading dataset independently of user edits. These tools do not select curriculum modules.
 
-`figureTargets.ts` registers HTML elements and text annotations with `@step-wise/drawing`, tracking replaced table roots and asynchronously rendered editor/table text. Use these hooks inside a drawing; keep each figure's layout in its module.
+Figures register containers with `FigureHtml target` and descendant text with `useDrawingTextTarget` from `@step-wise/drawing`. Read direction-aware drawing-coordinate bounds with `useDrawingTargetBounds`. Keep each figure's layout in its module.
 
 General document formatting, notices, loading screens, and theme utilities live in `@/ui`.
 

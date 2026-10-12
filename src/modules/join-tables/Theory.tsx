@@ -1,11 +1,8 @@
-import { Box } from '@mui/material'
-
-import { MeasuredDrawing, HtmlElement, Rectangle } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable, ISQL } from '@sqlvalley/sql'
+import { MeasuredDrawing, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { DataTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@/ui'
-import { useFigureTarget, useFigureTextBounds, SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 import { adjustedManagerId, addedManagerId, adjustedDepartments, FigureTwoTablesAdjusted } from '../join-and-decomposition/Theory'
 
@@ -123,11 +120,13 @@ ON d.manager_id = e.e_id`} actualQuery={`SELECT * FROM (${adjustedDepartments}) 
 }
 
 function FigureNaturalJoinAdjustedTables() {
-	return <MeasuredDrawing targets={['table1', 'table2']}
+	return <MeasuredDrawing
+		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({
 			type: 'identity', width: 800,
 			height: table1.height + table2.height + 35,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureNaturalJoinAdjustedTablesContents />
 	</MeasuredDrawing>
 }
@@ -142,29 +141,27 @@ function FigureNaturalJoinAdjustedTablesContents() {
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 
 	// Set up reference to the table.
-	const [t1Ref, t1Bounds, table1] = useFigureTarget('table1')
-	const [t2Ref, , table2] = useFigureTarget('table2')
-	const textNode1Bounds = useFigureTextBounds('textNode1Bounds', table1, 'e_id', { index: 0, parentDepth: 1 })
-	const textNode2Bounds = useFigureTextBounds('textNode2Bounds', table2, 'e_id', { index: 0, parentDepth: 1 })
+	const t1Bounds = useDrawingTargetBounds('table1')
+
+	useDrawingTextTarget('textNode1Bounds', 'table1', 'e_id', { index: 0, parentDepth: 1 })
+	const textNode1Bounds = useDrawingTargetBounds('textNode1Bounds')
+	useDrawingTextTarget('textNode2Bounds', 'table2', 'e_id', { index: 0, parentDepth: 1 })
+	const textNode2Bounds = useDrawingTargetBounds('textNode2Bounds')
 	const x = 80
 	const y1 = 20 + (t1Bounds?.height ?? 160) + 15
 	const width = 800
 
 	return <>
-		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
-		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 480 / 0.6 }}>
-				<DataTable data={data1} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
+		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+			<DataTable data={data1} showPagination={false} compact width={480 / 0.6} />
+		</FigureHtml>
 
 		{t1Bounds ? <>
-			<HtmlElement position={[790, y1 - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
-			<HtmlElement ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-				<Box sx={{ width: (width - x) / 0.6 }}>
-					<DataTable data={data2} showPagination={false} compact />
-				</Box>
-			</HtmlElement>
+			<FigureHtml position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
+			<FigureHtml target="table2" position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
+				<DataTable data={data2} showPagination={false} compact width={(width - x) / 0.6} />
+			</FigureHtml>
 		</> : null}
 
 		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}

@@ -1,10 +1,10 @@
 import { type ComponentProps, useCallback } from 'react'
-import { Box } from '@mui/material'
 
-import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, HtmlElement, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
+import { FigureHtml } from '../FigureHtml'
 import { useTheoryPageDatabase } from '../useTheoryPageDatabase'
 
 const targets = ['query', 'table'] as const
@@ -19,7 +19,10 @@ export function SQLQueryFigure({ query = '', actualQuery = '', below = false, ta
 		return { type: 'identity', width: Math.ceil(below ? Math.max(we, wt) : we + gap + wt), height: Math.ceil(below ? he + gap + ht : Math.max(he, ht)) }
 	}, [below, arrowLength, arrowRadius, delta])
 
-	return <MeasuredDrawing targets={targets} calculateView={calculateView} style={{ fontSize: 16 }}>
+	return <MeasuredDrawing
+		targets={targets}
+		calculateView={calculateView}
+		style={{ fontSize: 16 }}>
 		<SQLQueryFigureContents query={query} actualQuery={actualQuery} below={below} tableWidth={tableWidth} tableScale={tableScale} delta={delta} arrowLength={arrowLength} arrowRadius={arrowRadius} />
 	</MeasuredDrawing>
 }
@@ -47,24 +50,22 @@ function SQLQueryFigureContents({ query, actualQuery, below, tableWidth, tableSc
 	// Determine the arrow coordinates.
 	const arrowPoints = eBounds && tBounds && (arrowBetween ? (
 		below
-			? [[Math.min(eBounds.midpoint.x, tBounds.midpoint.x), eBounds.top + 4], [Math.min(eBounds.midpoint.x, tBounds.midpoint.x), ty - 4]]
+			? [[Math.min(eBounds.midpoint.x, tBounds.midpoint.x), eBounds.bottom + 4], [Math.min(eBounds.midpoint.x, tBounds.midpoint.x), ty - 4]]
 			: [[eBounds.right + 4, Math.min(eBounds.midpoint.y, tBounds.midpoint.y)], [tx - 4, Math.min(eBounds.midpoint.y, tBounds.midpoint.y)]]
 	) : (
 		below
 			? [eBounds.middleRight.add([4, 0]), [eBounds.right + arrowRadius, eBounds.midpoint.y], [eBounds.right + arrowRadius, ty - 4]]
-			: [eBounds.topMiddle.add([0, 4]), [eBounds.midpoint.x, eBounds.top + arrowRadius], [tx - 4, eBounds.top + arrowRadius]]
+			: [eBounds.bottomMiddle.add([0, 4]), [eBounds.midpoint.x, eBounds.bottom + arrowRadius], [tx - 4, eBounds.bottom + arrowRadius]]
 	))
 
 	return <>
-		<HtmlElement target="query" position={[0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ width: 'max-content', whiteSpace: 'normal' }}>
+		<FigureHtml target="query" position={[0, 0]} anchor={[-1, -1]} behind>
 			<SQLDisplay>{query}</SQLDisplay>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind ignoreMouse={false} style={{ whiteSpace: 'normal' }}>
-			<Box sx={{ width: tableWidth / tableScale }}>
-				<DataTable data={data} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind>
+			<DataTable data={data} showPagination={false} compact width={tableWidth / tableScale} />
+		</FigureHtml>
 
 		{arrowPoints ? <Curve positions={arrowPoints} stroke={themeColor} strokeWidth={2} smoothing={{ distance: arrowRadius }} endArrow /> : null}
 	</>

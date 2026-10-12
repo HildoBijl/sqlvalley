@@ -1,8 +1,8 @@
-import { Drawing, HtmlElement } from '@step-wise/drawing'
+import { Drawing } from '@step-wise/drawing'
 import { ISQL } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, Info } from '@/ui'
-import { SQLQueryFigure } from '@/learning'
+import { FigureHtml, SQLQueryFigure } from '@/learning'
 
 export function Summary() {
 	return <Page>
@@ -54,295 +54,295 @@ function FigureProcessingCommands() {
 
 	return <Drawing view={{ type: 'identity', width: w, height }} maxWidth={w}>
 		{/* Numbers */}
-		<HtmlElement position={[xm1, 0]} anchor={[0, -1]} behind>
+		<FigureHtml position={[xm1, 0]} anchor={[0, -1]} behind>
 			<span style={titleStyle}>Numbers</span>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight]} anchor={[-1, 0]} behind>
 			<span style={headerStyle}>Operation</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight]} anchor={[0, 0]} behind>
 			<span style={headerStyle}>Example</span>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight]} anchor={[0, 0]} behind>
 			<span style={headerStyle}>Result</span>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 0]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 0]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Addition</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
 			<ISQL>5 + 2</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
 			<ISQL>7</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 1]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 1]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Subtraction</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
 			<ISQL>5 - 2</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
 			<ISQL>3</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 2]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 2]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Multiplication</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
 			<ISQL>5 * 2</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
 			<ISQL>10</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 3]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 3]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Division</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
 			<ISQL>5.0 / 2</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
 			<ISQL>2.5</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 4]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 4]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Modulo</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
 			<ISQL>5 % 2</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
 			<ISQL>1</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 5]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 5]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Rounding</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>ROUND(3.14159)</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>3</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 6]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 6]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Rounding</span>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
 			<ISQL>ROUND(3.14159, 2)</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
 			<ISQL>3.14</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 7]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 7]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Maximum</span>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
 			<ISQL>GREATEST(5, 2)</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
 			<ISQL>5</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 8]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 8]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Minimum</span>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
 			<ISQL>LEAST(5, 2)</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
 			<ISQL>2</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 9]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 9]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Absolute</span>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
 			<ISQL>ABS(-5)</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
 			<ISQL>5</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x11, titleHeight + headerHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Power</span>
-		</HtmlElement>
-		<HtmlElement position={[x1i, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x12, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>POWER(10, 3)</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x13, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>1000</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
 		{/* Text */}
-		<HtmlElement position={[xm2, 0]} anchor={[0, -1]} behind>
+		<FigureHtml position={[xm2, 0]} anchor={[0, -1]} behind>
 			<span style={titleStyle}>Text</span>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight]} anchor={[-1, 0]} behind>
 			<span style={headerStyle}>Operation</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight]} anchor={[0, 0]} behind>
 			<span style={headerStyle}>Example</span>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight]} anchor={[0, 0]} behind>
 			<span style={headerStyle}>Result</span>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 0]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 0]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Concatenation</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
 			<ISQL>'SQL' || 'Valley'</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 0]} anchor={[0, 0]} behind>
 			<ISQL>'SQLValley'</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 1]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 1]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Trimming</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
 			<ISQL>TRIM('   user input  ')</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 1]} anchor={[0, 0]} behind>
 			<ISQL>'user input'</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 2]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 2]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Upper case</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
 			<ISQL>UPPER('SQL Valley')</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 2]} anchor={[0, 0]} behind>
 			<ISQL>'SQL VALLEY'</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 3]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 3]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Lower case</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
 			<ISQL>LOWER('SQL Valley')</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 3]} anchor={[0, 0]} behind>
 			<ISQL>'sql valley'</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 4]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 4]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Replace</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
 			<ISQL>REPLACE('SQL', 'QL', 'equel')</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 4]} anchor={[0, 0]} behind>
 			<ISQL>'Sequel'</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 6]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 6]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Text part</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
 			<ISQL>SUBSTRING('SQL Valley', 3, 5)</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
 			<ISQL>'L Val'</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 5]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 5]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Search</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>INSTR('SQL Valley', 'Val')</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>5</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 
 		{/* Fallback values */}
-		<HtmlElement position={[xm2, lineHeight * 10]} anchor={[0, -1]} behind>
+		<FigureHtml position={[xm2, lineHeight * 10]} anchor={[0, -1]} behind>
 			<span style={titleStyle}><ISQL>NULL</ISQL> values</span>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
 			<span style={headerStyle}>Operation</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<span style={headerStyle}>Example</span>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<span style={headerStyle}>Result</span>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[x21, titleHeight + headerHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
 			<span style={operationStyle}>Fallback value</span>
-		</HtmlElement>
-		<HtmlElement position={[x22, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>COALESCE(NULL, NULL, 'Default')</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x2i, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
-		</HtmlElement>
-		<HtmlElement position={[x23, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>'Default'</ISQL>
-		</HtmlElement>
+		</FigureHtml>
 	</Drawing>
 }

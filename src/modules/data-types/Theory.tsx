@@ -1,12 +1,10 @@
 import { Fragment } from 'react'
-import { Box } from '@mui/material'
 
-import { type Position, MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable, ISQL } from '@sqlvalley/sql'
+import { type Position, MeasuredDrawing, Curve, useDrawingTextTarget } from '@step-wise/drawing'
+import { DataTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	const now = new Date()
@@ -62,11 +60,13 @@ export function Theory() {
 }
 
 export function FigureDataTypeDemo() {
-	return <MeasuredDrawing targets={['table']}
+	return <MeasuredDrawing
+		targets={['table']}
 		calculateView={({ table }) => ({
 			type: 'identity', width: 800,
 			height: table.height + 73,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureDataTypeDemoContents />
 	</MeasuredDrawing>
 }
@@ -80,11 +80,10 @@ function FigureDataTypeDemoContents() {
 	console.log(data)
 
 	// Find the bounds of the table.
-	const [tableRef, , table] = useFigureTarget('table')
 
-	useFigureTextBounds('numberColumn', table, data?.columns[1] ?? '')
-	useFigureTextBounds('textColumn', table, data?.columns[3] ?? '')
-	useFigureTextBounds('dateColumn', table, data?.columns[4] ?? '')
+	useDrawingTextTarget('numberColumn', 'table', data?.columns[1] ?? '')
+	useDrawingTextTarget('textColumn', 'table', data?.columns[3] ?? '')
+	useDrawingTextTarget('dateColumn', 'table', data?.columns[4] ?? '')
 	const labels = [
 		{ text: 'Number', target: 'numberColumn', offset: 0 },
 		{ text: 'Text', target: 'textColumn', offset: 0 },
@@ -92,12 +91,10 @@ function FigureDataTypeDemoContents() {
 	]
 
 	return <>
-		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The expenses table</span></HtmlElement>
-		<HtmlElement position={[0, 25]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 800 / 0.8 }}>
-				<DataTable ref={tableRef} data={data} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The expenses table</span></FigureHtml>
+		<FigureHtml target="table" position={[0, 25]} anchor={[-1, -1]} scale={0.8} behind>
+			<DataTable data={data} showPagination={false} compact width={800 / 0.8} />
+		</FigureHtml>
 
 		{labels.map(({ text, target, offset }) => {
 			// Share the column's horizontal anchor and the table's bottom edge across both layers.
@@ -106,7 +103,7 @@ function FigureDataTypeDemoContents() {
 				calculate: ([column, table]) => [column.x + offset + x, table.y + y],
 			})
 			return <Fragment key={text}>
-				<HtmlElement position={position(-44, 24)} anchor={[1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.8rem' }}>{text}</span></HtmlElement>
+				<FigureHtml position={position(-44, 24)} anchor={[1, 0]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.8rem' }}>{text}</span></FigureHtml>
 				<Curve positions={[position(-40, 25), position(0, 25), position(0, 2)]} stroke={themeColor} smoothing={{ distance: 15 }} endArrow strokeWidth={2} />
 			</Fragment>
 		})}

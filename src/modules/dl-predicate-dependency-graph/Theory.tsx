@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 
-import { Drawing as StepWiseDrawing, HtmlElement, Curve as StepWiseCurve, anchors } from '@step-wise/drawing'
+import { Drawing as StepWiseDrawing, Curve as StepWiseCurve, anchors } from '@step-wise/drawing'
 
 import { useThemeColor, Page, Section, Par, List, Info, Warning, Term, Em } from '@/ui'
-import { DL, IDL } from '@/learning'
+import { FigureHtml, DL, IDL } from '@/learning'
 import { SQLValleySchema } from '@/curriculum'
 
 function DPGDL({ children }: { children: ReactNode }) {
@@ -88,12 +88,12 @@ export function FirstDependencyGraph() {
 	const themeColor = useThemeColor()
 
 	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 250 }} maxWidth={500}>
-		<HtmlElement target="p1" position={[80, 80]}><DPGDL>product</DPGDL></HtmlElement>
-		<HtmlElement target="p2" position={[240, 20]}><DPGDL>account</DPGDL></HtmlElement>
-		<HtmlElement target="p3" position={[420, 80]}><DPGDL>transaction</DPGDL></HtmlElement>
-		<HtmlElement target="p4" position={[80, 170]}><DPGDL>sold</DPGDL></HtmlElement>
-		<HtmlElement target="p5" position={[420, 170]}><DPGDL>soldAndBoughtBack</DPGDL></HtmlElement>
-		<HtmlElement target="p6" position={[240, 230]}><DPGDL>withNames</DPGDL></HtmlElement>
+		<FigureHtml target="p1" position={[80, 80]}><DPGDL>product</DPGDL></FigureHtml>
+		<FigureHtml target="p2" position={[240, 20]}><DPGDL>account</DPGDL></FigureHtml>
+		<FigureHtml target="p3" position={[420, 80]}><DPGDL>transaction</DPGDL></FigureHtml>
+		<FigureHtml target="p4" position={[80, 170]}><DPGDL>sold</DPGDL></FigureHtml>
+		<FigureHtml target="p5" position={[420, 170]}><DPGDL>soldAndBoughtBack</DPGDL></FigureHtml>
+		<FigureHtml target="p6" position={[240, 230]}><DPGDL>withNames</DPGDL></FigureHtml>
 
 		<StepWiseCurve positions={[
 			{ target: 'p4', anchor: anchors.topRight, pixelOffset: [2, 3] },
@@ -122,26 +122,26 @@ export function CleanedFirstDependencyGraph({ layer = 3 }) {
 	const themeColor = useThemeColor()
 
 	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 40 + 80 * layer }} maxWidth={500}>
-		<HtmlElement position={[0, 20]}><strong>Layer 0:</strong></HtmlElement>
-		<HtmlElement target="p1" position={[120, 20]}><DPGDL>product</DPGDL></HtmlElement>
-		<HtmlElement target="p2" position={[265, 20]}><DPGDL>account</DPGDL></HtmlElement>
-		<HtmlElement target="p3" position={[420, 20]}><DPGDL>transaction</DPGDL></HtmlElement>
+		<FigureHtml position={[0, 20]}><strong>Layer 0:</strong></FigureHtml>
+		<FigureHtml target="p1" position={[120, 20]}><DPGDL>product</DPGDL></FigureHtml>
+		<FigureHtml target="p2" position={[265, 20]}><DPGDL>account</DPGDL></FigureHtml>
+		<FigureHtml target="p3" position={[420, 20]}><DPGDL>transaction</DPGDL></FigureHtml>
 
 		{layer >= 1 ? <>
-			<HtmlElement position={[0, 100]}><strong>Layer 1:</strong></HtmlElement>
-			<HtmlElement target="p4" position={[420, 100]}><DPGDL>sold</DPGDL></HtmlElement>
+			<FigureHtml position={[0, 100]}><strong>Layer 1:</strong></FigureHtml>
+			<FigureHtml target="p4" position={[420, 100]}><DPGDL>sold</DPGDL></FigureHtml>
 			<StepWiseCurve positions={[{ target: 'p4', anchor: anchors.top, pixelOffset: [0, -3] }, { target: 'p3', anchor: anchors.bottom, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
 		</> : null}
 
 		{layer >= 2 ? <>
-			<HtmlElement position={[0, 180]}><strong>Layer 2:</strong></HtmlElement>
+			<FigureHtml position={[0, 180]}><strong>Layer 2:</strong></FigureHtml>
 			<StepWiseCurve positions={[{ target: 'p5', anchor: anchors.top, pixelOffset: [0, -3] }, { target: 'p4', anchor: anchors.bottom, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
-			<HtmlElement target="p5" position={[420, 180]}><DPGDL>soldAndBoughtBack</DPGDL></HtmlElement>
+			<FigureHtml target="p5" position={[420, 180]}><DPGDL>soldAndBoughtBack</DPGDL></FigureHtml>
 		</> : null}
 
 		{layer >= 3 ? <>
-			<HtmlElement position={[0, 260]}><strong>Layer 3:</strong></HtmlElement>
-			<HtmlElement target="p6" position={[265, 260]}><DPGDL>withNames</DPGDL></HtmlElement>
+			<FigureHtml position={[0, 260]}><strong>Layer 3:</strong></FigureHtml>
+			<FigureHtml target="p6" position={[265, 260]}><DPGDL>withNames</DPGDL></FigureHtml>
 			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [30, -2] }, { target: 'p5', anchor: anchors.bottomLeft, pixelOffset: [20, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
 			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [-30, -2] }, { target: 'p1', anchor: anchors.bottom, pixelOffset: [20, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />
 			<StepWiseCurve positions={[{ target: 'p6', anchor: anchors.top, pixelOffset: [0, -3] }, { target: 'p2', anchor: anchors.bottom, pixelOffset: [0, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
@@ -154,19 +154,19 @@ export function SecondDependencyGraph({ collapsed = false }) {
 	const edge = (from: string, fromAnchor: typeof anchors[keyof typeof anchors], to: string, toAnchor: typeof anchors[keyof typeof anchors], fromOffset: [number, number] = [0, 0], toOffset: [number, number] = [0, 0]) => <StepWiseCurve positions={[{ target: from, anchor: fromAnchor, pixelOffset: fromOffset }, { target: to, anchor: toAnchor, pixelOffset: toOffset }]} endArrow stroke={themeColor} strokeWidth={2} />
 
 	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 220 }} maxWidth={500}>
-		<HtmlElement target="p1" position={[80, 20]}><DPGDL>A</DPGDL></HtmlElement>
-		<HtmlElement target="p2" position={[240, 20]}><DPGDL>B</DPGDL></HtmlElement>
-		<HtmlElement target="p3" position={[420, 20]}><DPGDL>C</DPGDL></HtmlElement>
-		<HtmlElement target="p4" position={[80, 110]}><DPGDL>D</DPGDL></HtmlElement>
-		<HtmlElement target="p8" position={[240, 110]}><DPGDL>H</DPGDL></HtmlElement>
-		<HtmlElement target="p9" position={[80, 200]}><DPGDL>I</DPGDL></HtmlElement>
+		<FigureHtml target="p1" position={[80, 20]}><DPGDL>A</DPGDL></FigureHtml>
+		<FigureHtml target="p2" position={[240, 20]}><DPGDL>B</DPGDL></FigureHtml>
+		<FigureHtml target="p3" position={[420, 20]}><DPGDL>C</DPGDL></FigureHtml>
+		<FigureHtml target="p4" position={[80, 110]}><DPGDL>D</DPGDL></FigureHtml>
+		<FigureHtml target="p8" position={[240, 110]}><DPGDL>H</DPGDL></FigureHtml>
+		<FigureHtml target="p9" position={[80, 200]}><DPGDL>I</DPGDL></FigureHtml>
 
 		{collapsed ? <>
-			<HtmlElement target="p567" position={[420, 200]}><DPGDL>(E,F,G)</DPGDL></HtmlElement>
+			<FigureHtml target="p567" position={[420, 200]}><DPGDL>(E,F,G)</DPGDL></FigureHtml>
 		</> : <>
-			<HtmlElement target="p5" position={[420, 110]}><DPGDL>E</DPGDL></HtmlElement>
-			<HtmlElement target="p6" position={[420, 200]}><DPGDL>F</DPGDL></HtmlElement>
-			<HtmlElement target="p7" position={[240, 200]}><DPGDL>G</DPGDL></HtmlElement>
+			<FigureHtml target="p5" position={[420, 110]}><DPGDL>E</DPGDL></FigureHtml>
+			<FigureHtml target="p6" position={[420, 200]}><DPGDL>F</DPGDL></FigureHtml>
+			<FigureHtml target="p7" position={[240, 200]}><DPGDL>G</DPGDL></FigureHtml>
 		</>}
 
 		{edge('p4', anchors.top, 'p1', anchors.bottom, [0, -2], [0, 2])}
@@ -193,17 +193,17 @@ export function CleanedSecondDependencyGraph() {
 	const themeColor = useThemeColor()
 
 	return <StepWiseDrawing view={{ type: 'identity', width: 500, height: 275 }} maxWidth={500}>
-		<HtmlElement position={[0, 25]}><strong>Layer 0:</strong></HtmlElement>
-		<HtmlElement target="p1" position={[120, 25]}><DPGDL>A</DPGDL></HtmlElement>
-		<HtmlElement target="p2" position={[270, 25]}><DPGDL>B</DPGDL></HtmlElement>
-		<HtmlElement target="p3" position={[420, 25]}><DPGDL>C</DPGDL></HtmlElement>
-		<HtmlElement position={[0, 100]}><strong>Layer 1:</strong></HtmlElement>
-		<HtmlElement target="p4" position={[185, 100]}><DPGDL>D</DPGDL></HtmlElement>
-		<HtmlElement position={[0, 175]}><strong>Layer 2:</strong></HtmlElement>
-		<HtmlElement target="p8" position={[205, 175]}><DPGDL>H</DPGDL></HtmlElement>
-		<HtmlElement target="p567" position={[345, 175]}><DPGDL>(E,F,G)</DPGDL></HtmlElement>
-		<HtmlElement position={[0, 250]}><strong>Layer 3:</strong></HtmlElement>
-		<HtmlElement target="p9" position={[270, 250]}><DPGDL>I</DPGDL></HtmlElement>
+		<FigureHtml position={[0, 25]}><strong>Layer 0:</strong></FigureHtml>
+		<FigureHtml target="p1" position={[120, 25]}><DPGDL>A</DPGDL></FigureHtml>
+		<FigureHtml target="p2" position={[270, 25]}><DPGDL>B</DPGDL></FigureHtml>
+		<FigureHtml target="p3" position={[420, 25]}><DPGDL>C</DPGDL></FigureHtml>
+		<FigureHtml position={[0, 100]}><strong>Layer 1:</strong></FigureHtml>
+		<FigureHtml target="p4" position={[185, 100]}><DPGDL>D</DPGDL></FigureHtml>
+		<FigureHtml position={[0, 175]}><strong>Layer 2:</strong></FigureHtml>
+		<FigureHtml target="p8" position={[205, 175]}><DPGDL>H</DPGDL></FigureHtml>
+		<FigureHtml target="p567" position={[345, 175]}><DPGDL>(E,F,G)</DPGDL></FigureHtml>
+		<FigureHtml position={[0, 250]}><strong>Layer 3:</strong></FigureHtml>
+		<FigureHtml target="p9" position={[270, 250]}><DPGDL>I</DPGDL></FigureHtml>
 
 		<StepWiseCurve positions={[{ target: 'p4', anchor: anchors.topLeft, pixelOffset: [5, -3] }, { target: 'p1', anchor: anchors.bottomRight, pixelOffset: [-5, 3] }]} endArrow stroke={themeColor} strokeWidth={2} />
 		<StepWiseCurve positions={[{ target: 'p4', anchor: anchors.topRight, pixelOffset: [0, -2] }, { target: 'p2', anchor: anchors.bottomLeft, pixelOffset: [0, 2] }]} endArrow stroke={themeColor} strokeWidth={2} />

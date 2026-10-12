@@ -1,12 +1,10 @@
 import type { ComponentProps } from 'react'
-import { Box } from '@mui/material'
 
-import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
+import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Info, Warning, Term, Em } from '@/ui'
-import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -55,11 +53,13 @@ FROM employees AS e;`} />
 }
 
 function FigureSelectColumns() {
-	return <MeasuredDrawing targets={['table']}
+	return <MeasuredDrawing
+		targets={['table']}
 		calculateView={({ table }) => ({
 			type: 'identity', width: 800,
 			height: 20 + table.height,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureSelectColumnsContents />
 	</MeasuredDrawing>
 }
@@ -76,42 +76,46 @@ FROM employees;`
 	const data = useQueryResult(db, query)
 
 	// Find the editor bounds.
-	const [eRef, , editor] = useFigureTarget('query')
-	const c1QueryBounds = useFigureTextBounds('c1QueryBounds', editor, c1)
-	const c2QueryBounds = useFigureTextBounds('c2QueryBounds', editor, c2)
-	const c3QueryBounds = useFigureTextBounds('c3QueryBounds', editor, c3)
+	useDrawingTextTarget('c1QueryBounds', 'query', c1)
+	const c1QueryBounds = useDrawingTargetBounds('c1QueryBounds')
+	useDrawingTextTarget('c2QueryBounds', 'query', c2)
+	const c2QueryBounds = useDrawingTargetBounds('c2QueryBounds')
+	useDrawingTextTarget('c3QueryBounds', 'query', c3)
+	const c3QueryBounds = useDrawingTargetBounds('c3QueryBounds')
 
 	// Find the table column name bounds.
-	const [tRef, , table] = useFigureTarget('table')
-	const c1NameBounds = useFigureTextBounds('c1NameBounds', table, c1)
-	const c2NameBounds = useFigureTextBounds('c2NameBounds', table, c2)
-	const c3NameBounds = useFigureTextBounds('c3NameBounds', table, c3)
+	useDrawingTextTarget('c1NameBounds', 'table', c1)
+	const c1NameBounds = useDrawingTargetBounds('c1NameBounds')
+	useDrawingTextTarget('c2NameBounds', 'table', c2)
+	const c2NameBounds = useDrawingTargetBounds('c2NameBounds')
+	useDrawingTextTarget('c3NameBounds', 'table', c3)
+	const c3NameBounds = useDrawingTargetBounds('c3NameBounds')
 
 	return <>
-		<HtmlElement ref={eRef} position={[0, 20]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+		<FigureHtml target="query" position={[0, 20]} anchor={[-1, -1]} behind>
 			<SQLDisplay>{query}</SQLDisplay>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[350, 20]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 450 / 0.8 }}>
-				<DataTable ref={tRef} data={data} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table" position={[350, 20]} anchor={[-1, -1]} scale={0.8} behind>
+			<DataTable data={data} showPagination={false} compact width={450 / 0.8} />
+		</FigureHtml>
 
 		{c1QueryBounds && c1NameBounds && c2QueryBounds && c2NameBounds && c3QueryBounds && c3NameBounds ? <>
-			<Curve positions={[c1QueryBounds.bottomRight.add([0, 2]), [c1QueryBounds.right + 40, 0], [c1NameBounds.left - 40, 0], c1NameBounds.bottomLeft.add([-2, 2])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-			<Curve positions={[c2QueryBounds.bottomRight.add([0, 2]), [c2QueryBounds.right + 40, 0], [c2NameBounds.left - 40, 0], c2NameBounds.bottomLeft.add([-2, 2])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-			<Curve positions={[c3QueryBounds.bottomRight.add([0, 2]), [c3QueryBounds.right + 40, 0], [c3NameBounds.left - 40, 0], c3NameBounds.bottomLeft.add([-2, 2])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<Curve positions={[c1QueryBounds.topRight.add([0, 2]), [c1QueryBounds.right + 40, 0], [c1NameBounds.left - 40, 0], c1NameBounds.topLeft.add([-2, 2])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<Curve positions={[c2QueryBounds.topRight.add([0, 2]), [c2QueryBounds.right + 40, 0], [c2NameBounds.left - 40, 0], c2NameBounds.topLeft.add([-2, 2])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<Curve positions={[c3QueryBounds.topRight.add([0, 2]), [c3QueryBounds.right + 40, 0], [c3NameBounds.left - 40, 0], c3NameBounds.topLeft.add([-2, 2])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
 		</> : null}
 	</>
 }
 
 function FigureSelectUnique() {
-	return <MeasuredDrawing targets={['query1', 'table1', 'query2', 'table2']}
+	return <MeasuredDrawing
+		targets={['query1', 'table1', 'query2', 'table2']}
 		calculateView={({ query1, table1, query2, table2 }) => ({
 			type: 'identity', width: query1.width + table1.width + query2.width + table2.width + 80,
 			height: Math.max(table1.height, table2.height),
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureSelectUniqueContents />
 	</MeasuredDrawing>
 }
@@ -132,10 +136,10 @@ FROM employees;`
 	const data2 = useQueryResult(db, query2)
 
 	// Find the table column name bounds.
-	const [e1Ref, e1Bounds] = useFigureTarget('query1')
-	const [e2Ref, e2Bounds] = useFigureTarget('query2')
-	const [t1Ref, t1Bounds] = useFigureTarget('table1')
-	const [t2Ref, t2Bounds] = useFigureTarget('table2')
+	const e1Bounds = useDrawingTargetBounds('query1')
+	const e2Bounds = useDrawingTargetBounds('query2')
+	const t1Bounds = useDrawingTargetBounds('table1')
+	const t2Bounds = useDrawingTargetBounds('table2')
 
 	// Set up dimensions.
 	const w1 = e1Bounds?.width || 100
@@ -145,40 +149,38 @@ FROM employees;`
 	const delta2 = 40
 
 	return <>
-		<HtmlElement ref={e1Ref} position={[0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+		<FigureHtml target="query1" position={[0, 0]} anchor={[-1, -1]} behind>
 			<SQLDisplay>{query1}</SQLDisplay>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement ref={e2Ref} position={[w1 + delta1 + w2 + delta2, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+		<FigureHtml target="query2" position={[w1 + delta1 + w2 + delta2, 0]} anchor={[-1, -1]} behind>
 			<SQLDisplay>{query2}</SQLDisplay>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[w1 + delta1, 0]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 160 / 0.8 }}>
-				<DataTable ref={t1Ref} data={data1} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
-		<HtmlElement position={[w1 + delta1 + w2 + delta2 + w3 + delta1, 0]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 160 / 0.8 }}>
-				<DataTable ref={t2Ref} data={data2} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table1" position={[w1 + delta1, 0]} anchor={[-1, -1]} scale={0.8} behind>
+			<DataTable data={data1} showPagination={false} compact width={160 / 0.8} />
+		</FigureHtml>
+		<FigureHtml target="table2" position={[w1 + delta1 + w2 + delta2 + w3 + delta1, 0]} anchor={[-1, -1]} scale={0.8} behind>
+			<DataTable data={data2} showPagination={false} compact width={160 / 0.8} />
+		</FigureHtml>
 
 		{e1Bounds && t1Bounds ? <>
-			<Curve positions={[e1Bounds.topMiddle.add([0, 5]), [e1Bounds.midpoint.x, t1Bounds.midpoint.y + e1Bounds.height / 2], t1Bounds.middleLeft.add([-4, e1Bounds.height / 2])]} stroke={themeColor} smoothing={{ distance: 60 }} endArrow strokeWidth={2} />
+			<Curve positions={[e1Bounds.bottomMiddle.add([0, 5]), [e1Bounds.midpoint.x, t1Bounds.midpoint.y + e1Bounds.height / 2], t1Bounds.middleLeft.add([-4, e1Bounds.height / 2])]} stroke={themeColor} smoothing={{ distance: 60 }} endArrow strokeWidth={2} />
 		</> : null}
 		{e2Bounds && t2Bounds ? <>
-			<Curve positions={[e2Bounds.topMiddle.add([0, 5]), [e2Bounds.midpoint.x, t2Bounds.midpoint.y + e2Bounds.height / 2], t2Bounds.middleLeft.add([-4, e2Bounds.height / 2])]} stroke={themeColor} smoothing={{ distance: 60 }} endArrow strokeWidth={2} />
+			<Curve positions={[e2Bounds.bottomMiddle.add([0, 5]), [e2Bounds.midpoint.x, t2Bounds.midpoint.y + e2Bounds.height / 2], t2Bounds.middleLeft.add([-4, e2Bounds.height / 2])]} stroke={themeColor} smoothing={{ distance: 60 }} endArrow strokeWidth={2} />
 		</> : null}
 	</>
 }
 
 export function FigureRenameColumns(props: ComponentProps<typeof FigureRenameColumnsContents>) {
-	return <MeasuredDrawing targets={['query', 'table']}
+	return <MeasuredDrawing
+		targets={['query', 'table']}
 		calculateView={({ query, table }) => ({
 			type: 'identity', width: query.width + table.width + 80,
 			height: table.height,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureRenameColumnsContents {...props} />
 	</MeasuredDrawing>
 }
@@ -191,20 +193,18 @@ function FigureRenameColumnsContents({ query = '' }) {
 	const data = useQueryResult(db, query)
 
 	// Find the element bounds.
-	const [eRef, eBounds] = useFigureTarget('query')
-	const [tRef, tBounds] = useFigureTarget('table')
+	const eBounds = useDrawingTargetBounds('query')
+	const tBounds = useDrawingTargetBounds('table')
 	const arrowWidth = 80
 
 	return <>
-		<HtmlElement ref={eRef} position={[0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+		<FigureHtml target="query" position={[0, 0]} anchor={[-1, -1]} behind>
 			<SQLDisplay>{query}</SQLDisplay>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[(eBounds?.width || 200) + arrowWidth, 0]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 350 / 0.8 }}>
-				<DataTable ref={tRef} data={data} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml target="table" position={[(eBounds?.width || 200) + arrowWidth, 0]} anchor={[-1, -1]} scale={0.8} behind>
+			<DataTable data={data} showPagination={false} compact width={350 / 0.8} />
+		</FigureHtml>
 
 		{eBounds && tBounds ? <Curve positions={[eBounds.middleRight.add([4, 0]), [tBounds.left - 4, eBounds.midpoint.y]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
 	</>

@@ -11,7 +11,7 @@ export function Theory() {
 
 		<Section title="Superkey: a set of attributes uniquely identifying a row">
 			<Par>Let's consider the table of all employees of a company.</Par>
-			<TableQueryFigure query={`SELECT * FROM employees;`} title="List of employees" tableWidth={800} tableScale={0.65} />
+			<TableQueryFigure query={`SELECT * FROM employees;`} title="List of employees" tableWidth={1200} tableScale={0.7} />
 			<Par>If you want to point me to a specific row, you could try the following.</Par>
 			<List items={[
 				<>"Take the fourth row." This may fail, since the ordering is arbitrary. Maybe someone orders the rows differently, and I end up at a different row.</>,

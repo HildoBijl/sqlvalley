@@ -1,9 +1,8 @@
-import { Drawing, HtmlElement, Curve, anchors, TargetBoundsDrawing } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable } from '@sqlvalley/sql'
+import { Drawing, Curve, anchors, TargetBoundsDrawing } from '@step-wise/drawing'
+import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em, Link, Glyph } from '@/ui'
-import { TableQueryFigure, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -41,17 +40,17 @@ export function FigureTwoTables() {
 	const db = useTheoryPageDatabase()
 	const data1 = useQueryResult(db, 'SELECT * FROM departments;')
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
-	const tableScale = 0.6
-	return <TargetBoundsDrawing targets={['table1Title', 'table1', 'table2Title', 'table2']} maxWidth={800} style={{ fontSize: 16 }}>
-		<HtmlElement target="table1" position={[0, 25]} anchor={[-1, -1]} scale={tableScale} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+	const tableScale = 0.7
+	return <TargetBoundsDrawing targets={['table1Title', 'table1', 'table2Title', 'table2']} maxWidth={900} style={{ fontSize: 16 }}>
+		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={tableScale}>
 			<DataTable data={data1} width={800} showPagination={false} compact />
-		</HtmlElement>
-		<HtmlElement target="table1Title" position={{ target: 'table1', anchor: 'topLeft', pixelOffset: [10, 2] }} anchor="bottomLeft" ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
+		</FigureHtml>
+		<FigureHtml target="table1Title" position={{ target: 'table1', anchor: 'topLeft', pixelOffset: [10, 2] }} anchor="bottomLeft"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
 
-		<HtmlElement target="table2" position={[80, 104]} anchor={[-1, -1]} scale={tableScale} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<DataTable data={data2} width={1100} showPagination={false} compact />
-		</HtmlElement>
-		<HtmlElement target="table2Title" position={{ target: 'table2', anchor: 'topRight', pixelOffset: [-10, 2] }} anchor="bottomRight" ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
+		<FigureHtml target="table2" position={[80, 118]} anchor={[-1, -1]} scale={tableScale}>
+			<DataTable data={data2} width={1200} showPagination={false} compact />
+		</FigureHtml>
+		<FigureHtml target="table2Title" position={{ target: 'table2', anchor: 'topRight', pixelOffset: [-10, 2] }} anchor="bottomRight"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
 	</TargetBoundsDrawing>
 }
 
@@ -67,24 +66,24 @@ export function FigureDatabaseUsage() {
 
 	return <Drawing view={{ type: 'identity', width: w, height: h }}>
 		<Glyph name="User" position={[xUser, y - 25]} width={100} />
-		<HtmlElement position={[xUser, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>User</span></HtmlElement>
+		<FigureHtml position={[xUser, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>User</span></FigureHtml>
 
 		<Glyph name="Server" position={[xServer, y - 25]} width={60} />
-		<HtmlElement position={[xServer, y + 50]}><span style={{ fontSize: '1em', fontWeight: 500 }}>DBMS</span></HtmlElement>
+		<FigureHtml position={[xServer, y + 50]}><span style={{ fontSize: '1em', fontWeight: 500 }}>DBMS</span></FigureHtml>
 
 		<Glyph name="Database" position={[xDatabase, y - 25]} width={100} />
-		<HtmlElement position={[xDatabase, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>Database</span></HtmlElement>
+		<FigureHtml position={[xDatabase, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>Database</span></FigureHtml>
 
 		<Curve positions={[[xUser + 26, y - 70], [(xUser + xServer) / 2, y - 120], [xServer - 35, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
-		<HtmlElement position={[(xUser + xServer) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>"Get me the departments<br />that are going over budget"</p></HtmlElement>
+		<FigureHtml position={[(xUser + xServer) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>"Get me the departments<br />that are going over budget"</p></FigureHtml>
 
 		<Curve positions={[[xServer + 35, y - 70], [(xServer + xDatabase) / 2, y - 120], [xDatabase - 50, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
-		<HtmlElement position={[(xServer + xDatabase) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Pull up all relevant records</p></HtmlElement>
+		<FigureHtml position={[(xServer + xDatabase) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Pull up all relevant records</p></FigureHtml>
 
 		<Curve positions={[[xDatabase - 50, y + 20], [(xServer + xDatabase) / 2, y + 70], [xServer + 35, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
-		<HtmlElement position={[(xServer + xDatabase) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Give all requested records</p></HtmlElement>
+		<FigureHtml position={[(xServer + xDatabase) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Give all requested records</p></FigureHtml>
 
 		<Curve positions={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
-		<HtmlElement position={[(xUser + xServer) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></HtmlElement>
+		<FigureHtml position={[(xUser + xServer) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></FigureHtml>
 	</Drawing>
 }

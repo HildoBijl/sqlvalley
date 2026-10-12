@@ -1,11 +1,8 @@
-import { Box } from '@mui/material'
-
-import { MeasuredDrawing, HtmlElement, Curve, Rectangle } from '@step-wise/drawing'
-import { ISQL, DataTable } from '@sqlvalley/sql'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
+import { MeasuredDrawing, Curve, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { ISQL, DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
-import { useFigureTarget, useFigureTextBounds, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 import { FigureTwoTables } from '../database/Theory'
 
@@ -102,11 +99,13 @@ export function Theory() {
 }
 
 function FigureNaturalJoin() {
-	return <MeasuredDrawing targets={['table1', 'table2', 'table3']}
+	return <MeasuredDrawing
+		targets={['table1', 'table2', 'table3']}
 		calculateView={({ table1, table2, table3 }) => ({
 			type: 'identity', width: 800,
 			height: table1.height + table2.height + table3.height + 95,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureNaturalJoinContents />
 	</MeasuredDrawing>
 }
@@ -122,11 +121,13 @@ function FigureNaturalJoinContents() {
 	const data3 = useQueryResult(db, `SELECT * FROM (${query1}) d NATURAL JOIN employees e;`)
 
 	// Set up reference to the table.
-	const [t1Ref, t1Bounds, table1] = useFigureTarget('table1')
-	const [t2Ref, t2Bounds, table2] = useFigureTarget('table2')
-	const [t3Ref] = useFigureTarget('table3')
-	const textNode1Bounds = useFigureTextBounds('textNode1Bounds', table1, 'e_id', { index: 0, parentDepth: 1 })
-	const textNode2Bounds = useFigureTextBounds('textNode2Bounds', table2, 'e_id', { index: 0, parentDepth: 1 })
+	const t1Bounds = useDrawingTargetBounds('table1')
+	const t2Bounds = useDrawingTargetBounds('table2')
+
+	useDrawingTextTarget('textNode1Bounds', 'table1', 'e_id', { index: 0, parentDepth: 1 })
+	const textNode1Bounds = useDrawingTargetBounds('textNode1Bounds')
+	useDrawingTextTarget('textNode2Bounds', 'table2', 'e_id', { index: 0, parentDepth: 1 })
+	const textNode2Bounds = useDrawingTargetBounds('textNode2Bounds')
 	const x = 80
 	const y1 = 20 + (t1Bounds?.height ?? 160) + 15
 	const y2 = y1 + (t2Bounds?.height ?? 160)
@@ -134,30 +135,24 @@ function FigureNaturalJoinContents() {
 	const width = 800
 
 	return <>
-		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
-		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 480 / 0.6 }}>
-				<DataTable data={data1} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
+		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+			<DataTable data={data1} showPagination={false} compact width={480 / 0.6} />
+		</FigureHtml>
 
 		{t1Bounds ? <>
-			<HtmlElement position={[790, y1 - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
-			<HtmlElement ref={t2Ref} position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-				<Box sx={{ width: (width - x) / 0.6 }}>
-					<DataTable data={data2} showPagination={false} compact />
-				</Box>
-			</HtmlElement>
+			<FigureHtml position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
+			<FigureHtml target="table2" position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
+				<DataTable data={data2} showPagination={false} compact width={(width - x) / 0.6} />
+			</FigureHtml>
 
 			{t2Bounds ? <>
 				<Curve positions={[[width / 2, y2 + 4], [width / 2, y3 - 4]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-				<HtmlElement position={[width / 2 + 6, (y2 + y3) / 2 - 4]} anchor={[-1, 0]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Natural join</span></HtmlElement>
+				<FigureHtml position={[width / 2 + 6, (y2 + y3) / 2 - 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Natural join</span></FigureHtml>
 
-				<HtmlElement ref={t3Ref} position={[0, y3]} anchor={[-1, -1]} scale={0.45} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-					<Box sx={{ width: width / 0.45 }}>
-						<DataTable data={data3} showPagination={false} compact />
-					</Box>
-				</HtmlElement>
+				<FigureHtml target="table3" position={[0, y3]} anchor={[-1, -1]} scale={0.45}>
+					<DataTable data={data3} showPagination={false} compact width={width / 0.45} />
+				</FigureHtml>
 			</> : null}
 		</> : null}
 
@@ -167,11 +162,13 @@ function FigureNaturalJoinContents() {
 }
 
 export function FigureTwoTablesAdjusted() {
-	return <MeasuredDrawing targets={['table1', 'table2']}
+	return <MeasuredDrawing
+		targets={['table1', 'table2']}
 		calculateView={({ table1, table2 }) => ({
 			type: 'identity', width: 800,
 			height: table1.height + table2.height + 35,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureTwoTablesAdjustedContents />
 	</MeasuredDrawing>
 }
@@ -185,27 +182,25 @@ function FigureTwoTablesAdjustedContents() {
 	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
 
 	// Set up reference to the table.
-	const [t1Ref, t1Bounds, table1] = useFigureTarget('table1')
-	const [t2Ref] = useFigureTarget('table2')
-	const textNode1Bounds = useFigureTextBounds('textNode1Bounds', table1, adjustedManagerId, { index: 0, parentDepth: 2 })
-	const textNode2Bounds = useFigureTextBounds('textNode2Bounds', table1, addedManagerId, { index: 1, parentDepth: 2 })
+	const t1Bounds = useDrawingTargetBounds('table1')
+
+	useDrawingTextTarget('textNode1Bounds', 'table1', adjustedManagerId, { index: 0, parentDepth: 2 })
+	const textNode1Bounds = useDrawingTargetBounds('textNode1Bounds')
+	useDrawingTextTarget('textNode2Bounds', 'table1', addedManagerId, { index: 1, parentDepth: 2 })
+	const textNode2Bounds = useDrawingTargetBounds('textNode2Bounds')
 	const x = 80
 	const y = 20 + (t1Bounds?.height ?? 160) + 15
 
 	return <>
-		<HtmlElement position={[10, 0]} anchor={[-1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></HtmlElement>
-		<HtmlElement ref={t1Ref} position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: 800 }}>
-				<DataTable data={data1} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
+		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+			<DataTable data={data1} showPagination={false} compact width={800} />
+		</FigureHtml>
 
-		<HtmlElement position={[790, y - 25]} anchor={[1, -1]} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></HtmlElement>
-		<HtmlElement ref={t2Ref} position={[x, y]} anchor={[-1, -1]} scale={0.6} ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-			<Box sx={{ width: (800 - x) / 0.6 }}>
-				<DataTable data={data2} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[790, y - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
+		<FigureHtml target="table2" position={[x, y]} anchor={[-1, -1]} scale={0.6}>
+			<DataTable data={data2} showPagination={false} compact width={(800 - x) / 0.6} />
+		</FigureHtml>
 
 		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min, textNode1Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
 		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min, textNode2Bounds.max]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}

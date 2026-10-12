@@ -1,11 +1,11 @@
 import { type ComponentType, type ReactNode, useCallback } from 'react'
-import { Box } from '@mui/material'
 
-import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, HtmlElement, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
+import { type DrawingView, type TargetBoundsRecord, MeasuredDrawing, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DataTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
 import { RA } from '../notation'
+import { FigureHtml } from '../FigureHtml'
 import { useTheoryPageDatabase } from '../useTheoryPageDatabase'
 
 type RAQueryFigureProps = {
@@ -31,7 +31,10 @@ export function RAQueryFigure({ query = <></>, actualQuery = '', below = false, 
 		return { type: 'identity', width: below ? Math.max(we, wt) : we + gap + wt, height: below ? he + gap + ht : Math.max(he, ht) }
 	}, [below, arrowLength, arrowRadius, delta])
 
-	return <MeasuredDrawing targets={targets} calculateView={calculateView} style={{ fontSize: 16 }}>
+	return <MeasuredDrawing
+		targets={targets}
+		calculateView={calculateView}
+		style={{ fontSize: 16 }}>
 		<RAQueryFigureContents query={query} actualQuery={actualQuery} below={below} tableWidth={tableWidth} tableScale={tableScale} delta={delta} arrowLength={arrowLength} arrowRadius={arrowRadius} Component={Component} />
 	</MeasuredDrawing>
 }
@@ -69,7 +72,7 @@ function RAQueryFigureContents({ query, actualQuery, below, tableWidth, tableSca
 				tx = Math.max(0, (we - wt) / 2)
 				ty = he + arrowLength
 				const middleX = Math.min(eBounds.midpoint.x, tBounds.midpoint.x)
-				arrowPoints = [[middleX, eBounds.top + 4], [middleX, ty - 4]]
+				arrowPoints = [[middleX, eBounds.bottom + 4], [middleX, ty - 4]]
 			} else if (arrowPos === 'topRight') {
 				tx = 0
 				ty = he + delta
@@ -81,7 +84,7 @@ function RAQueryFigureContents({ query, actualQuery, below, tableWidth, tableSca
 				ty = he + delta
 				const leftX = tBounds.left - arrowRadius
 				const middleY = tBounds.midpoint.y
-				arrowPoints = [[leftX, eBounds.top + 4], [leftX, middleY], [tBounds.left - 4, middleY]]
+				arrowPoints = [[leftX, eBounds.bottom + 4], [leftX, middleY], [tBounds.left - 4, middleY]]
 			}
 		} else {
 			tx = we + (arrowPos === 'between' ? arrowLength : delta)
@@ -91,22 +94,20 @@ function RAQueryFigureContents({ query, actualQuery, below, tableWidth, tableSca
 				arrowPoints = [[eBounds.right + 4, middleY], [tx - 4, middleY]]
 			} else {
 				const middleX = eBounds.midpoint.x
-				const bottomY = eBounds.top + arrowRadius
-				arrowPoints = [[middleX, eBounds.top + 4], [middleX, bottomY], [tx - 4, bottomY]]
+				const bottomY = eBounds.bottom + arrowRadius
+				arrowPoints = [[middleX, eBounds.bottom + 4], [middleX, bottomY], [tx - 4, bottomY]]
 			}
 		}
 	}
 
 	return <>
-		<HtmlElement target="query" position={[below && arrowPos === 'between' ? Math.max(0, (wt - we) / 2) : 0, 0]} anchor={[-1, -1]} behind ignoreMouse={false} style={{ width: 'max-content', whiteSpace: 'normal' }}>
+		<FigureHtml target="query" position={[below && arrowPos === 'between' ? Math.max(0, (wt - we) / 2) : 0, 0]} anchor={[-1, -1]} behind>
 			<Component>{query}</Component>
-		</HtmlElement>
+		</FigureHtml>
 
-		<HtmlElement position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind ignoreMouse={false} style={{ whiteSpace: 'normal' }}>
-			<Box sx={{ width: tableWidth / tableScale }}>
-				<DataTable data={data} showPagination={false} compact />
-			</Box>
-		</HtmlElement>
+		<FigureHtml position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind>
+			<DataTable data={data} showPagination={false} compact width={tableWidth / tableScale} />
+		</FigureHtml>
 
 		{arrowPoints ? <Curve positions={arrowPoints} stroke={themeColor} strokeWidth={2} smoothing={{ distance: arrowRadius }} endArrow /> : null}
 	</>

@@ -1,12 +1,10 @@
 import type { ComponentProps } from 'react'
-import { Box } from '@mui/material'
 
-import { MeasuredDrawing, HtmlElement, Curve } from '@step-wise/drawing'
-import { useQueryResult } from '@sqlvalley/sql/databaseProvider'
-import { DataTable, ISQL, SQLDisplay } from '@sqlvalley/sql'
+import { MeasuredDrawing, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Info, Term, Em } from '@/ui'
-import { useFigureTarget, useFigureTextBounds, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	const now = new Date()
@@ -76,11 +74,13 @@ WHERE perf_score IS NULL;`} columnName="perf_score" />
 }
 
 export function FigureFiltering(props: ComponentProps<typeof FigureFilteringContents>) {
-	return <MeasuredDrawing targets={['query', 'table']}
+	return <MeasuredDrawing
+		targets={['query', 'table']}
 		calculateView={({ query, table }) => ({
 			type: 'identity', width: 800,
 			height: query.height + 15 + table.height,
-		})} style={{ fontSize: 16 }}>
+		})}
+		style={{ fontSize: 16 }}>
 		<FigureFilteringContents {...props} />
 	</MeasuredDrawing>
 }
@@ -93,12 +93,14 @@ function FigureFilteringContents({ query = '', columnName = '' }) {
 	const data = useQueryResult(db, query)
 
 	// Find the table column name bounds.
-	const [eRef, eBounds] = useFigureTarget('query')
-	const [tRef, , table] = useFigureTarget('table')
-	const columnNameBounds = useFigureTextBounds('columnNameBounds', table, columnName)
+	const eBounds = useDrawingTargetBounds('query')
+
+	useDrawingTextTarget('columnNameBounds', 'table', columnName)
+	const columnNameBounds = useDrawingTargetBounds('columnNameBounds')
 
 	// Set up dimensions.
 	const width = 800
+	const scale = 0.8
 	const h1 = eBounds?.height || 100
 	const delta = 15
 
@@ -123,20 +125,18 @@ function FigureFilteringContents({ query = '', columnName = '' }) {
 	const arrowStartX = arrowPosition === 1 ? queryLeft + (eBounds?.width ?? 0) + 4 : queryLeft - 4
 
 	return <>
-		<HtmlElement ref={eRef} position={[(queryPosition + 1) * width / 2, 0]} anchor={[queryPosition, -1]} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
+		<FigureHtml target="query" position={[(queryPosition + 1) * width / 2, 0]} anchor={[queryPosition, -1]} behind>
 			<SQLDisplay>{query}</SQLDisplay>
-		</HtmlElement>
+		</FigureHtml>
 
 		{eBounds ? <>
-			<HtmlElement position={[0, h1 + delta]} anchor={[-1, -1]} scale={0.8} behind ignoreMouse={false} style={{ whiteSpace: 'normal', width: 'max-content' }}>
-				<Box sx={{ width: width / 0.8 }}>
-					<DataTable ref={tRef} data={data} showPagination={false} compact />
-				</Box>
-			</HtmlElement>
+			<FigureHtml target="table" position={[0, h1 + delta]} anchor={[-1, -1]} scale={scale} behind>
+				<DataTable data={data} showPagination={false} compact width={width / scale} />
+			</FigureHtml>
 		</> : null}
 
 		{eBounds && columnNameBounds ? <>
-			<Curve positions={[[arrowStartX, h1 / 2], [columnNameBounds.midpoint.x, h1 / 2], [columnNameBounds.midpoint.x, h1 + delta - 4]]} stroke={themeColor} smoothing={{ distance: 60 }} endArrow strokeWidth={2} />
+			<Curve positions={[[arrowStartX, h1 / 2], [columnNameBounds.midpoint.x, h1 / 2], [columnNameBounds.midpoint.x, h1 + delta - 4]]} stroke={themeColor} smoothing={{ distance: 40 }} endArrow strokeWidth={2} />
 		</> : null}
 	</>
 }
