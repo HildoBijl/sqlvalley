@@ -10,7 +10,7 @@ import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform'
 import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro'
 import { useSkillTreePlanning } from '../utils/logic/useSkillTreePlanning'
 
-import { SkillTree } from './SkillTree'
+import { SkillTree } from '../display'
 import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro'
 import { PlanningProgressIndicator } from './SkillTreeComponents/PlanningProgressIndicator'
 import { SkillTreeIntro } from './SkillTreeComponents/SkillTreeIntro'

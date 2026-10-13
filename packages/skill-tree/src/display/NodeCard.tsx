@@ -1,17 +1,17 @@
 import type { HTMLAttributes } from 'react'
-import { ButtonBase, useTheme } from '@mui/material'
+import { useTheme, ButtonBase } from '@mui/material'
 
 import { Vector } from '@step-wise/geometry'
 import { HtmlElement, Rectangle } from '@step-wise/drawing'
 import type { Module } from '@step-wise/module-tree-definition'
 
-import { type ModulePositionData, cardHeight, cardWidth } from '../../positioning'
-import { treeColors } from '../../utils/graphics/treeColors'
-import { getNodeStyle } from '../../utils/graphics/nodeStyle'
+import { type ModulePositionData, cardHeight, cardWidth } from '../positioning'
 
-import { NodeCompletedMark } from './Icons/NodeCompletedMark'
-import { NodeGoalPin } from './Icons/NodeGoalPin'
-import { NodeIconBadge } from './Icons/NodeIconBadge'
+import { NodeCompletedMark } from './icons/NodeCompletedMark'
+import { NodeGoalPin } from './icons/NodeGoalPin'
+import { NodeIconBadge } from './icons/NodeIconBadge'
+import { getNodeStyle } from './nodeStyle'
+import { treeColors } from './treeColors'
 
 // Render a module as SVG backgrounds with an interactive HTML card above them.
 interface NodeCardProps

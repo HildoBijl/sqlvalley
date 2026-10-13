@@ -1,6 +1,6 @@
 import { Box, Button, Tooltip } from '@mui/material'
 import { Add, Remove, Refresh, OutlinedFlag, HelpOutline } from '@mui/icons-material'
-import { treeColors } from '../../utils/graphics/treeColors'
+import { treeColors } from '../../display'
 
 // Provide controls for zooming, resetting, planning mode, and help.
 interface ZoomControlsProps {

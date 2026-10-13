@@ -1,7 +1,7 @@
 import { Box, LinearProgress, Link, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
-import { treeColors } from '../../utils/graphics/treeColors'
+import { treeColors } from '../../display'
 
 interface PlanningProgressIndicatorProps {
 	nextStepName: string

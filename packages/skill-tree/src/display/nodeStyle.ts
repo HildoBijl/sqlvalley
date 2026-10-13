@@ -1,7 +1,9 @@
 import type { Theme } from '@mui/material/styles'
+
 import { treeColors } from './treeColors'
 
 interface NodeStyleInput {
+	theme: Theme
 	planningMode: boolean
 	isGoalNode: boolean
 	isOnGoalPath: boolean
@@ -11,7 +13,6 @@ interface NodeStyleInput {
 	readyToLearn: boolean
 	isSomethingHovered: boolean
 	isPrerequisite: boolean
-	theme: Theme
 	staticMode?: boolean
 	isSelected?: boolean
 }
@@ -24,6 +25,7 @@ interface NodeStyle {
 }
 
 export function getNodeStyle({
+	theme,
 	planningMode,
 	isGoalNode,
 	isOnGoalPath,
@@ -33,11 +35,12 @@ export function getNodeStyle({
 	readyToLearn,
 	isSomethingHovered,
 	isPrerequisite,
-	theme,
 	staticMode = false,
 	isSelected = false,
 }: NodeStyleInput): NodeStyle {
 	const fillColor = isGoalNode ? treeColors.goal : theme.palette.background.paper
+	const highlighted = isHovered || isPrerequisite || isSelected
+	const dimmed = isSomethingHovered && !highlighted && (!planningMode || !isGoalNode)
 
 	if (staticMode) {
 		return {
@@ -47,13 +50,10 @@ export function getNodeStyle({
 			strokeWidth: 1,
 		}
 	}
-
+	
 	if (planningMode) {
-		const highlighted = isHovered || isPrerequisite || isSelected
-		const dimmedByHover = isSomethingHovered && !highlighted && !isGoalNode
-
 		const prominent = isGoalNode || isOnGoalPath || highlighted || !hasGoal
-		const nodeOpacity = dimmedByHover || !prominent ? 0.15 : 1.0
+		const nodeOpacity = dimmed || !prominent ? 0.15 : 1.0
 		const strokeWidth = isGoalNode || highlighted ? 2 : 1
 
 		let borderColor: string
@@ -74,9 +74,6 @@ export function getNodeStyle({
 		return { borderColor, fillColor, nodeOpacity, strokeWidth }
 	}
 
-	const highlighted = isHovered || isPrerequisite || isSelected
-	const dimmed = isSomethingHovered && !highlighted
-
 	if (highlighted) {
 		return {
 			borderColor: completed ? treeColors.completed : readyToLearn ? treeColors.ready : treeColors.locked,
@@ -85,6 +82,7 @@ export function getNodeStyle({
 			strokeWidth: 2,
 		}
 	}
+	
 	if (completed) {
 		return {
 			borderColor: dimmed ? treeColors.completedFaded : treeColors.completed,
@@ -93,6 +91,7 @@ export function getNodeStyle({
 			strokeWidth: 1,
 		}
 	}
+
 	if (readyToLearn) {
 		return {
 			borderColor: dimmed ? treeColors.faded : treeColors.ready,
@@ -101,6 +100,7 @@ export function getNodeStyle({
 			strokeWidth: 1,
 		}
 	}
+
 	return {
 		borderColor: treeColors.faded,
 		fillColor,
