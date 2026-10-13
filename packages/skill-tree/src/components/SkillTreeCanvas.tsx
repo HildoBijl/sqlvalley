@@ -5,15 +5,14 @@ import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
 import type { SkillTreeSettings } from '../types/SkillTreeSettings'
+import { useSkillTreeTransform, ZoomControls } from '../explorer'
 import { PlanningModeIntro, PlanningProgressIndicator, useGoalProgress, useSkillTreePlanning } from '../planning'
 import type { ModulePositionData } from '../positioning'
-import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform'
 import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro'
 
 import { SkillTree } from '../display'
 import { SkillTreeIntro } from './SkillTreeComponents/SkillTreeIntro'
 import { TreeLegend } from './SkillTreeComponents/TreeLegend'
-import { ZoomControls } from './SkillTreeComponents/ZoomControls'
 
 // Assemble the skill tree with zoom, pan, planning, legend, and help controls.
 export interface SkillTreeCanvasProps {
