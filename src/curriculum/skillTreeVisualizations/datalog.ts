@@ -1,48 +1,44 @@
-import { type GridPosition, type ModulePositionMeta, defineSkillTree } from '@sqlvalley/skill-tree'
+import { type ModuleGridPositions, defineModulePositioning } from '@sqlvalley/skill-tree'
 
 import { moduleTree } from '../moduleDefinition'
 
-// Define where each module sits on the grid. Cells are 1-indexed, and fractional values place a module between two cells.
-const nodes: Record<string, GridPosition> = {
+// Define where each module sits on the grid.
+const gridPositions: ModuleGridPositions = {
 	// Fundamental database concepts (shared with SQL and RA tree).
-	'database': { col: 3, row: 1 },
-	'database-table': { col: 2.5, row: 2 },
-	'query-language': { col: 3.5, row: 2 },
-	'projection-and-filtering': { col: 2, row: 3 },
-	'database-keys': { col: 3, row: 3 },
+	'database': [3, 1],
+	'database-table': [2.5, 2],
+	'query-language': [3.5, 2],
+	'projection-and-filtering': [2, 3],
+	'database-keys': [3, 3],
 
-	'database-view': { col: 2, row: 4 },
-	'foreign-key': { col: 3, row: 4 },
-	'datalog': { col: 2, row: 5 },
-	'join-and-decomposition': { col: 3, row: 5 },
-	'recursive-query': { col: 4, row: 5 },
+	'database-view': [2, 4],
+	'foreign-key': [3, 4],
+	'datalog': [2, 5],
+	'join-and-decomposition': [3, 5],
+	'recursive-query': [4, 5],
 
 	// Datalog concepts
-	'dl-define-projection-rule': { col: 1, row: 6 },
-	'dl-define-filtering-rule': { col: 2, row: 6 },
-	'dl-define-derived-predicate': { col: 1, row: 7 },
-	'dl-define-join-rule': { col: 2, row: 7 },
+	'dl-define-projection-rule': [1, 6],
+	'dl-define-filtering-rule': [2, 6],
+	'dl-define-derived-predicate': [1, 7],
+	'dl-define-join-rule': [2, 7],
 
 	// Datalog with negation
-	'dl-literal-types-and-rule-safety': { col: 3, row: 6 },
-	'dl-define-negation-rule': { col: 2.5, row: 8 },
-	'dl-check-rule-safety': { col: 3, row: 7 },
-	'dl-write-multi-predicate-program': { col: 2, row: 9 },
+	'dl-literal-types-and-rule-safety': [3, 6],
+	'dl-define-negation-rule': [2.5, 8],
+	'dl-check-rule-safety': [3, 7],
+	'dl-write-multi-predicate-program': [2, 9],
 
 	// Recursive Datalog
-	'dl-predicate-dependency-graph': { col: 4.5, row: 6 },
-	'dl-draw-predicate-dependency-graph': { col: 4, row: 7 },
-	'dl-semi-positive-and-stratified-datalog': { col: 5, row: 7 },
-	'dl-check-program-stratification': { col: 4.5, row: 8 },
-	'dl-define-recursive-predicate': { col: 3.5, row: 8 },
-	'dl-write-recursive-program': { col: 3, row: 10 },
+	'dl-predicate-dependency-graph': [4.5, 6],
+	'dl-draw-predicate-dependency-graph': [4, 7],
+	'dl-semi-positive-and-stratified-datalog': [5, 7],
+	'dl-check-program-stratification': [4.5, 8],
+	'dl-define-recursive-predicate': [3.5, 8],
+	'dl-write-recursive-program': [3, 10],
 }
 
-const processedModulePositions = defineSkillTree({
-	name: 'Datalog Skill Tree',
-	moduleTree,
-	nodes,
-})
+const modulePositioning = defineModulePositioning(moduleTree, gridPositions)
 
-export const datalogModulePositions: Record<string, ModulePositionMeta> = processedModulePositions.modulePositions
-export const datalogConnectors = processedModulePositions.connectors
+export const datalogModulePositions = modulePositioning.modulePositions
+export const datalogConnectors = modulePositioning.connectors

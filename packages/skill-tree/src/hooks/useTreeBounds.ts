@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
-import type { ModulePositionMeta } from '../utils/positionProcessing'
-import { cardHeight, cardWidth, treeMargin } from '../utils/settings'
+
+import { type ModulePositionData, cardHeight, cardWidth, treeMargin } from '../positioning'
 
 // Calculate tree bounds while retaining any leading space before the first grid cell.
-export function useTreeBounds(modulePositions: Record<string, ModulePositionMeta>) {
+export function useTreeBounds(modulePositions: Record<string, ModulePositionData>) {
 	return useMemo(() => {
 		const positions = Object.values(modulePositions)
 		if (positions.length === 0) {
@@ -14,11 +14,11 @@ export function useTreeBounds(modulePositions: Record<string, ModulePositionMeta
 		let minY = Infinity
 		let maxX = -Infinity
 		let maxY = -Infinity
-		for (const { position } of positions) {
-			minX = Math.min(minX, position.x - cardWidth / 2 - treeMargin)
-			minY = Math.min(minY, position.y - cardHeight / 2 - treeMargin)
-			maxX = Math.max(maxX, position.x + cardWidth / 2 + treeMargin)
-			maxY = Math.max(maxY, position.y + cardHeight / 2 + treeMargin)
+		for (const { pixelPosition } of positions) {
+			minX = Math.min(minX, pixelPosition.x - cardWidth / 2 - treeMargin)
+			minY = Math.min(minY, pixelPosition.y - cardHeight / 2 - treeMargin)
+			maxX = Math.max(maxX, pixelPosition.x + cardWidth / 2 + treeMargin)
+			maxY = Math.max(maxY, pixelPosition.y + cardHeight / 2 + treeMargin)
 		}
 
 		return {

@@ -5,7 +5,7 @@ import { Curve, Drawing } from '@step-wise/drawing'
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { isReadyToLearn } from '@sqlvalley/progress'
 
-import type { ModulePositionMeta } from '../utils/positionProcessing'
+import type { ModulePositionData } from '../positioning'
 import { resolveConnectorStyle } from '../utils/graphics/connectorStyle'
 import { useHoverState } from '../utils/graphics/mouseEvents'
 import { useGoalProgress } from '../utils/logic/useGoalProgress'
@@ -17,7 +17,7 @@ import { Tooltip } from './SkillTreeComponents/Tooltip'
 interface SkillTreeProps {
 	moduleTree: ModuleTree
 	modulePresentation: Record<string, { name: string; description: string }>
-	modulePositions: Record<string, ModulePositionMeta>
+	modulePositions: Record<string, ModulePositionData>
 	treeBounds: {
 		minX: number
 		minY: number

@@ -5,8 +5,7 @@ import { Vector } from '@step-wise/geometry'
 import { HtmlElement, Rectangle } from '@step-wise/drawing'
 import type { Module } from '@step-wise/module-tree-definition'
 
-import { cardHeight, cardWidth } from '../../utils/settings'
-import type { ModulePositionMeta } from '../../utils/positionProcessing'
+import { type ModulePositionData, cardHeight, cardWidth } from '../../positioning'
 import { treeColors } from '../../utils/graphics/treeColors'
 import { getNodeStyle } from '../../utils/graphics/nodeStyle'
 
@@ -19,7 +18,7 @@ interface NodeCardProps
 	extends Pick<HTMLAttributes<HTMLDivElement>, 'onMouseEnter' | 'onMouseLeave' | 'onPointerDown'> {
 	item: Module
 	name: string
-	positionData: ModulePositionMeta
+	positionData: ModulePositionData
 	completed: boolean
 	isHovered: boolean
 	readyToLearn?: boolean
@@ -60,8 +59,8 @@ export function NodeCard({
 	const type = item.type
 	const cornerRadius = type === 'concept' ? 4 : 12
 
-	const rectStart = new Vector(positionData.position.x - cardWidth / 2, positionData.position.y - cardHeight / 2)
-	const rectEnd = new Vector(positionData.position.x + cardWidth / 2, positionData.position.y + cardHeight / 2)
+	const rectStart = new Vector(positionData.pixelPosition.x - cardWidth / 2, positionData.pixelPosition.y - cardHeight / 2)
+	const rectEnd = new Vector(positionData.pixelPosition.x + cardWidth / 2, positionData.pixelPosition.y + cardHeight / 2)
 
 	const iconSize = 20
 	const checkmarkSize = 18
@@ -105,7 +104,7 @@ export function NodeCard({
 			/>
 
 			<HtmlElement
-				position={positionData.position}
+				position={positionData.pixelPosition}
 				anchor={[0, 0]}
 				ignoreMouse={false}
 				onMouseEnter={onMouseEnter}

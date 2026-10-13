@@ -5,10 +5,10 @@ import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
 import type { SkillTreeSettings } from '../types/SkillTreeSettings'
+import type { ModulePositionData } from '../positioning'
 import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform'
 import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro'
 import { useSkillTreePlanning } from '../utils/logic/useSkillTreePlanning'
-import type { ModulePositionMeta } from '../utils/positionProcessing'
 
 import { SkillTree } from './SkillTree'
 import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro'
@@ -21,7 +21,7 @@ import { ZoomControls } from './SkillTreeComponents/ZoomControls'
 export interface SkillTreeCanvasProps {
 	moduleTree: ModuleTree
 	modulePresentation: Record<string, { name: string; description: string }>
-	modulePositions: Record<string, ModulePositionMeta>
+	modulePositions: Record<string, ModulePositionData>
 	treeBounds: {
 		minX: number
 		minY: number
