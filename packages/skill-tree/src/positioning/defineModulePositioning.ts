@@ -1,4 +1,4 @@
-import { Vector, ensureVector } from '@step-wise/geometry'
+import { Rectangle, Vector, ensureVector } from '@step-wise/geometry'
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 import type { GridPosition, ModuleConnector, ModuleGridPositions, ModulePositionData, ModulePositioning } from './types'
@@ -65,14 +65,31 @@ export function defineModulePositioning(moduleTree: ModuleTree, gridPositions: M
 	})
 
 	// All done. Return the data.
-	return { modulePositions, connectors }
+	const bounds = calculateModuleBounds(modulePositions)
+	return { modulePositions, connectors, bounds }
+}
+
+// Calculate the rectangle containing every module card and the surrounding tree margin.
+function calculateModuleBounds(modulePositions: Record<string, ModulePositionData>): Rectangle {
+	// On no modules, return an empty rectangle.
+	const positions = Object.values(modulePositions)
+	if (positions.length === 0) return new Rectangle([0, 0], [0, 0])
+
+	// Find the smallest and largest pixel positions among all modules.
+	const pixelPositions = positions.map(position => position.pixelPosition)
+	const minX = Math.min(...pixelPositions.map(position => position.x))
+	const minY = Math.min(...pixelPositions.map(position => position.y))
+	const maxX = Math.max(...pixelPositions.map(position => position.x))
+	const maxY = Math.max(...pixelPositions.map(position => position.y))
+
+	// Add padding for card size and margins.
+	const horizontalPadding = cardWidth / 2 + treeMargin
+	const verticalPadding = cardHeight / 2 + treeMargin
+	return new Rectangle([minX - horizontalPadding, minY - verticalPadding], [maxX + horizontalPadding, maxY + verticalPadding])
 }
 
 // Convert a grid cell into the drawing position of the card's center.
 export function gridToPixels(position: GridPosition): Vector {
 	const { x, y } = ensureVector(position, { dimension: 2 })
-	return new Vector(
-		treeMargin + cardWidth / 2 + (x - 1) * columnSpacing,
-		treeMargin + cardHeight / 2 + (y - 1) * rowSpacing,
-	)
+	return new Vector(x * columnSpacing, y * rowSpacing)
 }

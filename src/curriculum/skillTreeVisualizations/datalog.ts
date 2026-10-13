@@ -38,7 +38,4 @@ const gridPositions: ModuleGridPositions = {
 	'dl-write-recursive-program': [3, 10],
 }
 
-const modulePositioning = defineModulePositioning(moduleTree, gridPositions)
-
-export const datalogModulePositions = modulePositioning.modulePositions
-export const datalogConnectors = modulePositioning.connectors
+export const datalogModulePositioning = defineModulePositioning(moduleTree, gridPositions)

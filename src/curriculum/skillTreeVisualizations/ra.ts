@@ -29,7 +29,4 @@ const gridPositions: ModuleGridPositions = {
 	'ra-set-up-multi-step-query': [2.5, 8],
 }
 
-const modulePositioning = defineModulePositioning(moduleTree, gridPositions)
-
-export const raModulePositions = modulePositioning.modulePositions
-export const raConnectors = modulePositioning.connectors
+export const raModulePositioning = defineModulePositioning(moduleTree, gridPositions)

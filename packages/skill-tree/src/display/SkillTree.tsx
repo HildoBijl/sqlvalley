@@ -1,12 +1,10 @@
 import { useTheme } from '@mui/material'
 
-import type { Vector } from '@step-wise/geometry'
 import { Curve, Drawing } from '@step-wise/drawing'
-import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { isReadyToLearn } from '@sqlvalley/progress'
 
+import { useSkillTreeData } from '../core'
 import { useSkillTreeInteraction } from '../interaction'
-import type { ModulePositionData } from '../positioning'
 
 import { resolveConnectorStyle } from './connectorStyle'
 import { NodeCard } from './NodeCard'
@@ -14,18 +12,6 @@ import { Tooltip } from './Tooltip'
 
 // Render the tree nodes and connectors without zoom or pan controls.
 interface SkillTreeProps {
-	moduleTree: ModuleTree
-	modulePresentation: Record<string, { name: string; description: string }>
-	modulePositions: Record<string, ModulePositionData>
-	treeBounds: {
-		minX: number
-		minY: number
-		maxX: number
-		maxY: number
-		width: number
-		height: number
-	}
-	visiblePaths: { points: Vector[]; from: string; to: string }[]
 	isCompleted: (id: string) => boolean
 	planningMode: boolean
 	goalNodeId?: string | null
@@ -36,11 +22,6 @@ interface SkillTreeProps {
 }
 
 export function SkillTree({
-	moduleTree,
-	modulePresentation,
-	modulePositions,
-	treeBounds,
-	visiblePaths,
 	isCompleted,
 	planningMode,
 	goalNodeId,
@@ -50,6 +31,8 @@ export function SkillTree({
 	staticMode,
 }: SkillTreeProps) {
 	const theme = useTheme()
+	const { moduleTree, modulePresentation, modulePositioning } = useSkillTreeData()
+	const { modulePositions, connectors, bounds } = modulePositioning
 
 	const onNavigate = (id: string) => {
 		window.location.href = `/module/${id}`
@@ -67,20 +50,20 @@ export function SkillTree({
 		handlePointerOutside,
 	} = useSkillTreeInteraction(moduleTree, modulePresentation, onNavigate)
 
-	if (treeBounds.width <= 0 || treeBounds.height <= 0) return null
+	if (bounds.width <= 0 || bounds.height <= 0) return null
 
 	return <div
 		onPointerDown={handlePointerOutside}
 		style={{
 			position: 'relative',
-			width: `${treeBounds.width}px`,
-			height: `${treeBounds.height}px`,
+			width: `${bounds.width}px`,
+			height: `${bounds.height}px`,
 			marginLeft: '35px',
 			marginTop: '35px',
 			backgroundColor: theme.palette.background.paper,
 		}}>
-		<Drawing view={{ type: 'identity', width: treeBounds.width, height: treeBounds.height, yDirection: 'down' }}>
-			{visiblePaths.map((connector, i) => {
+		<Drawing view={{ type: 'bounds', bounds, width: bounds.width, height: bounds.height, yDirection: 'down' }}>
+			{connectors.map((connector, i) => {
 				const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
 					connector,
 					planningMode,

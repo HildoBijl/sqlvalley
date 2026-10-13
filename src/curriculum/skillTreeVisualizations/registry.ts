@@ -1,12 +1,12 @@
-import { datalogModulePositions, datalogConnectors } from './datalog'
-import { raModulePositions, raConnectors } from './ra'
-import { sqlModulePositions, sqlConnectors } from './sql'
+import { datalogModulePositioning } from './datalog'
+import { raModulePositioning } from './ra'
+import { sqlModulePositioning } from './sql'
 
 // All defined skill trees.
 export const skillTreeVisualizationDefinitions = [
-	{ id: 'sql', modulePositions: sqlModulePositions, visiblePaths: sqlConnectors, moduleIds: new Set(Object.keys(sqlModulePositions)) },
-	{ id: 'ra', modulePositions: raModulePositions, visiblePaths: raConnectors, moduleIds: new Set(Object.keys(raModulePositions)) },
-	{ id: 'datalog', modulePositions: datalogModulePositions, visiblePaths: datalogConnectors, moduleIds: new Set(Object.keys(datalogModulePositions)) },
+	{ id: 'sql', modulePositioning: sqlModulePositioning, moduleIds: new Set(Object.keys(sqlModulePositioning.modulePositions)) },
+	{ id: 'ra', modulePositioning: raModulePositioning, moduleIds: new Set(Object.keys(raModulePositioning.modulePositions)) },
+	{ id: 'datalog', modulePositioning: datalogModulePositioning, moduleIds: new Set(Object.keys(datalogModulePositioning.modulePositions)) },
 ] as const
 
 // The IDs of the existing skill trees.

@@ -1,13 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useGesture } from '@use-gesture/react'
 
-interface TreeBounds {
-	width: number
-	height: number
-}
+import type { Rectangle } from '@step-wise/geometry'
 
 interface UseSkillTreeTransformOptions {
-	treeBounds: TreeBounds
+	bounds: Rectangle
 	initialScale?: number
 	allowZoom?: boolean
 }
@@ -16,7 +13,7 @@ const MIN_SCALE = 0.5
 const MAX_SCALE = 2
 
 export function useSkillTreeTransform({
-	treeBounds,
+	bounds,
 	initialScale = 1,
 	allowZoom = true,
 }: UseSkillTreeTransformOptions) {
@@ -78,9 +75,9 @@ export function useSkillTreeTransform({
 					const scale = transformRef.current.scale
 					const extra = 250
 					return {
-						left: Math.min(0, viewW - treeBounds.width * scale) - extra,
+						left: Math.min(0, viewW - bounds.width * scale) - extra,
 						right: extra,
-						top: Math.min(0, viewH - treeBounds.height * scale) - extra,
+						top: Math.min(0, viewH - bounds.height * scale) - extra,
 						bottom: extra,
 					}
 				},

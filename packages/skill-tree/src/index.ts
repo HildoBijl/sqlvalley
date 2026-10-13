@@ -1,6 +1,5 @@
 export { SkillTreeCanvas, type SkillTreeCanvasProps } from './components/SkillTreeCanvas'
 export { treeColors } from './display'
-export { useTreeBounds } from './hooks/useTreeBounds'
 export {
 	type GridPosition,
 	type ModuleConnector,

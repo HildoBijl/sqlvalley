@@ -1,4 +1,4 @@
-import type { VectorLike as VectorInput, Vector } from '@step-wise/geometry'
+import type { Rectangle, VectorLike as VectorInput, Vector } from '@step-wise/geometry'
 
 // Input for the module positioning.
 export type GridPosition = VectorInput
@@ -8,6 +8,7 @@ export type ModuleGridPositions = Record<string, GridPosition>
 export interface ModulePositioning {
 	modulePositions: Record<string, ModulePositionData>
 	connectors: ModuleConnector[]
+	bounds: Rectangle
 }
 
 export interface ModulePositionData {

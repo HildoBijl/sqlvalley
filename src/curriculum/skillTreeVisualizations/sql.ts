@@ -40,7 +40,4 @@ const gridPositions: ModuleGridPositions = {
 	'write-multi-layered-query': [3.5, 8],
 }
 
-const modulePositioning = defineModulePositioning(moduleTree, gridPositions)
-
-export const sqlModulePositions = modulePositioning.modulePositions
-export const sqlConnectors = modulePositioning.connectors
+export const sqlModulePositioning = defineModulePositioning(moduleTree, gridPositions)

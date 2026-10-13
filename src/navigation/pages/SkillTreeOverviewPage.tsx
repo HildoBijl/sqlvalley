@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Container } from '@mui/material'
 
 import { useModuleCompletion } from '@sqlvalley/progress'
-import { SkillTreeCanvas, useTreeBounds } from '@sqlvalley/skill-tree'
+import { SkillTreeCanvas } from '@sqlvalley/skill-tree'
 
 import { useSkillTreeSettingsStore, useSkillTreeMemory, useLearningStore } from '@/store'
 import { type SkillTreeVisualizationId, modulePresentation, moduleTree, skillTreeVisualizationById } from '@/curriculum'
@@ -13,8 +13,7 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 	useEffect(() => { markSkillTreeVisited(treeId) }, [markSkillTreeVisited, treeId])
 
 	// Load the respective module tree positions/paths.
-	const { modulePositions, visiblePaths } = skillTreeVisualizationById.get(treeId)!
-	const treeBounds = useTreeBounds(modulePositions)
+	const { modulePositioning } = skillTreeVisualizationById.get(treeId)!
 
 	// Load in completion data for the user.
 	const moduleStates = useLearningStore(state => state.modules)
@@ -28,9 +27,7 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 		<SkillTreeCanvas
 			moduleTree={moduleTree}
 			modulePresentation={modulePresentation}
-			modulePositions={modulePositions}
-			treeBounds={treeBounds}
-			visiblePaths={visiblePaths}
+			modulePositioning={modulePositioning}
 			isCompleted={isCompleted}
 			memoryStoreAPI={memoryStoreAPI}
 			settings={{ allowZoom: true, initialZoom: 1, allowPlanningMode: true, trackProgress: true }} />
