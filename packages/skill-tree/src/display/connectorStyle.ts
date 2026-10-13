@@ -1,11 +1,15 @@
-import type { ModuleTree } from '@step-wise/module-tree-definition'
+import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
 import { isReadyToLearn } from '@sqlvalley/progress'
 
+import type { ModuleConnector } from '../positioning'
+
 import { treeColors } from './treeColors'
 
+type ConnectorReference = Pick<ModuleConnector, 'from' | 'to'>
+
 export function isConnectorInGoalPath(
-	connector: { from: string; to: string },
+	connector: ConnectorReference,
 	planningMode: boolean,
 	goalNodeId: string | null | undefined,
 	goalPath: Set<string>,
@@ -15,14 +19,14 @@ export function isConnectorInGoalPath(
 }
 
 export function resolveConnectorStyle(
-	connector: { from: string; to: string },
+	connector: ConnectorReference,
 	planningMode: boolean,
 	goalNodeId: string | null | undefined,
 	goalPath: Set<string>,
-	localHoveredId: string | null,
-	isCompletedFn: (id: string) => boolean,
+	hoveredModuleId: string | null,
+	isCompletedFn: (id: ModuleId) => boolean,
 	moduleTree: ModuleTree,
-	isConnectorInHoveredPath: (connector: { from: string; to: string }) => boolean,
+	isInHoveredPath: boolean,
 	staticMode?: boolean,
 ) {
 	const fromCompleted = isCompletedFn(connector.from)
@@ -30,8 +34,8 @@ export function resolveConnectorStyle(
 		planningMode,
 		goalNodeId,
 		isInGoalPath: isConnectorInGoalPath(connector, planningMode, goalNodeId, goalPath),
-		isInHoveredPath: isConnectorInHoveredPath(connector),
-		isSomethingHovered: !!localHoveredId,
+		isInHoveredPath,
+		isSomethingHovered: !!hoveredModuleId,
 		fromCompleted,
 		toCompleted: isCompletedFn(connector.to),
 		isNextToLearn: isReadyToLearn(moduleTree, connector.to, isCompletedFn) && fromCompleted,

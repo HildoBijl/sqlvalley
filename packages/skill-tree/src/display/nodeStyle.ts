@@ -14,7 +14,6 @@ interface NodeStyleInput {
 	isSomethingHovered: boolean
 	isPrerequisite: boolean
 	staticMode?: boolean
-	isSelected?: boolean
 }
 
 interface NodeStyle {
@@ -36,10 +35,9 @@ export function getNodeStyle({
 	isSomethingHovered,
 	isPrerequisite,
 	staticMode = false,
-	isSelected = false,
 }: NodeStyleInput): NodeStyle {
 	const fillColor = isGoalNode ? treeColors.goal : theme.palette.background.paper
-	const highlighted = isHovered || isPrerequisite || isSelected
+	const highlighted = isHovered || isPrerequisite
 	const dimmed = isSomethingHovered && !highlighted && (!planningMode || !isGoalNode)
 
 	if (staticMode) {

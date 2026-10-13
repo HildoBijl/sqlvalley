@@ -1,5 +1,5 @@
 import { Rectangle, Vector, ensureVector } from '@step-wise/geometry'
-import type { ModuleTree } from '@step-wise/module-tree-definition'
+import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
 import type { GridPosition, ModuleConnector, ModuleGridPositions, ModulePositionData, ModulePositioning } from './types'
 import { cardHeight, cardWidth, columnSpacing, rowSpacing, treeMargin } from './settings'
@@ -8,7 +8,7 @@ import { calculateConnectorPoints } from './calculateConnectorPoints'
 // Add drawing positions and connector paths to modules assigned to grid cells.
 export function defineModulePositioning(moduleTree: ModuleTree, gridPositions: ModuleGridPositions): ModulePositioning {
 	// Determine the positions of the modules in pixel coordinates.
-	const modulePositions: Record<string, ModulePositionData> = {}
+	const modulePositions: Record<ModuleId, ModulePositionData> = {}
 	Object.entries(gridPositions).forEach(([id, gridPositionInput]) => {
 		if (!moduleTree[id]) throw new Error(`Invalid module ID "${id}" encountered when defining module positions.`)
 		const gridPosition = ensureVector(gridPositionInput, { dimension: 2 })
@@ -70,7 +70,7 @@ export function defineModulePositioning(moduleTree: ModuleTree, gridPositions: M
 }
 
 // Calculate the rectangle containing every module card and the surrounding tree margin.
-function calculateModuleBounds(modulePositions: Record<string, ModulePositionData>): Rectangle {
+function calculateModuleBounds(modulePositions: Record<ModuleId, ModulePositionData>): Rectangle {
 	// On no modules, return an empty rectangle.
 	const positions = Object.values(modulePositions)
 	if (positions.length === 0) return new Rectangle([0, 0], [0, 0])

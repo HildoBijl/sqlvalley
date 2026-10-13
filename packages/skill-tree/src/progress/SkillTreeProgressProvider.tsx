@@ -13,6 +13,5 @@ export function SkillTreeProgressProvider({ children, isCompleted }: SkillTreePr
 		isCompleted: isCompleted ?? (() => false),
 		hasProgress: isCompleted !== undefined,
 	}), [isCompleted])
-
 	return <SkillTreeProgressContext value={value}>{children}</SkillTreeProgressContext>
 }

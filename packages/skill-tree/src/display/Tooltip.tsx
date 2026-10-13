@@ -1,18 +1,19 @@
-import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { useTheme } from '@mui/material'
 
 import { usePointerPosition } from '@step-wise/react-utils'
 
-interface TooltipProps {
-	children?: ReactNode
-}
+import { useSkillTreeData } from '../core'
+import { useSkillTreeInteraction } from '../interaction'
 
-export function Tooltip({ children }: TooltipProps) {
+export function Tooltip() {
 	const mousePosition = usePointerPosition()
 	const theme = useTheme()
+	const { modulePresentation } = useSkillTreeData()
+	const { hoveredModuleId } = useSkillTreeInteraction()
+	const description = hoveredModuleId ? (modulePresentation[hoveredModuleId]?.description ?? 'No description available') : undefined
 
-	if (!children || !mousePosition) return null
+	if (!description || !mousePosition) return null
 
 	return createPortal(
 		<div
@@ -32,7 +33,7 @@ export function Tooltip({ children }: TooltipProps) {
 				boxShadow: theme.shadows[4],
 				pointerEvents: 'none',
 			}}>
-			{children}
+			{description}
 		</div>,
 		document.body,
 	)

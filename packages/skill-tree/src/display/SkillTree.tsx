@@ -4,7 +4,7 @@ import { Curve, Drawing } from '@step-wise/drawing'
 import { isReadyToLearn } from '@sqlvalley/progress'
 
 import { useSkillTreeData } from '../core'
-import { useSkillTreeInteraction } from '../interaction'
+import { isConnectorInHoveredPath, useSkillTreeInteraction } from '../interaction'
 import { useSkillTreeProgress } from '../progress'
 
 import { resolveConnectorStyle } from './connectorStyle'
@@ -33,26 +33,16 @@ export function SkillTree({
 	const { modulePositions, connectors, bounds } = modulePositioning
 	const staticMode = !hasProgress
 
-	const onNavigate = (id: string) => {
-		window.location.href = `/module/${id}`
-	}
-
 	const {
-		localHoveredId,
-		prerequisites,
-		tooltip,
-		selectedId,
-		handleHoverStart,
-		handleHoverEnd,
-		isConnectorInHoveredPath,
-		handlePointerDown,
-		handlePointerOutside,
-	} = useSkillTreeInteraction(moduleTree, modulePresentation, onNavigate)
+		hoveredModuleId,
+		hoveredPrerequisiteIds,
+		endModuleHover,
+	} = useSkillTreeInteraction()
 
 	if (bounds.width <= 0 || bounds.height <= 0) return null
 
 	return <div
-		onPointerDown={handlePointerOutside}
+		onPointerDown={endModuleHover}
 		style={{
 			position: 'relative',
 			width: `${bounds.width}px`,
@@ -68,10 +58,10 @@ export function SkillTree({
 					planningMode,
 					goalNodeId,
 					goalPath,
-					localHoveredId,
+					hoveredModuleId,
 					isCompleted,
 					moduleTree,
-					isConnectorInHoveredPath,
+					isConnectorInHoveredPath(connector, hoveredModuleId, hoveredPrerequisiteIds),
 					staticMode,
 				)
 
@@ -93,22 +83,11 @@ export function SkillTree({
 
 				return <NodeCard
 					key={item.id}
-					onMouseEnter={() => handleHoverStart(item.id)}
-					onMouseLeave={handleHoverEnd}
-					onPointerDown={e => {
-						e.stopPropagation()
-						const isGoal = planningMode && goalNodeId === item.id
-						handlePointerDown(item.id, e, isGoal)
-					}}
 					item={item}
 					name={modulePresentation[item.id]?.name ?? item.id}
 					positionData={modulePositions[item.id]}
 					completed={isCompleted(item.id)}
-					isHovered={localHoveredId === item.id}
 					readyToLearn={readyToLearn}
-					isPrerequisite={prerequisites.has(item.id)}
-					isSomethingHovered={localHoveredId !== null}
-					isSelected={selectedId === item.id}
 					planningMode={planningMode}
 					hasGoal={planningMode && !!goalNodeId}
 					isGoalNode={planningMode && goalNodeId === item.id}
@@ -123,7 +102,7 @@ export function SkillTree({
 				/>
 			})}
 
-			<Tooltip>{tooltip}</Tooltip>
+			<Tooltip />
 		</Drawing>
 	</div>
 }

@@ -6,6 +6,7 @@ import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
 import type { SkillTreeSettings } from '../types/SkillTreeSettings'
 import { type ModulePresentation, SkillTreeDataProvider, useSkillTreeData } from '../core'
 import { useSkillTreeTransform, ZoomControls } from '../explorer'
+import { SkillTreeInteractionProvider } from '../interaction'
 import { PlanningModeIntro, PlanningProgressIndicator, useGoalProgress, useSkillTreePlanning } from '../planning'
 import type { ModulePositioning } from '../positioning'
 import { SkillTreeProgressProvider } from '../progress'
@@ -25,6 +26,8 @@ export interface SkillTreeCanvasProps {
 	memoryStoreAPI?: SkillTreeMemoryStoreAPI
 }
 
+const navigateToModule = (id: ModuleId) => { window.location.href = `/module/${id}` }
+
 export function SkillTreeCanvas({
 	moduleTree,
 	modulePresentation,
@@ -35,7 +38,9 @@ export function SkillTreeCanvas({
 }: SkillTreeCanvasProps) {
 	return <SkillTreeDataProvider moduleTree={moduleTree} modulePresentation={modulePresentation} modulePositioning={modulePositioning}>
 		<SkillTreeProgressProvider isCompleted={isCompleted}>
-			<SkillTreeCanvasContent settings={settings} memoryStoreAPI={memoryStoreAPI} />
+			<SkillTreeInteractionProvider onNavigate={navigateToModule}>
+				<SkillTreeCanvasContent settings={settings} memoryStoreAPI={memoryStoreAPI} />
+			</SkillTreeInteractionProvider>
 		</SkillTreeProgressProvider>
 	</SkillTreeDataProvider>
 }

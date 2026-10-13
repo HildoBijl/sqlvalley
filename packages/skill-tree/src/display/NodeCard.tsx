@@ -1,10 +1,10 @@
-import type { HTMLAttributes } from 'react'
 import { useTheme, ButtonBase } from '@mui/material'
 
 import { Vector } from '@step-wise/geometry'
 import { HtmlElement, Rectangle } from '@step-wise/drawing'
 import type { Module } from '@step-wise/module-tree-definition'
 
+import { useSkillTreeInteraction } from '../interaction'
 import { type ModulePositionData, cardHeight, cardWidth } from '../positioning'
 
 import { NodeCompletedMark } from './icons/NodeCompletedMark'
@@ -14,16 +14,12 @@ import { getNodeStyle } from './nodeStyle'
 import { treeColors } from './treeColors'
 
 // Render a module as SVG backgrounds with an interactive HTML card above them.
-interface NodeCardProps
-	extends Pick<HTMLAttributes<HTMLDivElement>, 'onMouseEnter' | 'onMouseLeave' | 'onPointerDown'> {
+interface NodeCardProps {
 	item: Module
 	name: string
 	positionData: ModulePositionData
 	completed: boolean
-	isHovered: boolean
 	readyToLearn?: boolean
-	isPrerequisite?: boolean
-	isSomethingHovered?: boolean
 	planningMode?: boolean
 	hasGoal?: boolean
 	isGoalNode?: boolean
@@ -31,7 +27,6 @@ interface NodeCardProps
 	onSetGoal?: () => void
 	nextStepId?: string | null
 	staticMode?: boolean
-	isSelected?: boolean
 }
 
 export function NodeCard({
@@ -39,10 +34,7 @@ export function NodeCard({
 	name,
 	positionData,
 	completed,
-	isHovered,
 	readyToLearn = false,
-	isPrerequisite = false,
-	isSomethingHovered = false,
 	planningMode = false,
 	hasGoal = false,
 	isGoalNode = false,
@@ -50,13 +42,19 @@ export function NodeCard({
 	onSetGoal,
 	nextStepId,
 	staticMode = false,
-	isSelected = false,
-	onMouseEnter,
-	onMouseLeave,
-	onPointerDown,
 }: NodeCardProps) {
 	const theme = useTheme()
+	const {
+		hoveredModuleId,
+		hoveredPrerequisiteIds,
+		startModuleHover,
+		endModuleHover,
+		handleModulePointerDown,
+	} = useSkillTreeInteraction()
 	const type = item.type
+	const isHovered = hoveredModuleId === item.id
+	const isPrerequisite = hoveredPrerequisiteIds.has(item.id)
+	const isSomethingHovered = hoveredModuleId !== null
 	const cornerRadius = type === 'concept' ? 4 : 12
 
 	const rectStart = new Vector(positionData.pixelPosition.x - cardWidth / 2, positionData.pixelPosition.y - cardHeight / 2)
@@ -77,7 +75,6 @@ export function NodeCard({
 		isPrerequisite,
 		theme,
 		staticMode,
-		isSelected,
 	})
 
 	return <>
@@ -107,9 +104,12 @@ export function NodeCard({
 				position={positionData.pixelPosition}
 				anchor={[0, 0]}
 				ignoreMouse={false}
-				onMouseEnter={onMouseEnter}
-				onMouseLeave={onMouseLeave}
-				onPointerDown={onPointerDown}
+				onMouseEnter={() => startModuleHover(item.id)}
+				onMouseLeave={endModuleHover}
+				onPointerDown={event => {
+					event.stopPropagation()
+					handleModulePointerDown(item.id, event, planningMode && isGoalNode)
+				}}
 				style={{ opacity: nodeOpacity, whiteSpace: 'normal' }}>
 				<ButtonBase
 					focusRipple
