@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
 
-import type { SkillTreeMemoryStoreAPI } from '../../types/SkillTreeMemoryStoreAPI'
+import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
 
-const noop = () => {}
+const noop = () => { }
 
 export function useSkillTreePlanning(memoryStoreAPI?: SkillTreeMemoryStoreAPI) {
 	const planningMode = memoryStoreAPI?.planningMode ?? false

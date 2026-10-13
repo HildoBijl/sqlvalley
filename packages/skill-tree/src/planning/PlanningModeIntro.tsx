@@ -24,8 +24,7 @@ export function PlanningModeIntro({ open, onClose }: PlanningModeIntroProps) {
 			</DialogTitle>
 			<DialogContent sx={{ px: 4 }}>
 				<Typography variant="body2" color="text.secondary" align="center">
-					In planning mode, you can set a learning goal and get a personalized learning path to reach it. Click on a pin
-					to set your goal and start planning your learning journey!
+					In planning mode, you can set a learning goal and get a personalized learning path to reach it. Click on a pin to set your goal and start planning your learning journey!
 				</Typography>
 			</DialogContent>
 			<DialogActions sx={{ px: 4, pb: 4, pt: 2 }}>

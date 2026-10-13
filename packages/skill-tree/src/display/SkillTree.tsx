@@ -5,11 +5,10 @@ import { Curve, Drawing } from '@step-wise/drawing'
 import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { isReadyToLearn } from '@sqlvalley/progress'
 
+import { useSkillTreeInteraction } from '../interaction'
 import type { ModulePositionData } from '../positioning'
-import { useGoalProgress } from '../utils/logic/useGoalProgress'
 
 import { resolveConnectorStyle } from './connectorStyle'
-import { useHoverState } from './mouseEvents'
 import { NodeCard } from './NodeCard'
 import { Tooltip } from './Tooltip'
 
@@ -30,13 +29,8 @@ interface SkillTreeProps {
 	isCompleted: (id: string) => boolean
 	planningMode: boolean
 	goalNodeId?: string | null
+	goalPath: Set<string>
 	setGoalNodeId?: (id: string | null) => void
-	onGoalProgressChange?: (
-		completedCount: number,
-		totalCount: number,
-		nextStepName: string | null,
-		nextStepId: string | null,
-	) => void
 	nextStepId?: string | null
 	staticMode?: boolean
 }
@@ -50,8 +44,8 @@ export function SkillTree({
 	isCompleted,
 	planningMode,
 	goalNodeId,
+	goalPath,
 	setGoalNodeId,
-	onGoalProgressChange,
 	nextStepId,
 	staticMode,
 }: SkillTreeProps) {
@@ -71,9 +65,7 @@ export function SkillTree({
 		isConnectorInHoveredPath,
 		handlePointerDown,
 		handlePointerOutside,
-	} = useHoverState(moduleTree, modulePresentation, onNavigate)
-
-	const goalPath = useGoalProgress(goalNodeId, moduleTree, modulePresentation, isCompleted, onGoalProgressChange)
+	} = useSkillTreeInteraction(moduleTree, modulePresentation, onNavigate)
 
 	if (treeBounds.width <= 0 || treeBounds.height <= 0) return null
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 
-export function useHoverState(
+export function useSkillTreeInteraction(
 	moduleTree: ModuleTree,
 	modulePresentation: Record<string, { description: string }>,
 	onNavigate: (id: string) => void,

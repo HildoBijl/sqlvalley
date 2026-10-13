@@ -5,14 +5,12 @@ import type { ModuleTree } from '@step-wise/module-tree-definition'
 
 import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
 import type { SkillTreeSettings } from '../types/SkillTreeSettings'
+import { PlanningModeIntro, PlanningProgressIndicator, useGoalProgress, useSkillTreePlanning } from '../planning'
 import type { ModulePositionData } from '../positioning'
 import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform'
 import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro'
-import { useSkillTreePlanning } from '../utils/logic/useSkillTreePlanning'
 
 import { SkillTree } from '../display'
-import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro'
-import { PlanningProgressIndicator } from './SkillTreeComponents/PlanningProgressIndicator'
 import { SkillTreeIntro } from './SkillTreeComponents/SkillTreeIntro'
 import { TreeLegend } from './SkillTreeComponents/TreeLegend'
 import { ZoomControls } from './SkillTreeComponents/ZoomControls'
@@ -67,6 +65,13 @@ export function SkillTreeCanvas({
 		setShowPlanningModeModal,
 		togglePlanningMode,
 	} = useSkillTreePlanning(memoryStoreAPI)
+	const goalPath = useGoalProgress(
+		goalNodeId,
+		moduleTree,
+		modulePresentation,
+		resolvedIsCompleted,
+		handleGoalProgressChange,
+	)
 
 	const { showIntro, setShowIntro, openIntro } = useSkillTreeIntro(memoryStoreAPI)
 
@@ -130,8 +135,8 @@ export function SkillTreeCanvas({
 						isCompleted={resolvedIsCompleted}
 						planningMode={allowPlanningMode ? planningMode : false}
 						goalNodeId={goalNodeId}
+						goalPath={goalPath}
 						setGoalNodeId={setGoalNodeId}
-						onGoalProgressChange={handleGoalProgressChange}
 						nextStepId={goalProgress.nextStepId}
 						staticMode={staticMode}
 					/>
