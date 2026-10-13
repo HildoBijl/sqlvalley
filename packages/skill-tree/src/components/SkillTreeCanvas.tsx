@@ -1,46 +1,39 @@
-import { useTheme } from '@mui/material';
-import type { Vector } from '@step-wise/geometry';
-import type { ModuleTree } from '@step-wise/module-tree-definition'
-import { SkillTree } from './SkillTree';
-import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro';
-import { PlanningProgressIndicator } from './SkillTreeComponents/PlanningProgressIndicator';
-import { SkillTreeIntro } from './SkillTreeComponents/SkillTreeIntro';
-import { TreeLegend } from './SkillTreeComponents/TreeLegend';
-import { ZoomControls } from './SkillTreeComponents/ZoomControls';
-import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI';
-import type { SkillTreeSettings } from '../types/SkillTreeSettings';
-import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform';
-import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro';
-import { useSkillTreePlanning } from '../utils/logic/useSkillTreePlanning';
-import type { ModulePositionMeta } from '../utils/positionProcessing';
+import { useTheme } from '@mui/material'
 
-/*
- * SkillTreeCanvas component that wraps the skill tree with zoom and pan capabilities.
- * This component only handles the zoom/pan functionality and UI controls.
- *
- * @param moduleTree - Modules keyed by module ID.
- * @param modulePresentation - Display names and descriptions keyed by module ID.
- * @param modulePositions - Array of module position data entries to display.
- * @param treeBounds - The bounding box of the tree layout.
- * @param visiblePaths - Array of connector objects with points arrays and from/to node IDs.
- * @param isCompleted - Function to check if a module is completed.
- */
+import type { Vector } from '@step-wise/geometry'
+import type { ModuleTree } from '@step-wise/module-tree-definition'
+
+import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
+import type { SkillTreeSettings } from '../types/SkillTreeSettings'
+import { useSkillTreeTransform } from '../utils/graphics/useSkillTreeTransform'
+import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro'
+import { useSkillTreePlanning } from '../utils/logic/useSkillTreePlanning'
+import type { ModulePositionMeta } from '../utils/positionProcessing'
+
+import { SkillTree } from './SkillTree'
+import { PlanningModeIntro } from './SkillTreeComponents/PlanningModeIntro'
+import { PlanningProgressIndicator } from './SkillTreeComponents/PlanningProgressIndicator'
+import { SkillTreeIntro } from './SkillTreeComponents/SkillTreeIntro'
+import { TreeLegend } from './SkillTreeComponents/TreeLegend'
+import { ZoomControls } from './SkillTreeComponents/ZoomControls'
+
+// Assemble the skill tree with zoom, pan, planning, legend, and help controls.
 export interface SkillTreeCanvasProps {
-	moduleTree: ModuleTree;
-	modulePresentation: Record<string, { name: string; description: string }>;
-	modulePositions: Record<string, ModulePositionMeta>;
+	moduleTree: ModuleTree
+	modulePresentation: Record<string, { name: string; description: string }>
+	modulePositions: Record<string, ModulePositionMeta>
 	treeBounds: {
-		minX: number;
-		minY: number;
-		maxX: number;
-		maxY: number;
-		width: number;
-		height: number;
-	};
-	visiblePaths: { points: Vector[]; from: string; to: string }[];
-	isCompleted?: (id: string) => boolean;
-	settings?: SkillTreeSettings;
-	memoryStoreAPI?: SkillTreeMemoryStoreAPI;
+		minX: number
+		minY: number
+		maxX: number
+		maxY: number
+		width: number
+		height: number
+	}
+	visiblePaths: { points: Vector[]; from: string; to: string }[]
+	isCompleted?: (id: string) => boolean
+	settings?: SkillTreeSettings
+	memoryStoreAPI?: SkillTreeMemoryStoreAPI
 }
 
 export function SkillTreeCanvas({
@@ -53,23 +46,16 @@ export function SkillTreeCanvas({
 	settings,
 	memoryStoreAPI,
 }: SkillTreeCanvasProps) {
-	const {
-		allowZoom = true,
-		initialZoom = 1,
-		allowPlanningMode = true,
-		trackProgress = true,
-	} = settings ?? {};
+	const { allowZoom = true, initialZoom = 1, allowPlanningMode = true, trackProgress = true } = settings ?? {}
 
-	const staticMode = !trackProgress;
-	const resolvedIsCompleted = staticMode
-		? () => false
-		: (isCompleted ?? (() => false));
+	const staticMode = !trackProgress
+	const resolvedIsCompleted = staticMode ? () => false : (isCompleted ?? (() => false))
 
 	const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform({
 		treeBounds,
 		initialScale: initialZoom,
 		allowZoom,
-	});
+	})
 
 	const {
 		planningMode,
@@ -80,19 +66,16 @@ export function SkillTreeCanvas({
 		showPlanningModeModal,
 		setShowPlanningModeModal,
 		togglePlanningMode,
-	} = useSkillTreePlanning(memoryStoreAPI);
+	} = useSkillTreePlanning(memoryStoreAPI)
 
-	const { showIntro, setShowIntro, openIntro } = useSkillTreeIntro(memoryStoreAPI);
+	const { showIntro, setShowIntro, openIntro } = useSkillTreeIntro(memoryStoreAPI)
 
-	const theme = useTheme();
+	const theme = useTheme()
 
-	const nextStepModule = goalProgress.nextStepId ? moduleTree[goalProgress.nextStepId] : null;
-	const nextStepHref = nextStepModule
-		? `/${nextStepModule.type}/${goalProgress.nextStepId}`
-		: null;
+	const nextStepModule = goalProgress.nextStepId ? moduleTree[goalProgress.nextStepId] : null
+	const nextStepHref = nextStepModule ? `/${nextStepModule.type}/${goalProgress.nextStepId}` : null
 
-	return (
-		<div
+	return <div
 			ref={outerRef}
 			style={{
 				width: '100%',
@@ -102,8 +85,7 @@ export function SkillTreeCanvas({
 				overflow: 'hidden',
 				backgroundColor: theme.palette.background.paper,
 				position: 'relative',
-			}}
-		>
+			}}>
 			<ZoomControls
 				onZoomIn={() => zoomBy(1.2)}
 				onZoomOut={() => zoomBy(1 / 1.2)}
@@ -123,10 +105,7 @@ export function SkillTreeCanvas({
 					hasGoal={!!goalNodeId}
 				/>
 			)}
-			<TreeLegend
-				hideLegend={memoryStoreAPI?.hideLegend}
-				setHideLegend={memoryStoreAPI?.setHideLegend}
-			/>
+			<TreeLegend hideLegend={memoryStoreAPI?.hideLegend} setHideLegend={memoryStoreAPI?.setHideLegend} />
 
 			<div
 				{...bind()}
@@ -135,15 +114,13 @@ export function SkillTreeCanvas({
 					height: '100%',
 					cursor: 'grab',
 					touchAction: 'none',
-				}}
-			>
+				}}>
 				<div
 					style={{
 						transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
 						transformOrigin: '0 0',
 						willChange: 'transform',
-					}}
-				>
+					}}>
 					<SkillTree
 						moduleTree={moduleTree}
 						modulePresentation={modulePresentation}
@@ -161,12 +138,8 @@ export function SkillTreeCanvas({
 				</div>
 			</div>
 
-			<PlanningModeIntro
-				open={showPlanningModeModal}
-				onClose={() => setShowPlanningModeModal(false)}
-			/>
+			<PlanningModeIntro open={showPlanningModeModal} onClose={() => setShowPlanningModeModal(false)} />
 
 			<SkillTreeIntro open={showIntro} onClose={() => setShowIntro(false)} />
-		</div>
-	);
+	</div>
 }

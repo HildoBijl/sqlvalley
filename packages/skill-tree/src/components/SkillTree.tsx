@@ -1,8 +1,8 @@
 import { useTheme } from '@mui/material'
 
 import type { Vector } from '@step-wise/geometry'
-import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { Curve, Drawing } from '@step-wise/drawing'
+import type { ModuleTree } from '@step-wise/module-tree-definition'
 import { isReadyToLearn } from '@sqlvalley/progress'
 
 import type { ModulePositionMeta } from '../utils/positionProcessing'
@@ -13,18 +13,7 @@ import { useGoalProgress } from '../utils/logic/useGoalProgress'
 import { NodeCard } from './SkillTreeComponents/NodeCard'
 import { Tooltip } from './SkillTreeComponents/Tooltip'
 
-/*
- * SkillTree component that renders the tree structure with nodes and connectors.
- * This is a pure rendering component without zoom/pan controls.
- * Uses the Drawing library for coordinate-based positioning.
- *
- * @param moduleTree - Modules keyed by module ID.
- * @param modulePresentation - Display names and descriptions keyed by module ID.
- * @param modulePositions - Array of module position data entries to display.
- * @param treeBounds - The bounding box of the tree layout.
- * @param visiblePaths - Array of connector objects with points arrays and from/to node IDs.
- * @param isCompleted - Function to check if a module is completed.
- */
+// Render the tree nodes and connectors without zoom or pan controls.
 interface SkillTreeProps {
 	moduleTree: ModuleTree
 	modulePresentation: Record<string, { name: string; description: string }>
@@ -84,89 +73,83 @@ export function SkillTree({
 		handlePointerOutside,
 	} = useHoverState(moduleTree, modulePresentation, onNavigate)
 
-	const goalPath = useGoalProgress(
-		goalNodeId,
-		moduleTree,
-		modulePresentation,
-		isCompleted,
-		onGoalProgressChange,
-	)
+	const goalPath = useGoalProgress(goalNodeId, moduleTree, modulePresentation, isCompleted, onGoalProgressChange)
 
 	if (treeBounds.width <= 0 || treeBounds.height <= 0) return null
 
 	return <div
-		onPointerDown={handlePointerOutside}
-		style={{
-			position: 'relative',
-			width: `${treeBounds.width}px`,
-			height: `${treeBounds.height}px`,
-			marginLeft: '35px',
-			marginTop: '35px',
-			backgroundColor: theme.palette.background.paper,
-		}}>
-		<Drawing view={{ type: 'identity', width: treeBounds.width, height: treeBounds.height, yDirection: 'down' }}>
-			{visiblePaths.map((connector, i) => {
-				const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
-					connector,
-					planningMode,
-					goalNodeId,
-					goalPath,
-					localHoveredId,
-					isCompleted,
-					moduleTree,
-					isConnectorInHoveredPath,
-					staticMode,
-				)
+			onPointerDown={handlePointerOutside}
+			style={{
+				position: 'relative',
+				width: `${treeBounds.width}px`,
+				height: `${treeBounds.height}px`,
+				marginLeft: '35px',
+				marginTop: '35px',
+				backgroundColor: theme.palette.background.paper,
+			}}>
+			<Drawing view={{ type: 'identity', width: treeBounds.width, height: treeBounds.height, yDirection: 'down' }}>
+				{visiblePaths.map((connector, i) => {
+					const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
+						connector,
+						planningMode,
+						goalNodeId,
+						goalPath,
+						localHoveredId,
+						isCompleted,
+						moduleTree,
+						isConnectorInHoveredPath,
+						staticMode,
+					)
 
 					return <Curve
-						key={i}
-						positions={connector.points}
-						stroke={strokeColor}
-						strokeWidth={strokeWidth}
-						smoothing={{ mode: 'around', distance: 20 }}
-						style={{ opacity }}
+							key={i}
+							positions={connector.points}
+							stroke={strokeColor}
+							strokeWidth={strokeWidth}
+							smoothing={{ mode: 'around', distance: 20 }}
+							style={{ opacity }}
 					/>
-			})}
+				})}
 
-			{Object.values(modulePositions).map(positionData => {
-				const item = moduleTree[positionData.id]
-				if (!item) return null
+				{Object.values(modulePositions).map(positionData => {
+					const item = moduleTree[positionData.id]
+					if (!item) return null
 
-				const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted)
+					const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted)
 
 					return <NodeCard
-						key={item.id}
-						onMouseEnter={() => handleHoverStart(item.id)}
-						onMouseLeave={handleHoverEnd}
-						onPointerDown={e => {
-							e.stopPropagation()
-							const isGoal = planningMode && goalNodeId === item.id
-							handlePointerDown(item.id, e, isGoal)
-						}}
-						item={item}
-						name={modulePresentation[item.id]?.name ?? item.id}
-						positionData={modulePositions[item.id]}
-						completed={isCompleted(item.id)}
-						isHovered={localHoveredId === item.id}
-						readyToLearn={readyToLearn}
-						isPrerequisite={prerequisites.has(item.id)}
-						isSomethingHovered={localHoveredId !== null}
-						isSelected={selectedId === item.id}
-						planningMode={planningMode}
-						hasGoal={planningMode && !!goalNodeId}
-						isGoalNode={planningMode && goalNodeId === item.id}
-						isOnGoalPath={planningMode && goalPath.has(item.id)}
-						onSetGoal={() => {
-							if (planningMode && setGoalNodeId) {
-								setGoalNodeId(goalNodeId === item.id ? null : item.id)
-							}
-						}}
-						nextStepId={nextStepId}
-						staticMode={staticMode}
-					/>
-			})}
+							key={item.id}
+							onMouseEnter={() => handleHoverStart(item.id)}
+							onMouseLeave={handleHoverEnd}
+							onPointerDown={e => {
+								e.stopPropagation()
+								const isGoal = planningMode && goalNodeId === item.id
+								handlePointerDown(item.id, e, isGoal)
+							}}
+							item={item}
+							name={modulePresentation[item.id]?.name ?? item.id}
+							positionData={modulePositions[item.id]}
+							completed={isCompleted(item.id)}
+							isHovered={localHoveredId === item.id}
+							readyToLearn={readyToLearn}
+							isPrerequisite={prerequisites.has(item.id)}
+							isSomethingHovered={localHoveredId !== null}
+							isSelected={selectedId === item.id}
+							planningMode={planningMode}
+							hasGoal={planningMode && !!goalNodeId}
+							isGoalNode={planningMode && goalNodeId === item.id}
+							isOnGoalPath={planningMode && goalPath.has(item.id)}
+							onSetGoal={() => {
+								if (planningMode && setGoalNodeId) {
+									setGoalNodeId(goalNodeId === item.id ? null : item.id)
+								}
+							}}
+							nextStepId={nextStepId}
+							staticMode={staticMode}
+						/>
+				})}
 
-			<Tooltip>{tooltip}</Tooltip>
-		</Drawing>
+				<Tooltip>{tooltip}</Tooltip>
+			</Drawing>
 	</div>
 }

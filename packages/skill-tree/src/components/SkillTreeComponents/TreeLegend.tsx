@@ -1,47 +1,41 @@
-import { Box, Typography, IconButton } from "@mui/material";
-import { EditNote, School, Close } from "@mui/icons-material";
+import { Box, Typography, IconButton } from '@mui/material'
+import { EditNote, School, Close } from '@mui/icons-material'
 
 interface TreeLegendProps {
-	hideLegend?: boolean;
-	setHideLegend?: (value: boolean) => void;
+	hideLegend?: boolean
+	setHideLegend?: (value: boolean) => void
 }
 
-/*
- * TreeLegend component that displays a legend for the skill tree nodes.
- */
+// Display a legend for the skill-tree nodes.
 export function TreeLegend({ hideLegend: hideLegendProp, setHideLegend: setHideLegendProp }: TreeLegendProps = {}) {
-	const hideLegend = hideLegendProp ?? false;
-	const setHideLegend = setHideLegendProp ?? (() => {});
+	const hideLegend = hideLegendProp ?? false
+	const setHideLegend = setHideLegendProp ?? (() => {})
 
-	if (hideLegend) return null;
+	if (hideLegend) return null
 
-	return (
-		<Box
+	return <Box
 			sx={{
-				position: "absolute",
+				position: 'absolute',
 				bottom: 20,
 				right: 20,
 				zIndex: 2,
-			}}
-		>
+			}}>
 			<Box
 				sx={{
-					display: "flex",
-					flexDirection: "column",
+					display: 'flex',
+					flexDirection: 'column',
 					gap: 1,
 					p: 2,
-					border: (theme) => `1px solid ${theme.palette.divider}`,
-					backgroundColor: "background.paper",
+					border: theme => `1px solid ${theme.palette.divider}`,
+					backgroundColor: 'background.paper',
 					borderRadius: 2,
-				}}
-			>
+				}}>
 				<Box
 					sx={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "space-between",
-					}}
-				>
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+					}}>
 					<Typography variant="subtitle2" fontWeight={600}>
 						Legend
 					</Typography>
@@ -49,47 +43,43 @@ export function TreeLegend({ hideLegend: hideLegendProp, setHideLegend: setHideL
 						size="small"
 						onClick={() => setHideLegend(true)}
 						sx={{
-							position: "absolute",
+							position: 'absolute',
 							top: 8,
 							right: 8,
 							opacity: 0.6,
-							"&:hover": { opacity: 1, color: "red" },
+							'&:hover': { opacity: 1, color: 'red' },
 							ml: 1,
 							p: 0.25,
-						}}
-					>
+						}}>
 						<Close fontSize="small" />
 					</IconButton>
 				</Box>
-				<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+				<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
 					<Box
 						sx={{
 							width: 40,
 							height: 20,
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-						}}
-					>
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
 						<School fontSize="small" color="action" />
 					</Box>
 					<Typography variant="body2">Concept</Typography>
 				</Box>
-				<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+				<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
 					<Box
 						sx={{
 							width: 40,
 							height: 20,
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-						}}
-					>
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
 						<EditNote fontSize="small" color="action" />
 					</Box>
 					<Typography variant="body2">Skill</Typography>
 				</Box>
 			</Box>
-		</Box>
-	);
+	</Box>
 }

@@ -3,11 +3,7 @@ import { useEffect, useMemo } from 'react'
 import { type ModuleId, type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 import { getGoalProgress } from '@sqlvalley/progress'
 
-/*
- * Track progress towards the planning-mode goal.
- * Returns the set of modules on the goal path (prerequisites plus the goal
- * itself), and reports progress updates through onGoalProgressChange.
- */
+// Track the required modules and progress towards the planning-mode goal.
 export function useGoalProgress(
 	goalNodeId: ModuleId | null | undefined,
 	moduleTree: ModuleTree,
@@ -23,16 +19,15 @@ export function useGoalProgress(
 	const goalPath = useMemo(
 		() => new Set(goalNodeId ? getRequiredModuleIds(moduleTree, [goalNodeId]) : []),
 		[goalNodeId, moduleTree],
-	);
+	)
 
 	useEffect(() => {
 		if (onGoalProgressChange && goalNodeId) {
-			const { completedCount, totalCount, nextStepId } =
-				getGoalProgress(moduleTree, goalNodeId, isCompleted);
-			const nextStepName = nextStepId ? modulePresentation[nextStepId]?.name ?? null : null
-			onGoalProgressChange(completedCount, totalCount, nextStepName, nextStepId);
+			const { completedCount, totalCount, nextStepId } = getGoalProgress(moduleTree, goalNodeId, isCompleted)
+			const nextStepName = nextStepId ? (modulePresentation[nextStepId]?.name ?? null) : null
+			onGoalProgressChange(completedCount, totalCount, nextStepName, nextStepId)
 		}
-	}, [goalNodeId, isCompleted, modulePresentation, moduleTree, onGoalProgressChange]);
+	}, [goalNodeId, isCompleted, modulePresentation, moduleTree, onGoalProgressChange])
 
-	return goalPath;
+	return goalPath
 }

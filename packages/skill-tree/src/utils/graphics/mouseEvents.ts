@@ -7,58 +7,55 @@ export function useHoverState(
 	modulePresentation: Record<string, { description: string }>,
 	onNavigate: (id: string) => void,
 ) {
-	const [localHoveredId, setLocalHoveredId] = useState<string | null>(null);
-	const [prerequisites, setPrerequisites] = useState<Set<string>>(new Set());
-	const [tooltip, setTooltip] = useState<string | null>(null);
-	const [selectedId, setSelectedId] = useState<string | null>(null);
+	const [localHoveredId, setLocalHoveredId] = useState<string | null>(null)
+	const [prerequisites, setPrerequisites] = useState<Set<string>>(new Set())
+	const [tooltip, setTooltip] = useState<string | null>(null)
+	const [selectedId, setSelectedId] = useState<string | null>(null)
 
 	const handleHoverStart = (id: string) => {
-		setLocalHoveredId(id);
+		setLocalHoveredId(id)
 		const chain = new Set(getRequiredModuleIds(moduleTree, [id]))
 		chain.delete(id)
 		setPrerequisites(chain)
 
-		setTooltip(modulePresentation[id]?.description ?? 'No description available');
-	};
+		setTooltip(modulePresentation[id]?.description ?? 'No description available')
+	}
 
 	const handleHoverEnd = () => {
-		setLocalHoveredId(null);
-		setPrerequisites(new Set());
-		setTooltip(null);
-	};
+		setLocalHoveredId(null)
+		setPrerequisites(new Set())
+		setTooltip(null)
+	}
 
 	const handlePointerDown = (id: string, e: React.PointerEvent, skipToNavigate = false) => {
 		if (e.pointerType === 'mouse' || skipToNavigate) {
-			onNavigate(id);
-			return;
+			onNavigate(id)
+			return
 		}
 		if (selectedId === id) {
-			onNavigate(id);
-			setSelectedId(null);
-			handleHoverEnd();
+			onNavigate(id)
+			setSelectedId(null)
+			handleHoverEnd()
 		} else {
-			setSelectedId(id);
-			handleHoverStart(id);
+			setSelectedId(id)
+			handleHoverStart(id)
 		}
 	}
 
 	const handlePointerOutside = () => {
-		setSelectedId(null);
-		handleHoverEnd();
-	};
+		setSelectedId(null)
+		handleHoverEnd()
+	}
 
-	const isConnectorInHoveredPath = (connector: {
-		from: string;
-		to: string;
-	}): boolean => {
-		if (!localHoveredId) return false;
+	const isConnectorInHoveredPath = (connector: { from: string; to: string }): boolean => {
+		if (!localHoveredId) return false
 
-		const toIsHovered = connector.to === localHoveredId;
-		const fromIsInChain = prerequisites.has(connector.from);
-		const toIsInChain = prerequisites.has(connector.to) || toIsHovered;
+		const toIsHovered = connector.to === localHoveredId
+		const fromIsInChain = prerequisites.has(connector.from)
+		const toIsInChain = prerequisites.has(connector.to) || toIsHovered
 
-		return toIsInChain && fromIsInChain;
-	};
+		return toIsInChain && fromIsInChain
+	}
 
 	return {
 		localHoveredId,
@@ -70,5 +67,5 @@ export function useHoverState(
 		isConnectorInHoveredPath,
 		handlePointerDown,
 		handlePointerOutside,
-	};
+	}
 }

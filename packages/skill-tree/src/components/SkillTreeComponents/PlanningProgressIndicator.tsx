@@ -1,14 +1,14 @@
-import { Box, LinearProgress, Link, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, LinearProgress, Link, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
-import { treeColors } from '../../utils/graphics/treeColors';
+import { treeColors } from '../../utils/graphics/treeColors'
 
 interface PlanningProgressIndicatorProps {
-	nextStepName: string;
-	nextStepHref: string | null;
-	completedCount: number;
-	totalCount: number;
-	hasGoal: boolean;
+	nextStepName: string
+	nextStepHref: string | null
+	completedCount: number
+	totalCount: number
+	hasGoal: boolean
 }
 
 export function PlanningProgressIndicator({
@@ -18,11 +18,10 @@ export function PlanningProgressIndicator({
 	totalCount,
 	hasGoal,
 }: PlanningProgressIndicatorProps) {
-	const theme = useTheme();
-	const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
+	const theme = useTheme()
+	const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0
 
-	return (
-		<Box
+	return <Box
 			sx={{
 				position: 'absolute',
 				top: 16,
@@ -33,8 +32,7 @@ export function PlanningProgressIndicator({
 				p: 2,
 				width: 220,
 				border: `1px solid ${theme.palette.divider}`,
-			}}
-		>
+			}}>
 			{hasGoal ? (
 				<>
 					<Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -48,8 +46,7 @@ export function PlanningProgressIndicator({
 							overflow: 'hidden',
 							textOverflow: 'ellipsis',
 							whiteSpace: 'wrap',
-						}}
-					>
+						}}>
 						Next Step:{' '}
 						{nextStepHref ? (
 							<Link href={nextStepHref} underline="none" sx={{ color: 'red', fontWeight: 700 }}>
@@ -69,13 +66,7 @@ export function PlanningProgressIndicator({
 							backgroundColor: theme.palette.grey[200],
 							'& .MuiLinearProgress-bar': {
 								backgroundColor:
-									progress < 33
-										? 'red'
-										: progress < 66
-											? 'orange'
-											: progress === 100
-												? treeColors.goal
-												: 'green',
+									progress < 33 ? 'red' : progress < 66 ? 'orange' : progress === 100 ? treeColors.goal : 'green',
 								borderRadius: 4,
 							},
 						}}
@@ -96,12 +87,10 @@ export function PlanningProgressIndicator({
 							overflow: 'hidden',
 							textOverflow: 'ellipsis',
 							whiteSpace: 'wrap',
-						}}
-					>
+						}}>
 						No goal set. Click on a pin to set your learning goal!
 					</Typography>
 				</>
 			)}
-		</Box>
-	);
+	</Box>
 }
