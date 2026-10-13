@@ -5,6 +5,7 @@ import { isReadyToLearn } from '@sqlvalley/progress'
 
 import { useSkillTreeData } from '../core'
 import { useSkillTreeInteraction } from '../interaction'
+import { useSkillTreeProgress } from '../progress'
 
 import { resolveConnectorStyle } from './connectorStyle'
 import { NodeCard } from './NodeCard'
@@ -12,27 +13,25 @@ import { Tooltip } from './Tooltip'
 
 // Render the tree nodes and connectors without zoom or pan controls.
 interface SkillTreeProps {
-	isCompleted: (id: string) => boolean
 	planningMode: boolean
 	goalNodeId?: string | null
 	goalPath: Set<string>
 	setGoalNodeId?: (id: string | null) => void
 	nextStepId?: string | null
-	staticMode?: boolean
 }
 
 export function SkillTree({
-	isCompleted,
 	planningMode,
 	goalNodeId,
 	goalPath,
 	setGoalNodeId,
 	nextStepId,
-	staticMode,
 }: SkillTreeProps) {
 	const theme = useTheme()
 	const { moduleTree, modulePresentation, modulePositioning } = useSkillTreeData()
+	const { isCompleted, hasProgress } = useSkillTreeProgress()
 	const { modulePositions, connectors, bounds } = modulePositioning
+	const staticMode = !hasProgress
 
 	const onNavigate = (id: string) => {
 		window.location.href = `/module/${id}`

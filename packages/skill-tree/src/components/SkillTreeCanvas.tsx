@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material'
 
-import type { ModuleTree } from '@step-wise/module-tree-definition'
+import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
 import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
 import type { SkillTreeSettings } from '../types/SkillTreeSettings'
@@ -8,6 +8,7 @@ import { type ModulePresentation, SkillTreeDataProvider, useSkillTreeData } from
 import { useSkillTreeTransform, ZoomControls } from '../explorer'
 import { PlanningModeIntro, PlanningProgressIndicator, useGoalProgress, useSkillTreePlanning } from '../planning'
 import type { ModulePositioning } from '../positioning'
+import { SkillTreeProgressProvider } from '../progress'
 import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro'
 
 import { SkillTree } from '../display'
@@ -19,7 +20,7 @@ export interface SkillTreeCanvasProps {
 	moduleTree: ModuleTree
 	modulePresentation: ModulePresentation
 	modulePositioning: ModulePositioning
-	isCompleted?: (id: string) => boolean
+	isCompleted?: (id: ModuleId) => boolean
 	settings?: SkillTreeSettings
 	memoryStoreAPI?: SkillTreeMemoryStoreAPI
 }
@@ -32,23 +33,19 @@ export function SkillTreeCanvas({
 	settings,
 	memoryStoreAPI,
 }: SkillTreeCanvasProps) {
-	return <SkillTreeDataProvider
-		moduleTree={moduleTree}
-		modulePresentation={modulePresentation}
-		modulePositioning={modulePositioning}>
-		<SkillTreeCanvasContent isCompleted={isCompleted} settings={settings} memoryStoreAPI={memoryStoreAPI} />
+	return <SkillTreeDataProvider moduleTree={moduleTree} modulePresentation={modulePresentation} modulePositioning={modulePositioning}>
+		<SkillTreeProgressProvider isCompleted={isCompleted}>
+			<SkillTreeCanvasContent settings={settings} memoryStoreAPI={memoryStoreAPI} />
+		</SkillTreeProgressProvider>
 	</SkillTreeDataProvider>
 }
 
-type SkillTreeCanvasContentProps = Pick<SkillTreeCanvasProps, 'isCompleted' | 'settings' | 'memoryStoreAPI'>
+type SkillTreeCanvasContentProps = Pick<SkillTreeCanvasProps, 'settings' | 'memoryStoreAPI'>
 
-function SkillTreeCanvasContent({ isCompleted, settings, memoryStoreAPI }: SkillTreeCanvasContentProps) {
+function SkillTreeCanvasContent({ settings, memoryStoreAPI }: SkillTreeCanvasContentProps) {
 	const { moduleTree, modulePresentation, modulePositioning } = useSkillTreeData()
 	const { bounds } = modulePositioning
-	const { allowZoom = true, initialZoom = 1, allowPlanningMode = true, trackProgress = true } = settings ?? {}
-
-	const staticMode = !trackProgress
-	const resolvedIsCompleted = staticMode ? () => false : (isCompleted ?? (() => false))
+	const { allowZoom = true, initialZoom = 1, allowPlanningMode = true } = settings ?? {}
 
 	const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform({
 		bounds,
@@ -70,7 +67,6 @@ function SkillTreeCanvasContent({ isCompleted, settings, memoryStoreAPI }: Skill
 		goalNodeId,
 		moduleTree,
 		modulePresentation,
-		resolvedIsCompleted,
 		handleGoalProgressChange,
 	)
 
@@ -128,13 +124,11 @@ function SkillTreeCanvasContent({ isCompleted, settings, memoryStoreAPI }: Skill
 					willChange: 'transform',
 				}}>
 				<SkillTree
-					isCompleted={resolvedIsCompleted}
 					planningMode={allowPlanningMode ? planningMode : false}
 					goalNodeId={goalNodeId}
 					goalPath={goalPath}
 					setGoalNodeId={setGoalNodeId}
 					nextStepId={goalProgress.nextStepId}
-					staticMode={staticMode}
 				/>
 			</div>
 		</div>

@@ -30,6 +30,6 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 			modulePositioning={modulePositioning}
 			isCompleted={isCompleted}
 			memoryStoreAPI={memoryStoreAPI}
-			settings={{ allowZoom: true, initialZoom: 1, allowPlanningMode: true, trackProgress: true }} />
+			settings={{ allowZoom: true, initialZoom: 1, allowPlanningMode: true }} />
 	</Container>
 }

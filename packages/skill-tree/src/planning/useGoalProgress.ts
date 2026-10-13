@@ -3,12 +3,13 @@ import { useEffect, useMemo } from 'react'
 import { type ModuleId, type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 import { getGoalProgress } from '@sqlvalley/progress'
 
+import { useSkillTreeProgress } from '../progress'
+
 // Track the required modules and progress towards the planning-mode goal.
 export function useGoalProgress(
 	goalNodeId: ModuleId | null | undefined,
 	moduleTree: ModuleTree,
 	modulePresentation: Record<ModuleId, { name: string }>,
-	isCompleted: (id: ModuleId) => boolean,
 	onGoalProgressChange?: (
 		completedCount: number,
 		totalCount: number,
@@ -16,6 +17,7 @@ export function useGoalProgress(
 		nextStepId: ModuleId | null,
 	) => void,
 ): Set<ModuleId> {
+	const { isCompleted } = useSkillTreeProgress()
 	const goalPath = useMemo(
 		() => new Set(goalNodeId ? getRequiredModuleIds(moduleTree, [goalNodeId]) : []),
 		[goalNodeId, moduleTree],
