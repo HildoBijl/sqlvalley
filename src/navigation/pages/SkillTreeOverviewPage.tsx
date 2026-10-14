@@ -4,7 +4,7 @@ import { Container } from '@mui/material'
 import { useModuleCompletion } from '@sqlvalley/progress'
 import { SkillTreeCanvas } from '@sqlvalley/skill-tree'
 
-import { useSkillTreeSettingsStore, useSkillTreeMemory, useLearningStore } from '@/store'
+import { useSkillTreeSettingsStore, useSkillTreeStateHandles, useLearningStore } from '@/store'
 import { type SkillTreeVisualizationId, modulePresentation, moduleTree, skillTreeVisualizationById } from '@/curriculum'
 
 export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizationId }) {
@@ -19,8 +19,8 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 	const moduleStates = useLearningStore(state => state.modules)
 	const { isCompleted } = useModuleCompletion(moduleTree, moduleStates)
 
-	// Load in the memory store API.
-	const memoryStoreAPI = useSkillTreeMemory(treeId)
+	// Load the persisted skill-tree state handles.
+	const stateHandles = useSkillTreeStateHandles(treeId)
 
 	// Render the Skill Tree canvas with the appropriate settings.
 	return <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -29,7 +29,7 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 			modulePresentation={modulePresentation}
 			modulePositioning={modulePositioning}
 			isCompleted={isCompleted}
-			memoryStoreAPI={memoryStoreAPI}
+			stateHandles={stateHandles}
 			settings={{ allowZoom: true, initialZoom: 1, allowPlanningMode: true }} />
 	</Container>
 }

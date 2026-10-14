@@ -11,19 +11,19 @@ type ConnectorReference = Pick<ModuleConnector, 'from' | 'to'>
 export function isConnectorInGoalPath(
 	connector: ConnectorReference,
 	planningMode: boolean,
-	goalNodeId: string | null | undefined,
-	goalPath: Set<string>,
+	goalModuleId: ModuleId | null,
+	goalPath: Set<ModuleId>,
 ): boolean {
-	if (!planningMode || !goalNodeId) return false
+	if (!planningMode || !goalModuleId) return false
 	return goalPath.has(connector.from) && goalPath.has(connector.to)
 }
 
 export function resolveConnectorStyle(
 	connector: ConnectorReference,
 	planningMode: boolean,
-	goalNodeId: string | null | undefined,
-	goalPath: Set<string>,
-	hoveredModuleId: string | null,
+	goalModuleId: ModuleId | null,
+	goalPath: Set<ModuleId>,
+	hoveredModuleId: ModuleId | null,
 	isCompletedFn: (id: ModuleId) => boolean,
 	moduleTree: ModuleTree,
 	isInHoveredPath: boolean,
@@ -32,8 +32,8 @@ export function resolveConnectorStyle(
 	const fromCompleted = isCompletedFn(connector.from)
 	return getConnectorStyle({
 		planningMode,
-		goalNodeId,
-		isInGoalPath: isConnectorInGoalPath(connector, planningMode, goalNodeId, goalPath),
+		goalModuleId,
+		isInGoalPath: isConnectorInGoalPath(connector, planningMode, goalModuleId, goalPath),
 		isInHoveredPath,
 		isSomethingHovered: !!hoveredModuleId,
 		fromCompleted,
@@ -45,7 +45,7 @@ export function resolveConnectorStyle(
 
 interface ConnectorStyleInput {
 	planningMode: boolean
-	goalNodeId: string | null | undefined
+	goalModuleId: ModuleId | null
 	isInGoalPath: boolean
 	isInHoveredPath: boolean
 	isSomethingHovered: boolean
@@ -63,7 +63,7 @@ interface ConnectorStyleOutput {
 
 export function getConnectorStyle({
 	planningMode,
-	goalNodeId,
+	goalModuleId,
 	isInGoalPath,
 	isInHoveredPath,
 	isSomethingHovered,
@@ -97,7 +97,7 @@ export function getConnectorStyle({
 	}
 
 	if (planningMode) {
-		if (!goalNodeId) {
+		if (!goalModuleId) {
 			return { strokeColor: treeColors.neutral, strokeWidth: 1.5, opacity: 0.7 }
 		}
 		if (!isInGoalPath) {

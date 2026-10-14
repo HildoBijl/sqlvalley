@@ -5,6 +5,7 @@ import { HtmlElement, Rectangle } from '@step-wise/drawing'
 import type { Module } from '@step-wise/module-tree-definition'
 
 import { useSkillTreeInteraction } from '../interaction'
+import { useSkillTreePlanning } from '../planning'
 import { type ModulePositionData, cardHeight, cardWidth } from '../positioning'
 
 import { NodeCompletedMark } from './icons/NodeCompletedMark'
@@ -20,12 +21,6 @@ interface NodeCardProps {
 	positionData: ModulePositionData
 	completed: boolean
 	readyToLearn?: boolean
-	planningMode?: boolean
-	hasGoal?: boolean
-	isGoalNode?: boolean
-	isOnGoalPath?: boolean
-	onSetGoal?: () => void
-	nextStepId?: string | null
 	staticMode?: boolean
 }
 
@@ -35,12 +30,6 @@ export function NodeCard({
 	positionData,
 	completed,
 	readyToLearn = false,
-	planningMode = false,
-	hasGoal = false,
-	isGoalNode = false,
-	isOnGoalPath = false,
-	onSetGoal,
-	nextStepId,
 	staticMode = false,
 }: NodeCardProps) {
 	const theme = useTheme()
@@ -51,10 +40,14 @@ export function NodeCard({
 		endModuleHover,
 		handleModulePointerDown,
 	} = useSkillTreeInteraction()
+	const { planningMode, goalModuleId, goalPath, goalProgress, setGoalModuleId } = useSkillTreePlanning()
 	const type = item.type
 	const isHovered = hoveredModuleId === item.id
 	const isPrerequisite = hoveredPrerequisiteIds.has(item.id)
 	const isSomethingHovered = hoveredModuleId !== null
+	const hasGoal = goalModuleId !== null
+	const isGoalNode = planningMode && goalModuleId === item.id
+	const isOnGoalPath = planningMode && goalPath.has(item.id)
 	const cornerRadius = type === 'concept' ? 4 : 12
 
 	const rectStart = new Vector(positionData.pixelPosition.x - cardWidth / 2, positionData.pixelPosition.y - cardHeight / 2)
@@ -108,7 +101,7 @@ export function NodeCard({
 				onMouseLeave={endModuleHover}
 				onPointerDown={event => {
 					event.stopPropagation()
-					handleModulePointerDown(item.id, event, planningMode && isGoalNode)
+					handleModulePointerDown(item.id, event, isGoalNode)
 				}}
 				style={{ opacity: nodeOpacity, whiteSpace: 'normal' }}>
 				<ButtonBase
@@ -148,15 +141,15 @@ export function NodeCard({
 						{completed && !isGoalNode && <NodeCompletedMark iconSize={checkmarkSize} />}
 
 						{planningMode && !isGoalNode && !completed && (!hasGoal || isHovered) && (
-							<NodeGoalPin variant="set" checkmarkSize={checkmarkSize} onSetGoal={onSetGoal} />
+							<NodeGoalPin variant="set" checkmarkSize={checkmarkSize} onSetGoal={() => setGoalModuleId(item.id)} />
 						)}
 
-						{planningMode && hasGoal && nextStepId === item.id && (
+						{planningMode && hasGoal && goalProgress.nextStepId === item.id && (
 							<NodeGoalPin variant="next-step" checkmarkSize={checkmarkSize} />
 						)}
 
 						{planningMode && isGoalNode && (
-							<NodeGoalPin variant="active" checkmarkSize={checkmarkSize} onSetGoal={onSetGoal} />
+							<NodeGoalPin variant="active" checkmarkSize={checkmarkSize} onSetGoal={() => setGoalModuleId(null)} />
 						)}
 
 						<div

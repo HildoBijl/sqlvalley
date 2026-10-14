@@ -5,6 +5,7 @@ import { isReadyToLearn } from '@sqlvalley/progress'
 
 import { useSkillTreeData } from '../core'
 import { isConnectorInHoveredPath, useSkillTreeInteraction } from '../interaction'
+import { useSkillTreePlanning } from '../planning'
 import { useSkillTreeProgress } from '../progress'
 
 import { resolveConnectorStyle } from './connectorStyle'
@@ -12,23 +13,10 @@ import { NodeCard } from './NodeCard'
 import { Tooltip } from './Tooltip'
 
 // Render the tree nodes and connectors without zoom or pan controls.
-interface SkillTreeProps {
-	planningMode: boolean
-	goalNodeId?: string | null
-	goalPath: Set<string>
-	setGoalNodeId?: (id: string | null) => void
-	nextStepId?: string | null
-}
-
-export function SkillTree({
-	planningMode,
-	goalNodeId,
-	goalPath,
-	setGoalNodeId,
-	nextStepId,
-}: SkillTreeProps) {
+export function SkillTree() {
 	const theme = useTheme()
 	const { moduleTree, modulePresentation, modulePositioning } = useSkillTreeData()
+	const { planningMode, goalModuleId, goalPath } = useSkillTreePlanning()
 	const { isCompleted, hasProgress } = useSkillTreeProgress()
 	const { modulePositions, connectors, bounds } = modulePositioning
 	const staticMode = !hasProgress
@@ -56,7 +44,7 @@ export function SkillTree({
 				const { strokeColor, strokeWidth, opacity } = resolveConnectorStyle(
 					connector,
 					planningMode,
-					goalNodeId,
+					goalModuleId,
 					goalPath,
 					hoveredModuleId,
 					isCompleted,
@@ -88,16 +76,6 @@ export function SkillTree({
 					positionData={modulePositions[item.id]}
 					completed={isCompleted(item.id)}
 					readyToLearn={readyToLearn}
-					planningMode={planningMode}
-					hasGoal={planningMode && !!goalNodeId}
-					isGoalNode={planningMode && goalNodeId === item.id}
-					isOnGoalPath={planningMode && goalPath.has(item.id)}
-					onSetGoal={() => {
-						if (planningMode && setGoalNodeId) {
-							setGoalNodeId(goalNodeId === item.id ? null : item.id)
-						}
-					}}
-					nextStepId={nextStepId}
 					staticMode={staticMode}
 				/>
 			})}

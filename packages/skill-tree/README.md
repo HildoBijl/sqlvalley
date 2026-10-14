@@ -3,6 +3,13 @@
 Renders module trees with progress highlighting, learning goals, tooltips, and zoom/pan controls. The caller supplies the module definitions, presentation, layout, and optional progress/settings integration.
 
 
+## Optional state handles
+
+`SkillTreeCanvas` works without external state: planning, intro, and legend state then remain local to the mounted component. Pass `stateHandles` to control and persist these values externally. The handles are grouped by feature and use standard React `[value, setValue]` tuples.
+
+When externally persisted state hydrates asynchronously, set `stateHandles.ready` to `false` until it is available. This prevents the introduction from appearing before its persisted `hasSeenIntro` value has loaded.
+
+
 ## Drawing
 
 `SkillTree` uses the fixed-size `Drawing` from `@step-wise/drawing`, with bounds derived from the positioned module cards and a downward y-axis. `SkillTreeCanvas` owns zoom and pan through an ancestor CSS transform; the drawing does not add responsive scaling. Empty layouts do not render a drawing.

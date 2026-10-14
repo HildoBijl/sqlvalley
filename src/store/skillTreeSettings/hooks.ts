@@ -4,8 +4,8 @@ import { useShallow } from 'zustand/react/shallow'
 import type { StateUpdate } from '../infrastructure'
 import { useSkillTreeSettingsStore } from './store'
 
-// Set up a storage object that can be used by Skill Tree Visualizations.
-export function useSkillTreeMemory(treeId: string) {
+// Set up persisted state handles for a skill-tree visualization.
+export function useSkillTreeStateHandles(treeId: string) {
 	// Retrieve all flags/setters from the learning store.
 	const memory = useSkillTreeSettingsStore(useShallow(state => ({
 		planningMode: state.planningModeByTreeId[treeId] ?? false,
@@ -21,10 +21,19 @@ export function useSkillTreeMemory(treeId: string) {
 		hasHydrated: state.hasHydrated,
 	})))
 
-	// Bundle in the treeId to setters that require it.
+	// Bundle values and setters into the state handles expected by the visualization.
 	return useMemo(() => ({
-		...memory,
-		setPlanningMode: (value: StateUpdate<boolean>) => memory.setPlanningMode(treeId, value),
-		setGoalNodeId: (value: StateUpdate<string | null>) => memory.setGoalNodeId(treeId, value),
+		planning: {
+			planningMode: [memory.planningMode, (value: StateUpdate<boolean>) => memory.setPlanningMode(treeId, value)] as const,
+			goalModuleId: [memory.goalNodeId, (value: StateUpdate<string | null>) => memory.setGoalNodeId(treeId, value)] as const,
+			hasSeenPlanningModeIntro: [memory.hasSeenPlanningModeIntro, memory.setHasSeenPlanningModeIntro] as const,
+		},
+		intro: {
+			hasSeenIntro: [memory.hasSeenSkillTreeIntro, memory.setHasSeenSkillTreeIntro] as const,
+		},
+		legend: {
+			hidden: [memory.hideLegend, memory.setHideLegend] as const,
+		},
+		ready: memory.hasHydrated,
 	}), [memory, treeId])
 }

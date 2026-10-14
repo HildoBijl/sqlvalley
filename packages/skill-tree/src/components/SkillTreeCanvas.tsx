@@ -2,19 +2,17 @@ import { useTheme } from '@mui/material'
 
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
-import type { SkillTreeMemoryStoreAPI } from '../types/SkillTreeMemoryStoreAPI'
-import type { SkillTreeSettings } from '../types/SkillTreeSettings'
 import { type ModulePresentation, SkillTreeDataProvider, useSkillTreeData } from '../core'
 import { useSkillTreeTransform, ZoomControls } from '../explorer'
+import { SkillTreeIntro, useSkillTreeIntro } from '../intro'
 import { SkillTreeInteractionProvider } from '../interaction'
-import { PlanningModeIntro, PlanningProgressIndicator, useGoalProgress, useSkillTreePlanning } from '../planning'
+import { TreeLegend } from '../legend'
+import { PlanningModeIntro, PlanningProgressIndicator, SkillTreePlanningProvider, useSkillTreePlanning } from '../planning'
 import type { ModulePositioning } from '../positioning'
 import { SkillTreeProgressProvider } from '../progress'
-import { useSkillTreeIntro } from '../utils/logic/useSkillTreeIntro'
+import type { SkillTreeSettings, SkillTreeStateHandles } from '../types'
 
 import { SkillTree } from '../display'
-import { SkillTreeIntro } from './SkillTreeComponents/SkillTreeIntro'
-import { TreeLegend } from './SkillTreeComponents/TreeLegend'
 
 // Assemble the skill tree with zoom, pan, planning, legend, and help controls.
 export interface SkillTreeCanvasProps {
@@ -23,7 +21,7 @@ export interface SkillTreeCanvasProps {
 	modulePositioning: ModulePositioning
 	isCompleted?: (id: ModuleId) => boolean
 	settings?: SkillTreeSettings
-	memoryStoreAPI?: SkillTreeMemoryStoreAPI
+	stateHandles?: SkillTreeStateHandles
 }
 
 const navigateToModule = (id: ModuleId) => { window.location.href = `/module/${id}` }
@@ -34,23 +32,26 @@ export function SkillTreeCanvas({
 	modulePositioning,
 	isCompleted,
 	settings,
-	memoryStoreAPI,
+	stateHandles,
 }: SkillTreeCanvasProps) {
 	return <SkillTreeDataProvider moduleTree={moduleTree} modulePresentation={modulePresentation} modulePositioning={modulePositioning}>
 		<SkillTreeProgressProvider isCompleted={isCompleted}>
-			<SkillTreeInteractionProvider onNavigate={navigateToModule}>
-				<SkillTreeCanvasContent settings={settings} memoryStoreAPI={memoryStoreAPI} />
-			</SkillTreeInteractionProvider>
+			<SkillTreePlanningProvider settings={settings} stateHandles={stateHandles?.planning}>
+				<SkillTreeInteractionProvider onNavigate={navigateToModule}>
+					<SkillTreeCanvasContent settings={settings} stateHandles={stateHandles} />
+				</SkillTreeInteractionProvider>
+			</SkillTreePlanningProvider>
 		</SkillTreeProgressProvider>
 	</SkillTreeDataProvider>
 }
 
-type SkillTreeCanvasContentProps = Pick<SkillTreeCanvasProps, 'settings' | 'memoryStoreAPI'>
+type SkillTreeCanvasContentProps = Pick<SkillTreeCanvasProps, 'settings' | 'stateHandles'>
 
-function SkillTreeCanvasContent({ settings, memoryStoreAPI }: SkillTreeCanvasContentProps) {
-	const { moduleTree, modulePresentation, modulePositioning } = useSkillTreeData()
+function SkillTreeCanvasContent({ settings, stateHandles }: SkillTreeCanvasContentProps) {
+	const { modulePositioning } = useSkillTreeData()
 	const { bounds } = modulePositioning
-	const { allowZoom = true, initialZoom = 1, allowPlanningMode = true } = settings ?? {}
+	const { allowZoom = true, initialZoom = 1 } = settings ?? {}
+	const { planningEnabled, planningMode, togglePlanningMode } = useSkillTreePlanning()
 
 	const { outerRef, transform, bind, zoomBy, reset } = useSkillTreeTransform({
 		bounds,
@@ -58,29 +59,9 @@ function SkillTreeCanvasContent({ settings, memoryStoreAPI }: SkillTreeCanvasCon
 		allowZoom,
 	})
 
-	const {
-		planningMode,
-		goalNodeId,
-		setGoalNodeId,
-		goalProgress,
-		handleGoalProgressChange,
-		showPlanningModeModal,
-		setShowPlanningModeModal,
-		togglePlanningMode,
-	} = useSkillTreePlanning(memoryStoreAPI)
-	const goalPath = useGoalProgress(
-		goalNodeId,
-		moduleTree,
-		modulePresentation,
-		handleGoalProgressChange,
-	)
-
-	const { showIntro, setShowIntro, openIntro } = useSkillTreeIntro(memoryStoreAPI)
+	const { showIntro, openIntro, closeIntro } = useSkillTreeIntro(stateHandles?.intro, stateHandles?.ready !== false)
 
 	const theme = useTheme()
-
-	const nextStepModule = goalProgress.nextStepId ? moduleTree[goalProgress.nextStepId] : null
-	const nextStepHref = nextStepModule ? `/${nextStepModule.type}/${goalProgress.nextStepId}` : null
 
 	return <div
 		ref={outerRef}
@@ -98,21 +79,13 @@ function SkillTreeCanvasContent({ settings, memoryStoreAPI }: SkillTreeCanvasCon
 			onZoomOut={() => zoomBy(1 / 1.2)}
 			onReset={reset}
 			onCenter={reset}
-			onTogglePlanningMode={allowPlanningMode ? togglePlanningMode : undefined}
-			planningMode={allowPlanningMode ? planningMode : false}
+			onTogglePlanningMode={planningEnabled ? togglePlanningMode : undefined}
+			planningMode={planningMode}
 			allowZoom={allowZoom}
 			onHelp={openIntro}
 		/>
-		{allowPlanningMode && planningMode && (
-			<PlanningProgressIndicator
-				nextStepName={goalProgress.nextStep || 'All completed!'}
-				nextStepHref={nextStepHref}
-				completedCount={goalProgress.completed}
-				totalCount={goalProgress.total}
-				hasGoal={!!goalNodeId}
-			/>
-		)}
-		<TreeLegend hideLegend={memoryStoreAPI?.hideLegend} setHideLegend={memoryStoreAPI?.setHideLegend} />
+		{planningMode && <PlanningProgressIndicator />}
+		<TreeLegend stateHandles={stateHandles?.legend} />
 
 		<div
 			{...bind()}
@@ -128,18 +101,12 @@ function SkillTreeCanvasContent({ settings, memoryStoreAPI }: SkillTreeCanvasCon
 					transformOrigin: '0 0',
 					willChange: 'transform',
 				}}>
-				<SkillTree
-					planningMode={allowPlanningMode ? planningMode : false}
-					goalNodeId={goalNodeId}
-					goalPath={goalPath}
-					setGoalNodeId={setGoalNodeId}
-					nextStepId={goalProgress.nextStepId}
-				/>
+				<SkillTree />
 			</div>
 		</div>
 
-		<PlanningModeIntro open={showPlanningModeModal} onClose={() => setShowPlanningModeModal(false)} />
+		<PlanningModeIntro />
 
-		<SkillTreeIntro open={showIntro} onClose={() => setShowIntro(false)} />
+		<SkillTreeIntro open={showIntro} onClose={closeIntro} />
 	</div>
 }
