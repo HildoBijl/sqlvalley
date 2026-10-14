@@ -16,23 +16,22 @@ export function Tooltip() {
 	if (!description || !mousePosition) return null
 
 	return createPortal(
-		<div
-			style={{
-				position: 'fixed',
-				left: mousePosition.x,
-				top: mousePosition.y,
-				transform: 'translate(12px, 12px)',
-				border: `1px solid ${theme.palette.divider}`,
-				backgroundColor: theme.palette.background.paper,
-				color: theme.palette.text.primary,
-				padding: '8px 12px',
-				borderRadius: '4px',
-				fontSize: '14px',
-				maxWidth: '300px',
-				zIndex: 1000,
-				boxShadow: theme.shadows[4],
-				pointerEvents: 'none',
-			}}>
+		<div style={{
+			position: 'fixed',
+			left: mousePosition.x,
+			top: mousePosition.y,
+			transform: 'translate(12px, 12px)',
+			border: `1px solid ${theme.palette.divider}`,
+			backgroundColor: theme.palette.background.paper,
+			color: theme.palette.text.primary,
+			padding: '8px 12px',
+			borderRadius: '4px',
+			fontSize: '14px',
+			maxWidth: '300px',
+			zIndex: 1000,
+			boxShadow: theme.shadows[4],
+			pointerEvents: 'none',
+		}}>
 			{description}
 		</div>,
 		document.body,

@@ -12,10 +12,10 @@ import type { ModulePositioning } from '../positioning'
 import { SkillTreeProgressProvider } from '../progress'
 import type { SkillTreeSettings, SkillTreeStateHandles } from '../types'
 
-import { SkillTree } from '../display'
+import { SkillTreeDrawing } from '../rendering'
 
 // Assemble the skill tree with zoom, pan, planning, legend, and help controls.
-export interface SkillTreeCanvasProps {
+export interface SkillTreeVisualizationProps {
 	moduleTree: ModuleTree
 	modulePresentation: ModulePresentation
 	modulePositioning: ModulePositioning
@@ -26,28 +26,28 @@ export interface SkillTreeCanvasProps {
 
 const navigateToModule = (id: ModuleId) => { window.location.href = `/module/${id}` }
 
-export function SkillTreeCanvas({
+export function SkillTreeVisualization({
 	moduleTree,
 	modulePresentation,
 	modulePositioning,
 	isCompleted,
 	settings,
 	stateHandles,
-}: SkillTreeCanvasProps) {
+}: SkillTreeVisualizationProps) {
 	return <SkillTreeDataProvider moduleTree={moduleTree} modulePresentation={modulePresentation} modulePositioning={modulePositioning}>
 		<SkillTreeProgressProvider isCompleted={isCompleted}>
 			<SkillTreePlanningProvider settings={settings} stateHandles={stateHandles?.planning}>
 				<SkillTreeInteractionProvider onNavigate={navigateToModule}>
-					<SkillTreeCanvasContent settings={settings} stateHandles={stateHandles} />
+					<SkillTreeVisualizationContent settings={settings} stateHandles={stateHandles} />
 				</SkillTreeInteractionProvider>
 			</SkillTreePlanningProvider>
 		</SkillTreeProgressProvider>
 	</SkillTreeDataProvider>
 }
 
-type SkillTreeCanvasContentProps = Pick<SkillTreeCanvasProps, 'settings' | 'stateHandles'>
+type SkillTreeVisualizationContentProps = Pick<SkillTreeVisualizationProps, 'settings' | 'stateHandles'>
 
-function SkillTreeCanvasContent({ settings, stateHandles }: SkillTreeCanvasContentProps) {
+function SkillTreeVisualizationContent({ settings, stateHandles }: SkillTreeVisualizationContentProps) {
 	const { modulePositioning } = useSkillTreeData()
 	const { bounds } = modulePositioning
 	const { allowZoom = true, initialZoom = 1 } = settings ?? {}
@@ -101,7 +101,7 @@ function SkillTreeCanvasContent({ settings, stateHandles }: SkillTreeCanvasConte
 					transformOrigin: '0 0',
 					willChange: 'transform',
 				}}>
-				<SkillTree />
+				<SkillTreeDrawing />
 			</div>
 		</div>
 

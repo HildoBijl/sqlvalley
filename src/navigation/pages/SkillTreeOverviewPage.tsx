@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Container } from '@mui/material'
 
 import { useModuleCompletion } from '@sqlvalley/progress'
-import { SkillTreeCanvas } from '@sqlvalley/skill-tree'
+import { SkillTreeVisualization } from '@sqlvalley/skill-tree'
 
 import { useSkillTreeSettingsStore, useSkillTreeStateHandles, useLearningStore } from '@/store'
 import { type SkillTreeVisualizationId, modulePresentation, moduleTree, skillTreeVisualizationById } from '@/curriculum'
@@ -22,9 +22,9 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 	// Load the persisted skill-tree state handles.
 	const stateHandles = useSkillTreeStateHandles(treeId)
 
-	// Render the Skill Tree canvas with the appropriate settings.
+	// Render the skill-tree visualization with the appropriate settings.
 	return <Container maxWidth="lg" sx={{ py: 4 }}>
-		<SkillTreeCanvas
+		<SkillTreeVisualization
 			moduleTree={moduleTree}
 			modulePresentation={modulePresentation}
 			modulePositioning={modulePositioning}

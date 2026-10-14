@@ -4,7 +4,7 @@ import { isReadyToLearn } from '@sqlvalley/progress'
 
 import type { ModuleConnector } from '../positioning'
 
-import { treeColors } from './treeColors'
+import { treeColors } from '../styles'
 
 type ConnectorReference = Pick<ModuleConnector, 'from' | 'to'>
 

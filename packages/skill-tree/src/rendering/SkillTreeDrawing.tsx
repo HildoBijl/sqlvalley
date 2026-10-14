@@ -1,7 +1,6 @@
 import { useTheme } from '@mui/material'
 
 import { Curve, Drawing } from '@step-wise/drawing'
-import { isReadyToLearn } from '@sqlvalley/progress'
 
 import { useSkillTreeData } from '../core'
 import { isConnectorInHoveredPath, useSkillTreeInteraction } from '../interaction'
@@ -9,13 +8,13 @@ import { useSkillTreePlanning } from '../planning'
 import { useSkillTreeProgress } from '../progress'
 
 import { resolveConnectorStyle } from './connectorStyle'
-import { NodeCard } from './NodeCard'
+import { ModuleCard } from './ModuleCard'
 import { Tooltip } from './Tooltip'
 
 // Render the tree nodes and connectors without zoom or pan controls.
-export function SkillTree() {
+export function SkillTreeDrawing() {
 	const theme = useTheme()
-	const { moduleTree, modulePresentation, modulePositioning } = useSkillTreeData()
+	const { moduleTree, modulePositioning } = useSkillTreeData()
 	const { planningMode, goalModuleId, goalPath } = useSkillTreePlanning()
 	const { isCompleted, hasProgress } = useSkillTreeProgress()
 	const { modulePositions, connectors, bounds } = modulePositioning
@@ -63,22 +62,7 @@ export function SkillTree() {
 				/>
 			})}
 
-			{Object.values(modulePositions).map(positionData => {
-				const item = moduleTree[positionData.id]
-				if (!item) return null
-
-				const readyToLearn = isReadyToLearn(moduleTree, item.id, isCompleted)
-
-				return <NodeCard
-					key={item.id}
-					item={item}
-					name={modulePresentation[item.id]?.name ?? item.id}
-					positionData={modulePositions[item.id]}
-					completed={isCompleted(item.id)}
-					readyToLearn={readyToLearn}
-					staticMode={staticMode}
-				/>
-			})}
+			{Object.values(modulePositions).map(({ id }) => <ModuleCard key={id} moduleId={id} />)}
 
 			<Tooltip />
 		</Drawing>

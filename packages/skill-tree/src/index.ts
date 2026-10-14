@@ -1,6 +1,6 @@
-export { SkillTreeCanvas, type SkillTreeCanvasProps } from './components/SkillTreeCanvas'
+export { type SkillTreeVisualizationProps, SkillTreeVisualization } from './visualization'
 export type { SkillTreeStateHandles } from './types'
-export { treeColors } from './display'
+export { treeColors } from './styles'
 export {
 	type GridPosition,
 	type ModuleConnector,
