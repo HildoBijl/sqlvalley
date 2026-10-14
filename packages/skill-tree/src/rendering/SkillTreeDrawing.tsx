@@ -26,8 +26,6 @@ export function SkillTreeDrawing() {
 			position: 'relative',
 			width: `${bounds.width}px`,
 			height: `${bounds.height}px`,
-			marginLeft: '35px',
-			marginTop: '35px',
 			backgroundColor: theme.palette.background.paper,
 		}}>
 		<Drawing view={{ type: 'bounds', bounds, width: bounds.width, height: bounds.height, yDirection: 'down' }}>

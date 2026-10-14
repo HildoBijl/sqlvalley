@@ -1,5 +1,4 @@
-export { type SkillTreeVisualizationProps, SkillTreeVisualization } from './visualization'
-export type { SkillTreeStateHandles } from './types'
+export { type SkillTreeSettings, type SkillTreeStateHandles, type SkillTreeVisualizationProps, SkillTreeVisualization } from './visualization'
 export { treeColors } from './styles'
 export {
 	type GridPosition,

@@ -3,7 +3,7 @@ import { type ReactNode, useMemo } from 'react'
 import type { IsModuleCompleted } from './types'
 import { SkillTreeProgressContext } from './context'
 
-interface SkillTreeProgressProviderProps {
+export interface SkillTreeProgressProviderProps {
 	children: ReactNode
 	isCompleted?: IsModuleCompleted
 }

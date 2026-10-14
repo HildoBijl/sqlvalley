@@ -25,7 +25,7 @@ const indicatorSize = 18
 // Render a Module Card as SVG backgrounds with an interactive HTML card above them.
 export function ModuleCard({ moduleId }: ModuleCardProps) {
 	const theme = useTheme()
-	
+
 	// Derive module data.
 	const { moduleTree, modulePresentation, modulePositioning } = useSkillTreeData()
 	const item = moduleTree[moduleId]
@@ -102,7 +102,7 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 					justifyContent: 'center',
 					pointerEvents: 'none',
 				}}>
-						<ModuleTypeIcon type={type} iconSize={iconSize} />
+					<ModuleTypeIcon type={type} iconSize={iconSize} />
 
 					{completed && !isGoalNode && <ModuleCompletionMark iconSize={indicatorSize} />}
 

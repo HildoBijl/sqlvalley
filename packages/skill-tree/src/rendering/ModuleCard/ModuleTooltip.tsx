@@ -1,10 +1,13 @@
+import { useRef } from 'react'
 import { useTheme } from '@mui/material'
 
 import { anchors, HtmlElement } from '@step-wise/drawing'
+import { useElementSize } from '@step-wise/react-utils'
 
 import { useSkillTreeData } from '../../core'
+import { useExplorer } from '../../explorer'
 import { useSkillTreeInteraction } from '../../interaction'
-import { cardHeight } from '../../positioning'
+import { cardHeight, cardWidth } from '../../positioning'
 
 // Tooltip settings.
 const maxTooltipWidth = 320
@@ -12,65 +15,89 @@ const tooltipGap = 10
 const arrowSize = 13
 const arrowEdgeMargin = 16
 
+type TooltipPlacement = 'below' | 'left' | 'right'
+
 // Show the hovered module's description beside its card.
 export function ModuleTooltip() {
 	const theme = useTheme()
+	const tooltipRef = useRef<HTMLDivElement>(null)
+	const tooltipSize = useElementSize(tooltipRef)
 
 	// Find which module is hovered over and determine its properties.
 	const { modulePresentation, modulePositioning } = useSkillTreeData()
+	const { viewportBounds } = useExplorer()
 	const { hoveredModuleId } = useSkillTreeInteraction()
 	if (!hoveredModuleId) return null
 	const description = modulePresentation[hoveredModuleId]?.description ?? 'No description available'
 	const positionData = modulePositioning.modulePositions[hoveredModuleId]
 	if (!positionData) throw new Error(`No position was defined for module "${hoveredModuleId}".`)
 
-	// Determine where to place the tooltip horizontally.
-	const { bounds } = modulePositioning
-	const tooltipWidth = Math.min(maxTooltipWidth, bounds.width)
-	const halfTooltipWidth = tooltipWidth / 2
-	const minTooltipX = bounds.min.x + halfTooltipWidth
-	const maxTooltipX = bounds.max.x - halfTooltipWidth
-	const tooltipX = minTooltipX <= maxTooltipX ? Math.max(minTooltipX, Math.min(positionData.pixelPosition.x, maxTooltipX)) : bounds.midpoint.x
+	// Prefer the space below the card; otherwise use the roomier horizontal side.
+	const position = positionData.pixelPosition
+	const viewportWidth = Math.max(0, viewportBounds.width - 2 * tooltipGap)
+	const defaultWidth = Math.min(maxTooltipWidth, viewportWidth)
+	const tooltipHeight = tooltipSize?.height ?? 0
+	const fitsBelow = position.y + cardHeight / 2 + tooltipGap + tooltipHeight <= viewportBounds.max.y
+	const spaceLeft = position.x - cardWidth / 2 - tooltipGap - viewportBounds.min.x
+	const spaceRight = viewportBounds.max.x - position.x - cardWidth / 2 - tooltipGap
+	const placement: TooltipPlacement = fitsBelow ? 'below' : spaceRight >= spaceLeft ? 'right' : 'left'
+	const tooltipWidth = placement === 'below' ? defaultWidth : Math.min(defaultWidth, Math.max(spaceLeft, spaceRight))
+	const halfWidth = tooltipWidth / 2
+	const halfHeight = tooltipHeight / 2
 
-	// Determine where to place the tooltip vertically.
-	const spaceAbove = positionData.pixelPosition.y - cardHeight / 2 - bounds.min.y
-	const spaceBelow = bounds.max.y - positionData.pixelPosition.y - cardHeight / 2
-	const showAbove = spaceAbove > spaceBelow
-	const tooltipY = positionData.pixelPosition.y + (showAbove ? -1 : 1) * (cardHeight / 2 + tooltipGap)
-	const arrowPosition = Math.max(arrowEdgeMargin, Math.min(halfTooltipWidth + positionData.pixelPosition.x - tooltipX, tooltipWidth - arrowEdgeMargin))
+	// Keep the tooltip and its arrow within the visible drawing rectangle.
+	const tooltipX = placement === 'below'
+		? clamp(position.x, viewportBounds.min.x + halfWidth, viewportBounds.max.x - halfWidth)
+		: position.x + (placement === 'right' ? 1 : -1) * (cardWidth / 2 + tooltipGap)
+	const tooltipY = placement === 'below'
+		? position.y + cardHeight / 2 + tooltipGap
+		: clamp(position.y, viewportBounds.min.y + halfHeight, viewportBounds.max.y - halfHeight)
+	const horizontalArrowPosition = clamp(halfWidth + position.x - tooltipX, arrowEdgeMargin, tooltipWidth - arrowEdgeMargin)
+	const verticalArrowPosition = clamp(halfHeight + position.y - tooltipY, arrowEdgeMargin, tooltipHeight - arrowEdgeMargin)
 
-	// Render the tooltip.
+	// Render the tooltip in drawing coordinates.
 	return <HtmlElement
 		position={[tooltipX, tooltipY]}
-		anchor={showAbove ? anchors.bottom : anchors.top}
-		style={{
-			width: tooltipWidth,
-			whiteSpace: 'normal',
-			boxSizing: 'border-box',
-			border: `1px solid ${theme.palette.divider}`,
-			backgroundColor: theme.palette.background.paper,
-			color: theme.palette.text.primary,
-			padding: '8px 12px',
-			borderRadius: 4,
-			fontSize: 14,
-			boxShadow: theme.shadows[4],
-			zIndex: 1,
-		}}>
-		{/* Border arrow. */}
-		<div style={{
-			position: 'absolute',
-			left: arrowPosition,
-			...(showAbove ? { bottom: -arrowSize / 2 } : { top: -arrowSize / 2 }),
-			width: arrowSize,
-			height: arrowSize,
-			backgroundColor: theme.palette.background.paper,
-			borderColor: theme.palette.divider,
-			borderStyle: 'solid',
-			borderWidth: showAbove ? '0 1px 1px 0' : '1px 0 0 1px',
-			transform: 'translateX(-50%) rotate(45deg)',
-		}} />
+		anchor={placement === 'below' ? anchors.top : placement === 'right' ? anchors.left : anchors.right}>
+		<div
+			ref={tooltipRef}
+			style={{
+				position: 'relative',
+				width: tooltipWidth,
+				visibility: tooltipSize ? 'visible' : 'hidden',
+				whiteSpace: 'normal',
+				boxSizing: 'border-box',
+				border: `1px solid ${theme.palette.divider}`,
+				backgroundColor: theme.palette.background.paper,
+				color: theme.palette.text.primary,
+				padding: '8px 12px',
+				borderRadius: 4,
+				fontSize: 14,
+				boxShadow: theme.shadows[4],
+				zIndex: 1,
+			}}>
+			{/* Border arrow. */}
+			<div style={{
+				position: 'absolute',
+				...(placement === 'below' ? { left: horizontalArrowPosition, top: -arrowSize / 2 }
+					: placement === 'right' ? { left: -arrowSize / 2, top: verticalArrowPosition }
+						: { right: -arrowSize / 2, top: verticalArrowPosition }),
+				width: arrowSize,
+				height: arrowSize,
+				backgroundColor: theme.palette.background.paper,
+				borderColor: theme.palette.divider,
+				borderStyle: 'solid',
+				borderWidth: placement === 'below' ? '1px 0 0 1px' : placement === 'right' ? '0 0 1px 1px' : '1px 1px 0 0',
+				transform: placement === 'below' ? 'translateX(-50%) rotate(45deg)' : 'translateY(-50%) rotate(45deg)',
+			}} />
 
-		{/* Tooltip contents. */}
-		{description}
+			{/* Tooltip contents. */}
+			{description}
+		</div>
 	</HtmlElement>
+}
+
+function clamp(value: number, min: number, max: number) {
+	if (min > max) return (min + max) / 2
+	return Math.max(min, Math.min(value, max))
 }

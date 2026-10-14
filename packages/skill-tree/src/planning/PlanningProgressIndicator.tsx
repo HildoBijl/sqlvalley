@@ -7,8 +7,12 @@ import { useSkillTreePlanning } from './hooks'
 
 export function PlanningProgressIndicator() {
 	const theme = useTheme()
-	const { goalModuleId } = useSkillTreePlanning()
+	const { planningMode, goalModuleId } = useSkillTreePlanning()
 
+	// When planning mode is turned off, don't show the indicator.
+	if (!planningMode) return null
+
+	// Render the indicator, with contents depending on whether there is a goal or not.
 	return <Box sx={{
 		position: 'absolute',
 		top: 16,
