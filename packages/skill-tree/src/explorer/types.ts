@@ -1,14 +1,22 @@
 import type { Rectangle, VectorLike } from '@step-wise/geometry'
 
-export interface ExplorerTransform {
-	x: number
-	y: number
-	scale: number
+/*
+ * Input: Explorer options.
+ */
+
+export interface ExplorerOptions {
+	bounds: Rectangle
+	initialFocus?: VectorLike
+	initialScale?: number
+	minScale?: number
+	maxScale?: number
+	dragOverflow?: number
+	allowZoom?: boolean
 }
 
-export interface FocusPositionOptions {
-	scale?: number
-}
+/*
+ * Output: State of the Explorer context.
+ */
 
 export interface ExplorerState {
 	allowZoom: boolean
@@ -17,4 +25,14 @@ export interface ExplorerState {
 	zoomBy: (factor: number) => void
 	reset: () => void
 	focusPosition: (position: VectorLike, options?: FocusPositionOptions) => void
+}
+
+export interface ExplorerTransform {
+	x: number
+	y: number
+	scale: number
+}
+
+export interface FocusPositionOptions {
+	scale?: number
 }

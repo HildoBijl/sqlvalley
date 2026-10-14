@@ -31,3 +31,5 @@ When externally persisted state hydrates asynchronously, set `stateHandles.ready
 `SkillTreeDrawing` uses the fixed-size `Drawing` from `@step-wise/drawing`, with bounds derived from the positioned module cards and a downward y-axis. `SkillTreeVisualization` places it in the context-backed explorer, which owns zooming, panning, viewport information, and focus actions. The drawing does not add responsive scaling. Empty layouts do not render a drawing.
 
 Connectors and card backgrounds are SVG shapes. `ModuleCard` places an interactive `HtmlElement` above the backgrounds and handles module mouse and pointer events there. Goal pins stop pointer propagation so selecting a goal does not navigate to the module.
+
+The explorer derives its effective minimum scale from the viewport, drawing bounds, and configured drag overflow. Configure `minScale`, `maxScale`, and `dragOverflow` through `settings` when needed. To choose the initial and reset focus, provide either `initialModuleId` or `initialGridPosition`; providing both is an error. Without either setting, the explorer focuses on the drawing midpoint.

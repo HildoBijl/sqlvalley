@@ -1,10 +1,13 @@
 import { useTheme } from '@mui/material'
 
+import type { VectorLike } from '@step-wise/geometry'
+
 import { useSkillTreeData } from '../core'
 import { Explorer, ExplorerContent } from '../explorer'
 import { SkillTreeIntro, useSkillTreeIntro } from '../intro'
 import { TreeLegend } from '../legend'
 import { PlanningModeIntro, PlanningProgressIndicator } from '../planning'
+import { gridToPixels } from '../positioning'
 import { SkillTreeDrawing } from '../rendering'
 
 import { SkillTreeControls } from './SkillTreeControls'
@@ -21,8 +24,11 @@ export function SkillTreeVisualizationContent({ settings, stateHandles }: SkillT
 
 	// Load in settings for the Explorer tool.
 	const { modulePositioning } = useSkillTreeData()
-	const { bounds } = modulePositioning
-	const { allowZoom = true, initialZoom = 1 } = settings ?? {}
+	const { bounds, modulePositions } = modulePositioning
+	const { allowZoom = true, initialZoom = 1, minScale = 0, maxScale = 1.5, dragOverflow = 50, initialModuleId, initialGridPosition } = settings ?? {}
+	if (initialModuleId && initialGridPosition) throw new Error('Provide either initialModuleId or initialGridPosition, not both.')
+	if (initialModuleId && !modulePositions[initialModuleId]) throw new Error(`Cannot focus on module "${initialModuleId}" because it is not positioned in this tree.`)
+	const initialFocus: VectorLike | undefined = initialModuleId ? modulePositions[initialModuleId].pixelPosition : initialGridPosition && gridToPixels(initialGridPosition)
 
 	// Load in the handles for the intro modal.
 	const { showIntro, openIntro, closeIntro } = useSkillTreeIntro(stateHandles?.intro, stateHandles?.ready !== false)
@@ -38,7 +44,7 @@ export function SkillTreeVisualizationContent({ settings, stateHandles }: SkillT
 		position: 'relative',
 	}}>
 		{/* Contents. */}
-		<Explorer bounds={bounds} initialScale={initialZoom} allowZoom={allowZoom}>
+		<Explorer bounds={bounds} initialFocus={initialFocus} initialScale={initialZoom} minScale={minScale} maxScale={maxScale} dragOverflow={dragOverflow} allowZoom={allowZoom}>
 			{/* Skill Tree. */}
 			<ExplorerContent>
 				<SkillTreeDrawing />

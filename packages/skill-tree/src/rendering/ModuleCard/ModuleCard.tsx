@@ -18,6 +18,7 @@ interface ModuleCardProps {
 }
 
 // Define settings for rendering the ModuleCard.
+const cornerRadius = 12
 const iconSize = 20
 const indicatorSize = 18
 
@@ -49,7 +50,6 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 
 	// Determine styling and positioning for the module card.
 	const { borderColor, fillColor, opacity, strokeWidth } = useModuleCardStyle(moduleId)
-	const cornerRadius = type === 'concept' ? 4 : 12
 	const rectStart = new Vector(positionData.pixelPosition.x - cardWidth / 2, positionData.pixelPosition.y - cardHeight / 2)
 	const rectEnd = new Vector(positionData.pixelPosition.x + cardWidth / 2, positionData.pixelPosition.y + cardHeight / 2)
 

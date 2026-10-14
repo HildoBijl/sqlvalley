@@ -2,26 +2,44 @@ import { type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } fr
 import { useGesture } from '@use-gesture/react'
 
 import { type Rectangle, type VectorLike, ensureVector, Rectangle as RectangleClass } from '@step-wise/geometry'
+import { clamp } from '@step-wise/js-utils'
 import { useElementSize } from '@step-wise/react-utils'
 
-import type { ExplorerState, ExplorerTransform, FocusPositionOptions } from './types'
+import type { ExplorerOptions, ExplorerState, ExplorerTransform, FocusPositionOptions } from './types'
 
-const minScale = 0.5
-const maxScale = 2
-const dragOverflow = 250
-
-interface UseExplorerStateOptions {
-	bounds: Rectangle
-	initialScale: number
-	allowZoom: boolean
+interface ViewportSize {
+	width: number
+	height: number
 }
 
-export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplorerStateOptions) {
+interface TransformLimits {
+	left: number
+	right: number
+	top: number
+	bottom: number
+}
+
+interface UseExplorerStateOptions extends Required<Omit<ExplorerOptions, 'initialFocus'>> {
+	initialFocus?: VectorLike
+}
+
+export function useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, dragOverflow, allowZoom }: UseExplorerStateOptions) {
+	// Check the given input.
+	if (minScale < 0) throw new Error('Explorer minScale cannot be negative.')
+	if (maxScale < minScale) throw new Error('Explorer maxScale cannot be smaller than minScale.')
+	if (dragOverflow < 0) throw new Error('Explorer dragOverflow cannot be negative.')
+
 	const rootRef = useRef<HTMLDivElement>(null)
 	const suppressClickRef = useRef(false)
+	const configurationRef = useRef('')
 	const viewportSize = useElementSize(rootRef)
+	const focus = initialFocus
+		? ensureVector(initialFocus, { dimension: 2 })
+		: bounds.min.add([bounds.width / 2, bounds.height / 2])
 	const [transform, setTransform] = useState<ExplorerTransform>({ x: 0, y: 0, scale: initialScale })
 	const transformRef = useRef(transform)
+	const optionsRef = useRef({ bounds, focus, initialScale, minScale, maxScale, dragOverflow, viewportSize })
+	optionsRef.current = { bounds, focus, initialScale, minScale, maxScale, dragOverflow, viewportSize }
 	const allowZoomRef = useRef(allowZoom)
 	allowZoomRef.current = allowZoom
 
@@ -33,6 +51,42 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 		})
 	}, [])
 
+	const constrainTransform = useCallback((next: ExplorerTransform) => {
+		const options = optionsRef.current
+		if (!options.viewportSize) return next
+		const scaleLimits = getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.dragOverflow)
+		const scale = clamp(next.scale, scaleLimits.min, scaleLimits.max)
+		const limits = getTransformLimits(options.bounds, options.viewportSize, scale, options.dragOverflow)
+		return {
+			x: clamp(next.x, limits.left, limits.right),
+			y: clamp(next.y, limits.top, limits.bottom),
+			scale,
+		}
+	}, [])
+
+	const getFocusedTransform = useCallback((positionInput: VectorLike, scaleInput: number) => {
+		const options = optionsRef.current
+		const position = ensureVector(positionInput, { dimension: 2 })
+		if (!options.viewportSize) return { x: 0, y: 0, scale: scaleInput }
+		return constrainTransform({
+			x: options.viewportSize.width / 2 - (position.x - options.bounds.min.x) * scaleInput,
+			y: options.viewportSize.height / 2 - (position.y - options.bounds.min.y) * scaleInput,
+			scale: scaleInput,
+		})
+	}, [constrainTransform])
+
+	// Center the configured focus initially and whenever the drawing configuration changes. On viewport resizes, retain and constrain the current transform.
+	useEffect(() => {
+		if (!viewportSize) return
+		const configuration = [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y, focus.x, focus.y, initialScale, minScale, maxScale, dragOverflow].join(':')
+		if (configurationRef.current !== configuration) {
+			configurationRef.current = configuration
+			updateTransform(() => getFocusedTransform([focus.x, focus.y], initialScale))
+			return
+		}
+		updateTransform(current => constrainTransform(current))
+	}, [bounds, constrainTransform, dragOverflow, focus.x, focus.y, getFocusedTransform, initialScale, maxScale, minScale, updateTransform, viewportSize])
+
 	// Apply mouse-wheel zooming to the complete explorer viewport.
 	useEffect(() => {
 		const element = rootRef.current
@@ -41,11 +95,11 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 			if (!allowZoomRef.current) return
 			event.preventDefault()
 			const factor = event.deltaY > 0 ? 0.95 : 1.05
-			updateTransform(current => ({ ...current, scale: clampScale(current.scale * factor) }))
+			updateTransform(current => constrainTransform({ ...current, scale: current.scale * factor }))
 		}
 		element.addEventListener('wheel', handleWheel, { passive: false })
 		return () => element.removeEventListener('wheel', handleWheel)
-	}, [updateTransform])
+	}, [constrainTransform, updateTransform])
 
 	// Set up dragging and pinch zooming for the explorer content.
 	const bind = useGesture(
@@ -56,7 +110,7 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 			},
 			onPinch: ({ offset: [scale] }) => {
 				if (!allowZoomRef.current) return
-				updateTransform(current => ({ ...current, scale: clampScale(scale) }))
+				updateTransform(current => constrainTransform({ ...current, scale }))
 			},
 		},
 		{
@@ -65,20 +119,18 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 				filterTaps: true,
 				pointer: { touch: true },
 				bounds: () => {
-					const width = viewportSize?.width ?? 0
-					const height = viewportSize?.height ?? 0
-					const scale = transformRef.current.scale
-					return {
-						left: Math.min(0, width - bounds.width * scale) - dragOverflow,
-						right: dragOverflow,
-						top: Math.min(0, height - bounds.height * scale) - dragOverflow,
-						bottom: dragOverflow,
-					}
+					const options = optionsRef.current
+					if (!options.viewportSize) return { left: 0, right: 0, top: 0, bottom: 0 }
+					return getTransformLimits(options.bounds, options.viewportSize, transformRef.current.scale, options.dragOverflow)
 				},
 				rubberband: true,
 			},
 			pinch: {
-				scaleBounds: { min: minScale, max: maxScale },
+				scaleBounds: () => {
+					const options = optionsRef.current
+					if (!options.viewportSize) return { min: options.minScale, max: options.maxScale }
+					return getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.dragOverflow)
+				},
 				from: () => [transformRef.current.scale, 0],
 				pointer: { touch: true },
 				pinchOnWheel: false,
@@ -98,26 +150,17 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 	}, [])
 
 	const zoomBy = useCallback((factor: number) => {
-		updateTransform(current => ({ ...current, scale: clampScale(current.scale * factor) }))
-	}, [updateTransform])
+		updateTransform(current => constrainTransform({ ...current, scale: current.scale * factor }))
+	}, [constrainTransform, updateTransform])
 
 	const reset = useCallback(() => {
-		updateTransform(() => ({ x: 0, y: 0, scale: initialScale }))
-	}, [initialScale, updateTransform])
+		const options = optionsRef.current
+		updateTransform(() => getFocusedTransform(options.focus, options.initialScale))
+	}, [getFocusedTransform, updateTransform])
 
-	const focusPosition = useCallback((positionInput: VectorLike, options: FocusPositionOptions = {}) => {
-		const position = ensureVector(positionInput, { dimension: 2 })
-		const width = viewportSize?.width ?? 0
-		const height = viewportSize?.height ?? 0
-		updateTransform(current => {
-			const scale = clampScale(options.scale ?? current.scale)
-			return {
-				x: width / 2 - (position.x - bounds.min.x) * scale,
-				y: height / 2 - (position.y - bounds.min.y) * scale,
-				scale,
-			}
-		})
-	}, [bounds, updateTransform, viewportSize])
+	const focusPosition = useCallback((position: VectorLike, options: FocusPositionOptions = {}) => {
+		updateTransform(current => getFocusedTransform(position, options.scale ?? current.scale))
+	}, [getFocusedTransform, updateTransform])
 
 	// Express the visible viewport rectangle in drawing coordinates.
 	const viewportBounds = useMemo(() => {
@@ -133,6 +176,20 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 	return { bind, handleClickCapture, handlePointerDownCapture, rootRef, state }
 }
 
-function clampScale(scale: number) {
-	return Math.min(maxScale, Math.max(minScale, scale))
+// Determine the real min/max scale settings, given minScale and maxScale settings, content bounds and viewport sizes.
+function getScaleLimits(bounds: Rectangle, viewport: ViewportSize, minScale: number, maxScale: number, dragOverflow: number) {
+	const fitScale = Math.min(viewport.width / (bounds.width + 2 * dragOverflow), viewport.height / (bounds.height + 2 * dragOverflow))
+	return { min: Math.min(maxScale, Math.max(minScale, fitScale)), max: maxScale }
+}
+
+// Determine the min/max values for x and y, given a scale, content bounds and viewport sizes.
+function getTransformLimits(bounds: Rectangle, viewport: ViewportSize, scale: number, dragOverflow: number): TransformLimits {
+	const width = bounds.width * scale
+	const height = bounds.height * scale
+	const overflow = dragOverflow * scale
+	const horizontalEnd = viewport.width - width - overflow
+	const verticalEnd = viewport.height - height - overflow
+	const [left, right] = [Math.min(overflow, horizontalEnd), Math.max(overflow, horizontalEnd)]
+	const [top, bottom] = [Math.min(overflow, verticalEnd), Math.max(overflow, verticalEnd)]
+	return { left, right, top, bottom }
 }

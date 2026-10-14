@@ -31,6 +31,6 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 			isCompleted={isCompleted}
 			getModuleHref={moduleId => `/module/${moduleId}`}
 			stateHandles={stateHandles}
-			settings={{ allowZoom: true, initialZoom: 1, allowPlanningMode: true }} />
+			settings={{ allowZoom: true, initialZoom: 1, initialModuleId: 'database', allowPlanningMode: true }} />
 	</Container>
 }

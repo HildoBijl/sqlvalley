@@ -2,7 +2,7 @@ import { Rectangle, Vector, ensureVector } from '@step-wise/geometry'
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
 import type { GridPosition, ModuleConnector, ModuleGridPositions, ModulePositionData, ModulePositioning } from './types'
-import { cardHeight, cardWidth, columnSpacing, rowSpacing, treeMargin } from './settings'
+import { cardHeight, cardWidth, columnSpacing, rowSpacing } from './settings'
 import { calculateConnectorPoints } from './calculateConnectorPoints'
 
 // Add drawing positions and connector paths to modules assigned to grid cells.
@@ -69,7 +69,7 @@ export function defineModulePositioning(moduleTree: ModuleTree, gridPositions: M
 	return { modulePositions, connectors, bounds }
 }
 
-// Calculate the rectangle containing every module card and the surrounding tree margin.
+// Calculate the smallest rectangle containing every module card.
 function calculateModuleBounds(modulePositions: Record<ModuleId, ModulePositionData>): Rectangle {
 	// On no modules, return an empty rectangle.
 	const positions = Object.values(modulePositions)
@@ -82,9 +82,9 @@ function calculateModuleBounds(modulePositions: Record<ModuleId, ModulePositionD
 	const maxX = Math.max(...pixelPositions.map(position => position.x))
 	const maxY = Math.max(...pixelPositions.map(position => position.y))
 
-	// Add padding for card size and margins.
-	const horizontalPadding = cardWidth / 2 + treeMargin
-	const verticalPadding = cardHeight / 2 + treeMargin
+	// Expand the center positions to include the full cards.
+	const horizontalPadding = cardWidth / 2
+	const verticalPadding = cardHeight / 2
 	return new Rectangle([minX - horizontalPadding, minY - verticalPadding], [maxX + horizontalPadding, maxY + verticalPadding])
 }
 

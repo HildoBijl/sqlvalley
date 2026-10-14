@@ -7,7 +7,7 @@ interface ExplorerContentProps {
 	children: ReactNode
 }
 
-// Make its contents draggable and apply the explorer transform.
+// Set up a container that will be scaled by the surrounding Explorer component. Contents are draggable.
 export function ExplorerContent({ children }: ExplorerContentProps) {
 	const { transform } = useExplorer()
 	const { bind, handleClickCapture, handlePointerDownCapture } = useExplorerInternals()
