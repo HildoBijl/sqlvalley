@@ -5,9 +5,8 @@ import { Drawing } from '@step-wise/drawing'
 import { useSkillTreeData } from '../core'
 import { useSkillTreeInteraction } from '../interaction'
 
-import { ModuleCard } from './ModuleCard'
+import { ModuleCard, ModuleTooltip } from './ModuleCard'
 import { ModuleConnector } from './ModuleConnector'
-import { Tooltip } from './Tooltip'
 
 // Render the tree nodes and connectors without zoom or pan controls.
 export function SkillTreeDrawing() {
@@ -38,8 +37,8 @@ export function SkillTreeDrawing() {
 			{/* ModuleCards. */}
 			{Object.values(modulePositions).map(({ id }) => <ModuleCard key={id} moduleId={id} />)}
 
-			{/* Tooltips. */}
-			<Tooltip />
+			{/* Module tooltip. */}
+			<ModuleTooltip />
 		</Drawing>
 	</div>
 }
