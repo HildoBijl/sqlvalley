@@ -3,6 +3,22 @@
 Renders module trees with progress highlighting, learning goals, tooltips, and zoom/pan controls. The caller supplies the module definitions, presentation, layout, and optional progress/settings integration.
 
 
+## Module links
+
+Pass `getModuleHref` to define the URL belonging to each module. Module cards and planning links render as native anchors, so normal clicks, modifier clicks, middle clicks, keyboard activation, and browser context-menu actions retain their standard behavior.
+
+```tsx
+<SkillTreeVisualization
+	getModuleHref={moduleId => `/module/${moduleId}`}
+	moduleTree={moduleTree}
+	modulePresentation={modulePresentation}
+	modulePositioning={modulePositioning}
+/>
+```
+
+On touchscreens, the first tap highlights a module and its prerequisites. Tapping the highlighted module again follows its link.
+
+
 ## Optional state handles
 
 `SkillTreeVisualization` works without external state: planning, intro, and legend state then remain local to the mounted component. Pass `stateHandles` to control and persist these values externally. The handles are grouped by feature and use standard React `[value, setValue]` tuples.

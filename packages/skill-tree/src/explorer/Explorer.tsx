@@ -15,9 +15,9 @@ interface ExplorerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 
 // Provide an interactive viewport that fills its parent.
 export function Explorer({ bounds, children, initialScale = 1, allowZoom = true, style, ...props }: ExplorerProps) {
-	const { bind, rootRef, state } = useExplorerState({ bounds, initialScale, allowZoom })
+	const { bind, handleClickCapture, handlePointerDownCapture, rootRef, state } = useExplorerState({ bounds, initialScale, allowZoom })
 	return <ExplorerContext value={state}>
-		<ExplorerInternalContext value={{ bind }}>
+		<ExplorerInternalContext value={{ bind, handleClickCapture, handlePointerDownCapture }}>
 			<div {...props} ref={rootRef} style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative', ...style }}>
 				{children}
 			</div>

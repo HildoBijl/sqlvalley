@@ -7,5 +7,6 @@ export interface SkillTreeInteraction {
 	endModuleHover: () => void
 	hoveredModuleId: ModuleId | null
 	hoveredPrerequisiteIds: Set<ModuleId>
-	handleModulePointerDown: (id: ModuleId, event: PointerEvent, navigateImmediately?: boolean) => void
+	handleModulePointerDown: (id: ModuleId, event: PointerEvent) => void
+	getModuleHref: (id: ModuleId) => string
 }

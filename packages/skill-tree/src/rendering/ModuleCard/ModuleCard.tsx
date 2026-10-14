@@ -1,4 +1,4 @@
-import { useTheme, ButtonBase } from '@mui/material'
+import { useTheme } from '@mui/material'
 
 import { Vector } from '@step-wise/geometry'
 import { HtmlElement, Rectangle } from '@step-wise/drawing'
@@ -40,7 +40,7 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 	const completed = isCompleted(moduleId)
 
 	// Derive interaction data.
-	const { hoveredModuleId, startModuleHover, endModuleHover, handleModulePointerDown } = useSkillTreeInteraction()
+	const { getModuleHref, hoveredModuleId, startModuleHover, endModuleHover, handleModulePointerDown } = useSkillTreeInteraction()
 	const isHovered = hoveredModuleId === moduleId
 
 	// Derive planning data.
@@ -56,12 +56,15 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 
 	// Render the ModuleCard.
 	return <>
+		{/* Base layer that remains visible on fade to hide connector paths behind it. */}
 		<Rectangle corners={[rectStart, rectEnd]} cornerRadius={cornerRadius} style={{
 			fill: theme.palette.background.paper,
 			stroke: theme.palette.divider,
 			strokeWidth: 1,
 			strokeOpacity: opacity,
 		}} />
+
+		{/* ModuleCard Rectangle that gets applied the respective border and fill colors. */}
 		<Rectangle corners={[rectStart, rectEnd]} cornerRadius={cornerRadius} style={{
 			fill: fillColor,
 			stroke: borderColor,
@@ -70,29 +73,33 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 			transition: 'fill 90ms, stroke 90ms',
 		}} />
 
+		{/* ModuleCard link and text. */}
 		<HtmlElement
 			position={positionData.pixelPosition}
 			anchor={[0, 0]}
 			ignoreMouse={false}
 			onMouseEnter={() => startModuleHover(moduleId)}
 			onMouseLeave={endModuleHover}
-			onPointerDown={event => {
-				event.stopPropagation()
-				handleModulePointerDown(moduleId, event, isGoalNode)
-			}}
 			style={{ opacity, whiteSpace: 'normal' }}>
-			<ButtonBase focusRipple centerRipple TouchRippleProps={{ style: { opacity: 0.3 } }} sx={{
-				width: cardWidth,
-				height: cardHeight,
-				position: 'relative',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				textAlign: 'center',
-				cursor: 'pointer',
-				borderRadius: `${cornerRadius}px`,
-				'&:hover': { backgroundColor: 'action.hover' },
-			}}>
+			<a
+				href={getModuleHref(moduleId)}
+				draggable={false}
+				onPointerDown={event => handleModulePointerDown(moduleId, event)}
+				style={{
+					width: cardWidth,
+					height: cardHeight,
+					position: 'relative',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					textAlign: 'center',
+					cursor: 'pointer',
+					borderRadius: `${cornerRadius}px`,
+					backgroundColor: isHovered ? theme.palette.action.hover : 'transparent',
+					color: 'inherit',
+					textDecoration: 'none',
+					transition: 'background-color 90ms',
+				}}>
 				<div style={{
 					width: cardWidth,
 					height: cardHeight,
@@ -113,16 +120,21 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 					{planningMode && isGoalNode && <ModuleGoalIndicator variant="active" iconSize={indicatorSize} onSetGoal={() => setGoalModuleId(null)} />}
 
 					<div style={{
-						width: cardWidth - 20,
+						width: '100%',
+						padding: '0 10px',
+						boxSizing: 'border-box',
 						textAlign: 'center',
-						fontWeight: 500,
+						fontFamily: theme.typography.fontFamily,
+						fontWeight: 400,
 						fontSize: '17px',
+						lineHeight: 1.15,
 						color: planningMode && isGoalNode ? treeColors.goalContrastText : theme.palette.text.primary,
+						textDecoration: 'none',
 					}}>
 						{name}
 					</div>
 				</div>
-			</ButtonBase>
+			</a>
 		</HtmlElement>
 	</>
 }

@@ -34,7 +34,7 @@ export function ModuleGoalIndicator({ variant, iconSize, onSetGoal }: ModuleGoal
 	// When this is the next step, show a play arrow.
 	if (variant === 'next-step') {
 		return <div style={{ ...containerStyle, border: '1px solid', color: treeColors.ready }}>
-			<PlayArrow style={{ fontSize: iconSize - 4, color: treeColors.ready }} />
+			<PlayArrow style={{ fontSize: iconSize, color: treeColors.ready }} />
 		</div>
 	}
 
@@ -45,16 +45,14 @@ export function ModuleGoalIndicator({ variant, iconSize, onSetGoal }: ModuleGoal
 
 	// Render the pin icon.
 	return <div
-		onPointerDown={e => {
-			e.stopPropagation()
+		onClick={event => {
+			event.preventDefault()
+			event.stopPropagation()
 			if (onSetGoal) onSetGoal()
 		}}
 		onMouseEnter={() => setIsPinHovered(true)}
 		onMouseLeave={() => setIsPinHovered(false)}
-		style={{
-			...containerStyle,
-			border: `1px solid ${containerBorderColor}`,
-		}}>
+		style={{ ...containerStyle, border: `1px solid ${containerBorderColor}` }}>
 		<PushPinIcon style={{ fontSize: iconSize - 4, color: pinIconColor }} />
 	</div>
 }

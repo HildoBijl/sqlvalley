@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useGesture } from '@use-gesture/react'
 
 import { type Rectangle, type VectorLike, ensureVector, Rectangle as RectangleClass } from '@step-wise/geometry'
@@ -18,6 +18,7 @@ interface UseExplorerStateOptions {
 
 export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplorerStateOptions) {
 	const rootRef = useRef<HTMLDivElement>(null)
+	const suppressClickRef = useRef(false)
 	const viewportSize = useElementSize(rootRef)
 	const [transform, setTransform] = useState<ExplorerTransform>({ x: 0, y: 0, scale: initialScale })
 	const transformRef = useRef(transform)
@@ -49,7 +50,10 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 	// Set up dragging and pinch zooming for the explorer content.
 	const bind = useGesture(
 		{
-			onDrag: ({ offset: [x, y] }) => updateTransform(current => ({ ...current, x, y })),
+			onDrag: ({ offset: [x, y], tap }) => {
+				if (!tap) suppressClickRef.current = true
+				updateTransform(current => ({ ...current, x, y }))
+			},
 			onPinch: ({ offset: [scale] }) => {
 				if (!allowZoomRef.current) return
 				updateTransform(current => ({ ...current, scale: clampScale(scale) }))
@@ -81,6 +85,17 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 			},
 		},
 	)
+
+	// Start every pointer interaction without stale click suppression from an earlier drag.
+	const handlePointerDownCapture = useCallback(() => { suppressClickRef.current = false }, [])
+
+	// Prevent a drag ending over a link from activating that link.
+	const handleClickCapture = useCallback((event: MouseEvent) => {
+		if (!suppressClickRef.current) return
+		event.preventDefault()
+		event.stopPropagation()
+		suppressClickRef.current = false
+	}, [])
 
 	const zoomBy = useCallback((factor: number) => {
 		updateTransform(current => ({ ...current, scale: clampScale(current.scale * factor) }))
@@ -115,7 +130,7 @@ export function useExplorerState({ bounds, initialScale, allowZoom }: UseExplore
 	}, [bounds, transform, viewportSize])
 
 	const state = useMemo<ExplorerState>(() => ({ allowZoom, transform, viewportBounds, zoomBy, reset, focusPosition }), [allowZoom, focusPosition, reset, transform, viewportBounds, zoomBy])
-	return { bind, rootRef, state }
+	return { bind, handleClickCapture, handlePointerDownCapture, rootRef, state }
 }
 
 function clampScale(scale: number) {
