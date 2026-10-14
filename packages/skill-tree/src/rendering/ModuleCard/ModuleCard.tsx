@@ -5,11 +5,10 @@ import { HtmlElement, Rectangle } from '@step-wise/drawing'
 import type { ModuleId } from '@step-wise/module-tree-definition'
 
 import { cardHeight, cardWidth } from '../../positioning'
-import { treeColors } from '../../styles'
 import { useSkillTreeData } from '../../core'
 import { ModuleCompletionMark, useSkillTreeProgress } from '../../progress'
 import { useSkillTreeInteraction } from '../../interaction'
-import { ModuleGoalIndicator, useSkillTreePlanning } from '../../planning'
+import { ModuleGoalIndicator, planningColors, useSkillTreePlanning } from '../../planning'
 
 import { ModuleTypeIcon } from './ModuleTypeIcon'
 import { useModuleCardStyle } from './useModuleCardStyle'
@@ -128,7 +127,7 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 						fontWeight: 400,
 						fontSize: '17px',
 						lineHeight: 1.15,
-						color: planningMode && isGoalNode ? treeColors.goalContrastText : theme.palette.text.primary,
+						color: planningMode && isGoalNode ? planningColors.goalContrastText : theme.palette.text.primary,
 						textDecoration: 'none',
 					}}>
 						{name}

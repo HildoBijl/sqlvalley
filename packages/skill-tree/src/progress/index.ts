@@ -1,4 +1,5 @@
 export * from './types'
+export * from './colors'
 export * from './SkillTreeProgressProvider'
 export * from './hooks'
 export * from './ModuleCompletionMark'

@@ -2,8 +2,6 @@ import School from '@mui/icons-material/School'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import { useTheme } from '@mui/material'
 
-import { treeColors } from '../../styles'
-
 interface ModuleTypeIconProps {
 	type: 'concept' | 'skill'
 	iconSize: number
@@ -24,7 +22,7 @@ export function ModuleTypeIcon({ type, iconSize }: ModuleTypeIconProps) {
 		justifyContent: 'center',
 	}}>
 		{type === 'concept' ?
-			<School style={{ fontSize: iconSize, color: treeColors.icon }} /> :
+			<School style={{ fontSize: iconSize, color: theme.palette.text.secondary }} /> :
 			<EditNoteIcon style={{ fontSize: iconSize, color: 'primary' }} />}
 	</div>
 }

@@ -5,9 +5,8 @@ import { isReadyToLearn } from '@sqlvalley/progress'
 
 import { useSkillTreeData } from '../../core'
 import { useSkillTreeInteraction } from '../../interaction'
-import { useSkillTreePlanning } from '../../planning'
-import { useSkillTreeProgress } from '../../progress'
-import { treeColors } from '../../styles'
+import { planningColors, useSkillTreePlanning } from '../../planning'
+import { progressColors, useSkillTreeProgress } from '../../progress'
 
 interface ModuleCardStyle {
 	borderColor: string
@@ -42,7 +41,7 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	// Derive combined data.
 	const highlighted = isHovered || isPrerequisite
 	const dimmed = hoveredModuleId !== null && !highlighted && (!planningMode || !isGoalModule)
-	const fillColor = isGoalModule ? treeColors.goal : theme.palette.background.paper
+	const fillColor = isGoalModule ? planningColors.goal : theme.palette.background.paper
 
 	// When no progress data is available, give a static style.
 	if (!hasProgress) return { borderColor: theme.palette.divider, fillColor: theme.palette.background.paper, opacity: 1, strokeWidth: 1 }
@@ -56,11 +55,11 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 
 		// Determine the border color.
 		let borderColor: string
-		if (isGoalModule) borderColor = treeColors.goal
-		else if (highlighted) borderColor = completed ? treeColors.completed : readyToLearn ? treeColors.ready : treeColors.locked
-		else if (completed) borderColor = treeColors.completed
-		else if (isOnGoalPath && readyToLearn) borderColor = treeColors.ready
-		else if (isOnGoalPath) borderColor = treeColors.goal
+		if (isGoalModule) borderColor = planningColors.goal
+		else if (highlighted) borderColor = completed ? progressColors.completed : readyToLearn ? progressColors.ready : progressColors.locked
+		else if (completed) borderColor = progressColors.completed
+		else if (isOnGoalPath && readyToLearn) borderColor = progressColors.ready
+		else if (isOnGoalPath) borderColor = planningColors.goal
 		else borderColor = theme.palette.divider
 
 		// Return the combined style.
@@ -70,7 +69,7 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	// For highlighted skills, show their completion status through a color. It's never dimmed.
 	if (highlighted) {
 		return {
-			borderColor: completed ? treeColors.completed : readyToLearn ? treeColors.ready : treeColors.locked,
+			borderColor: completed ? progressColors.completed : readyToLearn ? progressColors.ready : progressColors.locked,
 			fillColor,
 			opacity: 1,
 			strokeWidth: 2,
@@ -80,7 +79,7 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	// For completed skills, show it as green, but check if it should be dimmed.
 	if (completed) {
 		return {
-			borderColor: dimmed ? treeColors.completedFaded : treeColors.completed,
+			borderColor: dimmed ? progressColors.completedFaded : progressColors.completed,
 			fillColor,
 			opacity: dimmed ? 0.4 : 1,
 			strokeWidth: 1,
@@ -90,7 +89,7 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	// For skills that are ready to learn, show it in yellow, unless it's faded.
 	if (readyToLearn) {
 		return {
-			borderColor: dimmed ? treeColors.faded : treeColors.ready,
+			borderColor: dimmed ? theme.palette.divider : progressColors.ready,
 			fillColor,
 			opacity: dimmed ? 0.15 : 1,
 			strokeWidth: 1,
@@ -98,5 +97,5 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	}
 
 	// For a skill that cannot be learned yet, fade it.
-	return { borderColor: treeColors.faded, fillColor, opacity: 0.15, strokeWidth: 1 }
+	return { borderColor: theme.palette.divider, fillColor, opacity: 0.15, strokeWidth: 1 }
 }

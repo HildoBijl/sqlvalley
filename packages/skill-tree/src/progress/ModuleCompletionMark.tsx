@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
-import { treeColors } from '../styles'
+import { progressColors } from './colors'
 
 interface ModuleCompletionMarkProps {
 	iconSize: number
@@ -21,6 +21,6 @@ export function ModuleCompletionMark({ iconSize }: ModuleCompletionMarkProps) {
 		alignItems: 'center',
 		justifyContent: 'center',
 	}}>
-		<CheckCircleIcon style={{ fontSize: iconSize, color: treeColors.completed }} />
+		<CheckCircleIcon style={{ fontSize: iconSize, color: progressColors.completed }} />
 	</div>
 }

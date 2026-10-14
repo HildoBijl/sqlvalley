@@ -1,12 +1,18 @@
+import type { ReactElement } from 'react'
 import { Add, HelpOutline, OutlinedFlag, Refresh, Remove } from '@mui/icons-material'
-import { Box, Button, Tooltip } from '@mui/material'
+import { Box, Button, Fade, Tooltip } from '@mui/material'
+import { alpha } from '@mui/material/styles'
 
 import { useExplorer } from '../explorer'
-import { useSkillTreePlanning } from '../planning'
-import { treeColors } from '../styles'
+import { planningColors, useSkillTreePlanning } from '../planning'
 
 interface SkillTreeControlsProps {
 	onHelp?: () => void
+}
+
+interface ControlTooltipProps {
+	title: string
+	children: ReactElement
 }
 
 // Combine controls supplied by the explorer and optional skill-tree features.
@@ -32,25 +38,25 @@ export function SkillTreeControls({ onHelp }: SkillTreeControlsProps) {
 	}}>
 		{/* Zoom buttons. */}
 		{allowZoom && <>
-			<Tooltip title="Zoom In" placement="left">
+			<ControlTooltip title="Zoom In">
 				<Button variant="outlined" size="small" onClick={() => zoomBy(1.2)} sx={{ minWidth: '40px' }}>
 					<Add fontSize="small" color="primary" />
 				</Button>
-			</Tooltip>
-			<Tooltip title="Zoom Out" placement="left">
+			</ControlTooltip>
+			<ControlTooltip title="Zoom Out">
 				<Button variant="outlined" size="small" onClick={() => zoomBy(1 / 1.2)} sx={{ minWidth: '40px' }}>
 					<Remove fontSize="small" color="primary" />
 				</Button>
-			</Tooltip>
-			<Tooltip title="Reset View" placement="left">
+			</ControlTooltip>
+			<ControlTooltip title="Reset View">
 				<Button variant="outlined" size="small" onClick={reset} sx={{ minWidth: '40px', fontSize: '15px' }}>
 					<Refresh fontSize="small" color="primary" />
 				</Button>
-			</Tooltip>
+			</ControlTooltip>
 		</>}
 
 		{/* Planning mode flag. */}
-		{planningEnabled && <Tooltip title="Planning Mode" placement="left">
+		{planningEnabled && <ControlTooltip title="Planning Mode">
 			<Button
 				variant={planningMode ? 'contained' : 'outlined'}
 				size="small"
@@ -59,20 +65,47 @@ export function SkillTreeControls({ onHelp }: SkillTreeControlsProps) {
 					minWidth: '40px',
 					fontSize: '15px',
 					...(planningMode && {
-						backgroundColor: treeColors.goal,
-						borderColor: treeColors.goal,
-						'&:hover': { backgroundColor: treeColors.goalHover },
+						backgroundColor: planningColors.goal,
+						borderColor: planningColors.goal,
+						'&:hover': { backgroundColor: planningColors.goalHover },
 					}),
 				}}>
 				<OutlinedFlag fontSize="small" sx={{ color: planningMode ? 'white' : 'primary' }} />
 			</Button>
-		</Tooltip>}
+		</ControlTooltip>}
 
 		{/* Help button. */}
-		{onHelp && <Tooltip title="Help" placement="left">
+		{onHelp && <ControlTooltip title="Help">
 			<Button variant="outlined" size="small" onClick={onHelp} sx={{ minWidth: '40px', fontSize: '15px' }}>
 				<HelpOutline fontSize="small" color="primary" />
 			</Button>
-		</Tooltip>}
+		</ControlTooltip>}
 	</Box>
+}
+
+function ControlTooltip({ title, children }: ControlTooltipProps) {
+	return <Tooltip
+		title={title}
+		placement="left"
+		slots={{ transition: Fade }}
+		slotProps={{
+			tooltip: {
+				sx: theme => ({
+					position: 'relative',
+					marginRight: '7px !important',
+					'&::after': {
+						content: '""',
+						position: 'absolute',
+						top: '50%',
+						right: -4,
+						transform: 'translateY(-50%)',
+						borderTop: '5px solid transparent',
+						borderBottom: '5px solid transparent',
+						borderLeft: `5px solid ${alpha(theme.palette.grey[700], 0.92)}`,
+					},
+				}),
+			},
+		}}>
+		{children}
+	</Tooltip>
 }

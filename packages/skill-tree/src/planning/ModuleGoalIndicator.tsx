@@ -3,7 +3,9 @@ import PushPinIcon from '@mui/icons-material/PushPin'
 import { PlayArrow } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 
-import { treeColors } from '../styles'
+import { progressColors } from '../progress'
+
+import { planningColors } from './colors'
 
 interface ModuleGoalIndicatorProps {
 	variant: 'set' | 'active' | 'next-step'
@@ -33,15 +35,17 @@ export function ModuleGoalIndicator({ variant, iconSize, onSetGoal }: ModuleGoal
 
 	// When this is the next step, show a play arrow.
 	if (variant === 'next-step') {
-		return <div style={{ ...containerStyle, border: '1px solid', color: treeColors.ready }}>
-			<PlayArrow style={{ fontSize: iconSize, color: treeColors.ready }} />
+		return <div style={{ ...containerStyle, border: '1px solid', color: progressColors.ready }}>
+			<PlayArrow style={{ fontSize: iconSize, color: progressColors.ready }} />
 		</div>
 	}
 
 	// Determine colors for the icon and its border.
 	const isActive = variant === 'active'
-	const containerBorderColor = isActive ? isPinHovered ? treeColors.icon : treeColors.goal : isPinHovered ? treeColors.goal : treeColors.icon
-	const pinIconColor = isActive ? isPinHovered ? treeColors.neutral : treeColors.goal : isPinHovered ? treeColors.goal : treeColors.neutral
+	const neutralColor = theme.palette.text.disabled
+	const iconColor = theme.palette.text.secondary
+	const containerBorderColor = isActive ? isPinHovered ? iconColor : planningColors.goal : isPinHovered ? planningColors.goal : iconColor
+	const pinIconColor = isActive ? isPinHovered ? neutralColor : planningColors.goal : isPinHovered ? planningColors.goal : neutralColor
 
 	// Render the pin icon.
 	return <div
