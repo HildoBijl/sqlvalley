@@ -10,7 +10,7 @@ export interface SkillTreePlanningSettings {
 }
 
 export interface SkillTreePlanningStateHandles {
-	planningMode?: StateHandle<boolean>
+	isPlanningModeActive?: StateHandle<boolean>
 	goalModuleId?: StateHandle<ModuleId | null>
 	hasSeenPlanningModeIntro?: StateHandle<boolean>
 }
@@ -20,8 +20,8 @@ export interface SkillTreePlanningStateHandles {
  */
 
 export interface SkillTreePlanning {
-	planningEnabled: boolean
-	planningMode: boolean
+	isPlanningEnabled: boolean
+	isPlanningModeActive: boolean
 	goalModuleId: ModuleId | null
 	goalPath: Set<ModuleId>
 	goalProgress: SkillTreeGoalProgress

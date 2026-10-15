@@ -7,7 +7,7 @@ import type { SkillTreePlanningSettings, SkillTreePlanningStateHandles } from '.
 
 export interface SkillTreeSettings extends SkillTreePlanningSettings {
 	allowZoom?: boolean
-	initialZoom?: number
+	initialScale?: number
 	minScale?: number
 	maxScale?: number
 	treePadding?: number
@@ -19,5 +19,5 @@ export interface SkillTreeStateHandles {
 	intro?: SkillTreeIntroStateHandles
 	legend?: SkillTreeLegendStateHandles
 	planning?: SkillTreePlanningStateHandles
-	ready?: boolean
+	isReady?: boolean
 }

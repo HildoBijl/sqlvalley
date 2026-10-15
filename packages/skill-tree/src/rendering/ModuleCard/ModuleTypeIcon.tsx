@@ -1,5 +1,5 @@
 import School from '@mui/icons-material/School'
-import EditNoteIcon from '@mui/icons-material/EditNote'
+import EditNote from '@mui/icons-material/EditNote'
 import { useTheme } from '@mui/material'
 
 interface ModuleTypeIconProps {
@@ -23,6 +23,6 @@ export function ModuleTypeIcon({ type, iconSize }: ModuleTypeIconProps) {
 	}}>
 		{type === 'concept' ?
 			<School style={{ fontSize: iconSize, color: theme.palette.text.secondary }} /> :
-			<EditNoteIcon style={{ fontSize: iconSize, color: theme.palette.text.secondary }} />}
+			<EditNote style={{ fontSize: iconSize, color: theme.palette.text.secondary }} />}
 	</div>
 }

@@ -5,8 +5,8 @@ import type { Rectangle, Vector, VectorLike } from '@step-wise/geometry'
  */
 
 export interface ExplorerOptions {
-	bounds: Rectangle
-	initialFocus?: VectorLike
+	contentBounds: Rectangle
+	initialFocusPosition?: VectorLike
 	initialScale?: number
 	minScale?: number
 	maxScale?: number
@@ -21,7 +21,7 @@ export interface ExplorerOptions {
 export interface ExplorerState {
 	allowZoom: boolean
 	transform: ExplorerTransform
-	viewportBounds: Rectangle
+	visibleBounds: Rectangle
 	zoomBy: (factor: number) => void
 	reset: () => void
 	focusPosition: (position: VectorLike, scale?: number) => void

@@ -7,13 +7,13 @@ import { progressColors } from '../progress'
 
 import { planningColors } from './colors'
 
-interface ModuleGoalIndicatorProps {
+interface ModulePlanningIndicatorProps {
 	variant: 'set' | 'active' | 'next-step'
 	iconSize: number
 	onSetGoal?: () => void
 }
 
-export function ModuleGoalIndicator({ variant, iconSize, onSetGoal }: ModuleGoalIndicatorProps) {
+export function ModulePlanningIndicator({ variant, iconSize, onSetGoal }: ModulePlanningIndicatorProps) {
 	const theme = useTheme()
 	const [isPinHovered, setIsPinHovered] = useState(false)
 

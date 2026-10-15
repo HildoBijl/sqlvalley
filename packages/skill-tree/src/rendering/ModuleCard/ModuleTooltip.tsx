@@ -18,40 +18,40 @@ const arrowEdgeMargin = 16
 
 type TooltipPlacement = 'below' | 'left' | 'right'
 
-// Show the hovered module's description beside its card.
+// Show the highlighted module's description beside its card.
 export function ModuleTooltip() {
 	const theme = useTheme()
 	const tooltipRef = useRef<HTMLDivElement>(null)
 	const tooltipSize = useElementSize(tooltipRef)
 
-	// Find which module is hovered over and determine its properties.
+	// Find which module is highlighted and determine its properties.
 	const { modulePresentation, modulePositioning } = useSkillTreeData()
-	const { viewportBounds } = useExplorer()
-	const { hoveredModuleId } = useSkillTreeInteraction()
-	if (!hoveredModuleId) return null
-	const description = modulePresentation[hoveredModuleId]?.description ?? 'No description available'
+	const { visibleBounds } = useExplorer()
+	const { highlightedModuleId } = useSkillTreeInteraction()
+	if (!highlightedModuleId) return null
+	const description = modulePresentation[highlightedModuleId]?.description ?? 'No description available'
 	const { bounds: drawingBounds, modulePositions } = modulePositioning
-	const positionData = modulePositions[hoveredModuleId]
-	if (!positionData) throw new Error(`No position was defined for module "${hoveredModuleId}".`)
+	const positionData = modulePositions[highlightedModuleId]
+	if (!positionData) throw new Error(`No position was defined for module "${highlightedModuleId}".`)
 	const position = positionData.pixelPosition
 
 	// Calculate the size of the tooltip. For small screens, limit its width.
-	const visibleWidth = Math.max(0, viewportBounds.max.x - viewportBounds.min.x - 2 * tooltipGap)
+	const visibleWidth = Math.max(0, visibleBounds.max.x - visibleBounds.min.x - 2 * tooltipGap)
 	const defaultWidth = Math.min(maxTooltipWidth, visibleWidth)
 	const tooltipHeight = tooltipSize?.height ?? 0
 
 	// Determine where to place the tooltip based on available space. Possibly adjust its width if needed.
-	const fitsBelow = position.y + cardHeight / 2 + tooltipGap + tooltipHeight <= Math.min(drawingBounds.max.y, viewportBounds.max.y)
-	const spaceLeft = position.x - cardWidth / 2 - tooltipGap - viewportBounds.min.x
-	const spaceRight = viewportBounds.max.x - position.x - cardWidth / 2 - tooltipGap
+	const fitsBelow = position.y + cardHeight / 2 + tooltipGap + tooltipHeight <= Math.min(drawingBounds.max.y, visibleBounds.max.y)
+	const spaceLeft = position.x - cardWidth / 2 - tooltipGap - visibleBounds.min.x
+	const spaceRight = visibleBounds.max.x - position.x - cardWidth / 2 - tooltipGap
 	const placement: TooltipPlacement = fitsBelow ? 'below' : spaceRight >= spaceLeft ? 'right' : 'left'
 	const tooltipWidth = placement === 'below' ? defaultWidth : Math.min(defaultWidth, Math.max(0, spaceLeft, spaceRight))
 
 	// Try to keep the tooltip within the viewport, but never let it pass beyond the ModuleCard's edge.
 	const tooltipX = placement === 'below'
 		? clamp(position.x,
-			Math.min(position.x - cardWidth / 2, viewportBounds.min.x + tooltipViewportPadding) + tooltipWidth / 2,
-			Math.max(position.x + cardWidth / 2, viewportBounds.max.x - tooltipViewportPadding) - tooltipWidth / 2)
+			Math.min(position.x - cardWidth / 2, visibleBounds.min.x + tooltipViewportPadding) + tooltipWidth / 2,
+			Math.max(position.x + cardWidth / 2, visibleBounds.max.x - tooltipViewportPadding) - tooltipWidth / 2)
 		: position.x + (placement === 'right' ? 1 : -1) * (cardWidth / 2 + tooltipGap)
 	const tooltipY = placement === 'below'
 		? position.y + cardHeight / 2 + tooltipGap

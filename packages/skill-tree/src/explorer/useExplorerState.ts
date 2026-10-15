@@ -24,18 +24,18 @@ interface PinchStart {
 	origin: Vector
 }
 
-interface UseExplorerStateOptions extends Required<Omit<ExplorerOptions, 'initialFocus'>> {
-	initialFocus?: VectorLike
+interface UseExplorerStateOptions extends Required<Omit<ExplorerOptions, 'initialFocusPosition'>> {
+	initialFocusPosition?: VectorLike
 }
 
-export function useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, contentPadding, allowZoom }: UseExplorerStateOptions) {
+export function useExplorerState({ contentBounds, initialFocusPosition, initialScale, minScale, maxScale, contentPadding, allowZoom }: UseExplorerStateOptions) {
 	// Check the given input.
 	if (initialScale <= 0) throw new Error('Explorer initialScale must be positive.')
 	if (minScale < 0) throw new Error('Explorer minScale cannot be negative.')
 	if (maxScale <= 0) throw new Error('Explorer maxScale must be positive.')
 	if (maxScale < minScale) throw new Error('Explorer maxScale cannot be smaller than minScale.')
 	if (contentPadding < 0) throw new Error('Explorer contentPadding cannot be negative.')
-	const initialFocusVector = initialFocus ? ensureVector(initialFocus, { dimension: 2 }) : bounds.min.add([bounds.width / 2, bounds.height / 2])
+	const initialFocusVector = initialFocusPosition ? ensureVector(initialFocusPosition, { dimension: 2 }) : contentBounds.min.add([contentBounds.width / 2, contentBounds.height / 2])
 
 	// Extract the viewport size and focus.
 	const rootRef = useRef<HTMLDivElement>(null)
@@ -44,7 +44,7 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	// Set up refs for data storage and passing
 	const suppressClickRef = useRef(false)
 	const configurationRef = useRef('')
-	const optionsRef = useLatestRef({ bounds, viewportSize, initialScale, minScale, maxScale, contentPadding, allowZoom, initialFocusVector })
+	const optionsRef = useLatestRef({ contentBounds, viewportSize, initialScale, minScale, maxScale, contentPadding, allowZoom, initialFocusVector })
 
 	/*
 	* Transform: track and set the transform state.
@@ -67,7 +67,7 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	const constrainScale = useCallback((scale: number) => {
 		const options = optionsRef.current
 		if (!options.viewportSize) return clamp(scale, options.minScale, options.maxScale)
-		const limits = getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
+		const limits = getScaleLimits(options.contentBounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
 		return clamp(scale, limits.min, limits.max)
 	}, [optionsRef])
 
@@ -75,9 +75,9 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	const constrainTransform = useCallback((next: ExplorerTransform) => {
 		const options = optionsRef.current
 		if (!options.viewportSize) return next
-		const scaleLimits = getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
+		const scaleLimits = getScaleLimits(options.contentBounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
 		const scale = clamp(next.scale, scaleLimits.min, scaleLimits.max)
-		const coordinateLimits = getCoordinateLimits(options.bounds, options.viewportSize, scale, options.contentPadding)
+		const coordinateLimits = getCoordinateLimits(options.contentBounds, options.viewportSize, scale, options.contentPadding)
 		return {
 			translation: new Vector(
 				clamp(next.translation.x, coordinateLimits.left, coordinateLimits.right),
@@ -98,14 +98,14 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	}, [constrainScale, constrainTransform, optionsRef, updateTransform])
 
 	// Express the visible viewport rectangle in drawing coordinates based on the current transform.
-	const viewportBounds = useMemo(() => {
-		if (!viewportSize) return bounds
+	const visibleBounds = useMemo(() => {
+		if (!viewportSize) return contentBounds
 		const { translation, scale } = transform
 		return new RectangleClass(
-			[bounds.min.x - translation.x / scale, bounds.min.y - translation.y / scale],
-			[bounds.min.x + (viewportSize.width - translation.x) / scale, bounds.min.y + (viewportSize.height - translation.y) / scale],
+			[contentBounds.min.x - translation.x / scale, contentBounds.min.y - translation.y / scale],
+			[contentBounds.min.x + (viewportSize.width - translation.x) / scale, contentBounds.min.y + (viewportSize.height - translation.y) / scale],
 		)
-	}, [bounds, transform, viewportSize])
+	}, [contentBounds, transform, viewportSize])
 
 	/*
 	 * Focusing: jump to a specific point.
@@ -119,8 +119,8 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 		if (!options.viewportSize) return { translation: new Vector(0, 0), scale }
 		return constrainTransform({
 			translation: new Vector(
-				options.viewportSize.width / 2 - (position.x - options.bounds.min.x) * scale,
-				options.viewportSize.height / 2 - (position.y - options.bounds.min.y) * scale,
+				options.viewportSize.width / 2 - (position.x - options.contentBounds.min.x) * scale,
+				options.viewportSize.height / 2 - (position.y - options.contentBounds.min.y) * scale,
 			),
 			scale,
 		})
@@ -166,7 +166,7 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 				bounds: () => {
 					const options = optionsRef.current
 					if (!options.viewportSize) return { left: 0, right: 0, top: 0, bottom: 0 }
-					return getCoordinateLimits(options.bounds, options.viewportSize, transformRef.current.scale, options.contentPadding)
+					return getCoordinateLimits(options.contentBounds, options.viewportSize, transformRef.current.scale, options.contentPadding)
 				},
 				rubberband: true,
 			},
@@ -174,7 +174,7 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 				scaleBounds: () => {
 					const options = optionsRef.current
 					if (!options.viewportSize) return { min: options.minScale, max: options.maxScale }
-					return getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
+					return getScaleLimits(options.contentBounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
 				},
 				from: () => [transformRef.current.scale, 0],
 				pointer: { touch: true },
@@ -201,14 +201,14 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	// Center the configured focus initially and whenever the drawing configuration changes. On viewport resizes, retain and constrain the current transform.
 	useEffect(() => {
 		if (!viewportSize) return
-		const configuration = [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y, initialFocusVector.x, initialFocusVector.y, initialScale, minScale, maxScale, contentPadding].join(':')
+		const configuration = [contentBounds.min.x, contentBounds.min.y, contentBounds.max.x, contentBounds.max.y, initialFocusVector.x, initialFocusVector.y, initialScale, minScale, maxScale, contentPadding].join(':')
 		if (configurationRef.current !== configuration) {
 			configurationRef.current = configuration
 			updateTransform(() => getFocusedTransform([initialFocusVector.x, initialFocusVector.y], initialScale))
 			return
 		}
 		updateTransform(current => constrainTransform(current))
-	}, [bounds, constrainTransform, contentPadding, initialFocusVector.x, initialFocusVector.y, getFocusedTransform, initialScale, maxScale, minScale, updateTransform, viewportSize])
+	}, [contentBounds, constrainTransform, contentPadding, initialFocusVector.x, initialFocusVector.y, getFocusedTransform, initialScale, maxScale, minScale, updateTransform, viewportSize])
 
 	// Listen to mouse-wheel zooming within the complete viewport.
 	useEffect(() => {
@@ -231,7 +231,7 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	 */
 
 	// Determine the state: everything that child components may need from the explorer.
-	const state = useMemo<ExplorerState>(() => ({ allowZoom, transform, viewportBounds, zoomBy, reset, focusPosition }), [allowZoom, focusPosition, reset, transform, viewportBounds, zoomBy])
+	const state = useMemo<ExplorerState>(() => ({ allowZoom, transform, visibleBounds, zoomBy, reset, focusPosition }), [allowZoom, focusPosition, reset, transform, visibleBounds, zoomBy])
 
 	// Bundle the state with a ref and event handlers for the explorer root container.
 	return { rootRef, bind, handleClickCapture, handlePointerDownCapture, state }

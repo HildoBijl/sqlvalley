@@ -6,16 +6,16 @@ export interface SkillTreeIntroStateHandles {
 	hasSeenIntro?: StateHandle<boolean>
 }
 
-export function useSkillTreeIntro(stateHandles?: SkillTreeIntroStateHandles, stateReady = true) {
+export function useSkillTreeIntro(stateHandles?: SkillTreeIntroStateHandles, isStateReady = true) {
 	const [hasSeenIntro, setHasSeenIntro] = useControllableState(stateHandles?.hasSeenIntro, false)
 	const [showIntro, setShowIntro] = useState(false)
 
 	// Show the introduction once the external state is ready, unless it was already shown before.
 	useEffect(() => {
-		if (!stateReady || hasSeenIntro) return
+		if (!isStateReady || hasSeenIntro) return
 		setShowIntro(true)
 		setHasSeenIntro(true)
-	}, [hasSeenIntro, setHasSeenIntro, stateReady])
+	}, [hasSeenIntro, isStateReady, setHasSeenIntro])
 
 	// Return handlers to control the intro modal.
 	const openIntro = useCallback(() => setShowIntro(true), [])

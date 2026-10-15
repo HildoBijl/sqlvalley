@@ -11,9 +11,9 @@ export interface ExplorerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chi
 
 // Set up a viewport that fills its parent and will function as Explorer container. It also provides a context.
 export function Explorer({
-	bounds,
+	contentBounds,
 	children,
-	initialFocus,
+	initialFocusPosition,
 	initialScale = 1,
 	minScale = 0,
 	maxScale = 1.5,
@@ -22,7 +22,7 @@ export function Explorer({
 	style,
 	...props
 }: ExplorerProps) {
-	const { bind, handleClickCapture, handlePointerDownCapture, rootRef, state } = useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, contentPadding, allowZoom })
+	const { bind, handleClickCapture, handlePointerDownCapture, rootRef, state } = useExplorerState({ contentBounds, initialFocusPosition, initialScale, minScale, maxScale, contentPadding, allowZoom })
 	return <ExplorerContext value={state}>
 		<ExplorerInternalContext value={{ bind, handleClickCapture, handlePointerDownCapture }}>
 			<div {...props} ref={rootRef} style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative', ...style }}>

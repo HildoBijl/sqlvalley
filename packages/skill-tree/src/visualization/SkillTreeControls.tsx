@@ -18,10 +18,10 @@ interface ControlTooltipProps {
 // Combine controls supplied by the explorer and optional skill-tree features.
 export function SkillTreeControls({ onHelp }: SkillTreeControlsProps) {
 	const { allowZoom, zoomBy, reset } = useExplorer()
-	const { planningEnabled, planningMode, togglePlanningMode } = useSkillTreePlanning()
+	const { isPlanningEnabled, isPlanningModeActive, togglePlanningMode } = useSkillTreePlanning()
 
 	// On no zoom, planning mode, or help, don't render control buttons.
-	if (!allowZoom && !planningEnabled && !onHelp) return null
+	if (!allowZoom && !isPlanningEnabled && !onHelp) return null
 
 	// Render the control buttons.
 	return <Box sx={{
@@ -56,21 +56,21 @@ export function SkillTreeControls({ onHelp }: SkillTreeControlsProps) {
 		</>}
 
 		{/* Planning mode flag. */}
-		{planningEnabled && <ControlTooltip title="Planning Mode">
+		{isPlanningEnabled && <ControlTooltip title="Planning Mode">
 			<Button
-				variant={planningMode ? 'contained' : 'outlined'}
+				variant={isPlanningModeActive ? 'contained' : 'outlined'}
 				size="small"
 				onClick={togglePlanningMode}
 				sx={{
 					minWidth: '40px',
 					fontSize: '15px',
-					...(planningMode && {
+					...(isPlanningModeActive && {
 						backgroundColor: planningColors.goal,
 						borderColor: planningColors.goal,
 						'&:hover': { backgroundColor: planningColors.goalHover },
 					}),
 				}}>
-				<OutlinedFlag fontSize="small" sx={{ color: planningMode ? 'white' : 'primary' }} />
+				<OutlinedFlag fontSize="small" sx={{ color: isPlanningModeActive ? 'white' : 'primary' }} />
 			</Button>
 		</ControlTooltip>}
 

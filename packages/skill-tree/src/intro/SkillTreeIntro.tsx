@@ -13,7 +13,7 @@ interface SkillTreeIntroProps {
 export function SkillTreeIntro({ open, onClose }: SkillTreeIntroProps) {
 	const isTouch = useMediaQuery('(pointer: coarse)')
 	const { allowZoom } = useExplorer()
-	const { planningEnabled } = useSkillTreePlanning()
+	const { isPlanningEnabled } = useSkillTreePlanning()
 
 	return <Dialog
 		open={open}
@@ -53,7 +53,7 @@ export function SkillTreeIntro({ open, onClose }: SkillTreeIntroProps) {
 						Hover over a module to see what it covers and highlight everything you need first. Click to open it.
 					</Instruction>
 				</>}
-				{planningEnabled && <Instruction icon={<OutlinedFlag fontSize="small" />}>
+				{isPlanningEnabled && <Instruction icon={<OutlinedFlag fontSize="small" />}>
 					Use the flag button to enter the planning mode. This allows you to set a goal and see what you need to learn first.
 				</Instruction>}
 			</Stack>

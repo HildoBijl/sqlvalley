@@ -17,7 +17,7 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 
 	// Load in completion data for the user.
 	const moduleStates = useLearningStore(state => state.modules)
-	const { isCompleted } = useModuleCompletion(moduleTree, moduleStates)
+	const { isCompleted: isModuleCompleted } = useModuleCompletion(moduleTree, moduleStates)
 
 	// Load the persisted skill-tree state handles.
 	const stateHandles = useSkillTreeStateHandles(treeId)
@@ -28,9 +28,9 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 			moduleTree={moduleTree}
 			modulePresentation={modulePresentation}
 			modulePositioning={modulePositioning}
-			isCompleted={isCompleted}
+			isModuleCompleted={isModuleCompleted}
 			getModuleHref={moduleId => `/module/${moduleId}`}
 			stateHandles={stateHandles}
-			settings={{ allowZoom: true, initialZoom: 1, initialModuleId: 'database', allowPlanningMode: true }} />
+			settings={{ allowZoom: true, initialScale: 1, initialModuleId: 'database', allowPlanningMode: true }} />
 	</Container>
 }

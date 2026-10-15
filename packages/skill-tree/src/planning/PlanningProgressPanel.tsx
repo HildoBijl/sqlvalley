@@ -5,12 +5,12 @@ import { useSkillTreeInteraction } from '../interaction'
 
 import { useSkillTreePlanning } from './hooks'
 
-export function PlanningProgressIndicator() {
+export function PlanningProgressPanel() {
 	const theme = useTheme()
-	const { planningMode, goalModuleId } = useSkillTreePlanning()
+	const { isPlanningModeActive, goalModuleId } = useSkillTreePlanning()
 
 	// When planning mode is turned off, don't show the indicator.
-	if (!planningMode) return null
+	if (!isPlanningModeActive) return null
 
 	// Render the indicator, with contents depending on whether there is a goal or not.
 	return <Box sx={{

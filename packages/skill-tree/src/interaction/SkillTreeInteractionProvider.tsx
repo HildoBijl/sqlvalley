@@ -14,23 +14,23 @@ export interface SkillTreeInteractionProviderProps {
 export function SkillTreeInteractionProvider({ children, getModuleHref }: SkillTreeInteractionProviderProps) {
 	const { moduleTree } = useSkillTreeData()
 
-	// Set up a state to track the hovered module.
-	const [hoveredModuleId, setHoveredModuleId] = useState<ModuleId | null>(null)
+	// Set up a state to track the highlighted module.
+	const [highlightedModuleId, setHighlightedModuleId] = useState<ModuleId | null>(null)
 	const touchedModuleIdRef = useRef<ModuleId | null>(null)
 	const blockedTouchClickIdRef = useRef<ModuleId | null>(null)
-	const startModuleHover = useCallback((id: ModuleId) => setHoveredModuleId(id), [])
-	const endModuleHover = useCallback(() => {
+	const highlightModule = useCallback((id: ModuleId) => setHighlightedModuleId(id), [])
+	const clearModuleHighlight = useCallback(() => {
 		touchedModuleIdRef.current = null
-		setHoveredModuleId(null)
+		setHighlightedModuleId(null)
 	}, [])
 
-	// Cache the prerequisites of the hovered module.
-	const hoveredPrerequisiteIds = useMemo(() => {
-		if (!hoveredModuleId) return new Set<ModuleId>()
-		const prerequisiteIds = new Set(getRequiredModuleIds(moduleTree, [hoveredModuleId]))
-		prerequisiteIds.delete(hoveredModuleId)
+	// Cache the prerequisites of the highlighted module.
+	const highlightedPrerequisiteIds = useMemo(() => {
+		if (!highlightedModuleId) return new Set<ModuleId>()
+		const prerequisiteIds = new Set(getRequiredModuleIds(moduleTree, [highlightedModuleId]))
+		prerequisiteIds.delete(highlightedModuleId)
 		return prerequisiteIds
-	}, [hoveredModuleId, moduleTree])
+	}, [highlightedModuleId, moduleTree])
 
 	// On touchscreens, mark the first tap for suppression and reveal the module dependencies.
 	const handleModulePointerDown = useCallback((id: ModuleId, event: PointerEvent) => {
@@ -45,8 +45,8 @@ export function SkillTreeInteractionProvider({ children, getModuleHref }: SkillT
 		}
 		blockedTouchClickIdRef.current = id
 		touchedModuleIdRef.current = id
-		startModuleHover(id)
-	}, [startModuleHover])
+		highlightModule(id)
+	}, [highlightModule])
 
 	// Suppress the link belonging to a first touch tap. A second tap and mouse clicks retain native link behavior.
 	const handleModuleClick = useCallback((id: ModuleId, event: MouseEvent) => {
@@ -56,6 +56,6 @@ export function SkillTreeInteractionProvider({ children, getModuleHref }: SkillT
 	}, [])
 
 	// Bundle everything in an object and publish it in a context.
-	const value = useMemo(() => ({ startModuleHover, endModuleHover, hoveredModuleId, hoveredPrerequisiteIds, handleModulePointerDown, handleModuleClick, getModuleHref }), [startModuleHover, endModuleHover, hoveredModuleId, hoveredPrerequisiteIds, handleModulePointerDown, handleModuleClick, getModuleHref])
+	const value = useMemo(() => ({ highlightModule, clearModuleHighlight, highlightedModuleId, highlightedPrerequisiteIds, handleModulePointerDown, handleModuleClick, getModuleHref }), [highlightModule, clearModuleHighlight, highlightedModuleId, highlightedPrerequisiteIds, handleModulePointerDown, handleModuleClick, getModuleHref])
 	return <SkillTreeInteractionContext value={value}>{children}</SkillTreeInteractionContext>
 }

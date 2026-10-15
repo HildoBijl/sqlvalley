@@ -7,12 +7,12 @@ export interface SkillTreeLegendStateHandles {
 	hidden?: StateHandle<boolean>
 }
 
-interface TreeLegendProps {
+interface SkillTreeLegendProps {
 	stateHandles?: SkillTreeLegendStateHandles
 }
 
 // Display a legend for the skill-tree nodes.
-export function TreeLegend({ stateHandles }: TreeLegendProps) {
+export function SkillTreeLegend({ stateHandles }: SkillTreeLegendProps) {
 	const [hidden, setHidden] = useControllableState(stateHandles?.hidden, false)
 	if (hidden) return null
 

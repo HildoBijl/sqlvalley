@@ -23,7 +23,7 @@ On touchscreens, the first tap highlights a module and its prerequisites. Tappin
 
 `SkillTreeVisualization` works without external state: planning, intro, and legend state then remain local to the mounted component. Pass `stateHandles` to control and persist these values externally. The handles are grouped by feature and use standard React `[value, setValue]` tuples.
 
-When externally persisted state hydrates asynchronously, set `stateHandles.ready` to `false` until it is available. This prevents the introduction from appearing before its persisted `hasSeenIntro` value has loaded.
+When externally persisted state hydrates asynchronously, set `stateHandles.isReady` to `false` until it is available. This prevents the introduction from appearing before its persisted `hasSeenIntro` value has loaded.
 
 
 ## Drawing

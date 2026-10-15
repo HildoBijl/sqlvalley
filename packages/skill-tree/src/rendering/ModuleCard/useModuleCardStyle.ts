@@ -23,28 +23,28 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	if (!moduleTree[moduleId]) throw new Error(`Unknown module "${moduleId}".`)
 
 	// Derive progress-related data.
-	const { isCompleted, hasProgress } = useSkillTreeProgress()
-	const completed = isCompleted(moduleId)
-	const readyToLearn = isReadyToLearn(moduleTree, moduleId, isCompleted)
+	const { isModuleCompleted, isProgressTracked } = useSkillTreeProgress()
+	const completed = isModuleCompleted(moduleId)
+	const readyToLearn = isReadyToLearn(moduleTree, moduleId, isModuleCompleted)
 
 	// Derive interaction-related data.
-	const { hoveredModuleId, hoveredPrerequisiteIds } = useSkillTreeInteraction()
-	const isHovered = hoveredModuleId === moduleId
-	const isPrerequisite = hoveredPrerequisiteIds.has(moduleId)
+	const { highlightedModuleId, highlightedPrerequisiteIds } = useSkillTreeInteraction()
+	const isHighlightedModule = highlightedModuleId === moduleId
+	const isHighlightedPrerequisite = highlightedPrerequisiteIds.has(moduleId)
 
 	// Derive planning-mode-related data.
-	const { planningMode, goalModuleId, goalPath } = useSkillTreePlanning()
-	const isGoalModule = planningMode && goalModuleId === moduleId
-	const isOnGoalPath = planningMode && goalPath.has(moduleId)
+	const { isPlanningModeActive, goalModuleId, goalPath } = useSkillTreePlanning()
+	const isGoalModule = isPlanningModeActive && goalModuleId === moduleId
+	const isOnGoalPath = isPlanningModeActive && goalPath.has(moduleId)
 	const hasGoal = goalModuleId !== null
 
 	// Derive combined data.
-	const highlighted = isHovered || isPrerequisite
-	const dimmed = hoveredModuleId !== null && !highlighted && (!planningMode || !isGoalModule)
+	const highlighted = isHighlightedModule || isHighlightedPrerequisite
+	const dimmed = highlightedModuleId !== null && !highlighted && (!isPlanningModeActive || !isGoalModule)
 	const fillColor = isGoalModule ? planningColors.goal : theme.palette.background.paper
 
 	// When the planning mode is on, use the respective styling.
-	if (planningMode) {
+	if (isPlanningModeActive) {
 		// Determine the opacity and stroke.
 		const prominent = isGoalModule || isOnGoalPath || highlighted || !hasGoal
 		const opacity = dimmed || !prominent ? 0.15 : 1
@@ -64,7 +64,7 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	}
 
 	// When no progress data is available, give a static style.
-	if (!hasProgress) return {
+	if (!isProgressTracked) return {
 		borderColor: theme.palette.divider,
 		fillColor: theme.palette.background.paper,
 		opacity: 1,
