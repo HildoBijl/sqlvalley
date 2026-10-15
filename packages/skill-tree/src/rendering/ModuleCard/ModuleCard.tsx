@@ -40,7 +40,7 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 	const completed = isCompleted(moduleId)
 
 	// Derive interaction data.
-	const { getModuleHref, hoveredModuleId, startModuleHover, endModuleHover, handleModulePointerDown } = useSkillTreeInteraction()
+	const { getModuleHref, hoveredModuleId, startModuleHover, endModuleHover, handleModulePointerDown, handleModuleClick } = useSkillTreeInteraction()
 	const isHovered = hoveredModuleId === moduleId
 
 	// Derive planning data.
@@ -82,8 +82,10 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 			style={{ opacity, whiteSpace: 'normal' }}>
 			<a
 				href={getModuleHref(moduleId)}
+				data-skill-tree-module-card
 				draggable={false}
 				onPointerDown={event => handleModulePointerDown(moduleId, event)}
+				onClick={event => handleModuleClick(moduleId, event)}
 				style={{
 					width: cardWidth,
 					height: cardHeight,
@@ -97,6 +99,8 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 					backgroundColor: isHovered ? theme.palette.action.hover : 'transparent',
 					color: 'inherit',
 					textDecoration: 'none',
+					userSelect: 'none',
+					WebkitTapHighlightColor: 'transparent',
 					transition: 'background-color 90ms',
 				}}>
 				<div style={{

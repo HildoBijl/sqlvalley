@@ -1,4 +1,4 @@
-import type { PointerEvent } from 'react'
+import type { MouseEvent, PointerEvent } from 'react'
 
 import type { ModuleId } from '@step-wise/module-tree-definition'
 
@@ -8,5 +8,6 @@ export interface SkillTreeInteraction {
 	hoveredModuleId: ModuleId | null
 	hoveredPrerequisiteIds: Set<ModuleId>
 	handleModulePointerDown: (id: ModuleId, event: PointerEvent) => void
+	handleModuleClick: (id: ModuleId, event: MouseEvent) => void
 	getModuleHref: (id: ModuleId) => string
 }

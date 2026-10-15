@@ -21,7 +21,10 @@ export function SkillTreeDrawing() {
 
 	// Render the SkillTreeDrawing.
 	return <div
-		onPointerDown={endModuleHover}
+		onPointerDown={event => { // End hover when the pointer goes down outside of a module card.
+			if (event.target instanceof Element && event.target.closest('[data-skill-tree-module-card]')) return
+			endModuleHover()
+		}}
 		style={{
 			position: 'relative',
 			width: `${bounds.width}px`,
