@@ -23,6 +23,6 @@ export function ModuleTypeIcon({ type, iconSize }: ModuleTypeIconProps) {
 	}}>
 		{type === 'concept' ?
 			<School style={{ fontSize: iconSize, color: theme.palette.text.secondary }} /> :
-			<EditNoteIcon style={{ fontSize: iconSize, color: 'primary' }} />}
+			<EditNoteIcon style={{ fontSize: iconSize, color: theme.palette.text.secondary }} />}
 	</div>
 }

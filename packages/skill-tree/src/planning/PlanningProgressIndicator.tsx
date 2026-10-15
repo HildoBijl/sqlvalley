@@ -45,7 +45,7 @@ function GoalProgress() {
 			mb: 1,
 			overflow: 'hidden',
 			textOverflow: 'ellipsis',
-			whiteSpace: 'wrap',
+			whiteSpace: 'normal',
 		}}>
 			Next Step:{' '}
 			{nextStepHref ?
@@ -77,7 +77,7 @@ function NoGoalProgress() {
 			mb: 1,
 			overflow: 'hidden',
 			textOverflow: 'ellipsis',
-			whiteSpace: 'wrap',
+			whiteSpace: 'normal',
 		}}>
 			No goal set. Click on a pin to set your learning goal!
 		</Typography>
