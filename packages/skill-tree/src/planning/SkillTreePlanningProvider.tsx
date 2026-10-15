@@ -26,7 +26,7 @@ export function SkillTreePlanningProvider({ children, settings, stateHandles }: 
 	const [hasSeenPlanningModeIntro, setHasSeenPlanningModeIntro] = useControllableState(stateHandles?.hasSeenPlanningModeIntro, false)
 
 	// Planning mode: set up the flag for whether the planning mode is on.
-	const isPlanningEnabled = settings?.allowPlanningMode ?? true
+	const isPlanningEnabled = settings?.allowPlanningMode ?? false
 	const [storedPlanningMode, setPlanningMode] = useControllableState(stateHandles?.isPlanningModeActive, false)
 	const isPlanningModeActive = isPlanningEnabled && storedPlanningMode
 	const togglePlanningMode = useCallback(() => {
@@ -40,7 +40,7 @@ export function SkillTreePlanningProvider({ children, settings, stateHandles }: 
 
 	// Goal module ID: set up storage for the goal and calculate its path and progress.
 	const [goalModuleId, setGoalModuleId] = useControllableState(stateHandles?.goalModuleId, null)
-	const goalPath = useMemo(() => new Set(goalModuleId ? getRequiredModuleIds(moduleTree, [goalModuleId]) : []), [goalModuleId, moduleTree])
+	const goalPathModuleIds = useMemo(() => new Set(goalModuleId ? getRequiredModuleIds(moduleTree, [goalModuleId]) : []), [goalModuleId, moduleTree])
 	const goalProgress = useMemo(() => {
 		if (!goalModuleId) return { completedCount: 0, totalCount: 0, nextStepId: null, nextStepName: null }
 		const progress = getGoalProgress(moduleTree, goalModuleId, isModuleCompleted)
@@ -51,11 +51,11 @@ export function SkillTreePlanningProvider({ children, settings, stateHandles }: 
 	const value = useMemo(() => ({
 		showPlanningModeIntro, closePlanningModeIntro,
 		isPlanningEnabled, isPlanningModeActive, togglePlanningMode,
-		goalModuleId, setGoalModuleId, goalPath, goalProgress,
+		goalModuleId, setGoalModuleId, goalPathModuleIds, goalProgress,
 	}), [
 		showPlanningModeIntro, closePlanningModeIntro,
 		isPlanningEnabled, isPlanningModeActive, togglePlanningMode,
-		goalModuleId, setGoalModuleId, goalPath, goalProgress,
+		goalModuleId, setGoalModuleId, goalPathModuleIds, goalProgress,
 	])
 	return <SkillTreePlanningContext value={value}>{children}</SkillTreePlanningContext>
 }

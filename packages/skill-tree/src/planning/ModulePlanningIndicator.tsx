@@ -10,10 +10,10 @@ import { planningColors } from './colors'
 interface ModulePlanningIndicatorProps {
 	variant: 'set' | 'active' | 'next-step'
 	iconSize: number
-	onSetGoal?: () => void
+	onActivate?: () => void
 }
 
-export function ModulePlanningIndicator({ variant, iconSize, onSetGoal }: ModulePlanningIndicatorProps) {
+export function ModulePlanningIndicator({ variant, iconSize, onActivate }: ModulePlanningIndicatorProps) {
 	const theme = useTheme()
 	const [isPinHovered, setIsPinHovered] = useState(false)
 
@@ -52,7 +52,7 @@ export function ModulePlanningIndicator({ variant, iconSize, onSetGoal }: Module
 		onClick={event => {
 			event.preventDefault()
 			event.stopPropagation()
-			if (onSetGoal) onSetGoal()
+			if (onActivate) onActivate()
 		}}
 		onMouseEnter={() => setIsPinHovered(true)}
 		onMouseLeave={() => setIsPinHovered(false)}

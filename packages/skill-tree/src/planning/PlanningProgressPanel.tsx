@@ -43,9 +43,6 @@ function GoalProgress() {
 
 		<Typography variant="body2" sx={{
 			mb: 1,
-			overflow: 'hidden',
-			textOverflow: 'ellipsis',
-			whiteSpace: 'normal',
 		}}>
 			Next Step:{' '}
 			{nextStepHref ?
@@ -75,9 +72,6 @@ function NoGoalProgress() {
 		</Typography>
 		<Typography variant="body2" sx={{
 			mb: 1,
-			overflow: 'hidden',
-			textOverflow: 'ellipsis',
-			whiteSpace: 'normal',
 		}}>
 			No goal set. Click on a pin to set your learning goal!
 		</Typography>

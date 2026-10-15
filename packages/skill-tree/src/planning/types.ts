@@ -23,7 +23,7 @@ export interface SkillTreePlanning {
 	isPlanningEnabled: boolean
 	isPlanningModeActive: boolean
 	goalModuleId: ModuleId | null
-	goalPath: Set<ModuleId>
+	goalPathModuleIds: Set<ModuleId>
 	goalProgress: SkillTreeGoalProgress
 	setGoalModuleId: (id: ModuleId | null) => void
 	togglePlanningMode: () => void

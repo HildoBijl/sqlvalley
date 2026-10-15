@@ -46,7 +46,7 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 	// Derive planning data.
 	const { isPlanningModeActive, goalModuleId, goalProgress, setGoalModuleId } = useSkillTreePlanning()
 	const hasGoal = goalModuleId !== null
-	const isGoalNode = isPlanningModeActive && goalModuleId === moduleId
+	const isGoalModule = isPlanningModeActive && goalModuleId === moduleId
 
 	// Determine styling and positioning for the module card.
 	const { borderColor, fillColor, opacity, strokeWidth } = useModuleCardStyle(moduleId)
@@ -114,13 +114,13 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 				}}>
 					<ModuleTypeIcon type={type} iconSize={iconSize} />
 
-					{completed && !isGoalNode && <ModuleCompletionIndicator iconSize={indicatorSize} />}
+					{completed && !isGoalModule && <ModuleCompletionIndicator iconSize={indicatorSize} />}
 
-					{isPlanningModeActive && !isGoalNode && !completed && (!hasGoal || isHighlighted) && <ModulePlanningIndicator variant="set" iconSize={indicatorSize} onSetGoal={() => setGoalModuleId(moduleId)} />}
+					{isPlanningModeActive && !isGoalModule && !completed && (!hasGoal || isHighlighted) && <ModulePlanningIndicator variant="set" iconSize={indicatorSize} onActivate={() => setGoalModuleId(moduleId)} />}
 
 					{isPlanningModeActive && hasGoal && goalProgress.nextStepId === moduleId && <ModulePlanningIndicator variant="next-step" iconSize={indicatorSize} />}
 
-					{isPlanningModeActive && isGoalNode && <ModulePlanningIndicator variant="active" iconSize={indicatorSize} onSetGoal={() => setGoalModuleId(null)} />}
+					{isPlanningModeActive && isGoalModule && <ModulePlanningIndicator variant="active" iconSize={indicatorSize} onActivate={() => setGoalModuleId(null)} />}
 
 					<div style={{
 						width: '100%',
@@ -131,7 +131,7 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 						fontWeight: 400,
 						fontSize: '17px',
 						lineHeight: 1.15,
-						color: isPlanningModeActive && isGoalNode ? planningColors.goalContrastText : theme.palette.text.primary,
+						color: isPlanningModeActive && isGoalModule ? planningColors.goalContrastText : theme.palette.text.primary,
 						textDecoration: 'none',
 					}}>
 						{name}

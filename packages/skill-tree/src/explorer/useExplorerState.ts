@@ -71,7 +71,7 @@ export function useExplorerState({ contentBounds, initialFocusPosition, initialS
 		return clamp(scale, limits.min, limits.max)
 	}, [optionsRef])
 
-	// Contrain the transform settings to their min/max values.
+	// Constrain the transform settings to their min/max values.
 	const constrainTransform = useCallback((next: ExplorerTransform) => {
 		const options = optionsRef.current
 		if (!options.viewportSize) return next

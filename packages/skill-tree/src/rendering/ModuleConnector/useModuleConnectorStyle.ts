@@ -38,8 +38,8 @@ export function useModuleConnectorStyle(connector: ModuleConnectorReference): Mo
 	const isSomethingHighlighted = highlightedModuleId !== null
 
 	// Derive planning-mode-related data.
-	const { isPlanningModeActive, goalModuleId, goalPath } = useSkillTreePlanning()
-	const isInGoalPath = isPlanningModeActive && goalModuleId && goalPath.has(connector.from) && goalPath.has(connector.to)
+	const { isPlanningModeActive, goalModuleId, goalPathModuleIds } = useSkillTreePlanning()
+	const isInGoalPath = isPlanningModeActive && goalModuleId && goalPathModuleIds.has(connector.from) && goalPathModuleIds.has(connector.to)
 
 	// When neither planning nor progress data is available, give a static style.
 	if (!isProgressTracked && !isPlanningModeActive) return { strokeColor: neutralColor, strokeWidth: 1.5, opacity: 1 }

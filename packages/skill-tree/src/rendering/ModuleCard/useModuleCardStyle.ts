@@ -33,9 +33,9 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	const isHighlightedPrerequisite = highlightedPrerequisiteIds.has(moduleId)
 
 	// Derive planning-mode-related data.
-	const { isPlanningModeActive, goalModuleId, goalPath } = useSkillTreePlanning()
+	const { isPlanningModeActive, goalModuleId, goalPathModuleIds } = useSkillTreePlanning()
 	const isGoalModule = isPlanningModeActive && goalModuleId === moduleId
-	const isOnGoalPath = isPlanningModeActive && goalPath.has(moduleId)
+	const isOnGoalPath = isPlanningModeActive && goalPathModuleIds.has(moduleId)
 	const hasGoal = goalModuleId !== null
 
 	// Derive combined data.
