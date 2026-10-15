@@ -9,9 +9,10 @@ import { SkillTreeInteractionContext } from './context'
 export interface SkillTreeInteractionProviderProps {
 	children: ReactNode
 	getModuleHref: (id: ModuleId) => string
+	navigateToModule?: (id: ModuleId) => void
 }
 
-export function SkillTreeInteractionProvider({ children, getModuleHref }: SkillTreeInteractionProviderProps) {
+export function SkillTreeInteractionProvider({ children, getModuleHref, navigateToModule }: SkillTreeInteractionProviderProps) {
 	const { moduleTree } = useSkillTreeData()
 
 	// Set up a state to track the highlighted module.
@@ -48,12 +49,17 @@ export function SkillTreeInteractionProvider({ children, getModuleHref }: SkillT
 		highlightModule(id)
 	}, [highlightModule])
 
-	// Suppress the link belonging to a first touch tap. A second tap and mouse clicks retain native link behavior.
+	// Suppress the first touch tap and route ordinary clicks through the optional SPA navigator.
 	const handleModuleClick = useCallback((id: ModuleId, event: MouseEvent) => {
-		if (blockedTouchClickIdRef.current !== id) return
+		if (blockedTouchClickIdRef.current === id) {
+			event.preventDefault()
+			blockedTouchClickIdRef.current = null
+			return
+		}
+		if (!navigateToModule || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
 		event.preventDefault()
-		blockedTouchClickIdRef.current = null
-	}, [])
+		navigateToModule(id)
+	}, [navigateToModule])
 
 	// Bundle everything in an object and publish it in a context.
 	const value = useMemo(() => ({ highlightModule, clearModuleHighlight, highlightedModuleId, highlightedPrerequisiteIds, handleModulePointerDown, handleModuleClick, getModuleHref }), [highlightModule, clearModuleHighlight, highlightedModuleId, highlightedPrerequisiteIds, handleModulePointerDown, handleModuleClick, getModuleHref])

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Container } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 import { useModuleCompletion } from '@sqlvalley/progress'
 import { SkillTreeVisualization } from '@sqlvalley/skill-tree'
@@ -7,7 +8,11 @@ import { SkillTreeVisualization } from '@sqlvalley/skill-tree'
 import { useSkillTreeSettingsStore, useSkillTreeStateHandles, useLearningStore } from '@/store'
 import { type SkillTreeVisualizationId, modulePresentation, moduleTree, skillTreeVisualizationById } from '@/curriculum'
 
+import { getModulePath } from '../paths'
+
 export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizationId }) {
+	const navigate = useNavigate()
+
 	// Register the skill tree as visited, so we know where to send the user back to if needed.
 	const markSkillTreeVisited = useSkillTreeSettingsStore(state => state.markSkillTreeVisited)
 	useEffect(() => { markSkillTreeVisited(treeId) }, [markSkillTreeVisited, treeId])
@@ -29,7 +34,8 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 			modulePresentation={modulePresentation}
 			modulePositioning={modulePositioning}
 			isModuleCompleted={isModuleCompleted}
-			getModuleHref={moduleId => `/module/${moduleId}`}
+			getModuleHref={getModulePath}
+			navigateToModule={moduleId => navigate(getModulePath(moduleId))}
 			stateHandles={stateHandles}
 			settings={{ allowZoom: true, initialScale: 1, initialModuleId: 'database', allowPlanningMode: true }} />
 	</Container>

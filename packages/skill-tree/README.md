@@ -34,6 +34,18 @@ export function LearningOverview() {
 
 Module cards are native links. Normal clicks, modifier clicks, middle clicks, keyboard activation, and browser context menus therefore retain their standard behavior. On touchscreens, the first tap highlights a module and its prerequisites; tapping that module again follows its link.
 
+For client-side routing, keep supplying the real URL through `getModuleHref` and provide `navigateToModule` for ordinary clicks:
+
+```tsx
+<SkillTreeVisualization
+	{...props}
+	getModuleHref={moduleId => `/module/${moduleId}`}
+	navigateToModule={moduleId => navigate(`/module/${moduleId}`)}
+/>
+```
+
+The callback prevents a page reload for unmodified primary clicks. Modifier clicks and other native link interactions still use the `href`, so opening a module in a new tab continues to work.
+
 
 ## Visualization settings
 
