@@ -6,6 +6,8 @@ export interface ParsedCsv {
 // Parse a raw CSV string into headers and records. Each record maps column headers to string values.
 export function parseCsv(raw: string): ParsedCsv {
 	const source = raw.replace(/^\uFEFF/, '')
+	const firstLine = source.split(/\r?\n/, 1)[0]
+	const delimiter = firstLine.includes(';') && !firstLine.includes(',') ? ';' : ','
 	const rows: string[][] = []
 	let currentCell = ''
 	let currentRow: string[] = []
@@ -46,10 +48,10 @@ export function parseCsv(raw: string): ParsedCsv {
 		}
 
 		// Throw on characters after closing quotes.
-		if (quoteClosed && char !== ',' && char !== '\n' && char !== '\r') throw new SyntaxError(`Unexpected character after closing quote at character ${i + 1}.`)
+		if (quoteClosed && char !== delimiter && char !== '\n' && char !== '\r') throw new SyntaxError(`Unexpected character after closing quote at character ${i + 1}.`)
 
 		// Handle cell delimiters.
-		if (char === ',' && !inQuotes) {
+		if (char === delimiter && !inQuotes) {
 			currentRow.push(currentCell)
 			currentCell = ''
 			quoteClosed = false

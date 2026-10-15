@@ -91,6 +91,7 @@ The CSV parser is intentionally strict:
 
 - Headers must be present, non-empty, and unique.
 - Every record must contain exactly as many cells as the header.
+- Files may use commas or semicolons as delimiters; the header determines which delimiter is used.
 - Quotes are only allowed around complete cells; quotes inside a quoted cell must be escaped as `""`.
 - Unexpected or missing columns cause an error.
 - Empty cells become `null`.

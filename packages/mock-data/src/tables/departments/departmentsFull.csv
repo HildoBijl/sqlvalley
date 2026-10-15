@@ -1,16 +1,29 @@
 d_id,d_name,manager_id,budget,nr_employees
-1000,Information Technology,41651199,7400200.00,30
-1100,Platform Development,42359977,,15
-1110,Front End,44317755,,12
-1120,Back End,41376655,,7
-1200,Security,42191122,,7
-1300,Tech Support,45202200,,10
-2000,Public Relations,41378877,958200.00,5
-3000,Finance & Legal,41993210,2563000,8
-3100,Legal & Compliance,43627788,,4
-3200,Accounting,42351012,,4
-4000,Human Resources,42223311,981450,4
-5000,Operations,41655533,3308400,12
-5100,Logistics,43257678,,7
-5200,Customer Service,42286789,,3
-5300,Quality Assurance,42225432,,4
+1000,Executive Leadership,23070303,"$1,450,000.00 ",6
+1100,Executive Office,23070303,"$850,000.00 ",3
+1200,Strategy & Corporate Affairs,23070303,"$600,000.00 ",3
+2000,Technology,14338498,"$5,100,000.00 ",18
+2100,Product & Engineering,14338498,"$3,100,000.00 ",15
+2110,Product Management,14338498,$0.00 ,1
+2120,Software Engineering,14338498,$0.00 ,11
+2200,Data & Business Systems,24090361,"$1,100,000.00 ",8
+2300,IT & Security,26887263,"$900,000.00 ",3
+3000,Sales & Partnerships,64166280,"$2,750,000.00 ",14
+3100,Seller Partnerships,64166280,"$1,200,000.00 ",7
+3200,Private Sales,72880343,"$1,550,000.00 ",8
+4000,Art Operations,60706330,"$2,100,000.00 ",9
+4100,Art Research & Due Diligence,60706330,"$1,050,000.00 ",5
+4110,Provenance & Cataloguing,60706330,$0.00,3
+4120,Valuation & Condition,60706330,$0.00,1
+4200,Logistics & Collections,63336966,"$1,050,000.00",5
+5000,Legal & Risk,59497116,"$2,150,000.00",7
+5100,Legal,59497116,"$1,150,000.00",4
+5200,Compliance & Investigations,35242525,"$1,000,000.00",5
+6000,Finance & Corporate Services,23121126,"$1,700,000.00",9
+6100,Finance & Deal Operations,23121126,1100000,6
+6110,Accounting & Treasury,23121126,0,3
+6120,Transaction Operations,23121126,0,4
+6200,People & Workplace,21097316,600000,3
+7000,Client Experience & Communications,11194139,950000,8
+7100,Client Services,11194139,600000,5
+7200,Communications,32845340,350000,4
