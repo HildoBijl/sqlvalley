@@ -54,10 +54,10 @@ export function SkillTreeVisualizationContent({ settings, stateHandles }: SkillT
 			<SkillTreeControls onHelp={openIntro} />
 			<PlanningProgressIndicator />
 			<TreeLegend stateHandles={stateHandles?.legend} />
-		</Explorer>
 
-		{/* Modals. */}
-		<SkillTreeIntro open={showIntro} onClose={closeIntro} />
-		<PlanningModeIntro />
+			{/* Modals. */}
+			<SkillTreeIntro open={showIntro} onClose={closeIntro} />
+			<PlanningModeIntro />
+		</Explorer>
 	</div>
 }
