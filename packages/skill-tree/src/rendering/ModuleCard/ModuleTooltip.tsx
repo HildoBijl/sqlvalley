@@ -12,6 +12,7 @@ import { cardHeight, cardWidth } from '../../positioning'
 // Tooltip settings.
 const maxTooltipWidth = 320
 const tooltipGap = 10
+const tooltipViewportPadding = 20
 const arrowSize = 13
 const arrowEdgeMargin = 16
 
@@ -32,37 +33,31 @@ export function ModuleTooltip() {
 	const { bounds: drawingBounds, modulePositions } = modulePositioning
 	const positionData = modulePositions[hoveredModuleId]
 	if (!positionData) throw new Error(`No position was defined for module "${hoveredModuleId}".`)
-
-	// Limit the tooltip to the visible part of the drawing. Explorer overflow is not part of the drawing and cannot contain the tooltip.
-	const visibleBounds = {
-		minX: Math.max(drawingBounds.min.x, viewportBounds.min.x),
-		minY: Math.max(drawingBounds.min.y, viewportBounds.min.y),
-		maxX: Math.min(drawingBounds.max.x, viewportBounds.max.x),
-		maxY: Math.min(drawingBounds.max.y, viewportBounds.max.y),
-	}
-
-	// Prefer the space below the card; otherwise use the roomier horizontal side.
 	const position = positionData.pixelPosition
-	const visibleWidth = Math.max(0, visibleBounds.maxX - visibleBounds.minX - 2 * tooltipGap)
+
+	// Calculate the size of the tooltip. For small screens, limit its width.
+	const visibleWidth = Math.max(0, viewportBounds.max.x - viewportBounds.min.x - 2 * tooltipGap)
 	const defaultWidth = Math.min(maxTooltipWidth, visibleWidth)
 	const tooltipHeight = tooltipSize?.height ?? 0
-	const fitsBelow = position.y + cardHeight / 2 + tooltipGap + tooltipHeight <= visibleBounds.maxY
-	const spaceLeft = position.x - cardWidth / 2 - tooltipGap - visibleBounds.minX
-	const spaceRight = visibleBounds.maxX - position.x - cardWidth / 2 - tooltipGap
+
+	// Determine where to place the tooltip based on available space. Possibly adjust its width if needed.
+	const fitsBelow = position.y + cardHeight / 2 + tooltipGap + tooltipHeight <= Math.min(drawingBounds.max.y, viewportBounds.max.y)
+	const spaceLeft = position.x - cardWidth / 2 - tooltipGap - viewportBounds.min.x
+	const spaceRight = viewportBounds.max.x - position.x - cardWidth / 2 - tooltipGap
 	const placement: TooltipPlacement = fitsBelow ? 'below' : spaceRight >= spaceLeft ? 'right' : 'left'
 	const tooltipWidth = placement === 'below' ? defaultWidth : Math.min(defaultWidth, Math.max(spaceLeft, spaceRight))
-	const halfWidth = tooltipWidth / 2
-	const halfHeight = tooltipHeight / 2
 
-	// Keep the tooltip and its arrow within the visible drawing rectangle.
+	// Try to keep the tooltip within the viewport, but never let it pass beyond the ModuleCard's edge.
 	const tooltipX = placement === 'below'
-		? clamp(position.x, visibleBounds.minX + halfWidth, visibleBounds.maxX - halfWidth)
+		? clamp(position.x,
+			Math.min(position.x - cardWidth / 2, viewportBounds.min.x + tooltipViewportPadding) + tooltipWidth / 2,
+			Math.max(position.x + cardWidth / 2, viewportBounds.max.x - tooltipViewportPadding) - tooltipWidth / 2)
 		: position.x + (placement === 'right' ? 1 : -1) * (cardWidth / 2 + tooltipGap)
 	const tooltipY = placement === 'below'
 		? position.y + cardHeight / 2 + tooltipGap
-		: clamp(position.y, visibleBounds.minY + halfHeight, visibleBounds.maxY - halfHeight)
-	const horizontalArrowPosition = clamp(halfWidth + position.x - tooltipX, arrowEdgeMargin, tooltipWidth - arrowEdgeMargin)
-	const verticalArrowPosition = clamp(halfHeight + position.y - tooltipY, arrowEdgeMargin, tooltipHeight - arrowEdgeMargin)
+		: clamp(position.y, drawingBounds.min.y + tooltipHeight / 2, drawingBounds.max.y - tooltipHeight / 2)
+	const horizontalArrowPosition = clamp(tooltipWidth / 2 + position.x - tooltipX, arrowEdgeMargin, tooltipWidth - arrowEdgeMargin)
+	const verticalArrowPosition = clamp(tooltipHeight / 2 + position.y - tooltipY, arrowEdgeMargin, tooltipHeight - arrowEdgeMargin)
 
 	// Render the tooltip in drawing coordinates.
 	return <HtmlElement

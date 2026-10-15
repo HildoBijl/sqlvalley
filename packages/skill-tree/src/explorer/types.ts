@@ -10,7 +10,7 @@ export interface ExplorerOptions {
 	initialScale?: number
 	minScale?: number
 	maxScale?: number
-	dragOverflow?: number
+	contentPadding?: number
 	allowZoom?: boolean
 }
 

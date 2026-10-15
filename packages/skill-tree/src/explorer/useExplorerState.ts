@@ -23,11 +23,11 @@ interface UseExplorerStateOptions extends Required<Omit<ExplorerOptions, 'initia
 	initialFocus?: VectorLike
 }
 
-export function useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, dragOverflow, allowZoom }: UseExplorerStateOptions) {
+export function useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, contentPadding, allowZoom }: UseExplorerStateOptions) {
 	// Check the given input.
 	if (minScale < 0) throw new Error('Explorer minScale cannot be negative.')
 	if (maxScale < minScale) throw new Error('Explorer maxScale cannot be smaller than minScale.')
-	if (dragOverflow < 0) throw new Error('Explorer dragOverflow cannot be negative.')
+	if (contentPadding < 0) throw new Error('Explorer contentPadding cannot be negative.')
 
 	const rootRef = useRef<HTMLDivElement>(null)
 	const suppressClickRef = useRef(false)
@@ -38,8 +38,8 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 		: bounds.min.add([bounds.width / 2, bounds.height / 2])
 	const [transform, setTransform] = useState<ExplorerTransform>({ x: 0, y: 0, scale: initialScale })
 	const transformRef = useRef(transform)
-	const optionsRef = useRef({ bounds, focus, initialScale, minScale, maxScale, dragOverflow, viewportSize })
-	optionsRef.current = { bounds, focus, initialScale, minScale, maxScale, dragOverflow, viewportSize }
+	const optionsRef = useRef({ bounds, focus, initialScale, minScale, maxScale, contentPadding, viewportSize })
+	optionsRef.current = { bounds, focus, initialScale, minScale, maxScale, contentPadding, viewportSize }
 	const allowZoomRef = useRef(allowZoom)
 	allowZoomRef.current = allowZoom
 
@@ -54,9 +54,9 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	const constrainTransform = useCallback((next: ExplorerTransform) => {
 		const options = optionsRef.current
 		if (!options.viewportSize) return next
-		const scaleLimits = getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.dragOverflow)
+		const scaleLimits = getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
 		const scale = clamp(next.scale, scaleLimits.min, scaleLimits.max)
-		const limits = getTransformLimits(options.bounds, options.viewportSize, scale, options.dragOverflow)
+		const limits = getTransformLimits(options.bounds, options.viewportSize, scale, options.contentPadding)
 		return {
 			x: clamp(next.x, limits.left, limits.right),
 			y: clamp(next.y, limits.top, limits.bottom),
@@ -78,14 +78,14 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	// Center the configured focus initially and whenever the drawing configuration changes. On viewport resizes, retain and constrain the current transform.
 	useEffect(() => {
 		if (!viewportSize) return
-		const configuration = [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y, focus.x, focus.y, initialScale, minScale, maxScale, dragOverflow].join(':')
+		const configuration = [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y, focus.x, focus.y, initialScale, minScale, maxScale, contentPadding].join(':')
 		if (configurationRef.current !== configuration) {
 			configurationRef.current = configuration
 			updateTransform(() => getFocusedTransform([focus.x, focus.y], initialScale))
 			return
 		}
 		updateTransform(current => constrainTransform(current))
-	}, [bounds, constrainTransform, dragOverflow, focus.x, focus.y, getFocusedTransform, initialScale, maxScale, minScale, updateTransform, viewportSize])
+	}, [bounds, constrainTransform, contentPadding, focus.x, focus.y, getFocusedTransform, initialScale, maxScale, minScale, updateTransform, viewportSize])
 
 	// Apply mouse-wheel zooming to the complete explorer viewport.
 	useEffect(() => {
@@ -121,7 +121,7 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 				bounds: () => {
 					const options = optionsRef.current
 					if (!options.viewportSize) return { left: 0, right: 0, top: 0, bottom: 0 }
-					return getTransformLimits(options.bounds, options.viewportSize, transformRef.current.scale, options.dragOverflow)
+					return getTransformLimits(options.bounds, options.viewportSize, transformRef.current.scale, options.contentPadding)
 				},
 				rubberband: true,
 			},
@@ -129,7 +129,7 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 				scaleBounds: () => {
 					const options = optionsRef.current
 					if (!options.viewportSize) return { min: options.minScale, max: options.maxScale }
-					return getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.dragOverflow)
+					return getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
 				},
 				from: () => [transformRef.current.scale, 0],
 				pointer: { touch: true },
@@ -177,19 +177,19 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 }
 
 // Determine the real min/max scale settings, given minScale and maxScale settings, content bounds and viewport sizes.
-function getScaleLimits(bounds: Rectangle, viewport: ViewportSize, minScale: number, maxScale: number, dragOverflow: number) {
-	const fitScale = Math.min(viewport.width / (bounds.width + 2 * dragOverflow), viewport.height / (bounds.height + 2 * dragOverflow))
+function getScaleLimits(bounds: Rectangle, viewport: ViewportSize, minScale: number, maxScale: number, contentPadding: number) {
+	const fitScale = Math.min(viewport.width / (bounds.width + 2 * contentPadding), viewport.height / (bounds.height + 2 * contentPadding))
 	return { min: Math.min(maxScale, Math.max(minScale, fitScale)), max: maxScale }
 }
 
 // Determine the min/max values for x and y, given a scale, content bounds and viewport sizes.
-function getTransformLimits(bounds: Rectangle, viewport: ViewportSize, scale: number, dragOverflow: number): TransformLimits {
+function getTransformLimits(bounds: Rectangle, viewport: ViewportSize, scale: number, contentPadding: number): TransformLimits {
 	const width = bounds.width * scale
 	const height = bounds.height * scale
-	const overflow = dragOverflow * scale
-	const horizontalEnd = viewport.width - width - overflow
-	const verticalEnd = viewport.height - height - overflow
-	const [left, right] = [Math.min(overflow, horizontalEnd), Math.max(overflow, horizontalEnd)]
-	const [top, bottom] = [Math.min(overflow, verticalEnd), Math.max(overflow, verticalEnd)]
+	const padding = contentPadding * scale
+	const horizontalEnd = viewport.width - width - padding
+	const verticalEnd = viewport.height - height - padding
+	const [left, right] = [Math.min(padding, horizontalEnd), Math.max(padding, horizontalEnd)]
+	const [top, bottom] = [Math.min(padding, verticalEnd), Math.max(padding, verticalEnd)]
 	return { left, right, top, bottom }
 }

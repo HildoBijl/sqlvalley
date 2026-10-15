@@ -17,12 +17,12 @@ export function Explorer({
 	initialScale = 1,
 	minScale = 0,
 	maxScale = 1.5,
-	dragOverflow = 50,
+	contentPadding = 50,
 	allowZoom = true,
 	style,
 	...props
 }: ExplorerProps) {
-	const explorer = useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, dragOverflow, allowZoom })
+	const explorer = useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, contentPadding, allowZoom })
 	const { bind, handleClickCapture, handlePointerDownCapture, rootRef, state } = explorer
 	return <ExplorerContext value={state}>
 		<ExplorerInternalContext value={{ bind, handleClickCapture, handlePointerDownCapture }}>

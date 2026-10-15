@@ -32,4 +32,4 @@ When externally persisted state hydrates asynchronously, set `stateHandles.ready
 
 Connectors and card backgrounds are SVG shapes. `ModuleCard` places an interactive `HtmlElement` above the backgrounds and handles module mouse and pointer events there. Goal pins stop pointer propagation so selecting a goal does not navigate to the module.
 
-The explorer derives its effective minimum scale from the viewport, drawing bounds, and configured drag overflow. Configure `minScale`, `maxScale`, and `dragOverflow` through `settings` when needed. To choose the initial and reset focus, provide either `initialModuleId` or `initialGridPosition`; providing both is an error. Without either setting, the explorer focuses on the drawing midpoint.
+The explorer derives its effective minimum scale from the viewport, drawing bounds, and configured tree padding. Configure `minScale`, `maxScale`, and `treePadding` through `settings` when needed. To choose the initial and reset focus, provide either `initialModuleId` or `initialGridPosition`; providing both is an error. Without either setting, the explorer focuses on the drawing midpoint.

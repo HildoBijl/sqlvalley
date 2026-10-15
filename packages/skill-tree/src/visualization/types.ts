@@ -10,7 +10,7 @@ export interface SkillTreeSettings extends SkillTreePlanningSettings {
 	initialZoom?: number
 	minScale?: number
 	maxScale?: number
-	dragOverflow?: number
+	treePadding?: number
 	initialModuleId?: ModuleId
 	initialGridPosition?: GridPosition
 }
