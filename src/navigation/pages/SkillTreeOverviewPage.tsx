@@ -28,7 +28,7 @@ export function SkillTreeOverviewPage({ treeId }: { treeId: SkillTreeVisualizati
 	const stateHandles = useSkillTreeStateHandles(treeId)
 
 	// Render the skill-tree visualization with the appropriate settings.
-	return <Container maxWidth="lg" sx={{ py: 4 }}>
+	return <Container maxWidth="lg" sx={{ height: '100%', py: 4 }}>
 		<SkillTreeVisualization
 			moduleTree={moduleTree}
 			modulePresentation={modulePresentation}

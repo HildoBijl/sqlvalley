@@ -23,14 +23,18 @@ const gridPositions: ModuleGridPositions = {
 const modulePositioning = defineModulePositioning(moduleTree, gridPositions)
 
 export function LearningOverview() {
-	return <SkillTreeVisualization
-		moduleTree={moduleTree}
-		modulePresentation={modulePresentation}
-		modulePositioning={modulePositioning}
-		getModuleHref={moduleId => `/module/${moduleId}`}
-	/>
+	return <div style={{ height: 700 }}>
+		<SkillTreeVisualization
+			moduleTree={moduleTree}
+			modulePresentation={modulePresentation}
+			modulePositioning={modulePositioning}
+			getModuleHref={moduleId => `/module/${moduleId}`}
+		/>
+	</div>
 }
 ```
+
+The visualization fills its parent, so its containing element must provide a height. This lets an application use a fixed panel, a resizable area, or the remaining space in a flex layout without the package making assumptions about the viewport or surrounding header.
 
 Module cards are native links. Normal clicks, modifier clicks, middle clicks, keyboard activation, and browser context menus therefore retain their standard behavior. On touchscreens, the first tap highlights a module and its prerequisites; tapping that module again follows its link.
 

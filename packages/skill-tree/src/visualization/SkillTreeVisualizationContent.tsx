@@ -36,8 +36,8 @@ export function SkillTreeVisualizationContent({ settings, stateHandles }: SkillT
 	// Render the full Skill Tree Visualization.
 	return <div style={{
 		width: '100%',
-		height: 'calc(100vh - 120px)',
-		minHeight: '600px',
+		height: '100%',
+		minHeight: 0,
 		border: `1px solid ${theme.palette.divider}`,
 		overflow: 'hidden',
 		backgroundColor: theme.palette.background.paper,
