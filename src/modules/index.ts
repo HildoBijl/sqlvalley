@@ -1,2 +1,2 @@
 export * from './moduleLoading'
-export { useModuleExercises } from './exerciseLoading'
+export { hasModuleExercises, useModuleExercises } from './exerciseLoading'

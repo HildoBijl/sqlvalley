@@ -1,6 +1,6 @@
 import type { ModuleContent } from '@/learning'
 import { type ModuleId, getModulePresentation, getAvailableTableKeys, moduleTree } from '@/curriculum'
-import { useModuleExercises } from '@/modules'
+import { hasModuleExercises } from '@/modules'
 
 // Load in general data about the given module.
 export function useModuleData(moduleId: ModuleId, content: ModuleContent) {
@@ -13,11 +13,10 @@ export function useModuleData(moduleId: ModuleId, content: ModuleContent) {
 	const Practice = isSkill ? content?.Practice : undefined
 	const tables = isSkill ? getAvailableTableKeys(moduleId) : []
 
-	// Load in the exercises dynamically.
-	const { exercises, loading, error } = useModuleExercises(moduleId, { enabled: isSkill && !Practice })
-	const hasInteractivePractice = isSkill && !Practice && exercises.length > 0
+	// Check whether this module offers separately loaded interactive exercises.
+	const hasInteractivePractice = isSkill && !Practice && hasModuleExercises(moduleId)
 
 	// Run a final check and return the result.
 	if (!presentation) throw new Error(`Missing presentation for module "${moduleId}".`)
-	return { moduleId, moduleType, isSkill, content, presentation, Practice, tables, exercises, hasInteractivePractice, loading, error }
+	return { moduleId, moduleType, isSkill, content, presentation, Practice, tables, hasInteractivePractice }
 }

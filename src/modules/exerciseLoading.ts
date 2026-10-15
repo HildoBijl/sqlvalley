@@ -33,6 +33,10 @@ export const exerciseLoaders: Partial<Record<string, () => Promise<ModuleExercis
 	}),
 )
 
+export function hasModuleExercises(moduleId: string) {
+	return Boolean(exerciseLoaders[moduleId])
+}
+
 // Listen for HMR replacements of one module's exercises.
 export function subscribeToExerciseUpdates(moduleId: string, listener: () => void): () => void {
 	const subscribers = listeners.get(moduleId) ?? new Set<() => void>()
