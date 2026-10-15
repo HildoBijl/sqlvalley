@@ -41,8 +41,8 @@ export function useModuleConnectorStyle(connector: ModuleConnectorReference): Mo
 	const { planningMode, goalModuleId, goalPath } = useSkillTreePlanning()
 	const isInGoalPath = planningMode && goalModuleId && goalPath.has(connector.from) && goalPath.has(connector.to)
 
-	// When no progress data is available, give a static style.
-	if (!hasProgress) return { strokeColor: neutralColor, strokeWidth: 1.5, opacity: 1 }
+	// When neither planning nor progress data is available, give a static style.
+	if (!hasProgress && !planningMode) return { strokeColor: neutralColor, strokeWidth: 1.5, opacity: 1 }
 
 	// Highlight connectors within the hovered module's prerequisite path.
 	if (isInHoveredPath) {
