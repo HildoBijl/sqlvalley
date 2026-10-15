@@ -74,10 +74,8 @@ function FigureDataTypeDemoContents() {
 	// Set up query data.
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, `SELECT * FROM expenses;`)
-	console.log(data)
 
 	// Find the bounds of the table.
-
 	useDrawingTextTarget('numberColumn', 'table', data?.columns[1] ?? '')
 	useDrawingTextTarget('textColumn', 'table', data?.columns[3] ?? '')
 	useDrawingTextTarget('dateColumn', 'table', data?.columns[4] ?? '')

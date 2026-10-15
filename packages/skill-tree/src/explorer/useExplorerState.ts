@@ -19,13 +19,20 @@ interface TransformLimits {
 	bottom: number
 }
 
+interface PinchStart {
+	transform: ExplorerTransform
+	origin: Vector
+}
+
 interface UseExplorerStateOptions extends Required<Omit<ExplorerOptions, 'initialFocus'>> {
 	initialFocus?: VectorLike
 }
 
 export function useExplorerState({ bounds, initialFocus, initialScale, minScale, maxScale, contentPadding, allowZoom }: UseExplorerStateOptions) {
 	// Check the given input.
+	if (initialScale <= 0) throw new Error('Explorer initialScale must be positive.')
 	if (minScale < 0) throw new Error('Explorer minScale cannot be negative.')
+	if (maxScale <= 0) throw new Error('Explorer maxScale must be positive.')
 	if (maxScale < minScale) throw new Error('Explorer maxScale cannot be smaller than minScale.')
 	if (contentPadding < 0) throw new Error('Explorer contentPadding cannot be negative.')
 	const initialFocusVector = initialFocus ? ensureVector(initialFocus, { dimension: 2 }) : bounds.min.add([bounds.width / 2, bounds.height / 2])
@@ -56,6 +63,14 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 		})
 	}, [])
 
+	// Constrain a requested scale to the effective limits of the current viewport.
+	const constrainScale = useCallback((scale: number) => {
+		const options = optionsRef.current
+		if (!options.viewportSize) return clamp(scale, options.minScale, options.maxScale)
+		const limits = getScaleLimits(options.bounds, options.viewportSize, options.minScale, options.maxScale, options.contentPadding)
+		return clamp(scale, limits.min, limits.max)
+	}, [optionsRef])
+
 	// Contrain the transform settings to their min/max values.
 	const constrainTransform = useCallback((next: ExplorerTransform) => {
 		const options = optionsRef.current
@@ -72,10 +87,15 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 		}
 	}, [optionsRef])
 
-	// Apply an additional scaling factor.
+	// Apply an additional scaling factor around the viewport center.
 	const zoomBy = useCallback((factor: number) => {
-		updateTransform(current => constrainTransform({ ...current, scale: current.scale * factor }))
-	}, [constrainTransform, updateTransform])
+		updateTransform(current => {
+			const viewport = optionsRef.current.viewportSize
+			const scale = constrainScale(current.scale * factor)
+			if (!viewport) return { ...current, scale }
+			return constrainTransform(scaleAroundPoint(current, scale, new Vector(viewport.width / 2, viewport.height / 2)))
+		})
+	}, [constrainScale, constrainTransform, optionsRef, updateTransform])
 
 	// Express the visible viewport rectangle in drawing coordinates based on the current transform.
 	const viewportBounds = useMemo(() => {
@@ -95,15 +115,16 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 	const getFocusedTransform = useCallback((positionInput: VectorLike, scaleInput: number) => {
 		const options = optionsRef.current
 		const position = ensureVector(positionInput, { dimension: 2 })
-		if (!options.viewportSize) return { translation: new Vector(0, 0), scale: scaleInput }
+		const scale = constrainScale(scaleInput)
+		if (!options.viewportSize) return { translation: new Vector(0, 0), scale }
 		return constrainTransform({
 			translation: new Vector(
-				options.viewportSize.width / 2 - (position.x - options.bounds.min.x) * scaleInput,
-				options.viewportSize.height / 2 - (position.y - options.bounds.min.y) * scaleInput,
+				options.viewportSize.width / 2 - (position.x - options.bounds.min.x) * scale,
+				options.viewportSize.height / 2 - (position.y - options.bounds.min.y) * scale,
 			),
-			scale: scaleInput,
+			scale,
 		})
-	}, [constrainTransform, optionsRef])
+	}, [constrainScale, constrainTransform, optionsRef])
 
 	// Focus the drawing on the given location. Optionally, an extra scale may be given.
 	const focusPosition = useCallback((position: VectorLike, scale?: number) => {
@@ -127,9 +148,14 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 				if (!tap) suppressClickRef.current = true
 				updateTransform(current => ({ ...current, translation: new Vector(x, y) }))
 			},
-			onPinch: ({ offset: [scale] }) => {
+			onPinch: ({ first, offset: [scale], origin: [clientX, clientY], memo }) => {
 				if (!optionsRef.current.allowZoom) return
-				updateTransform(current => constrainTransform({ ...current, scale }))
+				const rect = rootRef.current?.getBoundingClientRect()
+				if (!rect) return
+				const origin = new Vector(clientX - rect.left, clientY - rect.top)
+				const start: PinchStart = first || !memo ? { transform: transformRef.current, origin } : memo
+				updateTransform(() => constrainTransform(scaleAroundPoint(start.transform, constrainScale(scale), start.origin, origin)))
+				return start
 			},
 		},
 		{
@@ -191,12 +217,14 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 		const handleWheel = (event: WheelEvent) => {
 			if (!optionsRef.current.allowZoom) return
 			event.preventDefault()
-			const factor = event.deltaY > 0 ? 0.95 : 1.05
-			updateTransform(current => constrainTransform({ ...current, scale: current.scale * factor }))
+			const rect = element.getBoundingClientRect()
+			const origin = new Vector(event.clientX - rect.left, event.clientY - rect.top)
+			const factor = event.deltaY > 0 ? 0.9 : 1.1
+			updateTransform(current => constrainTransform(scaleAroundPoint(current, constrainScale(current.scale * factor), origin)))
 		}
 		element.addEventListener('wheel', handleWheel, { passive: false })
 		return () => element.removeEventListener('wheel', handleWheel)
-	}, [constrainTransform, optionsRef, updateTransform])
+	}, [constrainScale, constrainTransform, optionsRef, updateTransform])
 
 	/*
 	 * Bundling.
@@ -207,6 +235,18 @@ export function useExplorerState({ bounds, initialFocus, initialScale, minScale,
 
 	// Bundle the state with a ref and event handlers for the explorer root container.
 	return { rootRef, bind, handleClickCapture, handlePointerDownCapture, state }
+}
+
+// Change scale while keeping the same drawing point underneath a viewport position.
+function scaleAroundPoint(transform: ExplorerTransform, scale: number, originalViewportPosition: Vector, newViewportPosition = originalViewportPosition): ExplorerTransform {
+	const factor = scale / transform.scale
+	return {
+		translation: new Vector(
+			newViewportPosition.x - (originalViewportPosition.x - transform.translation.x) * factor,
+			newViewportPosition.y - (originalViewportPosition.y - transform.translation.y) * factor,
+		),
+		scale,
+	}
 }
 
 // Determine the real min/max scale settings, given minScale and maxScale settings, content bounds and viewport sizes.

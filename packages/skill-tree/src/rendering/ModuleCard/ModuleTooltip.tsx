@@ -45,7 +45,7 @@ export function ModuleTooltip() {
 	const spaceLeft = position.x - cardWidth / 2 - tooltipGap - viewportBounds.min.x
 	const spaceRight = viewportBounds.max.x - position.x - cardWidth / 2 - tooltipGap
 	const placement: TooltipPlacement = fitsBelow ? 'below' : spaceRight >= spaceLeft ? 'right' : 'left'
-	const tooltipWidth = placement === 'below' ? defaultWidth : Math.min(defaultWidth, Math.max(spaceLeft, spaceRight))
+	const tooltipWidth = placement === 'below' ? defaultWidth : Math.min(defaultWidth, Math.max(0, spaceLeft, spaceRight))
 
 	// Try to keep the tooltip within the viewport, but never let it pass beyond the ModuleCard's edge.
 	const tooltipX = placement === 'below'
