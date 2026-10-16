@@ -28,7 +28,7 @@ export function MonoExercise(props: MonoExerciseProps) {
 
 function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization, Prompt, Payoff }: MonoExerciseProps) {
 	// Extract and verify data from contexts.
-	const { currentExercise: { definition, instance: exerciseInstance }, submitting, storyMode } = useExerciseSessionContext()
+	const { currentExercise: { definition, instance: exerciseInstance }, submitting, storyMode, admin } = useExerciseSessionContext()
 	if (!isMonoExercise(definition)) throw new Error('MonoExercise requires a mono-exercise definition.')
 	const { input, submitInput } = useInputExerciseContext()
 
@@ -48,7 +48,7 @@ function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization,
 		<ExerciseControls />
 		{InputVisualization ? <InputVisualization parameters={parameters} input={input} state={state} /> : null}
 		{storyMode && state.solved && Payoff ? <Payoff parameters={parameters} /> : null}
-		{complete ? <ExerciseSection title="Solution" collapsible>
+		{complete || admin.showControls ? <ExerciseSection key={complete ? 'completed-solution' : 'admin-solution'} title="Solution" collapsible defaultExpanded={complete}>
 			<Solution parameters={parameters} />
 		</ExerciseSection> : null}
 	</Box>

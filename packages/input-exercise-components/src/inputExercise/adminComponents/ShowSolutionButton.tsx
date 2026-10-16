@@ -9,6 +9,6 @@ export function ShowSolutionButton() {
 	const { submitting } = useExerciseSessionContext()
 	const { insertSolution } = useInputExerciseContext()
 	return <Button size="small" variant="outlined" startIcon={<Lightbulb />} disabled={submitting || !insertSolution} onClick={insertSolution}>
-		Show Solution
+		Insert solution
 	</Button>
 }
