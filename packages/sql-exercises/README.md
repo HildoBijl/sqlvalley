@@ -47,7 +47,7 @@ The static shorthand becomes `getSolution: () => ({ query: solution })`. Callbac
 
 `buildSQLMonoExerciseDefinition` and `buildSQLMonoExerciseComponent` are also available independently, with `SQLMonoExerciseDefinitionSpec` and `SQLMonoExerciseComponentSpec`. `SQLMonoExerciseSpec` combines those specs with the ID. Definitions preserve the upstream reducer and `valueOperations`. The builders live in `construction/`, alongside the private SQL grading helper.
 
-The component builder supplies the SQL input, preview, and available-table caption. `MonoExercise` owns section layout and solution visibility. Supply a custom `Solution` component or use the default `SQLExerciseSolution`, which reads `useSolution()` and renders its query with `SQLDisplay`.
+The component builder supplies the SQL input, preview, and available-table caption. Optional `Prompt` and `Payoff` components receive the inferred exercise parameters, just like `Problem` and `Solution`. Prompt appears above the problem; Payoff appears above the solution only after a successful solve, not after giving up. `MonoExercise` owns section layout and solution visibility. Supply a custom `Solution` component or use the default `SQLExerciseSolution`, which reads `useSolution()` and renders its query with `SQLDisplay`.
 
 Grading computes the expected output before running the submitted query and resets the grading database afterward. Preview and grading both use the first result set, including an empty SELECT with its column metadata. A submission without a result set cannot match an empty SELECT. Exercises that request sorting must set `comparisonOptions: { requireEqualRowOrder: true }` and state any tie-breakers used by their model answer. Skill metadata is forwarded to the upstream reducer.
 

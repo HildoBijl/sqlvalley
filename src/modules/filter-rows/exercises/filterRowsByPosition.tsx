@@ -1,6 +1,8 @@
 import { sample } from '@step-wise/js-utils'
 import { defineSQLMonoExercise } from '@sqlvalley/sql-exercises'
 
+import { Par } from '@/ui'
+
 export default defineSQLMonoExercise({
 	exerciseId: 'filter-rows-by-position',
 	definition: {
@@ -19,5 +21,7 @@ WHERE position='${parameters.position.replace(/'/g, '\'\'')}';`,
 	},
 	component: {
 		Problem: ({ parameters }) => <>Retrieve all contracts for the position of "{parameters.position}".</>,
+		Prompt: ({ parameters }) => <Par>This is a test prompt for the position of "{parameters.position}".</Par>,
+		Payoff: ({ parameters }) => <Par>This is a test payoff for the position of "{parameters.position}".</Par>,
 	},
 })

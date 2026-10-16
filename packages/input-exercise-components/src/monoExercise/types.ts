@@ -12,13 +12,20 @@ export interface MonoExerciseInputAreaProps {
 	onSubmit: () => void
 }
 
+export interface MonoExerciseSolutionProps {
+	parameters: ExerciseParameters
+}
+
 export interface MonoExerciseInputVisualizationProps {
 	parameters: ExerciseParameters
 	state: MonoExerciseState
 	input: PlainDataObject | undefined
 }
 
-export interface MonoExerciseSolutionProps {
+export interface MonoExercisePromptProps {
 	parameters: ExerciseParameters
-	state: MonoExerciseState
+}
+
+export interface MonoExercisePayoffProps {
+	parameters: ExerciseParameters
 }
