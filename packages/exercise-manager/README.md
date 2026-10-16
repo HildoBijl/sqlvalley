@@ -24,6 +24,8 @@ const exercises: ExerciseRegistration[] = [
 />
 ```
 
+`storyMode` is an optional presentation flag, defaulting to `false`, exposed through the exercise session context. The application controls its availability and persistence.
+
 The definition must support `processSoloAction`. The parent reads `currentExerciseInstance` from its store through a reactive hook, passing `undefined` when none exists. Key the manager or an ancestor by skill ID so navigation starts a fresh session.
 
 Implement the exported `ExerciseStorage` interface to connect your store:

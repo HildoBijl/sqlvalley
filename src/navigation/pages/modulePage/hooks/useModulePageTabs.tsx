@@ -1,6 +1,6 @@
 import { Bolt, Edit, Lightbulb, MenuBook, Storage } from '@mui/icons-material'
 
-import { useAdminMode, useSettingsStore } from '@/store'
+import { useAdminMode, useStoryMode } from '@/store'
 import type { TabConfig } from '@/learning'
 
 import type { useModuleData } from './useModuleData'
@@ -18,10 +18,10 @@ const allTabs: TabConfig[] = [
 
 // Determine which tabs a module page should show (given the loaded module's definition) and track which tab we're on. It calls useModuleTabSelection.
 export function useModulePageTabs(data: ReturnType<typeof useModuleData>, completed: boolean) {
-	const hideStories = useSettingsStore(state => state.hideStories)
+	const storyMode = useStoryMode()
 	const isAdmin = useAdminMode()
 	const tabs = allTabs.filter(tab => {
-		if (tab.key === 'story') return !hideStories
+		if (tab.key === 'story') return storyMode
 		if (tab.key === 'practice') return Boolean(data.Practice) || data.hasInteractivePractice
 		if (tab.key === 'data') return data.tables.length > 0
 		if (tab.key === 'summary') return completed || isAdmin

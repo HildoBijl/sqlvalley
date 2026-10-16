@@ -11,6 +11,7 @@ export interface ExerciseSessionContextValue {
 	currentExercise: CurrentExercise
 	controls: ExerciseControls<ExerciseAction>
 	submitting: boolean
+	storyMode: boolean
 	admin: ExerciseAdminControls
 }
 

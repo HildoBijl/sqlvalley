@@ -14,4 +14,5 @@ export interface ExerciseStorage {
 
 export interface ExerciseManagerProps extends ExerciseSessionOptions {
 	showAdminControls?: boolean
+	storyMode?: boolean
 }
