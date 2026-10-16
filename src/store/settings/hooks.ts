@@ -6,5 +6,5 @@ export function useAdminMode(): boolean {
 
 // Story mode is currently available only while admin mode is enabled.
 export function useStoryMode(): boolean {
-	return useSettingsStore(state => state.adminModeEnabled && !state.hideStories)
+	return useSettingsStore(state => state.adminModeEnabled && state.storyModeEnabled)
 }

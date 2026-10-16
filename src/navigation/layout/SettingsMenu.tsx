@@ -13,7 +13,8 @@ export function SettingsMenu() {
 
 	// Load the value/toggle for story mode.
 	const storyMode = useStoryMode()
-	const toggleHideStories = useSettingsStore(state => state.toggleHideStories)
+	const setStoryModeEnabled = useSettingsStore(state => state.setStoryModeEnabled)
+	const handleStoryToggle = () => { setStoryModeEnabled(enabled => !enabled) }
 
 	// Load the value/toggle for color mode.
 	const { mode, toggleColorMode } = useContext(ColorModeContext)
@@ -71,7 +72,7 @@ export function SettingsMenu() {
 				</MenuItem>
 			) : null}
 
-			{adminEnabled ? <MenuItem onClick={toggleHideStories} role="menuitemcheckbox" aria-checked={storyMode}>
+			{adminEnabled ? <MenuItem onClick={handleStoryToggle} role="menuitemcheckbox" aria-checked={storyMode}>
 				<ListItemIcon><AutoStories sx={{ color: storyMode ? 'primary.main' : 'inherit' }} /></ListItemIcon>
 				<ListItemText>Story mode</ListItemText>
 				<Check sx={{ color: 'primary.main', ml: 1, visibility: storyMode ? 'visible' : 'hidden' }} />

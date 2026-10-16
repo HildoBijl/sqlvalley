@@ -5,14 +5,14 @@ export type ThemeMode = (typeof themeModes)[number]
 
 export interface SettingsState {
 	adminModeEnabled: boolean
+	storyModeEnabled: boolean
 	themeMode: ThemeMode
-	hideStories: boolean
 	practiceDatasetSize: DatasetSize
 }
 
 export const initialSettingsState: SettingsState = {
 	adminModeEnabled: false,
+	storyModeEnabled: true,
 	themeMode: 'light',
-	hideStories: true,
 	practiceDatasetSize: 'full',
 }

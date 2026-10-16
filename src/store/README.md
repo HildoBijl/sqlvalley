@@ -11,10 +11,10 @@ Select only the state or action a component needs. Zustand will then rerender th
 import { useSettingsStore } from '@/store'
 
 export function StoryToggle() {
-	const hideStories = useSettingsStore(state => state.hideStories)
-	const toggleHideStories = useSettingsStore(state => state.toggleHideStories)
+	const storyModeEnabled = useSettingsStore(state => state.storyModeEnabled)
+	const setStoryModeEnabled = useSettingsStore(state => state.setStoryModeEnabled)
 
-	return <button onClick={toggleHideStories}>{hideStories ? 'Show stories' : 'Hide stories'}</button>
+	return <button onClick={() => setStoryModeEnabled(enabled => !enabled)}>{storyModeEnabled ? 'Hide stories' : 'Show stories'}</button>
 }
 ```
 
@@ -44,7 +44,7 @@ useLearningStore.getState().completeSkill(skillId)
 
 - Admin mode
 - Theme mode
-- Story visibility
+- Story mode preference (`storyModeEnabled`, default `true`); `useStoryMode()` additionally requires admin mode during the test phase
 - Practice dataset size
 
 [`learning/`](./learning/) owns learning progress for concepts and skills:
