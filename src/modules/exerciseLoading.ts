@@ -2,23 +2,18 @@ import { useEffect, useState } from 'react'
 
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 
+import { type ModuleExercises, getExerciseModuleUpdate, subscribeToExerciseUpdates } from './exerciseHotReload'
+
 /*
  * Module-based exercise loading.
  */
-
-export interface ModuleExercises {
-	default: (moduleId: string) => ExerciseRegistration[]
-}
 
 // Define Vite-based loaders for each module's exercises.
 const modules = import.meta.glob<ModuleExercises>('./*/exercises/index.ts')
 
 /*
- * HMR Extension.
+ * Exercise loaders.
  */
-
-const updates = new Map<string, ModuleExercises>()
-const listeners = new Map<string, Set<() => void>>()
 
 // Extend the Vite-based loaders to use the stored HMR-replacement if present. Otherwise use the original one loaded from Vite.
 export const exerciseLoaders: Partial<Record<string, () => Promise<ModuleExercises>>> = Object.fromEntries(
@@ -26,32 +21,16 @@ export const exerciseLoaders: Partial<Record<string, () => Promise<ModuleExercis
 		const moduleId = path.split('/').slice(-3)[0]
 		return [moduleId, async () => {
 			const original = await load()
-			const module = (import.meta.hot ? updates.get(moduleId) : undefined) ?? original
+			const module = (import.meta.hot ? getExerciseModuleUpdate(moduleId) : undefined) ?? original
 			if (typeof module.default !== 'function') throw new Error(`Exercise module "${moduleId}" has no default builder export.`)
 			return module
 		}]
 	}),
 )
 
+// The way to check if a module has exercises, is to check if it has a loader for exercises.
 export function hasModuleExercises(moduleId: string) {
 	return Boolean(exerciseLoaders[moduleId])
-}
-
-// Listen for HMR replacements of one module's exercises.
-export function subscribeToExerciseUpdates(moduleId: string, listener: () => void): () => void {
-	const subscribers = listeners.get(moduleId) ?? new Set<() => void>()
-	listeners.set(moduleId, subscribers)
-	subscribers.add(listener)
-	return () => {
-		subscribers.delete(listener)
-		if (!subscribers.size) listeners.delete(moduleId)
-	}
-}
-
-// Vite's HMR system calls this function through a plugin. When called, store the HMR replacement and notify the mounted consumers of that module.
-export function updateExerciseModule(moduleId: string, module: ModuleExercises): void {
-	updates.set(moduleId, module)
-	listeners.get(moduleId)?.forEach(listener => listener())
 }
 
 /*
