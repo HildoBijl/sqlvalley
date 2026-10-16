@@ -7,6 +7,7 @@ import type { ModuleId } from '@/curriculum'
 import { useModuleExercises } from '@/modules'
 
 import { ModuleContentTab } from './ModuleContentTab'
+import { ModuleStory } from './ModuleStory'
 import { useModuleData, useModuleProgress, useModuleNavigation, useModulePageTabs, useCompletionDialog } from './hooks'
 
 export function ModulePageContent({ moduleId, content }: { moduleId: ModuleId; content: ModuleContent }) {
@@ -30,7 +31,7 @@ export function ModulePageContent({ moduleId, content }: { moduleId: ModuleId; c
 			backTo={backPath} />
 
 		<LearningTabs value={currentTab} tabs={tabs} onChange={handleTabChange}>
-			{currentTab === 'story' && <ModuleContentTab content={content} contentKey="Story" />}
+			{currentTab === 'story' && <ModuleStory completed={completed} Story={content.Story} />}
 			{currentTab === 'video' && <ModuleContentTab content={content} contentKey="Video" />}
 			{currentTab === 'theory' && <ModuleContentTab content={content} contentKey="Theory" />}
 			{currentTab === 'practice' && Practice && <StaticPractice component={Practice} onComplete={completeModule} isCompleted={completed} />}

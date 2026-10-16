@@ -1,4 +1,4 @@
-import { Bolt, Edit, Lightbulb, MenuBook, Storage } from '@mui/icons-material'
+import { Bolt, Edit, Lightbulb, AutoStories, Storage } from '@mui/icons-material'
 
 import { useAdminMode, useStoryMode } from '@/store'
 import type { TabConfig } from '@/learning'
@@ -8,7 +8,7 @@ import { useModuleTabSelection } from './useModuleTabSelection'
 
 // These are all the tabs that a page may have.
 const allTabs: TabConfig[] = [
-	{ key: 'story', label: 'Story', icon: <MenuBook /> },
+	{ key: 'story', label: 'Story', icon: <AutoStories /> },
 	{ key: 'theory', label: 'Theory', icon: <Lightbulb /> },
 	// { key: 'video', label: 'Video', icon: <OndemandVideo /> },
 	{ key: 'practice', label: 'Practice', icon: <Edit /> },

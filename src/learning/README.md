@@ -33,6 +33,8 @@ General document formatting, notices, loading screens, and theme utilities live 
 
 The portrait defaults to the left. Children can contain multiple paragraphs or other React content. The component can be used in exercise prompts, payoffs, or module stories; the exercise decides when to display it.
 
+`Conversation` takes `opening` and `conclusion` components and a `completed` boolean: `<Conversation opening={Opening} conclusion={Conclusion} completed={completed} />`. The opening is always visible; completion reveals the conclusion below a divider, replacing a fixed unlock message. It has no routing or progress dependencies. Story components receive `completed` through `StoryProps`, supplied by navigation's `ModuleStory` wrapper.
+
 
 ## Supplying module content
 
