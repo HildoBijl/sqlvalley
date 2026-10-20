@@ -6,9 +6,9 @@ import type { ModuleId } from '@step-wise/module-tree-definition'
 
 import { cardHeight, cardWidth } from '../../positioning'
 import { useSkillTreeData } from '../../core'
-import { ModuleCompletionMark, useSkillTreeProgress } from '../../progress'
+import { ModuleCompletionIndicator, useSkillTreeProgress } from '../../progress'
 import { useSkillTreeInteraction } from '../../interaction'
-import { ModuleGoalIndicator, planningColors, useSkillTreePlanning } from '../../planning'
+import { ModulePlanningIndicator, planningColors, useSkillTreePlanning } from '../../planning'
 
 import { ModuleTypeIcon } from './ModuleTypeIcon'
 import { useModuleCardStyle } from './useModuleCardStyle'
@@ -36,17 +36,17 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 	const type = item.type
 
 	// Derive progress data.
-	const { isCompleted } = useSkillTreeProgress()
-	const completed = isCompleted(moduleId)
+	const { isModuleCompleted } = useSkillTreeProgress()
+	const completed = isModuleCompleted(moduleId)
 
 	// Derive interaction data.
-	const { getModuleHref, hoveredModuleId, startModuleHover, endModuleHover, handleModulePointerDown } = useSkillTreeInteraction()
-	const isHovered = hoveredModuleId === moduleId
+	const { getModuleHref, highlightedModuleId, highlightModule, clearModuleHighlight, handleModulePointerDown, handleModuleClick } = useSkillTreeInteraction()
+	const isHighlighted = highlightedModuleId === moduleId
 
 	// Derive planning data.
-	const { planningMode, goalModuleId, goalProgress, setGoalModuleId } = useSkillTreePlanning()
+	const { isPlanningModeActive, goalModuleId, goalProgress, setGoalModuleId } = useSkillTreePlanning()
 	const hasGoal = goalModuleId !== null
-	const isGoalNode = planningMode && goalModuleId === moduleId
+	const isGoalModule = isPlanningModeActive && goalModuleId === moduleId
 
 	// Determine styling and positioning for the module card.
 	const { borderColor, fillColor, opacity, strokeWidth } = useModuleCardStyle(moduleId)
@@ -77,13 +77,15 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 			position={positionData.pixelPosition}
 			anchor={[0, 0]}
 			ignoreMouse={false}
-			onMouseEnter={() => startModuleHover(moduleId)}
-			onMouseLeave={endModuleHover}
+			onMouseEnter={() => highlightModule(moduleId)}
+			onMouseLeave={clearModuleHighlight}
 			style={{ opacity, whiteSpace: 'normal' }}>
 			<a
 				href={getModuleHref(moduleId)}
+				data-skill-tree-module-card
 				draggable={false}
 				onPointerDown={event => handleModulePointerDown(moduleId, event)}
+				onClick={event => handleModuleClick(moduleId, event)}
 				style={{
 					width: cardWidth,
 					height: cardHeight,
@@ -94,9 +96,11 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 					textAlign: 'center',
 					cursor: 'pointer',
 					borderRadius: `${cornerRadius}px`,
-					backgroundColor: isHovered ? theme.palette.action.hover : 'transparent',
+					backgroundColor: isHighlighted ? theme.palette.action.hover : 'transparent',
 					color: 'inherit',
 					textDecoration: 'none',
+					userSelect: 'none',
+					WebkitTapHighlightColor: 'transparent',
 					transition: 'background-color 90ms',
 				}}>
 				<div style={{
@@ -110,13 +114,13 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 				}}>
 					<ModuleTypeIcon type={type} iconSize={iconSize} />
 
-					{completed && !isGoalNode && <ModuleCompletionMark iconSize={indicatorSize} />}
+					{completed && !isGoalModule && <ModuleCompletionIndicator iconSize={indicatorSize} />}
 
-					{planningMode && !isGoalNode && !completed && (!hasGoal || isHovered) && <ModuleGoalIndicator variant="set" iconSize={indicatorSize} onSetGoal={() => setGoalModuleId(moduleId)} />}
+					{isPlanningModeActive && !isGoalModule && !completed && (!hasGoal || isHighlighted) && <ModulePlanningIndicator variant="set" iconSize={indicatorSize} onActivate={() => setGoalModuleId(moduleId)} />}
 
-					{planningMode && hasGoal && goalProgress.nextStepId === moduleId && <ModuleGoalIndicator variant="next-step" iconSize={indicatorSize} />}
+					{isPlanningModeActive && hasGoal && goalProgress.nextStepId === moduleId && <ModulePlanningIndicator variant="next-step" iconSize={indicatorSize} />}
 
-					{planningMode && isGoalNode && <ModuleGoalIndicator variant="active" iconSize={indicatorSize} onSetGoal={() => setGoalModuleId(null)} />}
+					{isPlanningModeActive && isGoalModule && <ModulePlanningIndicator variant="active" iconSize={indicatorSize} onActivate={() => setGoalModuleId(null)} />}
 
 					<div style={{
 						width: '100%',
@@ -127,7 +131,7 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
 						fontWeight: 400,
 						fontSize: '17px',
 						lineHeight: 1.15,
-						color: planningMode && isGoalNode ? planningColors.goalContrastText : theme.palette.text.primary,
+						color: isPlanningModeActive && isGoalModule ? planningColors.goalContrastText : theme.palette.text.primary,
 						textDecoration: 'none',
 					}}>
 						{name}

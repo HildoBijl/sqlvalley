@@ -1,4 +1,4 @@
 export * from './types'
-export * from './isConnectorInHoveredPath'
+export * from './isConnectorInHighlightedPath'
 export * from './SkillTreeInteractionProvider'
 export * from './hooks'

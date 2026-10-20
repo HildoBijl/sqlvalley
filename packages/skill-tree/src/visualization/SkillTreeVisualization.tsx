@@ -19,15 +19,16 @@ export function SkillTreeVisualization({
 	moduleTree,
 	modulePresentation,
 	modulePositioning,
-	isCompleted,
+	isModuleCompleted,
 	getModuleHref,
+	navigateToModule,
 	settings,
 	stateHandles,
 }: SkillTreeVisualizationProps) {
 	return <SkillTreeDataProvider moduleTree={moduleTree} modulePresentation={modulePresentation} modulePositioning={modulePositioning}>
-		<SkillTreeProgressProvider isCompleted={isCompleted}>
+		<SkillTreeProgressProvider isModuleCompleted={isModuleCompleted}>
 			<SkillTreePlanningProvider settings={settings} stateHandles={stateHandles?.planning}>
-				<SkillTreeInteractionProvider getModuleHref={getModuleHref}>
+				<SkillTreeInteractionProvider getModuleHref={getModuleHref} navigateToModule={navigateToModule}>
 					<SkillTreeVisualizationContent settings={settings} stateHandles={stateHandles} />
 				</SkillTreeInteractionProvider>
 			</SkillTreePlanningProvider>

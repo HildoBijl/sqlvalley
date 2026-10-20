@@ -14,14 +14,17 @@ export function SkillTreeDrawing() {
 	const theme = useTheme()
 	const { modulePositioning } = useSkillTreeData()
 	const { modulePositions, connectors, bounds } = modulePositioning
-	const { endModuleHover } = useSkillTreeInteraction()
+	const { clearModuleHighlight } = useSkillTreeInteraction()
 
 	// Don't build when the drawing has no dimensions.
 	if (bounds.width <= 0 || bounds.height <= 0) return null
 
 	// Render the SkillTreeDrawing.
 	return <div
-		onPointerDown={endModuleHover}
+		onPointerDown={event => { // End hover when the pointer goes down outside of a module card.
+			if (event.target instanceof Element && event.target.closest('[data-skill-tree-module-card]')) return
+			clearModuleHighlight()
+		}}
 		style={{
 			position: 'relative',
 			width: `${bounds.width}px`,

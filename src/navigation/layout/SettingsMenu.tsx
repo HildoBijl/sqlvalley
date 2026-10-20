@@ -1,8 +1,8 @@
 import { type MouseEvent, useContext, useState } from 'react'
 import { IconButton, Tooltip, Menu, MenuItem, ListItemIcon, ListItemText, Divider } from '@mui/material'
-import { DarkMode, LightMode, RestartAlt, Settings, Check, AdminPanelSettings } from '@mui/icons-material'
+import { DarkMode, LightMode, RestartAlt, Settings, Check, AdminPanelSettings, AutoStories } from '@mui/icons-material'
 
-import { clearPersistedData, useAdminMode, useSettingsStore } from '@/store'
+import { clearPersistedData, useAdminMode, useStoryMode, useSettingsStore } from '@/store'
 import { ColorModeContext } from '@/ui'
 
 export function SettingsMenu() {
@@ -10,6 +10,11 @@ export function SettingsMenu() {
 	const adminEnabled = useAdminMode()
 	const setAdminModeEnabled = useSettingsStore(state => state.setAdminModeEnabled)
 	const handleAdminToggle = () => { setAdminModeEnabled(enabled => !enabled) }
+
+	// Load the value/toggle for story mode.
+	const storyMode = useStoryMode()
+	const setStoryModeEnabled = useSettingsStore(state => state.setStoryModeEnabled)
+	const handleStoryToggle = () => { setStoryModeEnabled(enabled => !enabled) }
 
 	// Load the value/toggle for color mode.
 	const { mode, toggleColorMode } = useContext(ColorModeContext)
@@ -66,6 +71,12 @@ export function SettingsMenu() {
 					<Check sx={{ color: 'primary.main', ml: 1, visibility: adminEnabled ? 'visible' : 'hidden' }} />
 				</MenuItem>
 			) : null}
+
+			{adminEnabled ? <MenuItem onClick={handleStoryToggle} role="menuitemcheckbox" aria-checked={storyMode}>
+				<ListItemIcon><AutoStories sx={{ color: storyMode ? 'primary.main' : 'inherit' }} /></ListItemIcon>
+				<ListItemText>Story mode</ListItemText>
+				<Check sx={{ color: 'primary.main', ml: 1, visibility: storyMode ? 'visible' : 'hidden' }} />
+			</MenuItem> : null}
 
 			<MenuItem onClick={toggleColorMode}>
 				<ListItemIcon>{isLight ? <DarkMode /> : <LightMode />}</ListItemIcon>

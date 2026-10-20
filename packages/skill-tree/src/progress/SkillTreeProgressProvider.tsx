@@ -5,13 +5,13 @@ import { SkillTreeProgressContext } from './context'
 
 export interface SkillTreeProgressProviderProps {
 	children: ReactNode
-	isCompleted?: IsModuleCompleted
+	isModuleCompleted?: IsModuleCompleted
 }
 
-export function SkillTreeProgressProvider({ children, isCompleted }: SkillTreeProgressProviderProps) {
+export function SkillTreeProgressProvider({ children, isModuleCompleted }: SkillTreeProgressProviderProps) {
 	const value = useMemo(() => ({
-		isCompleted: isCompleted ?? (() => false),
-		hasProgress: isCompleted !== undefined,
-	}), [isCompleted])
+		isModuleCompleted: isModuleCompleted ?? (() => false),
+		isProgressTracked: isModuleCompleted !== undefined,
+	}), [isModuleCompleted])
 	return <SkillTreeProgressContext value={value}>{children}</SkillTreeProgressContext>
 }

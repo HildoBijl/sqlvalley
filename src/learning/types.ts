@@ -9,9 +9,13 @@ export type ModuleContentSection = 'Theory' | 'Summary' | 'Story' | 'Video'
 export interface ModuleContent {
 	Theory?: ModuleContentComponent
 	Summary?: ModuleContentComponent
-	Story?: ModuleContentComponent
+	Story?: ModuleContentComponent<StoryProps>
 	Video?: ModuleContentComponent
 	Practice?: ModuleContentComponent<StaticPracticeComponentProps>
+}
+
+export interface StoryProps {
+	completed: boolean
 }
 
 export interface StaticPracticeComponentProps {

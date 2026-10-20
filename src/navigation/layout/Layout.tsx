@@ -12,9 +12,9 @@ export function Layout() {
 	useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }) }, [location.pathname])
 
 	// Render the header with below it the page (outlet) as given by the router.
-	return <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+	return <Box sx={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}>
 		<Header />
-		<Box component="main" sx={{ flexGrow: 1, minWidth: 0, bgcolor: 'background.default' }}>
+		<Box component="main" sx={{ flexGrow: 1, minWidth: 0, minHeight: 0, overflow: 'auto', bgcolor: 'background.default' }}>
 			<ErrorBoundary key={location.pathname}>
 				<Suspense fallback={<LoadingScreen />}>
 					<Outlet />

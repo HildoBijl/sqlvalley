@@ -1,4 +1,4 @@
-import type { ModuleId, SkillTreeVisualizationId } from '@/curriculum'
+import type { SkillTreeVisualizationId } from '@/curriculum'
 
 export const learningRoutes = [
 	{ id: 'sql', path: '/learn', label: 'Learn SQL' },
@@ -10,6 +10,6 @@ export function getLearningPath(treeId: SkillTreeVisualizationId) {
 	return learningRoutes.find(route => route.id === treeId)!.path
 }
 
-export function getModulePath(moduleId: ModuleId) {
+export function getModulePath(moduleId: string) {
 	return `/module/${moduleId}`
 }

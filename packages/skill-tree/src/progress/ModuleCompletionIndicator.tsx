@@ -3,11 +3,11 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 import { progressColors } from './colors'
 
-interface ModuleCompletionMarkProps {
+interface ModuleCompletionIndicatorProps {
 	iconSize: number
 }
 
-export function ModuleCompletionMark({ iconSize }: ModuleCompletionMarkProps) {
+export function ModuleCompletionIndicator({ iconSize }: ModuleCompletionIndicatorProps) {
 	const theme = useTheme()
 	return <div style={{
 		position: 'absolute',

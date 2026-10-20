@@ -7,13 +7,13 @@ import { progressColors } from '../progress'
 
 import { planningColors } from './colors'
 
-interface ModuleGoalIndicatorProps {
+interface ModulePlanningIndicatorProps {
 	variant: 'set' | 'active' | 'next-step'
 	iconSize: number
-	onSetGoal?: () => void
+	onActivate?: () => void
 }
 
-export function ModuleGoalIndicator({ variant, iconSize, onSetGoal }: ModuleGoalIndicatorProps) {
+export function ModulePlanningIndicator({ variant, iconSize, onActivate }: ModulePlanningIndicatorProps) {
 	const theme = useTheme()
 	const [isPinHovered, setIsPinHovered] = useState(false)
 
@@ -52,7 +52,7 @@ export function ModuleGoalIndicator({ variant, iconSize, onSetGoal }: ModuleGoal
 		onClick={event => {
 			event.preventDefault()
 			event.stopPropagation()
-			if (onSetGoal) onSetGoal()
+			if (onActivate) onActivate()
 		}}
 		onMouseEnter={() => setIsPinHovered(true)}
 		onMouseLeave={() => setIsPinHovered(false)}

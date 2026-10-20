@@ -6,7 +6,7 @@ import type { ExerciseManagerProps } from './types'
 import { useExerciseSession } from './exerciseSession'
 
 // Callers must key this component or an ancestor by skill ID to isolate sessions.
-export function ExerciseManager({ showAdminControls = false, ...options }: ExerciseManagerProps) {
+export function ExerciseManager({ showAdminControls = false, storyMode = false, ...options }: ExerciseManagerProps) {
 	// Set up the exercise session, creating the flags and control functions relevant to the exercise.
 	const { skillId, exercises, resources } = options
 	const { registration, instance, loading, generating, submitting, resourceError, generationError, submissionError, retryGeneration, dismissSubmissionError, submitAction, setDraftInput, startNewExercise, selectExerciseById } = useExerciseSession(options)
@@ -26,6 +26,7 @@ export function ExerciseManager({ showAdminControls = false, ...options }: Exerc
 		currentExercise: { definition: registration.definition, instance },
 		controls: { submitAction, setDraftInput, startNewExercise },
 		submitting,
+		storyMode,
 		admin: {
 			showControls: showAdminControls,
 			exerciseIds: exercises.map(exercise => exercise.exerciseId),

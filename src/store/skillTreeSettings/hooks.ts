@@ -24,7 +24,7 @@ export function useSkillTreeStateHandles(treeId: string) {
 	// Bundle values and setters into the state handles expected by the visualization.
 	return useMemo(() => ({
 		planning: {
-			planningMode: [memory.planningMode, (value: StateUpdate<boolean>) => memory.setPlanningMode(treeId, value)] as const,
+			isPlanningModeActive: [memory.planningMode, (value: StateUpdate<boolean>) => memory.setPlanningMode(treeId, value)] as const,
 			goalModuleId: [memory.goalNodeId, (value: StateUpdate<string | null>) => memory.setGoalNodeId(treeId, value)] as const,
 			hasSeenPlanningModeIntro: [memory.hasSeenPlanningModeIntro, memory.setHasSeenPlanningModeIntro] as const,
 		},
@@ -34,6 +34,6 @@ export function useSkillTreeStateHandles(treeId: string) {
 		legend: {
 			hidden: [memory.hideLegend, memory.setHideLegend] as const,
 		},
-		ready: memory.hasHydrated,
+		isReady: memory.hasHydrated,
 	}), [memory, treeId])
 }

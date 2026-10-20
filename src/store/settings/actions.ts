@@ -5,7 +5,7 @@ import type { SettingsState, ThemeMode } from './state'
 
 export interface SettingsActions {
 	setAdminModeEnabled: (enabled: StateUpdate<boolean>) => void
-	toggleHideStories: () => void
+	setStoryModeEnabled: (enabled: StateUpdate<boolean>) => void
 	setThemeMode: (themeMode: StateUpdate<ThemeMode>) => void
 	setPracticeDatasetSize: (size: StateUpdate<DatasetSize>) => void
 }
@@ -13,7 +13,7 @@ export interface SettingsActions {
 export function createSettingsActions(set: SetState<SettingsState>): SettingsActions {
 	return {
 		setAdminModeEnabled: update => set(state => ({ adminModeEnabled: typeof update === 'function' ? update(state.adminModeEnabled) : update })),
-		toggleHideStories: () => set(state => ({ hideStories: !state.hideStories })),
+		setStoryModeEnabled: update => set(state => ({ storyModeEnabled: typeof update === 'function' ? update(state.storyModeEnabled) : update })),
 		setThemeMode: update => set(state => ({ themeMode: typeof update === 'function' ? update(state.themeMode) : update })),
 		setPracticeDatasetSize: update => set(state => ({ practiceDatasetSize: typeof update === 'function' ? update(state.practiceDatasetSize) : update })),
 	}

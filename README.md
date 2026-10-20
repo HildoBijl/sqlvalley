@@ -28,10 +28,10 @@ The SQL Valley web app is an innovative educational site - no installation requi
 
 Make sure you have Node.js and npm installed.
 
-```
+```sh
 git clone https://github.com/HildoBijl/sqlvalley.git
 cd sqlvalley
-npm install
+npm ci
 npm run dev
 ```
 
@@ -57,7 +57,10 @@ All other parts, like the Skill Tree tool, the mock database and the storyline, 
 
 ## The documentation
 
-For detailed architecture and code structure, see the [source directory (src)](./src/).
+For detailed architecture and code structure, see:
+
+- [Application source structure](./src/README.md)
+- [Reusable package structure](./packages/README.md)
 
 
 ## Contributing

@@ -16,6 +16,8 @@ Put one exercise spec in each file under `exercises/`, with a stable, unique `ex
 
 The folder's `exercises/index.ts` imports all specs and exports a default `buildExercises(skillId)` function that calls `buildModuleExercises` from `@/curriculum`. Exercise builders are discovered separately from module indexes, so exercises remain outside the page-level module bundle until they are needed.
 
+In development, Vite injects hot-reload callbacks into these exercise indexes. `exerciseHotReload.ts` stores updates and notifies the loading hook. Keep this registry separate from `exerciseLoading.ts`: importing the loader from the indexes creates a runtime cycle that breaks repeated updates.
+
 
 ## Static exercises
 

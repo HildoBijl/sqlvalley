@@ -9,13 +9,15 @@ import { ExerciseSection } from '../ExerciseSection'
 import { InputExerciseProvider, useInputExerciseContext } from '../inputExercise'
 
 import { ExerciseControls } from './components'
-import type { MonoExerciseInputAreaProps, MonoExerciseInputVisualizationProps, MonoExerciseProblemProps, MonoExerciseSolutionProps } from './types'
+import type { MonoExerciseProblemProps, MonoExerciseInputAreaProps, MonoExerciseSolutionProps, MonoExerciseInputVisualizationProps, MonoExercisePromptProps, MonoExercisePayoffProps } from './types'
 
 export interface MonoExerciseProps {
 	Problem: ComponentType<MonoExerciseProblemProps>
 	InputArea: ComponentType<MonoExerciseInputAreaProps>
 	Solution: ComponentType<MonoExerciseSolutionProps>
 	InputVisualization?: ComponentType<MonoExerciseInputVisualizationProps>
+	Prompt?: ComponentType<MonoExercisePromptProps>
+	Payoff?: ComponentType<MonoExercisePayoffProps>
 }
 
 export function MonoExercise(props: MonoExerciseProps) {
@@ -24,9 +26,9 @@ export function MonoExercise(props: MonoExerciseProps) {
 	</InputExerciseProvider>
 }
 
-function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization }: MonoExerciseProps) {
+function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization, Prompt, Payoff }: MonoExerciseProps) {
 	// Extract and verify data from contexts.
-	const { currentExercise: { definition, instance: exerciseInstance }, submitting } = useExerciseSessionContext()
+	const { currentExercise: { definition, instance: exerciseInstance }, submitting, storyMode, admin } = useExerciseSessionContext()
 	if (!isMonoExercise(definition)) throw new Error('MonoExercise requires a mono-exercise definition.')
 	const { input, submitInput } = useInputExerciseContext()
 
@@ -38,14 +40,16 @@ function MonoExerciseContent({ Problem, InputArea, Solution, InputVisualization 
 
 	// Render the exercise.
 	return <Box>
+		{storyMode && Prompt ? <Prompt parameters={parameters} /> : null}
 		<ExerciseSection title="Exercise">
 			<Problem parameters={parameters} />
 		</ExerciseSection>
 		<InputArea parameters={parameters} disabled={complete || submitting} onSubmit={submitInput} />
 		<ExerciseControls />
 		{InputVisualization ? <InputVisualization parameters={parameters} input={input} state={state} /> : null}
-		{complete ? <ExerciseSection title="Solution" collapsible>
-			<Solution parameters={parameters} state={state} />
+		{storyMode && state.solved && Payoff ? <Payoff parameters={parameters} /> : null}
+		{complete || admin.showControls ? <ExerciseSection key={complete ? 'completed-solution' : 'admin-solution'} title="Solution" collapsible defaultExpanded={complete}>
+			<Solution parameters={parameters} />
 		</ExerciseSection> : null}
 	</Box>
 }

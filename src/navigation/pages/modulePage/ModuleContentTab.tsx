@@ -4,16 +4,15 @@ import { Typography } from '@mui/material'
 import { LoadingScreen } from '@/ui'
 import type { ModuleContent, ModuleContentSection } from '@/learning'
 
-const emptyMessages: Record<ModuleContentSection, string> = {
+const emptyMessages: Record<Exclude<ModuleContentSection, 'Story'>, string> = {
 	Theory: 'Theory content coming soon.',
 	Summary: 'Summary coming soon.',
-	Story: 'Story coming soon.',
 	Video: 'Video coming soon.',
 }
 
 interface ModuleContentTabProps {
 	content: ModuleContent | undefined
-	contentKey: ModuleContentSection
+	contentKey: Exclude<ModuleContentSection, 'Story'>
 }
 
 export function ModuleContentTab({ content, contentKey }: ModuleContentTabProps) {

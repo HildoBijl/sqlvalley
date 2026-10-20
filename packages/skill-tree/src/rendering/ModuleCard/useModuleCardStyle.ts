@@ -23,31 +23,28 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	if (!moduleTree[moduleId]) throw new Error(`Unknown module "${moduleId}".`)
 
 	// Derive progress-related data.
-	const { isCompleted, hasProgress } = useSkillTreeProgress()
-	const completed = isCompleted(moduleId)
-	const readyToLearn = isReadyToLearn(moduleTree, moduleId, isCompleted)
+	const { isModuleCompleted, isProgressTracked } = useSkillTreeProgress()
+	const completed = isModuleCompleted(moduleId)
+	const readyToLearn = isReadyToLearn(moduleTree, moduleId, isModuleCompleted)
 
 	// Derive interaction-related data.
-	const { hoveredModuleId, hoveredPrerequisiteIds } = useSkillTreeInteraction()
-	const isHovered = hoveredModuleId === moduleId
-	const isPrerequisite = hoveredPrerequisiteIds.has(moduleId)
-	
+	const { highlightedModuleId, highlightedPrerequisiteIds } = useSkillTreeInteraction()
+	const isHighlightedModule = highlightedModuleId === moduleId
+	const isHighlightedPrerequisite = highlightedPrerequisiteIds.has(moduleId)
+
 	// Derive planning-mode-related data.
-	const { planningMode, goalModuleId, goalPath } = useSkillTreePlanning()
-	const isGoalModule = planningMode && goalModuleId === moduleId
-	const isOnGoalPath = planningMode && goalPath.has(moduleId)
+	const { isPlanningModeActive, goalModuleId, goalPathModuleIds } = useSkillTreePlanning()
+	const isGoalModule = isPlanningModeActive && goalModuleId === moduleId
+	const isOnGoalPath = isPlanningModeActive && goalPathModuleIds.has(moduleId)
 	const hasGoal = goalModuleId !== null
-	
+
 	// Derive combined data.
-	const highlighted = isHovered || isPrerequisite
-	const dimmed = hoveredModuleId !== null && !highlighted && (!planningMode || !isGoalModule)
+	const highlighted = isHighlightedModule || isHighlightedPrerequisite
+	const dimmed = highlightedModuleId !== null && !highlighted && (!isPlanningModeActive || !isGoalModule)
 	const fillColor = isGoalModule ? planningColors.goal : theme.palette.background.paper
 
-	// When no progress data is available, give a static style.
-	if (!hasProgress) return { borderColor: theme.palette.divider, fillColor: theme.palette.background.paper, opacity: 1, strokeWidth: 1 }
-
 	// When the planning mode is on, use the respective styling.
-	if (planningMode) {
+	if (isPlanningModeActive) {
 		// Determine the opacity and stroke.
 		const prominent = isGoalModule || isOnGoalPath || highlighted || !hasGoal
 		const opacity = dimmed || !prominent ? 0.15 : 1
@@ -66,36 +63,43 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 		return { borderColor, fillColor, opacity, strokeWidth }
 	}
 
+	// When no progress data is available, give a static style.
+	if (!isProgressTracked) return {
+		borderColor: theme.palette.divider,
+		fillColor: theme.palette.background.paper,
+		opacity: 1,
+		strokeWidth: 1,
+	}
+
 	// For highlighted skills, show their completion status through a color. It's never dimmed.
-	if (highlighted) {
-		return {
-			borderColor: completed ? progressColors.completed : readyToLearn ? progressColors.ready : progressColors.locked,
-			fillColor,
-			opacity: 1,
-			strokeWidth: 2,
-		}
+	if (highlighted) return {
+		borderColor: completed ? progressColors.completed : readyToLearn ? progressColors.ready : progressColors.locked,
+		fillColor,
+		opacity: 1,
+		strokeWidth: 2,
 	}
 
 	// For completed skills, show it as green, but check if it should be dimmed.
-	if (completed) {
-		return {
-			borderColor: dimmed ? progressColors.completedFaded : progressColors.completed,
-			fillColor,
-			opacity: dimmed ? 0.4 : 1,
-			strokeWidth: 1,
-		}
+	if (completed) return {
+		borderColor: dimmed ? progressColors.completedFaded : progressColors.completed,
+		fillColor,
+		opacity: dimmed ? 0.4 : 1,
+		strokeWidth: 1,
 	}
 
 	// For skills that are ready to learn, show it in yellow, unless it's faded.
-	if (readyToLearn) {
-		return {
-			borderColor: dimmed ? theme.palette.divider : progressColors.ready,
-			fillColor,
-			opacity: dimmed ? 0.15 : 1,
-			strokeWidth: 1,
-		}
+	if (readyToLearn) return {
+		borderColor: dimmed ? theme.palette.divider : progressColors.ready,
+		fillColor,
+		opacity: dimmed ? 0.15 : 1,
+		strokeWidth: 1,
 	}
 
 	// For a skill that cannot be learned yet, fade it.
-	return { borderColor: theme.palette.divider, fillColor, opacity: 0.15, strokeWidth: 1 }
+	return {
+		borderColor: theme.palette.divider,
+		fillColor,
+		opacity: 0.15,
+		strokeWidth: 1,
+	}
 }

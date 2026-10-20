@@ -17,6 +17,25 @@ Figures register containers with `FigureHtml target` and descendant text with `u
 General document formatting, notices, loading screens, and theme utilities live in `@/ui`.
 
 
+## Character speech
+
+`story` provides `SpeechBox` and a central `characters` registry with names and placeholder portraits for Anna, Bob, and Carl. Character IDs are inferred from the registry. Import them through `@/learning`.
+
+```tsx
+<SpeechBox person="anna">
+	<Par>Could you find these contracts for me?</Par>
+</SpeechBox>
+
+<SpeechBox person="bob" picturePosition="right">
+	<Par>Thanks for finding them!</Par>
+</SpeechBox>
+```
+
+The portrait defaults to the left. Children can contain multiple paragraphs or other React content. The component can be used in exercise prompts, payoffs, or module stories; the exercise decides when to display it.
+
+`Conversation` takes `opening` and `conclusion` components and a `completed` boolean: `<Conversation opening={Opening} conclusion={Conclusion} completed={completed} />`. The opening is always visible; completion reveals the conclusion below a divider, replacing a fixed unlock message. It has no routing or progress dependencies. Story components receive `completed` through `StoryProps`, supplied by navigation's `ModuleStory` wrapper.
+
+
 ## Supplying module content
 
 `ModuleContent` contains optional `Theory`, `Summary`, `Story`, `Video`, and `Practice` components, either ordinary React components or lazy components. Modules select and load these; navigation renders passive sections through its internal `ModuleContentTab`:

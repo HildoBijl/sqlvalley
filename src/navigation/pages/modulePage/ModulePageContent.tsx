@@ -4,23 +4,19 @@ import { EditNote, School } from '@mui/icons-material'
 import { LoadingScreen } from '@/ui'
 import { type ModuleContent, LearningHeader, LearningTabs, DataExplorer, InteractivePractice, StaticPractice, CompletionDialog, CompleteModuleButton } from '@/learning'
 import type { ModuleId } from '@/curriculum'
+import { useModuleExercises } from '@/modules'
 
 import { ModuleContentTab } from './ModuleContentTab'
+import { ModuleStory } from './ModuleStory'
 import { useModuleData, useModuleProgress, useModuleNavigation, useModulePageTabs, useCompletionDialog } from './hooks'
 
 export function ModulePageContent({ moduleId, content }: { moduleId: ModuleId; content: ModuleContent }) {
-	const data = useModuleData(moduleId, content)
-	if (data.loading) return <LoadingScreen message="Loading module..." />
-	if (data.error) return <Alert severity="warning" sx={{ mb: 2 }}>{data.error.message}</Alert>
-	return <ModulePageReady data={data} />
-}
-
-function ModulePageReady({ data }: { data: ReturnType<typeof useModuleData> }) {
 	// Call various hooks to gather data from different sources.
-	const { moduleId, isSkill, content, presentation, Practice, tables, exercises, hasInteractivePractice } = data
+	const moduleData = useModuleData(moduleId, content)
+	const { isSkill, presentation, Practice, tables, hasInteractivePractice } = moduleData
 	const { completed, isModuleCompleted, exerciseProgress, completeModule } = useModuleProgress(moduleId)
 	const { backPath, returnToOverview, continueToNext } = useModuleNavigation(moduleId, isModuleCompleted)
-	const { tabs, currentTab, handleTabChange, selectTab } = useModulePageTabs(data, completed)
+	const { tabs, currentTab, handleTabChange, selectTab } = useModulePageTabs(moduleData, completed)
 	const { dialogOpen, closeDialog } = useCompletionDialog(completed)
 
 	// Manual completion is available for concepts and static practice.
@@ -35,11 +31,11 @@ function ModulePageReady({ data }: { data: ReturnType<typeof useModuleData> }) {
 			backTo={backPath} />
 
 		<LearningTabs value={currentTab} tabs={tabs} onChange={handleTabChange}>
-			{currentTab === 'story' && <ModuleContentTab content={content} contentKey="Story" />}
+			{currentTab === 'story' && <ModuleStory completed={completed} Story={content.Story} />}
 			{currentTab === 'video' && <ModuleContentTab content={content} contentKey="Video" />}
 			{currentTab === 'theory' && <ModuleContentTab content={content} contentKey="Theory" />}
 			{currentTab === 'practice' && Practice && <StaticPractice component={Practice} onComplete={completeModule} isCompleted={completed} />}
-			{currentTab === 'practice' && hasInteractivePractice && <InteractivePractice skillId={moduleId} exercises={exercises} />}
+			{currentTab === 'practice' && hasInteractivePractice && <InteractivePracticeTab skillId={moduleId} />}
 			{currentTab === 'data' && <DataExplorer tables={tables} />}
 			{currentTab === 'summary' && <ModuleContentTab content={content} contentKey="Summary" />}
 		</LearningTabs>
@@ -58,4 +54,11 @@ function ModulePageReady({ data }: { data: ReturnType<typeof useModuleData> }) {
 			onContinue={continueToNext}
 			onReturnToOverview={returnToOverview} />
 	</>
+}
+
+function InteractivePracticeTab({ skillId }: { skillId: string }) {
+	const { exercises, loading, error } = useModuleExercises(skillId)
+	if (loading) return <LoadingScreen message="Loading exercises..." />
+	if (error) return <Alert severity="warning" sx={{ mb: 2 }}>{error.message}</Alert>
+	return <InteractivePractice skillId={skillId} exercises={exercises} />
 }

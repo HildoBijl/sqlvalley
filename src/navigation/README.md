@@ -23,4 +23,6 @@ Module-page hooks live in `pages/modulePage/hooks`, with a local barrel export, 
 - `useModulePageTabs`: tab availability and selection through `useModuleTabSelection`.
 - `useCompletionDialog`: dialog visibility and notification when completion changes from false to true; it does not read or write the store.
 
+`ModulePageContent` renders `ModuleStory` directly for the Story tab, while `ModuleContentTab` handles Theory, Summary, and Video. `ModuleStory` handles its own loading and missing-content states. It passes the completion status already obtained by `ModulePageContent` to the supplied Story component.
+
 Both module types offer story, summary, and next-module actions when available. Manual completion only updates progress; the dialog opens when completion transitions from false to true.

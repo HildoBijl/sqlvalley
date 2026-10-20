@@ -2,6 +2,9 @@ import type { ReactNode } from 'react'
 import { ZoomIn, OpenWith, TouchApp, School, OutlinedFlag } from '@mui/icons-material'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography, useMediaQuery } from '@mui/material'
 
+import { useExplorer } from '../explorer'
+import { useSkillTreePlanning } from '../planning'
+
 interface SkillTreeIntroProps {
 	open: boolean
 	onClose: () => void
@@ -9,6 +12,8 @@ interface SkillTreeIntroProps {
 
 export function SkillTreeIntro({ open, onClose }: SkillTreeIntroProps) {
 	const isTouch = useMediaQuery('(pointer: coarse)')
+	const { allowZoom } = useExplorer()
+	const { isPlanningEnabled } = useSkillTreePlanning()
 
 	return <Dialog
 		open={open}
@@ -34,23 +39,23 @@ export function SkillTreeIntro({ open, onClose }: SkillTreeIntroProps) {
 			</Typography>
 			<Stack spacing={2}>
 				{isTouch ? <>
-					<Instruction icon={<ZoomIn fontSize="small" />}>Pinch with two fingers to zoom in and out.</Instruction>
-					<Instruction icon={<OpenWith fontSize="small" />}>Drag the background to move around.</Instruction>
+					{allowZoom && <Instruction icon={<ZoomIn fontSize="small" />}>Pinch with two fingers to zoom in and out.</Instruction>}
+					<Instruction icon={<OpenWith fontSize="small" />}>Drag to move around.</Instruction>
 					<Instruction icon={<TouchApp fontSize="small" />}>
 						Tap a module to see what it covers. <strong>Tap it again to open it.</strong>
 					</Instruction>
 				</> : <>
-					<Instruction icon={<ZoomIn fontSize="small" />}>
+					{allowZoom && <Instruction icon={<ZoomIn fontSize="small" />}>
 						Scroll to zoom in and out, or use the buttons in the corner.
-					</Instruction>
-					<Instruction icon={<OpenWith fontSize="small" />}>Drag the background to move around.</Instruction>
+					</Instruction>}
+					<Instruction icon={<OpenWith fontSize="small" />}>Drag to move around.</Instruction>
 					<Instruction icon={<School fontSize="small" />}>
-						Hover module to see what it covers and highlight everything you need first. Click to open it.
+						Hover over a module to see what it covers and highlight everything you need first. Click to open it.
 					</Instruction>
 				</>}
-				<Instruction icon={<OutlinedFlag fontSize="small" />}>
+				{isPlanningEnabled && <Instruction icon={<OutlinedFlag fontSize="small" />}>
 					Use the flag button to enter the planning mode. This allows you to set a goal and see what you need to learn first.
-				</Instruction>
+				</Instruction>}
 			</Stack>
 		</DialogContent>
 		<DialogActions sx={{ px: 4, pb: 4, pt: 3 }}>
