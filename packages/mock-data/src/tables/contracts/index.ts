@@ -24,6 +24,7 @@ const table: TableDefinition = {
   end_date TEXT,
   perf_score INTEGER,
   status TEXT,
+  PRIMARY KEY (e_id, start_date),
   FOREIGN KEY (e_id) REFERENCES employees(e_id)
 );`,
 	csvBySize: {
