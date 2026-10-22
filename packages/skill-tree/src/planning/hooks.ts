@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { SkillTreePlanningContext } from './context'
+import { SkillTreePlanningContext } from './context.ts'
 
 export function useSkillTreePlanning() {
 	const planning = useContext(SkillTreePlanningContext)

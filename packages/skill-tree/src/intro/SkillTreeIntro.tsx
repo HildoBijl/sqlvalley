@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react'
-import { ZoomIn, OpenWith, TouchApp, School, OutlinedFlag } from '@mui/icons-material'
+import ZoomIn from '@mui/icons-material/ZoomIn'
+import OpenWith from '@mui/icons-material/OpenWith'
+import TouchApp from '@mui/icons-material/TouchApp'
+import School from '@mui/icons-material/School'
+import OutlinedFlag from '@mui/icons-material/OutlinedFlag'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography, useMediaQuery } from '@mui/material'
 
-import { useExplorer } from '../explorer'
-import { useSkillTreePlanning } from '../planning'
+import { useExplorer } from '../explorer/index.ts'
+import { useSkillTreePlanning } from '../planning/index.ts'
 
 interface SkillTreeIntroProps {
 	open: boolean

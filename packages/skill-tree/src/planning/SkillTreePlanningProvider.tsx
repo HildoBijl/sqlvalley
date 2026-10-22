@@ -3,11 +3,11 @@ import { type ReactNode, useCallback, useMemo, useState } from 'react'
 import { type ModuleId, type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 import { useControllableState } from '@step-wise/react-utils'
 
-import { useSkillTreeData } from '../core'
-import { type IsModuleCompleted, isModuleReadyToLearn, useSkillTreeProgress } from '../progress'
+import { useSkillTreeData } from '../core/index.ts'
+import { type IsModuleCompleted, isModuleReadyToLearn, useSkillTreeProgress } from '../progress/index.ts'
 
-import { SkillTreePlanningContext } from './context'
-import type { SkillTreePlanningSettings, SkillTreePlanningStateHandles } from './types'
+import { SkillTreePlanningContext } from './context.ts'
+import type { SkillTreePlanningSettings, SkillTreePlanningStateHandles } from './types.ts'
 
 interface SkillTreePlanningProviderProps {
 	children: ReactNode

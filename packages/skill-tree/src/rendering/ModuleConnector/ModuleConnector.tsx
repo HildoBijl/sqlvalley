@@ -1,8 +1,8 @@
 import { Curve } from '@step-wise/drawing'
 
-import type { ModuleConnector as ModuleConnectorData } from '../../positioning'
+import type { ModuleConnector as ModuleConnectorData } from '../../positioning/index.ts'
 
-import { useModuleConnectorStyle } from './useModuleConnectorStyle'
+import { useModuleConnectorStyle } from './useModuleConnectorStyle.ts'
 
 interface ModuleConnectorProps {
 	connector: ModuleConnectorData

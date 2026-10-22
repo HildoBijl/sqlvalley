@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { ExplorerInternalContext } from './internalContext'
+import { ExplorerInternalContext } from './internalContext.ts'
 
 export function useExplorerInternals() {
 	const explorer = useContext(ExplorerInternalContext)

@@ -1,6 +1,6 @@
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
-import type { ModulePositioning } from '../positioning'
+import type { ModulePositioning } from '../positioning/index.ts'
 
 // All data about the skill tree needed to show it.
 export interface SkillTreeData {

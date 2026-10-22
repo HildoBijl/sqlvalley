@@ -1,2 +1,2 @@
-export * from './ModuleCard'
-export * from './ModuleTooltip'
+export * from './ModuleCard.tsx'
+export * from './ModuleTooltip.tsx'

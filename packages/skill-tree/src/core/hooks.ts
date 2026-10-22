@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { SkillTreeDataContext } from './context'
+import { SkillTreeDataContext } from './context.ts'
 
 export function useSkillTreeData() {
 	const data = useContext(SkillTreeDataContext)

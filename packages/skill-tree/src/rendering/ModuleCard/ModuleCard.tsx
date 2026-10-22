@@ -4,14 +4,14 @@ import { Vector } from '@step-wise/geometry'
 import { HtmlElement, Rectangle } from '@step-wise/drawing'
 import type { ModuleId } from '@step-wise/module-tree-definition'
 
-import { cardHeight, cardWidth } from '../../positioning'
-import { useSkillTreeData } from '../../core'
-import { ModuleCompletionIndicator, useSkillTreeProgress } from '../../progress'
-import { useSkillTreeInteraction } from '../../interaction'
-import { ModulePlanningIndicator, planningColors, useSkillTreePlanning } from '../../planning'
+import { cardHeight, cardWidth } from '../../positioning/index.ts'
+import { useSkillTreeData } from '../../core/index.ts'
+import { ModuleCompletionIndicator, useSkillTreeProgress } from '../../progress/index.ts'
+import { useSkillTreeInteraction } from '../../interaction/index.ts'
+import { ModulePlanningIndicator, planningColors, useSkillTreePlanning } from '../../planning/index.ts'
 
-import { ModuleTypeIcon } from './ModuleTypeIcon'
-import { useModuleCardStyle } from './useModuleCardStyle'
+import { ModuleTypeIcon } from './ModuleTypeIcon.tsx'
+import { useModuleCardStyle } from './useModuleCardStyle.ts'
 
 interface ModuleCardProps {
 	moduleId: ModuleId

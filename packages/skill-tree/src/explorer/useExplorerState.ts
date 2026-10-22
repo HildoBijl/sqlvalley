@@ -5,7 +5,7 @@ import { type Rectangle, type VectorLike, ensureVector, Rectangle as RectangleCl
 import { clamp } from '@step-wise/js-utils'
 import { useElementSize, useLatestRef } from '@step-wise/react-utils'
 
-import type { ExplorerOptions, ExplorerState, ExplorerTransform } from './types'
+import type { ExplorerOptions, ExplorerState, ExplorerTransform } from './types.ts'
 
 interface ViewportSize {
 	width: number

@@ -1,10 +1,10 @@
-import { type SkillTreeDataProviderProps, SkillTreeDataProvider } from '../core'
-import { type SkillTreeProgressProviderProps, SkillTreeProgressProvider } from '../progress'
-import { type SkillTreeInteractionProviderProps, SkillTreeInteractionProvider } from '../interaction'
-import { SkillTreePlanningProvider } from '../planning'
+import { type SkillTreeDataProviderProps, SkillTreeDataProvider } from '../core/index.ts'
+import { type SkillTreeProgressProviderProps, SkillTreeProgressProvider } from '../progress/index.ts'
+import { type SkillTreeInteractionProviderProps, SkillTreeInteractionProvider } from '../interaction/index.ts'
+import { SkillTreePlanningProvider } from '../planning/index.ts'
 
-import { SkillTreeVisualizationContent } from './SkillTreeVisualizationContent'
-import type { SkillTreeSettings, SkillTreeStateHandles } from './types'
+import { SkillTreeVisualizationContent } from './SkillTreeVisualizationContent.tsx'
+import type { SkillTreeSettings, SkillTreeStateHandles } from './types.ts'
 
 export interface SkillTreeVisualizationProps
 	extends Omit<SkillTreeDataProviderProps, 'children'>,

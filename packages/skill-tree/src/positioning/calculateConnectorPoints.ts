@@ -1,7 +1,7 @@
 import { Vector } from '@step-wise/geometry'
 
-import type { ModulePositionData } from './types'
-import { cardHeight, initialPathSpacing, maxPathSpace, maxVerticalOffset, minVerticalOffset } from './settings'
+import type { ModulePositionData } from './types.ts'
+import { cardHeight, initialPathSpacing, maxPathSpace, maxVerticalOffset, minVerticalOffset } from './settings.ts'
 
 // Calculate a connector's points directly in drawing coordinates.
 export function calculateConnectorPoints(from: ModulePositionData, to: ModulePositionData): Vector[] {

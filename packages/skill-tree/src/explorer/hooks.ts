@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { ExplorerContext } from './context'
+import { ExplorerContext } from './context.ts'
 
 export function useExplorer() {
 	const explorer = useContext(ExplorerContext)

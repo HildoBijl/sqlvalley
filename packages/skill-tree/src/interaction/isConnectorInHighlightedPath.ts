@@ -1,6 +1,6 @@
 import type { ModuleId } from '@step-wise/module-tree-definition'
 
-import type { ModuleConnector } from '../positioning'
+import type { ModuleConnector } from '../positioning/index.ts'
 
 export function isConnectorInHighlightedPath(
 	connector: Pick<ModuleConnector, 'from' | 'to'>,

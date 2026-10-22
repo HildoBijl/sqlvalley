@@ -1,1 +1,1 @@
-export * from './SkillTreeDrawing'
+export * from './SkillTreeDrawing.tsx'

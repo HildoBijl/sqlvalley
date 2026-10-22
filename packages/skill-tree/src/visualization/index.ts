@@ -1,2 +1,2 @@
-export * from './types'
-export * from './SkillTreeVisualization'
+export * from './types.ts'
+export * from './SkillTreeVisualization.tsx'

@@ -1,10 +1,10 @@
 import { useTheme } from '@mui/material'
 
-import type { ModuleConnector } from '../../positioning'
-import { useSkillTreeData } from '../../core'
-import { isConnectorInHighlightedPath, useSkillTreeInteraction } from '../../interaction'
-import { planningColors, useSkillTreePlanning } from '../../planning'
-import { isModuleReadyToLearn, progressColors, useSkillTreeProgress } from '../../progress'
+import type { ModuleConnector } from '../../positioning/index.ts'
+import { useSkillTreeData } from '../../core/index.ts'
+import { isConnectorInHighlightedPath, useSkillTreeInteraction } from '../../interaction/index.ts'
+import { planningColors, useSkillTreePlanning } from '../../planning/index.ts'
+import { isModuleReadyToLearn, progressColors, useSkillTreeProgress } from '../../progress/index.ts'
 
 type ModuleConnectorReference = Pick<ModuleConnector, 'from' | 'to'>
 

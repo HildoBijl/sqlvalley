@@ -2,10 +2,10 @@ import { useTheme } from '@mui/material'
 
 import type { ModuleId } from '@step-wise/module-tree-definition'
 
-import { useSkillTreeData } from '../../core'
-import { useSkillTreeInteraction } from '../../interaction'
-import { planningColors, useSkillTreePlanning } from '../../planning'
-import { isModuleReadyToLearn, progressColors, useSkillTreeProgress } from '../../progress'
+import { useSkillTreeData } from '../../core/index.ts'
+import { useSkillTreeInteraction } from '../../interaction/index.ts'
+import { planningColors, useSkillTreePlanning } from '../../planning/index.ts'
+import { isModuleReadyToLearn, progressColors, useSkillTreeProgress } from '../../progress/index.ts'
 
 interface ModuleCardStyle {
 	borderColor: string
