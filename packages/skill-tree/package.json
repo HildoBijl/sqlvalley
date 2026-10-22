@@ -1,13 +1,39 @@
 {
   "name": "@sqlvalley/skill-tree",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts"
+  "version": "0.1.0",
+  "description": "Interactive React visualization of 'Skill Trees': dependency trees of educational modules.",
+  "keywords": [
+    "education",
+    "learning",
+    "module-tree",
+    "react",
+    "skill-tree",
+    "visualization"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HildoBijl/sqlvalley.git",
+    "directory": "packages/skill-tree"
   },
+  "bugs": {
+    "url": "https://github.com/HildoBijl/sqlvalley/issues"
+  },
+  "homepage": "https://github.com/HildoBijl/sqlvalley/tree/main/packages/skill-tree#readme",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "development": "./src/index.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc -b tsconfig.build.json"
   },
@@ -16,13 +42,21 @@
     "@step-wise/geometry": "^0.1.1",
     "@step-wise/js-utils": "^0.1.2",
     "@step-wise/module-tree-definition": "^0.3.0",
-    "@step-wise/react-utils": "^0.1.0",
+    "@step-wise/react-utils": "^0.1.2",
     "@use-gesture/react": "^10.3.1"
   },
   "peerDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.3.11",
     "@mui/material": "^7.3.11",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

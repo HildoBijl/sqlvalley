@@ -5,6 +5,17 @@
 The package does not define the educational dependencies itself. Supply a `ModuleTree` from `@step-wise/module-tree-definition`, presentation text for its modules, and grid positions describing how those modules should appear.
 
 
+## Installation
+
+Install the package together with its React and Material UI peer dependencies.
+
+```sh
+npm install @sqlvalley/skill-tree react react-dom @mui/material @mui/icons-material @emotion/react @emotion/styled
+```
+
+The current release requires React 19.2 or newer within React 19 and Node.js 24.15 or newer.
+
+
 ## Basic setup
 
 Define a grid position for every module that should appear. Coordinates describe cell centers: increasing `x` moves right and increasing `y` moves down. `defineModulePositioning` converts these positions to drawing coordinates and creates the prerequisite connectors.
