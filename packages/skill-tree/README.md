@@ -18,19 +18,35 @@ The current release requires React 19.2 or newer within React 19 and Node.js 24.
 
 ## Basic setup
 
-Define a grid position for every module that should appear. Coordinates describe cell centers: increasing `x` moves right and increasing `y` moves down. `defineModulePositioning` converts these positions to drawing coordinates and creates the prerequisite connectors.
+The `SkillTreeVisualization` requires three separate pieces of data.
+
+- Define the educational structure with `@step-wise/module-tree-definition`. Its `createModuleTree` function turns a definition of concepts, skills, and prerequisites into the processed `ModuleTree` used by the visualization.
+
+- Presentation text remains separate from that structural data. `modulePresentation` maps every module ID to the language-specific `name` and `description` shown by the module card and tooltip.
+
+- Finally, define a grid position for every module that should appear. Coordinates describe cell centers: increasing `x` moves right and increasing `y` moves down. `defineModulePositioning` converts these positions to drawing coordinates and creates the prerequisite connectors.
 
 ```tsx
-import { type ModuleGridPositions, defineModulePositioning, SkillTreeVisualization } from '@sqlvalley/skill-tree'
+import { createModuleTree } from '@step-wise/module-tree-definition'
+import { type ModuleGridPositions, type ModulePresentation, defineModulePositioning, SkillTreeVisualization } from '@sqlvalley/skill-tree'
 
-import { moduleTree, modulePresentation } from './curriculum'
+const moduleTree = createModuleTree({
+	database: { type: 'concept' },
+	selectRows: { type: 'skill', prerequisites: ['database'] },
+	filterRows: { type: 'skill', prerequisites: ['selectRows'] },
+})
+
+const modulePresentation: ModulePresentation = {
+	database: { name: 'Databases', description: 'Learn how databases organize information.' },
+	selectRows: { name: 'Selecting rows', description: 'Retrieve rows from a database table.' },
+	filterRows: { name: 'Filtering rows', description: 'Restrict results using conditions.' },
+}
 
 const gridPositions: ModuleGridPositions = {
 	database: [0, 0],
 	selectRows: [-1, 1],
 	filterRows: [1, 1],
 }
-
 const modulePositioning = defineModulePositioning(moduleTree, gridPositions)
 
 export function LearningOverview() {
