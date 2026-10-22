@@ -1,12 +1,10 @@
 import { useTheme } from '@mui/material'
 
-import { isReadyToLearn } from '@sqlvalley/progress'
-
 import type { ModuleConnector } from '../../positioning'
 import { useSkillTreeData } from '../../core'
 import { isConnectorInHighlightedPath, useSkillTreeInteraction } from '../../interaction'
 import { planningColors, useSkillTreePlanning } from '../../planning'
-import { progressColors, useSkillTreeProgress } from '../../progress'
+import { isModuleReadyToLearn, progressColors, useSkillTreeProgress } from '../../progress'
 
 type ModuleConnectorReference = Pick<ModuleConnector, 'from' | 'to'>
 
@@ -30,7 +28,7 @@ export function useModuleConnectorStyle(connector: ModuleConnectorReference): Mo
 	const fromCompleted = isModuleCompleted(connector.from)
 	const toCompleted = isModuleCompleted(connector.to)
 	const bothCompleted = fromCompleted && toCompleted
-	const isNextToLearn = isReadyToLearn(moduleTree, connector.to, isModuleCompleted) && fromCompleted
+	const isNextToLearn = isModuleReadyToLearn(moduleTree, connector.to, isModuleCompleted) && fromCompleted
 
 	// Derive interaction-related data.
 	const { highlightedModuleId, highlightedPrerequisiteIds } = useSkillTreeInteraction()

@@ -1,11 +1,10 @@
 import { type ReactNode, useCallback, useMemo, useState } from 'react'
 
-import { getRequiredModuleIds } from '@step-wise/module-tree-definition'
+import { type ModuleId, type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 import { useControllableState } from '@step-wise/react-utils'
-import { getGoalProgress } from '@sqlvalley/progress'
 
 import { useSkillTreeData } from '../core'
-import { useSkillTreeProgress } from '../progress'
+import { type IsModuleCompleted, isModuleReadyToLearn, useSkillTreeProgress } from '../progress'
 
 import { SkillTreePlanningContext } from './context'
 import type { SkillTreePlanningSettings, SkillTreePlanningStateHandles } from './types'
@@ -58,4 +57,13 @@ export function SkillTreePlanningProvider({ children, settings, stateHandles }: 
 		goalModuleId, setGoalModuleId, goalPathModuleIds, goalProgress,
 	])
 	return <SkillTreePlanningContext value={value}>{children}</SkillTreePlanningContext>
+}
+
+function getGoalProgress(moduleTree: ModuleTree, goalModuleId: ModuleId, isModuleCompleted: IsModuleCompleted) {
+	const goalPathModuleIds = getRequiredModuleIds(moduleTree, [goalModuleId])
+	return {
+		completedCount: goalPathModuleIds.filter(isModuleCompleted).length,
+		totalCount: goalPathModuleIds.length,
+		nextStepId: goalPathModuleIds.find(id => isModuleReadyToLearn(moduleTree, id, isModuleCompleted)) ?? null,
+	}
 }

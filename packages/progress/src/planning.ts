@@ -120,22 +120,3 @@ function chooseSubgoalStep(
 	}
 	return bestStepId
 }
-
-// Determine, for a specific module, the progress up its prerequisite tree.
-export interface GoalProgress {
-	completedCount: number
-	totalCount: number
-	nextStepId: ModuleId | null
-}
-export function getGoalProgress(
-	moduleTree: ModuleTree,
-	goalId: ModuleId,
-	isModuleCompleted: (id: ModuleId) => boolean,
-): GoalProgress {
-	const goalPathModuleIds = getRequiredModuleIds(moduleTree, [goalId])
-	return {
-		completedCount: goalPathModuleIds.filter(isModuleCompleted).length,
-		totalCount: goalPathModuleIds.length,
-		nextStepId: goalPathModuleIds.find(id => isReadyToLearn(moduleTree, id, isModuleCompleted)) ?? null,
-	}
-}

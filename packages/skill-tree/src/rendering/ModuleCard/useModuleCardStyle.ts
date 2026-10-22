@@ -1,12 +1,11 @@
 import { useTheme } from '@mui/material'
 
 import type { ModuleId } from '@step-wise/module-tree-definition'
-import { isReadyToLearn } from '@sqlvalley/progress'
 
 import { useSkillTreeData } from '../../core'
 import { useSkillTreeInteraction } from '../../interaction'
 import { planningColors, useSkillTreePlanning } from '../../planning'
-import { progressColors, useSkillTreeProgress } from '../../progress'
+import { isModuleReadyToLearn, progressColors, useSkillTreeProgress } from '../../progress'
 
 interface ModuleCardStyle {
 	borderColor: string
@@ -25,7 +24,7 @@ export function useModuleCardStyle(moduleId: ModuleId): ModuleCardStyle {
 	// Derive progress-related data.
 	const { isModuleCompleted, isProgressTracked } = useSkillTreeProgress()
 	const completed = isModuleCompleted(moduleId)
-	const readyToLearn = isReadyToLearn(moduleTree, moduleId, isModuleCompleted)
+	const readyToLearn = isModuleReadyToLearn(moduleTree, moduleId, isModuleCompleted)
 
 	// Derive interaction-related data.
 	const { highlightedModuleId, highlightedPrerequisiteIds } = useSkillTreeInteraction()
