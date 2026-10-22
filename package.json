@@ -8,12 +8,17 @@
   ],
   "scripts": {
     "build:packages": "npm run build --workspace=@sqlvalley/sqljs && npm run build --workspace=@sqlvalley/skill-tree",
+    "build:public-packages": "npm run build --workspace=@sqlvalley/skill-tree",
     "dev": "npm run build:packages && vite",
     "build": "npm run build:packages && tsc && vite build",
     "lint": "eslint . --report-unused-disable-directives",
     "lint:strict": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "type-check": "npm run build --workspace=@sqlvalley/skill-tree && tsc --noEmit"
+    "type-check": "npm run build:public-packages && tsc --noEmit",
+    "stage:package-publications": "node scripts/stagePackagePublications.mjs",
+    "prepare:package-publications": "npm run build:public-packages && npm run verify:package-entry-points && npm run verify:package-artifacts",
+    "verify:package-entry-points": "node scripts/verifyPackageEntryPoints.mjs",
+    "verify:package-artifacts": "npm run stage:package-publications && node scripts/verifyPackageArtifacts.mjs"
   },
   "dependencies": {
     "@codemirror/lang-sql": "^6.6.1",
