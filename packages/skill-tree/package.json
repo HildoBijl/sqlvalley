@@ -38,7 +38,7 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@step-wise/drawing": "^0.5.1",
+    "@step-wise/drawing": "^0.5.2",
     "@step-wise/geometry": "^0.1.1",
     "@step-wise/js-utils": "^0.1.2",
     "@step-wise/module-tree-definition": "^0.3.0",
