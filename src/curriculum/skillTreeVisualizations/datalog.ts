@@ -25,15 +25,15 @@ const gridPositions: ModuleGridPositions = {
 
 	// Datalog with negation
 	'dl-literal-types-and-rule-safety': [3, 6],
-	'dl-define-negation-rule': [2.5, 8],
+	'dl-express-non-existence': [2.5, 8],
 	'dl-check-rule-safety': [3, 7],
-	'dl-write-multi-predicate-program': [2, 9],
+	'dl-write-multi-step-program': [2, 9],
 
 	// Recursive Datalog
 	'dl-predicate-dependency-graph': [4.5, 6],
 	'dl-draw-predicate-dependency-graph': [4, 7],
 	'dl-program-classes': [5, 7],
-	'dl-check-program-stratification': [4.5, 8],
+	'dl-classify-program': [4.5, 8],
 	'dl-define-recursive-predicate': [3.5, 8],
 	'dl-write-recursive-program': [3, 10],
 }

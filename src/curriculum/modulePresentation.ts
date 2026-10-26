@@ -177,13 +177,13 @@ export const modulePresentation = {
 		name: 'Check Rule Safety',
 		description: 'How can we check whether a Datalog rule is safe or not?',
 	},
-	'dl-define-negation-rule': {
-		name: 'Define Negation Rule',
-		description: 'How can we adequately apply the word "not" in some Datalog rule?',
+	'dl-express-non-existence': {
+		name: 'Express Non-Existence',
+		description: 'How do we use Datalog to express that a matching fact does not exist?',
 	},
-	'dl-write-multi-predicate-program': {
-		name: 'Write Multi-Predicate Program',
-		description: 'How can we set up more complex Datalog programs, combining joins with negation?',
+	'dl-write-multi-step-program': {
+		name: 'Write Multi-Step Program',
+		description: 'How do we solve multi-step data requests by assembling a Datalog program?',
 	},
 	'dl-define-recursive-predicate': {
 		name: 'Define Recursive Predicate',
@@ -201,9 +201,9 @@ export const modulePresentation = {
 		name: 'Datalog Program Classes',
 		description: 'How do restrictions on negation distinguish positive, semi-positive and stratified Datalog programs?',
 	},
-	'dl-check-program-stratification': {
-		name: 'Check Program Stratification',
-		description: 'How can we determine if a Datalog program is semi-positive and/or stratified?',
+	'dl-classify-program': {
+		name: 'Classify Datalog Program',
+		description: 'How do we determine whether a Datalog program is positive, semi-positive and/or stratified?',
 	},
 	'dl-write-recursive-program': {
 		name: 'Write Recursive Program',

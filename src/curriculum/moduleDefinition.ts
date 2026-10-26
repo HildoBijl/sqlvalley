@@ -54,14 +54,14 @@ const moduleDefinition = {
 	'dl-define-join-rule': skill('join-and-decomposition', 'dl-define-projection-rule', 'dl-define-filtering-rule'),
 	'dl-literal-types-and-rule-safety': concept('datalog'),
 	'dl-check-rule-safety': skill('dl-literal-types-and-rule-safety'),
-	'dl-define-negation-rule': skill('database-keys', 'dl-check-rule-safety', 'dl-define-derived-predicate'),
-	'dl-write-multi-predicate-program': skill('dl-define-derived-predicate', 'dl-define-join-rule', 'dl-define-negation-rule'),
+	'dl-express-non-existence': skill('database-keys', 'dl-check-rule-safety', 'dl-define-derived-predicate'),
+	'dl-write-multi-step-program': skill('dl-define-derived-predicate', 'dl-define-join-rule', 'dl-express-non-existence'),
 	'dl-define-recursive-predicate': skill('recursive-query', 'dl-define-derived-predicate'),
 	'dl-predicate-dependency-graph': concept('datalog', 'recursive-query'),
 	'dl-draw-predicate-dependency-graph': skill('dl-predicate-dependency-graph'),
 	'dl-program-classes': concept('dl-literal-types-and-rule-safety', 'dl-predicate-dependency-graph'),
-	'dl-check-program-stratification': skill('dl-draw-predicate-dependency-graph', 'dl-program-classes'),
-	'dl-write-recursive-program': skill('dl-write-multi-predicate-program', 'dl-define-recursive-predicate', 'dl-check-program-stratification'),
+	'dl-classify-program': skill('dl-draw-predicate-dependency-graph', 'dl-program-classes'),
+	'dl-write-recursive-program': skill('dl-write-multi-step-program', 'dl-define-recursive-predicate', 'dl-classify-program'),
 } satisfies ModuleTreeDefinition
 
 export type ModuleId = keyof typeof moduleDefinition
