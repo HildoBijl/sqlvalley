@@ -123,29 +123,29 @@ export const modulePresentation = {
 		name: 'Filter Rows',
 		description: 'How do we use relational algebra to filter the tuples within a relation based on some condition?',
 	},
-	'ra-set-up-single-relation-query': {
-		name: 'Set Up Single-Relation Query',
+	'ra-write-single-relation-query': {
+		name: 'Write Single-Relation Query',
 		description: 'How do we write basic relational algebra queries for a single relation?',
 	},
-	'ra-set-up-multi-condition-query': {
-		name: 'Set Up Multi-Condition Query',
-		description: 'How do we combine multiple conditions, possibly on different relations, in one query?',
+	'ra-combine-conditions-across-relations': {
+		name: 'Combine Conditions Across Relations',
+		description: 'How do we write a query that combines conditions defined across different relations?',
 	},
 	'ra-join-relations': {
 		name: 'Join Relations',
 		description: 'How do use relational algebra to join two relations together?',
 	},
-	'ra-set-up-multi-relation-query': {
-		name: 'Set Up Multi-Relation Query',
-		description: 'How do we write relational algebra queries on a combination of different relations?',
+	'ra-write-join-query': {
+		name: 'Write Join Query',
+		description: 'How do we write complete queries involving multiple joins or repeated use of the same relation?',
 	},
-	'ra-set-up-multi-step-query': {
-		name: 'Set Up Multi-Step Query',
-		description: 'How do we set up complex relational algebra queries involving multiple steps?',
+	'ra-write-multi-step-query': {
+		name: 'Write Multi-Step Query',
+		description: 'How do we write complex relational algebra queries involving multiple steps?',
 	},
-	'ra-set-up-universal-condition-query': {
-		name: 'Set Up Universal Condition Query',
-		description: 'How do we set up relational algebra queries involving "for every" quantifiers and similar?',
+	'ra-write-universal-condition-query': {
+		name: 'Write Universal-Condition Query',
+		description: 'How do we write relational algebra queries involving "for every" quantifiers and similar?',
 	},
 
 	// Datalog.

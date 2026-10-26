@@ -21,12 +21,12 @@ const gridPositions: ModuleGridPositions = {
 	// RA-specific skills.
 	'ra-choose-columns': [2, 4.5],
 	'ra-filter-rows': [3, 4.5],
-	'ra-set-up-single-relation-query': [2, 6],
+	'ra-write-single-relation-query': [2, 6],
 	'ra-join-relations': [3, 6],
-	'ra-set-up-multi-condition-query': [2, 7],
-	'ra-set-up-multi-relation-query': [3, 7],
-	'ra-set-up-universal-condition-query': [2.5, 9],
-	'ra-set-up-multi-step-query': [2.5, 8],
+	'ra-combine-conditions-across-relations': [2, 7],
+	'ra-write-join-query': [3, 7],
+	'ra-write-universal-condition-query': [2.5, 9],
+	'ra-write-multi-step-query': [2.5, 8],
 }
 
 export const raModulePositioning = defineModulePositioning(moduleTree, gridPositions)

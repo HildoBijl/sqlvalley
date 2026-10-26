@@ -39,12 +39,12 @@ const moduleDefinition = {
 	'relational-algebra': concept('query-language'),
 	'ra-choose-columns': skill('relational-algebra', 'projection-and-filtering'),
 	'ra-filter-rows': skill('relational-algebra', 'projection-and-filtering'),
-	'ra-set-up-single-relation-query': skill('ra-choose-columns', 'ra-filter-rows'),
-	'ra-set-up-multi-condition-query': skill('ra-set-up-single-relation-query', 'foreign-key'),
+	'ra-write-single-relation-query': skill('ra-choose-columns', 'ra-filter-rows'),
+	'ra-combine-conditions-across-relations': skill('ra-write-single-relation-query', 'foreign-key'),
 	'ra-join-relations': skill('join-and-decomposition', 'ra-filter-rows'),
-	'ra-set-up-multi-relation-query': skill('ra-set-up-single-relation-query', 'ra-join-relations'),
-	'ra-set-up-multi-step-query': skill('ra-set-up-multi-condition-query', 'ra-set-up-multi-relation-query'),
-	'ra-set-up-universal-condition-query': skill('ra-set-up-multi-relation-query', 'ra-set-up-multi-condition-query', 'ra-set-up-multi-step-query'),
+	'ra-write-join-query': skill('ra-write-single-relation-query', 'ra-join-relations'),
+	'ra-write-multi-step-query': skill('ra-combine-conditions-across-relations', 'ra-write-join-query'),
+	'ra-write-universal-condition-query': skill('ra-write-join-query', 'ra-combine-conditions-across-relations', 'ra-write-multi-step-query'),
 
 	// Datalog.
 	'datalog': concept('query-language', 'database-view'),
