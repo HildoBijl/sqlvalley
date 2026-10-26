@@ -32,7 +32,7 @@ const gridPositions: ModuleGridPositions = {
 	// Recursive Datalog
 	'dl-predicate-dependency-graph': [4.5, 6],
 	'dl-draw-predicate-dependency-graph': [4, 7],
-	'dl-semi-positive-and-stratified-datalog': [5, 7],
+	'dl-program-classes': [5, 7],
 	'dl-check-program-stratification': [4.5, 8],
 	'dl-define-recursive-predicate': [3.5, 8],
 	'dl-write-recursive-program': [3, 10],

@@ -59,8 +59,8 @@ const moduleDefinition = {
 	'dl-define-recursive-predicate': skill('recursive-query', 'dl-define-derived-predicate'),
 	'dl-predicate-dependency-graph': concept('datalog', 'recursive-query'),
 	'dl-draw-predicate-dependency-graph': skill('dl-predicate-dependency-graph'),
-	'dl-semi-positive-and-stratified-datalog': concept('dl-literal-types-and-rule-safety', 'dl-predicate-dependency-graph'),
-	'dl-check-program-stratification': skill('dl-draw-predicate-dependency-graph', 'dl-semi-positive-and-stratified-datalog'),
+	'dl-program-classes': concept('dl-literal-types-and-rule-safety', 'dl-predicate-dependency-graph'),
+	'dl-check-program-stratification': skill('dl-draw-predicate-dependency-graph', 'dl-program-classes'),
 	'dl-write-recursive-program': skill('dl-write-multi-predicate-program', 'dl-define-recursive-predicate', 'dl-check-program-stratification'),
 } satisfies ModuleTreeDefinition
 

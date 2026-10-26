@@ -1,6 +1,6 @@
 
 import { Page, Section, Par, List, Em } from '@/ui'
-import { DependencyGraph } from '../dl-semi-positive-and-stratified-datalog/Theory'
+import { DependencyGraph } from '../dl-program-classes/Theory'
 
 export function Summary() {
 	return <Page>

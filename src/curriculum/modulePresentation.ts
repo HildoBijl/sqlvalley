@@ -197,9 +197,9 @@ export const modulePresentation = {
 		name: 'Draw Predicate Dependency Graph',
 		description: 'How do we draw a Predicate Dependency Graph?',
 	},
-	'dl-semi-positive-and-stratified-datalog': {
-		name: 'Semi-Positive and Stratified Datalog',
-		description: 'How does restricting negation in Datalog prevent the problem of having multiple possible outputs?',
+	'dl-program-classes': {
+		name: 'Datalog Program Classes',
+		description: 'How do restrictions on negation distinguish positive, semi-positive and stratified Datalog programs?',
 	},
 	'dl-check-program-stratification': {
 		name: 'Check Program Stratification',
