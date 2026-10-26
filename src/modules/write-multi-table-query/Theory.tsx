@@ -86,7 +86,7 @@ WHERE prod_id IN (
   FROM products
   WHERE category = 'Fine Art'
 );`} tableWidth={150} tableScale={0.7} />
-			<Par>In many applications, we may need to go further. Perhaps we don't just want the username of the buyer, but also the email address? Through this layered approach, it is very easy to add this. We just add another look-up.</Par>
+			<Par>In many applications, we may need to go further. Perhaps we don't just want the username of the buyer, but also the email address? Through this layered approach, it is very easy to add this. We just add another lookup.</Par>
 			<Quote>Find the usernames and email addresses of the accounts for which the account ID is in the list of buyers for transactions where the corresponding product is in the list of products with category equal to "Fine Art".</Quote>
 			<SQLQueryFigure query={`
 SELECT username, email

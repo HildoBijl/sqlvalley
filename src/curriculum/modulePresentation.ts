@@ -77,24 +77,24 @@ export const modulePresentation = {
 		name: 'Process Columns',
 		description: 'How do we create new derived columns from existing columns?',
 	},
-	'sort-rows': {
-		name: 'Sort Rows',
+	'sort-and-limit-rows': {
+		name: 'Sort and Limit Rows',
 		description: 'How can we use SQL to sort the records in a table, and optionally only retrieve the first few?',
 	},
-	'write-multi-criterion-query': {
-		name: 'Write Multi-Criterion Query',
+	'write-single-table-query': {
+		name: 'Write Single-Table Query',
 		description: 'How do we set up advanced queries extracting data from a single table in various ways?',
 	},
 	'aggregate-columns': {
 		name: 'Aggregate Columns',
 		description: 'How do we use SQL to apply aggregation, merging multiple rows into joint statistics?',
 	},
-	'use-filtered-aggregation': {
-		name: 'Use Filtered Aggregation',
+	'write-filtered-aggregation-query': {
+		name: 'Write Filtered Aggregation Query',
 		description: 'How do we select which rows to aggregate, and/or subsequently filter aggregated results?',
 	},
-	'write-look-up-query': {
-		name: 'Write Look-up Query',
+	'write-lookup-query': {
+		name: 'Write Lookup Query',
 		description: 'How do we select data from one table based on a condition in another table?',
 	},
 	'join-tables': {
@@ -105,9 +105,9 @@ export const modulePresentation = {
 		name: 'Write Multi-Table Query',
 		description: 'How can we set up queries combining data from multiple tables in convoluted ways?',
 	},
-	'write-multi-layered-query': {
-		name: 'Write Multi-Layered Query',
-		description: 'How do we set up complex multi-table queries and structure their set-up through intermediate queries?',
+	'write-multi-step-query': {
+		name: 'Write Multi-Step Query',
+		description: 'How do we write complex queries through a series of clear intermediate steps?',
 	},
 
 	// Relational algebra.

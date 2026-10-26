@@ -40,7 +40,7 @@ JOIN employees m ON d.manager_id = m.e_id
 WHERE d.nr_employees - COALESCE(sa.only_allocated, 0) > 3;`
 
 export default {
-	exerciseId: 'multilayered-wrong-employee-counts',
+	exerciseId: 'multi-step-wrong-employee-counts',
 	definition: {
 		metadata: { version: 2 },
 		solution,

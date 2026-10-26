@@ -24,20 +24,20 @@ const gridPositions: ModuleGridPositions = {
 	'write-single-criterion-query': [3, 5],
 
 	// Single-table SQL querying.
-	'sort-rows': [1, 5],
+	'sort-and-limit-rows': [1, 5],
 	'process-columns': [2, 5],
 	'filter-rows-on-multiple-criteria': [4, 5],
-	'write-multi-criterion-query': [2, 6],
+	'write-single-table-query': [2, 6],
 
 	// Aggregation in SQL.
 	'aggregate-columns': [6, 5],
-	'use-filtered-aggregation': [5, 6],
+	'write-filtered-aggregation-query': [5, 6],
 
 	// Multi-table SQL querying.
-	'write-look-up-query': [3, 6],
+	'write-lookup-query': [3, 6],
 	'join-tables': [4, 6],
 	'write-multi-table-query': [3.5, 7],
-	'write-multi-layered-query': [3.5, 8],
+	'write-multi-step-query': [3.5, 8],
 }
 
 export const sqlModulePositioning = defineModulePositioning(moduleTree, gridPositions)

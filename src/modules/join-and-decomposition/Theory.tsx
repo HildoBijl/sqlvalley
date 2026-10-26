@@ -55,7 +55,7 @@ export function Theory() {
 					<TableQueryFigure query={`SELECT * FROM departments, employees WHERE manager_id=e_id;`} tableWidth={1600} tableScale={0.45} />
 				</>,
 			]} />
-			<Info>The above definition of a join, through a Cartesian product, is a <Em>generalization</Em> of the idea we saw earlier. The look-up idea we saw earlier only works when the foreign key is unique in the second (for us <ISQL>employees</ISQL>) table. If this is not the case, for instance because multiple employees have the same employee ID, then the look-up fails. This generalized method with the Cartesian product always works.</Info>
+			<Info>The above definition of a join, through a Cartesian product, is a <Em>generalization</Em> of the idea we saw earlier. The lookup idea we saw earlier only works when the foreign key is unique in the second (for us <ISQL>employees</ISQL>) table. If this is not the case, for instance because multiple employees have the same employee ID, then the lookup fails. This generalized method with the Cartesian product always works.</Info>
 		</Section>
 
 		<Section title="The natural join: require equal-named columns to be equal">
