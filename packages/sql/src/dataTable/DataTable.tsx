@@ -22,6 +22,7 @@ export interface DataTableProps {
 }
 
 const getRowHeight = () => 'auto' as const
+const allRowsPaginationModel = { page: 0, pageSize: -1 }
 
 export function DataTable({ data, width, maxRows = 100, showPagination = true, highlightHeader = true, compact = false, controls = false, ref }: DataTableProps) {
 	const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
@@ -59,8 +60,8 @@ export function DataTable({ data, width, maxRows = 100, showPagination = true, h
 				getRowHeight={getRowHeight}
 				columnHeaderHeight={compact ? 40 : 56}
 				getRowClassName={({ indexRelativeToCurrentPage }) => indexRelativeToCurrentPage % 2 === 0 ? 'striped' : ''}
-				paginationModel={showPagination ? paginationModel : { page: 0, pageSize: -1 }}
-				onPaginationModelChange={setPaginationModel}
+				paginationModel={showPagination ? paginationModel : allRowsPaginationModel}
+				onPaginationModelChange={showPagination ? setPaginationModel : undefined}
 				pageSizeOptions={[5, 10, 25, 50]}
 				hideFooter={!showPagination || rows.length === 0}
 				localeText={{ noRowsLabel: 'No rows returned' }}

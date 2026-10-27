@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react'
 
 import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Info, Warning, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -94,7 +94,7 @@ FROM employees;`
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[350, 20]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data} showPagination={false} compact width={450 / 0.8} />
+			<DrawingTable data={data} width={450 / 0.8} />
 		</FigureHtml>
 
 		{c1QueryBounds && c1NameBounds && c2QueryBounds && c2NameBounds && c3QueryBounds && c3NameBounds ? <>
@@ -152,10 +152,10 @@ FROM employees;`
 		</FigureHtml>
 
 		<FigureHtml target="table1" position={[w1 + delta1, 0]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data1} showPagination={false} compact width={160 / 0.8} />
+			<DrawingTable data={data1} width={160 / 0.8} />
 		</FigureHtml>
 		<FigureHtml target="table2" position={[w1 + delta1 + w2 + delta2 + w3 + delta1, 0]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data2} showPagination={false} compact width={160 / 0.8} />
+			<DrawingTable data={data2} width={160 / 0.8} />
 		</FigureHtml>
 
 		{e1Bounds && t1Bounds ? <>
@@ -194,7 +194,7 @@ function FigureRenameColumnsContents({ query = '' }) {
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[(eBounds?.width || 200) + arrowWidth, 0]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data} showPagination={false} compact width={350 / 0.8} />
+			<DrawingTable data={data} width={350 / 0.8} />
 		</FigureHtml>
 
 		{eBounds && tBounds ? <Curve positions={[eBounds.middleRight.add([4, 0]), [tBounds.left - 4, eBounds.midpoint.y]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}

@@ -1,5 +1,5 @@
 import { MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Term } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -43,11 +43,11 @@ function FigureAggregationContents() {
 
 	return <>
 		<FigureHtml target="table1" position={[0, 0]} anchor={[-1, -1]}>
-			<DataTable data={dataFull} showPagination={false} compact width={w1} />
+			<DrawingTable data={dataFull} width={w1} />
 		</FigureHtml>
 
 		<FigureHtml target="table2" position={[w1, h1 + delta]} anchor={[1, -1]}>
-			<DataTable data={dataAggregated} showPagination={false} compact width={w2} />
+			<DrawingTable data={dataAggregated} width={w2} />
 		</FigureHtml>
 
 		<Curve positions={[[(w1 - w2) / 2, h1 + arrowMargin], [(w1 - w2) / 2, h1 + delta + h2 / 2], [w1 - w2 - arrowMargin, h1 + delta + h2 / 2]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />

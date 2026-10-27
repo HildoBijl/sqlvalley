@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 
 import { type Position, MeasuredDrawingFigure, Curve, useDrawingTextTarget } from '@step-wise/drawing'
-import { DataTable, ISQL, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -88,7 +88,7 @@ function FigureDataTypeDemoContents() {
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>The expenses table</span></FigureHtml>
 		<FigureHtml target="table" position={[0, 25]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data} showPagination={false} compact width={800 / 0.8} />
+			<DrawingTable data={data} width={800 / 0.8} />
 		</FigureHtml>
 
 		{labels.map(({ text, target, offset }) => {

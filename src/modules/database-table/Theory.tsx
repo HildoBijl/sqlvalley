@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { TargetBoundsDrawingFigure, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
 import { FigureHtml, RelationName, useTheoryPageDatabase } from '@/learning'
@@ -85,7 +85,7 @@ function FigureTerminologyContents({ terminology }: { terminology?: Terminology 
 	return <>
 		{/* Table. */}
 		<FigureHtml target="table" position={[0, 0]} anchor="topLeft" scale={0.8} behind>
-			<DataTable data={data} width={650} showPagination={false} compact />
+			<DrawingTable data={data} width={650} />
 		</FigureHtml>
 
 		{table && header && cell ? <>

@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react'
 
 import { MeasuredDrawingFigure, DrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -144,7 +144,7 @@ WHERE ${addNot ? 'NOT (' : ''}${c1} = '${v1}'
 		</FigureHtml>
 
 		{eBounds ? <FigureHtml target="table" position={[0, eBounds.height + delta]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data} showPagination={false} compact width={800 / 0.8} />
+			<DrawingTable data={data} width={800 / 0.8} />
 		</FigureHtml> : null}
 
 		{eBounds && c1QueryBounds && c1NameBounds && c2QueryBounds && c2NameBounds ? <>
@@ -192,7 +192,7 @@ LIMIT 1;`)
 		{/* Example row */}
 		<FigureHtml position={[790, exampleY]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>Example row</span></FigureHtml>
 		<FigureHtml position={[600, exampleY + 25]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data} showPagination={false} compact width={200 / 0.8} />
+			<DrawingTable data={data} width={200 / 0.8} />
 		</FigureHtml>
 
 		{/* Steps */}
@@ -289,7 +289,7 @@ function FigureRewrittenQueryContents({ query = '' }) {
 		</FigureHtml>
 
 		{eBounds ? <FigureHtml target="table" position={[0, eBounds.height + delta]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data} showPagination={false} compact width={800 / 0.8} />
+			<DrawingTable data={data} width={800 / 0.8} />
 		</FigureHtml> : null}
 
 		{eBounds && tBounds ? <Curve positions={[eBounds.middleRight.add([2, 0]), [tBounds.midpoint.x + eBounds.width / 2, eBounds.midpoint.y], [tBounds.midpoint.x + eBounds.width / 2, tBounds.top - 4]]} stroke={themeColor} smoothing={{ distance: 40 }} endArrow strokeWidth={2} /> : null}
@@ -353,15 +353,15 @@ ${query2}`}</SQLDisplay>
 		</FigureHtml>
 
 		<FigureHtml target="table1" position={[width, 0]} anchor={[1, -1]} scale={tableScale} behind>
-			<DataTable data={data1} showPagination={false} compact width={w2} />
+			<DrawingTable data={data1} width={w2} />
 		</FigureHtml>
 
 		<FigureHtml target="table2" position={[width, h1 + delta1]} anchor={[1, -1]} scale={tableScale} behind>
-			<DataTable data={data2} showPagination={false} compact width={w2} />
+			<DrawingTable data={data2} width={w2} />
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[width, h1 + delta1 + h2 + delta2]} anchor={[1, -1]} scale={tableScale} behind>
-			<DataTable data={data} showPagination={false} compact width={w2} />
+			<DrawingTable data={data} width={w2} />
 		</FigureHtml>
 
 		{/* Horizontal arrows */}

@@ -1,5 +1,5 @@
 import { DrawingFigure, Curve, anchors, TargetBoundsDrawingFigure } from '@step-wise/drawing'
-import { DataTable, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em, Link, Glyph } from '@/ui'
 import { FigureHtml, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
@@ -43,12 +43,12 @@ export function FigureTwoTables() {
 	const tableScale = 0.7
 	return <TargetBoundsDrawingFigure targets={['table1Title', 'table1', 'table2Title', 'table2']} maxWidth={900} style={{ fontSize: 16 }}>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={tableScale}>
-			<DataTable data={data1} width={800} showPagination={false} compact />
+			<DrawingTable data={data1} width={800} />
 		</FigureHtml>
 		<FigureHtml target="table1Title" position={{ target: 'table1', anchor: 'topLeft', pixelOffset: [10, 2] }} anchor="bottomLeft"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
 
 		<FigureHtml target="table2" position={[80, 118]} anchor={[-1, -1]} scale={tableScale}>
-			<DataTable data={data2} width={1200} showPagination={false} compact />
+			<DrawingTable data={data2} width={1200} />
 		</FigureHtml>
 		<FigureHtml target="table2Title" position={{ target: 'table2', anchor: 'topRight', pixelOffset: [-10, 2] }} anchor="bottomRight"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
 	</TargetBoundsDrawingFigure>
