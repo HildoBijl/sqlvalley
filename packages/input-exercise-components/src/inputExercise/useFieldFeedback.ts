@@ -28,7 +28,7 @@ export function useFieldFeedback(name: string): InputFeedback | undefined {
 
 	// Load in validation info for the field.
 	const validation = getFieldValidation(name)
-	const invalid = validation.status === 'invalid'
+	const inputValid = validation.status === 'valid'
 
 	// Load in type-related functions like the exercise's value operations and the field's getFeedback function.
 	const definition = useExerciseDefinition()
@@ -38,12 +38,12 @@ export function useFieldFeedback(name: string): InputFeedback | undefined {
 
 	// When anything changes, recompute the feedback using the respective functions.
 	const feedback = useMemo(() => {
-		if (invalid || !getFeedback || !hasSubmittedInput || inputValue === undefined || !deepEqual(inputValue, submittedInputValue)) return
+		if (!inputValid || !getFeedback || !hasSubmittedInput || inputValue === undefined || !deepEqual(inputValue, submittedInputValue)) return
 		const domainValue = valueOperations.interpretInput({ [name]: inputValue })[name]
 		return getFeedback({ report, input: domainValue, expected, rawInput: inputValue, context: exerciseContext })
-	}, [invalid, getFeedback, hasSubmittedInput, inputValue, submittedInputValue, report, expected, valueOperations, name, exerciseContext])
+	}, [inputValid, getFeedback, hasSubmittedInput, inputValue, submittedInputValue, report, expected, valueOperations, name, exerciseContext])
 
 	// Return feedback. Prioritize validation feedback.
-	if (invalid) return validation.feedback == null ? undefined : { type: 'warning', message: validation.feedback }
+	if (!inputValid) return validation.feedback == null ? undefined : { type: 'warning', message: validation.feedback }
 	return feedback
 }
