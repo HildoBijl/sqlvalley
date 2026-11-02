@@ -1,9 +1,9 @@
 import { Rectangle, Vector, ensureVector } from '@step-wise/geometry'
 import type { ModuleId, ModuleTree } from '@step-wise/module-tree-definition'
 
-import type { GridPosition, ModuleConnector, ModuleGridPositions, ModulePositionData, ModulePositioning } from './types'
-import { cardHeight, cardWidth, columnSpacing, rowSpacing } from './settings'
-import { calculateConnectorPoints } from './calculateConnectorPoints'
+import type { GridPosition, ModuleConnector, ModuleGridPositions, ModulePositionData, ModulePositioning } from './types.ts'
+import { cardHeight, cardWidth, columnSpacing, rowSpacing } from './settings.ts'
+import { calculateConnectorPoints } from './calculateConnectorPoints.ts'
 
 // Add drawing positions and connector paths to modules assigned to grid cells.
 export function defineModulePositioning(moduleTree: ModuleTree, gridPositions: ModuleGridPositions): ModulePositioning {

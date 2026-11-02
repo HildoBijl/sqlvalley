@@ -2,16 +2,16 @@ import { useTheme } from '@mui/material'
 
 import type { VectorLike } from '@step-wise/geometry'
 
-import { gridToPixels } from '../positioning'
-import { Explorer, ExplorerContent } from '../explorer'
-import { useSkillTreeData } from '../core'
-import { SkillTreeIntro, useSkillTreeIntro } from '../intro'
-import { SkillTreeLegend } from '../legend'
-import { PlanningModeIntro, PlanningProgressPanel } from '../planning'
-import { SkillTreeDrawing } from '../rendering'
+import { gridToPixels } from '../positioning/index.ts'
+import { Explorer, ExplorerContent } from '../explorer/index.ts'
+import { useSkillTreeData } from '../core/index.ts'
+import { SkillTreeIntro, useSkillTreeIntro } from '../intro/index.ts'
+import { SkillTreeLegend } from '../legend.tsx'
+import { PlanningModeIntro, PlanningProgressPanel } from '../planning/index.ts'
+import { SkillTreeDrawing } from '../rendering/index.ts'
 
-import { SkillTreeControls } from './SkillTreeControls'
-import type { SkillTreeSettings, SkillTreeStateHandles } from './types'
+import { SkillTreeControls } from './SkillTreeControls.tsx'
+import type { SkillTreeSettings, SkillTreeStateHandles } from './types.ts'
 
 interface SkillTreeVisualizationContentProps {
 	settings?: SkillTreeSettings

@@ -34,3 +34,18 @@ npm run build --workspace=@sqlvalley/sqljs
 ```
 
 Run workspace commands from the repository root, and read a package's own README before changing its architecture or public API.
+
+
+## Publishing
+
+Only packages whose manifest does not contain `"private": true` are prepared for publication. Build, stage, and validate all such packages from the repository root with:
+
+```sh
+npm run prepare:package-publications
+```
+
+The command recreates `.release`, copies each package's compiled output, README, license, and publication manifest, and validates the resulting npm artifact. Publish the staged package rather than its workspace directory:
+
+```sh
+npm publish .release/skill-tree
+```

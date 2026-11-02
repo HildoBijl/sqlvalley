@@ -2,9 +2,9 @@ import { type MouseEvent, type ReactNode, type PointerEvent, useCallback, useMem
 
 import { type ModuleId, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 
-import { useSkillTreeData } from '../core'
+import { useSkillTreeData } from '../core/index.ts'
 
-import { SkillTreeInteractionContext } from './context'
+import { SkillTreeInteractionContext } from './context.ts'
 
 export interface SkillTreeInteractionProviderProps {
 	children: ReactNode

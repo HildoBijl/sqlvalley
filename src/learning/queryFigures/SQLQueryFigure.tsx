@@ -1,7 +1,7 @@
 import { type ComponentProps, useCallback } from 'react'
 
 import { type DrawingView, type TargetBoundsRecord, MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
 import { FigureHtml } from '../FigureHtml'
@@ -64,7 +64,7 @@ function SQLQueryFigureContents({ query, actualQuery, below, tableWidth, tableSc
 		</FigureHtml>
 
 		<FigureHtml position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind>
-			<DataTable data={data} showPagination={false} compact width={tableWidth / tableScale} />
+			<DrawingTable data={data} width={tableWidth / tableScale} />
 		</FigureHtml>
 
 		{arrowPoints ? <Curve positions={arrowPoints} stroke={themeColor} strokeWidth={2} smoothing={{ distance: arrowRadius }} endArrow /> : null}

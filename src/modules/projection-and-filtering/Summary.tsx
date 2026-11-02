@@ -1,5 +1,5 @@
 import { MeasuredDrawingFigure, Line, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, Term } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -41,15 +41,15 @@ function FigureProjectionAndFilteringContents() {
 
 	return <>
 		<FigureHtml target="table1" position={[0, 0]} anchor={[-1, -1]}>
-			<DataTable data={dataFull} showPagination={false} compact width={w1} />
+			<DrawingTable data={dataFull} width={w1} />
 		</FigureHtml>
 
 		<FigureHtml target="table2" position={[w1 + w2, 0]} anchor={[-1, -1]}>
-			<DataTable data={dataProjection} showPagination={false} compact width={w3} />
+			<DrawingTable data={dataProjection} width={w3} />
 		</FigureHtml>
 
 		<FigureHtml target="table3" position={[0, h1 + arrowHeight]} anchor={[-1, -1]}>
-			<DataTable data={dataFiltering} showPagination={false} compact width={w1} />
+			<DrawingTable data={dataFiltering} width={w1} />
 		</FigureHtml>
 
 		<Line positions={[[w1 + arrowMargin, h1 / 2], [w1 + w2 - arrowMargin, h1 / 2]]} stroke={themeColor} endArrow strokeWidth={2} />

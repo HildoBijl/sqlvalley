@@ -1,5 +1,5 @@
 import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -69,7 +69,7 @@ WHERE NOT (status = 'paid leave' OR status = 'sick leave')
 		</FigureHtml>
 
 		{eBounds ? <FigureHtml target="table" position={[0, eBounds.height + delta]} anchor={[-1, -1]} scale={0.8} behind>
-			<DataTable data={data} showPagination={false} compact width={800 / 0.8} />
+			<DrawingTable data={data} width={800 / 0.8} />
 		</FigureHtml> : null}
 
 		{eBounds && c1QueryBounds && c1NameBounds && c2QueryBounds && c2NameBounds ? <>

@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
-import { progressColors } from './colors'
+import { progressColors } from './colors.ts'
 
 interface ModuleCompletionIndicatorProps {
 	iconSize: number

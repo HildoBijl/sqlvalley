@@ -1,7 +1,7 @@
 import { type ReactNode, useMemo } from 'react'
 
-import type { IsModuleCompleted } from './types'
-import { SkillTreeProgressContext } from './context'
+import type { IsModuleCompleted } from './types.ts'
+import { SkillTreeProgressContext } from './context.ts'
 
 export interface SkillTreeProgressProviderProps {
 	children: ReactNode

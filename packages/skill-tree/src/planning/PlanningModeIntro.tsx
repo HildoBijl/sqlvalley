@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material'
 
-import { useSkillTreePlanning } from './hooks'
+import { useSkillTreePlanning } from './hooks.ts'
 
 export function PlanningModeIntro() {
 	const { showPlanningModeIntro, closePlanningModeIntro } = useSkillTreePlanning()

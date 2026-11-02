@@ -1,9 +1,9 @@
 import { Box, LinearProgress, Link, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
-import { useSkillTreeInteraction } from '../interaction'
+import { useSkillTreeInteraction } from '../interaction/index.ts'
 
-import { useSkillTreePlanning } from './hooks'
+import { useSkillTreePlanning } from './hooks.ts'
 
 export function PlanningProgressPanel() {
 	const theme = useTheme()

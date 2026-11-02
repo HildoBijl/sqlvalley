@@ -1,7 +1,7 @@
 import { type ComponentType, type ReactNode, useCallback } from 'react'
 
 import { type DrawingView, type TargetBoundsRecord, MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor } from '@/ui'
 import { RA } from '../notation'
@@ -106,7 +106,7 @@ function RAQueryFigureContents({ query, actualQuery, below, tableWidth, tableSca
 		</FigureHtml>
 
 		<FigureHtml position={[tx, ty]} anchor={[-1, -1]} scale={tableScale} target="table" behind>
-			<DataTable data={data} showPagination={false} compact width={tableWidth / tableScale} />
+			<DrawingTable data={data} width={tableWidth / tableScale} />
 		</FigureHtml>
 
 		{arrowPoints ? <Curve positions={arrowPoints} stroke={themeColor} strokeWidth={2} smoothing={{ distance: arrowRadius }} endArrow /> : null}

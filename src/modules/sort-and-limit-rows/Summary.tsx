@@ -1,6 +1,6 @@
 import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { Vector } from '@step-wise/geometry'
-import { SQLDisplay, DataTable, useQueryResult } from '@sqlvalley/sql'
+import { SQLDisplay, DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -88,13 +88,13 @@ function FigureSortingContents() {
 
 			{/* Table 1 */}
 			<FigureHtml target="table1" position={[0, editorHeight + 20]} anchor={[-1, -1]} scale={0.7}>
-				<DataTable data={data1} showPagination={false} compact width={460 / 0.75} />
+				<DrawingTable data={data1} width={460 / 0.75} />
 			</FigureHtml>
 
 			{t1Bounds ? <>
 				{/* Table 2. */}
 				<FigureHtml target="table2" position={[700, editorHeight + 20 + t1Height + 20]} anchor={[1, -1]} scale={0.7}>
-					<DataTable data={data2} showPagination={false} compact width={460 / 0.75} />
+					<DrawingTable data={data2} width={460 / 0.75} />
 				</FigureHtml>
 
 				{/* Arrow between tables */}

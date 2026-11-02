@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import { useExplorer } from './hooks'
-import { useExplorerInternals } from './internalHooks'
+import { useExplorer } from './hooks.ts'
+import { useExplorerInternals } from './internalHooks.ts'
 
 interface ExplorerContentProps {
 	children: ReactNode

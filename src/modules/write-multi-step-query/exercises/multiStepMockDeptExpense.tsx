@@ -20,7 +20,7 @@ LEFT JOIN dept_expenses e ON b.d_id = e.d_id
 WHERE COALESCE(e.total_spent, 0) <= b.budget`
 
 export default {
-	exerciseId: 'multilayered-mock-dept-expense',
+	exerciseId: 'multi-step-mock-dept-expense',
 	definition: {
 		metadata: { version: 2 },
 		solution,

@@ -1,1 +1,1 @@
-export * from './ModuleConnector'
+export * from './ModuleConnector.tsx'

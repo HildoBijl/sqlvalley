@@ -1,4 +1,6 @@
-import { Close, EditNote, School } from '@mui/icons-material'
+import Close from '@mui/icons-material/Close'
+import EditNote from '@mui/icons-material/EditNote'
+import School from '@mui/icons-material/School'
 import { Box, IconButton, Typography } from '@mui/material'
 
 import { type StateHandle, useControllableState } from '@step-wise/react-utils'

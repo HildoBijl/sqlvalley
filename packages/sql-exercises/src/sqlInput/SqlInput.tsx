@@ -24,10 +24,15 @@ export function SqlInput({ name, disabled = false, onSubmit, height = '125px' }:
 	// Render the editor field.
 	const completionSchema = useExerciseCompletionSchema()
 	const invalid = validation.status === 'invalid'
+	const validationFeedbackPending = validation.status === 'pending' && validation.feedback != null
 	return <>
 		<Box aria-invalid={invalid || undefined}>
 			<SQLEditor value={typeof value === 'string' ? value : ''} onChange={setValue} height={height} readOnly={disabled} onExecute={disabled ? undefined : onSubmit} completionSchema={completionSchema} />
 		</Box>
-		{feedback ? <Alert severity={feedback.type} sx={{ mt: 1.5 }}>{feedback.message}</Alert> : null}
+		{feedback ? <Alert
+			severity={feedback.type}
+			sx={{ mt: 1.5, opacity: validationFeedbackPending ? 0.6 : 1 }}>
+			{feedback.message}
+		</Alert> : null}
 	</>
 }

@@ -1,5 +1,5 @@
 import { MeasuredDrawingFigure, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, ISQL, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@/ui'
 import { FigureHtml, SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
@@ -152,13 +152,13 @@ function FigureNaturalJoinAdjustedTablesContents() {
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
-			<DataTable data={data1} showPagination={false} compact width={480 / 0.6} />
+			<DrawingTable data={data1} width={480 / 0.6} />
 		</FigureHtml>
 
 		{t1Bounds ? <>
 			<FigureHtml position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
 			<FigureHtml target="table2" position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
-				<DataTable data={data2} showPagination={false} compact width={(width - x) / 0.6} />
+				<DrawingTable data={data2} width={(width - x) / 0.6} />
 			</FigureHtml>
 		</> : null}
 

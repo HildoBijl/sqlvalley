@@ -4,10 +4,10 @@ import { useTheme } from '@mui/material'
 import { anchors, HtmlElement } from '@step-wise/drawing'
 import { useElementSize } from '@step-wise/react-utils'
 
-import { useSkillTreeData } from '../../core'
-import { useExplorer } from '../../explorer'
-import { useSkillTreeInteraction } from '../../interaction'
-import { cardHeight, cardWidth } from '../../positioning'
+import { useSkillTreeData } from '../../core/index.ts'
+import { useExplorer } from '../../explorer/index.ts'
+import { useSkillTreeInteraction } from '../../interaction/index.ts'
+import { cardHeight, cardWidth } from '../../positioning/index.ts'
 
 // Tooltip settings.
 const maxTooltipWidth = 320

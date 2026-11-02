@@ -1,3 +1,3 @@
-export * from './types'
-export * from './SkillTreeDataProvider'
-export * from './hooks'
+export * from './types.ts'
+export * from './SkillTreeDataProvider.tsx'
+export * from './hooks.ts'

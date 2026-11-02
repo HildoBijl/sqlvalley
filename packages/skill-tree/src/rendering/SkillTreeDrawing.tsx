@@ -2,11 +2,11 @@ import { useTheme } from '@mui/material'
 
 import { Drawing } from '@step-wise/drawing'
 
-import { useSkillTreeData } from '../core'
-import { useSkillTreeInteraction } from '../interaction'
+import { useSkillTreeData } from '../core/index.ts'
+import { useSkillTreeInteraction } from '../interaction/index.ts'
 
-import { ModuleCard, ModuleTooltip } from './ModuleCard'
-import { ModuleConnector } from './ModuleConnector'
+import { ModuleCard, ModuleTooltip } from './ModuleCard/index.ts'
+import { ModuleConnector } from './ModuleConnector/index.ts'
 
 // Render the tree nodes and connectors without zoom or pan controls.
 export function SkillTreeDrawing() {

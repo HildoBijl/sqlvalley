@@ -31,11 +31,10 @@ export function useInputValidation({ input, context, fields, normalizeInput }: I
 	const [entries, setEntries] = useState<Record<string, ValidationEntry>>({})
 	const entriesRef = useLatestRef(entries)
 	const latestInputRef = useLatestRef(input)
-	
+
+	// Turn the normalized input into an input key, which is used to check if validation needs to be done anew.
 	const normalizedInput = normalizeInput(input)
 	const normalizedInputRef = useLatestRef(normalizedInput)
-	
-	// Turn the normalized input into an input key, which is used to check if validation needs to be done anew.
 	const inputKey = JSON.stringify(normalizedInput)
 	const getInputKey = useCallback((draft: PlainDataObject | undefined) => JSON.stringify(normalizeInput(draft)), [normalizeInput])
 	
@@ -67,12 +66,16 @@ export function useInputValidation({ input, context, fields, normalizeInput }: I
 				continue
 			}
 
-			// Set up a new validation call and store that it's being run.
+			// Set up a new validation call. Note that it's being run (pending) and add the previous feedback in case it's still needed.
 			const rawInput = latestInputRef.current?.[name]
 			const validate = field.validate
 			const newValidation = { key, field, context, controller: new AbortController() }
 			activeValidations.current.set(name, newValidation)
-			setEntries(current => ({ ...current, [name]: { ...baseEntry, status: 'pending' } }))
+			setEntries(current => {
+				const previousEntry = current[name]
+				const feedback = previousEntry?.field === field && previousEntry.context === context ? previousEntry.feedback : undefined
+				return { ...current, [name]: { ...baseEntry, status: 'pending', ...(feedback == null ? {} : { feedback }) } }
+			})
 
 			// Start the validation call. When it's done, check if it's still recent, and if so store the results.
 			void (async () => {
@@ -96,13 +99,15 @@ export function useInputValidation({ input, context, fields, normalizeInput }: I
 		activeValidations.current.clear()
 	}, [])
 
-	// Handler: Extract the validation result for a given field name.
+	// Handler: Extract the validation result for a given field name. When it's not present, note that it's pending and add potential previous feedback.
 	const getFieldValidation = useCallback((name: string): FieldValidationState => {
 		const field = fields.get(name)
 		if (!field) return { status: 'pending' }
 		const key = JSON.stringify([name, normalizedInput[name]])
 		const entry = entries[name]
-		return entry?.key === key && entry.field === field && entry.context === context ? entry : { status: 'pending' }
+		if (entry?.key === key && entry.field === field && entry.context === context) return entry
+		const feedback = entry?.field === field && entry.context === context ? entry.feedback : undefined
+		return { status: 'pending', ...(feedback == null ? {} : { feedback }) }
 	}, [entries, normalizedInput, context, fields])
 
 	// Determine some useful flags for the context.

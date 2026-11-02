@@ -1,7 +1,7 @@
 import { type ReactNode, useMemo } from 'react'
 
-import { SkillTreeDataContext } from './context'
-import type { SkillTreeData } from './types'
+import { SkillTreeDataContext } from './context.ts'
+import type { SkillTreeData } from './types.ts'
 
 export interface SkillTreeDataProviderProps extends SkillTreeData {
 	children: ReactNode

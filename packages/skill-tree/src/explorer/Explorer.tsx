@@ -1,9 +1,9 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 
-import { ExplorerContext } from './context'
-import { ExplorerInternalContext } from './internalContext'
-import type { ExplorerOptions } from './types'
-import { useExplorerState } from './useExplorerState'
+import { ExplorerContext } from './context.ts'
+import { ExplorerInternalContext } from './internalContext.ts'
+import type { ExplorerOptions } from './types.ts'
+import { useExplorerState } from './useExplorerState.ts'
 
 export interface ExplorerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>, ExplorerOptions {
 	children: ReactNode

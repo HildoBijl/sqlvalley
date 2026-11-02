@@ -1,5 +1,5 @@
 import { MeasuredDrawingFigure, Curve, useDrawingTargetBounds } from '@step-wise/drawing'
-import { ISQL, DataTable, useQueryResult } from '@sqlvalley/sql'
+import { ISQL, DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -56,13 +56,13 @@ function FigureJoinAndDecompositionContents() {
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
-			<DataTable data={data1} showPagination={false} compact width={480 / 0.6} />
+			<DrawingTable data={data1} width={480 / 0.6} />
 		</FigureHtml>
 
 		{t1Bounds ? <>
 			<FigureHtml position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
 			<FigureHtml target="table2" position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
-				<DataTable data={data2} showPagination={false} compact width={(width - x) / 0.6} />
+				<DrawingTable data={data2} width={(width - x) / 0.6} />
 			</FigureHtml>
 
 			{t2Bounds ? <>
@@ -73,7 +73,7 @@ function FigureJoinAndDecompositionContents() {
 				<FigureHtml position={[width / 2 + delta / 2 + 6, (y2 + y3) / 2 + 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Decomposition</span></FigureHtml>
 
 				<FigureHtml target="table3" position={[0, y3]} anchor={[-1, -1]} scale={0.45}>
-					<DataTable data={data3} showPagination={false} compact width={width / 0.45} />
+					<DrawingTable data={data3} width={width / 0.45} />
 				</FigureHtml>
 			</> : null}
 		</> : null}

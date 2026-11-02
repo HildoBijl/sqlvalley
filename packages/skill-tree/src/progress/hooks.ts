@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { SkillTreeProgressContext } from './context'
+import { SkillTreeProgressContext } from './context.ts'
 
 export function useSkillTreeProgress() {
 	const progress = useContext(SkillTreeProgressContext)

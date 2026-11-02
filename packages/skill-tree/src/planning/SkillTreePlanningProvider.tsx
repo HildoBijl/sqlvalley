@@ -1,14 +1,13 @@
-import { type ReactNode, useCallback, useMemo, useState } from 'react'
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { getRequiredModuleIds } from '@step-wise/module-tree-definition'
+import { type ModuleId, type ModuleTree, getRequiredModuleIds } from '@step-wise/module-tree-definition'
 import { useControllableState } from '@step-wise/react-utils'
-import { getGoalProgress } from '@sqlvalley/progress'
 
-import { useSkillTreeData } from '../core'
-import { useSkillTreeProgress } from '../progress'
+import { useSkillTreeData } from '../core/index.ts'
+import { type IsModuleCompleted, isModuleReadyToLearn, useSkillTreeProgress } from '../progress/index.ts'
 
-import { SkillTreePlanningContext } from './context'
-import type { SkillTreePlanningSettings, SkillTreePlanningStateHandles } from './types'
+import { SkillTreePlanningContext } from './context.ts'
+import type { SkillTreePlanningSettings, SkillTreePlanningStateHandles } from './types.ts'
 
 interface SkillTreePlanningProviderProps {
 	children: ReactNode
@@ -38,8 +37,14 @@ export function SkillTreePlanningProvider({ children, settings, stateHandles }: 
 		setPlanningMode(!isPlanningModeActive)
 	}, [hasSeenPlanningModeIntro, isPlanningEnabled, isPlanningModeActive, setHasSeenPlanningModeIntro, setPlanningMode])
 
-	// Goal module ID: set up storage for the goal and calculate its path and progress.
-	const [goalModuleId, setGoalModuleId] = useControllableState(stateHandles?.goalModuleId, null)
+	// Goal module ID: set up storage for the goal module and clear the storage if it's invalid.
+	const [storedGoalModuleId, setGoalModuleId] = useControllableState(stateHandles?.goalModuleId, null)
+	const goalModuleId = storedGoalModuleId && Object.prototype.hasOwnProperty.call(moduleTree, storedGoalModuleId) ? storedGoalModuleId : null
+	useEffect(() => {
+		if (storedGoalModuleId && !goalModuleId) setGoalModuleId(null)
+	}, [goalModuleId, setGoalModuleId, storedGoalModuleId])
+
+	// Calculate the goal module's path and progress.
 	const goalPathModuleIds = useMemo(() => new Set(goalModuleId ? getRequiredModuleIds(moduleTree, [goalModuleId]) : []), [goalModuleId, moduleTree])
 	const goalProgress = useMemo(() => {
 		if (!goalModuleId) return { completedCount: 0, totalCount: 0, nextStepId: null, nextStepName: null }
@@ -58,4 +63,13 @@ export function SkillTreePlanningProvider({ children, settings, stateHandles }: 
 		goalModuleId, setGoalModuleId, goalPathModuleIds, goalProgress,
 	])
 	return <SkillTreePlanningContext value={value}>{children}</SkillTreePlanningContext>
+}
+
+function getGoalProgress(moduleTree: ModuleTree, goalModuleId: ModuleId, isModuleCompleted: IsModuleCompleted) {
+	const goalPathModuleIds = getRequiredModuleIds(moduleTree, [goalModuleId])
+	return {
+		completedCount: goalPathModuleIds.filter(isModuleCompleted).length,
+		totalCount: goalPathModuleIds.length,
+		nextStepId: goalPathModuleIds.find(id => isModuleReadyToLearn(moduleTree, id, isModuleCompleted)) ?? null,
+	}
 }

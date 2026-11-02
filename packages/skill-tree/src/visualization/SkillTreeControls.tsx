@@ -1,10 +1,14 @@
 import type { ReactElement } from 'react'
-import { Add, HelpOutline, OutlinedFlag, Refresh, Remove } from '@mui/icons-material'
+import Add from '@mui/icons-material/Add'
+import HelpOutline from '@mui/icons-material/HelpOutline'
+import OutlinedFlag from '@mui/icons-material/OutlinedFlag'
+import Refresh from '@mui/icons-material/Refresh'
+import Remove from '@mui/icons-material/Remove'
 import { Box, Button, Fade, Tooltip } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
-import { useExplorer } from '../explorer'
-import { planningColors, useSkillTreePlanning } from '../planning'
+import { useExplorer } from '../explorer/index.ts'
+import { planningColors, useSkillTreePlanning } from '../planning/index.ts'
 
 interface SkillTreeControlsProps {
 	onHelp?: () => void

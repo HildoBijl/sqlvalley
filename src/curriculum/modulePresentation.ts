@@ -77,24 +77,24 @@ export const modulePresentation = {
 		name: 'Process Columns',
 		description: 'How do we create new derived columns from existing columns?',
 	},
-	'sort-rows': {
-		name: 'Sort Rows',
+	'sort-and-limit-rows': {
+		name: 'Sort and Limit Rows',
 		description: 'How can we use SQL to sort the records in a table, and optionally only retrieve the first few?',
 	},
-	'write-multi-criterion-query': {
-		name: 'Write Multi-Criterion Query',
+	'write-single-table-query': {
+		name: 'Write Single-Table Query',
 		description: 'How do we set up advanced queries extracting data from a single table in various ways?',
 	},
 	'aggregate-columns': {
 		name: 'Aggregate Columns',
 		description: 'How do we use SQL to apply aggregation, merging multiple rows into joint statistics?',
 	},
-	'use-filtered-aggregation': {
-		name: 'Use Filtered Aggregation',
+	'write-filtered-aggregation-query': {
+		name: 'Write Filtered Aggregation Query',
 		description: 'How do we select which rows to aggregate, and/or subsequently filter aggregated results?',
 	},
-	'write-look-up-query': {
-		name: 'Write Look-up Query',
+	'write-lookup-query': {
+		name: 'Write Lookup Query',
 		description: 'How do we select data from one table based on a condition in another table?',
 	},
 	'join-tables': {
@@ -105,9 +105,9 @@ export const modulePresentation = {
 		name: 'Write Multi-Table Query',
 		description: 'How can we set up queries combining data from multiple tables in convoluted ways?',
 	},
-	'write-multi-layered-query': {
-		name: 'Write Multi-Layered Query',
-		description: 'How do we set up complex multi-table queries and structure their set-up through intermediate queries?',
+	'write-multi-step-query': {
+		name: 'Write Multi-Step Query',
+		description: 'How do we write complex queries through a series of clear intermediate steps?',
 	},
 
 	// Relational algebra.
@@ -123,29 +123,29 @@ export const modulePresentation = {
 		name: 'Filter Rows',
 		description: 'How do we use relational algebra to filter the tuples within a relation based on some condition?',
 	},
-	'ra-set-up-single-relation-query': {
-		name: 'Set Up Single-Relation Query',
+	'ra-write-single-relation-query': {
+		name: 'Write Single-Relation Query',
 		description: 'How do we write basic relational algebra queries for a single relation?',
 	},
-	'ra-set-up-multi-condition-query': {
-		name: 'Set Up Multi-Condition Query',
-		description: 'How do we combine multiple conditions, possibly on different relations, in one query?',
+	'ra-combine-conditions-across-relations': {
+		name: 'Combine Conditions Across Relations',
+		description: 'How do we write a query that combines conditions defined across different relations?',
 	},
 	'ra-join-relations': {
 		name: 'Join Relations',
 		description: 'How do use relational algebra to join two relations together?',
 	},
-	'ra-set-up-multi-relation-query': {
-		name: 'Set Up Multi-Relation Query',
-		description: 'How do we write relational algebra queries on a combination of different relations?',
+	'ra-write-join-query': {
+		name: 'Write Join Query',
+		description: 'How do we write complete queries involving multiple joins or repeated use of the same relation?',
 	},
-	'ra-set-up-multi-step-query': {
-		name: 'Set Up Multi-Step Query',
-		description: 'How do we set up complex relational algebra queries involving multiple steps?',
+	'ra-write-multi-step-query': {
+		name: 'Write Multi-Step Query',
+		description: 'How do we write complex relational algebra queries involving multiple steps?',
 	},
-	'ra-set-up-universal-condition-query': {
-		name: 'Set Up Universal Condition Query',
-		description: 'How do we set up relational algebra queries involving "for every" quantifiers and similar?',
+	'ra-write-universal-condition-query': {
+		name: 'Write Universal-Condition Query',
+		description: 'How do we write relational algebra queries involving "for every" quantifiers and similar?',
 	},
 
 	// Datalog.
@@ -177,13 +177,13 @@ export const modulePresentation = {
 		name: 'Check Rule Safety',
 		description: 'How can we check whether a Datalog rule is safe or not?',
 	},
-	'dl-define-negation-rule': {
-		name: 'Define Negation Rule',
-		description: 'How can we adequately apply the word "not" in some Datalog rule?',
+	'dl-express-non-existence': {
+		name: 'Express Non-Existence',
+		description: 'How do we use Datalog to express that a matching fact does not exist?',
 	},
-	'dl-write-multi-predicate-program': {
-		name: 'Write Multi-Predicate Program',
-		description: 'How can we set up more complex Datalog programs, combining joins with negation?',
+	'dl-write-multi-step-program': {
+		name: 'Write Multi-Step Program',
+		description: 'How do we solve multi-step data requests by assembling a Datalog program?',
 	},
 	'dl-define-recursive-predicate': {
 		name: 'Define Recursive Predicate',
@@ -197,13 +197,13 @@ export const modulePresentation = {
 		name: 'Draw Predicate Dependency Graph',
 		description: 'How do we draw a Predicate Dependency Graph?',
 	},
-	'dl-semi-positive-and-stratified-datalog': {
-		name: 'Semi-Positive and Stratified Datalog',
-		description: 'How does restricting negation in Datalog prevent the problem of having multiple possible outputs?',
+	'dl-program-classes': {
+		name: 'Datalog Program Classes',
+		description: 'How do restrictions on negation distinguish positive, semi-positive and stratified Datalog programs?',
 	},
-	'dl-check-program-stratification': {
-		name: 'Check Program Stratification',
-		description: 'How can we determine if a Datalog program is semi-positive and/or stratified?',
+	'dl-classify-program': {
+		name: 'Classify Datalog Program',
+		description: 'How do we determine whether a Datalog program is positive, semi-positive and/or stratified?',
 	},
 	'dl-write-recursive-program': {
 		name: 'Write Recursive Program',

@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react'
 
 import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Info, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -128,7 +128,7 @@ function FigureFilteringContents({ query = '', columnName = '' }) {
 
 		{eBounds ? <>
 			<FigureHtml target="table" position={[0, h1 + delta]} anchor={[-1, -1]} scale={scale} behind>
-				<DataTable data={data} showPagination={false} compact width={width / scale} />
+				<DrawingTable data={data} width={width / scale} />
 			</FigureHtml>
 		</> : null}
 

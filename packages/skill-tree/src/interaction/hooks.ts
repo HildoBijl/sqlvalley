@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { SkillTreeInteractionContext } from './context'
+import { SkillTreeInteractionContext } from './context.ts'
 
 export function useSkillTreeInteraction() {
 	const interaction = useContext(SkillTreeInteractionContext)

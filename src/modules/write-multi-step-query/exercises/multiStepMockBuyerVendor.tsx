@@ -21,7 +21,7 @@ const solution = `
   WHERE v.earned > COALESCE(b.spent, 0);`
 
 export default {
-	exerciseId: 'multilayered-mock-buyer-vendor',
+	exerciseId: 'multi-step-mock-buyer-vendor',
 	definition: {
 		metadata: { version: 2 },
 		solution,

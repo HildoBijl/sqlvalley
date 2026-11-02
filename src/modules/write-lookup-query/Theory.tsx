@@ -9,7 +9,7 @@ export function Theory() {
 			<Par>We know how to write basic queries for single tables. But tables are often linked to other tables through foreign keys. In SQL we can write queries involving multiple tables at the same time. Let's study a basic case, where we look up values from one table, based on a condition from another table.</Par>
 		</Section>
 
-		<Section title={<>Set up a look-up query using <ISQL>IN</ISQL></>}>
+		<Section title={<>Set up a lookup query using <ISQL>IN</ISQL></>}>
 			<Par>Let's consider the employees and departments of a company. Suppose that we are told to gather the following data.</Par>
 			<Quote>Find the IDs and names of all the managers who manage a department with more than ten employees.</Quote>
 			<Par>To do so, we can first look at the departments and see which ones qualify.</Par>

@@ -3,7 +3,7 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
 import CheckIcon from '@mui/icons-material/Check'
 
 import { MeasuredDrawingFigure, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { Page, Section, Par, List, Warning, Info, Term, Em, M, BM } from '@/ui'
 import { FigureHtml, RA, IRA, RAQueryFigure, useTheoryPageDatabase } from '@/learning'
@@ -206,19 +206,19 @@ function FigureDivisionTableContents() {
 
 	return <>
 		<FigureHtml target="table1" position={[0, 0]} anchor={[-1, -1]}>
-			<DataTable data={d1} showPagination={false} compact width={w1} />
+			<DrawingTable data={d1} width={w1} />
 		</FigureHtml>
 
 		<FigureHtml position={[w1 + w2 / 2, height / 2]} scale={2}><span style={{ fontWeight: 500, fontSize: '1em' }}>÷</span></FigureHtml>
 
 		<FigureHtml target="table2" position={[w1 + w2, height / 2]} anchor={[-1, 0]}>
-			<DataTable data={d2} showPagination={false} compact width={w3} />
+			<DrawingTable data={d2} width={w3} />
 		</FigureHtml>
 
 		<FigureHtml position={[w1 + w2 + w3 + w4 / 2, height / 2]} scale={2}><span style={{ fontWeight: 500, fontSize: '1em' }}>=</span></FigureHtml>
 
 		<FigureHtml target="table3" position={[w1 + w2 + w3 + w4, height / 2]} anchor={[-1, 0]}>
-			<DataTable data={d3} showPagination={false} compact width={w5} />
+			<DrawingTable data={d3} width={w5} />
 		</FigureHtml>
 	</>
 }

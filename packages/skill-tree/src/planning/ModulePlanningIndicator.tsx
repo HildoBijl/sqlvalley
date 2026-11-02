@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import PushPinIcon from '@mui/icons-material/PushPin'
-import { PlayArrow } from '@mui/icons-material'
+import PlayArrow from '@mui/icons-material/PlayArrow'
 import { useTheme } from '@mui/material'
 
-import { progressColors } from '../progress'
+import { progressColors } from '../progress/index.ts'
 
-import { planningColors } from './colors'
+import { planningColors } from './colors.ts'
 
 interface ModulePlanningIndicatorProps {
 	variant: 'set' | 'active' | 'next-step'

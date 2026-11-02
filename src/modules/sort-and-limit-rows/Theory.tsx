@@ -1,6 +1,6 @@
 import { Vector } from '@step-wise/geometry'
 import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { DataTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
+import { DrawingTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Section, Warning, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
@@ -71,7 +71,7 @@ ORDER BY ${sortColumn} DESC;`
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[320, 20]} anchor={[-1, -1]} scale={0.7} behind>
-			<DataTable data={data} width={700} showPagination={false} compact />
+			<DrawingTable data={data} width={700} />
 		</FigureHtml>
 
 		{/* Desc arrow and table sort arrow. */}
@@ -125,7 +125,7 @@ ORDER BY
 
 		{/* Table */}
 		<FigureHtml target="table" position={[320, 20]} anchor={[-1, -1]} scale={0.7} behind>
-			<DataTable data={data} width={700} showPagination={false} compact />
+			<DrawingTable data={data} width={700} />
 		</FigureHtml>
 
 		{/* First sorting arrows */}
@@ -185,7 +185,7 @@ LIMIT 3;`
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[320, 0]} anchor={[-1, -1]} scale={0.7} behind>
-			<DataTable data={data} width={700} showPagination={false} compact />
+			<DrawingTable data={data} width={700} />
 		</FigureHtml>
 
 		{limitBounds && sortColumnNameBounds ? <Curve positions={[limitBounds.middleRight.add([2, 2]), limitBounds.middleRight.add([70, 2]), [x - 30, avgY], [x - 8, avgY]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
@@ -235,7 +235,7 @@ LIMIT 3 OFFSET ${offset};`
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[320, 0]} anchor={[-1, -1]} scale={0.7} behind>
-			<DataTable data={data} width={700} showPagination={false} compact />
+			<DrawingTable data={data} width={700} />
 		</FigureHtml>
 
 		{point ? <FigureHtml position={point} anchor={[1, 0]} scale={0.6} behind>
@@ -282,7 +282,7 @@ ORDER BY ${sortColumn} ASC NULLS LAST;`
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[320, 20]} anchor={[-1, -1]} scale={0.7} behind>
-			<DataTable data={data} width={700} showPagination={false} compact />
+			<DrawingTable data={data} width={700} />
 		</FigureHtml>
 
 		{ascBounds && sortColumnNameBounds ? <Curve positions={[ascBounds.topRight.add([0, 0]), [ascBounds.right + 70, 0], [sortColumnNameBounds.left - 30, 0], sortColumnNameBounds.bottomLeft.add([-12, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}

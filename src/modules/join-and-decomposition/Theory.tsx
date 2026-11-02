@@ -1,5 +1,5 @@
 import { MeasuredDrawingFigure, Curve, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
-import { ISQL, DataTable, useQueryResult } from '@sqlvalley/sql'
+import { ISQL, DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
 import { FigureHtml, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
@@ -55,7 +55,7 @@ export function Theory() {
 					<TableQueryFigure query={`SELECT * FROM departments, employees WHERE manager_id=e_id;`} tableWidth={1600} tableScale={0.45} />
 				</>,
 			]} />
-			<Info>The above definition of a join, through a Cartesian product, is a <Em>generalization</Em> of the idea we saw earlier. The look-up idea we saw earlier only works when the foreign key is unique in the second (for us <ISQL>employees</ISQL>) table. If this is not the case, for instance because multiple employees have the same employee ID, then the look-up fails. This generalized method with the Cartesian product always works.</Info>
+			<Info>The above definition of a join, through a Cartesian product, is a <Em>generalization</Em> of the idea we saw earlier. The lookup idea we saw earlier only works when the foreign key is unique in the second (for us <ISQL>employees</ISQL>) table. If this is not the case, for instance because multiple employees have the same employee ID, then the lookup fails. This generalized method with the Cartesian product always works.</Info>
 		</Section>
 
 		<Section title="The natural join: require equal-named columns to be equal">
@@ -135,13 +135,13 @@ function FigureNaturalJoinContents() {
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
-			<DataTable data={data1} showPagination={false} compact width={480 / 0.6} />
+			<DrawingTable data={data1} width={480 / 0.6} />
 		</FigureHtml>
 
 		{t1Bounds ? <>
 			<FigureHtml position={[790, y1 - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
 			<FigureHtml target="table2" position={[x, y1]} anchor={[-1, -1]} scale={0.6} behind>
-				<DataTable data={data2} showPagination={false} compact width={(width - x) / 0.6} />
+				<DrawingTable data={data2} width={(width - x) / 0.6} />
 			</FigureHtml>
 
 			{t2Bounds ? <>
@@ -149,7 +149,7 @@ function FigureNaturalJoinContents() {
 				<FigureHtml position={[width / 2 + 6, (y2 + y3) / 2 - 4]} anchor={[-1, 0]}><span style={{ fontWeight: 500, fontSize: '0.8em', color: themeColor }}>Natural join</span></FigureHtml>
 
 				<FigureHtml target="table3" position={[0, y3]} anchor={[-1, -1]} scale={0.45}>
-					<DataTable data={data3} showPagination={false} compact width={width / 0.45} />
+					<DrawingTable data={data3} width={width / 0.45} />
 				</FigureHtml>
 			</> : null}
 		</> : null}
@@ -190,12 +190,12 @@ function FigureTwoTablesAdjustedContents() {
 	return <>
 		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
-			<DataTable data={data1} showPagination={false} compact width={800} />
+			<DrawingTable data={data1} width={800} />
 		</FigureHtml>
 
 		<FigureHtml position={[790, y - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
 		<FigureHtml target="table2" position={[x, y]} anchor={[-1, -1]} scale={0.6}>
-			<DataTable data={data2} showPagination={false} compact width={(800 - x) / 0.6} />
+			<DrawingTable data={data2} width={(800 - x) / 0.6} />
 		</FigureHtml>
 
 		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min.add([-padding, -padding]), textNode1Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}

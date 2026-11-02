@@ -125,7 +125,7 @@ WHERE username IN (
 			<Par>CTEs are a very powerful tool at structuring complex queries. When setting up the CTEs, there are a few tips and tricks that are useful to apply. We've already seen some of them applied in the example above, but it's useful to outline them all together.</Par>
 			<List useNumbers items={[
 				<>Start by <Term>executing the data request manually</Term>. When we do so, we often already generate lists (if only in our head) to support what we're doing. These lists are probably worthwhile to turn into CTEs.</>,
-				<>Set up CTEs using <Term>keys</Term> (or combinations of keys). Keys are far easier to work with than full records. And if we have keys, we can easily include the relevant rows again through a look-up query.</>,
+				<>Set up CTEs using <Term>keys</Term> (or combinations of keys). Keys are far easier to work with than full records. And if we have keys, we can easily include the relevant rows again through a lookup query.</>,
 				<>Set up CTEs that are <Term>easy to understand</Term>. The name itself should already be clear about what exactly it represents. If this is not the case, we may want to reconsider the CTE we are setting up.</>,
 				<>Work <Term>step by step</Term>. First we write a query for a CTE and <Em>test</Em> if it works as intended. Once it does, we turn it into a CTE and use it in the next query. We repeat as we work towards are final query.</>,
 				<>Use <Term>small steps</Term> whenever possible. If our query is getting large, it probably means we should split it up into more CTEs. The simpler each CTE is, the better, even if we use more of them.</>,
