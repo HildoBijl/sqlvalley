@@ -2,17 +2,17 @@ import { Vector } from '@step-wise/geometry'
 import { MeasuredDrawingFigure, Curve, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DrawingTable, ISQL, SQLDisplay, useQueryResult } from '@sqlvalley/sql'
 
-import { useThemeColor, Page, Par, Section, Warning, Term, Em } from '@/ui'
+import { useThemeColor, Page, Par, Section, Info, Warning, Term, Em } from '@/ui'
 import { FigureHtml, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
-		<Par>We know how to use SQL to retrieve an entire table. The rows usually appear in the order in which they have originally been added. If we want a different order, we can <Term>sort</Term> the table. Let's check out how this works.</Par>
+		<Par>We know how to use SQL to retrieve an entire table. When we do, SQL provides no guarantees about the order in which the rows are returned. That is, unless we explicitly specify an order. Let's check out how this works.</Par>
 
 		<Section title="Sort on a single column">
 			<Par>To sort the output, we add an <ISQL>ORDER BY</ISQL> clause to the end of the query and specify the column to sort by. Optionally, we can add <ISQL>ASC</ISQL> (ascending, default) or <ISQL>DESC</ISQL> (descending) to choose the sorting direction.</Par>
 			<FigureSortOnSingleColumn />
-			<Par>The exact sorting method depends on the <Term>data type</Term>. For numbers, we sort by magnitude. For text, we sort lexicographically (in dictionary order). For dates/times, we sort by which date/time is earlier or later.</Par>
+			<Par>The exact sorting method depends on the <Term>data type</Term>. For numbers, we sort by magnitude. For text, we sort lexicographically - in dictionary order - also subject to the database's settings. For dates/times, we sort by which date/time is earlier or later.</Par>
 		</Section>
 
 		<Section title="Sort based on multiple columns">
@@ -23,13 +23,14 @@ export function Theory() {
 		<Section title="Limit the number of rows">
 			<Par>To limit the number of rows that are returned, we add a <ISQL>LIMIT</ISQL> clause, followed by how many rows we want to be returned. Only the <Em>first</Em> couple of rows will be returned.</Par>
 			<FigureLimitRows />
+			<Info>You can also use <ISQL>LIMIT</ISQL> without using <ISQL>ORDER BY</ISQL>. However, without <ISQL>ORDER BY</ISQL> there are no guarantees about the ordering, so you'll never know which row you'll get. That's why it's best to always use <ISQL>LIMIT</ISQL> together with <ISQL>ORDER BY</ISQL>.</Info>
 			<Par>We can combine <ISQL>LIMIT</ISQL> with <ISQL>OFFSET</ISQL> to skip a number of rows before returning results.</Par>
 			<FigureLimitRowsWithOffset />
 			<Warning>Most database management systems support <ISQL>LIMIT</ISQL> and <ISQL>OFFSET</ISQL>, but a few use alternative keywords. If these clauses do not work in your DBMS, check its documentation for the required syntax.</Warning>
 		</Section>
 
 		<Section title="Deal with NULL values">
-			<Par>When sorting, <ISQL>NULL</ISQL> values either come at the start or at the end. About half of the DBMSs (including SQLite) treat <ISQL>NULL</ISQL> values as the <Em>smallest</Em> possible value: it comes first on ascending order and last on descending order. The other half of the DBMSs have it the other way around, and treat <ISQL>NULL</ISQL> values as the <Em>largest</Em> possible value. If you want to flip this default behavior, you can override it using <ISQL>NULLS FIRST</ISQL> or <ISQL>NULLS LAST</ISQL>, specified per sorting attribute.</Par>
+			<Par>When sorting, <ISQL>NULL</ISQL> values either come at the start or at the end. About half of the DBMSs (including SQLite) treat <ISQL>NULL</ISQL> values as the <Em>smallest</Em> possible value: they comes first on ascending order and last on descending order. The other half of the DBMSs have it the other way around, and treat <ISQL>NULL</ISQL> values as the <Em>largest</Em> possible value. If you want to flip this default behavior, you can override it using <ISQL>NULLS FIRST</ISQL> or <ISQL>NULLS LAST</ISQL>, specified per sorting attribute.</Par>
 			<FigureSortNullValues />
 		</Section>
 	</Page>
@@ -38,7 +39,7 @@ export function Theory() {
 function FigureSortOnSingleColumn() {
 	return <MeasuredDrawingFigure
 		targets={['table']}
-		calculateView={({ table }) => ({ type: 'identity', width: 320 + table.width, height: 20 + table.height })}
+		calculateView={({ table }) => ({ type: 'identity', width: 280 + table.width, height: 20 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureSortOnSingleColumnContents />
 	</MeasuredDrawingFigure>
@@ -48,10 +49,10 @@ function FigureSortOnSingleColumnContents() {
 	const themeColor = useThemeColor()
 
 	// Set up query data.
-	const sortColumn = 'd_name'
+	const sortColumn = 'salary'
 	const query = `
 SELECT *
-FROM departments
+FROM contracts
 ORDER BY ${sortColumn} DESC;`
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
@@ -60,7 +61,7 @@ ORDER BY ${sortColumn} DESC;`
 	useDrawingTextTarget('descBounds', 'query', 'DESC')
 	const descBounds = useDrawingTargetBounds('descBounds')
 
-	// Find the bounds for "d_name".
+	// Find the bounds for the sorting column.
 	const tBounds = useDrawingTargetBounds('table')
 	useDrawingTextTarget('sortColumnNameBounds', 'table', sortColumn)
 	const sortColumnNameBounds = useDrawingTargetBounds('sortColumnNameBounds')
@@ -70,8 +71,8 @@ ORDER BY ${sortColumn} DESC;`
 			<SQLDisplay>{query}</SQLDisplay>
 		</FigureHtml>
 
-		<FigureHtml target="table" position={[320, 20]} anchor={[-1, -1]} scale={0.7} behind>
-			<DrawingTable data={data} width={700} />
+		<FigureHtml target="table" position={[280, 20]} anchor={[-1, -1]} scale={0.7} behind>
+			<DrawingTable data={data} width={900} />
 		</FigureHtml>
 
 		{/* Desc arrow and table sort arrow. */}
@@ -83,7 +84,7 @@ ORDER BY ${sortColumn} DESC;`
 function FigureSortOnMultipleColumns() {
 	return <MeasuredDrawingFigure
 		targets={['table']}
-		calculateView={({ table }) => ({ type: 'identity', width: 320 + table.width, height: 40 + table.height })}
+		calculateView={({ table }) => ({ type: 'identity', width: 280 + table.width, height: 40 + table.height })}
 		style={{ fontSize: 16 }}>
 		<FigureSortOnMultipleColumnsContents />
 	</MeasuredDrawingFigure>
@@ -93,10 +94,10 @@ function FigureSortOnMultipleColumnsContents() {
 	const themeColor = useThemeColor()
 
 	// Set up query data.
-	const sortColumn1 = 'nr_employees'
-	const sortColumn2 = 'budget'
+	const sortColumn1 = 'position'
+	const sortColumn2 = 'salary'
 	const query = `SELECT *
-FROM departments
+FROM contracts
 ORDER BY
   ${sortColumn1} ASC,
   ${sortColumn2} DESC;`
@@ -109,7 +110,7 @@ ORDER BY
 	useDrawingTextTarget('descBounds', 'query', 'DESC')
 	const descBounds = useDrawingTargetBounds('descBounds')
 
-	// Find the bounds for "d_name".
+	// Find the bounds for the sorting columns.
 	const tBounds = useDrawingTargetBounds('table')
 	useDrawingTextTarget('sortColumn1NameBounds', 'table', sortColumn1)
 	const sortColumn1NameBounds = useDrawingTargetBounds('sortColumn1NameBounds')
@@ -117,6 +118,7 @@ ORDER BY
 	const sortColumn2NameBounds = useDrawingTargetBounds('sortColumn2NameBounds')
 
 	const drawingHeight = 20 + (tBounds?.height ?? 200) + 20
+	const secondarySortingOpacity = 0.5
 	return <>
 		{/* SQL query */}
 		<FigureHtml target="query" position={[0, 20]} anchor={[-1, -1]} behind>
@@ -124,22 +126,22 @@ ORDER BY
 		</FigureHtml>
 
 		{/* Table */}
-		<FigureHtml target="table" position={[320, 20]} anchor={[-1, -1]} scale={0.7} behind>
-			<DrawingTable data={data} width={700} />
+		<FigureHtml target="table" position={[280, 20]} anchor={[-1, -1]} scale={0.7} behind>
+			<DrawingTable data={data} width={900} />
 		</FigureHtml>
 
 		{/* First sorting arrows */}
 		{ascBounds && sortColumn1NameBounds && tBounds ? <>
-			<FigureHtml position={sortColumn1NameBounds.topLeft.add([-36, -6])} anchor={[-1, 1]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem' }}>Primary sorting</span></FigureHtml>
-			<Curve positions={[ascBounds.topRight.add([0, 0]), [ascBounds.right + 70, 0], [sortColumn1NameBounds.left - 30, 0], sortColumn1NameBounds.bottomLeft.add([-16, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-			<Curve positions={[sortColumn1NameBounds.bottomLeft.add([-14, 12]), [sortColumn1NameBounds.left - 14, tBounds.bottom - 6]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<FigureHtml position={sortColumn1NameBounds.topLeft.add([-30, -10])} anchor={[-1, 1]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem' }}>Primary sorting</span></FigureHtml>
+			<Curve positions={[ascBounds.topRight.add([0, 0]), [ascBounds.right + 70, 0], [sortColumn1NameBounds.left - 30, 0], sortColumn1NameBounds.bottomLeft.add([-9, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<Curve positions={[sortColumn1NameBounds.bottomLeft.add([-8, 12]), [sortColumn1NameBounds.left - 8, tBounds.bottom - 6]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
 		</> : null}
 
 		{/* Second sorting arrows */}
 		{descBounds && sortColumn2NameBounds && tBounds ? <>
-			<FigureHtml position={[sortColumn2NameBounds.left - 34, drawingHeight - 16]} anchor={[-1, -1]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem', opacity: 0.5 }}>Secondary sorting</span></FigureHtml>
-			<Curve positions={[descBounds.bottomRight.add([0, 3]), [descBounds.right + 120, drawingHeight], [sortColumn2NameBounds.left - 40, drawingHeight], [sortColumn2NameBounds.left - 14, drawingHeight - 24]]} stroke={themeColor} endArrow style={{ opacity: 0.5 }} strokeWidth={2} smoothing={{ ratio: 1 }} />
-			<Curve positions={[[sortColumn2NameBounds.left - 12, tBounds.bottom - 6], sortColumn2NameBounds.bottomLeft.add([-12, 12])]} stroke={themeColor} endArrow style={{ opacity: 0.5 }} strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<FigureHtml position={[sortColumn2NameBounds.left - 32, drawingHeight - 14]} anchor={[-1, -1]}><span style={{ fontWeight: 600, color: themeColor, fontSize: '0.7rem', opacity: secondarySortingOpacity }}>Secondary sorting</span></FigureHtml>
+			<Curve positions={[descBounds.bottomRight.add([0, 3]), [descBounds.right + 60, drawingHeight], [sortColumn2NameBounds.left - 60, drawingHeight + 16], [sortColumn2NameBounds.left - 9, drawingHeight - 24]]} stroke={themeColor} endArrow={{ style: { opacity: secondarySortingOpacity } }} style={{ opacity: secondarySortingOpacity }} strokeWidth={2} smoothing={{ ratio: 1 }} />
+			<Curve positions={[[sortColumn2NameBounds.left - 8, tBounds.bottom - 6], sortColumn2NameBounds.bottomLeft.add([-8, 12])]} stroke={themeColor} endArrow={{ style: { opacity: secondarySortingOpacity } }} style={{ opacity: secondarySortingOpacity }} strokeWidth={2} smoothing={{ ratio: 1 }} />
 		</> : null}
 	</>
 }
@@ -147,7 +149,7 @@ ORDER BY
 function FigureLimitRows() {
 	return <MeasuredDrawingFigure
 		targets={['table', 'query']}
-		calculateView={({ table, query }) => ({ type: 'identity', width: 320 + table.width, height: Math.max(table.height, query.height) })}
+		calculateView={({ table, query }) => ({ type: 'identity', width: 280 + table.width, height: Math.max(table.height, query.height) })}
 		style={{ fontSize: 16 }}>
 		<FigureLimitRowsContents />
 	</MeasuredDrawingFigure>
@@ -157,10 +159,10 @@ function FigureLimitRowsContents() {
 	const themeColor = useThemeColor()
 
 	// Set up query data.
-	const sortColumn = 'd_name'
+	const sortColumn = 'salary'
 	const query = `
 SELECT *
-FROM departments
+FROM contracts
 ORDER BY ${sortColumn} DESC
 LIMIT 3;`
 	const db = useTheoryPageDatabase()
@@ -170,7 +172,7 @@ LIMIT 3;`
 	useDrawingTextTarget('limitBounds', 'query', ';')
 	const limitBounds = useDrawingTargetBounds('limitBounds')
 
-	// Find the bounds for "d_name".
+	// Find the bounds for the sorting column.
 	const tBounds = useDrawingTargetBounds('table')
 	useDrawingTextTarget('sortColumnNameBounds', 'table', sortColumn)
 	const sortColumnNameBounds = useDrawingTargetBounds('sortColumnNameBounds')
@@ -184,8 +186,8 @@ LIMIT 3;`
 			<SQLDisplay>{query}</SQLDisplay>
 		</FigureHtml>
 
-		<FigureHtml target="table" position={[320, 0]} anchor={[-1, -1]} scale={0.7} behind>
-			<DrawingTable data={data} width={700} />
+		<FigureHtml target="table" position={[280, 0]} anchor={[-1, -1]} scale={0.7} behind>
+			<DrawingTable data={data} width={900} />
 		</FigureHtml>
 
 		{limitBounds && sortColumnNameBounds ? <Curve positions={[limitBounds.middleRight.add([2, 2]), limitBounds.middleRight.add([70, 2]), [x - 30, avgY], [x - 8, avgY]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
@@ -197,7 +199,7 @@ LIMIT 3;`
 function FigureLimitRowsWithOffset() {
 	return <MeasuredDrawingFigure
 		targets={['table', 'query']}
-		calculateView={({ table, query }) => ({ type: 'identity', width: 320 + table.width, height: Math.max(table.height, query.height) })}
+		calculateView={({ table, query }) => ({ type: 'identity', width: 280 + table.width, height: Math.max(table.height, query.height) })}
 		style={{ fontSize: 16 }}>
 		<FigureLimitRowsWithOffsetContents />
 	</MeasuredDrawingFigure>
@@ -207,11 +209,11 @@ function FigureLimitRowsWithOffsetContents() {
 	const themeColor = useThemeColor()
 
 	// Set up query data.
-	const sortColumn = 'd_name'
-	const offset = 1
+	const sortColumn = 'salary'
+	const offset = 2
 	const query = `
 SELECT *
-FROM departments
+FROM contracts
 ORDER BY ${sortColumn} DESC
 LIMIT 3 OFFSET ${offset};`
 	const db = useTheoryPageDatabase()
@@ -221,7 +223,7 @@ LIMIT 3 OFFSET ${offset};`
 	useDrawingTextTarget('offsetBounds', 'query', ';')
 	const offsetBounds = useDrawingTargetBounds('offsetBounds')
 
-	// Find the bounds for "d_name".
+	// Find the bounds for the sorting column.
 	const tBounds = useDrawingTargetBounds('table')
 	useDrawingTextTarget('sortColumnNameBounds', 'table', sortColumn)
 	const sortColumnNameBounds = useDrawingTargetBounds('sortColumnNameBounds')
@@ -234,15 +236,15 @@ LIMIT 3 OFFSET ${offset};`
 			<SQLDisplay>{query}</SQLDisplay>
 		</FigureHtml>
 
-		<FigureHtml target="table" position={[320, 0]} anchor={[-1, -1]} scale={0.7} behind>
-			<DrawingTable data={data} width={700} />
+		<FigureHtml target="table" position={[280, 0]} anchor={[-1, -1]} scale={0.7} behind>
+			<DrawingTable data={data} width={900} />
 		</FigureHtml>
 
 		{point ? <FigureHtml position={point} anchor={[1, 0]} scale={0.6} behind>
 			<span style={{ color: themeColor, fontWeight: 600 }}>+{offset}</span>
 		</FigureHtml> : null}
 
-		{offsetBounds && point ? <Curve positions={[offsetBounds.middleRight.add([2, 2]), offsetBounds.middleRight.add([70, 2]), point.add([-40, 0]), point.add([-14, 0])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+		{offsetBounds && point ? <Curve positions={[offsetBounds.middleRight.add([2, 2]), offsetBounds.middleRight.add([50, 2]), point.add([-40, 0]), point.add([-14, 0])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
 	</>
 }
 
@@ -259,10 +261,10 @@ function FigureSortNullValuesContents() {
 	const themeColor = useThemeColor()
 
 	// Set up query data.
-	const sortColumn = 'budget'
+	const sortColumn = 'end_date'
 	const query = `
 SELECT *
-FROM departments
+FROM contracts
 ORDER BY ${sortColumn} ASC NULLS LAST;`
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
@@ -271,7 +273,7 @@ ORDER BY ${sortColumn} ASC NULLS LAST;`
 	useDrawingTextTarget('ascBounds', 'query', 'ASC')
 	const ascBounds = useDrawingTargetBounds('ascBounds')
 
-	// Find the bounds for "d_name".
+	// Find the bounds for the sorting column.
 	const tBounds = useDrawingTargetBounds('table')
 	useDrawingTextTarget('sortColumnNameBounds', 'table', sortColumn)
 	const sortColumnNameBounds = useDrawingTargetBounds('sortColumnNameBounds')
@@ -282,10 +284,10 @@ ORDER BY ${sortColumn} ASC NULLS LAST;`
 		</FigureHtml>
 
 		<FigureHtml target="table" position={[320, 20]} anchor={[-1, -1]} scale={0.7} behind>
-			<DrawingTable data={data} width={700} />
+			<DrawingTable data={data} width={900} />
 		</FigureHtml>
 
-		{ascBounds && sortColumnNameBounds ? <Curve positions={[ascBounds.topRight.add([0, 0]), [ascBounds.right + 70, 0], [sortColumnNameBounds.left - 30, 0], sortColumnNameBounds.bottomLeft.add([-12, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
-		{sortColumnNameBounds && tBounds ? <Curve positions={[sortColumnNameBounds.bottomLeft.add([-10, 12]), [sortColumnNameBounds.left - 10, tBounds.bottom - 6]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+		{ascBounds && sortColumnNameBounds ? <Curve positions={[ascBounds.topRight.add([0, 0]), [ascBounds.right + 70, -10], [sortColumnNameBounds.left - 30, -10], sortColumnNameBounds.bottomLeft.add([-7, 8])]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
+		{sortColumnNameBounds && tBounds ? <Curve positions={[sortColumnNameBounds.bottomLeft.add([-6, 12]), [sortColumnNameBounds.left - 6, tBounds.bottom - 6]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} /> : null}
 	</>
 }

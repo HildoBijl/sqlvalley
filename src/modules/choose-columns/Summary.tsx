@@ -19,7 +19,7 @@ FROM employees;`} />
   e.last_name AS family_name,
   e.phone AS number
 FROM employees AS e;`} />
-			<Info>Ideally table/column names are without spaces and in lower case. If you deviate from this (not recommended) then you may use <Em>double</Em> quotation marks to make this work, like in <ISQL>SELECT "First Name" FROM "All Employees";</ISQL>. For regular column names, double quotation marks are optional and unnecessary.</Info>
+			<Info>Ideally table/column names do not contain spaces or upper case letters. If you deviate from this (not recommended) then you may use <Em>double</Em> quotation marks to make this work, like in <ISQL>SELECT "First Name" FROM "All Employees";</ISQL>. For regular column names, double quotation marks are optional and unnecessary.</Info>
 		</Section>
 	</Page>
 }

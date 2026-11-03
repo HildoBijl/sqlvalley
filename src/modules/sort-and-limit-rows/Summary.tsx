@@ -16,17 +16,17 @@ export function Summary() {
 
 const query = `
 SELECT *
-FROM departments
+FROM contracts
 ORDER BY
-  nr_employees ASC,
-  budget DESC
-LIMIT 3
-OFFSET 1;`
+  position ASC,
+  salary DESC
+LIMIT 5
+OFFSET 3;`
 
 function FigureSorting() {
 	return <MeasuredDrawingFigure
 		targets={['query', 'table1', 'table2']}
-		calculateView={({ query, table1, table2 }) => ({ type: 'identity', width: 700, height: query.height + table1.height + table2.height + 40 })}
+		calculateView={({ query, table1, table2 }) => ({ type: 'identity', width: 750, height: query.height + table1.height + table2.height + 40 })}
 		style={{ fontSize: 16 }}>
 		<FigureSortingContents />
 	</MeasuredDrawingFigure>
@@ -37,7 +37,7 @@ function FigureSortingContents() {
 
 	// Set up data for the two tables.
 	const db = useTheoryPageDatabase()
-	const data1 = useQueryResult(db, 'SELECT * FROM departments')
+	const data1 = useQueryResult(db, 'SELECT * FROM contracts')
 	const data2 = useQueryResult(db, query)
 
 	// Obtain bounds of elements.
@@ -69,15 +69,15 @@ function FigureSortingContents() {
 	// Render the figure.
 	return <>
 		{/* Query */}
-		<FigureHtml target="query" position={[40, 0]} anchor={[-1, -1]} behind>
+		<FigureHtml target="query" position={[60, 0]} anchor={[-1, -1]} behind>
 			<SQLDisplay>{query}</SQLDisplay>
 		</FigureHtml>
 
 		{/* Explainer text */}
-		<FigureHtml position={b1} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>Sort ascending by number of employees,</span></FigureHtml>
-		<FigureHtml position={b2} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>and on equality, sort descending by budget.</span></FigureHtml>
-		<FigureHtml position={b3} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>Then only pick the first three rows,</span></FigureHtml>
-		<FigureHtml position={b4} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>after having skipped the first row.</span></FigureHtml>
+		<FigureHtml position={b1} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>Sort ascending by position,</span></FigureHtml>
+		<FigureHtml position={b2} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>and on equality, sort descending by salary.</span></FigureHtml>
+		<FigureHtml position={b3} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>Then only pick the first five rows,</span></FigureHtml>
+		<FigureHtml position={b4} anchor={[-1, 0]}><span style={{ textWrap: 'nowrap' }}>after having skipped the first three rows.</span></FigureHtml>
 
 		{eBounds ? <>
 			{/* Arrows to explainer text */}
@@ -88,13 +88,13 @@ function FigureSortingContents() {
 
 			{/* Table 1 */}
 			<FigureHtml target="table1" position={[0, editorHeight + 20]} anchor={[-1, -1]} scale={0.7}>
-				<DrawingTable data={data1} width={460 / 0.75} />
+				<DrawingTable data={data1} width={900} />
 			</FigureHtml>
 
 			{t1Bounds ? <>
 				{/* Table 2. */}
-				<FigureHtml target="table2" position={[700, editorHeight + 20 + t1Height + 20]} anchor={[1, -1]} scale={0.7}>
-					<DrawingTable data={data2} width={460 / 0.75} />
+				<FigureHtml target="table2" position={[750, editorHeight + 20 + t1Height + 20]} anchor={[1, -1]} scale={0.7}>
+					<DrawingTable data={data2} width={900} />
 				</FigureHtml>
 
 				{/* Arrow between tables */}
