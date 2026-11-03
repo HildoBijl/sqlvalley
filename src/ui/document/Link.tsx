@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { type LinkProps as MuiLinkProps, Link as MuiLink } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
 
 export type LinkProps = MuiLinkProps & {
 	to: string
@@ -7,11 +8,9 @@ export type LinkProps = MuiLinkProps & {
 }
 
 export function Link({ to, children, ...props }: LinkProps) {
-	const external = to[0] !== '/'
+	const external = to[0] !== '/' || to.startsWith('//')
 	return <MuiLink
-		href={to}
-		target={external ? '_blank' : 'self'}
-		rel={external ? 'noopener noreferrer' : ''}
+		{...(external ? { href: to, target: '_blank', rel: 'noopener noreferrer' } : { component: RouterLink, to })}
 		{...props}
 		sx={{
 			...(props.sx || {}),

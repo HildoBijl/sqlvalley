@@ -1,6 +1,9 @@
-p_id,name,category,owned_by,est_value,status 
-151879,Chippendale Mahogany Chair Set,Antique Furniture,XxMrMelonxX,90000,listed
-501342, Lincoln Head Copper Penny,Collectible Coins,barry.m,255000,listed
-110345,"Herm�s Birkin Bag (Crocodile, 35cm)",Designer Fashion,vanilla_coke,33000,listed
-214320,Gucci Jackie Bag (Vintage),Designer Fashion,Jim_Business,16000,withdrawn
-732499,Frida Kahlo Self-Portrait Sketch,Fine Art,lizardman,85000,in_escrow
+p_id,name,category,owned_by,est_value,status
+100088,Standing Form,PAINTING,sabrina.shah,183000,SOLD
+100177,"Cypress Observatory Control Panel, 1901",INDUSTRIAL_OBJECT,jade.campbell,726000,AVAILABLE
+100264,"Pablo Picasso, Visage aux yeux rieurs, ceramic plate, 1969",CERAMIC,sabrina.shah,435000,SOLD
+100599,Studio with Copper Vessel,PAINTING,jade.campbell,2973000,AVAILABLE
+100722,Handwoven Wall Textile — Group 4,TEXTILE,theo_kinc2,221000,AVAILABLE
+100725,Victorian Era Monocle — Group 3,HISTORIC_OBJECT,howardfineobjects,2636000,SOLD
+100738,"Richmond Botanical Specimen Collection, 1858",NATURAL_HISTORY,howardfineobjects,1574000,AVAILABLE
+101234,"Philadelphia Championship Match-Worn Jersey, 1967",SPORTS_MEMORABILIA,khalil.johnson,265000,SOLD

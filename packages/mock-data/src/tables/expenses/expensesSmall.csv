@@ -1,7 +1,7 @@
-exp_id,amount,d_id,description,date,requested_by,approved_by
-1788957,20000,1000,Update server storage and memory,2025-06-01,41376655,41376655
-1699769,100000,2000,Social media campaign,2024-12-04,41378877,41378877
-2100979,30000,3000,Upgrade to smart standing desks in Legal Dep.,2025-03-04,41655533,41655533
-1678495,10000,4000,Christmas teambuilding dinner at Nobu Malibu,2025-12-12,42223311,41378877
-1899093,100000,5000,Security budget,2024-09-10,41655533,41378877
-1959024,59500,4000,Department teambuilding event Q1,2025-02-02,42223311,41378877
+exp_id;amount;d_id;description;date;requested_by;approved_by
+501041;5690.00;1200;Marketplace strategy advisory;2024-09-03;24090361;23062302
+501036;4420.00;2200;Infrastructure audit support;2024-09-07;23062302;23062301
+501275;6340.00;2200;Data reconciliation tooling;2025-02-24;23062302;14338498
+501339;4030.00;2200;Data reconciliation tooling;2025-03-26;23062302;23062301
+501379;7160.00;2200;Data reconciliation tooling;2025-03-28;24090361;14338498
+501257;4450.99;2200;Data reconciliation tooling;2025-01-28;11614912;

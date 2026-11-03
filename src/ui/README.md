@@ -8,4 +8,6 @@ Shared SQL Valley components and styling. Import these from `@/ui`.
 - `maths`: inline and block mathematical notation using KaTeX.
 - `theme.ts`: theme creation, color-mode context, and the theme-color hook.
 
+Internal `Link` destinations use React Router and preserve normal modified-click behavior. External links open in a new tab by default.
+
 Educational notation and exercise containers live in `@/learning`.

@@ -17,14 +17,14 @@ export function Theory() {
 		</Section>
 
 		<Section title="Each column has a data type">
-			<Par>In a database table, every column has a specific <Term>data type</Term>. Let's consider for instance an <ISQL>expenses</ISQL> table tracking the various positions of employees as they move through a company.</Par>
+			<Par>In a database table, every column has a specific <Term>data type</Term>. Let's consider for instance an <ISQL>expenses</ISQL> table listing various expenses a company has had to pay.</Par>
 			<FigureDataTypeDemo />
-			<Par>Note that some columns contain <Term>numbers</Term>, others contain <Term>text</Term>, and others have <Term>date/time</Term> values. Many DBMSs enforce the declared type. SQLite normally uses <Term>type affinity</Term>: it attempts conversions but may store values of different types in one column. SQLite STRICT tables enforce a narrower set of column types.</Par>
-			<Par>Optionally, columns may be given further restrictions. For instance, the <ISQL>perf_score</ISQL> column may be set up to only allow numbers between <ISQL>0</ISQL> and <ISQL>100</ISQL>, and the <ISQL>status</ISQL> column may be set up to only take values from a list of possible employee statuses. The set of all possible values that can be put in a column is formally called the <Term>domain</Term> of that column.</Par>
+			<Par>Note that some columns contain <Term>numbers</Term>, others contain <Term>text</Term>, and others have <Term>date/time</Term> values. A column containing numbers may not contain text, and a column containing text may not contain numbers. (Unless you format the numbers as text, of course.)</Par>
+			<Par>Optionally, columns may be given further restrictions. For instance, the <ISQL>amount</ISQL> column may be set up to only allow positive numbers and/or integer numbers, and the <ISQL>description</ISQL> may be limited to a certain length. The set of all possible values that can be put in a column is formally called the <Term>domain</Term> of that column.</Par>
 		</Section>
 
 		<Section title={<>The <ISQL>NULL</ISQL> value</>}>
-			<Par>The cells in a database table generally <Em>cannot</Em> be empty. However, they often <Em>can</Em> be given the value <ISQL>NULL</ISQL>. This is a special value recognized by most DBMSs. Having <ISQL>NULL</ISQL> in a cell usually means "This value is not known", although it may also mean "This value is not applicable here." Like for instance when a contract has a <ISQL>start_date</ISQL> but is on-going, and hence does not have an <ISQL>end_date</ISQL> yet.</Par>
+			<Par>The cells in a database table generally <Em>cannot</Em> be empty. However, they often <Em>can</Em> be given the value <ISQL>NULL</ISQL>. This is a special marker recognized by most DBMSs. Having <ISQL>NULL</ISQL> in a cell usually means "This value is not known", although it may also mean "This value is not applicable here." Like for instance when an expense has not been approved yet, and hence has no applicable <ISQL>approved_by</ISQL> value.</Par>
 			<Warning>You can only put <ISQL>NULL</ISQL> in a cell, if the corresponding column allows this. This depends on the domain that is specified for that column when creating the table.</Warning>
 		</Section>
 
@@ -35,11 +35,11 @@ export function Theory() {
 				<><strong>Numbers</strong>
 					<List items={[
 						<>The <ISQL>INTEGER</ISQL> type stores whole numbers like <ISQL>842</ISQL>. Its range depends on the DBMS: SQLite supports signed 64-bit integers, while many other DBMSs use 32-bit <ISQL>INTEGER</ISQL> and provide <ISQL>BIGINT</ISQL> for a larger range. Types such as <ISQL>TINYINT</ISQL> and <ISQL>SMALLINT</ISQL> also vary by DBMS.</>,
-						<>The <ISQL>FLOAT</ISQL> type stores floating-point numbers like <ISQL>3,141.592,65</ISQL>. Most DBMSs allow for fine-tuning the precision with which the numbers are stored.</>,
+						<>The <ISQL>FLOAT</ISQL> type stores floating-point numbers like <ISQL>3.14159265</ISQL>. Most DBMSs allow for fine-tuning the precision with which the numbers are stored.</>,
 					]} /></>,
 				<><strong>Text</strong>
 					<List items={[
-						<>The <ISQL>VARCHAR(n)</ISQL> type stores a small piece of text like <ISQL>'The Netherlands'</ISQL>. The number <ISQL>n</ISQL> indicates the <Em>maximum</Em> number of characters that can be stored. The permitted maximum depends on the DBMS. SQLite does not enforce the length in a <ISQL>VARCHAR(n)</ISQL> declaration.</>,
+						<>The <ISQL>VARCHAR(n)</ISQL> type stores a piece of text like <ISQL>'The Netherlands'</ISQL>. The number <ISQL>n</ISQL> indicates the <Em>maximum</Em> number of characters that can be stored. The permitted maximum depends on the DBMS.</>,
 						<>The <ISQL>TEXT</ISQL> type stores pieces of text. Its maximum size depends on the DBMS and its configuration.</>,
 					]} /></>,
 				<><strong>Date/time</strong>
@@ -51,10 +51,11 @@ export function Theory() {
 				<><strong>Other</strong>
 					<List items={[
 						<>The <ISQL>BOOLEAN</ISQL> type stores either <ISQL>TRUE</ISQL> or <ISQL>FALSE</ISQL>.</>,
-						<>Depending on which DBMS you are using, you may use the the <ISQL>INTEGER[]</ISQL> or <ISQL>TEXT[]</ISQL> types for lists, the <ISQL>JSON</ISQL> type for JavaScript objects, the <ISQL>XML</ISQL> type for XML data, and various other options.</>,
+						<>Depending on which DBMS you are using, you may use the <ISQL>INTEGER[]</ISQL> or <ISQL>TEXT[]</ISQL> types for lists, the <ISQL>JSON</ISQL> type for JavaScript object notations, the <ISQL>XML</ISQL> type for XML data, and various other options.</>,
 					]} /></>,
 			]} />
-			<Par>It's not necessary to remember all these types. The main lesson is that every data type has limitations on exactly what it can store and with what precision. These limitations should be taken into account.</Par>
+			<Info>Since SQLite (used here on SQL Valley) is a light-weight database, it doesn't directly support all data types. It stores dates and times as plain text, and boolean values are stored as integer values: 0 or 1. It is also a bit more permissive on various restrictions than other DBMSs.</Info>
+			<Par>It's not necessary to remember all the above types. The main lesson is that every data type has limitations on exactly what it can store and with what precision. These limitations should be taken into account.</Par>
 		</Section>
 	</Page>
 }

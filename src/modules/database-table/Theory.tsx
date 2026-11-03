@@ -3,8 +3,8 @@ import type { ReactNode } from 'react'
 import { TargetBoundsDrawingFigure, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
-import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
-import { FigureHtml, RelationName, useTheoryPageDatabase } from '@/learning'
+import { useThemeColor, Page, Section, Par, List, Info, Term, Em, Link } from '@/ui'
+import { FigureHtml, TableSchema, useTheoryPageDatabase } from '@/learning'
 
 export function Theory() {
 	return <Page>
@@ -22,12 +22,14 @@ export function Theory() {
 				row: 'Row',
 				cell: 'Cell',
 			}} />
-			<Info>In database tables columns have names, but rows do not. They don't even have an index or ID. Of course you <Em>can</Em> set up a column named "ID" or similar. This is actually common practice.</Info>
-			<Par>The set-up/design of the table is called the <Term>schema</Term>. It consists of the table name and the names of its columns. A common way of writing the schema is by putting the table name in bold, and the attributes behind it within brackets. (Though variations to this convention occur.) For the above example table we have the schema: <List items={[<><RelationName>departments</RelationName> (d_id, d_name, manager_id, budget, nr_employees)</>]} /></Par>
+			<Info>Unlike spreadsheet rows, database rows have no inherent row number or fixed order. To identify individual records, we commonly use a column such as <Em>d_id</Em>. This is discussed further in the <Link to="/module/database-keys">Database Keys</Link> concept.</Info>
+			<Par>The set-up/design of the table is called its <Term>schema</Term>. This specifies its columns and their properties. For now, we describe a schema using the table name and its column names. A common way of writing the schema is by putting the table name in bold, and the attributes behind it within brackets. (Though variations to this convention occur.) For the above example table we have the schema:</Par>
+			<List sx={{ my: -1 }} items={[<TableSchema key="departments" table="departments" />]} />
+			<Par>So adding an extra row changes the table's contents. Adding another column changes its schema.</Par>
 		</Section>
 
 		<Section title="Rows as objects">
-			<Par>In database tables, a table row often represents some kind of real-life object. When this is the case, another set of terminology is often used. Columns are called <Term>properties</Term> or <Term>attributes</Term>, and they have a <Term>property name</Term>. Rows represents <Term>records</Term>, and they have various <Term>fields</Term>/<Term>property values</Term>.</Par>
+			<Par>In database tables, a table row often represents some kind of real-life object. When this is the case, another set of terminology is often used. Columns are called <Term>properties</Term> or <Term>attributes</Term>, and they have a <Term>property name</Term>. Rows represent <Term>records</Term>, and they have various <Term>fields</Term>/<Term>property values</Term>.</Par>
 			<FigureTerminology terminology={{
 				table: 'Table',
 				contents: 'Records',

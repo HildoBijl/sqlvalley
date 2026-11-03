@@ -4,7 +4,16 @@ import { DrawingTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 import { useThemeColor, Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@/ui'
 import { FigureHtml, SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
 
-import { adjustedManagerId, addedManagerId, adjustedDepartments, FigureTwoTablesAdjusted } from '../join-and-decomposition/Theory'
+const adjustedManagerId = '11111111'
+const addedManagerId = '41655533'
+const adjustedDepartments = `SELECT
+  d_id, d_name,
+  CASE
+      WHEN d_id = 2000 THEN ${adjustedManagerId}
+      WHEN d_id = 4000 THEN ${addedManagerId}
+      ELSE manager_id
+  END AS manager_id,
+  budget, nr_employees FROM departments`
 
 const departmentsReplacement = `SELECT d_id, d_name, manager_id e_id, budget, nr_employees FROM departments`
 
@@ -161,6 +170,50 @@ function FigureNaturalJoinAdjustedTablesContents() {
 				<DrawingTable data={data2} width={(width - x) / 0.6} />
 			</FigureHtml>
 		</> : null}
+
+		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min.add([-padding, -padding]), textNode1Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min.add([-padding, -padding]), textNode2Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
+	</>
+}
+
+function FigureTwoTablesAdjusted() {
+	return <MeasuredDrawingFigure
+		targets={['table1', 'table2']}
+		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 800, height: table1.height + table2.height + 35 })}
+		style={{ fontSize: 16 }}>
+		<FigureTwoTablesAdjustedContents />
+	</MeasuredDrawingFigure>
+}
+
+function FigureTwoTablesAdjustedContents() {
+	const themeColor = useThemeColor()
+
+	// Get the data.
+	const db = useTheoryPageDatabase()
+	const data1 = useQueryResult(db, adjustedDepartments)
+	const data2 = useQueryResult(db, 'SELECT * FROM employees;')
+
+	// Set up reference to the table.
+	const t1Bounds = useDrawingTargetBounds('table1')
+
+	useDrawingTextTarget('textNode1Bounds', 'table1', adjustedManagerId, { index: 0, parentDepth: 1 })
+	const textNode1Bounds = useDrawingTargetBounds('textNode1Bounds')
+	useDrawingTextTarget('textNode2Bounds', 'table1', addedManagerId, { index: 1, parentDepth: 1 })
+	const textNode2Bounds = useDrawingTargetBounds('textNode2Bounds')
+	const x = 80
+	const y = 20 + (t1Bounds?.height ?? 160) + 15
+	const padding = 6
+
+	return <>
+		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
+		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={0.6} behind>
+			<DrawingTable data={data1} width={800} />
+		</FigureHtml>
+
+		<FigureHtml position={[790, y - 25]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
+		<FigureHtml target="table2" position={[x, y]} anchor={[-1, -1]} scale={0.6}>
+			<DrawingTable data={data2} width={(800 - x) / 0.6} />
+		</FigureHtml>
 
 		{textNode1Bounds ? <Rectangle corners={[textNode1Bounds.min.add([-padding, -padding]), textNode1Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}
 		{textNode2Bounds ? <Rectangle corners={[textNode2Bounds.min.add([-padding, -padding]), textNode2Bounds.max.add([padding, padding])]} cornerRadius={10} style={{ stroke: themeColor, strokeWidth: 2, fill: 'none' }} /> : null}

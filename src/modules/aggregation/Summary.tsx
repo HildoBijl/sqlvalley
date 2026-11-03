@@ -21,7 +21,7 @@ export function Summary() {
 function FigureAggregation() {
 	return <MeasuredDrawingFigure
 		targets={['table1', 'table2']}
-		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 900, height: table1.height + 20 + table2.height })} maxWidth={720} style={{ fontSize: 16 }}>
+		calculateView={({ table1, table2 }) => ({ type: 'identity', width: 1000, height: table1.height + 20 + table2.height })} maxWidth={720} style={{ fontSize: 16 }}>
 		<FigureAggregationContents />
 	</MeasuredDrawingFigure>
 }
@@ -30,12 +30,12 @@ function FigureAggregationContents() {
 	const themeColor = useThemeColor()
 	const db = useTheoryPageDatabase()
 	const dataFull = useQueryResult(db, 'SELECT * FROM quarterly_performance;')
-	const dataAggregated = useQueryResult(db, 'SELECT fiscal_year, SUM(revenue) AS total_revenue, AVG(revenue) AS average_revenue, MAX(revenue) as highest_revenue, COUNT(1) AS num_quarters FROM quarterly_performance GROUP BY fiscal_year;')
+	const dataAggregated = useQueryResult(db, 'SELECT quarter, fiscal_year, SUM(total_transactions) AS total_transactions, AVG(total_transactions) AS av_cat_transactions, MAX(total_transactions) AS max_cat_transactions, COUNT(1) AS num_categories FROM quarterly_performance GROUP BY quarter, fiscal_year ORDER BY fiscal_year ASC, quarter ASC;')
 
 	const t1Bounds = useDrawingTargetBounds('table1')
 	const t2Bounds = useDrawingTargetBounds('table2')
-	const w1 = 900
-	const w2 = 600
+	const w1 = 1000
+	const w2 = 750
 	const delta = 20
 	const arrowMargin = 5
 	const h1 = t1Bounds?.height ?? 200
@@ -51,6 +51,6 @@ function FigureAggregationContents() {
 		</FigureHtml>
 
 		<Curve positions={[[(w1 - w2) / 2, h1 + arrowMargin], [(w1 - w2) / 2, h1 + delta + h2 / 2], [w1 - w2 - arrowMargin, h1 + delta + h2 / 2]]} stroke={themeColor} endArrow strokeWidth={2} smoothing={{ ratio: 1 }} />
-		<FigureHtml position={[(w1 - w2) / 2 + 80, h1 + delta + h2 / 2 - 2]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '1em', color: themeColor }}>Aggregate by year</span></FigureHtml>
+		<FigureHtml position={[(w1 - w2) / 2 + 100, h1 + delta + h2 / 2 + 6]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '1em', color: themeColor }}>Aggregate by quarter and year</span></FigureHtml>
 	</>
 }

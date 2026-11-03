@@ -11,24 +11,24 @@ export function Theory() {
 		</Section>
 
 		<Section title="The idea behind a query language">
-			<Par>Databases usually don't have a flashy interface with clear graphics, useful buttons and such. To interact with the database and make it do anything, we have to give the DBMS specific commands. Think of "Create a new table 'employees'", "Add a new record to the 'employees' table" or "Find the names of all employees earning more than two hundred thousand per year." Such commands are known as <Term>queries</Term>: structured commands to extract/adjust data.</Par>
+			<Par>Databases usually don't come with a user interface. The most common way to interact with a database is by giving the DBMS specific commands. Think of "Create a new table 'employees'", "Add a new record to the 'employees' table" or "Find the names of all employees earning more than two hundred thousand per year." Such commands are known as <Term>queries</Term>: structured commands to extract/adjust data.</Par>
 			<FigureQueryExample />
 			<Par>Sadly DBMSs do not understand English, or any spoken language for that matter. Spoken languages are far too ambiguous. Queries must therefore follow a very specific format. The exact format of how to set up queries and what can be put in them is known as the <Term>query language</Term>.</Par>
 		</Section>
 
 		<Section title="Examples of query languages">
-			<Par>So what does a query look like? This depends on the query language. There is a large variety of query languages: every DBMS pretty much has its own query language. But to get a feeling of what queries may look like, we study a few examples.</Par>
-			<Par>Suppose that we want to find all employees earning more than 200.000 annually. In the <Term>SQL</Term> query language (the query language used by the most common/popular databases) that would be done through</Par>
+			<Par>So what does a query look like? This depends on the query language. There is a large variety of query languages: different DBMSs often use different query languages. To get a feeling of what queries may look like, we study a few examples. You don't need to understand these examples yet; it's just to give an idea of what queries can looks like.</Par>
+			<Par>Suppose that we want to find all employees earning more than two hundred thousand annually. In the <Term>SQL</Term> query language (the query language used by the most common/popular databases) that would be done through</Par>
 			<Par><pre><code>{`SELECT first_name, last_name
 FROM employees
-WHERE current_salary > 200000
+WHERE current_salary > 200000;
 `}</code></pre></Par>
-			<Par>In <Term>Datalog</Term> (a more modern and up-and-coming query language) this would be done with</Par>
+			<Par>In <Term>Datalog</Term> (a rule-based query language) this would be done with</Par>
 			<Par><pre><code>{`highEarners(fn, ln) :- employees(_, fn, ln, _, _, _, _, _, s), s > 200000.
 ?- highEarners(fn, ln).`}</code></pre></Par>
 			<Par>In <Term>relational algebra</Term> (a more theoretical and mathematical query language) this is done using</Par>
 			<Par><pre><code>highEarners ← ∏<sub>first_name,last_name</sub>(σ<sub>current_salary &gt; 200000</sub>(employees))</code></pre></Par>
-			<Par>Or in an object-database like <Link to="https://www.mongodb.com/">MongoDB</Link> the query looks like this.</Par>
+			<Par>Or in a document-database like <Link to="https://www.mongodb.com/">MongoDB</Link> the query looks like this.</Par>
 			<Par><pre><code>{`db.employees.find(
   { current_salary: { $gt: 200000 } },
   { first_name: 1, last_name: 1, _id: 0 }
@@ -37,7 +37,7 @@ WHERE current_salary > 200000
 		</Section>
 
 		<Section title="Three branches of query languages">
-			<Par>Query languages usually consist of three parts (sublanguages) that work mostly independently from one another.</Par>
+			<Par>Most query languages can be split up further into three parts (sublanguages) that work mostly independently from one another.</Par>
 			<List items={[
 				<>The <Term>Data Definition Language</Term> (DDL) revolves around defining the structure of data: creating tables, adjusting tables, etcetera.</>,
 				<>The <Term>Data Manipulation Language</Term> (DML) focuses on adjusting data: adding/updating/deleting records.</>,

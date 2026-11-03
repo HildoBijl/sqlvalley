@@ -14,8 +14,8 @@ export function Theory() {
 		<Section title="Why databases: a list of requirements">
 			<Par>For many small-scale use cases, storing data in a single file would work. When scaling up, there are various reasons why this fails.</Par>
 			<List items={[
-				<>When the number of records gets into the millions, it becomes too big for one file. Computers cannot keep it all in their working memory. We need a solution that can <strong>deal with large amounts of data</strong> that doesn't overload the file system.</>,
-				<>Finding any desired records will be a challenge. We need a solution that we can <strong>easily ask questions extracting data</strong>, like "Which departments are going over budget?"</>,
+				<>As the data grows, repeatedly reading through everything becomes slow. We need a solution that can <strong>efficiently handle large amounts of data</strong>, finding and updating relevant records without loading everything into memory.</>,
+				<>Finding any desired records will be a challenge. We need a solution that we can <strong>easily ask questions extracting data</strong>, like "Which departments are managed by Graham Cole?"</>,
 				<>Perhaps we want to build a website where users can add new departments, add employees to those departments, and so forth. This website (basically a computer script) should be able to adjust the data, also when multiple users use it at the same time. We hence need a solution in which <strong>applications can adjust data concurrently</strong>.</>,
 			]} />
 			<Par>To meet all these requirements, databases and corresponding software tools have been created.</Par>
@@ -24,13 +24,13 @@ export function Theory() {
 		<Section title="Database: a collection of tables">
 			<Par>A <Term>database</Term> stores data. Most databases do so purely in table form. The easiest way to picture a database is therefore as a collection of tables, each filled with potentially large amounts of entries. A small database consists of a few small tables, but bigger databases can have dozens of enormous tables that are all linked to each other in some way.</Par>
 			<FigureTwoTables />
-			<Info>Most databases, the so-called <Term>relational databases</Term>, use tables. (A "relation" is, roughly put, a mathematical term for a table.) There are a few databases that deviate from this and don't use tables. They for example store graphs (like <Link to="https://neo4j.com/">Neo4j</Link>), JSON objects (like <Link to="https://www.mongodb.com/">MongoDB</Link>) or key-value pairs (like <Link to="https://redis.io/">Redis</Link>). Since this only involves a small subset of all databases, we focus on relational databases for now.</Info>
+			<Info>Most databases, the so-called <Term>relational databases</Term>, use tables. (A "relation" is, roughly put, a mathematical term for a table.) There are more specialized databases that deviate from this. They for example store graphs (like <Link to="https://neo4j.com/">Neo4j</Link>), JSON objects (like <Link to="https://www.mongodb.com/">MongoDB</Link>) or key-value pairs (like <Link to="https://redis.io/">Redis</Link>). So keep in mind: there are always exceptions.</Info>
 		</Section>
 
 		<Section title="The database management system">
 			<Par>The "database" is the collection of all the data that's stored somewhere. To get this data stored in the desired way, we use a specialized program called a <Term>Database Management System</Term> (DBMS). Examples of DBMSs that use tables are <Link to="https://www.postgresql.org/">PostgreSQL</Link>, <Link to="https://www.mysql.com/">MySQL</Link>, <Link to="https://www.oracle.com/database/">Oracle</Link>, <Link to="https://sqlite.org/">SQLite</Link> and dozens more. The DBMS handles all functionalities around the database, allowing users to read and write data.</Par>
 			<FigureDatabaseUsage />
-			<Par>Every DBMS has its own specific way of how exactly it stores its data. As a result, a DBMS and a database are inextricably linked. You cannot just take a database and couple it to a different DBMS. It <Em>is</Em> possible (and common) that a single DBMS has multiple different databases on the same machine, for instance for different applications.</Par>
+			<Par>Every DBMS has its own specific way of how exactly it stores its data. As a result, a DBMS and a database are inextricably linked. You cannot just take a database and couple it to a different DBMS: this would require a migration tool of sorts. It <Em>is</Em> possible (and common) that a single DBMS has multiple different databases on the same machine, for instance for different applications.</Par>
 			<Warning>Because a database and its DBMS are so linked, people often use the word "database" when they actually mean DBMS. "Hey, which database are you using at SQL Valley? Oh, we're using SQLite!"</Warning>
 		</Section>
 	</Page>
@@ -47,7 +47,7 @@ export function FigureTwoTables() {
 		</FigureHtml>
 		<FigureHtml target="table1Title" position={{ target: 'table1', anchor: 'topLeft', pixelOffset: [10, 2] }} anchor="bottomLeft"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of departments</span></FigureHtml>
 
-		<FigureHtml target="table2" position={[80, 118]} anchor={[-1, -1]} scale={tableScale}>
+		<FigureHtml target="table2" position={[80, 138]} anchor={[-1, -1]} scale={tableScale}>
 			<DrawingTable data={data2} width={1200} />
 		</FigureHtml>
 		<FigureHtml target="table2Title" position={{ target: 'table2', anchor: 'topRight', pixelOffset: [-10, 2] }} anchor="bottomRight"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of employees</span></FigureHtml>
@@ -75,7 +75,7 @@ export function FigureDatabaseUsage() {
 		<FigureHtml position={[xDatabase, y + 38]}><span style={{ fontSize: '1em', fontWeight: 500 }}>Database</span></FigureHtml>
 
 		<Curve positions={[[xUser + 26, y - 70], [(xUser + xServer) / 2, y - 120], [xServer - 35, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
-		<FigureHtml position={[(xUser + xServer) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>"Get me the departments<br />that are going over budget"</p></FigureHtml>
+		<FigureHtml position={[(xUser + xServer) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>"Get me the departments<br />managed by Graham Cole"</p></FigureHtml>
 
 		<Curve positions={[[xServer + 35, y - 70], [(xServer + xDatabase) / 2, y - 120], [xDatabase - 50, y - 70]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
 		<FigureHtml position={[(xServer + xDatabase) / 2, y - 102]} anchor={anchors.bottom}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Pull up all relevant records</p></FigureHtml>
@@ -84,6 +84,6 @@ export function FigureDatabaseUsage() {
 		<FigureHtml position={[(xServer + xDatabase) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>Give all requested records</p></FigureHtml>
 
 		<Curve positions={[[xServer - 35, y + 20], [(xUser + xServer) / 2, y + 70], [xUser + 50, y + 20]]} smoothing={curveSmoothing} endArrow stroke={themeColor} strokeWidth={2} />
-		<FigureHtml position={[(xUser + xServer) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Finance & Legal", "Operations"]</p></FigureHtml>
+		<FigureHtml position={[(xUser + xServer) / 2, y + 52]} anchor={anchors.top}><p style={{ fontSize: '0.8em', lineHeight: '1.2em', fontWeight: 500, margin: 0, textAlign: 'center' }}>["Technology", "Product & Engineering"]</p></FigureHtml>
 	</DrawingFigure>
 }

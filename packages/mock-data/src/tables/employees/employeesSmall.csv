@@ -1,6 +1,6 @@
 e_id,first_name,last_name,phone,email,address,city,hire_date,current_salary
-41376655,Bob,Dylon,650-555-0601,bob.dylon@herishare.com,6655 Alma St,Los Altos,2023-04-12,250000
-41378877,Caesar,Bink,408-555-0692,caesar.bink@herishare.com,8877 Scott Blvd,Santa Clara,2023-04-12,350000
-41651199,Elvis,Vallelonga,650-555-0683,elvis.vallelonga@herishare.com,1199 Embarcadero Rd,Palo Alto,2024-01-18,180000
-41655533,Paris,Casteel,650-555-0665,paris.casteel@herishare.com,5533 Porter Dr,Palo Alto,2024-01-18,180000
-42223311,Marcelle,Johnson,408-555-0674,marcelle.johnson@herishare.com,3311 Castro St,Mountain View,2025-08-04,200000
+23062301,Caesar,Vallelonga,408-326-6006,c.vallelonga@herishare.com,"1253 Franklin St, Apt 19","Santa Clara, CA",2023-06-23,250000
+23062302,Bob,Andrews,650-593-5442,b.andrews@herishare.com,2461 Villa St,"Mountain View, CA",2023-06-23,195000
+23070303,Paris,Morgan,650-863-6039,p.morgan@herishare.com,1632 Park Blvd,"Palo Alto, CA",2023-07-03,220000
+24090361,Marcelle,Johnson,415-732-2514,m.johnson@herishare.com,"926 California St, Apt 26","San Francisco, CA",2024-09-03,215000
+14338498,Graham,Cole,650-233-4290,g.cole@herishare.com,1535 Middlefield Rd,"Palo Alto, CA",2024-09-09,245000

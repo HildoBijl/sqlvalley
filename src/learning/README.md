@@ -4,6 +4,7 @@ Educational tools that do not depend on the module tree. Import public component
 
 - `FigureHtml.tsx`: wraps the drawing toolbox's `HtmlElement` with pointer events enabled, normal whitespace, and content-sized width. All props, including refs, pass through; explicit styles and `ignoreMouse` override the defaults.
 - `notation`: relation names, primary and foreign keys, relational algebra (`RA`/`IRA`), and Datalog (`DL`/`IDL`). These components remain independent so their presentation can evolve separately.
+- `TableSchema.tsx`: renders a table name and its ordered column names from the small theory database, for example `<TableSchema table="departments" />`. Optional `primaryKeys={['d_id']}` underlines columns and `foreignKeys={['manager_id']}` italicizes columns. Columns in both lists receive both styles; names absent from the table cause an error once the schema loads. This explicit selection also supports hypothetical keys in teaching examples.
 - `ManualExerciseSet.tsx`: arranges manually authored exercises and their solutions using the shared `ExerciseSection` from `@sqlvalley/input-exercise-components`, with closely spaced problem and solution panels and a white solution background.
 - `layout`: `LearningHeader` and `LearningTabs`. Tabs receive configuration, including optional `align: 'end'`, without interpreting tab names.
 - `types.ts`: defines the shared module-content contract for theory, summary, story, video, and static practice components.

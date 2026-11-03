@@ -17,7 +17,7 @@ const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {
 
 	// Sales.
 	accounts: 'database-keys',
-	products: 'join-and-decomposition',
+	products: 'foreign-key',
 	transactions: 'projection-and-filtering',
 }
 
