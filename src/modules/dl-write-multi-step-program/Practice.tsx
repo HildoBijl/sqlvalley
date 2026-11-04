@@ -35,9 +35,9 @@ fineArtProduct(pid) :- product(pid, _, 'Fine Art', _, _, _).
 validatedFineArtSale(eid) :- transaction(_, _, _, pid, _, _, eid, _), fineArtProduct(pid).
 beenOnSickLeave(eid) :- contract(eid, _, _, _, _, _, 'sick leave').
 requestedEmailAddress(e) :-
-        employee(eid, _, _, _, e, _, _, _, _),
-        not validatedFineArtSale(eid),
-        beenOnSickLeave(eid).
+				employee(eid, _, _, _, e, _, _, _, _),
+				not validatedFineArtSale(eid),
+				beenOnSickLeave(eid).
 ?- requestedEmailAddress(email).
 `}</DL>
 			<Par>Note that we could have also merged the conditions together in a separate predicate <IDL>meetsAllConditions(eid)</IDL> first, before combining it with the <IDL>employee</IDL> predicate. Some would find it clearer, while others would not. It's a personal preference.</Par>
@@ -85,13 +85,13 @@ validatedAllUsers(eid) :- employeeId(eid), not didNotValidateSomeUser(eid).
 validatedUser(eid, u) :- transaction(_, u, _, _, _, _, eid, _).
 validatedUser(eid, u) :- transaction(_, _, u, _, _, _, eid, _).
 validatedUserFromDifferentCity(eid) :-
-        validatedUser(eid, u),
-        employee(eid, _, _, _, _, _, ec, _, _),
-        account(u, _, _, _, _, _, _, uc, _, _),
-        ec != uc.
+				validatedUser(eid, u),
+				employee(eid, _, _, _, _, _, ec, _, _),
+				account(u, _, _, _, _, _, _, uc, _, _),
+				ec != uc.
 onlyValidatedFromOwnCity(eid) :-
-        employee(eid, _, _, _, _, _, _, _, _),
-        not validatedUserFromDifferentCity(eid).
+				employee(eid, _, _, _, _, _, _, _, _),
+				not validatedUserFromDifferentCity(eid).
 ?- onlyValidatedFromOwnCity(eid).
 `}</DL>
 			<Par>If further data is required from this employee, we could of course also join that in at the end.</Par>

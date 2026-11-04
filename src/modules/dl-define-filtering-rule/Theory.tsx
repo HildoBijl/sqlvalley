@@ -16,9 +16,9 @@ export function Theory() {
 			<Par>So to restrict arguments through conditions, we simply add constraints to the rule. We call this <Term>constraint-based filtering</Term> and it has a lot of possibilities. We could for instance also require that our employees are hired before 2024.</Par>
 			<DLQueryFigure query={`
 highEarningSeniorEmployee(id, fn, ln, p, e, a, c, hd, cs) :-
-        employee(id, fn, ln, p, e, a, c, hd, cs),
-        cs >= 200000,
-        hd < '2024-01-01'.
+				employee(id, fn, ln, p, e, a, c, hd, cs),
+				cs >= 200000,
+				hd < '2024-01-01'.
 `} actualQuery="SELECT DISTINCT * FROM employees WHERE current_salary >= 200000 AND hire_date < '2024-01-01'" tableWidth={940} below />
 			<Par>Any additional constraint can be added to the rule as well.</Par>
 			<Info>We have split up the above Datalog rule over multiple lines. This is a very common thing to do. Datalog ignores enters: a command only ends on a period.</Info>

@@ -99,8 +99,8 @@ function FigureSortOnMultipleColumnsContents() {
 	const query = `SELECT *
 FROM contracts
 ORDER BY
-  ${sortColumn1} ASC,
-  ${sortColumn2} DESC;`
+	${sortColumn1} ASC,
+	${sortColumn2} DESC;`
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 

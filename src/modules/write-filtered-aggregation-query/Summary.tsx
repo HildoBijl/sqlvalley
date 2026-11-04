@@ -22,10 +22,10 @@ HAVING AVG(revenue) > 5000000;`} tableScale={0.8} tableWidth={220} />
 			<Par>When using aggregation, it is common to process values. This processing can happen both before and after aggregation.</Par>
 			<SQLQueryFigure query={`
 SELECT
-  city,
-  ROUND(AVG(current_salary / 12)) AS mean_monthly_salary,
-  COUNT(*) AS nr_employees,
-  COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees) AS percentage
+	city,
+	ROUND(AVG(current_salary / 12)) AS mean_monthly_salary,
+	COUNT(*) AS nr_employees,
+	COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees) AS percentage
 FROM employees
 GROUP BY city;`} tableScale={0.8} tableWidth={440} />
 		</Section>

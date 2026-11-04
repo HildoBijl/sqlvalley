@@ -9,7 +9,7 @@ export function Summary() {
 			<Par>A condition is always of the form <IRA>[value] [comparator] [value]</IRA>. Each value can be a predefined constant (like "10") or an attribute value (like "nr_employees"). For text, the <Term>comparator</Term> is usually <M>=</M> or <M>\neq</M>, but for numbers common comparators also include <M>{`>`}</M>, <M>{`<`}</M>, <M>\geq</M> or <M>\leq</M>.</Par>
 			<Par>Multiple conditions can be combined into one predicate using the <Term>and</Term> (<M>\wedge</M>), the <Term>or</Term> (<M>\vee</M>), or the <Term>not</Term> (<M>\neg</M>) <Term>connectives</Term>.</Par>
 			<RAQueryFigure query={<>σ<sub>¬(nr_employees &gt; 6 ∧ nr_employees &lt; 20)</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE NOT (nr_employees > 6 AND nr_employees < 20)" tableWidth={500} />
-			<Warning>When using different connectives together, make sure to use brackets to prevent confusion in the evaluation order.</Warning>
+			<Warning>When using different connectives together, make sure to use parentheses to prevent confusion in the evaluation order.</Warning>
 			<Par>The filtering operator is formally defined as</Par>
 			<BM>{`\\sigma_p(r) := \\{t \\, | \\, t \\in r \\, \\textrm{and} \\, p(t) \\}.`}</BM>
 		</Section>

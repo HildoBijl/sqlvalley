@@ -21,6 +21,7 @@ export function List({ items, useNumbers = false, startNumber, sx, itemSx, conte
 			listStyleType: useNumbers ? 'decimal' : 'disc',
 			paddingY: 0,
 			paddingLeft: 3,
+			my: -0.5,
 			...sx,
 		}}>
 		{items.map((item, index) => (

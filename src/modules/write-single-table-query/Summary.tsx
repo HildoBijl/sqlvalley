@@ -14,16 +14,16 @@ export function Summary() {
 				<><Term>Cut columns</Term> to only get the required output.</>,
 				<><Term>Remove duplicates</Term> if required.</>
 			]} />
-			<Info>We can use processed column values in the <ISQL>WHERE</ISQL> and <ISQL>ORDER BY</ISQL> clauses too. Newly defined column names from the <ISQL>SELECT</ISQL> clause may be used within the <ISQL>ORDER BY</ISQL> clause as well. (But usually not within the <ISQL>WHERE</ISQL> clause.)</Info>
-			<Quote>Find the income taxes paid per position, but only for contracts that lasted exactly one year, and only for the top 5 performance scores.</Quote>
-			<Par>For a one-year contract, compare the end date with the first anniversary. Here February 29 maps to February 28 in a non-leap year.</Par>
+			<Info>We can use processing expressions in the <ISQL>WHERE</ISQL> and <ISQL>ORDER BY</ISQL> clauses too. Newly defined column names from the <ISQL>SELECT</ISQL> clause may be used within the <ISQL>ORDER BY</ISQL> clause as well, but usually not within the <ISQL>WHERE</ISQL> clause, as it's executed before the <ISQL>SELECT</ISQL> clause.</Info>
+			<Quote>Find the salary that was actually paid per contract: the yearly salary scaled to the contract's duration, rounded to whole dollars. Only do so for ended contracts that lasted more than four weeks. Show the five contracts with the highest payouts.</Quote>
 			<SQLQueryFigure query={`SELECT
-  position,
-  0.3*salary AS taxes
+	position,
+	ROUND((JULIANDAY(end_date) - JULIANDAY(start_date)) / 365.25 * salary) AS payout
 FROM contracts
-WHERE end_date = DATE(start_date, '+1 year', 'floor')
-ORDER BY perf_score DESC
-LIMIT 5;`} tableWidth={240} tableScale={0.7} />
+WHERE end_date IS NOT NULL
+	AND JULIANDAY(end_date) - JULIANDAY(start_date) > 28
+ORDER BY payout DESC
+LIMIT 5;`} tableWidth={300} tableScale={0.8} />
 		</Section>
 	</Page>
 }

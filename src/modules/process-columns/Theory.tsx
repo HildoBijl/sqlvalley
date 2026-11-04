@@ -14,17 +14,17 @@ export function Theory() {
 
 	return <Page>
 		<Section>
-			<Par>We know how to <Term>rename</Term> columns using the (optional) <ISQL>AS</ISQL> command, but we can take this one step further. We can <Term>process columns</Term>: manipulate and/or combine various columns to create new ones. We'll first study the general application of this idea, and then dive into the numerous ways of <Em>how</Em> to process column values.</Par>
+			<Par>We know how to <Term>rename</Term> columns using the (optional) <ISQL>AS</ISQL> command, but we can take this one step further. We can <Term>process columns</Term>: manipulate and/or combine the values in various columns to create new ones. We'll first study the general application of this idea, and then dive into the numerous ways of <Em>how</Em> to process column values.</Par>
 		</Section>
 
 		<Section title="Create new (processed) columns">
 			<Par>Suppose that we have a list of contracts with corresponding salaries. When paying those salaries, taxes also need to be paid. We could calculate this income tax by multiplying the salaries by a factor, for instance <ISQL>0.3</ISQL>. (Or whatever the tax rate is.) In SQL it is possible to directly create a new column <ISQL>taxes</ISQL> whose value is <ISQL>0.3 * salary</ISQL>.</Par>
 			<SQLQueryFigure query={`SELECT
-  position,
-  salary,
-  0.3*salary AS taxes
-FROM contracts;`} tableWidth={350} />
-			<Par>Behind the scenes, the DBMS iterates over all the rows. For each row, it performs the given calculation <ISQL>0.3*salary</ISQL>, where it uses the salary for that row. The result is then put this in the new <ISQL>taxes</ISQL> column. In this way, a new column is created within the query output.</Par>
+	position,
+	salary,
+	0.3*salary AS taxes
+FROM contracts;`} tableWidth={400} />
+			<Par>Behind the scenes, the DBMS iterates over all the rows. For each row, it performs the given calculation <ISQL>0.3*salary</ISQL>, where it uses the salary for that row. The result is then placed in the new <ISQL>taxes</ISQL> column. In this way, a new column is created within the query output.</Par>
 		</Section>
 
 		<Section title="Process numerical values">
@@ -36,6 +36,7 @@ FROM contracts;`} tableWidth={350} />
 				<><Term>Division</Term>: <ISQL>5.0 / 2</ISQL> becomes <ISQL>2.5</ISQL>. In SQLite, dividing two integers truncates the result: <ISQL>5 / 2</ISQL> is <ISQL>2</ISQL>.</>,
 				<><Term>Modulo</Term>/<Term>Integer remainder</Term>: <ISQL>5 % 2</ISQL> becomes <ISQL>1</ISQL>.</>,
 			]} />
+			<Info>When using <ISQL>NULL</ISQL> in arithmetics, the result is always <ISQL>NULL</ISQL>. After all, <ISQL>NULL</ISQL> represents an unknown value. The result of for instance <ISQL>2*NULL</ISQL> will also be unknown.</Info>
 			<Par>Next to general arithmetic, there is a wide variety of functions.</Par>
 			<List items={[
 				<><Term>Rounding</Term>: <ISQL>ROUND(x)</ISQL> rounds <ISQL>x</ISQL> to the nearest integer. <ISQL>ROUND(x, 2)</ISQL> rounds <ISQL>x</ISQL> to two decimals. <ISQL>FLOOR(x)</ISQL> rounds <ISQL>x</ISQL> <Em>down</Em> to the nearest integer lower than (or equal to) <ISQL>x</ISQL>. <ISQL>CEIL(x)</ISQL> rounds <ISQL>x</ISQL> <Em>up</Em> to the nearest integer higher than (or equal to) <ISQL>x</ISQL>.</>,
@@ -48,11 +49,11 @@ FROM contracts;`} tableWidth={350} />
 		<Section title="Process text values">
 			<Par>The most common thing to do with text is concatenate multiple pieces of text. This is done through <ISQL>||</ISQL>.</Par>
 			<SQLQueryFigure query={`SELECT
-  first_name,
-  last_name,
-  first_name || ' ' || last_name AS full_name
-FROM employees;`} tableWidth={350} />
-			<Info>The notation with <ISQL>||</ISQL> works in SQLite and PostgreSQL. In MySQL it means logical OR unless the <ISQL>PIPES_AS_CONCAT</ISQL> SQL mode is enabled; use <ISQL>CONCAT</ISQL> there. Some DBMSs also allow <ISQL>CONCAT(first_name, ' ', last_name)</ISQL> while others allow <ISQL>first_name + ' ' + last_name</ISQL>.</Info>
+	first_name,
+	last_name,
+	first_name || ' ' || last_name AS full_name
+FROM employees;`} tableWidth={400} />
+			<Info>The notation with <ISQL>||</ISQL> works in SQLite and PostgreSQL. In MySQL it means logical OR unless the <ISQL>PIPES_AS_CONCAT</ISQL> SQL mode is enabled. Some DBMSs also allow <ISQL>CONCAT(first_name, ' ', last_name)</ISQL> while others allow <ISQL>first_name + ' ' + last_name</ISQL>.</Info>
 			<Par>There is a large variety of further text processing functions.</Par>
 			<List items={[
 				<><Term>Text length</Term>: <ISQL>LENGTH('Hello world')</ISQL> becomes <ISQL>11</ISQL>.</>,
@@ -65,7 +66,7 @@ FROM employees;`} tableWidth={350} />
 		</Section>
 
 		<Section title="Process date/time values">
-			<Par>Working with dates and times is always tricky in SQL, since the various DBMSs have implemented things rather differently. We will mainly look at SQLite here, as it's what is used on SQL Valley. In SQLite, the <Term>current time</Term> (in UTC) is available through the keywords <ISQL>CURRENT_DATE</ISQL> for <ISQL>{date}</ISQL>, <ISQL>CURRENT_TIME</ISQL> for <ISQL>{time}</ISQL>, or <ISQL>CURRENT_TIMESTAMP</ISQL> for <ISQL>{`${date} ${time}`}</ISQL>. Many other DBMSs also use the short-hand <ISQL>NOW()</ISQL>.</Par>
+			<Par>Working with dates and times is always tricky in SQL, since the various DBMSs have implemented things rather differently. We will mainly look at SQLite here, as it's what is used on SQL Valley. In SQLite, the <Term>current time</Term> (in UTC) is available through the keywords <ISQL>CURRENT_DATE</ISQL> for <ISQL>{date}</ISQL>, <ISQL>CURRENT_TIME</ISQL> for <ISQL>{time}</ISQL>, or <ISQL>CURRENT_TIMESTAMP</ISQL> for <ISQL>{`${date} ${time}`}</ISQL>. Many other DBMSs also use the short-hand function <ISQL>NOW()</ISQL>.</Par>
 			<Par>Often we want to do <Term>arithmetics with time</Term>. For instance, we want to take a date and subtract a week. In SQLite (which is used here on SQL Valley) this is done through the <ISQL>DATE</ISQL> function, the <ISQL>TIME</ISQL> function, or the <ISQL>DATETIME</ISQL> function, depending on which data type you're using. You pass this function the given date/time, and then add one or more modifiers like <ISQL>'-7 days'</ISQL>. So <ISQL>{`DATE('${date}', '-7 days')`}</ISQL> becomes <ISQL>{dateLastWeek}</ISQL>. Other DBMSs have different time manipulation functions.</Par>
 			<Par>If we have a date/time value, we can <Term>display</Term>/<Term>format</Term> this in various ways. In SQLite this is done using the <ISQL>STRFTIME(format, datetime)</ISQL> function to string-format time. For instance <ISQL>STRFTIME('%Y-%m-%d %H:%M:%S', DATETIME(CURRENT_TIMESTAMP, '-7 days'))</ISQL> gives <ISQL>{`${dateLastWeek} ${timeLastWeek}`}</ISQL>. The special characters like <ISQL>%H</ISQL> denote things like "Two-digit hour".</Par>
 			<Par>A final thing that is often done with dates is <Term>extract parameters</Term> from it, like the month or the year. Several DBMSs support <ISQL>EXTRACT</ISQL>; SQLite uses <ISQL>STRFTIME</ISQL> instead. To get for instance the month in SQLite, you can use the by-now-familiar <ISQL>STRFTIME</ISQL> function. For instance <ISQL>STRFTIME('%m', CURRENT_DATE)</ISQL> gives the text <ISQL>{`'${String(now.getUTCMonth() + 1).padStart(2, '0')}'`}</ISQL>. Note that this is stored as <Em>text</Em>. If you want to calculate with this, you first have to tell SQLite that it is indeed a number, which is done through a so-called <Term>type cast</Term>. <ISQL>CAST(STRFTIME('%m', CURRENT_DATE) AS INT)</ISQL> gives the number <ISQL>{`${now.getUTCMonth() + 1}`}</ISQL>, which we can then do calculations with.</Par>
@@ -75,22 +76,22 @@ FROM employees;`} tableWidth={350} />
 		<Section title="Conditionally process values">
 			<Par>It is possible to adjust column values based on various conditions. We could for instance designate departments as being small, medium or large, using the <ISQL>CASE</ISQL> keyword.</Par>
 			<SQLQueryFigure query={`SELECT
-  d_name,
-  nr_employees,
-  CASE
-    WHEN nr_employees > 25 THEN 'large'
-    WHEN nr_employees > 10 THEN 'medium'
-    ELSE 'small'
-  END AS dep_size
-FROM departments;`} tableWidth={350} />
+	d_name,
+	nr_employees,
+	CASE
+		WHEN nr_employees > 12 THEN 'large'
+		WHEN nr_employees > 6 THEN 'medium'
+		ELSE 'small'
+	END AS dep_size
+FROM departments;`} tableWidth={400} />
 			<Info>When using <ISQL>CASE</ISQL>, add as many <ISQL>WHEN ... THEN ...</ISQL> conditions as needed. SQL looks for the <Em>first</Em> condition that matches. If no condition matches, then the <ISQL>ELSE</ISQL> outcome is used. (Or when <ISQL>ELSE</ISQL> is omitted, then <ISQL>NULL</ISQL> is applied.)</Info>
-			<Par>When dealing with a column containing <ISQL>NULL</ISQL> values, it could be useful to set up a fallback value. This is done through the <ISQL>COALESCE(v1, v2, ...)</ISQL> function. This function gives the <Em>first</Em> value that is not <ISQL>NULL</ISQL>. An example (albeit a not very sensible one) is the following query. It tries to get the performance score, but if that is unknown it divides the salary by 1000 and uses that, but if the salary is unknown too it just defaults to 20.</Par>
+			<Par>When dealing with a column containing <ISQL>NULL</ISQL> values, it could be useful to set up a fallback value. This is done through the <ISQL>COALESCE(v1, v2, ...)</ISQL> function. This function gives the <Em>first</Em> value that is not <ISQL>NULL</ISQL>. An example (albeit a not very sensible one) is the following query. It tries to get the performance score, but if that is unknown it divides the salary by 2500 and uses that, but if the salary is unknown too it just defaults to 40.</Par>
 			<SQLQueryFigure query={`SELECT
-  position,
-  salary,
-  perf_score,
-  COALESCE(perf_score, salary/1000, 20) AS backup_score
-FROM contracts;`} tableWidth={400} />
+	position,
+	salary,
+	perf_score,
+	COALESCE(perf_score, salary/2500, 40) AS backup_score
+FROM contracts;`} tableWidth={500} />
 		</Section>
 	</Page>
 }

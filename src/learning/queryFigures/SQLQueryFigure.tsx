@@ -13,11 +13,12 @@ export function SQLQueryFigure({ query = '', actualQuery = '', below = false, ta
 	const calculateView = useCallback(({ query, table }: TargetBoundsRecord<typeof targets>): DrawingView => {
 		const { width: we, height: he } = query
 		const { width: wt, height: ht } = table
-		const arrowBetween = below ? we + arrowRadius * 1.5 > wt : he + arrowRadius * 1.5 > ht
+		const resolvedTableWidth = below ? tableWidth : wt
+		const arrowBetween = below ? we + arrowRadius * 1.5 > resolvedTableWidth : he + arrowRadius * 1.5 > ht
 		const gap = arrowBetween ? arrowLength : delta
 		// Keep fractional measurement changes from repeatedly resizing the drawing and its tables.
-		return { type: 'identity', width: Math.ceil(below ? Math.max(we, wt) : we + gap + wt), height: Math.ceil(below ? he + gap + ht : Math.max(he, ht)) }
-	}, [below, arrowLength, arrowRadius, delta])
+		return { type: 'identity', width: Math.ceil(below ? Math.max(we, resolvedTableWidth) : we + gap + resolvedTableWidth), height: Math.ceil(below ? he + gap + ht : Math.max(he, ht)) }
+	}, [below, arrowLength, arrowRadius, delta, tableWidth])
 
 	return <MeasuredDrawingFigure
 		targets={targets}
@@ -37,10 +38,12 @@ function SQLQueryFigureContents({ query, actualQuery, below, tableWidth, tableSc
 	// Find the bounds of the respective elements.
 	const eBounds = useDrawingTargetBounds('query')
 	const tBounds = useDrawingTargetBounds('table')
-	const we = eBounds?.width || 100
-	const wt = tBounds?.width || 100
-	const he = eBounds?.height || 100
-	const ht = tBounds?.height || 100
+	// Quantize measured dimensions before using them for layout. Otherwise tiny browser measurement
+	// changes can move the table, causing another measurement and an endless feedback loop.
+	const we = Math.ceil(eBounds?.width || 100)
+	const wt = below ? tableWidth : Math.ceil(tBounds?.width || 100)
+	const he = Math.ceil(eBounds?.height || 100)
+	const ht = Math.ceil(tBounds?.height || 100)
 
 	// Determine the table position.
 	const arrowBetween = below ? we + arrowRadius * 1.5 > wt : he + arrowRadius * 1.5 > ht

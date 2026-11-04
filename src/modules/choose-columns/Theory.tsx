@@ -27,9 +27,9 @@ export function Theory() {
 		<Section title="Rename columns">
 			<Par>In database tables, the columns have names. When retrieving a table, we can optionally adjust the names that the columns have in our output. (This is only for the output: the original table is never changed.) To <Term>rename</Term> a column, we add the keyword <ISQL>AS</ISQL> followed by the new name of the column.</Par>
 			<FigureRenameColumns query={`SELECT
-  first_name,
-  last_name AS family_name,
-  phone AS number
+	first_name,
+	last_name AS family_name,
+	phone AS number
 FROM employees;`} />
 			<Info>The keyword <ISQL>AS</ISQL> is optional, and it works just as well without. For readability, it is still recommended to add it.</Info>
 		</Section>
@@ -37,16 +37,16 @@ FROM employees;`} />
 		<Section title="Deal with multiple tables">
 			<Par>So far we have run queries that only request a single table. Later on we will encounter queries involving multiple tables. In that case it may be confusing which column comes from which table, especially if the two tables have columns with the same name. We can indicate what specific table to select a column from through the format <ISQL>table_name.column_name</ISQL>. This is called <Term>column qualification</Term>.</Par>
 			<FigureRenameColumns query={`SELECT
-  employees.first_name,
-  employees.last_name AS family_name,
-  employees.phone AS number
+	employees.first_name,
+	employees.last_name AS family_name,
+	employees.phone AS number
 FROM employees;`} />
 			<Par>Using column qualification is obligatory when there is any kind of ambiguity; for instance when two tables have columns with the same name. Not using it would then cause an error. In case there is no ambiguity, using column qualification is optional yet recommended.</Par>
 			<Par>In case the table names are long, we can also <Term>alias</Term> our tables: temporarily rename them within this specific query. This creates a shorter query, which may improve readability. Just as with columns, we may remove <ISQL>AS</ISQL>, but its usage is recommended for readability.</Par>
 			<FigureRenameColumns query={`SELECT
-  e.first_name,
-  e.last_name AS family_name,
-  e.phone AS number
+	e.first_name,
+	e.last_name AS family_name,
+	e.phone AS number
 FROM employees AS e;`} />
 		</Section>
 	</Page>

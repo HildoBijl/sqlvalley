@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { type SQLConfig, sql } from '@codemirror/lang-sql'
+import { indentUnit, syntaxHighlighting } from '@codemirror/language'
+import { EditorState } from '@codemirror/state'
 import { EditorView, keymap } from '@codemirror/view'
-import { syntaxHighlighting } from '@codemirror/language'
 
 import { useLatestRef } from '@step-wise/react-utils'
 
@@ -35,6 +36,8 @@ export function useEditorExtensions({ completionSchema, completionDefaultTable, 
 		const sqlExtension = sqlConfig.schema ? sql(sqlConfig) : sql()
 		const baseExtensions = [
 			sqlExtension,
+			indentUnit.of('\t'),
+			EditorState.tabSize.of(2),
 			editorTheme,
 			syntaxHighlighting(highlightStyle),
 			EditorView.lineWrapping,

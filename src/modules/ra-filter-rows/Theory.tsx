@@ -12,7 +12,7 @@ export function Theory() {
 		<Section title="Use the filtering operator">
 			<Par>Suppose that we have a list of departments of a company, and we want to find the departments with more than 10 employees. This is done through filtering: we find all rows for which the number of employees is larger than ten. In relational algebra we can do so through</Par>
 			<RAQueryFigure query={<>σ<sub>nr_employees &gt; 10</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE nr_employees > 10" tableWidth={500} />
-			<Par>Note that the <Term>filtering operator</Term> <M>\sigma</M> (the Greek letter sigma) expects some relation within its brackets. As subscript, it expects a <Term>predicate</Term>/<Term>condition</Term> which it can check on each tuple within the relation. As output, the operator returns the given relation, but only with the tuples matching the given condition.</Par>
+			<Par>Note that the <Term>filtering operator</Term> <M>\sigma</M> (the Greek letter sigma) expects some relation within its parentheses. As subscript, it expects a <Term>predicate</Term>/<Term>condition</Term> which it can check on each tuple within the relation. As output, the operator returns the given relation, but only with the tuples matching the given condition.</Par>
 		</Section>
 
 		<Section title="Set up a single condition">
@@ -37,7 +37,7 @@ export function Theory() {
 			<Warning>Whereas a person might say, "Get me the departments whose manager ID is 41378877 or 42223311" this is not allowed in relational algebra. You cannot use the predicate <IRA>manager_id = 41378877 ∨ 42223311</IRA>. The connectives can only combine <Em>conditions</Em>, and a condition should always be a comparison.</Warning>
 			<Par>The final connective is the <Term>not</Term> connective <M>\neg</M>. It negates whatever condition comes after it, turning true into false and vice versa. We could for instance also find all departments having more than ten employees using</Par>
 			<RAQueryFigure query={<>σ<sub>¬(departments.nr_employees ≤ 10)</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE NOT (nr_employees <= 10)" tableWidth={500} />
-			<Warning>When using <M>\neg</M> or when combining different connectives, <Em>always</Em> use brackets to indicate which connective should be evaluated first. Otherwise things may get very unclear. For instance, consider the condition <IRA>1 = 1 ∨ 2 = 2 ∧ 3 = 4</IRA>. If we evaluate this as <IRA>1 = 1 ∨ (2 = 2 ∧ 3 = 4)</IRA> then it becomes true, but if we evaluate this as <IRA>(1 = 1 ∨ 2 = 2) ∧ 3 = 4</IRA> then it becomes false.</Warning>
+			<Warning>When using <M>\neg</M> or when combining different connectives, <Em>always</Em> use parentheses to indicate which connective should be evaluated first. Otherwise things may get very unclear. For instance, consider the condition <IRA>1 = 1 ∨ 2 = 2 ∧ 3 = 4</IRA>. If we evaluate this as <IRA>1 = 1 ∨ (2 = 2 ∧ 3 = 4)</IRA> then it becomes true, but if we evaluate this as <IRA>(1 = 1 ∨ 2 = 2) ∧ 3 = 4</IRA> then it becomes false.</Warning>
 			<Par>By cleverly combining the three connectives with the right conditions, we can set up pretty much any composite condition that we want.</Par>
 		</Section>
 

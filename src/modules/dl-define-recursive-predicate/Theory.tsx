@@ -20,12 +20,12 @@ export function Theory() {
 			<Quote>We also say that v received money from b, if there is some other person x for which v received money from x and x sold something to b.</Quote>
 			<Par>This second rule for the <IDL>receivedMoneyFrom</IDL> predicate refers to <Em>itself</Em>. We can set it up in Datalog, adding it to the previous rule.</Par>
 			<DLQueryFigure query={<>receivedMoneyFrom(v, b) :- transaction(_, v, b, _, _, _, _, _).<br />receivedMoneyFrom(v, b) :- receivedMoneyFrom(v, x), transaction(_, x, b, _, _, _, _, _).</>} actualQuery={`WITH RECURSIVE vendor_chain AS (
-    SELECT vendor, buyer
-    FROM transactions
-    UNION
-    SELECT c.vendor, t.buyer
-    FROM transactions t
-    JOIN vendor_chain c ON c.buyer = t.vendor
+		SELECT vendor, buyer
+		FROM transactions
+		UNION
+		SELECT c.vendor, t.buyer
+		FROM transactions t
+		JOIN vendor_chain c ON c.buyer = t.vendor
 )
 SELECT * FROM vendor_chain;`} tableWidth={260} />
 			<Par>And that's all there is to it! By seeing that a predicate's rule refers to itself – there is a so-called <Term>cycle</Term> – Datalog will know it has to apply the fixed-point algorithm. It will continue to search until it has found all relevant cases.</Par>

@@ -1,13 +1,13 @@
-import { TargetBoundsDrawingFigure, MeasuredDrawingFigure, Curve, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, Rectangle, useDrawingTextTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { ISQL, DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Warning, Info, Term, Em } from '@/ui'
 import { FigureHtml, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 export const adjustedProducts = `SELECT
-  p_id, name, category,
-  CASE WHEN p_id = 100599 THEN 'nonexistent' ELSE owned_by END AS owned_by,
-  est_value, status FROM products`
+	p_id, name, category,
+	CASE WHEN p_id = 100599 THEN 'nonexistent' ELSE owned_by END AS owned_by,
+	est_value, status FROM products`
 
 export function Theory() {
 	return <Page>
@@ -95,7 +95,10 @@ export function FigureTwoTables() {
 	const data1 = useQueryResult(db, 'SELECT * FROM products;')
 	const data2 = useQueryResult(db, 'SELECT * FROM accounts;')
 	const tableScale = 0.7
-	return <TargetBoundsDrawingFigure targets={['table1Title', 'table1', 'table2Title', 'table2']} maxWidth={1000} style={{ fontSize: 16 }}>
+	return <MeasuredDrawingFigure
+		targets={['table2']}
+		calculateView={({ table2 }) => ({ type: 'identity', width: 1025, height: 140 + table2.height })}
+		maxWidth={1000} style={{ fontSize: 16 }}>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={tableScale}>
 			<DrawingTable data={data1} width={900} />
 		</FigureHtml>
@@ -105,7 +108,7 @@ export function FigureTwoTables() {
 			<DrawingTable data={data2} width={1350} />
 		</FigureHtml>
 		<FigureHtml target="table2Title" position={{ target: 'table2', anchor: 'topRight', pixelOffset: [-10, 2] }} anchor="bottomRight"><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of accounts</span></FigureHtml>
-	</TargetBoundsDrawingFigure>
+	</MeasuredDrawingFigure>
 }
 
 function FigureNaturalJoin() {

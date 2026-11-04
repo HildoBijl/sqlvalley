@@ -64,10 +64,10 @@ authorizedEmployee(eid) :- allocation(eid, did), not departmentWithoutAccess(did
 suspiciousTransaction(v, b, p, d) :- transaction(_, v, b, p, d, _, e, _), not authorizedEmployee(e).
 suspiciousChain(v, b, p, 1, d) :- suspiciousTransaction(v, b, p, d).
 suspiciousChain(v, b, p, n, d2) :-
-        suspiciousChain(v, x, p, m, d1),
-        suspiciousTransaction(x, b, p, d2),
-        n = m + 1,
-        d1 < d2.
+				suspiciousChain(v, x, p, m, d1),
+				suspiciousTransaction(x, b, p, d2),
+				n = m + 1,
+				d1 < d2.
 suspiciousProduct(p) :- suspiciousChain(_, _, p, n, _), n >= 10.
 suspiciousProductData(n, c) :- suspiciousProduct(p), product(p, n, c, _, _, _).
 ?- suspiciousProductData(name, category).
@@ -90,45 +90,45 @@ suspiciousTransaction(id) :- transaction(id, _, _, _, _, _, e, _), not authorize
 			<DL>{`
 suspiciousChain(p, t, t, 1) :- suspiciousTransaction(t), transaction(t, _, _, p, _, _, _, _).
 suspiciousChain(p, ft, nt, n) :-
-        suspiciousChain(p, ft, lt, m),
-        suspiciousTransaction(nt),
-        transaction(lt, _, u, p, ld, _, _, _),
-        transaction(nt, u, _, p, nd, _, _, _),
-        ld < nd,
-        n = m + 1.
+				suspiciousChain(p, ft, lt, m),
+				suspiciousTransaction(nt),
+				transaction(lt, _, u, p, ld, _, _, _),
+				transaction(nt, u, _, p, nd, _, _, _),
+				ld < nd,
+				n = m + 1.
 `}</DL>
 			<Par>Note that we require the new transaction to also be suspicious, to be for the same product, and to have a later date, and to have a user who first acts as buyer and then as vendor.</Par>
 			<Par>The next challenge is to find the endpoints of each chain. We filter the chains, keeping those with no further link in either direction. You may think this would work:</Par>
 			<DL>{`
 fullSuspiciousChain(p, ft, lt, n) :-
-        suspiciousChain(p, ft, lt, n),
-        not suspiciousChain(p, _, ft, _),
-        not suspiciousChain(p, lt, _, _).
+				suspiciousChain(p, ft, lt, n),
+				not suspiciousChain(p, _, ft, _),
+				not suspiciousChain(p, lt, _, _).
 `}</DL>
 			<Par>However, the chains we are comparing can have the same transaction as start and end, so that fails. We could try to require the transactions to be different?</Par>
 			<DL>{`
 fullSuspiciousChain(p, ft, lt, n) :-
-        suspiciousChain(p, ft, lt, n),
-        not suspiciousChain(p, x, ft, _),
-        x != ft,
-        not suspiciousChain(p, lt, y, _),
-        lt != y.
+				suspiciousChain(p, ft, lt, n),
+				not suspiciousChain(p, x, ft, _),
+				x != ft,
+				not suspiciousChain(p, lt, y, _),
+				lt != y.
 `}</DL>
 			<Par>This also fails, because the rule is unsafe: both <IDL>x</IDL> and <IDL>y</IDL> are unbound, making our negative literals ineffective. Instead, the solution is to find all chains with multiple transactions first.</Par>
 			<DL>{`
 suspiciousMultiStepChain(p, ft, lt, n) :- suspiciousChain(p, ft, lt, n), n >= 2.
 fullSuspiciousChain(p, ft, lt, n) :-
-        suspiciousChain(p, ft, lt, n),
-        not suspiciousMultiStepChain(p, _, ft, _),
-        not suspiciousMultiStepChain(p, lt, _, _).
+				suspiciousChain(p, ft, lt, n),
+				not suspiciousMultiStepChain(p, _, ft, _),
+				not suspiciousMultiStepChain(p, lt, _, _).
 `}</DL>
 			<Par>Now it works as intended!</Par>
 			<Par>Now that we obtained all the full chains, we will join in the data from the first vendor and the last buyer. We then output this.</Par>
 			<DL>{`
 fullSuspiciousChainWithUsers(p, v, b, n) :-
-        fullSuspiciousChain(p, ft, lt, n),
-        transaction(ft, v, _, _, _, _, _, _),
-        transaction(lt, _, b, _, _, _, _, _).
+				fullSuspiciousChain(p, ft, lt, n),
+				transaction(ft, v, _, _, _, _, _, _),
+				transaction(lt, _, b, _, _, _, _, _).
 ?- fullSuspiciousChainWithUsers(product, firstVendor, lastBuyer, numSteps).
 `}</DL>
 			<Par>And with that we are done!</Par>
@@ -141,25 +141,25 @@ fullSuspiciousChainWithUsers(p, v, b, n) :-
 			<Par>Keep the definitions of <IDL>suspiciousTransaction</IDL> and <IDL>suspiciousMultiStepChain</IDL> from the previous exercise. Add the following rules. The list operations are an extension, not part of core Datalog.</Par>
 			<DL>{`
 simpleSuspiciousChain(p, t, t, 1, [v]) :-
-        suspiciousTransaction(t),
-        transaction(t, v, _, p, _, _, _, _).
+				suspiciousTransaction(t),
+				transaction(t, v, _, p, _, _, _, _).
 simpleSuspiciousChain(p, ft, nt, n, [v | vs]) :-
-        simpleSuspiciousChain(p, ft, lt, m, vs),
-        suspiciousTransaction(nt),
-        transaction(lt, _, v, p, ld, _, _, _),
-        transaction(nt, v, _, p, nd, _, _, _),
-        ld < nd,
-        not member(v, vs),
-        n = m + 1.
+				simpleSuspiciousChain(p, ft, lt, m, vs),
+				suspiciousTransaction(nt),
+				transaction(lt, _, v, p, ld, _, _, _),
+				transaction(nt, v, _, p, nd, _, _, _),
+				ld < nd,
+				not member(v, vs),
+				n = m + 1.
 fullCircularSuspiciousChain(p, ft, lt, n) :-
-        simpleSuspiciousChain(p, ft, lt, n, _),
-        not suspiciousMultiStepChain(p, _, ft, _),
-        not suspiciousMultiStepChain(p, lt, _, _),
-        transaction(ft, u, _, _, _, _, _, _),
-        transaction(lt, _, u, _, _, _, _, _).
+				simpleSuspiciousChain(p, ft, lt, n, _),
+				not suspiciousMultiStepChain(p, _, ft, _),
+				not suspiciousMultiStepChain(p, lt, _, _),
+				transaction(ft, u, _, _, _, _, _, _),
+				transaction(lt, _, u, _, _, _, _, _).
 fullCircularSuspiciousChainWithUser(p, u, n) :-
-        fullCircularSuspiciousChain(p, ft, _, n),
-        transaction(ft, u, _, _, _, _, _, _).
+				fullCircularSuspiciousChain(p, ft, _, n),
+				transaction(ft, u, _, _, _, _, _, _).
 ?- fullCircularSuspiciousChainWithUser(product, user, numSteps).
 `}</DL>
 			<Par>The endpoint checks still use all suspicious chains: a path must be maximal even if extending it would repeat a vendor. The increasing dates bound its length, so the list construction terminates on a finite transaction table.</Par>

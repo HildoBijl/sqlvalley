@@ -10,12 +10,12 @@ export function Theory() {
 	const q2 = 'SELECT DISTINCT vendor, buyer FROM transactions'
 	const q3 = 'SELECT DISTINCT t1.vendor, t2.buyer FROM transactions t1, transactions t2 WHERE t1.buyer = t2.vendor'
 	const q4 = `WITH RECURSIVE vendor_chain AS (
-    SELECT vendor, buyer
-    FROM transactions
-    UNION
-    SELECT c.vendor, t.buyer
-    FROM transactions t
-    JOIN vendor_chain c ON c.buyer = t.vendor
+		SELECT vendor, buyer
+		FROM transactions
+		UNION
+		SELECT c.vendor, t.buyer
+		FROM transactions t
+		JOIN vendor_chain c ON c.buyer = t.vendor
 )
 SELECT * FROM vendor_chain;`
 	const q5 = `${q3} EXCEPT ${q2}`

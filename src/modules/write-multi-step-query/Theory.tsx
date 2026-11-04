@@ -21,26 +21,26 @@ WHERE current_salary < 200000;`} tableScale={0.8} tableWidth={120} />
 SELECT vendor, buyer
 FROM transactions
 WHERE validated_by IN (
-  SELECT e_id
-  FROM employees
-  WHERE current_salary < 200000
+	SELECT e_id
+	FROM employees
+	WHERE current_salary < 200000
 );`} tableScale={0.8} tableWidth={300} />
 			<Par>We want a list of all involved users, so we need to merge the two lists. We can do that using a union.</Par>
 			<SQLQueryFigure query={`
 SELECT vendor AS username
 FROM transactions
 WHERE validated_by IN (
-  SELECT e_id
-  FROM employees
-  WHERE current_salary < 200000
+	SELECT e_id
+	FROM employees
+	WHERE current_salary < 200000
 )
 UNION
 SELECT buyer AS username
 FROM transactions
 WHERE validated_by IN (
-  SELECT e_id
-  FROM employees
-  WHERE current_salary < 200000
+	SELECT e_id
+	FROM employees
+	WHERE current_salary < 200000
 );`} tableScale={0.8} tableWidth={150} />
 			<Par>The query becomes large, and we're not even there yet! And to make it worse, we're <Em>repeating</Em> ourselves. If we later on want to change the limit of "200,000" then we need to do so in multiple places. Maybe someone changes it in one place and forgets to change it in the other place. We'd get a wrong query! We need a way to make this process easier.</Par>
 		</Section>
@@ -49,9 +49,9 @@ WHERE validated_by IN (
 			<Par>The key to our problem lies in naming <Term>intermediate query results</Term>. Before the main <ISQL>SELECT</ISQL>, use <ISQL>WITH</ISQL> to define a result that can be referenced like a table within the statement.</Par>
 			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
-  SELECT e_id
-  FROM employees
-  WHERE current_salary < 200000
+	SELECT e_id
+	FROM employees
+	WHERE current_salary < 200000
 )
 
 SELECT vendor AS username
@@ -66,13 +66,13 @@ WHERE validated_by IN (SELECT e_id FROM low_salary_employees);`} tableScale={0.8
 			<Par>Instead of just one CTE, we can create more. We only use the <ISQL>WITH</ISQL> keyword once, but we add the table definitions separated by commas.</Par>
 			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
-  SELECT e_id
-  FROM employees
-  WHERE current_salary < 200000
+	SELECT e_id
+	FROM employees
+	WHERE current_salary < 200000
 ), affected_transactions AS (
-  SELECT *
-  FROM transactions
-  WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
+	SELECT *
+	FROM transactions
+	WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
 )
 
 SELECT vendor AS username FROM affected_transactions
@@ -82,17 +82,17 @@ SELECT buyer AS username FROM affected_transactions;`} tableScale={0.8} tableWid
 			<Par>Let's continue extending our query. Now that the affected users are known, we should get their email addresses. We could do so through a nested query, but it's better to simply add yet another CTE.</Par>
 			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
-  SELECT e_id
-  FROM employees
-  WHERE current_salary < 200000
+	SELECT e_id
+	FROM employees
+	WHERE current_salary < 200000
 ), affected_transactions AS (
-  SELECT *
-  FROM transactions
-  WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
+	SELECT *
+	FROM transactions
+	WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
 ), affected_users AS (
-  SELECT vendor AS username FROM affected_transactions
-  UNION
-  SELECT buyer AS username FROM affected_transactions
+	SELECT vendor AS username FROM affected_transactions
+	UNION
+	SELECT buyer AS username FROM affected_transactions
 )
 
 SELECT email
@@ -103,21 +103,21 @@ WHERE username IN (SELECT username FROM affected_users);`} tableScale={0.8} tabl
 SELECT email
 FROM accounts
 WHERE username IN (
-  SELECT vendor AS username
-  FROM transactions
-  WHERE validated_by IN (
-    SELECT e_id
-    FROM employees
-    WHERE current_salary < 200000
-  )
-  UNION
-  SELECT buyer AS username
-  FROM transactions
-  WHERE validated_by IN (
-    SELECT e_id
-    FROM employees
-    WHERE current_salary < 200000
-  )
+	SELECT vendor AS username
+	FROM transactions
+	WHERE validated_by IN (
+		SELECT e_id
+		FROM employees
+		WHERE current_salary < 200000
+	)
+	UNION
+	SELECT buyer AS username
+	FROM transactions
+	WHERE validated_by IN (
+		SELECT e_id
+		FROM employees
+		WHERE current_salary < 200000
+	)
 );`} tableScale={0.8} tableWidth={250} />
 		</Section>
 

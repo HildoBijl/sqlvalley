@@ -24,9 +24,9 @@ musicalInstrument(id) :- product(id, _, 'Musical Instruments', _, _, _).
 			<Par>Using these predicates, we can find all suspicious transactions. We only take those arguments that we'll need later on.</Par>
 			<DL>{`
 suspiciousTransaction(v, b, pid, d) :-
-        transaction(_, v, b, pid, d, _, eid, _),
-        cio(eid),
-        not musicalInstrument(pid).
+				transaction(_, v, b, pid, d, _, eid, _),
+				cio(eid),
+				not musicalInstrument(pid).
 `}</DL>
 			<Par>This gives us an overview of the vendor and buyer of a given product on a given date, and only for the transactions that are suspicious. It's a really useful starting point!</Par>
 		</Section>
@@ -36,16 +36,16 @@ suspiciousTransaction(v, b, pid, d) :-
 			<DL>{`
 transferredProduct(v, b, p) :- suspiciousTransaction(v, b, p, _).
 transferredProduct(v, b, p) :-
-        transferredProduct(v, x, p),
-        suspiciousTransaction(x, b, p, _).
+				transferredProduct(v, x, p),
+				suspiciousTransaction(x, b, p, _).
 `}</DL>
 			<Par>This works well, except that in our case we <Em>do</Em> need a counter. After all, we want to know if the product got back to the original owner after <Em>at least five</Em> steps. That requires counting! So we add a counter. We could change the above rules to</Par>
 			<DL>{`
 transferredProduct(v, b, p, 1) :- suspiciousTransaction(v, b, p, _).
 transferredProduct(v, b, p, n) :-
-        transferredProduct(v, x, p, m),
-        suspiciousTransaction(x, b, p, _),
-        n = m + 1.
+				transferredProduct(v, x, p, m),
+				suspiciousTransaction(x, b, p, _),
+				n = m + 1.
 `}</DL>
 			<Par>However, this program fails to run: it gets stuck in an infinite loop. After all, if A sold a product to B, and B sold it back to A, then A sold the product to A in two steps, but also in four, six, eight, etcetera. The counter keeps on increasing!</Par>
 			<Warning>When using a counter, always make sure there are no cycles in your data. If there are: find a way to get rid of these cycles, or to prevent in some other way that the counter keeps increasing indefinitely.</Warning>
@@ -54,10 +54,10 @@ transferredProduct(v, b, p, n) :-
 			<DL>{`
 transferredProduct(v, b, p, 1, d) :- suspiciousTransaction(v, b, p, d).
 transferredProduct(v, b, p, n, d2) :-
-        transferredProduct(v, x, p, m, d1),
-        suspiciousTransaction(x, b, p, d2),
-        n = m + 1,
-        d1 < d2.
+				transferredProduct(v, x, p, m, d1),
+				suspiciousTransaction(x, b, p, d2),
+				n = m + 1,
+				d1 < d2.
 `}</DL>
 			<Par>This successfully sets up the recursive predicate. It now finds all chains of people who sold a product to one another through suspicious transactions, where each transaction occurred <Em>after</Em> the previous transaction.</Par>
 		</Section>
@@ -86,15 +86,15 @@ transferredProduct(v, b, p, n, d2) :-
 cio(id) :- contract(id, 'CIO', _, _, _, _, _).
 musicalInstrument(id) :- product(id, _, 'Musical Instruments', _, _, _).
 suspiciousTransaction(v, b, pid, d) :-
-        transaction(_, v, b, pid, d, _, eid, _),
-        cio(eid),
-        not musicalInstrument(pid).
+				transaction(_, v, b, pid, d, _, eid, _),
+				cio(eid),
+				not musicalInstrument(pid).
 transferredProduct(v, b, p, 1, d) :- suspiciousTransaction(v, b, p, d).
 transferredProduct(v, b, p, n, d2) :-
-        transferredProduct(v, x, p, m, d1),
-        suspiciousTransaction(x, b, p, d2),
-        n = m + 1,
-        d1 < d2.
+				transferredProduct(v, x, p, m, d1),
+				suspiciousTransaction(x, b, p, d2),
+				n = m + 1,
+				d1 < d2.
 suspiciousProduct(p, u) :- transferredProduct(u, u, p, n, _), n >= 5.
 suspiciousProductName(n, u) :- suspiciousProduct(p, u), product(p, n, _, _, _, _).
 ?- suspiciousProductName(productName, userName).

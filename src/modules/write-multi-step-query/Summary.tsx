@@ -10,17 +10,17 @@ export function Summary() {
 			<Quote>Find the email addresses of all users involved (as vendor or buyer) in transactions validated by employees earning less than 200,000.</Quote>
 			<SQLQueryFigure query={`
 WITH low_salary_employees AS (
-  SELECT e_id
-  FROM employees
-  WHERE current_salary < 200000
+	SELECT e_id
+	FROM employees
+	WHERE current_salary < 200000
 ), affected_transactions AS (
-  SELECT *
-  FROM transactions
-  WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
+	SELECT *
+	FROM transactions
+	WHERE validated_by IN (SELECT e_id FROM low_salary_employees)
 ), affected_users AS (
-  SELECT vendor AS username FROM affected_transactions
-  UNION
-  SELECT buyer AS username FROM affected_transactions
+	SELECT vendor AS username FROM affected_transactions
+	UNION
+	SELECT buyer AS username FROM affected_transactions
 )
 
 SELECT email

@@ -13,8 +13,9 @@ export function Theory() {
 		</Section>
 
 		<Section title={<>Combine conditions using <ISQL>AND</ISQL></>}>
-			<Par>Suppose that we have a list of contracts and want to find all active PR directors. We now have two conditions: we want the employee contract to be active <Em>and</Em> we want the position to be "director of pr". To combine these two conditions in SQL, we can use the <ISQL>AND</ISQL> keyword.</Par>
-			<FigureCombinedCondition c1="status" v1="active" c2="position" v2="director of pr" combiner="AND" />
+			<Par>Suppose that we have a list of contracts and want to find all active contracts for a Chief Technology Officer. We now have two conditions: we want the contract to be active <Em>and</Em> we want the position to be "Chief Technology Officer". To combine these two conditions in SQL, we can use the <ISQL>AND</ISQL> keyword.</Par>
+			<FigureCombinedCondition c1="status" v1="ACTIVE" c2="position" v2="Chief Technology Officer" combiner="AND" />
+			<Info>Keep in mind that white space (enters, tabs) are ignored by SQL. When conditions get long, we usually break them into multiple lines for better readability.</Info>
 		</Section>
 
 		<Section title={<>Understand how conditions are evaluated</>}>
@@ -32,44 +33,46 @@ export function Theory() {
 
 		<Section title={<>Combine conditions using <ISQL>OR</ISQL></>}>
 			<Par>Very similar to the <ISQL>AND</ISQL> keyword is the <ISQL>OR</ISQL> keyword. This keyword also expects one value before it and one value after it. The <ISQL>OR</ISQL> keyword resolves to <ISQL>TRUE</ISQL> when <Em>at least one</Em> of the two given values is <ISQL>TRUE</ISQL>. It is only <ISQL>FALSE</ISQL> when <Em>both</Em> values are <ISQL>FALSE</ISQL>.</Par>
-			<FigureCombinedCondition c1="status" v1="sick leave" c2="position" v2="transportation supervisor" combiner="OR" />
-			<Par>It is possible (and common) to combine the <ISQL>AND</ISQL> and <ISQL>OR</ISQL> keywords. When you do so, <Em>always</Em> use brackets to separate them. After all, it is very unclear what <ISQL>TRUE OR TRUE AND FALSE</ISQL> resolves to, while both <ISQL>(TRUE OR TRUE) AND FALSE</ISQL> and <ISQL>TRUE OR (TRUE AND FALSE)</ISQL> have a clear result.</Par>
+			<FigureCombinedCondition c1="status" v1="PTO" c2="position" v2="Chief Technology Officer" combiner="OR" />
+			<Par>It is possible (and common) to combine the <ISQL>AND</ISQL> and <ISQL>OR</ISQL> keywords. When you do so, <Em>always</Em> use parentheses to separate them. After all, it is very unclear what <ISQL>TRUE OR TRUE AND FALSE</ISQL> resolves to, while both <ISQL>(TRUE OR TRUE) AND FALSE</ISQL> and <ISQL>TRUE OR (TRUE AND FALSE)</ISQL> have a clear result.</Par>
 			<Info><ISQL>OR</ISQL> and <ISQL>AND</ISQL> have interesting behavior when it comes to <ISQL>NULL</ISQL>. Keep in mind that <ISQL>NULL</ISQL> means "unknown". For this reason, both <ISQL>TRUE AND NULL</ISQL> as well as <ISQL>FALSE OR NULL</ISQL> resolve to <ISQL>NULL</ISQL>: their outcomes are unknown. However, <ISQL>FALSE AND NULL</ISQL> will certainly be <ISQL>FALSE</ISQL>, and <ISQL>TRUE OR NULL</ISQL> will always be <ISQL>TRUE</ISQL>, because no matter what value this unknown <ISQL>NULL</ISQL> may have, the outcome is already clear.</Info>
 		</Section>
 
 		<Section title={<>Negate conditions using <ISQL>NOT</ISQL></>}>
-			<Par>Suppose that we want to find all employees that are <Em>not</Em> active transportation supervisors. To do so, we can use the <ISQL>NOT</ISQL> keyword.</Par>
-			<FigureCombinedCondition c1="status" v1="active" c2="position" v2="transportation supervisor" combiner="AND" addNot={true} />
+			<Par>Suppose that we want to find all contracts that are <Em>not</Em> for active Chief Data and Systems Transformation Officers. To do so, we can use the <ISQL>NOT</ISQL> keyword.</Par>
+			<FigureCombinedCondition c1="status" v1="ACTIVE" c2="position" v2="Chief Data and Systems Transformation Officer" combiner="AND" addNot={true} />
 			<Par>The <ISQL>NOT</ISQL> keyword expects a <ISQL>TRUE</ISQL>/<ISQL>FALSE</ISQL>/<ISQL>NULL</ISQL> value after it. It then inverts this value: <ISQL>NOT TRUE</ISQL> resolves to <ISQL>FALSE</ISQL> and <ISQL>NOT FALSE</ISQL> resolves as <ISQL>TRUE</ISQL>. <ISQL>NOT NULL</ISQL> reduces to <ISQL>NULL</ISQL>, since the opposite of an unknown result is still unknown.</Par>
+			<Warning>The parentheses in the above example query are very much necessary. The keyword <ISQL>NOT</ISQL> has a higher precedence than <ISQL>AND</ISQL>. Without parentheses, the <ISQL>NOT</ISQL> would only be applied to <ISQL>status = 'ACTIVE'</ISQL>, and only then would the <ISQL>AND</ISQL> be evaluated.</Warning>
 		</Section>
 
 		<Section title="Use logic theory to rewrite conditions">
-			<Par>Conditions can often be <Term>rewritten</Term>: we adjust them such that they still do the <Em>same</Em> thing. As a simple example, <ISQL>NOT status = 'active'</ISQL> can also be written as <ISQL>{`status <> 'active'`}</ISQL>.</Par>
-			<Par>A powerful trick in rewriting conditions is to expand brackes with <ISQL>NOT</ISQL>. Suppose <ISQL>c1</ISQL> and <ISQL>c2</ISQL> are any conditions.
-				<List items={[
-					<><ISQL>NOT (c1 AND c2)</ISQL> may be written as <ISQL>NOT c1 OR NOT c2</ISQL>.</>,
-					<><ISQL>NOT (c1 OR c2)</ISQL> may be written as <ISQL>NOT c1 AND NOT c2</ISQL>.</>,
-				]} />
-				In other words: pulling a <ISQL>NOT</ISQL> inside brackets will turn <ISQL>AND</ISQL> into <ISQL>OR</ISQL> and vice versa. This could help us recreate the previous table. We can rewrite the condition <ISQL>NOT (status = 'active' AND position = 'transportation supervisor')</ISQL>.</Par>
+			<Par>Conditions can often be <Term>rewritten</Term>: we adjust them such that they still do the <Em>same</Em> thing. As a simple example, <ISQL>NOT status = 'ACTIVE'</ISQL> can also be written as <ISQL>{`status <> 'ACTIVE'`}</ISQL>.</Par>
+			<Par>A powerful trick in rewriting conditions is to pull the <ISQL>NOT</ISQL> keyword inside the parentheses. Suppose <ISQL>c1</ISQL> and <ISQL>c2</ISQL> are any conditions. <Term>De Morgan's Laws</Term> now state that:</Par>
+			<List items={[
+				<><ISQL>NOT (c1 AND c2)</ISQL> may be written as <ISQL>NOT c1 OR NOT c2</ISQL>.</>,
+				<><ISQL>NOT (c1 OR c2)</ISQL> may be written as <ISQL>NOT c1 AND NOT c2</ISQL>.</>,
+			]} />
+			<Par>In other words: pulling a <ISQL>NOT</ISQL> inside parentheses will turn <ISQL>AND</ISQL> into <ISQL>OR</ISQL> and vice versa. This could help us recreate the previous table. We can rewrite the condition <ISQL>NOT (status = 'ACTIVE' AND position = 'Chief Data and Systems Transformation Officer')</ISQL>.</Par>
 			<FigureRewrittenQuery query={`
 SELECT *
 FROM contracts
-WHERE NOT status = 'active' OR NOT position = 'transportation supervisor';`} />
-			<Info>The <ISQL>NOT</ISQL> keyword is evaluated <Em>after</Em> the comparison, but <Em>before</Em> the <ISQL>OR</ISQL> keyword. The above condition is equivalent to <ISQL>{`(NOT (status = 'active')) OR (NOT (position = 'transportation supervisor'))`}</ISQL>. The brackets here can be added for clarity, but SQL programmers should know the evaluation orders, so usually they are omitted.</Info>
+WHERE NOT status = 'ACTIVE'
+	OR NOT position = 'Chief Data and Systems Transformation Officer';`} />
+			<Info>This time we do not need parentheses. After all, <ISQL>NOT</ISQL> takes precedence over <ISQL>OR</ISQL>. You may find the equivalent condition <ISQL>{`(NOT (status = 'ACTIVE')) OR (NOT (position = 'Chief Data and Systems Transformation Officer'))`}</ISQL> to be clearer, but SQL programmers are expected to know the evaluation orders. So unnecessary parentheses are usually omitted.</Info>
 		</Section>
 
 		<Section title="Use common SQL short-cuts to simplify conditions">
 			<Par>There are various short-cuts in SQL that allow you to write conditions more succinctly. Let's study a few.</Par>
-			<Par>Suppose that we want to find all employees having a performance score between <ISQL>70</ISQL> and <ISQL>80</ISQL> (inclusive). The normal method is to use the condition <ISQL>{`perf_score >= 70 AND perf_score <= 80`}</ISQL>. The short-cut says we can use the <ISQL>BETWEEN</ISQL> keyword.</Par>
+			<Par>Suppose that we want to find all contracts that started between <ISQL>'2024-07-01'</ISQL> and <ISQL>'2024-12-31'</ISQL> (inclusive). The normal method is to use the condition <ISQL>{`start_date >= '2024-07-01' AND start_date <= '2024-12-31'`}</ISQL>. The short-cut says we can use the <ISQL>BETWEEN</ISQL> keyword.</Par>
 			<FigureRewrittenQuery query={`
 SELECT *
 FROM contracts
-WHERE perf_score BETWEEN 70 AND 80;`} />
-			<Par>Now suppose that we want to find all employees that are either on sick leave or on paid leave. The normal method is to use the condition <ISQL>status = 'sick leave' OR status = 'paid leave'</ISQL>. The short-cut is to create a list <ISQL>('sick leave', 'paid leave')</ISQL> of statuses we look for, and see if the status is <ISQL>IN</ISQL> this list.</Par>
+WHERE start_date BETWEEN '2024-07-01' AND '2024-12-31';`} />
+			<Par>Now suppose that we want to find all contracts with the status <ISQL>'PTO'</ISQL> or <ISQL>'SABBATICAL'</ISQL>. The normal method is to use the condition <ISQL>status = 'PTO' OR status = 'SABBATICAL'</ISQL>. The short-cut is to create a list <ISQL>('PTO', 'SABBATICAL')</ISQL> of statuses we look for, and see if the status is <ISQL>IN</ISQL> this list.</Par>
 			<FigureRewrittenQuery query={`
 SELECT *
 FROM contracts
-WHERE status IN ('sick leave', 'paid leave');`} />
+WHERE status IN ('PTO', 'SABBATICAL');`} />
 			<Par>Given how broad SQL is, there are dozens more short-cuts like this. If you ever see a keyword you don't recognize, simply look up its specifications to see how it works. In this way, you learn more and more commands as you go.</Par>
 		</Section>
 
@@ -77,23 +80,23 @@ WHERE status IN ('sick leave', 'paid leave');`} />
 			<Par>A completely different way to combine different conditions is through <Term>merging tables</Term>. If we have two tables with the <Em>same number of columns</Em>, we can merge them together. One way to do so is through the <ISQL>UNION</ISQL> operator. This operator merges two tables, and it keeps a row if it is in <Em>either</Em> (or both) of the given tables. So it kind of functions like an <ISQL>OR</ISQL>.</Par>
 			<FigureMergingTables query1={`SELECT *
 FROM contracts
-WHERE status = 'sick leave'`} query2={`SELECT *
+WHERE status = 'PTO'`} query2={`SELECT *
 FROM contracts
-WHERE position = 'transportation supervisor'`} operator="UNION" />
+WHERE position = 'Chief Technology Officer'`} operator="UNION" />
 			<Par>A similar command is the <ISQL>INTERSECT</ISQL> operator. This one also merges two tables, but it only keeps a row if it is in <Em>both</Em> tables. So it more or less acts like an <ISQL>AND</ISQL>.</Par>
 			<FigureMergingTables query1={`SELECT *
 FROM contracts
-WHERE status = 'active'`} query2={`SELECT *
+WHERE status = 'ACTIVE'`} query2={`SELECT *
 FROM contracts
-WHERE position = 'transportation supervisor'`} operator="INTERSECT" />
+WHERE position = 'Chief Technology Officer'`} operator="INTERSECT" />
 			<Par>The final merging operator is the <ISQL>EXCEPT</ISQL>. This one functions as a subtraction: it takes the first table, and it then removes all the rows from it that are in the second table.</Par>
 			<FigureMergingTables query1={`SELECT *
 FROM contracts
-WHERE status = 'active'`} query2={`SELECT *
+WHERE status = 'ACTIVE'`} query2={`SELECT *
 FROM contracts
-WHERE position = 'transportation supervisor'`} operator="EXCEPT" />
-			<Warning>The <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> commands match columns by their <Em>position</Em> and not by their name. When using them, always make sure that both tables have the columns in the same order. In fact, column names don't even have to match. Types do: you cannot merge a number column with a text one.</Warning>
-			<Par>Since the <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> keywords do very similar things as <ISQL>AND</ISQL>, <ISQL>OR</ISQL> and <ISQL>NOT</ISQL>, their usage is not so common, but there are a few edge cases where they can be really useful.</Par>
+WHERE position = 'Chief Technology Officer'`} operator="EXCEPT" />
+			<Warning>The <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> commands match columns by their <Em>position</Em> and not by their name. When using them, always make sure that both tables have the columns in the same order. In fact, column names don't even have to match. Types do: you cannot merge a number column with a text one. (Although SQLite tries to work around this issue when it does occur.)</Warning>
+			<Par>Since the <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> and <ISQL>EXCEPT</ISQL> keywords do very similar things as <ISQL>AND</ISQL>, <ISQL>OR</ISQL> and <ISQL>NOT</ISQL>, their usage is less common, but there are a few cases where they can be really useful.</Par>
 			<Info>
 				<Par>Contrary to set theory in mathematics, SQL allows duplicate rows. However, whenever you use <ISQL>UNION</ISQL>, <ISQL>INTERSECT</ISQL> or <ISQL>EXCEPT</ISQL>, duplicates are always removed: a single row remains. If you don't want that, you can use <ISQL>UNION ALL</ISQL>, <ISQL>INTERSECT ALL</ISQL> and <ISQL>EXCEPT ALL</ISQL>. These commands cleverly deal with duplicates. Suppose that table A consists of five identical rows, and table B consists of three of the same identical rows. Then <ISQL>A UNION ALL B</ISQL> has eight rows, <ISQL>A INTERSECT ALL B</ISQL> has three rows, and <ISQL>A EXCEPT ALL B</ISQL> has two rows.</Par>
 			</Info>
@@ -118,7 +121,7 @@ function FigureCombinedConditionContents({ c1 = '', v1 = '', c2 = '', v2 = '', c
 SELECT *
 FROM contracts
 WHERE ${addNot ? 'NOT (' : ''}${c1} = '${v1}'
-  ${combiner} ${c2} = '${v2}'${addNot ? ')' : ''};`
+	${combiner} ${c2} = '${v2}'${addNot ? ')' : ''};`
 	const db = useTheoryPageDatabase()
 	const data = useQueryResult(db, query)
 
@@ -165,14 +168,14 @@ function FigureAndExplanationContents() {
 
 	// Set up query data.
 	const db = useTheoryPageDatabase()
-	const status = 'active'
-	const position = 'director of pr'
-	const examplePosition = 'CIO'
+	const status = 'ACTIVE'
+	const position = 'Chief Technology Officer'
+	const examplePosition = 'Founder and Chief Executive Officer'
 	const data = useQueryResult(db, `
 SELECT position, status
 FROM contracts
 WHERE status = '${status}'
-  AND position = '${examplePosition}'
+	AND position = '${examplePosition}'
 LIMIT 1;`)
 
 	// Find the editor bounds.
@@ -186,13 +189,13 @@ LIMIT 1;`)
 	// Position data.
 	const lineHeight = 50
 	const andX = 382
-	const exampleY = 60
+	const exampleY = 50
 
 	return <>
 		{/* Example row */}
 		<FigureHtml position={[790, exampleY]} anchor={[1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>Example row</span></FigureHtml>
-		<FigureHtml position={[600, exampleY + 25]} anchor={[-1, -1]} scale={0.8} behind>
-			<DrawingTable data={data} width={200 / 0.8} />
+		<FigureHtml position={[800, exampleY + 25]} anchor={[1, -1]} scale={0.8} behind>
+			<DrawingTable data={data} width={210} />
 		</FigureHtml>
 
 		{/* Steps */}

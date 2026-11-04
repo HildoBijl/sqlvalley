@@ -18,8 +18,8 @@ const query = `
 SELECT *
 FROM contracts
 ORDER BY
-  position ASC,
-  salary DESC
+	position ASC,
+	salary DESC
 LIMIT 5
 OFFSET 3;`
 

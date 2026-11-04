@@ -59,9 +59,9 @@ WHERE p.category = 'Fine Art';`} tableWidth={150} tableScale={0.7} />
 SELECT DISTINCT buyer
 FROM transactions
 WHERE prod_id IN (
-  SELECT DISTINCT p_id
-  FROM products
-  WHERE category = 'Fine Art'
+	SELECT DISTINCT p_id
+	FROM products
+	WHERE category = 'Fine Art'
 );`} tableWidth={150} tableScale={0.7} />
 			<Par>The latter query expresses the membership check directly. Either form may be faster: the execution plan depends on indexes, table sizes and the optimizer.</Par>
 			<Info>Write the form that expresses the request clearly. When performance matters, compare execution plans and timings on representative data. In SQLite, <ISQL>EXPLAIN QUERY PLAN</ISQL> shows the scans and index lookups chosen by the optimizer.</Info>
@@ -82,9 +82,9 @@ WHERE category = 'Fine Art';`} tableWidth={120} tableScale={0.7} />
 SELECT DISTINCT buyer
 FROM transactions
 WHERE prod_id IN (
-  SELECT DISTINCT p_id
-  FROM products
-  WHERE category = 'Fine Art'
+	SELECT DISTINCT p_id
+	FROM products
+	WHERE category = 'Fine Art'
 );`} tableWidth={150} tableScale={0.7} />
 			<Par>In many applications, we may need to go further. Perhaps we don't just want the username of the buyer, but also the email address? Through this layered approach, it is very easy to add this. We just add another lookup.</Par>
 			<Quote>Find the usernames and email addresses of the accounts for which the account ID is in the list of buyers for transactions where the corresponding product is in the list of products with category equal to "Fine Art".</Quote>
@@ -92,13 +92,13 @@ WHERE prod_id IN (
 SELECT username, email
 FROM accounts
 WHERE username IN (
-  SELECT DISTINCT buyer
-  FROM transactions
-  WHERE prod_id IN (
-    SELECT DISTINCT p_id
-    FROM products
-    WHERE category = 'Fine Art'
-  )
+	SELECT DISTINCT buyer
+	FROM transactions
+	WHERE prod_id IN (
+		SELECT DISTINCT p_id
+		FROM products
+		WHERE category = 'Fine Art'
+	)
 );`} tableWidth={300} tableScale={0.7} />
 			<Warning>Setting up a query from inside to outside, testing every step of the way, is very common. It does only work for non-correlated queries, and not for correlated queries. This is yet another reason to use non-correlated queries whenever possible.</Warning>
 		</Section>
@@ -119,16 +119,16 @@ WHERE username IN (
 SELECT username
 FROM accounts AS a
 WHERE NOT EXISTS (
-  SELECT 1
-  FROM products AS p1
-  WHERE NOT EXISTS (
-    SELECT 1
-    FROM transactions AS t
-    JOIN products AS p2
-    ON t.prod_id = p2.p_id
-    WHERE a.username = t.buyer
-      AND p1.category = p2.category
-  )
+	SELECT 1
+	FROM products AS p1
+	WHERE NOT EXISTS (
+		SELECT 1
+		FROM transactions AS t
+		JOIN products AS p2
+		ON t.prod_id = p2.p_id
+		WHERE a.username = t.buyer
+			AND p1.category = p2.category
+	)
 );`} tableWidth={300} tableScale={0.7} />
 			<Par>This query is hard to understand, because it is a correlated query: it uses the outer attribute <ISQL>a.username</ISQL> somewhere deep within its inner query. To understand it, it helps to see correlated queries as iterations. <List items={[
 				<>In the outer layer, we iterate over all accounts. Every time, we consider some account ID <ISQL>a.username</ISQL>.</>,
@@ -145,13 +145,13 @@ WHERE NOT EXISTS (
 SELECT username, email
 FROM accounts
 WHERE username IN (
-  SELECT DISTINCT buyer
-  FROM transactions
-  WHERE prod_id IN (
-    SELECT DISTINCT p_id
-    FROM products
-    WHERE category = 'Fine Art'
-  )
+	SELECT DISTINCT buyer
+	FROM transactions
+	WHERE prod_id IN (
+		SELECT DISTINCT p_id
+		FROM products
+		WHERE category = 'Fine Art'
+	)
 );`} tableWidth={300} tableScale={0.7} />
 			<Par>To check if this is the correct output, we should take one random sample from this output (okay, there only is one here), dive into the tables, and see if this person really meets the criteria. When we do, we see that user <ISQL>lizardman</ISQL> indeed bought a "Fine Art" product, being the "Frida Kahlo Self-Portrait Sketch".</Par>
 			<Info>When running these checks, the Data Explorer is your friend! But you can also quickly write some basic queries for support.</Info>

@@ -33,10 +33,10 @@ GROUP BY fiscal_year;`} tableScale={0.8} tableWidth={220} />
 			<SQLQueryFigure query={`
 SELECT *
 FROM (
-  SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
-  FROM quarterly_performance
-  WHERE quarter <= 2
-  GROUP BY fiscal_year
+	SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
+	FROM quarterly_performance
+	WHERE quarter <= 2
+	GROUP BY fiscal_year
 )
 WHERE average_revenue_q12 > 5000000;`} tableScale={0.8} tableWidth={220} />
 			<Par>Note that we took our aggregated table and treated it as a new table. It works, but it's a bit cumbersome, and since this is a use-case that occurs often in practice, SQL has a cleaner solution. We add a <ISQL>HAVING</ISQL> clause <Em>after</Em> the <ISQL>GROUP BY</ISQL> clause to filter the resulting table.</Par>
@@ -66,9 +66,9 @@ FROM departments;`} tableScale={0.8} tableWidth={220} />
 			<Par>When we get results from aggregation, we can use these in our calculations too, effectively processing data <Em>after</Em> aggregation. Suppose that we want to get an overview of the cities where employees live. Using aggregation, we can count how many people live in each city. We could also calculate this as a percentage of the total employee count.</Par>
 			<SQLQueryFigure query={`
 SELECT
-  city,
-  COUNT(*) AS num_people,
-  COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees) AS percentage
+	city,
+	COUNT(*) AS num_people,
+	COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees) AS percentage
 FROM employees
 GROUP BY city;`} tableScale={0.8} tableWidth={320} />
 			<Par>Note that we use <ISQL>COUNT</ISQL> and then start calculating with it, multiplying it by <ISQL>100.0</ISQL> to avoid integer division. Also note that we have casually included a subquery within our calculations for the total number of employees. SQL allows subqueries wherever their value make sense. In this case, the subquery returns a single number, so SQL will treat the subquery as a number and use it in its calculations.</Par>
@@ -78,8 +78,8 @@ GROUP BY city;`} tableScale={0.8} tableWidth={320} />
 			<Par>Though not as common, it is possible to <Term>aggregate text</Term>. Most aggregation functions like <ISQL>SUM</ISQL> and <ISQL>AVG</ISQL> don't work for text, but a few are still relevant.</Par>
 			<SQLQueryFigure query={`
 SELECT
-  MIN(d_name) AS first_in_alphabet,
-  MAX(d_name) AS last_in_alphabet
+	MIN(d_name) AS first_in_alphabet,
+	MAX(d_name) AS last_in_alphabet
 FROM departments;`} tableScale={0.8} tableWidth={250} />
 			<Par>One particular function that is useful in aggregating text is the <Term>string concatenation</Term> command. It concatenates all the values within a column, adding a separator in-between. It varies per DBMS what it's called: <ISQL>STRING_AGG</ISQL>, <ISQL>GROUP_CONCAT</ISQL>, or <ISQL>LISTAGG</ISQL>. We can for instance make a list of four-letter codes for each department and write them as a dash-separated list.</Par>
 			<SQLQueryFigure query={`

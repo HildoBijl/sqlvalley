@@ -7,6 +7,8 @@ This package has three components: `sqlEditor` for editing and displaying SQL, `
 
 `SQLEditor` is a controlled editor with SQL highlighting and autocomplete. Supply `value` and `onChange`; optionally supply `completionSchema` (table names mapped to column names). `onExecute` handles Ctrl+Enter or Cmd+Enter. The consumer decides how and when to execute queries.
 
+The editor uses hard tabs for indentation and displays each tab as two columns. Pressing Tab and Shift+Tab therefore adds and removes one indentation level as a single character.
+
 `SQLDisplay` displays read-only SQL, and `ISQL` displays it inline.
 
 ```tsx

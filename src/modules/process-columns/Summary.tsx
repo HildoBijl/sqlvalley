@@ -9,13 +9,13 @@ export function Summary() {
 		<Section>
 			<Par>In SQL there is a wide variety of functions that can be used to process the values in a column, for instance to create new columns.</Par>
 			<SQLQueryFigure query={`SELECT
-  position,
-  salary,
-  0.3*salary AS taxes
-FROM contracts;`} tableWidth={350} />
+	position,
+	salary,
+	0.3*salary AS taxes
+FROM contracts;`} tableWidth={400} />
 			<Par>The most commonly used processing functions for numbers and text are shown below. There are far more, so whenever you want to process some values, do a quick search on which functions might come in handy.</Par>
 			<FigureProcessingCommands />
-			<Info>Processing functions for <ISQL>DATE</ISQL> values are also available, but they strongly differ per DBMS. Look up the specifications for your own DBMS whenever you need them.</Info>
+			<Info>Processing functions for date/time values are also available, but they strongly differ per DBMS. Look up the specifications for your own DBMS whenever you need them.</Info>
 		</Section>
 	</Page>
 }
@@ -32,7 +32,7 @@ function FigureProcessingCommands() {
 	const titleHeight = 50
 	const headerHeight = 33
 	const lineHeight = 30
-	const height = titleHeight + headerHeight + 10.5 * lineHeight
+	const height = titleHeight + headerHeight + 11.5 * lineHeight
 
 	// Define widths.
 	const w1 = 400
@@ -49,7 +49,7 @@ function FigureProcessingCommands() {
 	const x21 = w1 + delta
 	const x22 = x21 + 240
 	const x23 = x21 + w2 - 80
-	const x2i = (x22 + x23) / 2 + 36
+	const x2i = (x22 + x23) / 2 + 40
 	const xm2 = x22
 
 	return <DrawingFigure view={{ type: 'identity', width: w, height }} maxWidth={w}>
@@ -137,77 +137,90 @@ function FigureProcessingCommands() {
 			<span style={operationStyle}>Rounding</span>
 		</FigureHtml>
 		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
-			<ISQL>ROUND(3.14159)</ISQL>
+			<ISQL>ROUND(3.14159, 2)</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 5]} anchor={[0, 0]} behind>
-			<ISQL>3</ISQL>
+			<ISQL>3.14</ISQL>
 		</FigureHtml>
 
 		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 6]} anchor={[-1, 0]} behind>
-			<span style={operationStyle}>Rounding</span>
+			<span style={operationStyle}>Round up</span>
 		</FigureHtml>
 		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
-			<ISQL>ROUND(3.14159, 2)</ISQL>
+			<ISQL>CEIL(3.14159)</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 6]} anchor={[0, 0]} behind>
-			<ISQL>3.14</ISQL>
+			<ISQL>4</ISQL>
 		</FigureHtml>
 
 		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 7]} anchor={[-1, 0]} behind>
-			<span style={operationStyle}>Maximum</span>
+			<span style={operationStyle}>Round down</span>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
+			<ISQL>FLOOR(2.71828)</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
 		</FigureHtml>
-		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
-			<ISQL>GREATEST(5, 2)</ISQL>
-		</FigureHtml>
 		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 7]} anchor={[0, 0]} behind>
-			<ISQL>5</ISQL>
+			<ISQL>2</ISQL>
 		</FigureHtml>
 
 		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 8]} anchor={[-1, 0]} behind>
-			<span style={operationStyle}>Minimum</span>
+			<span style={operationStyle}>Maximum</span>
 		</FigureHtml>
 		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
-			<ISQL>LEAST(5, 2)</ISQL>
+			<ISQL>GREATEST(5, 2)</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 8]} anchor={[0, 0]} behind>
-			<ISQL>2</ISQL>
+			<ISQL>5</ISQL>
 		</FigureHtml>
 
 		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 9]} anchor={[-1, 0]} behind>
-			<span style={operationStyle}>Absolute</span>
+			<span style={operationStyle}>Minimum</span>
 		</FigureHtml>
 		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
-			<ISQL>ABS(-5)</ISQL>
+			<ISQL>LEAST(5, 2)</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 9]} anchor={[0, 0]} behind>
-			<ISQL>5</ISQL>
+			<ISQL>2</ISQL>
 		</FigureHtml>
 
 		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
-			<span style={operationStyle}>Power</span>
+			<span style={operationStyle}>Absolute</span>
 		</FigureHtml>
 		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
-			<ISQL>POWER(10, 3)</ISQL>
+			<ISQL>ABS(-5)</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+			<ISQL>5</ISQL>
+		</FigureHtml>
+
+		<FigureHtml position={[x11, titleHeight + headerHeight + lineHeight * 11]} anchor={[-1, 0]} behind>
+			<span style={operationStyle}>Power</span>
+		</FigureHtml>
+		<FigureHtml position={[x1i, titleHeight + headerHeight + lineHeight * 11]} anchor={[0, 0]} behind>
+			<ISQL>=</ISQL>
+		</FigureHtml>
+		<FigureHtml position={[x12, titleHeight + headerHeight + lineHeight * 11]} anchor={[0, 0]} behind>
+			<ISQL>POWER(10, 3)</ISQL>
+		</FigureHtml>
+		<FigureHtml position={[x13, titleHeight + headerHeight + lineHeight * 11]} anchor={[0, 0]} behind>
 			<ISQL>1000</ISQL>
 		</FigureHtml>
 
@@ -317,9 +330,9 @@ function FigureProcessingCommands() {
 			<ISQL>5</ISQL>
 		</FigureHtml>
 
-		{/* Fallback values */}
+		{/* Case-based values */}
 		<FigureHtml position={[xm2, lineHeight * 10]} anchor={[0, -1]} behind>
-			<span style={titleStyle}><ISQL>NULL</ISQL> values</span>
+			<span style={titleStyle}>Conditional values</span>
 		</FigureHtml>
 
 		<FigureHtml position={[x21, titleHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
@@ -333,15 +346,28 @@ function FigureProcessingCommands() {
 		</FigureHtml>
 
 		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 10]} anchor={[-1, 0]} behind>
-			<span style={operationStyle}>Fallback value</span>
+			<span style={operationStyle}>Conditions</span>
 		</FigureHtml>
 		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
-			<ISQL>COALESCE(NULL, NULL, 'Default')</ISQL>
+			<ISQL>CASE WHEN 3 &lt; 6 THEN 1 ELSE 0 END</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
 			<ISQL>=</ISQL>
 		</FigureHtml>
 		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 10]} anchor={[0, 0]} behind>
+			<ISQL>1</ISQL>
+		</FigureHtml>
+
+		<FigureHtml position={[x21, titleHeight + headerHeight + lineHeight * 11]} anchor={[-1, 0]} behind>
+			<span style={operationStyle}>Fallback value</span>
+		</FigureHtml>
+		<FigureHtml position={[x22, titleHeight + headerHeight + lineHeight * 11]} anchor={[0, 0]} behind>
+			<ISQL>COALESCE(NULL, NULL, 'Default')</ISQL>
+		</FigureHtml>
+		<FigureHtml position={[x2i, titleHeight + headerHeight + lineHeight * 11]} anchor={[0, 0]} behind>
+			<ISQL>=</ISQL>
+		</FigureHtml>
+		<FigureHtml position={[x23, titleHeight + headerHeight + lineHeight * 11]} anchor={[0, 0]} behind>
 			<ISQL>'Default'</ISQL>
 		</FigureHtml>
 	</DrawingFigure>

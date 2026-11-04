@@ -21,10 +21,10 @@ FROM quarterly_performance;`} tableWidth={160} />
 				<Par sx={{ mb: 1 }}>Whenever we set up an aggregated query (a query that uses an aggregation function), SQL <Em>will</Em> squash rows together. In this case, <Em>do not</Em> select regular columns in the query too. Most DBMSs would throw an error, while some more forgiving DBMSs just pick <Em>any</Em> row they can find, without any guarantees on which one.</Par>
 				<SQLQueryFigure query={`
 SELECT
-  quarter,
-  fiscal_year,
-  revenue,
-  SUM(revenue)
+	quarter,
+	fiscal_year,
+	revenue,
+	SUM(revenue)
 FROM quarterly_performance;`} tableWidth={340} /></Warning>
 		</Section>
 
@@ -40,9 +40,9 @@ FROM quarterly_performance;`} tableWidth={340} /></Warning>
 			<Par>We can use multiple aggregation functions at the same time. When doing so, it is recommended to give them descriptive names.</Par>
 			<SQLQueryFigure query={`
 SELECT
-  MAX(revenue) AS highest_revenue,
-  AVG(revenue) AS average_revenue,
-  COUNT(revenue) AS num_quarters
+	MAX(revenue) AS highest_revenue,
+	AVG(revenue) AS average_revenue,
+	COUNT(revenue) AS num_quarters
 FROM quarterly_performance;`} tableWidth={320} />
 			<Info>
 				<Par>Whenever aggregation functions encounter <ISQL>NULL</ISQL> values, they generally <Em>ignore</Em> them. Any <ISQL>NULL</ISQL> values are first removed, and <Em>only then</Em> will aggregation be applied. <ISQL>SUM</ISQL>, <ISQL>AVG</ISQL>, <ISQL>MIN</ISQL> and <ISQL>MAX</ISQL> return <ISQL>NULL</ISQL> if there are no non-NULL inputs, including an empty input. <ISQL>COUNT(column)</ISQL> returns <ISQL>0</ISQL> in that case. For example:</Par>
@@ -59,20 +59,20 @@ FROM quarterly_performance;`} tableWidth={320} />
 			<Par>Aggregation becomes a lot more powerful when grouping is introduced. To set up <Term>grouped aggregation</Term> in SQL, add a <ISQL>GROUP BY</ISQL> statement right after <ISQL>FROM</ISQL> and specify one or more column names to group by. This causes the rows to first be grouped by equal grouping columns. Aggregation is then performed <Em>separately</Em> within each group.</Par>
 			<SQLQueryFigure query={`
 SELECT
-  fiscal_year,
-  MAX(revenue) AS highest_revenue,
-  AVG(revenue) AS average_revenue,
-  COUNT(revenue) AS num_quarters
+	fiscal_year,
+	MAX(revenue) AS highest_revenue,
+	AVG(revenue) AS average_revenue,
+	COUNT(revenue) AS num_quarters
 FROM quarterly_performance
 GROUP BY fiscal_year;`} tableWidth={500} />
 			<Par>We could add multiple grouping columns, separated by commas. For our example that's not so useful, but if the table for instance had multiple entries per quarter (like one for each month) then a grouping by quarter <Em>would</Em> make sense.</Par>
 			<SQLQueryFigure query={`
 SELECT
-  fiscal_year,
-  quarter,
-  MAX(revenue) AS highest_revenue,
-  AVG(revenue) AS average_revenue,
-  COUNT(revenue) AS num_rows_in_quarter
+	fiscal_year,
+	quarter,
+	MAX(revenue) AS highest_revenue,
+	AVG(revenue) AS average_revenue,
+	COUNT(revenue) AS num_rows_in_quarter
 FROM quarterly_performance
 GROUP BY fiscal_year, quarter;`} tableWidth={500} />
 			<Info>Earlier we saw that we should not add regular columns to a <ISQL>SELECT</ISQL> statement when using aggregation. Grouping is an exception: when we group by certain columns, then we <Em>can</Em> add these grouping columns to our <ISQL>SELECT</ISQL> statement. In fact, it's very helpful to do so, to get sensible data! After all, the above tables wouldn't make sense if we didn't show the "fiscal_year" in them.</Info>

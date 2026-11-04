@@ -30,8 +30,8 @@ WHERE current_salary > 200000;
 			<Par><pre><code>highEarners ← ∏<sub>first_name,last_name</sub>(σ<sub>current_salary &gt; 200000</sub>(employees))</code></pre></Par>
 			<Par>Or in a document-database like <Link to="https://www.mongodb.com/">MongoDB</Link> the query looks like this.</Par>
 			<Par><pre><code>{`db.employees.find(
-  { current_salary: { $gt: 200000 } },
-  { first_name: 1, last_name: 1, _id: 0 }
+	{ current_salary: { $gt: 200000 } },
+	{ first_name: 1, last_name: 1, _id: 0 }
 )`}</code></pre></Par>
 			<Par>You see that there is a large variety of query languages.</Par>
 		</Section>
