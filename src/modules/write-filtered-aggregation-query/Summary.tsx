@@ -13,21 +13,25 @@ export function Summary() {
 			]} />
 			<Info>You may <Em>not</Em> use columns from the original table in the <ISQL>HAVING</ISQL> filter, other than those given at <ISQL>GROUP BY</ISQL>. You <Em>can</Em> use additional aggregation functions.</Info>
 			<SQLQueryFigure query={`
-SELECT fiscal_year, AVG(revenue) AS average_revenue_q12
+SELECT fiscal_year, SUM(total_transactions) AS yearly_transactions
 FROM quarterly_performance
-WHERE quarter <= 2
+WHERE category = 'PAINTING'
 GROUP BY fiscal_year
-HAVING AVG(revenue) > 5000000;`} tableScale={0.8} tableWidth={220} />
+HAVING SUM(total_transactions) > 1000;`} tableScale={0.8} tableWidth={220} />
 			<Warning>In most DBMSs you <Em>cannot</Em> use the aliases defined in the <ISQL>SELECT</ISQL> clause within the <ISQL>HAVING</ISQL> clause. This means you may have to repeat calculations.</Warning>
 			<Par>When using aggregation, it is common to process values. This processing can happen both before and after aggregation.</Par>
 			<SQLQueryFigure query={`
+SELECT fiscal_year, AVG(revenue - operating_expenses) AS average_quarterly_profit
+FROM quarterly_performance
+WHERE category = 'PAINTING'
+GROUP BY fiscal_year;`} tableScale={0.8} tableWidth={240} />
+			<SQLQueryFigure query={`
 SELECT
-	city,
-	ROUND(AVG(current_salary / 12)) AS mean_monthly_salary,
-	COUNT(*) AS nr_employees,
-	COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees) AS percentage
-FROM employees
-GROUP BY city;`} tableScale={0.8} tableWidth={440} />
+	category,
+	COUNT(*) AS num_entries,
+	ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM quarterly_performance), 2) AS percentage
+FROM quarterly_performance
+GROUP BY category;`} tableScale={0.8} tableWidth={320} />
 		</Section>
 	</Page>
 }

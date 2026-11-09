@@ -31,7 +31,7 @@ export function Theory() {
 			<Par>Grouped aggregation takes place in three steps.</Par>
 			<List useNumbers items={[
 				<>We specify by which attribute(s) we group: the <Term>grouping attributes</Term>. For example by the combination of quarter and year.</>,
-				<>The original table is divided into <Term>groups</Term>: all rows that have the <Em>same</Em> value for the grouping attributes are grouped together.</>,
+				<>The original table is divided into <Term>groups</Term>: all rows that have the <Em>same</Em> value for all grouping attributes are grouped together.</>,
 				<>Aggregation is performed separately within each group: each group is squashed into one or more <Term>aggregated statistics</Term>.</>,
 			]} />
 			<Par>The result is a table containing both the grouping attributes (on the left) and any aggregated statistics within each group (on the right).</Par>

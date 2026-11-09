@@ -87,6 +87,17 @@ export function Theory() {
 			]} />
 			<Info>Note that the distinction of natural/non-natural join is completely separate from the distinction of inner/outer join. The first issue is about "Do we manually specify on which attributes to perform the join, or do we just pick equally named attributes?" The second issue is about "How do we handle entries without a matching reference?" When we talk about a "join" we usually refer to the the non-natural inner join, but you could very well apply a natural full outer join too.</Info>
 		</Section>
+
+		<Section title="Multiple joins in a row">
+			<Par>The join is an operation, and operations can be applied multiple times. To see how this works in practice, let's introduce a new table. Let's track which employee is allocated to which department. Employees can be allocated to multiple departments, so we cannot just add one field to the <ISQL>employees</ISQL> table. We need a separate <ISQL>allocations</ISQL> table.</Par>
+			<TableQueryFigure query={`SELECT * FROM allocations;`} title="Employee-department allocations" tableWidth={320} tableScale={0.7} />
+			<Info>Such <Term>linking tables</Term> are very common in practice. They often only contain foreign keys, and every row - every combination of these foreign keys - represents a fact. Here it's that the respective employee is allocated to the respective department.</Info>
+			<Par>Now let's say we want to set up a table that joins in the employee information. Both the <ISQL>allocations</ISQL> table and the <ISQL>employees</ISQL> table have a column with the same name: <ISQL>d_id</ISQL>. This means we can use a natural join to join these tables.</Par>
+			<TableQueryFigure query={`SELECT employees.*, allocations.d_id FROM allocations NATURAL JOIN employees;`} title="Allocations with employee info joined in" tableWidth={1100} tableScale={0.7} />
+			<Par>But we can also join in the department information. Both the <ISQL>allocations</ISQL> table and the <ISQL>departments</ISQL> table have a column <ISQL>e_id</ISQL>. Applying another natural join gives us the following table. It shows us the combined information from all three tables.</Par>
+			<TableQueryFigure query={`SELECT employees.*, departments.* FROM allocations NATURAL JOIN employees NATURAL JOIN departments;`} title="Allocations with employee and department info joined in" tableWidth={1600} tableScale={0.7} />
+			<Info>Repeated joins like this are very common in practice. It is helpful to be able to visualize these operations inside your head to keep track of them.</Info>
+		</Section>
 	</Page>
 }
 

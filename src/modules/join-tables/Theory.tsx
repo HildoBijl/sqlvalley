@@ -2,7 +2,7 @@ import { MeasuredDrawingFigure, Rectangle, useDrawingTextTarget, useDrawingTarge
 import { DrawingTable, ISQL, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Par, Quote, List, Section, Warning, Info, Term, Em } from '@/ui'
-import { FigureHtml, SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
+import { FigureHtml, TableQueryFigure, SQLQueryFigure, useTheoryPageDatabase } from '@/learning'
 
 const adjustedProducts = `SELECT
 	p_id, name, category,
@@ -24,7 +24,7 @@ export function Theory() {
 			<Par>We know that a join is basically a Cartesian product followed by a filter. To set up a Cartesian product in SQL, we can add multiple tables to the <ISQL>FROM</ISQL> clause. When we do, SQL sets up a large table with one row for each possible <Em>combination</Em> of rows from the first and second table.</Par>
 			<SQLQueryFigure query={`SELECT *
 FROM products, accounts;`} tableScale={0.35} tableWidth={770} below />
-			<Warning>We can also take the Cartesian product of even more tables. Note that the number of rows in such a Cartesian product grows very rapidly. Be careful setting up the Cartesian product of several large tables.</Warning>
+			<Warning>We can also take the Cartesian product of even more tables. Note that the row counts multiply in such a Cartesian product. Be careful setting up the Cartesian product of several large tables.</Warning>
 			<Par>To complete the join, we have to add a filter to the Cartesian product. Specifically, we require the foreign key reference to match: <ISQL>products.owned_by</ISQL> must equal <ISQL>accounts.username</ISQL>.</Par>
 			<SQLQueryFigure query={`SELECT *
 FROM products, accounts
@@ -34,11 +34,11 @@ WHERE products.owned_by = accounts.username;`} tableScale={0.6} tableWidth={1320
 			<Par>To solve the given assignment, we can add extra filtering conditions, select the appropriate columns for the output, and use aliasing to shorten the notation. This gives the full query.</Par>
 			<SQLQueryFigure query={`SELECT p.name, a.first_name, a.last_name, p.status
 FROM products AS p, accounts AS a
-WHERE p.owned_by = a.username AND p.est_value > 1000000;`} tableScale={0.7} tableWidth={700} />
+WHERE p.owned_by = a.username AND p.est_value > 1000000;`} tableScale={0.7} tableWidth={450} />
 		</Section>
 
 		<Section title={<>Join tables using <ISQL>JOIN</ISQL></>}>
-			<Par>Let's take a look at the <ISQL>WHERE</ISQL> clause of the above query. The first condition in this clause is a <Term>join condition</Term>: it is the requirement, when joining the tables, that the foreign keys are equal. The second condition is an <Term>external condition</Term>: for unrelated reasons, we are only interested in products with an estimated value of more than a million dollars. At the moment, the join conditions and external conditions are both mixed up in the same clause. That's confusing!</Par>
+			<Par>Let's take a look at the <ISQL>WHERE</ISQL> clause of the above query. The first condition in this clause is a <Term>join condition</Term>: it specifies which rows from the two tables match. For us, the product's <ISQL>owned_by</ISQL> column must equal the account's <ISQL>username</ISQL> column. The second condition is an <Term>external condition</Term>: for unrelated reasons, we are only interested in products with an estimated value of more than a million dollars. At the moment, the join conditions and external conditions are both mixed up in the same clause. That's confusing!</Par>
 			<Par>To make queries easier to understand, it is helpful to keep join conditions and external conditions separate. That's exactly where the <ISQL>JOIN</ISQL> command comes in. Using <ISQL>JOIN</ISQL> goes in three steps. <List items={[
 				<>Put one table in the <ISQL>FROM</ISQL> clause.</>,
 				<>Use a <ISQL>JOIN</ISQL> clause to specify the second table to be joined in.</>,
@@ -53,12 +53,12 @@ ON products.owned_by = accounts.username;`} tableScale={0.6} tableWidth={1320} b
 FROM products AS p
 JOIN accounts AS a
 ON p.owned_by = a.username
-WHERE p.est_value > 1000000;`} tableScale={0.7} tableWidth={700} />
+WHERE p.est_value > 1000000;`} tableScale={0.7} tableWidth={450} />
 			<Par>The above query does <Em>exactly</Em> the same as the join from before, but now we have smoothly separated our join conditions from our external conditions. It's easier to read!</Par>
 		</Section>
 
 		<Section title={<>Use the natural join short-cut</>}>
-			<Par>Previously we required the column <ISQL>owned_by</ISQL> from one table to equal the column <ISQL>username</ISQL> from another table. In practice, it often happens that both columns related to a foreign key already have the same name. Perhaps the column <ISQL>owned_by</ISQL> actually already has the name <ISQL>username</ISQL>? In this case there are various short-cuts possible!</Par>
+			<Par>Previously we required the column <ISQL>owned_by</ISQL> from one table to equal the column <ISQL>username</ISQL> from another table. In practice, it often happens that both columns related to a foreign key already have the same name. Suppose, hypothetically, that the column <ISQL>owned_by</ISQL> already has the name <ISQL>username</ISQL>. In this case there are various short-cuts possible!</Par>
 			<FigureNaturalJoinAdjustedTables />
 			<Par>The first option is to use the <ISQL>NATURAL JOIN</ISQL>. This automatically requires all columns with equal name to be equal. When we use the natural join, the DBMS will go through the column names from both tables, find all pairs of matching column names, and it requires all these values to then be equal.</Par>
 			<SQLQueryFigure query={`SELECT *
@@ -67,7 +67,7 @@ NATURAL JOIN accounts;`} actualQuery={`SELECT *
 FROM (${productsReplacement}) AS products
 NATURAL JOIN accounts;`} tableScale={0.5} tableWidth={1100} below />
 			<Par>This works well! But what happens when the two tables have another column name in common? What would we for instance do if both the column for product name <ISQL>name</ISQL> and the column for account last name <ISQL>last_name</ISQL> would be called <ISQL>name</ISQL>? In that case, the natural join would require these columns to be equal too! That's not what we want.</Par>
-			<Par>For this use-case, there is an in-between solution: we can manually specify which columns have to be equal in the natural join. This is done through <ISQL>JOIN table_name USING (column_name1, column_name2, ...)</ISQL>. Note that the parentheses indicate a <Em>list</Em> of column names, but this list could also be a single column name.</Par>
+			<Par>For this use-case, there is an in-between solution: we can manually specify which columns have to be equal in the natural join. This is done through <ISQL>JOIN table_name USING (column_name1, column_name2, ...)</ISQL>. Note that the parentheses indicate a <Em>list</Em> of column names, but this list may also contain just a single column name.</Par>
 			<SQLQueryFigure query={`SELECT *
 FROM products
 JOIN accounts
@@ -76,16 +76,27 @@ FROM (${productsReplacement}) AS products
 JOIN accounts
 USING (username);`} tableScale={0.5} tableWidth={1100} below />
 			<Par>In this case, even if there are other columns with equal names, we only require the values in the <ISQL>username</ISQL> columns to be equal.</Par>
-			<Info>The commands <ISQL>NATURAL JOIN</ISQL> and <ISQL>JOIN ... USING</ISQL> are short-cuts for <ISQL>JOIN ... ON</ISQL>: they do the exact same thing with less code. Well ... <Em>almost</Em> the same thing. They have one added benefit: they automatically remove duplicate columns. When using <ISQL>JOIN ... ON</ISQL>, there may be two columns <ISQL>username</ISQL> present after the join whose contents are exactly the same. When using these short-cuts, SQL neatly drops one of these columns, since the short-cuts inherently require these columns to have equal contents.</Info>
+			<Info>The commands <ISQL>NATURAL JOIN</ISQL> and <ISQL>JOIN ... USING</ISQL> are short-cuts for <ISQL>JOIN ... ON</ISQL>: they do the exact same thing with less code. Well ... <Em>almost</Em> the same thing. They have one added benefit: they automatically remove duplicate columns. When using <ISQL>JOIN ... ON</ISQL>, both columns used for the joining (for us <ISQL>username</ISQL> and <ISQL>owned_by</ISQL>) are present in the result. But these short-cuts are more intelligent: they know that the two columns from the two tables are the same. So they neatly drop one of these columns, keeping only one instance.</Info>
+		</Section>
+
+		<Section title="Use multiple joins">
+			<Par>It is common to apply multiple join operations in a single query to combine data from several tables. This is done by chaining multiple join commands together. To see how this works, consider the <ISQL>allocations</ISQL> table.</Par>
+			<TableQueryFigure query={`SELECT * FROM allocations;`} title="Employee-department allocations" tableWidth={320} tableScale={0.7} />
+			<Par>We could join in both the employee and the department information. Because the column names <ISQL>e_id</ISQL> and <ISQL>d_id</ISQL> match up in both tables, the natural join works remarkably well here.</Par>
+			<SQLQueryFigure query={`SELECT *
+FROM allocations
+NATURAL JOIN employees
+NATURAL JOIN departments;`} tableWidth={1000} tableScale={0.6} below />
+			<Par>It's also possible to mix in <ISQL>JOIN ... USING</ISQL> or <ISQL>JOIN ... ON</ISQL> commands if desired/required. In this way, SQL allows us to join multiple tables in a variety of ways.</Par>
 		</Section>
 
 		<Section title={<>Use inner and outer joins</>}>
-			<Par>When joining tables, there could be missing matches. Let's mess up our data and create some missing matches, to show how we can deal with them.
-				<List items={[
-					<>We change the owner of "Studio with Copper Vessel" to a non-existing account with username <ISQL>nonexistent</ISQL>.</>,
-				]} /></Par>
+			<Par>When joining tables, there could be missing matches. Let's mess up our data and create some missing matches, to show how we can deal with them.</Par>
+			<List items={[
+				<>We change the owner of "Studio with Copper Vessel" to a non-existing account with username <ISQL>nonexistent</ISQL>.</>,
+			]} />
 			<FigureTwoTablesAdjusted />
-			<Par>Note that there is now one product without an owner, and various accounts without a product. There are four ways to deal with these missing matches.</Par>
+			<Par>Note that there is now one product without a matching owner, and various accounts without a product. There are four ways to deal with these missing matches.</Par>
 			<List items={[
 				<>
 					<Par>In the <Term>inner join</Term> any rows with missing matches are dropped from the output.</Par>
@@ -96,14 +107,14 @@ ON p.owned_by = a.username`} actualQuery={`SELECT * FROM (${adjustedProducts}) p
 					<Info sx={{ my: 1 }}>The default join is the inner join. The commands <ISQL>JOIN</ISQL> and <ISQL>INNER JOIN</ISQL> do the exact same thing.</Info>
 				</>,
 				<>
-					<Par>In the <Term>left (outer) join</Term> the rows from the left table are always kept.</Par>
+					<Par>In the <Term>left (outer) join</Term> the rows from the left table are always kept. When a row has no match, the columns belonging to the other table contain <ISQL>NULL</ISQL>.</Par>
 					<Par sx={{ my: 1 }}><SQLQueryFigure query={`SELECT *
 FROM products AS p
 LEFT JOIN accounts AS a
 ON p.owned_by = a.username`} actualQuery={`SELECT * FROM (${adjustedProducts}) p LEFT JOIN accounts a ON p.owned_by=a.username;`} tableScale={0.5} tableWidth={1100} below /></Par>
 				</>,
 				<>
-					<Par>In the <Term>right (outer) join</Term> the rows from the right table are always kept.</Par>
+					<Par>In the <Term>right (outer) join</Term> the rows from the right table are always kept. Again, the missing values are filled up with <ISQL>NULL</ISQL>.</Par>
 					<Par sx={{ my: 1 }}><SQLQueryFigure query={`SELECT *
 FROM products AS p
 RIGHT JOIN accounts AS a
@@ -117,6 +128,7 @@ FULL JOIN accounts AS a
 ON p.owned_by = a.username`} actualQuery={`SELECT * FROM (${adjustedProducts}) p FULL JOIN accounts a ON p.owned_by=a.username;`} tableScale={0.5} tableWidth={1100} below /></Par>
 				</>,
 			]} />
+			<Info>The addition of <ISQL>INNER/LEFT/RIGHT/FULL</ISQL> is a separate issue compared to using <ISQL>NATURAL JOIN</ISQL> or <ISQL>JOIN ... USING</ISQL>. The first considers how to handle rows that don't have matches in the other table, while the second describes how to specify the columns for the join. You may very well use a <ISQL>NATURAL LEFT JOIN</ISQL>.</Info>
 		</Section>
 	</Page>
 }
@@ -149,7 +161,7 @@ function FigureNaturalJoinAdjustedTablesContents() {
 	const padding = 6
 
 	return <>
-		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of products (owned_by renamed to username)</span></FigureHtml>
+		<FigureHtml position={[10, 0]} anchor={[-1, -1]}><span style={{ fontWeight: 500, fontSize: '0.8em' }}>List of products (with owned_by renamed to username)</span></FigureHtml>
 		<FigureHtml target="table1" position={[0, 25]} anchor={[-1, -1]} scale={tableScale} behind>
 			<DrawingTable data={data1} width={900} />
 		</FigureHtml>
@@ -167,7 +179,7 @@ function FigureNaturalJoinAdjustedTablesContents() {
 function FigureTwoTablesAdjusted() {
 	return <MeasuredDrawingFigure
 		targets={['table2']}
-		calculateView={({ table2 }) => ({ type: 'identity', width: 1025, height: 185 + table2.height + 35 })}
+		calculateView={({ table2 }) => ({ type: 'identity', width: 1025, height: 185 + table2.height })}
 		maxWidth={1000} style={{ fontSize: 16 }}>
 		<FigureTwoTablesAdjustedContents />
 	</MeasuredDrawingFigure>

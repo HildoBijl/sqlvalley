@@ -12,12 +12,14 @@ export function Summary() {
 			<Par>Formally a join is a <Term>Cartesian product</Term> (all possible combinations of one row from one table and another row from the other table) followed by a <Term>filter</Term> that requires the foreign keys to be equal.</Par>
 			<Par>The opposite of a join is a <Term>decomposition</Term>: it splits the table back up into two separate tables. This is useful in case the larger table has duplicate data: by storing the decomposed tables, we can prevent storing duplicate data.</Par>
 			<Par>Normally, when performing a join, we have to specify through which foreign key we join the tables. In the <Term>natural join</Term> we do not: we implicitly state that the foreign key used to join the tables consists of all <Em>equally-named</Em> attributes. This can be a useful (though sometimes risky) short-cut.</Par>
-			<Par>When we encounter missing references in a join, there are four ways to deal with this. <List items={[
+			<Par>When we encounter missing references in a join, there are four ways to deal with this.</Par>
+			<List items={[
 				<>In the <Term>inner join</Term> (the default method) we ignore (remove) any rows from either table that does not have a matching row from the other table.</>,
 				<>In the <Term>left (outer) join</Term> we <Em>always</Em> keep the rows from the left table.</>,
 				<>In the <Term>right (outer) join</Term> we <Em>always</Em> keep the rows from the right table.</>,
 				<>In the <Term>full (outer) join</Term> we <Em>always</Em> keep the rows from <Em>both</Em> tables.</>,
-			]} /> Any potential missing values are given the value <ISQL>NULL</ISQL> in the joined table.</Par>
+			]} />
+			<Par>Any potential missing values are given the value <ISQL>NULL</ISQL> in the joined table.</Par>
 			<Info>When we are talking about a "join", we usually talk about the non-natural inner join.</Info>
 		</Section>
 	</Page>

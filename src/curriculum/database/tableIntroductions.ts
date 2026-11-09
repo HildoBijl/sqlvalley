@@ -9,7 +9,7 @@ const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {
 	departments: 'database',
 	employees: 'database',
 	contracts: ['sql','relational-algebra','datalog'],
-	allocations: ['join-tables', 'dl-check-rule-safety'],
+	allocations: ['join-and-decomposition', 'dl-check-rule-safety'],
 
 	// Financials.
 	expenses: 'data-types',
