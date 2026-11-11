@@ -1,5 +1,6 @@
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link } from '@/ui'
+import { Page, Section, Par, List, Info, Warning, Term, Em, M } from '@/ui'
 import { RA, IRA, RelationName, RAQueryFigure } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 import { FigureTwoTables } from '../database/Theory'
 
@@ -24,7 +25,7 @@ export function Theory() {
 			<Par>To adjust an attribute name, we use the <Term>rename operator</Term> <M>\rho</M> (the Greek letter rho). If we want to rename <Em>e_id</Em> to <Em>manager_id</Em>, we could do so using the <M>\rightarrow</M> notation.</Par>
 			<RAQueryFigure query={<>ρ<sub>e_id→manager_id</sub>(employees)</>} actualQuery="SELECT DISTINCT e_id AS manager_id, first_name, last_name, phone, email, address, city, hire_date, current_salary FROM employees" tableWidth={900} tableScale={0.7} below />
 			<Par>Note that the rename operator receives a relation, and the subscript describes how to adjust the attribute names. We can also add multiple attribute renames at the same time if we separate them by commas.</Par>
-			<Info>The rename operator can be used in a variety of ways. There are also notations in which we can rename the relation itself, or rename <Em>all</Em> attributes at the same time. More about that will be discussed when learning to <Link to="/module/ra-write-join-query">write join queries</Link>.</Info>
+			<Info>The rename operator can be used in a variety of ways. There are also notations in which we can rename the relation itself, or rename <Em>all</Em> attributes at the same time. More about that will be discussed when learning to <ModuleLink moduleId="ra-write-join-query">write join queries</ModuleLink>.</Info>
 		</Section>
 
 		<Section title="Join relations through the natural join">

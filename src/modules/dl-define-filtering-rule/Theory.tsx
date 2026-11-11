@@ -1,5 +1,6 @@
-import { Page, Section, Par, Quote, List, Info, Warning, Em, Term, Link } from '@/ui'
+import { Page, Section, Par, Quote, List, Info, Warning, Em, Term } from '@/ui'
 import { DL, IDL, DLQueryFigure } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 export function Theory() {
 	return <Page>
@@ -8,7 +9,7 @@ export function Theory() {
 		</Section>
 
 		<Section title="Add constraints to rules to restrict arguments">
-			<Par>Let's say we want to find all employees earning at least 200000. How would we do so in Datalog? (This example may seem familiar: we've already shown it at the <Link to="/module/datalog">Datalog</Link> concept. Here we'll figure out how it works.)</Par>
+			<Par>Let's say we want to find all employees earning at least 200000. How would we do so in Datalog? (This example may seem familiar: we've already shown it at the <ModuleLink moduleId="datalog">Datalog</ModuleLink> concept. Here we'll figure out how it works.)</Par>
 			<Par>The idea here is to set up a new predicate that contains all these high-earning employees. We can set it up using the following rule.</Par>
 			<DLQueryFigure query={<>highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 200000.</>} actualQuery="SELECT DISTINCT * FROM employees WHERE current_salary >= 200000" tableWidth={940} below />
 			<Par>You can read this rule as:</Par>

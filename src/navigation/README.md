@@ -1,9 +1,12 @@
 # Navigation
 
-Navigation combines curriculum, learning components, and application state into pages. Only the router is exported through `@/navigation`.
+Navigation combines curriculum, learning components, and application state into pages. The router and `ModuleLink` are exported through `@/navigation`.
+
+Module content imports `ModuleLink` from `@/navigation`. Use `<ModuleLink moduleId="database-keys" />` for a link labeled with the module's title, or provide children for custom text. The component uses the central module path builder.
 
 - `router.tsx`: routes and error/not-found pages.
 - `paths.ts`: learning overview paths and labels, plus module URL construction.
+- `ModuleLink.tsx`: module links for lesson content.
 - `useLearningNavigationContext.ts`: shared tree-history selection and return destinations.
 - `layout`: the header, settings menu, and outlet loading/error boundaries.
 - `pages`: the home page and one skill-tree overview page configured by tree ID.

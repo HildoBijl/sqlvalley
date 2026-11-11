@@ -3,8 +3,9 @@ import type { ReactNode } from 'react'
 import { TargetBoundsDrawingFigure, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
-import { useThemeColor, Page, Section, Par, List, Info, Term, Em, Link } from '@/ui'
+import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
 import { FigureHtml, TableSchema, useTheoryPageDatabase } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 export function Theory() {
 	return <Page>
@@ -22,7 +23,7 @@ export function Theory() {
 				row: 'Row',
 				cell: 'Cell',
 			}} />
-			<Info>Unlike spreadsheet rows, database rows have no inherent row number or fixed order. To identify individual records, we commonly use a column such as <Em>d_id</Em>. This is discussed further in the <Link to="/module/database-keys">Database Keys</Link> concept.</Info>
+			<Info>Unlike spreadsheet rows, database rows have no inherent row number or fixed order. To identify individual records, we commonly use a column such as <Em>d_id</Em>. This is discussed further in the <ModuleLink moduleId="database-keys">Database Keys</ModuleLink> concept.</Info>
 			<Par>The set-up/design of the table is called its <Term>schema</Term>. This specifies its columns and their properties. For now, we describe a schema using the table name and its column names. A common way of writing the schema is by putting the table name in bold, and the attributes behind it within parentheses. (Though variations to this convention occur.) For the above example table we have the schema:</Par>
 			<List sx={{ my: -1 }} items={[<TableSchema key="departments" table="departments" />]} />
 			<Par>So adding an extra row changes the table's contents. Adding another column changes its schema.</Par>

@@ -1,7 +1,8 @@
 import { ISQL } from '@sqlvalley/sql'
 
-import { Page, Par, Quote, Section, Warning, Info, Term, Em, Link } from '@/ui'
+import { Page, Par, Quote, Section, Warning, Info, Term, Em } from '@/ui'
 import { SQLQueryFigure } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 export function Theory() {
 	return <Page>
@@ -89,7 +90,7 @@ WHERE current_salary > (
 	FROM contracts
 	WHERE e_id = 23070303
 );`} tableWidth={260} />
-			<Warning>The <ISQL>ANY</ISQL>/<ISQL>SOME</ISQL> and <ISQL>ALL</ISQL> keywords work in nearly all DBMSs, but sadly not in SQLite. Since we use SQLite on SQL Valley, we cannot use those keywords on this site. Luckily there are various alternatives to do the same thing, for instance through <Link to="/module/aggregate-columns">aggregation</Link>.</Warning>
+			<Warning>The <ISQL>ANY</ISQL>/<ISQL>SOME</ISQL> and <ISQL>ALL</ISQL> keywords work in nearly all DBMSs, but sadly not in SQLite. Since we use SQLite on SQL Valley, we cannot use those keywords on this site. Luckily there are various alternatives to do the same thing, for instance through <ModuleLink moduleId="aggregate-columns">aggregation</ModuleLink>.</Warning>
 		</Section>
 	</Page>
 }

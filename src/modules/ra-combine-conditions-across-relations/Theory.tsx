@@ -1,5 +1,6 @@
-import { Page, Par, Section, Warning, Info, Term, Em, M, BM, Link } from '@/ui'
+import { Page, Par, Section, Warning, Info, Term, Em, M, BM } from '@/ui'
 import { RelationName, RAQueryFigure } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 export function Theory() {
 	return <Page>
@@ -21,7 +22,7 @@ export function Theory() {
 			<Par>To adjust attribute names, we use the <Term>rename operator</Term> <M>\rho</M> (the Greek letter rho). We could for instance use it to rename a single attribute using the <M>\rightarrow</M> notation.</Par>
 			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments" tableWidth={150} />
 			<Par>Note that the rename operator receives a relation, and the subscript describes how to adjust the attribute names. We can also add multiple attribute renames at the same time if we separate them by commas.</Par>
-			<Info>The rename operator can be used in a variety of ways. There are also notations in which we can rename the relation itself, or rename <Em>all</Em> attributes at the same time. More about that will be discussed when learning to <Link to="/module/ra-write-join-query">write join queries</Link>.</Info>
+			<Info>The rename operator can be used in a variety of ways. There are also notations in which we can rename the relation itself, or rename <Em>all</Em> attributes at the same time. More about that will be discussed when learning to <ModuleLink moduleId="ra-write-join-query">write join queries</ModuleLink>.</Info>
 		</Section>
 
 		<Section title="Use the intersection">

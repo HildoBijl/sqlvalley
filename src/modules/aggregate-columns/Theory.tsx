@@ -1,7 +1,8 @@
 import { ISQL } from '@sqlvalley/sql'
 
-import { Page, Par, List, Section, Info, Warning, Term, Em, Link } from '@/ui'
+import { Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
 import { TableQueryFigure, SQLQueryFigure } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 export function Theory() {
 	return <Page>
@@ -76,7 +77,7 @@ SELECT
 	COUNT(total_transactions) AS num_entries
 FROM quarterly_performance
 GROUP BY fiscal_year, quarter;`} tableWidth={500} />
-<Par>We may want to <Link to="/module/sort-and-limit-rows">sort this table</Link> in a more useful order, but that's a different topic.</Par>
+<Par>We may want to <ModuleLink moduleId="sort-and-limit-rows">sort this table</ModuleLink> in a more useful order, but that's a different topic.</Par>
 			<Info>Earlier we saw that we should not add regular columns to a <ISQL>SELECT</ISQL> statement when using aggregation. Grouping is an exception: when we group by certain columns, then we <Em>can</Em> add these grouping columns to our <ISQL>SELECT</ISQL> statement. In fact, it's very helpful to do so, to get sensible data! After all, the above tables would be very hard to interpret without the <ISQL>fiscal_year</ISQL> column.</Info>
 		</Section>
 	</Page>

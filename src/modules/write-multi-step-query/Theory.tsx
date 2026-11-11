@@ -1,7 +1,8 @@
 import { ISQL } from '@sqlvalley/sql'
 
-import { Page, Par, List, Section, Info, Warning, Term, Em, Link } from '@/ui'
+import { Page, Par, List, Section, Info, Warning, Term, Em } from '@/ui'
 import { SQLQueryFigure } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 export function Theory() {
 	return <Page>
@@ -62,7 +63,7 @@ SELECT buyer AS username
 FROM transactions
 WHERE prod_id IN (SELECT p_id FROM high_value_products);`} tableScale={0.8} tableWidth={150} />
 			<Par>These named results are formally called <Term>Common Table Expressions (CTEs)</Term>. They are very powerful tools at structuring queries and making them easier to read. But keep in mind that they are temporary: as soon as the query ends they are forgotten!</Par>
-			<Info>The CTE is only defined as an alias for this specific query. Its definition is forgotten once the query ends! If you want to store persistent table aliases, look into <Link to="/module/database-view">database views</Link>.</Info>
+			<Info>The CTE is only defined as an alias for this specific query. Its definition is forgotten once the query ends! If you want to store persistent table aliases, look into <ModuleLink moduleId="database-view">database views</ModuleLink>.</Info>
 			<Par>Instead of just one CTE, we can create more. We only use the <ISQL>WITH</ISQL> keyword once, but we add the table definitions separated by commas.</Par>
 			<SQLQueryFigure query={`
 WITH high_value_products AS (

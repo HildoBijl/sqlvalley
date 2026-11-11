@@ -1,6 +1,7 @@
 
-import { Page, Section, Par, List, Info, Warning, Term, Em, M, Link } from '@/ui'
+import { Page, Section, Par, List, Info, Warning, Term, Em, M } from '@/ui'
 import { IDL } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 import { SampleDatalogScriptForDependencyGraph, SecondDependencyGraph, CleanedSecondDependencyGraph } from '../dl-predicate-dependency-graph/Theory'
 
@@ -11,7 +12,7 @@ export function Theory() {
 		</Section>
 
 		<Section title="Step 1: Draw a rough draft of the graph without layers">
-			<Par>Let's consider a sample Datalog program. (This is the same example as used to introduce the <Link to="/module/dl-predicate-dependency-graph">dependency graph concept</Link>.)</Par>
+			<Par>Let's consider a sample Datalog program. (This is the same example as used to introduce the <ModuleLink moduleId="dl-predicate-dependency-graph">dependency graph concept</ModuleLink>.)</Par>
 			<SampleDatalogScriptForDependencyGraph />
 			<Par>If we want to draw a predicate dependency graph for this, the first step is always to make a rough draft showing the dependencies. Grab a piece of paper, make a node for every predicate there is, and draw an arrow if a rule describing one predicate mentions some other predicate.</Par>
 			<SecondDependencyGraph />

@@ -1,7 +1,8 @@
 import { Box } from '@mui/material'
 
-import { Page, Section, Par, List, Info, Term, Em, M, Link } from '@/ui'
+import { Page, Section, Par, List, Info, Term, Em, M } from '@/ui'
 import { RA, RAQueryFigure } from '@/learning'
+import { ModuleLink } from '@/navigation'
 
 export function Theory() {
 	return <Page>
@@ -10,7 +11,7 @@ export function Theory() {
 		</Section>
 
 		<Section title="Use the assignment operator to structure your query">
-			<Par>Suppose that we want to find all department managers who earn less than 200,000 per year. We have actually done this before, when learning to <Link to="/module/ra-combine-conditions-across-relations">combine conditions across relations</Link>. Back then, we set up one large query.</Par>
+			<Par>Suppose that we want to find all department managers who earn less than 200,000 per year. We have actually done this before, when learning to <ModuleLink moduleId="ra-combine-conditions-across-relations">combine conditions across relations</ModuleLink>. Back then, we set up one large query.</Par>
 			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) ∩ ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 200000" tableWidth={150} />
 			<Par>It is already a bit hard to read back this query and understand what it does. Imagine if queries get larger!</Par>
 			<Par>The main way to create structure in a query is through the <Term>assignment operator</Term> <M>\leftarrow</M>. Through it, we can create intermediate relations, that are temporarily available for us to use further. We could for instance first make a list of all department managers and <Em>assign</Em> those to a temporary new relation.</Par>
