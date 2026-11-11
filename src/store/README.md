@@ -44,7 +44,7 @@ useLearningStore.getState().completeSkill(skillId)
 
 - Admin mode
 - Theme mode
-- Story mode preference (`storyModeEnabled`, default `true`); `useStoryMode()` additionally requires admin mode during the test phase
+- Story mode preference (`storyModeEnabled`, default `false` during development); `useStoryMode()` additionally requires admin mode during the test phase
 - Practice dataset size
 
 [`learning/`](./learning/) owns learning progress for concepts and skills:

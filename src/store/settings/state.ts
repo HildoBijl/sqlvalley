@@ -12,7 +12,7 @@ export interface SettingsState {
 
 export const initialSettingsState: SettingsState = {
 	adminModeEnabled: false,
-	storyModeEnabled: true,
+	storyModeEnabled: false,
 	themeMode: 'light',
 	practiceDatasetSize: 'full',
 }
