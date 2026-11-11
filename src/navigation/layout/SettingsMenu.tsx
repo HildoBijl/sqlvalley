@@ -64,7 +64,7 @@ export function SettingsMenu() {
 			anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 			transformOrigin={{ vertical: 'top', horizontal: 'right' }}>
 
-			{typeof window !== 'undefined' && window.location.hostname === 'localhost' ? (
+			{adminEnabled || (typeof window !== 'undefined' && window.location.hostname === 'localhost') ? (
 				<MenuItem onClick={handleAdminToggle}>
 					<ListItemIcon><AdminPanelSettings sx={{ color: adminEnabled ? 'primary.main' : 'inherit' }} /></ListItemIcon>
 					<ListItemText>Admin Mode</ListItemText>
