@@ -16,6 +16,8 @@ Module content imports `ModuleLink` from `@/navigation`. Use `<ModuleLink module
 
 Curriculum owns tree layouts and follow-up module selection. Learning owns reusable presentation; navigation supplies content, progress, and callbacks. Video tabs remain commented out until video content is introduced.
 
+Module tab selections add browser history entries, so Back and Forward revisit tabs. Automatic default-tab selection and URL corrections replace the current entry. Tabs have URLs that preserve unrelated query parameters and the hash, allowing Ctrl/Cmd-click and middle-click to open a tab separately.
+
 The retired playground prototype and its route have been removed.
 
 Module-page hooks live in `pages/modulePage/hooks`, with a local barrel export, and separate responsibilities:

@@ -1,5 +1,5 @@
 import { type SyntheticEvent, useCallback, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
 import type { ModuleType } from '@step-wise/module-tree-definition'
 
@@ -10,12 +10,17 @@ import type { TabConfig } from '@/learning'
 export function useModuleTabSelection(moduleId: string, moduleType: ModuleType, tabs: TabConfig[], defaultTab = 'theory') {
 	// Check the URL's search parameters for a tab option.
 	const [searchParams, setSearchParams] = useSearchParams()
+	const location = useLocation()
 	const searchParamTab = searchParams.get('tab')?.toLowerCase()
-	const setSearchParamTab = useCallback((value: string) => {
+	const getTabSearchParams = useCallback((value: string) => {
 		const params = new URLSearchParams(searchParams)
 		params.set('tab', value)
-		setSearchParams(params, { replace: true })
-	}, [searchParams, setSearchParams])
+		return params
+	}, [searchParams])
+	const setSearchParamTab = useCallback((value: string, replace = false) => {
+		setSearchParams(getTabSearchParams(value), { replace })
+	}, [getTabSearchParams, setSearchParams])
+	const getTabHref = (value: string) => `${location.pathname}?${getTabSearchParams(value)}${location.hash}`
 
 	// Connect to the data store to see which tab the user last visited for this module.
 	const moduleState = useModuleState(moduleId, moduleType)
@@ -28,18 +33,18 @@ export function useModuleTabSelection(moduleId: string, moduleType: ModuleType, 
 	// If the current tab is not equal to the search param's value or the data store's value, then store it there.
 	useEffect(() => {
 		if (!currentTab) return
-		if (searchParams.get('tab') !== currentTab) setSearchParamTab(currentTab)
+		if (searchParams.get('tab') !== currentTab) setSearchParamTab(currentTab, true)
 		if (moduleState.tab !== currentTab) setModuleTab(moduleId, moduleType, currentTab)
 	}, [currentTab, moduleId, moduleType, moduleState.tab, searchParams, setSearchParamTab, setModuleTab])
 
 	// Set up handlers to adjust the tab, both in the search parameters and in the data store.
 	const selectTab = useCallback((value: string) => {
-		if (!tabs.some(tab => tab.key === value)) return
+		if (value === currentTab || !tabs.some(tab => tab.key === value)) return
 		setSearchParamTab(value)
 		setModuleTab(moduleId, moduleType, value)
-	}, [moduleId, moduleType, tabs, setSearchParamTab, setModuleTab])
+	}, [currentTab, moduleId, moduleType, tabs, setSearchParamTab, setModuleTab])
 	const handleTabChange = (_event: SyntheticEvent, value: string) => selectTab(value)
 
 	// Return the current tab value and its change handlers.
-	return { currentTab, selectTab, handleTabChange }
+	return { currentTab, selectTab, handleTabChange, getTabHref }
 }

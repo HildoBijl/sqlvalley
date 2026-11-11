@@ -28,5 +28,5 @@ export function useModulePageTabs(data: ReturnType<typeof useModuleData>, comple
 		return true
 	})
 	const selection = useModuleTabSelection(data.moduleId, data.moduleType, tabs)
-	return { ...selection, tabs }
+	return { ...selection, tabs: tabs.map(tab => ({ ...tab, href: selection.getTabHref(tab.key) })) }
 }
