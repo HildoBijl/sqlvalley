@@ -30,6 +30,8 @@ The shared MUI DataGrid renderer preserves query order by default. Set `controls
 
 Tables fill their container by default. Supply `width` to set an explicit width, using a number in pixels (for example, `width={800}`) or a CSS width string. This also applies to the no-data placeholder.
 
+Column widths account for wrapping: headers can wrap after underscores, and email/username columns (including `buyer`, `vendor`, and `owned_by`) can wrap at punctuation or within long identifiers. Ordinary text keeps whole words together. Sorting, filtering, and copied values retain the original text.
+
 Use `DrawingTable` for tables inside drawings. It uses the same renderer, always shows all rows without pagination or sorting/filtering controls, and defaults to compact styling. Its props exclude `showPagination`, `maxRows`, and `controls`; other display options, including `width` and `compact`, remain configurable.
 
 ```tsx
