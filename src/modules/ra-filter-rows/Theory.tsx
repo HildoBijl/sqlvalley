@@ -18,7 +18,7 @@ export function Theory() {
 		<Section title="Set up a single condition">
 			<Par>In relational algebra, predicates/conditions are set up using propositional logic. In this logic, conditions are always some kind of comparison. They come in the form</Par>
 			<RA>[value] [comparator] [value]</RA>
-			<Par>Here, the value may be predefined (like a given number or piece of text, such as "10") or they may come from the given tuple (like for instance "nr_employees").</Par>
+			<Par>Here, the value may be predefined (like a given number <IRA>10</IRA> or piece of text <IRA>"Technology"</IRA>) or they may come from the given tuple (like for instance <IRA>nr_employees</IRA>).</Par>
 			<Par>For <Term>text</Term>, comparing is usually done using either <M>=</M> (equals) or <M>\neq</M> (unequals). You could for instance find all departments whose name does not equal "Operations" using</Par>
 			<RAQueryFigure query={<>σ<sub>d_name ≠ "Operations"</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE d_name <> 'Operations'" tableWidth={500} />
 			<Warning>When you are predefining a piece of text in a condition, always use quotation marks to show that you are using text, rather than using an attribute name.</Warning>
@@ -30,11 +30,11 @@ export function Theory() {
 
 		<Section title="Combine multiple conditions">
 			<Par>In practice you often need to combine multiple conditions. This can be done using the <Term>connectives</Term> <M>\wedge</M> (and), <M>\vee</M> (or) and <M>\neg</M> (not).</Par>
-			<Par>For example, if we want to find all departments with ID lower than 4000 <Term>and</Term> less than 20 employees, we can use</Par>
-			<RAQueryFigure query={<>σ<sub>d_id &lt; 4000 ∧ nr_employees &lt; 20</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE d_id < 4000 AND nr_employees < 20" tableWidth={500} />
-			<Par>Similarly, if we want to find all departments managed by either the manager with ID <ISQL>41378877</ISQL> <Term>or</Term> managed by the manager with ID <ISQL>42223311</ISQL>, then we can use</Par>
-			<RAQueryFigure query={<>σ<sub>manager_id = 41378877 ∨ manager_id = 42223311</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE manager_id = 41378877 OR manager_id = 42223311" tableWidth={500} />
-			<Warning>Whereas a person might say, "Get me the departments whose manager ID is 41378877 or 42223311" this is not allowed in relational algebra. You cannot use the predicate <IRA>manager_id = 41378877 ∨ 42223311</IRA>. The connectives can only combine <Em>conditions</Em>, and a condition should always be a comparison.</Warning>
+			<Par>For example, if we want to find all departments with less than ten employees <Term>and</Term> a budget of more than a million, we can use</Par>
+			<RAQueryFigure query={<>σ<sub>nr_employees &lt; 10 ∧ budget &gt; 1000000</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE nr_employees < 10 AND budget > 1000000" tableWidth={500} />
+			<Par>Similarly, if we want to find all departments managed by either the manager with ID <ISQL>14338498</ISQL> <Term>or</Term> managed by the manager with ID <ISQL>24090361</ISQL>, then we can use</Par>
+			<RAQueryFigure query={<>σ<sub>manager_id = 14338498 ∨ manager_id = 24090361</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE manager_id = 14338498 OR manager_id = 24090361" tableWidth={500} />
+			<Warning>Whereas a person might say, "Get me the departments whose manager ID is 14338498 or 24090361" this is not allowed in relational algebra. You cannot use the predicate <IRA>manager_id = 14338498 ∨ 24090361</IRA>. The connectives can only combine <Em>conditions</Em>, and a condition should always be a comparison.</Warning>
 			<Par>The final connective is the <Term>not</Term> connective <M>\neg</M>. It negates whatever condition comes after it, turning true into false and vice versa. We could for instance also find all departments having more than ten employees using</Par>
 			<RAQueryFigure query={<>σ<sub>¬(departments.nr_employees ≤ 10)</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE NOT (nr_employees <= 10)" tableWidth={500} />
 			<Warning>When using <M>\neg</M> or when combining different connectives, <Em>always</Em> use parentheses to indicate which connective should be evaluated first. Otherwise things may get very unclear. For instance, consider the condition <IRA>1 = 1 ∨ 2 = 2 ∧ 3 = 4</IRA>. If we evaluate this as <IRA>1 = 1 ∨ (2 = 2 ∧ 3 = 4)</IRA> then it becomes true, but if we evaluate this as <IRA>(1 = 1 ∨ 2 = 2) ∧ 3 = 4</IRA> then it becomes false.</Warning>

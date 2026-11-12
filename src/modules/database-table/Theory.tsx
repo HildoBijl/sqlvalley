@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { TargetBoundsDrawingFigure, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
+import { MeasuredDrawingFigure, Curve, Rectangle, useDrawingElementTarget, useDrawingTargetBounds } from '@step-wise/drawing'
 import { DrawingTable, useQueryResult } from '@sqlvalley/sql'
 
 import { useThemeColor, Page, Section, Par, List, Info, Term, Em } from '@/ui'
@@ -59,9 +59,12 @@ export function Theory() {
 type Terminology = Partial<Record<'table' | 'contents' | 'column' | 'columnNames' | 'row' | 'cell', ReactNode>>
 
 export function FigureTerminology({ terminology }: { terminology?: Terminology }) {
-	return <TargetBoundsDrawingFigure targets={['table', 'tableLabel', 'contentsLabel', 'columnLabel', 'columnNamesLabel', 'rowLabel', 'cellLabel']} margin={5} maxWidth={700} style={{ fontSize: 16 }}>
+	return <MeasuredDrawingFigure
+		targets={['table']}
+		calculateView={({ table }) => ({ type: 'identity', width: 745, height: 70 + table.height })}
+		maxWidth={700} style={{ fontSize: 16 }}>
 		<FigureTerminologyContents terminology={terminology} />
-	</TargetBoundsDrawingFigure>
+	</MeasuredDrawingFigure>
 }
 
 function FigureTerminologyContents({ terminology }: { terminology?: Terminology }) {
@@ -87,7 +90,7 @@ function FigureTerminologyContents({ terminology }: { terminology?: Terminology 
 	// Render the drawing.
 	return <>
 		{/* Table. */}
-		<FigureHtml target="table" position={[0, 0]} anchor="topLeft" scale={0.8} behind>
+		<FigureHtml target="table" position={[220, 65]} anchor="topLeft" scale={0.8} behind>
 			<DrawingTable data={data} width={650} />
 		</FigureHtml>
 
