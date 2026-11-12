@@ -76,23 +76,23 @@ SELECT * FROM vendor_chain;`
 			<Par>The method that is generally used is the <Term>fixed-point algorithm</Term>. This algorithm keeps two sets in its memory.</Par>
 			<List items={[
 				<>The <Term>result set</Term> <M>R</M> containing <Em>all</Em> rows we have found so far.</>,
-				<>The <Term>delta set</Term> <M>\Delta</M> containing <Em>only</Em> new rows we just found. These are then added to the result set <M>R</M>.</>,
+				<>The <Term>delta set</Term> <M>\Delta</M> containing <Em>only</Em> new rows we just found. These are then added to the result set <M suffix=".">R</M></>,
 			]} />
 			<Par>In essence, the fixed-point algorithm works through the following steps.</Par>
 			<List items={[
 				<>
 					<Par><Term>Initialization</Term>: start with the base case(s).</Par>
 					<List items={[
-						<><M>\Delta \leftarrow A</M>: fill up the delta set with the anchor.</>,
-						<><M>R \leftarrow \Delta</M>: add these cases to the result set too.</>,
+						<><M suffix=":">\Delta \leftarrow A</M> fill up the delta set with the anchor.</>,
+						<><M suffix=":">R \leftarrow \Delta</M> add these cases to the result set too.</>,
 					]} />
 				</>,
 				<>
 					<Par><Term>Iteration</Term>: keep searching for new cases.</Par>
 					<List items={[
-						<><M>\Delta \leftarrow f(\Delta)</M>: use the recently found cases <M>\Delta</M>, together with the recursion definition <M>f</M>, to try and find new cases.</>,
-						<><M>\Delta \leftarrow \Delta - R</M>: from the new cases that were found, remove those that we found before. Only keep what's new.</>,
-						<><M>R \leftarrow R \cup \Delta</M>: add these new cases (if any) to the result set to remember them.</>,
+						<><M suffix=":">\Delta \leftarrow f(\Delta)</M> use the recently found cases <M suffix=",">\Delta</M> together with the recursion definition <M suffix=",">f</M> to try and find new cases.</>,
+						<><M suffix=":">\Delta \leftarrow \Delta - R</M> from the new cases that were found, remove those that we found before. Only keep what's new.</>,
+						<><M suffix=":">R \leftarrow R \cup \Delta</M> add these new cases (if any) to the result set to remember them.</>,
 					]} />
 					<Par>Repeat this until <M>\Delta</M> ends up being empty. If <M>\Delta</M> ever <Em>is</Em> empty - we have not found any new cases during one iteration - then we won't find any more cases in future iterations either. The result set <M>R</M> won't grow anymore and has reached a fixed point. We're done searching.</Par>
 				</>,
@@ -100,9 +100,9 @@ SELECT * FROM vendor_chain;`
 			<Par>The above might still sound a bit vague, so let's clarify it by applying it to our example.</Par>
 			<Par>We start with the initalization. Our anchor is the set of all people who directly sold to another person: the transactions table.</Par>
 			<TableQueryFigure query={q2} title={<>The delta set <M>\Delta</M> at initialization</>} tableWidth={300} tableScale={0.8} />
-			<Par>These rows are all added to <M>R</M>. Given these new rows, we now try to find <Em>additional</Em> rows according to our recursion definition. That is, we try to find people A, B and C, where (A, B) appears in the above delta set <M>\Delta</M>, and (B, C) appears in the original transactions table. This gives quite a lot of combinations of people, but only a few of them are actually new.</Par>
+			<Par>These rows are all added to <M suffix=".">R</M> Given these new rows, we now try to find <Em>additional</Em> rows according to our recursion definition. That is, we try to find people A, B and C, where (A, B) appears in the above delta set <M suffix=",">\Delta</M> and (B, C) appears in the original transactions table. This gives quite a lot of combinations of people, but only a few of them are actually new.</Par>
 			<TableQueryFigure query={q5} title={<>The delta set <M>\Delta</M> after the first iteration</>} tableWidth={300} tableScale={0.8} />
-			<Par>Next, we repeat this, but once again <Em>only</Em> for these new rows. So we once more try to find people A, B and C, where (A, B) appears in the above delta set <M>\Delta</M>, and (B, C) appears in the transactions table. In our example, this gives no more pairs of people.</Par>
+			<Par>Next, we repeat this, but once again <Em>only</Em> for these new rows. So we once more try to find people A, B and C, where (A, B) appears in the above delta set <M suffix=",">\Delta</M> and (B, C) appears in the transactions table. In our example, this gives no more pairs of people.</Par>
 			<TableQueryFigure query={q7} title={<>The delta set <M>\Delta</M> after the second iteration</>} tableWidth={300} tableScale={0.8} />
 			<Par>Because we found no more new pairs, the algorithm is done. (If there was a new pair, we'd have to continue iterating.) The result is the full set of all rows that we have found.</Par>
 			<TableQueryFigure query={q4} title={<>The final result set <M>R</M></>} tableWidth={300} tableScale={0.8} />

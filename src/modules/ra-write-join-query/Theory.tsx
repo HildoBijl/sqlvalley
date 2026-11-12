@@ -34,7 +34,7 @@ export function Theory() {
 		</Section>
 
 		<Section title="Use the rename operator">
-			<Par>As final explanation, we add some clarification on the rename operator <M>\rho</M>. You have by now seen two ways of using it. There are actually three common ways in which we can use the rename operator.</Par>
+			<Par>As final explanation, we add some clarification on the rename operator <M suffix=".">\rho</M> You have by now seen two ways of using it. There are actually three common ways in which we can use the rename operator.</Par>
 			<List items={[
 				<>As an <Term>attribute rename</Term> <IRA>ρ<sub>e_id→manager_id</sub>(works)</IRA>. This changes the names of one (or more) attributes within a relation. This is often used to prepare for a natural join. It can also be useful by itself, if you want the output attributes to have a certain name.</>,
 				<>As a <Term>relation rename</Term> <IRA>ρ<sub>e2</sub>(contracts)</IRA>. This changes the name of the relation given to it. It is only used to support proper referencing in the rest of the query, as it doesn't do anything else.</>,

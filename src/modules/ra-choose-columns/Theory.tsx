@@ -19,12 +19,12 @@ export function Theory() {
 			<BM>{`\\Pi_{A_1, \\ldots, A_n}(r) := \\{ t[S] \\, | \\, t \\in r, S = \\{A_1, \\ldots, A_n\\} \\}.`}</BM>
 			<Par>Let's walk through the definition piece by piece to understand what it means.</Par>
 			<List items={[
-				<>On the left we have the projection we are defining. It shows that, when we use projection, we must provide some attribute names <M>A_1, \ldots, A_n</M> and some relation <M>r</M>.</>,
-				<>The "<M>:=</M>" part stands for "is defined as". The colon shows it is a definition.</>,
-				<>On the right, we have the actual definition of the projection. In words, you can read it as "The set of all tuples <M>t[S]</M>, where the tuple <M>t</M> comes from the given relation <M>r</M> and <M>S</M> is the set consisting of the given attributes <M>A_1, \ldots, A_n</M>."</>,
-				<>The notation <M>t[S]</M> is a shorthand for the tuple <M>(t[A_1], \ldots, t[A_n])</M>. (Given that <M>{`S = \\{A_1, \\ldots, A_n\\}`}</M>.) So <M>t[S]</M> is the tuple we get when we pick the given attributes <Em>from the tuple <M>t</M></Em>.</>,
+				<>On the left we have the projection we are defining. It shows that, when we use projection, we must provide some attribute names <M>A_1, \ldots, A_n</M> and some relation <M suffix=".">r</M></>,
+				<>The "<M suffix={'"'}>:=</M> part stands for "is defined as". The colon shows it is a definition.</>,
+				<>On the right, we have the actual definition of the projection. In words, you can read it as "The set of all tuples <M suffix=",">t[S]</M> where the tuple <M>t</M> comes from the given relation <M>r</M> and <M>S</M> is the set consisting of the given attributes <M suffix={'."'}>A_1, \ldots, A_n</M></>,
+				<>The notation <M>t[S]</M> is a shorthand for the tuple <M suffix=".">(t[A_1], \ldots, t[A_n])</M> (Given that <M suffix=".)">{`S = \\{A_1, \\ldots, A_n\\}`}</M> So <M>t[S]</M> is the tuple we get when we pick the given attributes <Em>from the tuple <M>t</M></Em>.</>,
 			]} />
-			<Par>So altogether the above definition says: "The projection of the relation <M>r</M> onto the attributes <M>A_1, \ldots, A_n</M> is defined as the set of all possible tuples <M>(t[A_1], \ldots, t[A_n])</M>, where <M>t</M> comes from the relation <M>r</M>."</Par>
+			<Par>So altogether the above definition says: "The projection of the relation <M>r</M> onto the attributes <M>A_1, \ldots, A_n</M> is defined as the set of all possible tuples <M suffix=",">(t[A_1], \ldots, t[A_n])</M> where <M>t</M> comes from the relation <M suffix={'."'}>r</M></Par>
 		</Section>
 	</Page>
 }

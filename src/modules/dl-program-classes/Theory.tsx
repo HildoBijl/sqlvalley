@@ -47,7 +47,7 @@ ancestor(a, b) :- ancestor(a, x), parent(x, b).
 				<>We evaluate the rules again, but no new entries pop up. We have found a model: a set of facts for which all rules hold true.</>,
 			]} />
 			<Par>For positive Datalog, adding input facts cannot invalidate a conclusion. This property is called <Term>monotonicity</Term>. It lets us compute the least model by repeatedly adding consequences of the rules.</Par>
-			<Par>A consequence operator <M>f</M> is <Term>monotonic</Term> if <M>X \subseteq Y</M> implies <M>f(X) \subseteq f(Y)</M>. This differs from <Term>inflationarity</Term>, which means <M>D \subseteq f(D)</M>. To evaluate a positive program, keep the original facts and repeatedly add rule consequences, starting with no derived facts. The result grows until it reaches the least fixed point.</Par>
+			<Par>A consequence operator <M>f</M> is <Term>monotonic</Term> if <M>X \subseteq Y</M> implies <M suffix=".">f(X) \subseteq f(Y)</M> This differs from <Term>inflationarity</Term>, which means <M suffix=".">D \subseteq f(D)</M> To evaluate a positive program, keep the original facts and repeatedly add rule consequences, starting with no derived facts. The result grows until it reaches the least fixed point.</Par>
 			<Info>
 				<Par sx={{ mb: 0.5 }}>For safe positive Datalog over a finite domain, this gives three useful properties.</Par>
 				<List items={[

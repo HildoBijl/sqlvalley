@@ -28,27 +28,27 @@ export function Theory() {
 		<Section title="Step 3: Structure the dependency graph using layers">
 			<Par>Now that we have a graph without cycles, it is possible to structure all the nodes in layers. This is done by running the following algorithm.</Par>
 			<List items={[
-				<>Set up a <Term>set of unassigned nodes</Term> <M>S</M>, which initially contains all nodes.</>,
-				<>Apply the following steps, using a counter <M>i = 0, 1, \ldots</M>, until <M>S</M> is empty.
+				<>Set up a <Term>set of unassigned nodes</Term> <M suffix=",">S</M> which initially contains all nodes.</>,
+				<>Apply the following steps, using a counter <M suffix=",">i = 0, 1, \ldots</M> until <M>S</M> is empty.
 					<List items={[
-						<>Set up a set <M>L_i</M> for layer <M>i</M>, which is initially empty.</>,
-						<>Walk through all the nodes in <M>S</M>: all unassigned nodes.
+						<>Set up a set <M>L_i</M> for layer <M suffix=",">i</M> which is initially empty.</>,
+						<>Walk through all the nodes in <M suffix=":">S</M> all unassigned nodes.
 							<List items={[
-								<>If <Em>all</Em> of the dependencies (excluding dependencies pointing to itself) point to nodes that have been assigned in earlier layers <M>{`L_0, L_1, \\ldots, L_{i-1}`}</M>, then move the node out of <M>S</M> and into <M>L_i</M>: assign it to layer <M>i</M>.</>,
+								<>If <Em>all</Em> of the dependencies (excluding dependencies pointing to itself) point to nodes that have been assigned in earlier layers <M suffix=",">{`L_0, L_1, \\ldots, L_{i-1}`}</M> then move the node out of <M>S</M> and into <M suffix=":">L_i</M> assign it to layer <M suffix=".">i</M></>,
 								<>Reversely, if <Em>any</Em> of the dependencies points to a node that is <Em>not</Em> assigned to an earlier layer, ignore this node for now.</>,
 							]} />
 						</>,
 					]} />
 				</>,
 			]} />
-			<Par>In the end each set <M>L_i</M> contains the nodes belonging to layer <M>i</M>,</Par>
+			<Par>In the end each set <M>L_i</M> contains the nodes belonging to layer <M suffix=",">i</M></Par>
 			<CleanedSecondDependencyGraph />
 			<Par>To see how this algorithm works, we can apply it to our example. This generates the above graph.</Par>
 			<List items={[
-				<>Initially there are no assigned nodes. However, nodes <IDL>A</IDL>, <IDL>B</IDL> and <IDL>C</IDL> also have no dependencies, so for them it holds that <Em>all</Em> their dependencies have been assigned. We move these nodes into <M>L_0</M>.</>,
-				<>For the remaining nodes, only <IDL>D</IDL> has <Em>all</Em> its dependencies already assigned: it depends on <IDL>A</IDL> and <IDL>B</IDL>. (Though <IDL>H</IDL> depends on <IDL>B</IDL>, it also depends on <IDL>D</IDL> which has not been assigned yet.) So we move <IDL>D</IDL> to <M>L_1</M>.</>,
-				<>For the remaining nodes, <IDL>H</IDL> and <IDL>(E,F,G)</IDL> have all of its dependencies assigned. We move those into <M>L_2</M>.</>,
-				<>Now only <IDL>I</IDL> is remaining. Not surprisingly, it now also has all its dependencies assigned. We move it into <M>L_3</M>.</>,
+				<>Initially there are no assigned nodes. However, nodes <IDL>A</IDL>, <IDL>B</IDL> and <IDL>C</IDL> also have no dependencies, so for them it holds that <Em>all</Em> their dependencies have been assigned. We move these nodes into <M suffix=".">L_0</M></>,
+				<>For the remaining nodes, only <IDL>D</IDL> has <Em>all</Em> its dependencies already assigned: it depends on <IDL>A</IDL> and <IDL>B</IDL>. (Though <IDL>H</IDL> depends on <IDL>B</IDL>, it also depends on <IDL>D</IDL> which has not been assigned yet.) So we move <IDL>D</IDL> to <M suffix=".">L_1</M></>,
+				<>For the remaining nodes, <IDL>H</IDL> and <IDL>(E,F,G)</IDL> have all of its dependencies assigned. We move those into <M suffix=".">L_2</M></>,
+				<>Now only <IDL>I</IDL> is remaining. Not surprisingly, it now also has all its dependencies assigned. We move it into <M suffix=".">L_3</M></>,
 			]} />
 			<Par>In the end, we can still make the graph a bit prettier by shifting nodes horizontally along its layer, but mathematically that's all not so relevant.</Par>
 			<Info>

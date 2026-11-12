@@ -9,10 +9,20 @@ export interface MathProps {
 	className?: string
 }
 
-export function M({ children, className }: MathProps) {
-	return <InlineMath className={className}>
+export interface InlineMathProps extends MathProps {
+	suffix?: string
+}
+
+export function M({ children, className, suffix }: InlineMathProps) {
+	const math = <InlineMath className={className}>
 		{children}
 	</InlineMath>
+
+	if (suffix) return <span style={{ whiteSpace: 'nowrap' }}>
+		{math}{suffix}
+	</span>
+
+	return math
 }
 
 export function BM({ children, className }: MathProps) {

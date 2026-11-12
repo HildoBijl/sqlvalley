@@ -26,30 +26,30 @@ export function Theory() {
 		</Section>
 
 		<Section title="Use the intersection">
-			<Par>Now let's go back to our original problem. We want to find all the department managers (their IDs) who earn less than 200,000 per year. This consists of the people who appear in <Em>both</Em> the given lists. For that, we use the <Term>intersection operator</Term> "<M>\cap</M>".</Par>
+			<Par>Now let's go back to our original problem. We want to find all the department managers (their IDs) who earn less than 200,000 per year. This consists of the people who appear in <Em>both</Em> the given lists. For that, we use the <Term>intersection operator</Term> "<M suffix={'".'}>\cap</M></Par>
 			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) ∩ ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 200000" tableWidth={150} />
 			<Par>You can only take the intersection of two relations which have <Em>exactly</Em> the same attributes. When you do, the result will only consist of those tuples that appear in <Em>both</Em> relation instances.</Par>
-			<Par>The intersection operator is formally defined, for two relations <M>r</M> and <M>s</M> having a common schema <M>R</M>, as</Par>
+			<Par>The intersection operator is formally defined, for two relations <M>r</M> and <M>s</M> having a common schema <M suffix=",">R</M> as</Par>
 			<BM>{`r \\cap s = \\{ t \\, | \\, t \\in r \\, \\textrm{and} \\, t \\in s \\}.`}</BM>
 			<Warning>Whenever we use the intersection (or any of the following set operators), we in practice only do so on relations of <Em>keys</Em>, or combinations of <Em>keys</Em>. So before we use set operators, we first use projection to ensure we only have keys as attributes. This is not a hard rule, but it's a useful guideline that makes our querying life a lot easier.</Warning>
 		</Section>
 
 		<Section title="Use the union">
 			<Par>Let's consider a slightly adjusted problem. Now we want to find all the people who <Em>either</Em> manage a department, <Em>or</Em> earn less than 200,000 per year.</Par>
-			<Par>In this case the solution is to find all people who appear in <Em>either</Em> of the two lists we have obtained. For this, we use the <Term>union operator</Term> "<M>\cup</M>".</Par>
+			<Par>In this case the solution is to find all people who appear in <Em>either</Em> of the two lists we have obtained. For this, we use the <Term>union operator</Term> "<M suffix={'".'}>\cup</M></Par>
 			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) ∪ ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments UNION SELECT e_id FROM employees WHERE current_salary < 200000" tableWidth={150} />
-			<Par>The union operator takes two relations and gives a relation that consists of all tuples that appear in <Em>either</Em> (or both) of the given relations. The union operator is formally defined, for two relations <M>r</M> and <M>s</M> having a common schema <M>R</M>, as</Par>
+			<Par>The union operator takes two relations and gives a relation that consists of all tuples that appear in <Em>either</Em> (or both) of the given relations. The union operator is formally defined, for two relations <M>r</M> and <M>s</M> having a common schema <M suffix=",">R</M> as</Par>
 			<BM>{`r \\cup s = \\{ t \\, | \\, t \\in r \\, \\textrm{or} \\, t \\in s \\}.`}</BM>
 			<Info>Initially you may mix up the union and intersection symbols. It may help to remember that the union symbol (the cup) looks like a "u" which is also in "union". Similarly, the intersection symbol (the cap) looks like an "n" which is also in "intersection". (Although "union" also has an "n", but it's only in the second syllable, so let's ignore that part.)</Info>
 		</Section>
 
 		<Section title="Use the set difference">
 			<Par>To introduce the final set operator, we adjust the problem again. Now we want to find all the people who manage a department but do <Em>not</Em> earn less than 200,000 per year.</Par>
-			<Par>The solution here is to take the first list, and <Em>remove</Em> all the people from it that appear on the second list. For this, we use the <Term>difference operator</Term> "<M>-</M>" (the minus sign).</Par>
+			<Par>The solution here is to take the first list, and <Em>remove</Em> all the people from it that appear on the second list. For this, we use the <Term>difference operator</Term> "<M suffix={'"'}>-</M> (the minus sign).</Par>
 			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) - ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments EXCEPT SELECT e_id FROM employees WHERE current_salary < 200000" tableWidth={150} />
-			<Par>The difference operator takes two relations and gives a relation that consists of all tuples that appear in the first but not in the second relation. The difference operator is formally defined, for two relations <M>r</M> and <M>s</M> having a common schema <M>R</M>, as</Par>
+			<Par>The difference operator takes two relations and gives a relation that consists of all tuples that appear in the first but not in the second relation. The difference operator is formally defined, for two relations <M>r</M> and <M>s</M> having a common schema <M suffix=",">R</M> as</Par>
 			<BM>{`r - s = \\{ t \\, | \\, t \\in r \\, \\textrm{and} \\, t \\notin s \\}.`}</BM>
-			<Info>If you take the difference <M>r - s</M>, and if <M>s</M> has tuples that are <Em>not</Em> in <M>r</M>, then these tuples are ignored. They have no effect on the set difference.</Info>
+			<Info>If you take the difference <M suffix=",">r - s</M> and if <M>s</M> has tuples that are <Em>not</Em> in <M suffix=",">r</M> then these tuples are ignored. They have no effect on the set difference.</Info>
 		</Section>
 	</Page>
 }

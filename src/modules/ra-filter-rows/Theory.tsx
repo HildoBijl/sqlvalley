@@ -35,7 +35,7 @@ export function Theory() {
 			<Par>Similarly, if we want to find all departments managed by either the manager with ID <ISQL>14338498</ISQL> <Term>or</Term> managed by the manager with ID <ISQL>24090361</ISQL>, then we can use</Par>
 			<RAQueryFigure query={<>σ<sub>manager_id = 14338498 ∨ manager_id = 24090361</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE manager_id = 14338498 OR manager_id = 24090361" tableWidth={500} />
 			<Warning>Whereas a person might say, "Get me the departments whose manager ID is 14338498 or 24090361" this is not allowed in relational algebra. You cannot use the predicate <IRA>manager_id = 14338498 ∨ 24090361</IRA>. The connectives can only combine <Em>conditions</Em>, and a condition should always be a comparison.</Warning>
-			<Par>The final connective is the <Term>not</Term> connective <M>\neg</M>. It negates whatever condition comes after it, turning true into false and vice versa. We could for instance also find all departments having more than ten employees using</Par>
+			<Par>The final connective is the <Term>not</Term> connective <M suffix=".">\neg</M> It negates whatever condition comes after it, turning true into false and vice versa. We could for instance also find all departments having more than ten employees using</Par>
 			<RAQueryFigure query={<>σ<sub>¬(departments.nr_employees ≤ 10)</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE NOT (nr_employees <= 10)" tableWidth={500} />
 			<Warning>When using <M>\neg</M> or when combining different connectives, <Em>always</Em> use parentheses to indicate which connective should be evaluated first. Otherwise things may get very unclear. For instance, consider the condition <IRA>1 = 1 ∨ 2 = 2 ∧ 3 = 4</IRA>. If we evaluate this as <IRA>1 = 1 ∨ (2 = 2 ∧ 3 = 4)</IRA> then it becomes true, but if we evaluate this as <IRA>(1 = 1 ∨ 2 = 2) ∧ 3 = 4</IRA> then it becomes false.</Warning>
 			<Par>By cleverly combining the three connectives with the right conditions, we can set up pretty much any composite condition that we want.</Par>
@@ -46,10 +46,10 @@ export function Theory() {
 			<BM>{`\\sigma_p(r) := \\{t \\, | \\, t \\in r \\, \\textrm{and} \\, p(t) \\}.`}</BM>
 			<Par>Let's walk through the definition piece by piece to understand what it means.</Par>
 			<List items={[
-				<>On the left we have the filter we are defining. It shows that, when we use filtering, we must provide some predicate/condition <M>p</M> and some relation <M>r</M>.</>,
-				<>The "<M>:=</M>" part stands for "is defined as". The colon shows it is a definition.</>,
-				<>On the right, we have the actual definition of the filter. In words, you can read it as "The set of all tuples <M>t</M>, where <M>t</M> comes from the given relation <M>r</M>, and where the predicate <M>p(t)</M>, when evaluated for the tuple <M>t</M>, results in something that holds true."</>,
-				<>The notation <M>p(t)</M> is a shorthand for the predicate evaluated given the tuple <M>t</M>. It is something that evaluates as true or false.</>,
+				<>On the left we have the filter we are defining. It shows that, when we use filtering, we must provide some predicate/condition <M>p</M> and some relation <M suffix=".">r</M></>,
+				<>The "<M suffix={'"'}>:=</M> part stands for "is defined as". The colon shows it is a definition.</>,
+				<>On the right, we have the actual definition of the filter. In words, you can read it as "The set of all tuples <M suffix=",">t</M> where <M>t</M> comes from the given relation <M suffix=",">r</M> and where the predicate <M suffix=",">p(t)</M> when evaluated for the tuple <M suffix=",">t</M> results in something that holds true."</>,
+				<>The notation <M>p(t)</M> is a shorthand for the predicate evaluated given the tuple <M suffix=".">t</M> It is something that evaluates as true or false.</>,
 			]} />
 			<Par>So altogether the above definition says: "The filtering of the relation <M>r</M> subject to the predicate/condition <M>p</M> is defined as the set of all tuples <M>t</M> from <M>r</M> for which the predicate <M>p</M> evaluates as true."</Par>
 		</Section>

@@ -27,11 +27,11 @@ export function Summary() {
 				</>,
 			]} />
 			<Info>Recursive queries are often used to following successive links (so-called <Term>chains</Term>) between tables. Without recursive queries, you can only find chains of a <Em>fixed</Em> length. Recursive queries allow you to find chains of <Em>any</Em> length. This would be <Em>impossible</Em> without recursion, so any query language that supports recursion is inherently more powerful than a query language that does not.</Info>
-			<Par>Recursive queries are evaluated using the <Term>fixed-point algorithm</Term>. This algorithm tracks a <Term>result set</Term> <M>R</M> and a <Term>delta set</Term> <M>\Delta</M>. Initially both are filled with the base case/anchor. For linear recursion such as this example, the following <Term>iteration</Term> steps are repeated. With several recursive references in a rule, new and previously found facts must be combined.</Par>
+			<Par>Recursive queries are evaluated using the <Term>fixed-point algorithm</Term>. This algorithm tracks a <Term>result set</Term> <M>R</M> and a <Term>delta set</Term> <M suffix=".">\Delta</M> Initially both are filled with the base case/anchor. For linear recursion such as this example, the following <Term>iteration</Term> steps are repeated. With several recursive references in a rule, new and previously found facts must be combined.</Par>
 			<List items={[
-				<><M>\Delta \leftarrow f(\Delta)</M>: use the previous delta set and the recursion definition <M>f</M> to try and find new cases.</>,
-				<><M>\Delta \leftarrow \Delta - R</M>: track which of these cases have not been found before.</>,
-				<><M>R \leftarrow R \cup \Delta</M>: add these new cases (if any) to the result set.</>,
+				<><M suffix=":">\Delta \leftarrow f(\Delta)</M> use the previous delta set and the recursion definition <M>f</M> to try and find new cases.</>,
+				<><M suffix=":">\Delta \leftarrow \Delta - R</M> track which of these cases have not been found before.</>,
+				<><M suffix=":">R \leftarrow R \cup \Delta</M> add these new cases (if any) to the result set.</>,
 			]} />
 			<Par>This is continued until the delta set <M>\Delta</M> ends up empty: no new cases can be found. The final result set <M>R</M> is then the output of the recursive query.</Par>
 		</Section>

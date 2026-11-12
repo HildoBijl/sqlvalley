@@ -6,8 +6,8 @@ export function Summary() {
 		<Section>
 			<Par>The <Term>filtering operator</Term> <M>\sigma</M> returns the relation with only the tuples satisfying the given <Term>predicate</Term>/<Term>condition</Term>.</Par>
 			<RAQueryFigure query={<>σ<sub>nr_employees &gt; 10</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE nr_employees > 10" tableWidth={500} />
-			<Par>A condition is always of the form <IRA>[value] [comparator] [value]</IRA>. Each value can be a predefined constant (like "10") or an attribute value (like "nr_employees"). For text, the <Term>comparator</Term> is usually <M>=</M> or <M>\neq</M>, but for numbers common comparators also include <M>{`>`}</M>, <M>{`<`}</M>, <M>\geq</M> or <M>\leq</M>.</Par>
-			<Par>Multiple conditions can be combined into one predicate using the <Term>and</Term> (<M>\wedge</M>), the <Term>or</Term> (<M>\vee</M>), or the <Term>not</Term> (<M>\neg</M>) <Term>connectives</Term>.</Par>
+			<Par>A condition is always of the form <IRA>[value] [comparator] [value]</IRA>. Each value can be a predefined constant (like "10") or an attribute value (like "nr_employees"). For text, the <Term>comparator</Term> is usually <M>=</M> or <M suffix=",">\neq</M> but for numbers common comparators also include <M suffix=",">{`>`}</M> <M>{`<`}</M>, <M>\geq</M> or <M suffix=".">\leq</M></Par>
+			<Par>Multiple conditions can be combined into one predicate using the <Term>and</Term> (<M suffix="),">\wedge</M> the <Term>or</Term> (<M suffix="),">\vee</M> or the <Term>not</Term> (<M suffix=")">\neg</M> <Term>connectives</Term>.</Par>
 			<RAQueryFigure query={<>σ<sub>¬(nr_employees &gt; 6 ∧ nr_employees &lt; 20)</sub>(departments)</>} actualQuery="SELECT DISTINCT * FROM departments WHERE NOT (nr_employees > 6 AND nr_employees < 20)" tableWidth={500} />
 			<Warning>When using different connectives together, make sure to use parentheses to prevent confusion in the evaluation order.</Warning>
 			<Par>The filtering operator is formally defined as</Par>
