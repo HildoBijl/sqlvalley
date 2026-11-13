@@ -8,8 +8,8 @@ import { DL, IDL, TableQueryFigure, useTheoryPageDatabase } from '@/learning'
 export function Theory() {
 	const db = useTheoryPageDatabase()
 	const q1 = 'SELECT * FROM employees'
-	const q2 = 'SELECT * FROM employees WHERE current_salary >= 200000'
-	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000'
+	const q2 = 'SELECT * FROM employees WHERE current_salary >= 240000'
+	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 240000'
 	const data1 = useQueryResult(db, q1)
 	const data2 = useQueryResult(db, q2)
 	const data3 = useQueryResult(db, q3)
@@ -45,9 +45,9 @@ export function Theory() {
 
 		<Section title="Step 2: the rules">
 			<Par>The main part of any Datalog program is the rules part. In Datalog, we define a <Term>rule</Term> like this.</Par>
-			<DL>highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 200000.</DL>
+			<DL>highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 240000.</DL>
 			<Par>This statement can be read in English as:</Par>
-			<Quote>The tuple (id, fn, ln, p, e, a, c, hd, cs) is a highEarningEmployee, when the tuple (id, fn, ln, p, e, a, c, hd, cs) is an employee <strong>and</strong> when the value of cs is at least 200000.</Quote>
+			<Quote>The tuple (id, fn, ln, p, e, a, c, hd, cs) is a highEarningEmployee, when the tuple (id, fn, ln, p, e, a, c, hd, cs) is an employee <strong>and</strong> when the value of cs is at least 240000.</Quote>
 			<Par>To see why it says this, let's dissect the rule.</Par>
 			<List items={[
 				<>
@@ -58,7 +58,7 @@ export function Theory() {
 				<>On the right is the <Term>body</Term> of the rule. It is a list of <Term>literals</Term>: claims that may or may not be true, based on existing data. The literals are separated by commas, where each comma functions as an "and". The rule only evaluates to true when <Em>all</Em> literals hold true.
 					<List sx={{ listStyleType: 'circle' }} items={[
 						<>The first literal requires the fact <IDL>employee(id, fn, ln, p, e, a, c, hd, cs)</IDL> to be true. Or thinking in terms of tables: "The row <IDL>(id, fn, ln, p, e, a, c, hd, cs)</IDL> is in the employees table."</>,
-						<>The second literal adds an extra condition for the variable <IDL>cs</IDL>: it must be at least 200000.</>,
+						<>The second literal adds an extra condition for the variable <IDL>cs</IDL>: it must be at least 240000.</>,
 					]} />
 				</>,
 				<>
@@ -92,7 +92,7 @@ export function Theory() {
 			<Info>Note that in the output step the variable names do matter! It is how Datalog shows the output. Of course we can use any variable names that we want here.</Info>
 			<Warning>Some Datalog engines don't use "?-" but instead use "?" for queries. When using Datalog, always check out the local syntax.</Warning>
 			<Par>It is worthwhile to note that we could in theory also add more conditions to the query. In fact, we could have skipped the rules altogether and immediately set up the following query.</Par>
-			<DL>?- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 200000.</DL>
+			<DL>?- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 240000.</DL>
 			<Par>This would instantly get us all high-earning employees (with all nine arguments). However, we are now setting up queries that contain conditions, which is generally frowned upon in Datalog. It's cleaner to <Em>first</Em> define a rule for a new predicate (in table-terms: define a new view) and only <Em>then</Em> set up a simple query that requests the full predicate (in table-terms: query the view). This keeps every line in your Datalog program short and comprehensible.</Par>
 			<Info>Datalog programs can have any number of queries, each retrieving different data. When we set up Datalog programs, we will usually do so to find specific data, which is why our programs usually end with a single query. This query then marks the end of our program.</Info>
 		</Section>

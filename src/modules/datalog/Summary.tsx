@@ -9,7 +9,7 @@ import { DatalogFacts, DatalogOutput } from './Theory'
 export function Summary() {
 	const db = useTheoryPageDatabase()
 	const q1 = 'SELECT * FROM employees'
-	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 200000'
+	const q3 = 'SELECT first_name, last_name FROM employees WHERE current_salary >= 240000'
 	const data1 = useQueryResult(db, q1)
 	const data3 = useQueryResult(db, q3)
 
@@ -21,7 +21,7 @@ export function Summary() {
 			<DatalogFacts data={data1} predicate="employee" />
 			<Par>A typical Datalog program consists of a number of <Term>rules</Term> that define new predicates. You can see these rules as view definitions.</Par>
 			<DL>
-				highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 200000.<br />
+				highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs) :- employee(id, fn, ln, p, e, a, c, hd, cs), cs &gt;= 240000.<br />
 				highEarningEmployeeName(fn, ln) :- highEarningEmployee(id, fn, ln, p, e, a, c, hd, cs).
 			</DL>
 			<Par>In these rules, the left part (the <Term>head</Term>) describes a new predicate (like a view), while the right part (the <Term>body</Term>) contains a list of comma-separated <Term>literals</Term> (conditions) that must hold true. Datalog will try to find <Em>all</Em> possible combinations values for <Em>all</Em> given <Term>variables</Term> such that <Em>all</Em> literals hold true.</Par>

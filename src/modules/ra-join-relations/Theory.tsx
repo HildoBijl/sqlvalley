@@ -36,7 +36,7 @@ export function Theory() {
 			]} />
 			<Par>An example way to use it would be the following.</Par>
 			<RAQueryFigure query={<>departments ⋈ ρ<sub>e_id→manager_id</sub>(employees)</>} actualQuery="SELECT DISTINCT * FROM departments NATURAL JOIN (SELECT e_id AS manager_id, first_name, last_name, phone, email, address, city, hire_date, current_salary FROM employees)" tableWidth={900} tableScale={0.5} below />
-			<Info>A third thing that the natural join does, is merge the equally-named attributes (here "departments.manager_id" and "employees.manager_id") into one attribute (here "manager_id"). After all, they are required to have equal value anyway.</Info>
+			<Info>A third thing that the natural join does, is merge the equally-named attributes (here <IRA>departments.manager_id</IRA> and <IRA>employees.manager_id</IRA>) into one attribute (here <IRA>manager_id</IRA>). After all, they are required to have equal value anyway. So that's why you don't see two <IRA>manager_id</IRA> columns.</Info>
 			<Par>The natural join is a useful short-cut, assuming the attribute names line up well, and there are no extra attributes that accidentally also have the same name.</Par>
 		</Section>
 
@@ -45,7 +45,7 @@ export function Theory() {
 			<Par>When using a Cartesian product, we can either add a separate filtering operator, or add the new condition to the existing operator.</Par>
 			<RA>σ<sub>employees.current_salary &gt; 0.2*departments.budget</sub>(σ<sub>departments.manager_id = employees.e_id</sub>(departments ⨯ employees))</RA>
 			<RA>σ<sub>departments.manager_id = employees.e_id ∧ employees.current_salary &gt; 0.2*departments.budget</sub>(departments ⨯ employees)</RA>
-			<Par>Both options are fine. It is however recommended for clarity to keep the <Term>join conditions</Term> (needed to complete the join) separate from the <Term>external conditions</Term> (given by the problem statement). Don't alternate join conditions and external conditions!</Par>
+			<Par>Both options are fine. It is however recommended for clarity to keep the <Term>join conditions</Term> (needed to complete the join) separate from the <Term>external conditions</Term> (given by the problem statement). Don't start mixing join conditions and external conditions!</Par>
 			<Warning>
 				<Par sx={{ mb: 1 }}>There exists an alternate join notation: the <Term>theta-join</Term>. In this notation, we add the join conditions as subscript to the <M>\bowtie</M> symbol: the notation <M>{`r_1 \\bowtie_{\\theta} r_2`}</M> is per definition equivalent to <M suffix=",">{`\\sigma_{\\theta}(r_1 \\times r_2)`}</M> where <M>\theta</M> can be any condition. Using this notation, we could also write the above queries as</Par>
 				<RA>σ<sub>employees.current_salary &gt; 0.2*departments.budget</sub>(departments ⋈<sub>departments.manager_id = employees.e_id</sub> employees)</RA>

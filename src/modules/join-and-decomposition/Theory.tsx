@@ -21,6 +21,7 @@ export function Theory() {
 			<Par>Let's say that we want a list of all products <Em>including</Em> all attributes of the corresponding owners. In other words, we want all data in one big table. We could combine the two tables into one: we can <Term>join</Term> the tables.</Par>
 			<Par>For the join to make sense, we must have one table (often placed on the left) with a foreign key to the other table (placed on the right). To execute the join, we walk through all the rows of the left table, and look up the respective record of the right table. We add this data to the back of the row. If we do this for all rows, we get the joined table. It has columns from both tables.</Par>
 			<TableQueryFigure query={`SELECT * FROM products p JOIN accounts a ON p.owned_by=a.username;`} tableScale={0.5} tableWidth={2200} />
+			<Info>Note that our joined table does not have all data that the two separate tables have. We for instance lost the data of Georgia Elli, since she doesn't own any products. For now we ignore this issue. Later on this page, we look into outer joins, and then this becomes relevant again.</Info>
 		</Section>
 
 		<Section title="Decomposition: split a table into two through a foreign key">

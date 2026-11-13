@@ -133,7 +133,7 @@ export const modulePresentation = {
 	},
 	'ra-join-relations': {
 		name: 'Join Relations',
-		description: 'How do use relational algebra to join two relations together?',
+		description: 'How do we use relational algebra to join two relations together?',
 	},
 	'ra-write-join-query': {
 		name: 'Write Join Query',

@@ -11,13 +11,13 @@ export function Theory() {
 		</Section>
 
 		<Section title="Use the assignment operator to structure your query">
-			<Par>Suppose that we want to find all department managers who earn less than 200,000 per year. We have actually done this before, when learning to <ModuleLink moduleId="ra-combine-conditions-across-relations">combine conditions across relations</ModuleLink>. Back then, we set up one large query.</Par>
-			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) ∩ ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 200000" tableWidth={150} />
+			<Par>Suppose that we want to find all department managers who earn less than 240,000 per year. We have actually done this before, when learning to <ModuleLink moduleId="ra-combine-conditions-across-relations">combine conditions across relations</ModuleLink>. Back then, we set up one large query.</Par>
+			<RAQueryFigure query={<>ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments)) ∩ ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 240000</sub>(employees))</>} actualQuery="SELECT DISTINCT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 240000" tableWidth={150} />
 			<Par>It is already a bit hard to read back this query and understand what it does. Imagine if queries get larger!</Par>
 			<Par>The main way to create structure in a query is through the <Term>assignment operator</Term> <M suffix=".">\leftarrow</M> Through it, we can create intermediate relations, that are temporarily available for us to use further. We could for instance first make a list of all department managers and <Em>assign</Em> those to a temporary new relation.</Par>
 			<RA>department_managers ← ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments))</RA>
 			<Par>Then we make a list of low-earning employees and <Em>assign</Em> those too.</Par>
-			<RA>low_earners ← ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))</RA>
+			<RA>low_earners ← ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 240000</sub>(employees))</RA>
 			<Par>Then we combine these results to find the low-earning managers.</Par>
 			<RA>low_earning_managers ← department_managers ∩ low_earners</RA>
 			<Par>Note that we have used the relations that we previously assigned! Optionally, we can even join in extra data for these low-earning managers (like their names and salaries) through a join.</Par>
@@ -25,11 +25,32 @@ export function Theory() {
 			<Par>All together, the steps we have taken form a <Term>relational algebra script</Term>. Such scripts can be used to structure more complicated relational algebra queries.</Par>
 			<RAQueryFigure query={<>
 				department_managers ← ρ<sub>manager_id→e_id</sub>(∏<sub>manager_id</sub>(departments))<br />
-				low_earners ← ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 200000</sub>(employees))<br />
+				low_earners ← ∏<sub>e_id</sub>(σ<sub>current_salary &lt; 240000</sub>(employees))<br />
 				low_earning_managers ← department_managers ∩ low_earners<br />
 				∏<sub>first_name,last_name,current_salary</sub>(low_earning_managers ⋈ employees)
-			</>} actualQuery="SELECT DISTINCT first_name, last_name, current_salary FROM employees NATURAL JOIN (SELECT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 200000)" tableWidth={280} tableScale={0.8} />
+			</>} actualQuery="SELECT DISTINCT first_name, last_name, current_salary FROM employees NATURAL JOIN (SELECT manager_id AS e_id FROM departments INTERSECT SELECT e_id FROM employees WHERE current_salary < 240000)" tableWidth={280} tableScale={0.8} />
 			<Info>Usually all lines in a relational algebra script use an assignment operator except the last one. The result of this last line is the <Term>output</Term> of the relational algebra script.</Info>
+		</Section>
+
+		<Section title="On a never/every request, first do the opposite">
+			<Par>Let's consider another example: suppose that we want to find all employees who have <Em>never</Em> taken a sabbatical. This "never" part sounds hard, but there is a trick. When you hear "never" or "every" in a query, we should first do the opposite. We should find the employees that <Em>have</Em> taken a sabbatical.</Par>
+			<RA>been_on_sabbatical ← ∏<sub>e_id</sub>(σ<sub>status = "SABBATICAL"</sub>(contracts))</RA>
+			<Par>The people who have <Em>never</Em> taken a sabbatical are all employees <Em>except</Em> the employees who have taken a sabbatical. So we <Term>flip</Term>/<Term>invert</Term> the relation: we take everyone <Em>except</Em> the employees we found.</Par>
+			<RA>all_employees ← ∏<sub>e_id</sub>(employees)<br />never_had_sabbatical ← all_employees - been_on_sabbatical</RA>
+			<Info>
+				<Par sx={{ mb: 1 }}>Note that we could have merged the two above steps into one step too as</Par>
+				<RA>never_had_sabbatical ← ∏<sub>e_id</sub>(employees) - been_on_sabbatical</RA>
+				<Par sx={{ mt: 1 }}>However, using smaller steps makes everything easier to read and understand. If every step is easy to follow, it is harder to make errors and it is easier to spot any errors that do occur.</Par>
+			</Info>
+			<Par>Optionally, we can again join in extra data as output for our final result.</Par>
+			<Box>
+				<RAQueryFigure query={<>
+					been_on_sabbatical ← ∏<sub>e_id</sub>(σ<sub>status = "SABBATICAL"</sub>(contracts))<br />
+					all_employees ← ∏<sub>e_id</sub>(employees)<br />
+					never_had_sabbatical ← all_employees - been_on_sabbatical<br />
+					∏<sub>first_name,last_name,current_salary</sub>(never_had_sabbatical ⋈ employees)
+				</>} actualQuery="SELECT DISTINCT first_name, last_name, current_salary FROM employees NATURAL JOIN (SELECT e_id FROM employees EXCEPT SELECT e_id FROM contracts WHERE status = 'SABBATICAL')" tableWidth={280} tableScale={0.8} />
+			</Box>
 		</Section>
 
 		<Section title="Apply tips and tricks to set up a relational algebra script">
@@ -50,24 +71,6 @@ export function Theory() {
 					<Par>When you find the word "never" or "every" in a request, first <Term>do the opposite</Term>. Relational algebra is very good in existence checks: we just check if a tuple exists in a relation. But a "never" or "every" check is not something relational algebra can directly do.</Par>
 				</>,
 			]} />
-			<Par>To show how this last point of "doing the opposite" idea works, we use an example. Suppose we want to find all the employees who have <Em>never</Em> been on sick leave. This sounds hard, but we could first do the opposite: we find the employees that <Em>have</Em> been on sick leave.</Par>
-			<RA>had_sick_leave ← ∏<sub>e_id</sub>(σ<sub>status = "sick leave"</sub>(contracts))</RA>
-			<Par>The people who have <Em>never</Em> been on sick leave are all employees <Em>except</Em> the employees who had sick leave. So we <Term>flip</Term>/<Term>invert</Term> the relation: we take everyone except the employees we found.</Par>
-			<RA>all_employees ← ∏<sub>e_id</sub>(employees)<br />never_had_sick_leave ← all_employees - had_sick_leave</RA>
-			<Info>
-				<Par sx={{ mb: 1 }}>Note that we could have merged the two above steps into one step too as</Par>
-				<RA>never_had_sick_leave ← ∏<sub>e_id</sub>(employees) - had_sick_leave</RA>
-				<Par sx={{ mt: 1 }}>However, using smaller steps makes everything easier to read and understand. If every step is easy to follow, it is harder to make errors and it is easier to spot any errors that do occur.</Par>
-			</Info>
-			<Par>Optionally, we can again join in extra data as output for our final result.</Par>
-			<Box>
-				<RAQueryFigure query={<>
-					had_sick_leave ← ∏<sub>e_id</sub>(σ<sub>status = "sick leave"</sub>(contracts))<br />
-					all_employees ← ∏<sub>e_id</sub>(employees)<br />
-					never_had_sick_leave ← all_employees - had_sick_leave<br />
-					∏<sub>first_name,last_name,current_salary</sub>(never_had_sick_leave ⋈ employees)
-				</>} actualQuery="SELECT DISTINCT first_name, last_name, current_salary FROM employees NATURAL JOIN (SELECT e_id FROM employees EXCEPT SELECT e_id FROM contracts WHERE status = 'sick leave')" tableWidth={280} tableScale={0.8} />
-			</Box>
 			<Par>By using the above tips and tricks, you should be able to turn most data requests into properly functioning relational algebra scripts.</Par>
 		</Section>
 	</Page>

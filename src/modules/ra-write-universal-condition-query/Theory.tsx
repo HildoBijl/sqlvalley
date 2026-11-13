@@ -1,4 +1,3 @@
-import type { ComponentProps } from 'react'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 
@@ -20,7 +19,7 @@ export function Theory() {
 			<Par>How can we find the employees who have had <Em>all</Em> these statuses at some point during their career?</Par>
 			<Par>To start, we apply the usual tricks in setting up complex queries.</Par>
 			<List items={[
-				<>We <Term>manually execute the request</Term>. When doing so, we will have to run a <Term>checklist</Term> for every employee. We have to verify: "Have they been on sick leave? Have they been on paid leave?" And so forth. At the end, for every employee, we should check if the checklist is fully ticked off. If so, the employee has had all statuses. This means that, whatever relational algebra query we end up writing, it must do something similar!</>,
+				<>We <Term>manually execute the request</Term>. When doing so, we will have to run a <Term>checklist</Term> for every employee. We have to verify: "Have they been on PTO? Have they been on sabbatical?" And so forth. At the end, for every employee, we should check if the checklist is fully ticked off. If so, the employee has had all statuses. This means that, whatever relational algebra query we end up writing, it must do something similar!</>,
 				<>We <Term>reformulate the request</Term>, replacing any difficult universal condition like "for every" by existence checks. Our example request can be reformulated as "Find all employees for which there exists no status which they have not had." Note that the "for every" request has turned into a double negative. Double negatives are very common for universal conditions.</>,
 			]} />
 			<Par>The above steps have given us a more intuitive feel of what the script we write must entail. Let's start setting up the script.</Par>
@@ -63,7 +62,7 @@ export function Theory() {
 			]} />
 			<Par>This is summarized through the following relational algebra assignment.</Par>
 			<RAQueryFigure query={<>statuses_not_held ← all_employees x all_statuses - statuses_held</>} actualQuery="SELECT DISTINCT e1.e_id, e2.status FROM contracts e1 JOIN contracts e2 EXCEPT SELECT DISTINCT e_id, status FROM contracts" tableWidth={200} />
-			<Par>The result is a new checklist table, but then one that is closer to the result we are searching for.</Par>
+			<Par>The result is a new checklist table; one that is closer to the result we are searching for.</Par>
 		</Section>
 
 		<Section title="Evaluate entities: squash the checklist table">
@@ -110,67 +109,83 @@ export function Theory() {
 	</Page>
 }
 
-type RowData = {
-	id: number
-	active: boolean
-	sickLeave: boolean
-	fmla: boolean
-	paidLeave: boolean
+type ChecklistTableProps = {
+	all?: boolean
+	flip?: boolean
+	scale?: number
 }
 
-const rows: RowData[] = [
-	{ id: 41378877, active: true, sickLeave: true, fmla: false, paidLeave: false },
-	{ id: 41376655, active: true, sickLeave: true, fmla: true, paidLeave: true },
-	{ id: 41651199, active: true, sickLeave: true, fmla: false, paidLeave: true },
-	{ id: 41655533, active: true, sickLeave: false, fmla: false, paidLeave: false },
-	{ id: 42223311, active: true, sickLeave: false, fmla: false, paidLeave: true },
-]
+type ChecklistRow = {
+	employeeId: number
+	statuses: ReadonlySet<string>
+}
 
-export function ChecklistTable(props: ComponentProps<typeof ChecklistTableContents>) {
+export function ChecklistTable(props: ChecklistTableProps) {
+	const database = useTheoryPageDatabase()
+	const data = useQueryResult(database, 'SELECT DISTINCT e_id, status FROM contracts ORDER BY e_id, status;')
+	if (!data) return null
+
+	const statusSet = new Set<string>()
+	const statusesByEmployee = new Map<number, Set<string>>()
+	data.values.forEach(([employeeId, status]) => {
+		if (typeof employeeId !== 'number' || typeof status !== 'string') return
+		statusSet.add(status)
+		const employeeStatuses = statusesByEmployee.get(employeeId) ?? new Set<string>()
+		employeeStatuses.add(status)
+		statusesByEmployee.set(employeeId, employeeStatuses)
+	})
+
+	const statuses = [...statusSet]
+	const rows = [...statusesByEmployee].map(([employeeId, employeeStatuses]) => ({ employeeId, statuses: employeeStatuses }))
+	return <ChecklistTableFigure {...props} statuses={statuses} rows={rows} />
+}
+
+type ChecklistTableFigureProps = ChecklistTableProps & {
+	statuses: string[]
+	rows: ChecklistRow[]
+}
+
+function ChecklistTableFigure(props: ChecklistTableFigureProps) {
+	const scale = props.scale ?? 0.8
+	const tableWidth = 100 + props.statuses.length * 130
+
 	return <MeasuredDrawingFigure
 		targets={['table']}
-		calculateView={({ table }) => ({ type: 'identity', width: 500 * (props.scale ?? 0.8), height: table.height })}
+		calculateView={({ table }) => ({ type: 'identity', width: tableWidth * scale, height: table.height })}
 		style={{ fontSize: 16 }}>
-		<ChecklistTableContents {...props} />
+		<ChecklistTableContents {...props} scale={scale} tableWidth={tableWidth} />
 	</MeasuredDrawingFigure>
 }
 
-function ChecklistTableContents({ all = false, flip = false, scale = 0.8 }) {
+type ChecklistTableContentsProps = ChecklistTableFigureProps & {
+	scale: number
+	tableWidth: number
+}
 
-	const tableWidth = 500
-
+function ChecklistTableContents({ all = false, flip = false, scale, tableWidth, statuses, rows }: ChecklistTableContentsProps) {
 	return <>
 		<FigureHtml target="table" scale={scale} anchor={[-1, -1]} position={[0, 0]}>
 			<TableContainer component={Paper} sx={{ width: tableWidth }}>
 				<Table size="small">
 					<TableHead>
 						<TableRow>
-							<TableCell />
-							<TableCell align="center">Active</TableCell>
-							<TableCell align="center">Sick Leave</TableCell>
-							<TableCell align="center">FMLA</TableCell>
-							<TableCell align="center">Paid Leave</TableCell>
+							<TableCell>e_id</TableCell>
+							{statuses.map(status => <TableCell key={status} align="center">{status}</TableCell>)}
 						</TableRow>
 					</TableHead>
 
 					<TableBody>
 						{rows.map(row => (
-							<TableRow key={row.id}>
+							<TableRow key={row.employeeId}>
 								<TableCell component="th" scope="row">
-									{row.id}
+									{row.employeeId}
 								</TableCell>
-								<TableCell align="center">
-									{(all || (row.active !== flip)) && <CheckIcon color="success" />}
-								</TableCell>
-								<TableCell align="center">
-									{(all || (row.sickLeave !== flip)) && <CheckIcon color="success" />}
-								</TableCell>
-								<TableCell align="center">
-									{(all || (row.fmla !== flip)) && <CheckIcon color="success" />}
-								</TableCell>
-								<TableCell align="center">
-									{(all || (row.paidLeave !== flip)) && <CheckIcon color="success" />}
-								</TableCell>
+								{statuses.map(status => {
+									const held = row.statuses.has(status)
+									return <TableCell key={status} align="center">
+										{(all || held !== flip) && <CheckIcon color="success" />}
+									</TableCell>
+								})}
 							</TableRow>
 						))}
 					</TableBody>
