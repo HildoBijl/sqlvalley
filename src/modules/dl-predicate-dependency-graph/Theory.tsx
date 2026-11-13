@@ -26,9 +26,9 @@ export function Theory() {
 sold(v, b, p, d) :- transaction(_, v, b, p, d, _, _, _).
 soldAndBoughtBack(v, p) :- sold(v, _, p, d1), sold(_, v, p, d2), d2 > d1.
 withNames(fn, ln, pn) :-
-				soldAndBoughtBack(v, p),
-				account(v, _, _, _, fn, ln, _, _, _, _),
-				product(p, pn, _, _, _, _).
+	soldAndBoughtBack(v, p),
+	account(v, _, _, _, fn, ln, _, _, _, _),
+	product(p, pn, _, _, _, _).
 `}</DL>
 			<Par>The idea now is to make an overview of <Em>which</Em> predicate <Term>directly depends</Term> on <Em>which other</Em> predicate(s): they are referenced within the rules describing the predicate. We can see from the above program that ...</Par>
 			<List items={[
