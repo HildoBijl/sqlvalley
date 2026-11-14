@@ -19,9 +19,10 @@ At the beginning of the story:
 - **64 active employees**
 - **15 former employees**
 
-The player does not appear because their intended manager, Marcelle, went on sabbatical before completing the data engineering intern's onboarding. The player therefore has no employee row and cannot reply in the internal company chat. Wheatley also has no employee row, although his access to that chat and his improvised explanations imply that he is a high-ranking employee. His actual background remains unclear.
+The player does not appear because their intended manager, Marcelle, went on sabbatical before completing the data engineering intern's onboarding. The player therefore has no employee row and cannot reply in the internal company chat. Wheatley also has no employee row, although his access to that chat and his improvised explanations imply that he is a high-ranking employee. His Glasshouse affiliation and purpose are known to the author, while his identity and background remain hidden from the characters during the investigation.
 
 # Phase 1 — Startup
+
 
 ## Events 2–7 — February to June 2023: Informal Founder Work
 
@@ -37,6 +38,7 @@ Caesar Vallelonga and Bob Andrews build and test HeriShare but are not yet forma
 **Active employees:** 0
 
 # Phase 2 — The Accelerator
+
 
 ## Event 8 — 23 June 2023: Seed Funding and Formal Payroll
 
@@ -54,6 +56,7 @@ Both founders initially accept moderate salaries to preserve runway.
 **Employee rows:** 2  
 **Active employees:** 2
 
+
 ## Event 10 — 3 July 2023: First Non-Founder Employee
 
 Paris joins as HeriShare’s first non-founder employee.
@@ -68,6 +71,7 @@ Paris is later promoted, but retains the same employee row.
 **New employees:** 1  
 **Employee rows:** 3  
 **Active employees:** 3
+
 
 ## Event 12 — 25 August 2023: Partnership Expansion
 
@@ -90,6 +94,7 @@ Several become long-serving department managers. Their IDs are later referenced 
 **New employees:** 6  
 **Employee rows:** 9  
 **Active employees:** 9
+
 
 ## Event 14 — 5 October 2023: Internal Marketplace Launch
 
@@ -115,6 +120,7 @@ Elvis may join Finance during this period or the following growth wave. His fina
 **New employees:** 8  
 **Employee rows:** 17  
 **Active employees:** 17
+
 
 ## Event 15 — 19 November 2023: Viral Press Coverage
 
@@ -151,6 +157,7 @@ Paris moves beyond customer support and begins coordinating confidential cross-d
 **New employees:** 18  
 **Employee rows:** 35  
 **Active employees:** 35
+
 
 ## Events 15–18 — December 2023 to 10 May 2024: Continued Growth
 
@@ -196,6 +203,7 @@ Bob remains CTO and oversees Technology, although individual technical departmen
 
 # Phase 3 — The Loophole
 
+
 ## Event 19 — 11 May 2024: Media Leak and Hiring Freeze
 
 The ownership loophole becomes public.
@@ -212,6 +220,7 @@ The ownership loophole becomes public.
 **New employees:** 0  
 **Employee rows:** 60  
 **Active employees:** 60
+
 
 ## Event 21 — 9 June 2024: Platform Shutdown and Workforce Reduction
 
@@ -257,6 +266,7 @@ The retained core includes:
 
 # Phase 4 — The Pivot
 
+
 ## Event 22 — 25 August 2024: Board Intervention
 
 The board approves the private-marketplace pivot. Caesar enthusiastically supports it.
@@ -296,6 +306,7 @@ Elvis becomes increasingly important after senior Finance employees leave. He ga
 **Employee rows:** 60  
 **Active employees:** 45
 
+
 ## Event 23 — 3 September 2024: Marcelle Johnson Joins
 
 Marcelle Johnson is hired as:
@@ -319,6 +330,7 @@ Her influence creates direct tension with Paris, who fears Marcelle will receive
 **Employee rows:** 61  
 **Active employees:** 46
 
+
 ## Event 24 — 29 September 2024: Quiet Rebranding
 
 HeriShare hires a small number of senior specialists required for the relaunch.
@@ -337,6 +349,7 @@ New hires generally receive stronger salaries than employees retained through th
 **New employees:** 5  
 **Employee rows:** 66  
 **Active employees:** 51
+
 
 ## Event 25 — October 2024 to April 2025: Recovery Hiring
 
@@ -435,9 +448,10 @@ Other manager IDs reserved in the departments dataset must correspond to valid e
 
 # Excluded Identities
 
+
 ## Wheatley
 
-Wheatley is not present in the employee data. This absence does not settle whether he is an outsider, an omitted employee or someone using a compromised identity.
+Wheatley is a Glasshouse operative posing as an employee and is not present in the employee data. The characters do not initially know he is an outsider; his real identity and method of accessing chat remain undecided.
 
 He must not have:
 - an employee row;
@@ -445,7 +459,8 @@ He must not have:
 - a payroll record;
 - a valid department allocation.
 
-He has access to the internal company chat and presents himself differently on each request through an improvised, plausible business motivation. His true identity and motive remain unconfirmed.
+He has access to the internal company chat and presents himself differently on each request through an improvised, plausible business motivation. His Glasshouse affiliation and investigative motive are author-facing canon; his real identity and access method remain undecided.
+
 
 ## Player
 

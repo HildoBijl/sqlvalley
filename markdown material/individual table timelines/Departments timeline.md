@@ -38,6 +38,8 @@ Field interpretation:
 Department IDs remain unchanged when a department is renamed or repurposed. Closed departments remain in the table with zero employees or budget rather than being deleted.
 
 # Phase 2 — The Accelerator
+
+
 ## Event 8 — 23 June 2023: Seed Funding and Formal Organisation
 Formal payroll and company administration begin after seed funding.
 
@@ -56,6 +58,7 @@ At this stage, both departments contain only one founder. Finance, operations, c
 **Total department rows:** 2  
 **Active organisational units:** 2
 
+
 ## Event 10 — 3 July 2023: First Non-Founder Employee
 
 Paris joins as HeriShare’s first non-founder employee.
@@ -71,6 +74,7 @@ Paris becomes manager of `7100`.
 **New department rows:** 1  
 **Total department rows:** 3  
 **Active organisational units:** 3
+
 
 ## Event 12 — 25 August 2023: Partnership Expansion
 
@@ -88,6 +92,7 @@ Caesar initially remains heavily involved in `3100`, but operational managers ar
 **New department rows:** 2  
 **Total department rows:** 5  
 **Active organisational units:** 5
+
 
 ## Event 14 — 5 October 2023: Internal Marketplace Launch
 
@@ -115,6 +120,7 @@ The IDs remain unchanged because these are continuing organisational units.
 **New department rows:** 3  
 **Total department rows:** 8  
 **Active organisational units:** 8
+
 
 ## Event 15 — 19 November 2023: Viral Growth and Formal Reorganisation
 
@@ -173,6 +179,7 @@ By the end of Event 15, HeriShare has the 14 operational departments used by the
 **New department rows:** 6  
 **Total department rows:** 14  
 **Active organisational units:** 14
+
 
 ## Events 15–18 — November 2023 to 10 May 2024: Continued Growth
 
@@ -233,6 +240,7 @@ Her responsibilities include:
 
 # Phase 3 — The Loophole
 
+
 ## Event 19 — 11 May 2024: Media Leak and Emergency Budget Shift
 
 No departments are created or removed.
@@ -259,6 +267,7 @@ Budgets are immediately reallocated:
 **New department rows:** 0  
 **Total department rows:** 14  
 **Active organisational units:** 14
+
 
 ## Event 21 — 9 June 2024: Platform Shutdown and Workforce Reduction
 
@@ -319,6 +328,7 @@ Compliance staffing is protected because investigations and remediation continue
 ||**Total**|**45**|
 
 # Phase 4 — The Pivot
+
 
 ## Event 22 — 25 August 2024: Board Intervention and Strategic Pivot
 
@@ -404,6 +414,7 @@ The department now handles both marketplace compliance and internal misconduct i
 **Renamed department rows:** 3  
 **Total department rows:** 14
 
+
 ## Event 23 — 3 September 2024: Marcelle Joins
 
 Marcelle Johnson joins as **Chief Data and Systems Transformation Officer**.
@@ -449,6 +460,7 @@ The broad scope of `2200` increases Marcelle’s influence and contributes to Pa
 **Total department rows:** 14  
 **Active headcount:** 46
 
+
 ## Event 24 — 29 September 2024: Quiet Rebranding
 
 The existing departments begin operating under the private marketplace model.
@@ -487,6 +499,7 @@ No new department rows are needed because the existing structure is repurposed.
 **Total department rows:** 14  
 **Active organisational units:** 14
 
+
 ## Event 25 — October 2024 to April 2025: Recovery and Selective Hiring
 
 HeriShare hires 18 employees during recovery.
@@ -512,7 +525,7 @@ Elvis becomes **Acting CFO and Head of Finance Operations** and manager of `6100
 
 Marcelle remains manager of `2200` during her sabbatical because temporary leave does not change the department record.
 
-Wheatley does not appear in `departments`, `employees` or legitimate `allocations`. His access to the internal company chat implies a high-ranking employee identity, but whether he is an outsider, an omitted employee or using a compromised identity remains unclear.
+Wheatley does not appear in `departments`, `employees` or legitimate `allocations`. He is a Glasshouse operative posing as an employee. His apparent high-ranking identity is unverified by the characters, and his method of accessing chat remains undecided.
 
 The player is a data engineering intern who does not appear in the company data because Marcelle's sabbatical interrupted their onboarding.
 

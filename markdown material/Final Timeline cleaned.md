@@ -1,5 +1,6 @@
 # Phase 1 — The Startup
 
+
 ## Event 1 — 18 January 2023: Two Friends and a Vision
 
 Caesar and Bob present their business idea during a Digital Markets seminar. Their pitch frames art as “a public good trapped in private markets.”
@@ -7,6 +8,7 @@ Caesar and Bob present their business idea during a Digital Markets seminar. The
 - The project receives the highest grade in the seminar.
 - Students vote it the seminar’s most innovative idea.
 - The university newspaper publishes an article about the project.
+
 
 ## Event 2 — 9 February 2023: First Proof-of-Concept Prototype
 
@@ -22,6 +24,7 @@ Caesar and Bob add themselves, family members, and friends as mock users. Althou
 
 **Accounts milestone:** 15 prototype accounts.
 
+
 ## Event 3 — 3 March 2023: Student Startup Night
 
 Caesar and Bob present the prototype at Student Startup Night.
@@ -31,6 +34,7 @@ The presentation attracts significant interest, although many attendees compare 
 Following the presentation, the platform is opened for expressions of interest and early registrations.
 
 **Accounts milestone:** 30 new accounts.
+
 
 ## Event 4 — 11 April 2023: First Museum Partnership
 
@@ -66,6 +70,7 @@ The partnership attracts art enthusiasts, preservation supporters, and speculati
 
 **Accounts milestone:** 35 new accounts.
 
+
 ## Event 5 — 6 May 2023: Platform V1.0 Launch
 
 HeriShare integrates Stripe and officially launches the first public version of its platform.
@@ -74,6 +79,7 @@ A promotional campaign attracts a substantial wave of new users. The founders al
 
 **Accounts milestone:** 95 new accounts.
 
+
 ## Event 6 — 2 June 2023: Official Company Registration
 
 HeriShare is formally registered as **HeriShare Inc.**
@@ -81,6 +87,7 @@ HeriShare is formally registered as **HeriShare Inc.**
 The company adopts initial Terms of Service based largely on adapted equity-crowdfunding templates. Its legal and operational structure remains immature.
 
 # Phase 2 — The Accelerator
+
 
 ## Event 7 — 20 June 2023: Entry into the Accelerator
 
@@ -107,6 +114,7 @@ The accelerator provides:
 
 The accelerator positions HeriShare as a combination of fintech, cultural preservation, and marketplace infrastructure.
 
+
 ## Event 8 — 23 June 2023: Seed Funding
 
 HeriShare raises **$150,000** in seed funding in exchange for equity.
@@ -121,6 +129,7 @@ The funding is intended for:
 
 The investors place significant pressure on the founders to prioritise scalability and rapid growth.
 
+
 ## Event 9 — 28 June 2023: First Mentor Review
 
 During the first formal accelerator review, mentors identify two urgent weaknesses:
@@ -128,6 +137,7 @@ During the first formal accelerator review, mentors identify two urgent weakness
 - The company has no consistent process for onboarding and evaluating assets.
 
 The founders are instructed to formalise both systems before expanding further.
+
 
 ## Event 10 — 3 July 2023: First Team Expansion
 
@@ -139,11 +149,13 @@ Initial roles include:
 
 Caesar is formally entered into the employee system as part of the operations function. Paris joins in customer support and community management.
 
+
 ## Event 11 — 18 July 2023: Second Listing Sells Out
 
 A privately owned contemporary sculpture is fully funded within 72 hours.
 
 The successful listing provides stronger evidence that HeriShare can attract users beyond the museum-restoration project.
+
 
 ## Event 12 — 25 August 2023: Major Partnership Expansion
 
@@ -159,6 +171,7 @@ New listings include:
 
 Several financially distressed institutions join the platform hoping that fractional investment will provide a new source of funding and public attention.
 
+
 ## Event 13 — 1 September 2023: Accelerator Demo Day
 
 HeriShare presents its progress to investors, mentors, and potential commercial partners during the accelerator’s Demo Day.
@@ -169,6 +182,7 @@ The presentation focuses on:
 - The platform’s cultural-preservation mission.
 - The possibility of building a scalable secondary marketplace.
 
+
 ## Event 14 — 5 October 2023: Internal Marketplace Launch
 
 HeriShare releases a major platform update introducing an internal secondary marketplace.
@@ -176,6 +190,7 @@ HeriShare releases a major platform update introducing an internal secondary mar
 Users can now sell their shares to other registered users instead of waiting for the underlying asset to be sold.
 
 The update substantially increases transaction volume and transforms HeriShare from a restoration-funding platform into a more active speculative marketplace.
+
 
 ## Event 15 — 19 November 2023: Viral Press Coverage
 
@@ -204,6 +219,7 @@ HeriShare begins expanding its engineering, operations, acquisition, legal, fina
 
 # Phase 3 — The Loophole
 
+
 ## Event 16 — 21 April 2024: First Majority Ownership Accumulation
 
 A billionaire uses several accounts to quietly acquire a combined **51% ownership interest** in a listed sculpture.
@@ -212,6 +228,7 @@ The platform evaluates ownership separately for each account and does not detect
 
 This creates the first known instance of a single beneficial owner obtaining majority control over an asset.
 
+
 ## Event 17 — 23 April 2024: The Loophole Spreads
 
 Other wealthy users begin exploiting the same weakness.
@@ -219,6 +236,7 @@ Other wealthy users begin exploiting the same weakness.
 Through multiple accounts and coordinated purchases, a small number of individuals accumulate majority ownership positions in several listed assets.
 
 The activity initially goes unnoticed because the database does not reliably connect related accounts or identify common beneficial owners.
+
 
 ## Event 18 — 2 May 2024: Relocation Request
 
@@ -236,6 +254,7 @@ The legal team discovers that the platform agreements did not adequately address
 
 The company cannot immediately reject the request because its contracts and platform rules were built around the assumption that ownership would remain widely distributed.
 
+
 ## Event 19 — 11 May 2024: Media Leak
 
 An article exposes the ownership loophole under the headline:
@@ -252,6 +271,7 @@ Many users create:
 - Accounts intended to imitate the strategy used by wealthy investors.
 
 Museums and NGOs suspend their collaborations and threaten legal action.
+
 
 ## Event 20 — 28 May 2024: Platform Destabilisation
 
@@ -272,6 +292,7 @@ At the same time:
 - The platform is temporarily taken offline.
 - Many suspicious accounts show misleading or abnormal `last_login_at` values.
 
+
 ## Event 21 — 9 June 2024: Internal Breakdown
 
 HeriShare takes the platform fully offline.
@@ -289,6 +310,7 @@ The crisis results in:
 
 # Phase 4 — The Pivot
 
+
 ## Event 22 — 25 August 2024: Board Intervention
 
 The board holds an emergency meeting to determine the company’s future.
@@ -296,6 +318,7 @@ The board holds an emergency meeting to determine the company’s future.
 The board votes to abandon HeriShare’s original public-access mission and rebuild the company as a private marketplace for valuable and culturally significant assets.
 
 The vote is nearly unanimous. Bob abstains because he opposes the new direction but considers himself partly responsible for the platform’s failure.
+
 
 ## Event 23 — 3 September 2024: Marcelle Johnson Is Hired
 
@@ -311,6 +334,7 @@ Her work includes:
 - Reconstructing relationships between users, clients, products, and transactions.
 
 The imported client data is significantly messier than the original account data because it was collected in different formats and for different purposes.
+
 
 ## Event 24 — 29 September 2024: Quiet Rebranding
 
@@ -330,6 +354,7 @@ Private sellers become the dominant source of listings, including:
 - Individuals attempting to sell objects of questionable cultural or financial value.
     
 
+
 ## Event 25 — October 2024 to April 2025: Recovery Phase
 
 Over the following six months, the company gradually stabilises around its new marketplace model.
@@ -347,6 +372,7 @@ Marcelle becomes central to the company’s technical and operational recovery.
 
 # Phase 5 — The Story
 
+
 ## Event 26 — Marcelle’s Sabbatical
 
 After approximately six months of repairing the company’s systems, Marcelle begins an extended sabbatical.
@@ -362,6 +388,7 @@ The intended system would:
 Marcelle has access to limited work-presence or login-time information that will become available to the player in the final module. The eventual table is provisionally called `checkInOut`; its exact name, schema and collection mechanism are not yet fixed.
 
 The prototype is difficult to use and only collects partial information. Marcelle is initially the only person with access to it.
+
 
 ## Event 27 — The Player Joins HeriShare
 
@@ -383,18 +410,20 @@ Caesar asks the player to investigate rumours that someone inside the company is
 
 Caesar does not initially believe there is a serious internal threat. He assigns the investigation to a junior employee partly to keep them occupied and avoid committing to a formal audit.
 
+
 ## Event 28 — Internal Suspicion Escalates
 
-Several employees take advantage of the company’s disorder and Marcelle’s absence.
+Three insiders and one unrelated outsider independently take advantage of the company’s disorder and Marcelle’s absence.
 
 - **Bob** considers sabotaging the company he helped build. He believes Marcelle’s return would prevent him from carrying out his plan.
-- **Paris** attempts to damage Marcelle’s reputation.
-- **Wheatley** gathers information without clearly revealing his purpose.
-- **Elvis** begins financial misconduct involving questionable expenses and approvals. His exact scheme and personal motive remain to be finalized.
+- **Paris** changes selected ordinary staff or organizational records to create downstream salary, leave, travel or handoff problems. Complaints reach the areas she coordinates; she investigates them and uses the apparent data failures to damage Marcelle's reputation.
+- **Wheatley**, an undercover operative for Glasshouse, uses the player's access to gather confidential information for an external investigation into corruption among wealthy figures. He does not alter HeriShare's records.
+- **Elvis** begins financial misconduct involving questionable expenses and approvals. Staff or departments later raise problems such as unrecognized purchases or budget impacts with Caesar; Elvis does not deliberately lead the player to his own misconduct. His exact scheme and personal motive remain to be finalized.
 
-These are the only four malicious actors in the story. Ordinary mistakes and legitimate historical inconsistencies may still exist, but no other employee is another mole.
+These are the four principal suspicious figures in the story. Bob, Paris and Elvis independently manipulate company data; Wheatley is an unrelated outsider whose deception and unauthorized information gathering create a red herring. Ordinary mistakes and legitimate historical inconsistencies may still exist, but no other employee is another mole.
 
-The combined activity creates the impression that a single “Mole” is responsible, even though several people are independently manipulating the database.
+Their overlapping activity creates the impression that a single “Mole” is responsible. Caesar moves from expecting ordinary mistakes to believing someone is interfering as corroborated discrepancies accumulate. Before the final node, he can recognize that the apparent motives are scattered across administrative failures, company finances and the business pivot, while still assuming one culprit. The final reveal explains that three independent insiders created those overlapping patterns.
+
 
 ## Event 29 — Marcelle’s Monitoring Data Becomes Available
 
@@ -414,4 +443,11 @@ The table alone does not identify a mole. The player must combine it with:
 - Work-presence or login-time records.
 - Context gathered from other characters.
 
-The final module contains three multi-layered exercises. Each combines the new table with evidence established by earlier investigations and returns the single responsible insider for that case: Bob, Paris or Elvis. Wheatley does not appear in the database and is addressed only in the post-completion dialogue. The precise table schema and reveal queries remain to be designed.
+The final module contains three multi-layered exercises. Each combines new evidence with earlier investigations and returns the single responsible insider for that case: Bob, Paris or Elvis. A work-presence table and an independently retained change history are possible evidence sources; the schema and reveal queries remain to be designed. Wheatley has no legitimate employee record and no fourth graded reveal exercise.
+
+
+## Event 30 — Breaking News and Epilogue
+
+During the closing payoff of the final module, the characters' confrontation over the three insider moles is interrupted by breaking news. Exposés, raids, arrests and asset freezes are underway against wealthy individuals, and the characters recognize several names and establish that all those named in the report are HeriShare clients. This suggests a connection to Wheatley's confidential requests without fully explaining him.
+
+In the epilogue, the player learns the wider truth: Wheatley worked for Glasshouse, which had spent years gathering evidence of bribery, embezzlement and political corruption. The client information helped complete links in its investigations; Glasshouse delivered evidence to journalists and authorities for a coordinated international operation. HeriShare's own business was legal, and Wheatley's purpose was to expose powerful criminals rather than enrich himself or harm innocent clients. His real identity, access method, implicated clients and the exact revelation remain to be designed.
