@@ -385,9 +385,7 @@ The intended system would:
 - Help investigate suspicious database activity.
 - Distinguish legitimate work from unauthorised changes.
 
-Marcelle has access to limited work-presence or login-time information that will become available to the player in the final module. The eventual table is provisionally called `checkInOut`; its exact name, schema and collection mechanism are not yet fixed.
-
-The prototype is difficult to use and only collects partial information. Marcelle is initially the only person with access to it.
+Separately from the proposed monitoring improvements, an independently retained signed export can recover authenticated account changes affecting the investigated records. Marcelle obtains this limited export for the finale. It is not a complete historical audit service and is not available to the player during the earlier investigation.
 
 
 ## Event 27 — The Player Joins HeriShare
@@ -418,7 +416,7 @@ Three insiders and one unrelated outsider independently take advantage of the co
 - **Bob** considers sabotaging the company he helped build. He believes Marcelle’s return would prevent him from carrying out his plan.
 - **Paris** changes selected ordinary staff or organizational records to create downstream salary, leave, travel or handoff problems. Complaints reach the areas she coordinates; she investigates them and uses the apparent data failures to damage Marcelle's reputation.
 - **Wheatley**, an undercover operative for Glasshouse, uses the player's access to gather confidential information for an external investigation into corruption among wealthy figures. He does not alter HeriShare's records.
-- **Elvis** begins financial misconduct involving questionable expenses and approvals. Staff or departments later raise problems such as unrecognized purchases or budget impacts with Caesar; Elvis does not deliberately lead the player to his own misconduct. His exact scheme and personal motive remain to be finalized.
+- **Elvis** begins siphoning funds through duplicate service-expense requests, routing duplicate payments to a supplier account he controls because he believes the company is failing. Staff or departments later raise problems such as unrecognized purchases or budget impacts with Caesar; Elvis does not deliberately lead the player to his own misconduct. The finale combines authenticated record-creation evidence with independent settlement confirmations and his admission.
 
 These are the four principal suspicious figures in the story. Bob, Paris and Elvis independently manipulate company data; Wheatley is an unrelated outsider whose deception and unauthorized information gathering create a red herring. Ordinary mistakes and legitimate historical inconsistencies may still exist, but no other employee is another mole.
 
@@ -427,7 +425,7 @@ Their overlapping activity creates the impression that a single “Mole” is re
 
 ## Event 29 — Marcelle’s Monitoring Data Becomes Available
 
-Near the end of the story, Marcelle returns or re-establishes contact and the player gains access to a new table, provisionally called `checkInOut`, containing work-presence or login-time information.
+Near the end of the story, Marcelle returns or re-establishes contact and supplies `record_changes`, an independently retained, signed change-history export with authenticated individual actor references, affected row keys, fields and before/after values.
 
 Marcelle has stronger technical knowledge than the player but lacks the context the player has collected through conversations, database investigations, and earlier exercises.
 
@@ -440,10 +438,10 @@ The table alone does not identify a mole. The player must combine it with:
 - Product ownership.
 - Expenses.
 - Performance data.
-- Work-presence or login-time records.
+- Independent signed change events and retained business documents.
 - Context gathered from other characters.
 
-The final module contains three multi-layered exercises. Each combines new evidence with earlier investigations and returns the single responsible insider for that case: Bob, Paris or Elvis. A work-presence table and an independently retained change history are possible evidence sources; the schema and reveal queries remain to be designed. Wheatley has no legitimate employee record and no fourth graded reveal exercise.
+The final module contains three multi-step exercises. Dependent CTEs combine current discrepancies, repeated cases and matching authenticated change events to identify Bob, Paris or Elvis. The log also contains legitimate unrelated activity. Independent settlement confirmations establish that Elvis’s duplicate requests were paid to a supplier account he controlled; his admission explains that he believed the company was failing. Wheatley has no legitimate employee record and no fourth graded reveal exercise.
 
 
 ## Event 30 — Breaking News and Epilogue

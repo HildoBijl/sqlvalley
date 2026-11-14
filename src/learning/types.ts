@@ -16,6 +16,7 @@ export interface ModuleContent {
 
 export interface StoryProps {
 	completed: boolean
+	part?: 'opening' | 'conclusion'
 }
 
 export interface StaticPracticeComponentProps {

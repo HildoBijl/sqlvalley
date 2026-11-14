@@ -1,10 +1,10 @@
-import { type TableKey, allTableKeys } from '@sqlvalley/mock-data'
 import { type TableIntroductions, buildTablesIntroducedByModule, getAvailableTableKeys as resolveAvailableTableKeys } from '@sqlvalley/sql-exercises'
 
 import { type ModuleId, moduleTree } from '../moduleDefinition'
+import { type StoryTableKey, storyTableKeys } from './storyDatabaseSource'
 
 // Tables become accessible at their introduction modules and in dependent modules.
-const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {
+const tableIntroductions: TableIntroductions<StoryTableKey, ModuleId> = {
 	// Company internals.
 	departments: 'database',
 	employees: 'database',
@@ -19,12 +19,13 @@ const tableIntroductions: TableIntroductions<TableKey, ModuleId> = {
 	accounts: 'database-keys',
 	products: 'foreign-key',
 	transactions: 'projection-and-filtering',
+	recordChanges: 'write-multi-step-query',
 }
 
 // Invert the table introductions to find which module introduces which tables.
-export const tablesIntroducedByModule = buildTablesIntroducedByModule({ moduleTree, tableIntroductions, tableKeys: allTableKeys })
+export const tablesIntroducedByModule = buildTablesIntroducedByModule({ moduleTree, tableIntroductions, tableKeys: storyTableKeys })
 
 // Determine which module may access which tables.
-export function getAvailableTableKeys(moduleId: string): TableKey[] {
+export function getAvailableTableKeys(moduleId: string): StoryTableKey[] {
 	return resolveAvailableTableKeys({ moduleId, moduleTree, tablesIntroducedByModule })
 }

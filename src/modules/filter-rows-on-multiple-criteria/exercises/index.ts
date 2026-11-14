@@ -1,10 +1,11 @@
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 
 import { buildModuleExercises } from '@/curriculum'
-import multiFilterEmployeesBetween from './multiFilterEmployeesBetween'
-import multiFilterOnLeave from './multiFilterOnLeave'
-import multiFilterPhoneArea from './multiFilterPhoneArea'
+
+import exercise0 from './expense-periods'
+import exercise1 from './expense-ranges'
+import exercise2 from './approval-conditions'
 
 export default function buildExercises(skillId: string): ExerciseRegistration[] {
-	return buildModuleExercises([multiFilterEmployeesBetween, multiFilterOnLeave, multiFilterPhoneArea], skillId)
+	return buildModuleExercises([exercise0, exercise1, exercise2], skillId)
 }

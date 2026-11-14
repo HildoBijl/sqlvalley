@@ -15,7 +15,7 @@ interface GenerationOptions extends ExerciseSessionOptions, ExerciseSessionDepen
 	exercisesById: ReadonlyMap<string, ExerciseRegistration>
 }
 
-export function useExerciseGeneration({ skillId, exercises, currentExerciseInstance, storage, selectionOptions, exercisesById, context, contextReady, activeOperation }: GenerationOptions) {
+export function useExerciseGeneration({ skillId, exercises, currentExerciseInstance, storage, selectionOptions, selectNextExercise, exercisesById, context, contextReady, activeOperation }: GenerationOptions) {
 	const [generationError, setGenerationError] = useState<GenerationError>()
 	const [generating, setGenerating] = useState(false)
 	const generationRequestId = useRef(0)
@@ -51,9 +51,10 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 	// Handler: Randomly select and subsequently start an exercise.
 	const startNewExercise = useCallback(() => {
 		if (!contextReady || activeOperation.current !== undefined) return
-		const selected = selectExercise(exercises, storage.getExerciseHistory(skillId), selectionOptions)
+		const history = storage.getExerciseHistory(skillId)
+		const selected = selectNextExercise ? selectNextExercise(exercises, history) : selectExercise(exercises, history, selectionOptions)
 		if (selected) void startExercise(selected)
-	}, [exercises, contextReady, activeOperation, selectionOptions, skillId, startExercise, storage])
+	}, [exercises, contextReady, activeOperation, selectionOptions, selectNextExercise, skillId, startExercise, storage])
 
 	// Handler: For a given exercise ID, generate and start that exercise.
 	const selectExerciseById = useCallback((exerciseId: string) => {
@@ -75,11 +76,12 @@ export function useExerciseGeneration({ skillId, exercises, currentExerciseInsta
 		const registration = instance ? exercisesById.get(instance.exerciseId) : undefined
 		let cancelled = false
 		if (!instance || !registration || (registration.definition.metadata.version ?? 1) !== instance.version) {
-			const selected = registration ?? selectExercise(exercises, storage.getExerciseHistory(skillId), selectionOptions)
+			const history = storage.getExerciseHistory(skillId)
+			const selected = registration ?? (selectNextExercise ? selectNextExercise(exercises, history) : selectExercise(exercises, history, selectionOptions))
 			if (selected) void startExercise(selected, () => !cancelled)
 		}
 		return () => { cancelled = true }
-	}, [exercisesById, exercises, currentExerciseInstance?.exerciseId, currentExerciseInstance?.version, currentExerciseInstance?.parameters, context, contextReady, activeOperation, selectionOptions, skillId, startExercise, storage])
+	}, [exercisesById, exercises, currentExerciseInstance?.exerciseId, currentExerciseInstance?.version, currentExerciseInstance?.parameters, context, contextReady, activeOperation, selectionOptions, selectNextExercise, skillId, startExercise, storage])
 
 	// Effect: On a dismount, invalidate any ongoing generation action.
 	useEffect(() => {

@@ -77,7 +77,7 @@ His attitude changes as credible evidence accumulates: he first expects mistakes
 - misaligned, yet strong moral code
 - unexpectedly competent, hinting at a more developed persona than what may be apparent at a glance
 
-**Hidden motivation:** unfinished. It will combine his large-living personality, financial pressure and a sympathetic or relatable element that has not yet been designed. He uses genuine Finance access for misconduct involving questionable expenses and approvals, but the exact scheme must not be invented yet.
+**Hidden motivation:** believes the company is failing and wants to siphon funds before it collapses. His Finance access lets him create duplicate service-expense requests and route the duplicate payments to a supplier account he controls. SQL exposes repeated requests and their authenticated insertion actor; independently obtained settlement confirmations establish the payment destination. His admission supplies the motive. Do not add an unapproved addiction or personal tragedy.
 ### Dialogue bits
 - they say you can’t buy happiness, but apparently you can rent it at 14% interest!
 
@@ -116,7 +116,7 @@ His attitude changes as credible evidence accumulates: he first expects mistakes
 
 **Relevance to ending:** evidence must distinguish actual historical migration messiness from **deliberately planted** problems. A system mismatch is not inherently proof of Marcelle's incompetence or Paris's tampering.
 
-**Finale role:** Marcelle returns or re-establishes contact in the final module and provides access to a new table, provisionally called `checkInOut`, containing work-presence or login-time information. This table alone does not reveal a culprit. Its exact schema and the circumstances of Marcelle's return remain unresolved.
+**Finale role:** Marcelle returns or re-establishes contact in the final module and supplies `record_changes`, an independently retained, signed export attributing changes to authenticated individual accounts. Legitimate unrelated events appear alongside the relevant changes. The player must corroborate them against the investigated business discrepancies rather than treating an arbitrary logged action as guilt. Marcelle separately obtains the settlement confirmations establishing Elvis’s payment destination. The polished circumstances of her return remain for later dialogue work.
 
 
 ## Player — Investigating SQL learner (non-mole)
@@ -133,7 +133,7 @@ His attitude changes as credible evidence accumulates: he first expects mistakes
 | Caesar    | Reliable answers, successful business | Same; innocent                                        | Asks how certain the conclusion is            |
 | Bob       | Understand weak marketplace results   | Shape anti-pivot conclusions with fabricated evidence | Cautious observations, lets others conclude   |
 | Paris     | Fix messy migrated records            | Damage Marcelle's credibility                         | Frames “quality” questions in political terms |
-| Elvis     | Reconcile Finance                     | Financial misconduct; exact scheme unfinished         | Technical explanation, plausible dismissal    |
+| Elvis     | Reconcile Finance                     | Siphons funds through duplicate service-expense requests         | Technical explanation, plausible dismissal    |
 | Wheatley  | Unconvincing employee with a business request | Gather intelligence for Glasshouse to expose corruption | Narrow, oddly specific request |
 | Marcelle  | Repair the database                   | Same; innocent                                        | Evidence-driven technical reasoning           |
 | Player    | Solve SQL tasks and expose mole       | Same                                                  |                                               |

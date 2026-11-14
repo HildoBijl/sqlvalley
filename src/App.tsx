@@ -3,13 +3,13 @@ import { RouterProvider } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
-import { databaseSource } from '@sqlvalley/mock-data'
 import { SQLJSProvider } from '@sqlvalley/sqljs'
 import { DatabaseProvider } from '@sqlvalley/sql/databaseProvider'
 
 import { useSettingsStore, useStoresHydrated } from '@/store'
 import { getTheme, ColorModeContext, ErrorBoundary } from '@/ui'
 import { router } from '@/navigation'
+import { storyDatabaseSource } from '@/curriculum/database'
 
 export function App() {
 	// Set up theming/coloring.
@@ -35,7 +35,7 @@ export function App() {
 					<ThemeProvider theme={muiTheme}>
 						<CssBaseline />
 						<SQLJSProvider>
-							<DatabaseProvider source={databaseSource} datasetSizeHandle={[datasetSize, setDatasetSize]}>
+							<DatabaseProvider source={storyDatabaseSource} datasetSizeHandle={[datasetSize, setDatasetSize]}>
 								<RouterProvider router={router} />
 							</DatabaseProvider>
 						</SQLJSProvider>

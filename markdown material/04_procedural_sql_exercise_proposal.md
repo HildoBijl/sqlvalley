@@ -1,20 +1,20 @@
 # Procedural SQL exercise directions
 
-**Purpose:** Working material for designing exercises together, module by module. These are story and teaching ideas, not approved dialogue, fixed exercise specifications, seed data, or implementation instructions. All perpetrator information is private to the authors.
+**Purpose:** Story and teaching directions for the procedural SQL exercise set. The implementation request authorizes turning these directions into working exercises and temporary character dialogue. The implemented exercises, story fixtures and reference queries now live in the application; see the review guide for verification and editing paths. All perpetrator information is private to the authors. The [implementation audit](./05_exercise_implementation_audit.md) records the accepted decisions and quality checks. See [the implementation review guide](./06_exercise_review_guide.md) for the working set.
 
-Each family below follows the same chain: **who benefits and why → what happens to the data → what prompts the request → what the player investigates → what the characters can reasonably conclude**. The exact records, affected people, amounts, dates, thresholds, SQL, and procedural ranges will be chosen when we design the node. Ordinary employees and clients are the default subjects of tampering; use a main-cast member as the affected subject only if an exercise genuinely needs it.
+Each family below follows the same chain: **who benefits and why → what happens to the data → what prompts the request → what the player investigates → what the characters can reasonably conclude**. The concrete records, affected people, amounts, dates, thresholds and SQL are kept in the implementation and review guide so this document remains a general design reference. Ordinary employees and clients are the default subjects of tampering; use a main-cast member as the affected subject only if an exercise genuinely needs it.
 
 Each skill has three exercise families covering different aspects of the skill. Within a family, vary the particular records, fields, conditions, and other appropriate parameters while preserving the same causal story. The families in a module share a broad opening and closing, but each has its own parameter-dependent setup, query prompt, and payoff. The directions do not prescribe a sequence between the three families or require the same record in all of them.
 
-**Evidence:** Staff complaints, approved requests, agreements, and other business documents can motivate an investigation, but they are not automatically stored in the playable database. Where a conclusion relies on an independent source, the future exercise and dialogue must establish what that source says. A result shows the data currently recorded; it does not by itself prove an edit, a person's intent, who made the edit, or a payment. Suspected misuse remains a working interpretation until sufficiently supported. The player performs read-only queries and does not repair the database.
+**Evidence:** Staff complaints, approved requests, agreements, and other business documents can motivate an investigation, but they are not automatically stored in the playable database. Where a conclusion relies on an independent source, the exercise and dialogue establish what that source says. A result shows the data currently recorded; it does not by itself prove an edit, a person's intent, who made the edit, or a payment. Suspected misuse remains a working interpretation until sufficiently supported. The player performs read-only queries and does not repair the database.
 
 **Curriculum:** Apply actual module prerequisites and table availability from the repository, not the numerical order in this document. A shared narrative or conclusion must work for every procedural variant and for valid paths through the skill tree. When sorting and limiting, design deterministic tie-breakers. Wheatley's personal client-data request belongs to node 20, where client accounts are available; he does not alter the company's records.
 
-**Table notation:** Available tables are the SQL table names currently exposed by the curriculum at each node. “Tables used” lists the proposed tables for an exercise direction; alternatives and the finale evidence source remain open until the exercises are designed. `quarterly_performance` is the SQL table name for the `quarterlyPerformance` dataset.
+**Table notation:** Available tables are the SQL table names currently exposed by the curriculum at each node. “Tables used” lists the tables for an exercise direction; executable registrations and the review guide specify the implemented choices. The finale adds the story-only `record_changes` source. `quarterly_performance` is the SQL table name for the `quarterlyPerformance` dataset.
 
 **Progression:** The investigation moves from confused operational complaints, to repeated discrepancies that persuade Caesar someone is interfering, to a clearer picture of the apparent motivations just before the finale. The facts may suggest damage to Marcelle's credibility, financial misuse, and a case against the pivot; no character should conclude before the finale that these must be separate perpetrators. Caesar can notice that the pattern reaches different parts of the company and be puzzled by why a single mole would have such scattered aims. The finale explains that the motives overlap because three insiders acted independently. Wheatley's requests are a separate red herring.
 
-**Scope of design:** This document proposes general directions for all pre-finale skill nodes and possible directions for the finale. Exact plot records and a trustworthy attribution mechanism remain to be designed and reviewed. The current engine does not guarantee that three different families appear before a skill is marked complete; the desired module story loop will need a separate implementation decision.
+**Scope of design:** All 13 practical SQL nodes, including the finale, are implemented as three procedural families each. The user approved the finale and clarified that Elvis siphons money because he believes the company is failing. New story exercise IDs use version 1 and store only a numeric variant. Initial selection prioritizes unsolved families; local story completion requires all three current-version families independently of inferred curriculum completion.
 
 
 ## Node 11 — Choose Columns
@@ -50,10 +50,10 @@ Each skill has three exercise families covering different aspects of the skill. 
 **Tables used:** `employees`.
 
 - **Mole and intent:** Paris wants travel-compensation questions to lead back to employee information that appears to have been migrated incorrectly.
-- **Action on data:** She changes a location value used by a downstream travel process for selected ordinary employees.
-- **Issue and request:** An employee questions why a travel claim was assessed using a different location. Paris asks what locations the directory currently contains.
-- **Query direction:** Retrieve distinct recorded employee locations. Vary the reported location or comparable field only when the chosen data makes the issue visible in a distinct list.
-- **Conclusion:** The list can show whether a reported location appears at all; it cannot identify who changed an address or, by itself, prove where someone lives. Paris can arrange a follow-up without claiming a culprit.
+- **Action on data:** She changes a city value used by a downstream travel process for selected ordinary employees, producing a recorded value that conflicts with a verified claim or address.
+- **Issue and request:** An employee questions why a travel claim was assessed using a different city. Paris has the independently verified claim information and asks what city values the directory contains.
+- **Query direction:** Retrieve distinct recorded employee cities. Choose the altered city from verified story cases so it appears in the output; vary the case without requiring filtering, text processing, or a comparison against another table.
+- **Conclusion:** The distinct list exposes a recorded city that Paris can compare with the independent claim. It cannot identify the affected employee or editor by itself. Do not treat absence of a city as proof: another employee may legitimately share a city, and preview datasets differ.
 
 **Shared conclusion:** A few routine processes depend on questionable recorded information. Caesar sees an operational problem but still favors mistake or migration confusion over sabotage.
 
@@ -71,7 +71,7 @@ Each skill has three exercise families covering different aspects of the skill. 
 **Tables used:** `expenses`.
 
 - **Mole and intent:** Elvis wants a questionable expense to move through routine Finance processing without drawing attention to himself.
-- **Action on data:** He enters or alters an expense request so it is charged to a department in a way that can be concealed among normal activity. The exact scheme and personal motive remain open.
+- **Action on data:** He enters or alters an expense request so it is charged to a department in a way that can be concealed among normal activity. He wants to siphon money from a company he believes is failing; duplicate service-expense requests lead to payments to an account he controls.
 - **Issue and request:** The department's staff do not recognize the use of their budget and raise it with Caesar, who asks for the department's recorded expense requests.
 - **Query direction:** Filter expense rows on one department identifier. Vary the affected department or equivalent single criterion.
 - **Conclusion:** The player finds requests recorded against that department. A department assignment alone does not prove an expense is illegitimate or that money was paid.
@@ -175,7 +175,7 @@ Each skill has three exercise families covering different aspects of the skill. 
 - **Mole and intent:** Bob wants staff to notice the deals that support a pessimistic interpretation.
 - **Action on data:** He has made some recorded prices look unfavorable.
 - **Issue and request:** A business stakeholder asks for a simple way to flag recorded values for follow-up.
-- **Query direction:** Produce a conditional flag from a stated threshold using a processed column; vary the threshold or flag labels without requiring a filter.
+- **Query direction:** Produce a conditional flag from a stated threshold using a processed column; vary the threshold or flag labels without requiring a filter. Include a null-fallback variant using `COALESCE` when a deliberately present missing source value makes it meaningful.
 - **Conclusion:** The flags identify recorded values in the requested band, not financial losses. Caesar sees a reason to examine deals more closely, not yet proof of a threat.
 
 **Shared conclusion:** The output makes some reported outcomes worth investigating. Bob's changes must be supported by separately designed data, and he does not openly state his preferred strategic conclusion.
@@ -319,7 +319,7 @@ Each skill has three exercise families covering different aspects of the skill. 
 - **Mole and intent:** Elvis wants a questionable expense to look like a routine request from within the business.
 - **Action on data:** He records or changes the claimed requester on an expense so the entry appears to have a plausible business origin.
 - **Issue and request:** The department disputes having requested a charge. Caesar asks which employees the relevant expense entries name as requesters.
-- **Query direction:** Look up employees whose identifiers occur as requesters of expenses matching a selected condition. Vary the expense condition and affected group.
+- **Query direction:** Use a membership lookup with `IN` in the model solution to find employees whose identifiers occur as requesters of expenses matching a selected condition. Vary the expense condition and affected group. Equivalent result-producing queries remain valid.
 - **Conclusion:** The output gives the people recorded as requesters. It does not establish who actually submitted the request or that a named employee authorized it.
 
 ### Which department bears the charge?
@@ -329,7 +329,7 @@ Each skill has three exercise families covering different aspects of the skill. 
 - **Mole and intent:** Elvis wants questionable costs to be absorbed into legitimate departmental spending.
 - **Action on data:** He records or changes the department associated with an expense.
 - **Issue and request:** A manager says a charge does not belong to their team's work. Caesar asks which departments are associated with the relevant requests.
-- **Query direction:** Look up departments referenced by expenses meeting a selected condition, varying the condition or cost category.
+- **Query direction:** Use a correlated `EXISTS` lookup in the model solution to find departments having a relevant expense. Vary the condition or cost category. Equivalent result-producing queries remain valid.
 - **Conclusion:** The query identifies the recorded cost centres. A department's name in the result is a lead to check against its own purchase information, not proof of responsibility.
 
 ### Who is recorded as approver?
@@ -337,10 +337,10 @@ Each skill has three exercise families covering different aspects of the skill. 
 **Tables used:** `employees`, `expenses`.
 
 - **Mole and intent:** Elvis wants the requests to appear consistent with Finance's approval process.
-- **Action on data:** He inserts or alters approval-related values on selected requests; the exact method and scheme remain undecided.
-- **Issue and request:** The requester and the department cannot reconcile an entry with the authorization they expected. Caesar asks which employees are listed as approvers for that group of expenses.
-- **Query direction:** Look up employees referenced by the `approved_by` field of relevant expenses. Vary the expense condition while retaining enough normal records to avoid singling out an actor merely by name.
-- **Conclusion:** The result lists recorded approvers. It does not prove that an approval was valid, that money moved, or who created the underlying request.
+- **Action on data:** He inserts or alters approval-related values on selected requests; the duplicate request carries a different or missing recorded approval.
+- **Issue and request:** The requester and the department cannot reconcile a specific entry with the authorization they expected. Caesar asks which employee is recorded as approving that expense.
+- **Query direction:** Use a scalar subquery in the model solution to retrieve the approver identifier for one uniquely identified expense, then look up the employee. Select cases with a non-null recorded approver and vary the expense, including plausible ordinary approval cases. A primary-key lookup must guarantee the scalar result; do not rely on SQLite silently choosing a row from a multirow subquery.
+- **Conclusion:** The result identifies the recorded approver of the selected expense. It does not prove that an approval was valid, that money moved, or who created the underlying request; a listed name must not prematurely reveal Elvis.
 
 **Shared conclusion:** The issue touches people and approval responsibilities, not just a display error. Caesar is increasingly convinced that some records warrant deliberate investigation, but the data does not identify the person responsible.
 
@@ -378,9 +378,9 @@ Each skill has three exercise families covering different aspects of the skill. 
 **Tables used:** `employees`, `allocations`, `departments`, depending on the chosen relationship.
 
 - **Mole and intent:** Paris wants a complaint from a departmental handoff to point toward an apparently flawed organizational record.
-- **Action on data:** She changes a department assignment or management reference for a small number of ordinary employees or affected organizational rows, keeping the reference valid where possible.
+- **Action on data:** She changes a valid department assignment or management reference, or removes an allocation needed by a handoff, for ordinary staff or organizational rows. Missing relationships can be created without inserting a foreign key that points to a nonexistent record.
 - **Issue and request:** A department says a staff request or responsibility was routed to the wrong place. Paris asks the player to inspect the relevant employee, allocation, and department information.
-- **Query direction:** Join relevant employee, allocation, and department records, or use a left join where the exercise asks for unmatched relationships. Vary the type of handoff or affected group.
+- **Query direction:** Use a left join chain from employees through allocations to departments, returning the selected employees even when no allocation matches. Ensure at least one legitimate matching relationship and one deliberately missing relationship in the relevant fixture. Keep conditions on optional right-side data from accidentally removing the unmatched rows. Vary the handoff or affected group.
 - **Conclusion:** The joined rows show the recorded relationship. A transfer notice or other independent source is needed to establish what it should be. Parent and child departments can overlap, so headcount arithmetic alone cannot prove an error.
 
 **Shared conclusion:** Complaints from distinct operational processes now connect to discrepancies across related records. Paris can argue that Marcelle's work needs scrutiny; Caesar is increasingly convinced that at least some interference may be deliberate, but an apparent pattern around migration is circumstantial and no identity is established.
@@ -410,8 +410,8 @@ Each skill has three exercise families covering different aspects of the skill. 
 
 - **Mole and intent:** Wheatley wants to narrow which asset relationships could matter to the outside investigation.
 - **Action on data:** None.
-- **Issue and request:** He asks the player to identify assets with or without a specified kind of recorded transaction, presenting it as a routine internal check.
-- **Query direction:** Combine product and transaction conditions using an appropriate join, membership test, or existence test. Vary the relationship or qualifying condition.
+- **Issue and request:** He asks for assets whose relevant recorded transactions all satisfy a stated condition, presenting it as a routine internal check.
+- **Query direction:** Combine products and transactions to express a universal condition. The model solution uses an existence check for at least one transaction in the stated scope and an anti-existence check for any transaction violating the condition. Define that scope explicitly and include matching and counterexample assets, so an asset with no relevant transactions does not pass accidentally. Vary the qualifying condition; no aggregation or sorting is required.
 - **Conclusion:** The result establishes only the requested relationship in HeriShare's records. Current ownership does not prove who owned an asset at every earlier transaction.
 
 ### Client identities and contact information
@@ -509,17 +509,17 @@ Each skill has three exercise families covering different aspects of the skill. 
 **Shared conclusion:** With a credible independent comparison as well as the suspicious reports, Caesar can conclude that someone is interfering and wonder whether the commercial figures were made to weaken the pivot's case. This node does not assume that he has heard complaints from unrelated branches or already knows all apparent motives. His certainty depends on designing the corroborating evidence, not on a weak-looking number alone.
 
 
-## Node 25 — Write Multi-Step Query: finale directions
+## Node 25 — Write Multi-Step Query: finale
 
-**Available tables:** `departments`, `employees`, `contracts`, `allocations`, `expenses`, `quarterly_performance`, `accounts`, `products`, `transactions`. A potential new finale evidence table is not yet available or defined.
+**Available tables:** `departments`, `employees`, `contracts`, `allocations`, `expenses`, `quarterly_performance`, `accounts`, `products`, `transactions`. The story-only `record_changes` evidence table is introduced here, with registry key `recordChanges`.
 
 The last node is reserved for the reveal. Its prerequisites cover the earlier investigation branches, so just before it Caesar can bring together the established concerns: staff-facing administrative failures seem to damage confidence in Marcelle, financial records suggest possible misuse, and commercial reports may have been made to weaken the pivot. Still looking for one mole, he is confused about how those apparently different motives fit together. These are evidence-supported hypotheses, not established identities.
 
-The exact evidence source, its schema, records, and final queries remain open. A work-presence table can narrow who had an opportunity; a reliable, independently retained change history could show what changed and which authenticated account performed it. Either would need corroboration and careful provenance: presence alone cannot attribute an edit, and an account alone does not establish who controlled it. The current baseline contains neither a complete edit history nor payment-destination records.
+Marcelle supplies an independently retained, signed change-history export. Its actor reference denotes an authenticated individual account, distinct from requesters, approvers or people present at work. It contains routine legitimate activity alongside relevant events. Each final query combines business discrepancies with matching row keys, fields and before/after values, corroborating several selected records before resolving an employee identity. Payment destinations are supplied separately through independent settlement confirmations in the payoff. The neutral mock-data package remains unchanged.
 
 ### Bob — Strategic manipulation
 
-**Tables used:** potentially `transactions`, `quarterly_performance`, `employees`, and a new evidence source; the final combination is undecided.
+**Tables used:** `transactions`, `products`, `quarterly_performance`, `employees`, `record_changes`.
 
 - **Intent and action:** Bob has altered business information to make the pivot appear unsuccessful and prompt a return toward the original mission.
 - **Investigation direction:** Starting with the earlier transaction and performance discrepancies, use independently retained evidence to establish which values changed and trace the relevant actions to the responsible insider. A multi-step query should combine the earlier case with the new evidence rather than selecting a culprit from the new source alone.
@@ -527,7 +527,7 @@ The exact evidence source, its schema, records, and final queries remain open. A
 
 ### Paris — Manufactured downstream complaints
 
-**Tables used:** potentially `employees`, `contracts`, `departments`, `allocations`, and a new evidence source; the final combination is undecided.
+**Tables used:** `employees`, `contracts`, `record_changes`.
 
 - **Intent and action:** Paris has caused staff-facing problems in areas she coordinates, then used their apparent connection to migrated data to discredit Marcelle.
 - **Investigation direction:** Combine previously identified personnel, leave, salary, travel, or departmental discrepancies with independent evidence of the relevant changes. Trace the changes to the responsible insider without treating a complaint or valid foreign key as proof of authorship.
@@ -535,11 +535,11 @@ The exact evidence source, its schema, records, and final queries remain open. A
 
 ### Elvis — Financial misconduct
 
-**Tables used:** potentially `expenses`, `employees`, and a new evidence source; the final combination is undecided.
+**Tables used:** `expenses`, `employees`, `record_changes`.
 
-- **Intent and action:** Elvis has used his Finance access for misconduct involving expense requests or approvals. The exact scheme and his sympathetic personal motivation remain open.
+- **Intent and action:** Elvis inserts duplicate service-expense requests to siphon funds into a supplier account he controls because he believes the company is failing.
 - **Investigation direction:** Connect earlier disputed charges and approval information to independent evidence that establishes the relevant actions and responsible insider. If the story asserts that money was paid or diverted, supply separate evidence of payment or destination; expense requests alone cannot establish it.
-- **Conclusion:** The characters learn Elvis's responsibility and the nature of the misconduct, with the precise scheme and motivation to be developed together.
+- **Conclusion:** The query identifies Elvis as the authenticated insertion actor behind the repeated duplicates. Independent settlement confirmations establish payments to his controlled supplier account, and his admission establishes the motive. Expense rows alone do not prove a transfer.
 
 ### Closing payoff and epilogue
 

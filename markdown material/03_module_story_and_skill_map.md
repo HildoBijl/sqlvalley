@@ -296,7 +296,7 @@ The concept modules contain reading and dialogue rather than the procedural exer
 ### Exercise 25C — Elvis: financial concealment
 **Case:** To be developed module by module. It must combine new finale evidence with established evidence from earlier modules.
 **Desired discovery:** one successful query returns Elvis's name as the single person at fault.
-**Motive reveal:** unfinished. Preserve his likeable, fun and extravagant personality; do not infer a specific financial scheme or motive yet.
+**Motive reveal:** Elvis siphoned funds because he believed HeriShare was failing. Duplicate service-expense requests identify the falsification pattern; authenticated insertion events identify him. Separate bank settlement confirmations establish payments to a supplier account he controls. Preserve his likeable, fun and extravagant personality without adding an unapproved personal tragedy.
 **Evidence caution:** the new evidence source must not identify him by itself. Questionable approvals, disproportionate spending or blank `approved_by` values can support the case, but the exact chain remains to be designed and seeded.
 
 ### Post-25 dialogue — Wheatley

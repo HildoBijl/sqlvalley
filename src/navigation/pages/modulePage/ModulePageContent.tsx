@@ -5,6 +5,8 @@ import { LoadingScreen } from '@/ui'
 import { type ModuleContent, LearningHeader, LearningTabs, DataExplorer, InteractivePractice, StaticPractice, CompletionDialog, CompleteModuleButton } from '@/learning'
 import type { ModuleId } from '@/curriculum'
 import { useModuleExercises } from '@/modules'
+import { useStoryMode } from '@/store'
+import { isStoryModuleId, selectNextStoryExercise } from '@/curriculum/exercises'
 
 import { ModuleContentTab } from './ModuleContentTab'
 import { ModuleStory } from './ModuleStory'
@@ -14,7 +16,9 @@ export function ModulePageContent({ moduleId, content }: { moduleId: ModuleId; c
 	// Call various hooks to gather data from different sources.
 	const moduleData = useModuleData(moduleId, content)
 	const { isSkill, presentation, Practice, tables, hasInteractivePractice } = moduleData
-	const { completed, isModuleCompleted, exerciseProgress, completeModule } = useModuleProgress(moduleId)
+	const { completed: curriculumCompleted, storyCompleted, storyProgress, isModuleCompleted, exerciseProgress, completeModule } = useModuleProgress(moduleId)
+	const storyMode = useStoryMode()
+	const completed = storyMode ? storyCompleted ?? curriculumCompleted : curriculumCompleted
 	const { backPath, returnToOverview, continueToNext } = useModuleNavigation(moduleId, isModuleCompleted)
 	const { tabs, currentTab, handleTabChange, selectTab } = useModulePageTabs(moduleData, completed)
 	const { dialogOpen, closeDialog } = useCompletionDialog(completed)
@@ -27,15 +31,15 @@ export function ModulePageContent({ moduleId, content }: { moduleId: ModuleId; c
 	return <>
 		<LearningHeader title={presentation.name} description={presentation.description}
 			icon={<Icon color="primary" sx={{ fontSize: 32 }} />} isCompleted={completed}
-			progress={hasInteractivePractice && currentTab === 'practice' ? exerciseProgress : undefined}
+			progress={hasInteractivePractice && currentTab === 'practice' ? storyProgress ?? exerciseProgress : undefined}
 			backTo={backPath} />
 
 		<LearningTabs value={currentTab} tabs={tabs} onChange={handleTabChange}>
-			{currentTab === 'story' && <ModuleStory completed={completed} Story={content.Story} />}
+			{currentTab === 'story' && <ModuleStory completed={storyCompleted ?? completed} Story={content.Story} />}
 			{currentTab === 'video' && <ModuleContentTab content={content} contentKey="Video" />}
 			{currentTab === 'theory' && <ModuleContentTab content={content} contentKey="Theory" />}
 			{currentTab === 'practice' && Practice && <StaticPractice component={Practice} onComplete={completeModule} isCompleted={completed} />}
-			{currentTab === 'practice' && hasInteractivePractice && <InteractivePracticeTab skillId={moduleId} />}
+			{currentTab === 'practice' && hasInteractivePractice && <InteractivePracticeTab skillId={moduleId} Story={content.Story} completed={storyCompleted ?? completed} />}
 			{currentTab === 'data' && <DataExplorer tables={tables} />}
 			{currentTab === 'summary' && <ModuleContentTab content={content} contentKey="Summary" />}
 		</LearningTabs>
@@ -56,9 +60,15 @@ export function ModulePageContent({ moduleId, content }: { moduleId: ModuleId; c
 	</>
 }
 
-function InteractivePracticeTab({ skillId }: { skillId: string }) {
+function InteractivePracticeTab({ skillId, Story, completed }: { skillId: string; Story: ModuleContent['Story']; completed: boolean }) {
 	const { exercises, loading, error } = useModuleExercises(skillId)
+	const storyMode = useStoryMode()
 	if (loading) return <LoadingScreen message="Loading exercises..." />
 	if (error) return <Alert severity="warning" sx={{ mb: 2 }}>{error.message}</Alert>
-	return <InteractivePractice skillId={skillId} exercises={exercises} />
+	const storyModule = isStoryModuleId(skillId)
+	return <>
+		{storyMode && storyModule && <ModuleStory Story={Story} completed={completed} part="opening" />}
+		<InteractivePractice skillId={skillId} exercises={exercises} selectNextExercise={storyModule ? selectNextStoryExercise : undefined} />
+		{storyMode && storyModule && completed && <ModuleStory Story={Story} completed={completed} part="conclusion" />}
+	</>
 }

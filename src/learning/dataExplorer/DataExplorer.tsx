@@ -2,15 +2,14 @@ import { useMemo, useState } from 'react'
 import { Box, Button } from '@mui/material'
 import { AccountTree } from '@mui/icons-material'
 
-import { type TableKey, buildCompletionSchema } from '@sqlvalley/mock-data'
-import { useDatabase, useDatasetSize, useQuery } from '@sqlvalley/sql'
+import { useDatabase, useDatabaseContext, useDatasetSize, useQuery } from '@sqlvalley/sql'
 import { DatasetSizeSelector } from '@sqlvalley/sql-exercises'
 
 import { SchemaDialog } from './viewSchema'
 import { TableDataView } from './TableDataView'
 
 interface DataExplorerProps {
-	tables: TableKey[]
+	tables: string[]
 }
 
 export function DataExplorer({ tables }: DataExplorerProps) {
@@ -19,7 +18,8 @@ export function DataExplorer({ tables }: DataExplorerProps) {
 
 	// Set up a state to track the selected table.
 	const [selectedTable, setSelectedTable] = useState('')
-	const tableNames = useMemo(() => Object.keys(buildCompletionSchema(tables)).sort(), [tables])
+	const { source } = useDatabaseContext()
+	const tableNames = useMemo(() => Object.keys(source.buildCompletionSchema?.(tables) ?? {}).sort(), [source, tables])
 	const activeTable = tableNames.includes(selectedTable) ? selectedTable : tableNames[0]
 
 	// Load the table from the right database.

@@ -1,11 +1,6 @@
-import { Box, Typography } from '@mui/material'
+import type { StoryProps } from '@/learning'
+import { StoryModule } from '@/curriculum/exercises'
 
-export function Story() {
-	return <Box display="flex" flexDirection="column" gap={1.5}>
-		<Typography variant="body1">
-			Some story will appear here.
-		</Typography>
-	</Box>
+export function Story(props: StoryProps) {
+	return <StoryModule moduleId="join-tables" {...props} />
 }
-
-export default Story

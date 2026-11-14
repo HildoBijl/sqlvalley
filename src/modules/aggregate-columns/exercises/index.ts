@@ -1,10 +1,11 @@
 import type { ExerciseRegistration } from '@sqlvalley/exercise-manager'
 
 import { buildModuleExercises } from '@/curriculum'
-import aggregateMaxMinRevenue from './aggregateMaxMinRevenue'
-import aggregateTotalExpenses from './aggregateTotalExpenses'
-import aggregateHighestExpenses from './aggregateHighestExpenses'
+
+import exercise0 from './status-counts'
+import exercise1 from './quarter-totals'
+import exercise2 from './expense-statistics'
 
 export default function buildExercises(skillId: string): ExerciseRegistration[] {
-	return buildModuleExercises([aggregateMaxMinRevenue, aggregateTotalExpenses, aggregateHighestExpenses], skillId)
+	return buildModuleExercises([exercise0, exercise1, exercise2], skillId)
 }

@@ -13,6 +13,7 @@ export interface ExerciseSessionOptions {
 	storage: ExerciseStorage
 	resources?: ExerciseResources
 	selectionOptions?: ExerciseSelectionOptions
+	selectNextExercise?: (exercises: readonly ExerciseRegistration[], history: readonly ExerciseInstance[]) => ExerciseRegistration | undefined
 }
 
 // Bundle some dependencies that are needed for exercise session set-up.

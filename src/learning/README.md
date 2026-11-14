@@ -20,7 +20,7 @@ General document formatting, notices, loading screens, and theme utilities live 
 
 ## Character speech
 
-`story` provides `SpeechBox` and a central `characters` registry with names and placeholder portraits for Anna, Bob, and Carl. Character IDs are inferred from the registry. Import them through `@/learning`.
+`story` provides `SpeechBox` and a central `characters` registry, including the HeriShare cast. Portraits remain reused placeholders. Character IDs are inferred from the registry. Import them through `@/learning`.
 
 ```tsx
 <SpeechBox person="anna">
@@ -35,6 +35,8 @@ General document formatting, notices, loading screens, and theme utilities live 
 The portrait defaults to the left. Children can contain multiple paragraphs or other React content. The component can be used in exercise prompts, payoffs, or module stories; the exercise decides when to display it.
 
 `Conversation` takes `opening` and `conclusion` components and a `completed` boolean: `<Conversation opening={Opening} conclusion={Conclusion} completed={completed} />`. The opening is always visible; completion reveals the conclusion below a divider, replacing a fixed unlock message. It has no routing or progress dependencies. Story components receive `completed` through `StoryProps`, supplied by navigation's `ModuleStory` wrapper.
+
+`PlaceholderDialogue` adds visible Purpose and Goal notes to editable temporary speech. `StoryProps.part` optionally requests only the opening or conclusion, allowing navigation to place shared story blocks around practice. Curriculum-owned story components decide which conclusion their local completion permits. `InteractivePractice` forwards an optional `selectNextExercise` callback to the exercise manager without importing curriculum policy.
 
 
 ## Supplying module content

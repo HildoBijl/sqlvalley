@@ -1,0 +1,1981 @@
+{
+	"employees": {
+		"columns": [
+			"e_id",
+			"first_name",
+			"last_name",
+			"phone",
+			"email",
+			"address",
+			"city",
+			"hire_date",
+			"current_salary"
+		],
+		"rows": [
+			[
+				"23062301",
+				"Caesar",
+				"Vallelonga",
+				"408-326-6006",
+				"c.vallelonga@herishare.com",
+				"1253 Franklin St, Apt 19",
+				"Santa Clara, CA",
+				"2023-06-23",
+				"250000"
+			],
+			[
+				"23062302",
+				"Bob",
+				"Andrews",
+				"650-593-5442",
+				"b.andrews@herishare.com",
+				"2461 Villa St",
+				"Mountain View, CA",
+				"2023-06-23",
+				"195000"
+			],
+			[
+				"23070303",
+				"Paris",
+				"Morgan",
+				"650-863-6039",
+				"p.morgan@herishare.com",
+				"1632 Park Blvd",
+				"Palo Alto, CA",
+				"2023-07-03",
+				"220000"
+			],
+			[
+				"60706330",
+				"Evelyn",
+				"Hart",
+				"408-857-3575",
+				"e.hart@herishare.com",
+				"408 The Alameda, Unit 4",
+				"San Jose, CA",
+				"2023-09-01",
+				"180000"
+			],
+			[
+				"63336966",
+				"Marcus",
+				"Lee",
+				"669-807-4420",
+				"m.lee@herishare.com",
+				"168 W Washington Ave",
+				"Sunnyvale, CA",
+				"2023-09-05",
+				"155000"
+			],
+			[
+				"64166280",
+				"Sofia",
+				"Ramirez",
+				"628-744-8564",
+				"s.ramirez@herishare.com",
+				"113 Mission St, Unit 2",
+				"San Francisco, CA",
+				"2023-09-11",
+				"175000"
+			],
+			[
+				"47132966",
+				"Priya",
+				"Desai",
+				"510-748-3023",
+				"p.desai@herishare.com",
+				"2077 Mission Blvd, Apt 13",
+				"Fremont, CA",
+				"2023-09-15",
+				"108000"
+			],
+			[
+				"72738553",
+				"Noah",
+				"Chen",
+				"408-216-2407",
+				"n.chen@herishare.com",
+				"1700 N 3rd St, Unit 18",
+				"San Jose, CA",
+				"2023-10-06",
+				"165000"
+			],
+			[
+				"69733054",
+				"Aisha",
+				"Patel",
+				"650-694-3326",
+				"a.patel@herishare.com",
+				"2366 High St",
+				"Palo Alto, CA",
+				"2023-10-20",
+				"160000"
+			],
+			[
+				"26887263",
+				"Owen",
+				"Brooks",
+				"408-332-7524",
+				"o.brooks@herishare.com",
+				"1420 Benton St, Apt 3",
+				"Santa Clara, CA",
+				"2023-10-30",
+				"190000"
+			],
+			[
+				"59497116",
+				"Rebecca",
+				"Stone",
+				"650-236-6124",
+				"r.stone@herishare.com",
+				"761 Park Blvd",
+				"Palo Alto, CA",
+				"2023-12-06",
+				"225000"
+			],
+			[
+				"23121126",
+				"Elvis",
+				"Romero",
+				"669-725-8217",
+				"e.romero@herishare.com",
+				"1873 The Alameda",
+				"San Jose, CA",
+				"2023-12-11",
+				"205000"
+			],
+			[
+				"75941901",
+				"Hana",
+				"Ito",
+				"669-313-4781",
+				"h.ito@herishare.com",
+				"1202 Orchard City Dr",
+				"Campbell, CA",
+				"2023-12-13",
+				"120000"
+			],
+			[
+				"11194139",
+				"Rachel",
+				"Walker",
+				"408-481-9373",
+				"r.walker@herishare.com",
+				"618 Campbell Ave",
+				"Campbell, CA",
+				"2023-12-15",
+				"125000"
+			],
+			[
+				"32845340",
+				"Natalie",
+				"Price",
+				"415-335-8047",
+				"n.price@herishare.com",
+				"2286 California St, Apt 31",
+				"San Francisco, CA",
+				"2024-01-17",
+				"145000"
+			],
+			[
+				"11614912",
+				"Daniel",
+				"Nguyen",
+				"510-432-5602",
+				"d.nguyen@herishare.com",
+				"215 Walnut Ave",
+				"Fremont, CA",
+				"2024-02-20",
+				"138000"
+			],
+			[
+				"35242525",
+				"Nadia",
+				"Hassan",
+				"341-473-1650",
+				"n.hassan@herishare.com",
+				"885 Lakeshore Ave",
+				"Oakland, CA",
+				"2024-03-04",
+				"185000"
+			],
+			[
+				"77404927",
+				"Amelia",
+				"Scott",
+				"650-735-4208",
+				"a.scott@herishare.com",
+				"1416 3rd Ave",
+				"San Mateo, CA",
+				"2024-04-10",
+				"155000"
+			],
+			[
+				"16498618",
+				"Carmen",
+				"Diaz",
+				"408-627-5333",
+				"c.diaz@herishare.com",
+				"2295 Bernardo Ave",
+				"Sunnyvale, CA",
+				"2024-04-26",
+				"185000"
+			],
+			[
+				"87292197",
+				"Selene",
+				"Parker",
+				"408-650-6160",
+				"s.parker@herishare.com",
+				"2182 Bernardo Ave, Unit 2",
+				"Sunnyvale, CA",
+				"2024-05-09",
+				"125000"
+			],
+			[
+				"24090361",
+				"Marcelle",
+				"Johnson",
+				"415-732-2514",
+				"m.johnson@herishare.com",
+				"926 California St, Apt 26",
+				"San Francisco, CA",
+				"2024-09-03",
+				"215000"
+			],
+			[
+				"14338498",
+				"Graham",
+				"Cole",
+				"650-233-4290",
+				"g.cole@herishare.com",
+				"1535 Middlefield Rd",
+				"Palo Alto, CA",
+				"2024-09-09",
+				"245000"
+			],
+			[
+				"72880343",
+				"Helena",
+				"Avery",
+				"332-782-6814",
+				"h.avery@herishare.com",
+				"1692 Lexington Ave",
+				"New York, NY",
+				"2024-09-16",
+				"195000"
+			],
+			[
+				"96187039",
+				"Omar",
+				"Davis",
+				"650-636-1775",
+				"o.davis@herishare.com",
+				"141 Emerson St, Apt 18",
+				"Palo Alto, CA",
+				"2024-09-20",
+				"118000"
+			],
+			[
+				"12742361",
+				"Xavier",
+				"Carter",
+				"669-432-9715",
+				"x.carter@herishare.com",
+				"780 S Market St, Apt 24",
+				"San Jose, CA",
+				"2024-12-02",
+				"148000"
+			]
+		]
+	},
+	"contracts": {
+		"columns": [
+			"e_id",
+			"position",
+			"salary",
+			"start_date",
+			"end_date",
+			"perf_score",
+			"status"
+		],
+		"rows": [
+			[
+				"11194139",
+				"Client Services Manager",
+				"115000",
+				"2023-12-15",
+				"2024-03-13",
+				null,
+				"PROBATION"
+			],
+			[
+				"11194139",
+				"Client Services Manager",
+				"120000",
+				"2024-03-14",
+				"2024-06-23",
+				"85",
+				"ACTIVE"
+			],
+			[
+				"11194139",
+				"Client Services Manager",
+				"120000",
+				"2024-03-25",
+				"2024-03-29",
+				null,
+				"PTO"
+			],
+			[
+				"11194139",
+				"Client Services Manager",
+				"120000",
+				"2024-06-17",
+				"2024-06-21",
+				null,
+				"SICK_LEAVE"
+			],
+			[
+				"11194139",
+				"Client Services Manager",
+				"114000",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"11194139",
+				"Client Services Manager",
+				"120000",
+				"2024-08-25",
+				"2024-12-14",
+				null,
+				"ACTIVE"
+			],
+			[
+				"11194139",
+				"Director of Client Services",
+				"125000",
+				"2024-12-15",
+				null,
+				"88",
+				"ACTIVE"
+			],
+			[
+				"11614912",
+				"Business Systems Analyst",
+				"138000",
+				"2024-02-20",
+				"2024-05-19",
+				null,
+				"PROBATION"
+			],
+			[
+				"11614912",
+				"Business Systems Analyst",
+				"138000",
+				"2024-05-20",
+				"2025-02-19",
+				"82",
+				"ACTIVE"
+			],
+			[
+				"11614912",
+				"Business Systems Analyst",
+				"138000",
+				"2024-10-14",
+				"2024-10-18",
+				null,
+				"SICK_LEAVE"
+			],
+			[
+				"11614912",
+				"Business Systems Analyst",
+				"138000",
+				"2025-02-20",
+				null,
+				"75",
+				"ACTIVE"
+			],
+			[
+				"12742361",
+				"Auction House Account Manager",
+				"142000",
+				"2024-12-02",
+				"2025-03-01",
+				null,
+				"PROBATION"
+			],
+			[
+				"12742361",
+				"Auction House Account Manager",
+				"148000",
+				"2025-03-02",
+				null,
+				"87",
+				"ACTIVE"
+			],
+			[
+				"14338498",
+				"Chief Technology Officer",
+				"235000",
+				"2024-09-09",
+				"2024-12-07",
+				null,
+				"ACTIVE"
+			],
+			[
+				"14338498",
+				"Chief Technology Officer",
+				"245000",
+				"2024-12-08",
+				null,
+				"88",
+				"ACTIVE"
+			],
+			[
+				"16498618",
+				"Transactions Counsel",
+				"185000",
+				"2024-04-26",
+				"2024-07-24",
+				null,
+				"PROBATION"
+			],
+			[
+				"16498618",
+				"Transactions Counsel",
+				"185000",
+				"2024-07-25",
+				"2025-04-25",
+				"83",
+				"ACTIVE"
+			],
+			[
+				"16498618",
+				"Transactions Counsel",
+				"185000",
+				"2025-04-26",
+				null,
+				"83",
+				"ACTIVE"
+			],
+			[
+				"23062301",
+				"Founder and Chief Executive Officer",
+				"150000",
+				"2023-06-23",
+				"2023-11-18",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062301",
+				"Founder and Chief Executive Officer",
+				"180000",
+				"2023-11-19",
+				"2024-06-23",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062301",
+				"Founder and Chief Executive Officer",
+				"153000",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062301",
+				"Founder and Chief Executive Officer",
+				"225000",
+				"2024-08-25",
+				"2024-12-31",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062301",
+				"Founder and Chief Executive Officer",
+				"250000",
+				"2025-01-01",
+				null,
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062302",
+				"Founder and Chief Technology Officer",
+				"145000",
+				"2023-06-23",
+				"2023-11-18",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062302",
+				"Founder and Chief Technology Officer",
+				"170000",
+				"2023-11-19",
+				"2024-06-23",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062302",
+				"Founder and Chief Technology Officer",
+				"144500",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062302",
+				"Founder and Principal Systems Architect",
+				"150000",
+				"2024-08-25",
+				"2025-02-28",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23062302",
+				"Founder and Principal Systems Architect",
+				"195000",
+				"2025-03-01",
+				null,
+				null,
+				"ACTIVE"
+			],
+			[
+				"23070303",
+				"Customer Support and Community Associate",
+				"78000",
+				"2023-07-03",
+				"2023-09-30",
+				null,
+				"PROBATION"
+			],
+			[
+				"23070303",
+				"Customer Support and Community Associate",
+				"78000",
+				"2023-09-18",
+				"2023-09-20",
+				null,
+				"PTO"
+			],
+			[
+				"23070303",
+				"Customer Support and Community Associate",
+				"82000",
+				"2023-10-01",
+				"2023-11-18",
+				"94",
+				"ACTIVE"
+			],
+			[
+				"23070303",
+				"Community Operations Manager",
+				"110000",
+				"2023-11-19",
+				"2024-01-31",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23070303",
+				"Chief of Staff and Director of Corporate Affairs",
+				"165000",
+				"2024-02-01",
+				"2024-06-23",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23070303",
+				"Chief of Staff and Director of Corporate Affairs",
+				"140250",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23070303",
+				"Chief Strategy and Corporate Affairs Officer",
+				"200000",
+				"2024-08-25",
+				"2024-12-31",
+				"96",
+				"ACTIVE"
+			],
+			[
+				"23070303",
+				"Chief Strategy and Corporate Affairs Officer",
+				"220000",
+				"2025-01-01",
+				null,
+				null,
+				"ACTIVE"
+			],
+			[
+				"23121126",
+				"Finance Operations Manager",
+				"135000",
+				"2023-12-11",
+				"2024-03-09",
+				null,
+				"PROBATION"
+			],
+			[
+				"23121126",
+				"Senior Finance Operations Manager",
+				"150000",
+				"2024-03-10",
+				"2024-06-23",
+				"87",
+				"ACTIVE"
+			],
+			[
+				"23121126",
+				"Acting CFO and Head of Finance Operations",
+				"166500",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23121126",
+				"Acting CFO and Head of Finance Operations",
+				"185000",
+				"2024-08-25",
+				"2024-12-10",
+				null,
+				"ACTIVE"
+			],
+			[
+				"23121126",
+				"Acting CFO and Head of Finance Operations",
+				"205000",
+				"2024-12-11",
+				null,
+				"93",
+				"ACTIVE"
+			],
+			[
+				"24090361",
+				"Chief Data and Systems Transformation Officer",
+				"215000",
+				"2024-09-03",
+				"2024-12-01",
+				null,
+				"ACTIVE"
+			],
+			[
+				"24090361",
+				"Chief Data and Systems Transformation Officer",
+				"215000",
+				"2024-12-02",
+				null,
+				"96",
+				"ACTIVE"
+			],
+			[
+				"24090361",
+				"Chief Data and Systems Transformation Officer",
+				"215000",
+				"2025-01-27",
+				"2025-01-31",
+				null,
+				"PTO"
+			],
+			[
+				"24090361",
+				"Chief Data and Systems Transformation Officer",
+				"215000",
+				"2025-04-14",
+				null,
+				null,
+				"SABBATICAL"
+			],
+			[
+				"26887263",
+				"Infrastructure and Security Manager",
+				"175000",
+				"2023-10-30",
+				"2023-11-18",
+				null,
+				"PROBATION"
+			],
+			[
+				"26887263",
+				"Infrastructure and Security Manager",
+				"180000",
+				"2023-11-19",
+				"2024-01-27",
+				null,
+				"PROBATION"
+			],
+			[
+				"26887263",
+				"Infrastructure and Security Manager",
+				"184000",
+				"2024-01-28",
+				"2024-06-23",
+				"91",
+				"ACTIVE"
+			],
+			[
+				"26887263",
+				"Infrastructure and Security Manager",
+				"165600",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"26887263",
+				"Infrastructure and Security Manager",
+				"184000",
+				"2024-08-25",
+				"2024-10-29",
+				null,
+				"ACTIVE"
+			],
+			[
+				"26887263",
+				"Infrastructure and Security Manager",
+				"190000",
+				"2024-10-30",
+				null,
+				"90",
+				"ACTIVE"
+			],
+			[
+				"26887263",
+				"Infrastructure and Security Manager",
+				"190000",
+				"2024-12-09",
+				"2024-12-13",
+				null,
+				"SICK_LEAVE"
+			],
+			[
+				"32845340",
+				"Communications Lead",
+				"135000",
+				"2024-01-17",
+				"2024-04-15",
+				null,
+				"PROBATION"
+			],
+			[
+				"32845340",
+				"Communications Lead",
+				"140000",
+				"2024-04-16",
+				"2024-06-23",
+				"88",
+				"ACTIVE"
+			],
+			[
+				"32845340",
+				"Communications Lead",
+				"133000",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"32845340",
+				"Communications Lead",
+				"140000",
+				"2024-08-25",
+				"2024-09-01",
+				null,
+				"ACTIVE"
+			],
+			[
+				"32845340",
+				"Communications Manager",
+				"140000",
+				"2024-09-02",
+				"2025-01-16",
+				null,
+				"ACTIVE"
+			],
+			[
+				"32845340",
+				"Director of Communications",
+				"145000",
+				"2025-01-17",
+				null,
+				"87",
+				"ACTIVE"
+			],
+			[
+				"35242525",
+				"Compliance Manager",
+				"165000",
+				"2024-03-04",
+				"2024-06-01",
+				null,
+				"PROBATION"
+			],
+			[
+				"35242525",
+				"Compliance Manager",
+				"165000",
+				"2024-06-02",
+				"2024-06-23",
+				"90",
+				"ACTIVE"
+			],
+			[
+				"35242525",
+				"Compliance Manager",
+				"148500",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"35242525",
+				"Compliance Manager",
+				"165000",
+				"2024-08-25",
+				"2024-09-01",
+				null,
+				"ACTIVE"
+			],
+			[
+				"35242525",
+				"Head of Compliance",
+				"175000",
+				"2024-09-02",
+				"2025-03-03",
+				null,
+				"ACTIVE"
+			],
+			[
+				"35242525",
+				"Head of Compliance",
+				"185000",
+				"2025-03-04",
+				null,
+				"92",
+				"ACTIVE"
+			],
+			[
+				"47132966",
+				"Provenance Specialist",
+				"105000",
+				"2023-09-15",
+				"2023-12-13",
+				null,
+				"PROBATION"
+			],
+			[
+				"47132966",
+				"Provenance Specialist",
+				"105000",
+				"2023-12-11",
+				"2023-12-15",
+				null,
+				"PTO"
+			],
+			[
+				"47132966",
+				"Provenance Specialist",
+				"105000",
+				"2023-12-14",
+				"2024-09-01",
+				"75",
+				"ACTIVE"
+			],
+			[
+				"47132966",
+				"Provenance Specialist",
+				"105000",
+				"2024-04-08",
+				"2024-04-12",
+				null,
+				"PTO"
+			],
+			[
+				"47132966",
+				"Senior Provenance Specialist",
+				"108000",
+				"2024-09-02",
+				"2024-09-14",
+				null,
+				"ACTIVE"
+			],
+			[
+				"47132966",
+				"Senior Provenance Specialist",
+				"108000",
+				"2024-09-15",
+				null,
+				"75",
+				"ACTIVE"
+			],
+			[
+				"59497116",
+				"General Counsel",
+				"210000",
+				"2023-12-06",
+				"2024-03-04",
+				null,
+				"PROBATION"
+			],
+			[
+				"59497116",
+				"General Counsel",
+				"215000",
+				"2024-03-05",
+				"2024-06-23",
+				"90",
+				"ACTIVE"
+			],
+			[
+				"59497116",
+				"General Counsel",
+				"193500",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"59497116",
+				"General Counsel",
+				"215000",
+				"2024-08-25",
+				"2024-12-05",
+				null,
+				"ACTIVE"
+			],
+			[
+				"59497116",
+				"General Counsel",
+				"225000",
+				"2024-12-06",
+				null,
+				"92",
+				"ACTIVE"
+			],
+			[
+				"60706330",
+				"Head of Asset Operations",
+				"160000",
+				"2023-09-01",
+				"2023-11-18",
+				null,
+				"PROBATION"
+			],
+			[
+				"60706330",
+				"Head of Asset Operations",
+				"165000",
+				"2023-11-19",
+				"2023-11-29",
+				null,
+				"PROBATION"
+			],
+			[
+				"60706330",
+				"Head of Asset Operations",
+				"172000",
+				"2023-11-30",
+				"2024-06-23",
+				"92",
+				"ACTIVE"
+			],
+			[
+				"60706330",
+				"Head of Asset Operations",
+				"154800",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"60706330",
+				"Head of Asset Operations",
+				"172000",
+				"2024-08-25",
+				"2024-08-31",
+				null,
+				"ACTIVE"
+			],
+			[
+				"60706330",
+				"Head of Asset Operations",
+				"180000",
+				"2024-09-01",
+				null,
+				"93",
+				"ACTIVE"
+			],
+			[
+				"63336966",
+				"Logistics Manager",
+				"145000",
+				"2023-09-05",
+				"2023-11-18",
+				null,
+				"PROBATION"
+			],
+			[
+				"63336966",
+				"Logistics Manager",
+				"150000",
+				"2023-11-19",
+				"2023-12-03",
+				null,
+				"PROBATION"
+			],
+			[
+				"63336966",
+				"Logistics Manager",
+				"152000",
+				"2023-12-04",
+				"2024-06-23",
+				"84",
+				"ACTIVE"
+			],
+			[
+				"63336966",
+				"Logistics Manager",
+				"144400",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"63336966",
+				"Logistics Manager",
+				"144400",
+				"2024-07-15",
+				"2024-07-19",
+				null,
+				"PTO"
+			],
+			[
+				"63336966",
+				"Logistics Manager",
+				"152000",
+				"2024-08-25",
+				"2024-09-01",
+				null,
+				"ACTIVE"
+			],
+			[
+				"63336966",
+				"Logistics and Custody Manager",
+				"152000",
+				"2024-09-02",
+				"2024-09-04",
+				null,
+				"ACTIVE"
+			],
+			[
+				"63336966",
+				"Logistics and Custody Manager",
+				"155000",
+				"2024-09-05",
+				null,
+				"85",
+				"ACTIVE"
+			],
+			[
+				"64166280",
+				"Partnerships Director",
+				"155000",
+				"2023-09-11",
+				"2023-11-18",
+				null,
+				"PROBATION"
+			],
+			[
+				"64166280",
+				"Partnerships Director",
+				"160000",
+				"2023-11-19",
+				"2023-12-09",
+				null,
+				"PROBATION"
+			],
+			[
+				"64166280",
+				"Partnerships Director",
+				"168000",
+				"2023-12-10",
+				"2024-06-23",
+				"93",
+				"ACTIVE"
+			],
+			[
+				"64166280",
+				"Partnerships Director",
+				"151200",
+				"2024-06-24",
+				"2024-08-24",
+				null,
+				"ACTIVE"
+			],
+			[
+				"64166280",
+				"Partnerships Director",
+				"168000",
+				"2024-08-25",
+				"2024-09-01",
+				null,
+				"ACTIVE"
+			],
+			[
+				"64166280",
+				"Head of Seller Partnerships",
+				"168000",
+				"2024-09-02",
+				"2024-09-10",
+				null,
+				"ACTIVE"
+			],
+			[
+				"64166280",
+				"Head of Seller Partnerships",
+				"175000",
+				"2024-09-11",
+				null,
+				"92",
+				"ACTIVE"
+			],
+			[
+				"64166280",
+				"Head of Seller Partnerships",
+				"175000",
+				"2024-09-16",
+				"2024-09-20",
+				null,
+				"PTO"
+			],
+			[
+				"69733054",
+				"Data Engineer",
+				"150000",
+				"2023-10-20",
+				"2024-01-17",
+				null,
+				"PROBATION"
+			],
+			[
+				"69733054",
+				"Data Engineer",
+				"155000",
+				"2024-01-18",
+				"2024-10-19",
+				"86",
+				"ACTIVE"
+			],
+			[
+				"69733054",
+				"Data Engineer",
+				"155000",
+				"2024-04-22",
+				"2024-04-26",
+				null,
+				"SICK_LEAVE"
+			],
+			[
+				"69733054",
+				"Senior Data Engineer",
+				"160000",
+				"2024-10-20",
+				null,
+				"85",
+				"ACTIVE"
+			],
+			[
+				"72738553",
+				"Backend Engineer",
+				"155000",
+				"2023-10-06",
+				"2024-01-03",
+				null,
+				"PROBATION"
+			],
+			[
+				"72738553",
+				"Backend Engineer",
+				"160000",
+				"2024-01-04",
+				"2024-10-05",
+				"84",
+				"ACTIVE"
+			],
+			[
+				"72738553",
+				"Backend Engineer",
+				"160000",
+				"2024-01-22",
+				"2024-01-26",
+				null,
+				"SICK_LEAVE"
+			],
+			[
+				"72738553",
+				"Senior Backend Engineer",
+				"165000",
+				"2024-10-06",
+				null,
+				"86",
+				"ACTIVE"
+			],
+			[
+				"72880343",
+				"Director of Private Sales",
+				"185000",
+				"2024-09-16",
+				"2024-12-14",
+				null,
+				"PROBATION"
+			],
+			[
+				"72880343",
+				"Director of Private Sales",
+				"195000",
+				"2024-12-15",
+				null,
+				"93",
+				"ACTIVE"
+			],
+			[
+				"75941901",
+				"Compliance Analyst",
+				"115000",
+				"2023-12-13",
+				"2024-03-11",
+				null,
+				"PROBATION"
+			],
+			[
+				"75941901",
+				"Compliance Analyst",
+				"120000",
+				"2024-03-12",
+				"2024-06-23",
+				"82",
+				"ACTIVE"
+			],
+			[
+				"75941901",
+				"AML and KYC Analyst",
+				"120000",
+				"2024-06-24",
+				"2024-12-12",
+				null,
+				"ACTIVE"
+			],
+			[
+				"75941901",
+				"AML and KYC Analyst",
+				"120000",
+				"2024-12-13",
+				null,
+				"77",
+				"ACTIVE"
+			],
+			[
+				"75941901",
+				"AML and KYC Analyst",
+				"120000",
+				"2025-01-13",
+				"2025-01-17",
+				null,
+				"SICK_LEAVE"
+			],
+			[
+				"77404927",
+				"Client Relations Manager",
+				"145000",
+				"2024-04-10",
+				"2024-07-08",
+				null,
+				"PROBATION"
+			],
+			[
+				"77404927",
+				"Client Relations Manager",
+				"145000",
+				"2024-07-09",
+				"2024-09-01",
+				"84",
+				"ACTIVE"
+			],
+			[
+				"77404927",
+				"Buyer Relations Manager",
+				"145000",
+				"2024-09-02",
+				"2025-04-09",
+				null,
+				"ACTIVE"
+			],
+			[
+				"77404927",
+				"Buyer Relations Manager",
+				"155000",
+				"2025-04-10",
+				null,
+				"89",
+				"ACTIVE"
+			],
+			[
+				"87292197",
+				"Client Escalations Specialist",
+				"115000",
+				"2024-05-09",
+				"2024-06-23",
+				null,
+				"PROBATION"
+			],
+			[
+				"87292197",
+				"Trust and Safety Investigator",
+				"115000",
+				"2024-06-24",
+				"2024-08-06",
+				null,
+				"ACTIVE"
+			],
+			[
+				"87292197",
+				"Client Escalations Specialist",
+				"115000",
+				"2024-08-07",
+				"2024-09-01",
+				"88",
+				"ACTIVE"
+			],
+			[
+				"87292197",
+				"Trust and Safety Investigator",
+				"120000",
+				"2024-09-02",
+				"2024-12-31",
+				null,
+				"ACTIVE"
+			],
+			[
+				"87292197",
+				"Trust and Safety Investigator",
+				"125000",
+				"2025-01-01",
+				null,
+				null,
+				"ACTIVE"
+			],
+			[
+				"96187039",
+				"Transaction Operations Specialist",
+				"112000",
+				"2024-09-20",
+				"2024-12-18",
+				null,
+				"PROBATION"
+			],
+			[
+				"96187039",
+				"Transaction Operations Specialist",
+				"118000",
+				"2024-12-19",
+				null,
+				"84",
+				"ACTIVE"
+			]
+		]
+	},
+	"allocations": {
+		"columns": [
+			"e_id",
+			"d_id"
+		],
+		"rows": [
+			[
+				"11194139",
+				"7000"
+			],
+			[
+				"11194139",
+				"7100"
+			],
+			[
+				"11194139",
+				"7200"
+			],
+			[
+				"11614912",
+				"2000"
+			],
+			[
+				"11614912",
+				"2200"
+			],
+			[
+				"12742361",
+				"3000"
+			],
+			[
+				"12742361",
+				"3100"
+			],
+			[
+				"14338498",
+				"2000"
+			],
+			[
+				"14338498",
+				"2100"
+			],
+			[
+				"16498618",
+				"5000"
+			],
+			[
+				"16498618",
+				"5100"
+			],
+			[
+				"23062301",
+				"1000"
+			],
+			[
+				"23062301",
+				"1100"
+			],
+			[
+				"23062301",
+				"3000"
+			],
+			[
+				"23062301",
+				"3100"
+			],
+			[
+				"23062302",
+				"2000"
+			],
+			[
+				"23062302",
+				"2100"
+			],
+			[
+				"23062302",
+				"2200"
+			],
+			[
+				"23070303",
+				"1000"
+			],
+			[
+				"23070303",
+				"1200"
+			],
+			[
+				"23070303",
+				"7000"
+			],
+			[
+				"23070303",
+				"7200"
+			],
+			[
+				"23121126",
+				"6000"
+			],
+			[
+				"23121126",
+				"6100"
+			],
+			[
+				"23121126",
+				"6110"
+			],
+			[
+				"23121126",
+				"6120"
+			],
+			[
+				"24090361",
+				"1000"
+			],
+			[
+				"24090361",
+				"1200"
+			],
+			[
+				"24090361",
+				"2000"
+			],
+			[
+				"24090361",
+				"2100"
+			],
+			[
+				"24090361",
+				"2200"
+			],
+			[
+				"26887263",
+				"2000"
+			],
+			[
+				"26887263",
+				"2100"
+			],
+			[
+				"26887263",
+				"2120"
+			],
+			[
+				"26887263",
+				"2300"
+			],
+			[
+				"32845340",
+				"7000"
+			],
+			[
+				"32845340",
+				"7200"
+			],
+			[
+				"35242525",
+				"5000"
+			],
+			[
+				"35242525",
+				"5100"
+			],
+			[
+				"35242525",
+				"5200"
+			],
+			[
+				"47132966",
+				"4000"
+			],
+			[
+				"47132966",
+				"4100"
+			],
+			[
+				"47132966",
+				"4110"
+			],
+			[
+				"59497116",
+				"5000"
+			],
+			[
+				"59497116",
+				"5100"
+			],
+			[
+				"59497116",
+				"5200"
+			],
+			[
+				"60706330",
+				"4000"
+			],
+			[
+				"60706330",
+				"4100"
+			],
+			[
+				"60706330",
+				"4200"
+			],
+			[
+				"63336966",
+				"3000"
+			],
+			[
+				"63336966",
+				"3100"
+			],
+			[
+				"63336966",
+				"4000"
+			],
+			[
+				"63336966",
+				"4200"
+			],
+			[
+				"64166280",
+				"3000"
+			],
+			[
+				"64166280",
+				"3100"
+			],
+			[
+				"64166280",
+				"3200"
+			],
+			[
+				"69733054",
+				"2000"
+			],
+			[
+				"69733054",
+				"2100"
+			],
+			[
+				"69733054",
+				"2120"
+			],
+			[
+				"69733054",
+				"2200"
+			],
+			[
+				"72738553",
+				"2000"
+			],
+			[
+				"72738553",
+				"2100"
+			],
+			[
+				"72738553",
+				"2120"
+			],
+			[
+				"72738553",
+				"2200"
+			],
+			[
+				"72880343",
+				"3000"
+			],
+			[
+				"72880343",
+				"3200"
+			],
+			[
+				"75941901",
+				"5000"
+			],
+			[
+				"75941901",
+				"5200"
+			],
+			[
+				"77404927",
+				"3000"
+			],
+			[
+				"77404927",
+				"3200"
+			],
+			[
+				"87292197",
+				"5000"
+			],
+			[
+				"87292197",
+				"5200"
+			],
+			[
+				"87292197",
+				"7000"
+			],
+			[
+				"87292197",
+				"7100"
+			],
+			[
+				"96187039",
+				"6000"
+			],
+			[
+				"96187039",
+				"6100"
+			],
+			[
+				"96187039",
+				"6120"
+			]
+		]
+	},
+	"departments": {
+		"columns": [
+			"d_id",
+			"d_name",
+			"manager_id",
+			"budget",
+			"nr_employees"
+		],
+		"rows": [
+			[
+				"1000",
+				"Executive Leadership",
+				"23070303",
+				"1450000",
+				"6"
+			],
+			[
+				"1100",
+				"Executive Office",
+				"23070303",
+				"850000",
+				"3"
+			],
+			[
+				"1200",
+				"Strategy & Corporate Affairs",
+				"23070303",
+				"600000",
+				"3"
+			],
+			[
+				"2000",
+				"Technology",
+				"14338498",
+				"5100000",
+				"18"
+			],
+			[
+				"2100",
+				"Product & Engineering",
+				"14338498",
+				"3100000",
+				"15"
+			],
+			[
+				"2120",
+				"Software Engineering",
+				"14338498",
+				"0",
+				"11"
+			],
+			[
+				"2200",
+				"Data & Business Systems",
+				"24090361",
+				"1100000",
+				"8"
+			],
+			[
+				"2300",
+				"IT & Security",
+				"26887263",
+				"900000",
+				"3"
+			],
+			[
+				"3000",
+				"Sales & Partnerships",
+				"64166280",
+				"2750000",
+				"14"
+			],
+			[
+				"3100",
+				"Seller Partnerships",
+				"64166280",
+				"1200000",
+				"7"
+			],
+			[
+				"3200",
+				"Private Sales",
+				"72880343",
+				"1550000",
+				"8"
+			],
+			[
+				"4000",
+				"Art Operations",
+				"60706330",
+				"2100000",
+				"9"
+			],
+			[
+				"4100",
+				"Art Research & Due Diligence",
+				"60706330",
+				"1050000",
+				"5"
+			],
+			[
+				"4110",
+				"Provenance & Cataloguing",
+				"60706330",
+				"0",
+				"3"
+			],
+			[
+				"4200",
+				"Logistics & Collections",
+				"63336966",
+				"1050000",
+				"5"
+			],
+			[
+				"5000",
+				"Legal & Risk",
+				"59497116",
+				"2150000",
+				"7"
+			],
+			[
+				"5100",
+				"Legal",
+				"59497116",
+				"1150000",
+				"4"
+			],
+			[
+				"5200",
+				"Compliance & Investigations",
+				"35242525",
+				"1000000",
+				"5"
+			],
+			[
+				"6000",
+				"Finance & Corporate Services",
+				"23121126",
+				"1700000",
+				"9"
+			],
+			[
+				"6100",
+				"Finance & Deal Operations",
+				"23121126",
+				"1100000",
+				"6"
+			],
+			[
+				"6110",
+				"Accounting & Treasury",
+				"23121126",
+				"0",
+				"3"
+			],
+			[
+				"6120",
+				"Transaction Operations",
+				"23121126",
+				"0",
+				"4"
+			],
+			[
+				"7000",
+				"Client Experience & Communications",
+				"11194139",
+				"950000",
+				"8"
+			],
+			[
+				"7100",
+				"Client Services",
+				"11194139",
+				"600000",
+				"5"
+			],
+			[
+				"7200",
+				"Communications",
+				"32845340",
+				"350000",
+				"4"
+			]
+		]
+	},
+	"quarterly_performance": {
+		"columns": [
+			"quarter",
+			"fiscal_year",
+			"category",
+			"revenue",
+			"operating_expenses",
+			"total_transactions",
+			"updated_at"
+		],
+		"rows": [
+			[
+				"Q4",
+				"2024",
+				"CERAMIC",
+				"91040.00",
+				"63359.39",
+				"10",
+				"2025-01-11 11:24:00"
+			],
+			[
+				"Q4",
+				"2024",
+				"PAINTING",
+				"816958.50",
+				"300512.42",
+				"60",
+				"2025-01-15 16:31:00"
+			],
+			[
+				"Q4",
+				"2024",
+				"SPORTS_MEMORABILIA",
+				"752206.50",
+				"150035.57",
+				"32",
+				"2025-01-11 11:52:00"
+			],
+			[
+				"Q1",
+				"2025",
+				"CERAMIC",
+				"183458.00",
+				"119654.13",
+				"26",
+				"2025-04-13 15:44:00"
+			],
+			[
+				"Q1",
+				"2025",
+				"PAINTING",
+				"1084054.00",
+				"407078.79",
+				"92",
+				"2025-04-13 13:31:00"
+			],
+			[
+				"Q1",
+				"2025",
+				"SPORTS_MEMORABILIA",
+				"1171735.50",
+				"251609.88",
+				"67",
+				"2025-04-08 10:37:00"
+			]
+		]
+	}
+}
