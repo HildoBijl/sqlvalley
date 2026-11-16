@@ -22,10 +22,10 @@ export function Theory() {
 			<DL>managerId(id) :- department(_, _, id, _, _).</DL>
 			Once we have this, we can find the IDs of all non-manager employees through
 			<DLQueryFigure query={<>nonManagerId(id) :- employee(id, _, _, _, _, _, _, _, _), not managerId(id).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
-			<Par>If we really want to be clean, we could instead also defined another supporting predicate, and then apply that one as well.</Par>
+			<Par>If we really want to be clean, we could also defined another supporting predicate, and then apply that one as well.</Par>
 			<DLQueryFigure query={<>employeeId(id) :- employee(id, _, _, _, _, _, _, _, _).<br />nonManagerId(id) :- employeeId(id), not managerId(id).</>} actualQuery="SELECT DISTINCT e_id FROM employees EXCEPT SELECT manager_id AS e_id FROM departments" tableWidth={150} />
 			<Par>Both methods are fine and come down to the exact same idea.</Par>
-			<Par>Setting up negation through an intermediate predicate like this is a very useful way of keeping scripts clean and easy to follow. They also allow for <Term>reusability</Term>: if we need the predicate <IDL>managerId</IDL> anywhere else in our program, we can again use it. The downside is that it does define a lot of predicates. That's not really a big problem, but if you really want to let your script have as few lines as possible, you can also try the second method of getting rid of unbound variables.</Par>
+			<Par>Setting up negation through an intermediate predicate like this is a very useful way of keeping scripts clean and easy to follow. They also allow for <Term>reusability</Term>: if we need the predicate <IDL>managerId</IDL> anywhere else in our program, we can use it again. The downside is that it does define a lot of predicates. That's not really a big problem, but if you really want to let your script have as few lines as possible, you can also try the second method of getting rid of unbound variables.</Par>
 		</Section>
 
 		<Section title="Method 2: remove unbound variables through anonymous variables">

@@ -11,8 +11,8 @@ export function Theory() {
 			<Par>A join is basically a Cartesian product followed by a filter. So first let's set up a Cartesian product in Datalog. Suppose that we have a table of departments, and a table of employees. The <Term>Cartesian product</Term> is set up by adding both literals to a single rule.</Par>
 			<DLQueryFigure query={`
 departmentEmployeeCombination(did, dn, mid, b, ne, eid, fn, ln, p, e, a, c, hd, cs) :-
-				department(did, dn, mid, b, ne),
-				employee(eid, fn, ln, p, e, a, c, hd, cs).
+	department(did, dn, mid, b, ne),
+	employee(eid, fn, ln, p, e, a, c, hd, cs).
 `} actualQuery="SELECT DISTINCT * FROM departments, employees" tableWidth={1500} below />
 			<Par>The above rule can be read as follows.</Par>
 			<Quote>The set of values <IDL>(did, dn, mid, b, ne, eid, fn, ln, p, e, a, c, hd, cs)</IDL> is considered a department/employee combination, if <IDL>(did, dn, mid, b, ne)</IDL> is a department and if <IDL>(eid, fn, ln, p, e, a, c, hd, cs)</IDL> is an employee.</Quote>
@@ -23,9 +23,9 @@ departmentEmployeeCombination(did, dn, mid, b, ne, eid, fn, ln, p, e, a, c, hd, 
 			<Par>To complete the join, we must add a filter. The naive way of doing so would be to add the constraint that the manager ID from the departments table must equal the employee ID from the employees table: <IDL>mid = eid</IDL>.</Par>
 			<DLQueryFigure query={`
 departmentWithManager(did, dn, mid, b, ne, eid, fn, ln, p, e, a, c, hd, cs) :-
-				department(did, dn, mid, b, ne),
-				employee(eid, fn, ln, p, e, a, c, hd, cs),
-				mid = eid.
+	department(did, dn, mid, b, ne),
+	employee(eid, fn, ln, p, e, a, c, hd, cs),
+	mid = eid.
 `} actualQuery="SELECT DISTINCT d.*, e.* FROM departments d JOIN employees e ON d.manager_id=e.e_id" tableWidth={1500} below />
 			<Par>This would work, but it's not the way it's commonly done.</Par>
 			<Par>In Datalog, if we ever use the <Em>same variable name</Em> in one rule, then this variable must have the <Em>same value</Em> everywhere it is used within this rule. Through this idea we shorten the above rule: we use the same variable name for the manager ID and the employee ID, denoting both as <IDL>mid</IDL>. (Any name will do, as long as it's equal.)</Par>

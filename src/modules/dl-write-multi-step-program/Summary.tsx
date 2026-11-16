@@ -5,7 +5,7 @@ export function Summary() {
 	return <Page>
 		<Section>
 			<Par>A typical Datalog program consists of many small rules defining predicates, ending with a query.</Par>
-			<DLQueryFigure query={<>fineArtProduct(id) :- product(id, _, 'Fine Art', _, _, _).<br />boughtFineArt(u) :- transaction(_, _, u, id, _, _, _, _), fineArtProduct(id).<br />neverBoughtFineArt(u) :- account(u, _, _, _, _, _, _, _, _, _), not boughtFineArt(u).<br />?- neverBoughtFineArt(username).</>} actualQuery="SELECT DISTINCT username AS username FROM accounts EXCEPT SELECT buyer AS username FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='Fine Art')" tableWidth={150} />
+			<DLQueryFigure query={<>painting(id) :- product(id, _, 'PAINTING', _, _, _).<br />boughtPainting(u) :- transaction(_, _, u, id, _, _, _, _), painting(id).<br />neverBoughtPainting(u) :- account(u, _, _, _, _, _, _, _, _, _), not boughtPainting(u).<br />?- neverBoughtPainting(username).</>} actualQuery="SELECT DISTINCT username AS username FROM accounts EXCEPT SELECT buyer AS username FROM transactions WHERE prod_id IN (SELECT p_id FROM products WHERE category='PAINTING')" tableWidth={150} />
 			<Par>Getting good at setting up these programs mainly requires practice. There are a few helpful tips and tricks.</Par>
 			<List useNumbers items={[
 				<>First <Term>manually execute</Term> the data request for a few entries to gain intuition about the data.</>,
@@ -15,7 +15,7 @@ export function Summary() {
 				</>,
 				<>Set up predicates that are <Term>based on keys</Term>. This makes referencing them easier.</>,
 				<>Write <Term>many intuitive predicates</Term>. Every step should be as small as possible.</>,
-				<>On a not-exists statement, <Term>first do the opposite</Term>. Then flip the result to find the opposite.</>,
+				<>On a not-exists statement, <Term>first do the opposite</Term>. Then flip the result to find the original request.</>,
 				<>Always <Term>check your results</Term>, both for a <Term>positive sample case</Term> and for a <Term>negative sample case</Term>.</>,
 				<>Don't forget the <Term>query</Term> at the end.</>,
 			]} />
