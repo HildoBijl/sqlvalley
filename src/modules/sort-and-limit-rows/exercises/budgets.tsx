@@ -1,17 +1,50 @@
-import { defineStoryExercise } from '@/curriculum/exercises'
+import { SQLDisplay } from '@sqlvalley/sql'
+import { defineSQLMonoExercise } from '@sqlvalley/sql-exercises'
 
-export default defineStoryExercise({
-	moduleId: 'sort-and-limit-rows',
-	key: 'budgets',
-	person: 'wheatley',
-	purpose: 'Prepare a ranked department report.',
-	goal: 'Return the requested order with deterministic ties.',
-	variants: ['ASC', 'DESC'].map(direction => ({
-		problem: `Retrieve all departments ordered by budget ${direction}, with unknown budgets last, then department ID ascending.`,
-		query: `SELECT * FROM departments ORDER BY budget ${direction} NULLS LAST, d_id ASC`,
-		evidence: `The requested internal report uses ${direction === 'ASC' ? 'smallest' : 'largest'} budgets first.`,
+import { SpeechBox } from '@/learning'
+import { Par } from '@/ui'
+
+const variants = [
+	{
+		problem: 'Retrieve all departments ordered by budget ASC, with unknown budgets last, then department ID ascending.',
+		query: 'SELECT * FROM departments ORDER BY budget ASC NULLS LAST, d_id ASC',
+		evidence: 'The requested internal report uses smallest budgets first.',
 		payoff: 'That is the ordering I needed for the internal brief. I’ll take the report from here.',
-	})),
-	explanation: 'Specify direction and null placement. The unique department ID resolves equal budgets.',
-	comparisonOptions: { requireEqualRowOrder: true },
+	},
+	{
+		problem: 'Retrieve all departments ordered by budget DESC, with unknown budgets last, then department ID ascending.',
+		query: 'SELECT * FROM departments ORDER BY budget DESC NULLS LAST, d_id ASC',
+		evidence: 'The requested internal report uses largest budgets first.',
+		payoff: 'That is the ordering I needed for the internal brief. I’ll take the report from here.',
+	},
+] as const
+
+export default defineSQLMonoExercise({
+	exerciseId: 'story-sort-and-limit-rows-budgets',
+	definition: {
+		metadata: { version: 1 },
+		generateParameters: () => ({ variant: Math.floor(Math.random() * variants.length) }),
+		getSolution: ({ parameters }) => ({ query: variants[parameters.variant].query }),
+		comparisonOptions: {requireEqualRowOrder:true},
+	},
+	component: {
+		Problem: ({ parameters }) => <>
+			<Par>{variants[parameters.variant].problem}</Par>
+			<Par>{variants[parameters.variant].evidence}</Par>
+		</>,
+		Prompt: ({ parameters }) => <>
+			<Par>Purpose: Prepare a ranked department report.</Par>
+			<Par>Goal: Return the requested order with deterministic ties.</Par>
+			<SpeechBox person="wheatley"><Par>{variants[parameters.variant].evidence}</Par></SpeechBox>
+		</>,
+		Payoff: ({ parameters }) => <>
+			<Par>Purpose: Interpret the investigation’s result.</Par>
+			<Par>Goal: Return the requested order with deterministic ties.</Par>
+			<SpeechBox person="wheatley"><Par>{variants[parameters.variant].payoff}</Par></SpeechBox>
+		</>,
+		Solution: ({ parameters }) => <>
+			<Par>Specify direction and null placement. The unique department ID resolves equal budgets.</Par>
+			<SQLDisplay>{variants[parameters.variant].query}</SQLDisplay>
+		</>,
+	},
 })

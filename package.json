@@ -15,8 +15,6 @@
     "lint:strict": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "type-check": "npm run build:public-packages && tsc --noEmit",
-    "verify:story-exercises": "node scripts/verifyStoryExercises.mjs",
-    "verify:story-browser": "node scripts/verifyStoryBrowser.mjs",
     "stage:package-publications": "node scripts/stagePackagePublications.mjs",
     "prepare:package-publications": "npm run build:public-packages && npm run verify:package-entry-points && npm run verify:package-artifacts",
     "verify:package-entry-points": "node scripts/verifyPackageEntryPoints.mjs",

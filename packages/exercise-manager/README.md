@@ -38,8 +38,6 @@ Implement the exported `ExerciseStorage` interface to connect your store:
 
 The manager restores compatible instances and generates replacements when needed. It displays loading and error messages. Optional `selectionOptions={{ dontRepeatBefore: 3, minimumChoices: 2 }}` controls repeat avoidance; these are the defaults. Set `showAdminControls` to enable admin UI in renderers that support it.
 
-Applications can instead supply `selectNextExercise(exercises, history)`, returning a registration or `undefined`. It receives the current registrations and persisted history, oldest first, and controls initial selection and the Next exercise action. Explicit admin selection and regeneration still select the requested registration, and an outdated instance regenerates its registered exercise at the current version. The callback does not replace a compatible current instance, including a solved instance awaiting Next. Without the callback, `selectionOptions` and the default selector retain their behavior.
-
 
 ## Access the exercise session
 

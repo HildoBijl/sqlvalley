@@ -4,7 +4,6 @@ import { EXERCISES_REQUIRED_FOR_SKILL_COMPLETION, useModuleCompletion } from '@s
 
 import { useLearningStore } from '@/store'
 import { type ModuleId, moduleTree } from '@/curriculum'
-import { getStorySolvedCount, isStoryModuleId } from '@/curriculum/exercises'
 
 export function useModuleProgress(moduleId: ModuleId) {
 	// Load in data from the data store and process it.
@@ -12,7 +11,6 @@ export function useModuleProgress(moduleId: ModuleId) {
 	const { isCompleted: isModuleCompleted } = useModuleCompletion(moduleTree, modules)
 	const state = modules[moduleId]
 	const solvedExerciseCount = state?.moduleType === 'skill' ? state.solvedExerciseCount : 0
-	const storySolvedCount = isStoryModuleId(moduleId) ? getStorySolvedCount(moduleId, state?.moduleType === 'skill' ? state.exerciseHistory : []) : undefined
 
 	// Set up a handler to complete a module.
 	const completeConcept = useLearningStore(state => state.completeConcept)
@@ -25,8 +23,6 @@ export function useModuleProgress(moduleId: ModuleId) {
 	// Return the progress data in an object.
 	return {
 		completed: isModuleCompleted(moduleId),
-		storyCompleted: storySolvedCount === undefined ? undefined : storySolvedCount === 3,
-		storyProgress: storySolvedCount === undefined ? undefined : { current: storySolvedCount, required: 3 },
 		isModuleCompleted,
 		exerciseProgress: { current: solvedExerciseCount, required: EXERCISES_REQUIRED_FOR_SKILL_COMPLETION },
 		completeModule,
