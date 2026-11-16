@@ -16,18 +16,28 @@ export function Theory() {
 			<Par>We know that negation in Datalog can be tricky: we need safe queries, or we could get infinitely large outputs. Similarly recursion in Datalog is tricky: we need the fixed-point algorithm to compute predicates. When combining negation with recursion, there are even more pitfalls. We'll study some of the problems that occur, and then see what is required to avoid them.</Par>
 		</Section>
 
-		<Section title="The problem: non-unique results – multiple models">
-			<Par>Let's consider a very simple Datalog program. We have one fact – Alice is a person – and two rules – a person is happy if they're not stressed, and a person is stressed if they're not happy.</Par>
+		<Section title="Background: minimal models">
+			<Par>To start, we dive a bit deeper in what constitutes a "solution" of a Datalog program. Consider the following very basic Datalog program: Alice is a person, and every person is happy.</Par>
+			<DL>{`
+person('Alice').
+happy(x) :- person(x).
+`}</DL>
+			<Par>The set of facts <IDL>{`{ person('Alice'), happy('Alice') }`}</IDL> makes all rules true. Any set of facts that makes all rules true is called a <Term>model</Term> of the program.</Par>
+			<Par>Now consider the set of facts <IDL>{`{ person('Alice'), happy('Alice'), happy('Barky') }`}</IDL>: apparently Barky (who is not a person) is happy too. This set of facts makes all rules true as well, but it has come up with extra facts seemingly out of nowhere. More specifically, there are facts that can be removed, while still maintaining the property that all rules in our program are true.</Par>
+			<Par>This idea leads to another definition: a model is a <Term>minimal model</Term> if it has no proper subset that is also a model. In other words, we cannot remove something while still maintaining the property that all rules in the program are true. When running a Datalog program, we are typically interested in the minimal model.</Par>
+		</Section>
+
+		<Section title="The problem: non-unique results – multiple minimal models">
+			<Par>Let's extend the previous Datalog program a tiny bit. We have one fact – Alice is a person – and two rules – a person is happy if they're not stressed, and a person is stressed if they're not happy.</Par>
 			<DL>{`
 person('Alice').
 happy(x) :- person(x), not stressed(x).
 stressed(x) :- person(x), not happy(x).
 `}</DL>
-			<Par>We can evaluate this program. To evaluate programs, Datalog starts off with a set of facts – here <IDL>{`{ person('Alice') }`}</IDL> – and evaluates all rules with this set of facts to update/extend its set of facts. This is repeated until nothing changes anymore.</Par>
-			<Par>When updating the set of facts, Datalog generally evaluates all rules <Em>together</Em> for this set of facts. When we apply this to our example, <Em>both</Em> rules are triggered: Alice is currently neither happy nor stressed. The updated set of facts will then be <IDL>{`{ person('Alice'), happy('Alice'), stressed('Alice') }`}</IDL>. So Alice is now both happy and stressed. We then evaluate the rules again, and this time we come back to <IDL>{`{ person('Alice') }`}</IDL>. We're back where we started. This process is repeated, and the algorithm never ends!</Par>
+			<Par>We can evaluate this program. But in what order do we evaluate the rules? One (naive) option is to start off with a set of facts – here <IDL>{`{ person('Alice') }`}</IDL> – and evaluate all rules at the same time to update/extend it. This is repeated until nothing changes anymore.</Par>
+			<Par>When we apply this procedure to our example, <Em>both</Em> rules are triggered: Alice is currently neither happy nor stressed. The updated set of facts will then be <IDL>{`{ person('Alice'), happy('Alice'), stressed('Alice') }`}</IDL>. So Alice is now both happy and stressed. We then evaluate the rules again, and this time we come back to <IDL>{`{ person('Alice') }`}</IDL>. We're back where we started. This process is repeated, and the algorithm never ends!</Par>
 			<Par>You might think this procedure is silly, and we should just evaluate rules one at a time. We could do so, but which of the two rules should we then check first? If we check the first rule first, we'll end up with <IDL>{`{ person('Alice'), happy('Alice') }`}</IDL>. If we check the second rule first, we'll wind up with <IDL>{`{ person('Alice'), stressed('Alice') }`}</IDL>. Both these sets won't change further, and are hence valid outcomes of the program. But they're different!</Par>
-			<Par>We define a <Term>model</Term> as a set of facts that makes <Em>all</Em> rules true. In principle, the programs we have seen earlier on have infinitely many models, as it's always possible to simply add random facts like <IDL>person('bob'). happy('bob').</IDL> To keep things manageable, we usually look for the <Term>least model</Term>: the smallest set of facts that makes all rules true. All the programs we have seen before have always had a single least model.</Par>
-			<Par>Now let's look at the above example program again. This program seems to have two least models! Having multiple least models is definitely a problem: which output should our program give?</Par>
+			<Par>The problem that we have with this program is that it has multiple minimal models. This is a significant issue because it means the program can have different outputs depending on the evaluation order. How did this happen?</Par>
 		</Section>
 
 		<Section title="The root cause: shrinking result sets – no monotonicity">
@@ -48,13 +58,13 @@ ancestor(a, b) :- ancestor(a, x), parent(x, b).
 				<>We evaluate the rules again, but no new entries pop up. We have found a model: a set of facts for which all rules hold true.</>,
 			]} />
 			<Par>A key realization from the above example is that the set of facts <Em>only grows</Em>. We started with three parent facts, and then we kept getting more and more ancestor facts until we were done. A program where the set of facts can only grow is called <Term>monotonic</Term>.</Par>
-			<Par>More mathematically, we can write the set of facts as <M>D</M> and the set of rules as a function <M>f(D)</M>. The program starts with an initial set of facts <M>D_0</M> and then derives <M>D_1 = f(D_0), D_2 = f(D_1), \ldots</M> until the set of facts stops changing: we have found a model. We now say that the rules <M>f</M> are <Term>monotonic</Term> if <M>D \subseteq f(D)</M> for all possible sets <M suffix=".">D</M> In words: applying the rules can never make us lose any fact.</Par>
+			<Par>More mathematically, we can write the set of facts as <M>D</M> and the set of rules as a function <M>f(D)</M>. The program starts with an initial set of facts <M>D_0</M> and then derives <M>D_1 = f(D_0), D_2 = f(D_1), \ldots</M> until the set of facts stops changing: we have found a model. We now say that the rules <M>f</M> are <Term>monotonic</Term> if, for any sets <M>D \subseteq E</M>, we always have <M suffix=".">f(D) \subseteq f(E)</M> In words: for monotonic programs, adding facts to the input could never remove facts from the output.</Par>
 			<Info>
 				<Par sx={{ mb: 0.5 }}>Monotonic programs have three very important properties.</Par>
 				<List items={[
 					<>They are <Term>guaranteed to converge</Term>. Since the set of facts can only grow, and the set of all possible facts is finite (for safe rules), we must reach the end eventually.</>,
 					<>The <Term>rule order does not matter</Term>. As long as we keep checking rules, any fact that could possibly be true, given the set of initial facts, will eventually be found.</>,
-					<>There is only <Term>one least model</Term>. We will always reach the maximal set of derivable facts.</>,
+					<>There is only <Term>one minimal model</Term>. We will always reach a minimal model containing all initial facts.</>,
 				]} />
 			</Info>
 			<Par>To improve our intuition of what monotonicity means, let's also study a program that's non-monotonic.</Par>
@@ -72,25 +82,25 @@ stressed(x) :- working(x).
 				<>We evaluate the rules another time and get <IDL>{`{ person('Alice'), working('Alice'), stressed('Alice') }`}</IDL>.</>,
 				<>We evaluate the rules again and get exactly the same result. So we're done.</>,
 			]} />
-			<Par>Crucial in this example is that, at the fourth step, the set of facts <Em>decreases</Em>. We remove a fact! Alice used to be happy, but then she started working, wound up stressed, and this removed her happiness. This shows that the above program is <Em>not</Em> monotonic. Luckily this non-monotonic program does have a unique model. (We'll soon see why: it's "stratified".) But non-monotonic programs don't always have a single model, as the very first example showed.</Par>
+			<Par>Crucial in this example is that, at the fourth step, the set of facts <Em>decreases</Em>. We remove a fact! Alice used to be happy, but then she started working, wound up stressed, and this removed her happiness. This shows that the above program is <Em>not</Em> monotonic. Luckily this non-monotonic program does have a unique minimal model. (We'll soon see why: it's "stratified".) But non-monotonic programs don't always have a single minimal model, as the first example with <IDL>not</IDL> showed.</Par>
 			<Warning>Generally non-monotonic programs are harder to compute than monotonic ones, since facts can also disappear again.</Warning>
 		</Section>
 
 		<Section title="Different Datalog types: positive, semi-positive and stratified Datalog">
-			<Par>The problem of having multiple models originates from the <IDL>not</IDL> keyword. It causes us to lose monotonicity. To fix those problems, we must apply some restrictions to when/how <IDL>not</IDL> can be used. Let's study three such possible restrictions, going from "very strict" to "less strict".</Par>
+			<Par>The problem of having multiple minimal models originates from the <IDL>not</IDL> keyword. It causes us to lose monotonicity. To make sure the output of our Datalog programs is somewhat predictable, we apply restrictions to when/how <IDL>not</IDL> can be used. Let's study three such possible restrictions, going from "very strict" to "less strict".</Par>
 			<Par>Option one is to ban <Em>all</Em> negation. This is called <Term>positive Datalog</Term>. The <IDL>not</IDL> keyword is simply not allowed.</Par>
-			<Info>Positive Datalog is monotonic. Because of this, we always have a single model that we are guaranteed to find.</Info>
+			<Info>Positive Datalog is monotonic. Because of this, we always have a single minimal model that we are guaranteed to find.</Info>
 			<Par>Obviously, the <IDL>not</IDL> keyword is pretty useful, so this is not an ideal solution. Let's loosen the restrictions.</Par>
 			<Par>Option two is to allow the <IDL>not</IDL> keyword, but <Em>only</Em> at the original tables of our database: the EDBs. This is called <Term>semi-positive Datalog</Term>. We may use <IDL>not originalFact(x)</IDL> but we can't write <IDL>not derivedPredicate(x)</IDL>.</Par>
-			<Info>Semi-positive Datalog is also monotonic. After all, we never apply negation to a derived predicate, so it can never happen that a new fact of a derived predicate is negated which then removes a fact somewhere else. Because semi-positive Datalog is monotonic, it benefits from all the advantages of monotonicity: semi-positive Datalog programs are also relatively easy to compute.</Info>
-			<Par>As it turns out, we can loosen the restrictions a bit further. The problem of multiple models only occurs when we <Em>mix</Em> negation with recursion. The third option is to not allow any <Em>cycle</Em> with negation. This is called <Term>stratified Datalog</Term>.</Par>
+			<Info>Assuming that original database (the EDBs) doesn't change, semi-positive Datalog is also monotonic. After all, we never apply negation to a derived predicate, so it can never happen that a new fact of a derived predicate is negated which then removes a fact somewhere else. Because semi-positive Datalog is monotonic, it benefits from all the advantages of monotonicity: semi-positive Datalog programs are also relatively easy to compute.</Info>
+			<Par>As it turns out, we can loosen the restrictions a bit further. We found that we mainly get multiple minimal models when we <Em>mix</Em> negation with recursion. The third option is to not allow any <Em>cycle</Em> with negation. This is called <Term>stratified Datalog</Term>.</Par>
 			<Par>This definition may initially sound a bit vague. We can clarify it using the predicate dependency graph. Let's consider the following example program.</Par>
 			<SampleNonStratifiedProgram />
 			<Par>We say that a predicate <IDL>X</IDL> <Term>negatively depends</Term> on a predicate <IDL>Y</IDL> if the literal <IDL>not Y</IDL> appears in a rule for <IDL>X</IDL>. So in the above example program, <IDL>C</IDL> negatively depends on <IDL>D</IDL> and <IDL>D</IDL> negatively depends on <IDL>B</IDL>.</Par>
 			<DependencyGraph />
 			<Par>When drawing the dependency graph (before collapsing cycles) we always indicate negative dependencies. This is done by writing a minus sign next to the arrow. (We can also add a plus sign to all other arrows, but this is rather implicit, so it's often skipped.)</Par>
 			<Par>The program is stratified if <Em>all</Em> cycles consist of <Em>only positive</Em> dependencies. If there is <Em>any</Em> cycle containing <Em>any</Em> negative dependency, then the program is <Em>not</Em> stratified. The above dependency graph shows that the example program is <Em>not</Em> stratified: there is a cycle <IDL>(C,D,E)</IDL> with a negative dependency from <IDL>C</IDL> to <IDL>D</IDL> in it. If this was a positive dependency, or if there was no cycle, the example program <Em>would</Em> be stratified.</Par>
-			<Info>Stratified Datalog programs are not monotonic, which can make them harder to compute. However, stratification <Em>does</Em> guarantee a unique model. To find it, we can once more collapse the cycles into single nodes, divide the dependency graph into layers, and compute the predicates layer by layer. Since all cycles are positive, the fixed-point algorithm won't have any problems with them.</Info>
+			<Info>Stratified Datalog programs are not necessarily monotonic, which can make them harder to compute. However, if we evaluate the rules in a stratified program layer (stratum) by layer, we do always find a unique minimal model. (Layers are also called <Term>strata</Term> in this context.) The model we find in this way is also called the <Term>perfect model</Term>. It is minimal, but the program may in principle have other minimal models.</Info>
 			<Par>An intuitive way to keep track of these three categories is through the following thoughts.</Par>
 			<List items={[
 				<><Term>Positive Datalog</Term>: You can't use negation at all.</>,
@@ -150,10 +160,10 @@ export function DatalogTypeVennDiagram() {
 	]
 	return <DrawingFigure view={{ type: 'identity', width: w, height: h }} maxWidth={w}>
 		<Rectangle style={{ fill: infoColor, fillOpacity: 0.06, stroke: infoColor, strokeWidth: 2 }} corners={[[circles[1].x - circles[1].w / 2 - 8, 40], [circles[1].x + circles[1].w / 2 + 12, h - 8]]} cornerRadius={10} />
-		<FigureHtml position={[circles[1].x - circles[1].w / 2 - 8 + 6, 40 + 2]} anchor={[-1, -1]} style={{ color: infoColor, fontWeight: 'bold', textAlign: 'center' }}>Monotonic programs</FigureHtml>
+		<FigureHtml position={[circles[1].x - circles[1].w / 2 - 8 + 6, 40 + 2]} anchor={[-1, -1]} style={{ color: infoColor, fontWeight: 'bold', textAlign: 'center' }}>Monotonic programs (with fixed EDB)</FigureHtml>
 
 		<Rectangle style={{ fill: warningColor, fillOpacity: 0.06, stroke: warningColor, strokeWidth: 2 }} corners={[[circles[2].x - circles[2].w / 2 - 8, 0], [circles[2].x + circles[2].w / 2 + 12, h]]} cornerRadius={10} />
-		<FigureHtml position={[circles[2].x - circles[2].w / 2 - 8 + 6, 2]} anchor={[-1, -1]} style={{ color: warningColor, fontWeight: 'bold', textAlign: 'center' }}>Programs with a unique model</FigureHtml>
+		<FigureHtml position={[circles[2].x - circles[2].w / 2 - 8 + 6, 2]} anchor={[-1, -1]} style={{ color: warningColor, fontWeight: 'bold', textAlign: 'center' }}>Programs with a unique perfect model</FigureHtml>
 
 		{circles.map((circle, index) => <Rectangle key={index} corners={[[circle.x - circle.w / 2, circle.y - circle.h / 2], [circle.x + circle.w / 2, circle.y + circle.h / 2]]} cornerRadius={circle.w / 2} style={{ fill: themeColor, fillOpacity: 0.06, stroke: themeColor, strokeWidth: 2 }} />)}
 

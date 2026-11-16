@@ -1,7 +1,7 @@
 
 import { Page, Section, Par, Info, Term, Em } from '@/ui'
 import { IDL, DL } from '@/learning'
-import { FirstDependencyGraph, CleanedSecondDependencyGraph } from './Theory'
+import { CleanedFirstDependencyGraph, CleanedSecondDependencyGraph } from './Theory'
 
 export function Summary() {
 	return <Page>
@@ -12,7 +12,7 @@ sold(v, b, p, d) :- transaction(_, v, b, p, d, _, _, _).
 soldAndBoughtBack(v, p) :- sold(v, _, p, d1), sold(_, v, p, d2), d2 > d1.
 withNames(fn, ln, pn) :- soldAndBoughtBack(v, p), account(v, _, _, _, fn, ln, _, _, _, _), product(p, pn, _, _, _, _).
 `}</DL>
-			<FirstDependencyGraph />
+			<CleanedFirstDependencyGraph />
 			<Par>It may happen that there are <Term>cycles</Term> in the dependency graph: there is <Term>recursion</Term>. In this case, the idea is to find a <Term>Strongly Connected Component</Term> (SCC) in the graph: a set of nodes in which every node can reach every other node. Those SCCs are <Term>collapsed</Term> into a single node. If we repeat this until there are no cycles left, we can once more draw the graph using layers.</Par>
 			<DL>{`
 D(x) :- A(x), B(x).
