@@ -48,7 +48,7 @@ const companiesExercises = [
 		</>,
 	},
 	{
-		problem: <Par>Find the names of the employees that do not work for the same company as their managers. (Perhaps they are employed through an employment agency.)</Par>,
+		problem: <Par>Find the names of the employees that work for a different company than their manager. (Perhaps they are employed through an employment agency.)</Par>,
 		solution: <>
 			<Par>The relations we need are the <RelationName>works</RelationName> relation for a person's company, then the <RelationName>manages</RelationName> relation to find their manager, and then once more the <RelationName>works</RelationName> relation for the manager's company. Because we join a table with itself, we need to rename one of the works relations to prevent naming problems. The join can then be done through</Par>
 			<RA>σ<sub>works.person_name = manages.person_name ∧ manages.manager_name = boss.person_name</sub>(works⨯manages⨯ρ<sub>boss</sub>(works))</RA>

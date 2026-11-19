@@ -1,6 +1,7 @@
-import { Page, Section, Par, Em, Term, Link } from '@/ui'
+import { Page, Section, Par, Em, Term } from '@/ui'
 import { RA, RelationName, ManualExerciseSet } from '@/learning'
 import { CompaniesSchema } from '@/curriculum'
+import { ModuleLink } from '@/navigation'
 
 export function Practice() {
 	return <Page>
@@ -44,7 +45,7 @@ const exercises = [
 			<RA>∏<sub>company_name</sub>(σ<sub>salary &gt; 200000</sub>(works))</RA>
 			<Par>The companies where both conditions hold follow from the intersection.</Par>
 			<RA>∏<sub>company_name</sub>(σ<sub>city = "Amsterdam"</sub>(company)) ∩ ∏<sub>company_name</sub>(σ<sub>salary &gt; 200000</sub>(works))</RA>
-			<Par>This solves the given exercise. Alternatively, we could have also done this through a <Link to="/skills/ra-join-relations">join</Link>, but that would have been more complicated and less efficient. We'd then have</Par>
+			<Par>This solves the given exercise. Alternatively, we could have also done this through a <ModuleLink moduleId="ra-join-relations">join</ModuleLink>, but that would have been more complicated and less efficient. We'd then have</Par>
 			<RA>∏<sub>company_name</sub>(σ<sub>city = "Amsterdam" ∧ salary &gt; 200000</sub>(works ⋈ company))</RA>
 		</>,
 	},
